@@ -479,19 +479,14 @@ All rows are **published** numbers. Cycles are copied as published; `sz` = key/s
 | S2-0334 | ML-DSA ML-DSA-44 verify | STM32 NUCLEO-F439ZI, Cortex-M4, 168 |  |  |  |  | final-FIPS-name |
 | S2-0363 | ML-DSA ML-DSA-44 verify | CHERIoT Ibex (Verilato, Ibex RISC-,  | 3674071 | 44672 |  |  | final-FIPS-name |
 
-# Appendix C. Sources I could not retrieve (please fetch manually)
+# Appendix C. Sources not yet used for a table row
 
-None of these is used for any number or claim in this report. In phase 2 the fetch tools returned summaries or abstracts for ePrint 2025/366, 2020/470, 2026/1333, 2021/781, 2026/312 and 2026/2343 (data/raw/S7_retry.md); because a summary is not a verbatim read, no number from them is in the evidence table until the full text is checked. Please upload the PDFs listed in docs/SOURCES_TO_UPLOAD.md.
+On 2026-10-12 the author supplied PDFs of ePrint 2019/844, 2020/470, 2021/781, 2022/323, 2025/366, 2026/312, 2026/1333 and 2026/2343, the NSA CNSA 2.0 FAQ, two UAE National Encryption Policy documents and a CISA quantum readiness document (docs/SOURCES_TO_UPLOAD.md). Rows from 2025/366 and 2020/470 are now in the table (stream S7, each value found in the PDF). The other papers are in hand but no number from them is in the table yet. Two supplied files (CISA, uaelegislation.gov.ae) are image only and need OCR or a text copy. The items below are still unretrieved.
 
 | Source | Why it matters | Note |
 |---|---|---|
-| NSA CNSA 2.0 algorithms advisory and FAQ (media.defense.gov, nsa.gov) | algorithm set, dates, LMS/XMSS firmware-signing guidance | HTTP 403 |
-| CISA quantum-readiness pages (cisa.gov/quantum) | US federal migration material | HTTP 403; a NIST-hosted copy of the 2023 fact sheet was used instead |
-| UAE National Encryption Policy and executive regulation text; UAE National Cryptography Center algorithm list; Arabic-language sources | UAE requirements for embedded systems | only press copies of the WAM article were read |
-| ePrint 2019/844 (pqm4 paper) | background only; the board and clock question was answered from the project's own files (data/raw/S6_pqm4_config.md) | blocked for the fetch tools |
-| ePrint 2026/1333 (Riou et al., ML-DSA benchmarking pitfalls) | exact reporting recommendations | abstract only |
-| ePrint 2022/323 (Dilithium for memory-constrained devices, `m4fstack`), 2025/366 (SLOTHY, M4 to M7), 2020/470 (LMS vs XMSS full paper), 2021/781 (software updates on embedded devices) | stack-optimisation method; M7 numbers; full LMS/XMSS tables | Cloudflare 403 |
-| ePrint 2026/312 (RISQrypt), 2026/256 (Adams Bridge), 2026/2343 (KpqC command authentication for unmanned systems) | accelerator and UAV numbers | PDFs 403; abstracts or repository copies only |
+| NSA CNSA 2.0 algorithms advisory (separate from the FAQ) | algorithm set, dates, LMS/XMSS firmware-signing guidance | HTTP 403; only the FAQ was supplied |
+| UAE National Cryptography Center algorithm list; Arabic-language sources; executive regulation text | UAE requirements for embedded systems | not found |
 | NIST CAVP / CMVP PQC validation lists | which libraries are validated | JavaScript pages not extractable |
 | Nordic, ST, NXP, Infineon, Arm product and documentation pages; Bluetooth Core spec; LoRa RP002; IEEE 802.15.4 | exact device specs and PQC accelerator claims | blocked, JavaScript-only or paywalled |
 | micro-ROS security documentation; DDS-XRCE specification | micro-ROS security status | guessed paths 404 |
