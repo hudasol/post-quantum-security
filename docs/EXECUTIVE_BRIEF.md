@@ -8,7 +8,7 @@ fontsize: 10pt
 
 **Bottom line.** Verification-only post-quantum designs fit Cortex-M-class flight and robot computers; per-message post-quantum signatures do not fit MAVLink-class radio links; and the real deadline pressure is on **firmware-signature trust anchors that cannot be changed after shipping**. Everything below is published or derived from retrieved sources; **nothing was measured on a microcontroller** (hardware plan included).
 
-**What costs what** (published; pqm4 on Cortex-M4F; board/clock ambiguous, 24 MHz stated; setups differ)
+**What costs what** (published; pqm4 on Cortex-M4F; board and clock unresolved (README says 24 MHz, default board code says 20 MHz); setups differ)
 
 | Operation | Cycles | Stack | Notes |
 |---|---|---|---|
