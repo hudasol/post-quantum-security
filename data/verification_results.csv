@@ -1,0 +1,519 @@
+id,field,claimed_value,found_value,status,note
+S2-0086,cycles,4026533198,4026533198,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 142, col Sign mean; min/max in notes also match"
+S2-0086,stack_bytes,5876,5876,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 285, col Sign [bytes]"
+S2-0086,flash_or_code_bytes,4720,4720,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 572, col Total [bytes]"
+S2-0086,scheme,SPHINCS+ (round-3 'simple'; pre-standard predecessor of SLH-DSA),SPHINCS+ (round-3 'simple'; pre-standard predecessor of SLH-DSA),match,pqm4 benchmarks.csv scheme/family row name
+S2-0086,parameter_set,sphincs-shake-256f-simple,sphincs-shake-256f-simple,match,row name on line 142
+S2-0086,operation,sign,sign,match,column Sign mean
+S2-0086,device,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,match,CSV names no board (0 hits for nucleo/stm32); README L75 lists nucleo-l4r5zi as default
+S2-0086,core,Cortex-M4F,Cortex-M4F,match,"README L69/L71: ARM Cortex-M4 boards, m4f=M4F opts; arXiv 2604.15868 p17 L999 names L4R5ZI Cortex-M4F"
+S2-0086,clock_mhz,24,24,match,pqm4 README.md L222: all cycle counts obtained at 24MHz
+S2-0086,library,pqm4 implementation 'clean (PQClean reference C)',pqm4 implementation 'clean (PQClean reference C)',match,implementation column value in CSV row (142)
+S2-0086,library_version,pqm4 master HEAD 5e5cc76d0b07 (2026-09-04) when read; benchmarks.csv last changed in commit 90bfb630e536 (2025-05-22),,unverifiable-source-unreachable,README L227 gcc 11.3.1 20220712 matches; HEAD 5e5cc76d0b07 / commit 90bfb630e536 dates not in source; GitHub API returned 403
+S2-0086,comparability_warning,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,match,"24 MHz, zero-wait-state, clean/m4f naming, board not named in CSV: all consistent with CSV+README; not contradicted"
+S2-0028,cycles,1874405,1874405,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 92, col KeyGen mean; min/max in notes also match"
+S2-0028,stack_bytes,38304,38304,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 235, col Key Generation [bytes]"
+S2-0028,flash_or_code_bytes,8212,8212,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 522, col Total [bytes]"
+S2-0028,scheme,ML-DSA,ML-DSA,match,pqm4 benchmarks.csv scheme/family row name
+S2-0028,parameter_set,ML-DSA-44,ML-DSA-44,match,row name on line 92
+S2-0028,operation,keygen,keygen,match,column KeyGen mean
+S2-0028,device,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,match,CSV names no board (0 hits for nucleo/stm32); README L75 lists nucleo-l4r5zi as default
+S2-0028,core,Cortex-M4F,Cortex-M4F,match,"README L69/L71: ARM Cortex-M4 boards, m4f=M4F opts; arXiv 2604.15868 p17 L999 names L4R5ZI Cortex-M4F"
+S2-0028,clock_mhz,24,24,match,pqm4 README.md L222: all cycle counts obtained at 24MHz
+S2-0028,library,pqm4 implementation 'clean (PQClean reference C)',pqm4 implementation 'clean (PQClean reference C)',match,implementation column value in CSV row (92)
+S2-0028,library_version,pqm4 master HEAD 5e5cc76d0b07 (2026-09-04) when read; benchmarks.csv last changed in commit 90bfb630e536 (2025-05-22),,unverifiable-source-unreachable,README L227 gcc 11.3.1 20220712 matches; HEAD 5e5cc76d0b07 / commit 90bfb630e536 dates not in source; GitHub API returned 403
+S2-0028,comparability_warning,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,match,"24 MHz, zero-wait-state, clean/m4f naming, board not named in CSV: all consistent with CSV+README; not contradicted"
+S2-0019,cycles,988722,988722,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 17, col KeyGen mean; min/max in notes also match"
+S2-0019,stack_bytes,10248,10248,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 160, col Key Generation [bytes]"
+S2-0019,flash_or_code_bytes,5120,5120,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 447, col Total [bytes]"
+S2-0019,scheme,ML-KEM,ML-KEM,match,pqm4 benchmarks.csv scheme/family row name
+S2-0019,parameter_set,ML-KEM-768,ML-KEM-768,match,row name on line 17
+S2-0019,operation,keygen,keygen,match,column KeyGen mean
+S2-0019,device,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,match,CSV names no board (0 hits for nucleo/stm32); README L75 lists nucleo-l4r5zi as default
+S2-0019,core,Cortex-M4F,Cortex-M4F,match,"README L69/L71: ARM Cortex-M4 boards, m4f=M4F opts; arXiv 2604.15868 p17 L999 names L4R5ZI Cortex-M4F"
+S2-0019,clock_mhz,24,24,match,pqm4 README.md L222: all cycle counts obtained at 24MHz
+S2-0019,library,pqm4 implementation 'clean (PQClean reference C)',pqm4 implementation 'clean (PQClean reference C)',match,implementation column value in CSV row (17)
+S2-0019,library_version,pqm4 master HEAD 5e5cc76d0b07 (2026-09-04) when read; benchmarks.csv last changed in commit 90bfb630e536 (2025-05-22),,unverifiable-source-unreachable,README L227 gcc 11.3.1 20220712 matches; HEAD 5e5cc76d0b07 / commit 90bfb630e536 dates not in source; GitHub API returned 403
+S2-0019,comparability_warning,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,match,"24 MHz, zero-wait-state, clean/m4f naming, board not named in CSV: all consistent with CSV+README; not contradicted"
+S2-0007,cycles,1020202,1020202,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 13, col KeyGen mean; min/max in notes also match"
+S2-0007,stack_bytes,3332,3332,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 156, col Key Generation [bytes]"
+S2-0007,flash_or_code_bytes,14016,14016,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 443, col Total [bytes]"
+S2-0007,scheme,ML-KEM,ML-KEM,match,pqm4 benchmarks.csv scheme/family row name
+S2-0007,parameter_set,ML-KEM-1024,ML-KEM-1024,match,row name on line 13
+S2-0007,operation,keygen,keygen,match,column KeyGen mean
+S2-0007,device,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,match,CSV names no board (0 hits for nucleo/stm32); README L75 lists nucleo-l4r5zi as default
+S2-0007,core,Cortex-M4F,Cortex-M4F,match,"README L69/L71: ARM Cortex-M4 boards, m4f=M4F opts; arXiv 2604.15868 p17 L999 names L4R5ZI Cortex-M4F"
+S2-0007,clock_mhz,24,24,match,pqm4 README.md L222: all cycle counts obtained at 24MHz
+S2-0007,library,"pqm4 implementation 'm4fstack (Cortex-M4F-specific, label as in file)'","pqm4 implementation 'm4fstack (Cortex-M4F-specific, label as in file)'",match,implementation column value in CSV row (13)
+S2-0007,library_version,pqm4 master HEAD 5e5cc76d0b07 (2026-09-04) when read; benchmarks.csv last changed in commit 90bfb630e536 (2025-05-22),,unverifiable-source-unreachable,README L227 gcc 11.3.1 20220712 matches; HEAD 5e5cc76d0b07 / commit 90bfb630e536 dates not in source; GitHub API returned 403
+S2-0007,comparability_warning,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,match,"24 MHz, zero-wait-state, clean/m4f naming, board not named in CSV: all consistent with CSV+README; not contradicted"
+S2-0032,cycles,3943121,3943121,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 93, col Sign mean; min/max in notes also match"
+S2-0032,stack_bytes,44816,44816,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 236, col Sign [bytes]"
+S2-0032,flash_or_code_bytes,19592,19592,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 523, col Total [bytes]"
+S2-0032,scheme,ML-DSA,ML-DSA,match,pqm4 benchmarks.csv scheme/family row name
+S2-0032,parameter_set,ML-DSA-44,ML-DSA-44,match,row name on line 93
+S2-0032,operation,sign,sign,match,column Sign mean
+S2-0032,device,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,match,CSV names no board (0 hits for nucleo/stm32); README L75 lists nucleo-l4r5zi as default
+S2-0032,core,Cortex-M4F,Cortex-M4F,match,"README L69/L71: ARM Cortex-M4 boards, m4f=M4F opts; arXiv 2604.15868 p17 L999 names L4R5ZI Cortex-M4F"
+S2-0032,clock_mhz,24,24,match,pqm4 README.md L222: all cycle counts obtained at 24MHz
+S2-0032,library,"pqm4 implementation 'm4f (Cortex-M4F-specific, typically assembly)'","pqm4 implementation 'm4f (Cortex-M4F-specific, typically assembly)'",match,implementation column value in CSV row (93)
+S2-0032,library_version,pqm4 master HEAD 5e5cc76d0b07 (2026-09-04) when read; benchmarks.csv last changed in commit 90bfb630e536 (2025-05-22),,unverifiable-source-unreachable,README L227 gcc 11.3.1 20220712 matches; HEAD 5e5cc76d0b07 / commit 90bfb630e536 dates not in source; GitHub API returned 403
+S2-0032,comparability_warning,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,match,"24 MHz, zero-wait-state, clean/m4f naming, board not named in CSV: all consistent with CSV+README; not contradicted"
+S2-0033,cycles,1421623,1421623,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 93, col Verify mean; min/max in notes also match"
+S2-0033,stack_bytes,8912,8912,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 236, col Verify [bytes]"
+S2-0033,flash_or_code_bytes,19592,19592,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 523, col Total [bytes]"
+S2-0033,scheme,ML-DSA,ML-DSA,match,pqm4 benchmarks.csv scheme/family row name
+S2-0033,parameter_set,ML-DSA-44,ML-DSA-44,match,row name on line 93
+S2-0033,operation,verify,verify,match,column Verify mean
+S2-0033,device,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,match,CSV names no board (0 hits for nucleo/stm32); README L75 lists nucleo-l4r5zi as default
+S2-0033,core,Cortex-M4F,Cortex-M4F,match,"README L69/L71: ARM Cortex-M4 boards, m4f=M4F opts; arXiv 2604.15868 p17 L999 names L4R5ZI Cortex-M4F"
+S2-0033,clock_mhz,24,24,match,pqm4 README.md L222: all cycle counts obtained at 24MHz
+S2-0033,library,"pqm4 implementation 'm4f (Cortex-M4F-specific, typically assembly)'","pqm4 implementation 'm4f (Cortex-M4F-specific, typically assembly)'",match,implementation column value in CSV row (93)
+S2-0033,library_version,pqm4 master HEAD 5e5cc76d0b07 (2026-09-04) when read; benchmarks.csv last changed in commit 90bfb630e536 (2025-05-22),,unverifiable-source-unreachable,README L227 gcc 11.3.1 20220712 matches; HEAD 5e5cc76d0b07 / commit 90bfb630e536 dates not in source; GitHub API returned 403
+S2-0033,comparability_warning,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,match,"24 MHz, zero-wait-state, clean/m4f naming, board not named in CSV: all consistent with CSV+README; not contradicted"
+S2-0063,cycles,35457937,35457937,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 134, col Verify mean; min/max in notes also match"
+S2-0063,stack_bytes,4356,4356,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 277, col Verify [bytes]"
+S2-0063,flash_or_code_bytes,5444,5444,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 564, col Total [bytes]"
+S2-0063,scheme,SPHINCS+ (round-3 'simple'; pre-standard predecessor of SLH-DSA),SPHINCS+ (round-3 'simple'; pre-standard predecessor of SLH-DSA),match,pqm4 benchmarks.csv scheme/family row name
+S2-0063,parameter_set,sphincs-sha2-192f-simple,sphincs-sha2-192f-simple,match,row name on line 134
+S2-0063,operation,verify,verify,match,column Verify mean
+S2-0063,device,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,match,CSV names no board (0 hits for nucleo/stm32); README L75 lists nucleo-l4r5zi as default
+S2-0063,core,Cortex-M4F,Cortex-M4F,match,"README L69/L71: ARM Cortex-M4 boards, m4f=M4F opts; arXiv 2604.15868 p17 L999 names L4R5ZI Cortex-M4F"
+S2-0063,clock_mhz,24,24,match,pqm4 README.md L222: all cycle counts obtained at 24MHz
+S2-0063,library,pqm4 implementation 'clean (PQClean reference C)',pqm4 implementation 'clean (PQClean reference C)',match,implementation column value in CSV row (134)
+S2-0063,library_version,pqm4 master HEAD 5e5cc76d0b07 (2026-09-04) when read; benchmarks.csv last changed in commit 90bfb630e536 (2025-05-22),,unverifiable-source-unreachable,README L227 gcc 11.3.1 20220712 matches; HEAD 5e5cc76d0b07 / commit 90bfb630e536 dates not in source; GitHub API returned 403
+S2-0063,comparability_warning,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,match,"24 MHz, zero-wait-state, clean/m4f naming, board not named in CSV: all consistent with CSV+README; not contradicted"
+S2-0059,cycles,7657558168,7657558168,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 133, col Sign mean; min/max in notes also match"
+S2-0059,stack_bytes,2556,2556,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 276, col Sign [bytes]"
+S2-0059,flash_or_code_bytes,5264,5264,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 563, col Total [bytes]"
+S2-0059,scheme,SPHINCS+ (round-3 'simple'; pre-standard predecessor of SLH-DSA),SPHINCS+ (round-3 'simple'; pre-standard predecessor of SLH-DSA),match,pqm4 benchmarks.csv scheme/family row name
+S2-0059,parameter_set,sphincs-sha2-128s-simple,sphincs-sha2-128s-simple,match,row name on line 133
+S2-0059,operation,sign,sign,match,column Sign mean
+S2-0059,device,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,match,CSV names no board (0 hits for nucleo/stm32); README L75 lists nucleo-l4r5zi as default
+S2-0059,core,Cortex-M4F,Cortex-M4F,match,"README L69/L71: ARM Cortex-M4 boards, m4f=M4F opts; arXiv 2604.15868 p17 L999 names L4R5ZI Cortex-M4F"
+S2-0059,clock_mhz,24,24,match,pqm4 README.md L222: all cycle counts obtained at 24MHz
+S2-0059,library,pqm4 implementation 'clean (PQClean reference C)',pqm4 implementation 'clean (PQClean reference C)',match,implementation column value in CSV row (133)
+S2-0059,library_version,pqm4 master HEAD 5e5cc76d0b07 (2026-09-04) when read; benchmarks.csv last changed in commit 90bfb630e536 (2025-05-22),,unverifiable-source-unreachable,README L227 gcc 11.3.1 20220712 matches; HEAD 5e5cc76d0b07 / commit 90bfb630e536 dates not in source; GitHub API returned 403
+S2-0059,comparability_warning,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,match,"24 MHz, zero-wait-state, clean/m4f naming, board not named in CSV: all consistent with CSV+README; not contradicted"
+S2-0026,cycles,664654,664654,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 19, col Encaps mean; min/max in notes also match"
+S2-0026,stack_bytes,2860,2860,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 162, col Encapsulation [bytes]"
+S2-0026,flash_or_code_bytes,13320,13320,match,"pqm4 benchmarks.csv (retrieved 2026-10-11, 573 lines, sha256 4e4ca381...) line 449, col Total [bytes]"
+S2-0026,scheme,ML-KEM,ML-KEM,match,pqm4 benchmarks.csv scheme/family row name
+S2-0026,parameter_set,ML-KEM-768,ML-KEM-768,match,row name on line 19
+S2-0026,operation,encaps,encaps,match,column Encaps mean
+S2-0026,device,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,STM32 Cortex-M4F development board (benchmarks.csv does not name the board; pqm4 README lists default platform nucleo-l4,match,CSV names no board (0 hits for nucleo/stm32); README L75 lists nucleo-l4r5zi as default
+S2-0026,core,Cortex-M4F,Cortex-M4F,match,"README L69/L71: ARM Cortex-M4 boards, m4f=M4F opts; arXiv 2604.15868 p17 L999 names L4R5ZI Cortex-M4F"
+S2-0026,clock_mhz,24,24,match,pqm4 README.md L222: all cycle counts obtained at 24MHz
+S2-0026,library,"pqm4 implementation 'm4fstack (Cortex-M4F-specific, label as in file)'","pqm4 implementation 'm4fstack (Cortex-M4F-specific, label as in file)'",match,implementation column value in CSV row (19)
+S2-0026,library_version,pqm4 master HEAD 5e5cc76d0b07 (2026-09-04) when read; benchmarks.csv last changed in commit 90bfb630e536 (2025-05-22),,unverifiable-source-unreachable,README L227 gcc 11.3.1 20220712 matches; HEAD 5e5cc76d0b07 / commit 90bfb630e536 dates not in source; GitHub API returned 403
+S2-0026,comparability_warning,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks; 'clean' = ,match,"24 MHz, zero-wait-state, clean/m4f naming, board not named in CSV: all consistent with CSV+README; not contradicted"
+S2-0228,cycles,3148000,"3,148 k",unit-conversion-ok,"arXiv 2603.19340v6 (pdftotext) Table IV row ML-KEM-1024 KeyGen 25.18 ms: table gives kilocycles (3148 kc), x1000 exact"
+S2-0228,scheme,ML-KEM,ML-KEM,match,"arXiv 2603.19340v6 (pdftotext) title/abstract, Table IV-VIII captions"
+S2-0228,parameter_set,ML-KEM-1024,ML-KEM-1024,match,arXiv 2603.19340v6 (pdftotext) table row label
+S2-0228,operation,keygen,keygen,match,arXiv 2603.19340v6 (pdftotext) table Op. column
+S2-0228,device,Raspberry Pi Pico H (RP2040),Raspberry Pi Pico H (RP2040),match,arXiv 2603.19340v6 (pdftotext) Sec. IV: Raspberry Pi Pico H (L281)
+S2-0228,core,Cortex-M0+,Cortex-M0+,match,arXiv 2603.19340v6 (pdftotext) paper: Cortex-M0+ (RP2040)
+S2-0228,clock_mhz,125,125,match,arXiv 2603.19340v6 (pdftotext) abstract: RP2040 at 125 MHz
+S2-0228,library,PQClean reference C ('clean'),PQClean reference C ('clean'),match,"arXiv 2603.19340v6 (pdftotext) L314-331 PQClean, L347 mbedTLS 3.6.0"
+S2-0228,library_version,"arXiv:2603.19340v6, 11 Aug 2026 (preprint; PQClean commit 3730b32a, reference C)","arXiv:2603.19340v6, 11 Aug 2026 (preprint; PQClean commit 3730b32a, reference C)",match,arXiv 2603.19340v6 (pdftotext) v6 11 Aug 2026 stamp (L21); PQClean commit 3730b32a (L331)
+S2-0228,comparability_warning,"Cortex-M0+ (no caches, single-cycle multiplier) - NOT comparable to M4/M33 rows; PQClean reference C (unoptimised) at -O","Cortex-M0+ (no caches, single-cycle multiplier) - NOT comparable to M4/M33 rows; PQClean reference C (unoptimised) at -O",match,"arXiv 2603.19340v6 (pdftotext) n=30/n=100, cycles=t(us)x125, -O3, gcc 12.2.1, preprint: consistent with paper"
+S2-0229,cycles,3512000,"3,512 k",unit-conversion-ok,"arXiv 2603.19340v6 (pdftotext) Table IV row ML-KEM-1024 Encaps 28.10 ms: table gives kilocycles (3512 kc), x1000 exact"
+S2-0229,scheme,ML-KEM,ML-KEM,match,"arXiv 2603.19340v6 (pdftotext) title/abstract, Table IV-VIII captions"
+S2-0229,parameter_set,ML-KEM-1024,ML-KEM-1024,match,arXiv 2603.19340v6 (pdftotext) table row label
+S2-0229,operation,encaps,encaps,match,arXiv 2603.19340v6 (pdftotext) table Op. column
+S2-0229,device,Raspberry Pi Pico H (RP2040),Raspberry Pi Pico H (RP2040),match,arXiv 2603.19340v6 (pdftotext) Sec. IV: Raspberry Pi Pico H (L281)
+S2-0229,core,Cortex-M0+,Cortex-M0+,match,arXiv 2603.19340v6 (pdftotext) paper: Cortex-M0+ (RP2040)
+S2-0229,clock_mhz,125,125,match,arXiv 2603.19340v6 (pdftotext) abstract: RP2040 at 125 MHz
+S2-0229,library,PQClean reference C ('clean'),PQClean reference C ('clean'),match,"arXiv 2603.19340v6 (pdftotext) L314-331 PQClean, L347 mbedTLS 3.6.0"
+S2-0229,library_version,"arXiv:2603.19340v6, 11 Aug 2026 (preprint; PQClean commit 3730b32a, reference C)","arXiv:2603.19340v6, 11 Aug 2026 (preprint; PQClean commit 3730b32a, reference C)",match,arXiv 2603.19340v6 (pdftotext) v6 11 Aug 2026 stamp (L21); PQClean commit 3730b32a (L331)
+S2-0229,comparability_warning,"Cortex-M0+ (no caches, single-cycle multiplier) - NOT comparable to M4/M33 rows; PQClean reference C (unoptimised) at -O","Cortex-M0+ (no caches, single-cycle multiplier) - NOT comparable to M4/M33 rows; PQClean reference C (unoptimised) at -O",match,"arXiv 2603.19340v6 (pdftotext) n=30/n=100, cycles=t(us)x125, -O3, gcc 12.2.1, preprint: consistent with paper"
+S2-0225,cycles,2323000,"2,323 k",unit-conversion-ok,"arXiv 2603.19340v6 (pdftotext) Table IV row ML-KEM-768 Encaps 18.58 ms: table gives kilocycles (2323 kc), x1000 exact"
+S2-0225,scheme,ML-KEM,ML-KEM,match,"arXiv 2603.19340v6 (pdftotext) title/abstract, Table IV-VIII captions"
+S2-0225,parameter_set,ML-KEM-768,ML-KEM-768,match,arXiv 2603.19340v6 (pdftotext) table row label
+S2-0225,operation,encaps,encaps,match,arXiv 2603.19340v6 (pdftotext) table Op. column
+S2-0225,device,Raspberry Pi Pico H (RP2040),Raspberry Pi Pico H (RP2040),match,arXiv 2603.19340v6 (pdftotext) Sec. IV: Raspberry Pi Pico H (L281)
+S2-0225,core,Cortex-M0+,Cortex-M0+,match,arXiv 2603.19340v6 (pdftotext) paper: Cortex-M0+ (RP2040)
+S2-0225,clock_mhz,125,125,match,arXiv 2603.19340v6 (pdftotext) abstract: RP2040 at 125 MHz
+S2-0225,library,PQClean reference C ('clean'),PQClean reference C ('clean'),match,"arXiv 2603.19340v6 (pdftotext) L314-331 PQClean, L347 mbedTLS 3.6.0"
+S2-0225,library_version,"arXiv:2603.19340v6, 11 Aug 2026 (preprint; PQClean commit 3730b32a, reference C)","arXiv:2603.19340v6, 11 Aug 2026 (preprint; PQClean commit 3730b32a, reference C)",match,arXiv 2603.19340v6 (pdftotext) v6 11 Aug 2026 stamp (L21); PQClean commit 3730b32a (L331)
+S2-0225,comparability_warning,"Cortex-M0+ (no caches, single-cycle multiplier) - NOT comparable to M4/M33 rows; PQClean reference C (unoptimised) at -O","Cortex-M0+ (no caches, single-cycle multiplier) - NOT comparable to M4/M33 rows; PQClean reference C (unoptimised) at -O",match,"arXiv 2603.19340v6 (pdftotext) n=30/n=100, cycles=t(us)x125, -O3, gcc 12.2.1, preprint: consistent with paper"
+S2-0223,cycles,4464000,"4,464 k",unit-conversion-ok,"arXiv 2603.19340v6 (pdftotext) Table IV ML-KEM-512 Total 35.71 ms: table gives kilocycles (4464 kc), x1000 exact"
+S2-0223,energy_uj,2830,2.83 mJ,unit-conversion-ok,arXiv 2603.19340v6 (pdftotext) Appendix A text: 2.83 mJ (ML-KEM-512 handshake); also Sec. VI L1016: mJ x1000 -> uJ
+S2-0223,scheme,ML-KEM,ML-KEM,match,"arXiv 2603.19340v6 (pdftotext) title/abstract, Table IV-VIII captions"
+S2-0223,parameter_set,ML-KEM-512,ML-KEM-512,match,arXiv 2603.19340v6 (pdftotext) table row label
+S2-0223,operation,handshake total (keygen+encaps+decaps),handshake total (keygen+encaps+decaps),match,arXiv 2603.19340v6 (pdftotext) table Op. column
+S2-0223,device,Raspberry Pi Pico H (RP2040),Raspberry Pi Pico H (RP2040),match,arXiv 2603.19340v6 (pdftotext) Sec. IV: Raspberry Pi Pico H (L281)
+S2-0223,core,Cortex-M0+,Cortex-M0+,match,arXiv 2603.19340v6 (pdftotext) paper: Cortex-M0+ (RP2040)
+S2-0223,clock_mhz,125,125,match,arXiv 2603.19340v6 (pdftotext) abstract: RP2040 at 125 MHz
+S2-0223,library,PQClean reference C ('clean'),PQClean reference C ('clean'),match,"arXiv 2603.19340v6 (pdftotext) L314-331 PQClean, L347 mbedTLS 3.6.0"
+S2-0223,library_version,"arXiv:2603.19340v6, 11 Aug 2026 (preprint; PQClean commit 3730b32a, reference C)","arXiv:2603.19340v6, 11 Aug 2026 (preprint; PQClean commit 3730b32a, reference C)",match,arXiv 2603.19340v6 (pdftotext) v6 11 Aug 2026 stamp (L21); PQClean commit 3730b32a (L331)
+S2-0223,comparability_warning,"Cortex-M0+ (no caches, single-cycle multiplier) - NOT comparable to M4/M33 rows; PQClean reference C (unoptimised) at -O","Cortex-M0+ (no caches, single-cycle multiplier) - NOT comparable to M4/M33 rows; PQClean reference C (unoptimised) at -O",match,"arXiv 2603.19340v6 (pdftotext) n=30/n=100, cycles=t(us)x125, -O3, gcc 12.2.1, preprint: consistent with paper"
+S2-0239,cycles,44404000,"44,404 k",unit-conversion-ok,"arXiv 2603.19340v6 (pdftotext) Table V ML-DSA-87 Sign 355.2 ms: table gives kilocycles (44404 kc), x1000 exact"
+S2-0239,scheme,ML-DSA,ML-DSA,match,"arXiv 2603.19340v6 (pdftotext) title/abstract, Table IV-VIII captions"
+S2-0239,parameter_set,ML-DSA-87,ML-DSA-87,match,arXiv 2603.19340v6 (pdftotext) table row label
+S2-0239,operation,sign,sign,match,arXiv 2603.19340v6 (pdftotext) table Op. column
+S2-0239,device,Raspberry Pi Pico H (RP2040),Raspberry Pi Pico H (RP2040),match,arXiv 2603.19340v6 (pdftotext) Sec. IV: Raspberry Pi Pico H (L281)
+S2-0239,core,Cortex-M0+,Cortex-M0+,match,arXiv 2603.19340v6 (pdftotext) paper: Cortex-M0+ (RP2040)
+S2-0239,clock_mhz,125,125,match,arXiv 2603.19340v6 (pdftotext) abstract: RP2040 at 125 MHz
+S2-0239,library,PQClean reference C ('clean'),PQClean reference C ('clean'),match,"arXiv 2603.19340v6 (pdftotext) L314-331 PQClean, L347 mbedTLS 3.6.0"
+S2-0239,library_version,"arXiv:2603.19340v6, 11 Aug 2026 (preprint; PQClean commit 3730b32a, reference C)","arXiv:2603.19340v6, 11 Aug 2026 (preprint; PQClean commit 3730b32a, reference C)",match,arXiv 2603.19340v6 (pdftotext) v6 11 Aug 2026 stamp (L21); PQClean commit 3730b32a (L331)
+S2-0239,comparability_warning,"Cortex-M0+ (no caches, single-cycle multiplier) - NOT comparable to M4/M33 rows; PQClean reference C (unoptimised) at -O","Cortex-M0+ (no caches, single-cycle multiplier) - NOT comparable to M4/M33 rows; PQClean reference C (unoptimised) at -O",match,"arXiv 2603.19340v6 (pdftotext) n=30/n=100, cycles=t(us)x125, -O3, gcc 12.2.1, preprint: consistent with paper"
+S2-0239,compiler_flags_or_notes,"arm-none-eabi-gcc 12.2.1 -O3; Pico SDK 2.2.0; mean time 355.2 ms; cycles = t x 125; CV 66.0%, p95 831.9 ms, p99 1124.5 m","arm-none-eabi-gcc 12.2.1 -O3; Pico SDK 2.2.0; mean time 355.2 ms; cycles = t x 125; CV 66.0%, p95 831.9 ms, p99 1124.5 m",match,"Table V/IX: CV 66.0%, p95 831.9, p99 1124.5, peak stack 119.6 KB, total RAM 131.5 KB, flash 8.7 KB all match"
+S2-0251,energy_uj,48870,48.87 mJ,unit-conversion-ok,arXiv 2603.19340v6 (pdftotext) Appendix A text: 48.87 mJ ECDH P-256 key agreement (also 48.9 mJ L1016): mJ x1000 -> uJ
+S2-0251,scheme,ECDH P-256 (classical baseline),ECDH P-256 (classical baseline),match,"arXiv 2603.19340v6 (pdftotext) title/abstract, Table IV-VIII captions"
+S2-0251,parameter_set,P-256,P-256,match,arXiv 2603.19340v6 (pdftotext) table row label
+S2-0251,operation,full key agreement,full key agreement,match,arXiv 2603.19340v6 (pdftotext) table Op. column
+S2-0251,device,Raspberry Pi Pico H (RP2040),Raspberry Pi Pico H (RP2040),match,arXiv 2603.19340v6 (pdftotext) Sec. IV: Raspberry Pi Pico H (L281)
+S2-0251,core,Cortex-M0+,Cortex-M0+,match,arXiv 2603.19340v6 (pdftotext) paper: Cortex-M0+ (RP2040)
+S2-0251,clock_mhz,125,125,match,arXiv 2603.19340v6 (pdftotext) abstract: RP2040 at 125 MHz
+S2-0251,library,mbedTLS 3.6.0,mbedTLS 3.6.0,match,"arXiv 2603.19340v6 (pdftotext) L314-331 PQClean, L347 mbedTLS 3.6.0"
+S2-0251,library_version,"arXiv:2603.19340v6, 11 Aug 2026 (preprint; PQClean commit 3730b32a, reference C)","arXiv:2603.19340v6, 11 Aug 2026 (preprint; PQClean commit 3730b32a, reference C)",match,arXiv 2603.19340v6 (pdftotext) v6 11 Aug 2026 stamp (L21); PQClean commit 3730b32a (L331)
+S2-0251,comparability_warning,"Cortex-M0+ (no caches, single-cycle multiplier) - NOT comparable to M4/M33 rows; PQClean reference C (unoptimised) at -O","Cortex-M0+ (no caches, single-cycle multiplier) - NOT comparable to M4/M33 rows; PQClean reference C (unoptimised) at -O",match,"arXiv 2603.19340v6 (pdftotext) n=30/n=100, cycles=t(us)x125, -O3, gcc 12.2.1, preprint: consistent with paper"
+S2-0251,compiler_flags_or_notes,ENERGY ESTIMATED not measured: 79.2 mW constant datasheet model; source states 48.87 mJ,ENERGY ESTIMATED not measured: 79.2 mW constant datasheet model; source states 48.87 mJ,match,Appendix A/Sec IV-G: 3.3 V x 24 mA = 79.2 mW constant model; 48.87 mJ stated
+S2-0228,compiler_flags_or_notes,arm-none-eabi-gcc 12.2.1 -O3; Pico SDK 2.2.0; mean time 25.18 ms (1 us timer); cycles = t x 125,arm-none-eabi-gcc 12.2.1 -O3; Pico SDK 2.2.0; mean time 25.18 ms (1 us timer); cycles = t x 125,match,L317/329: gcc 12.2.1 -O3; Table IV ms values match note
+S2-0229,compiler_flags_or_notes,arm-none-eabi-gcc 12.2.1 -O3; Pico SDK 2.2.0; mean time 28.10 ms (1 us timer); cycles = t x 125,arm-none-eabi-gcc 12.2.1 -O3; Pico SDK 2.2.0; mean time 28.10 ms (1 us timer); cycles = t x 125,match,L317/329: gcc 12.2.1 -O3; Table IV ms values match note
+S2-0225,compiler_flags_or_notes,arm-none-eabi-gcc 12.2.1 -O3; Pico SDK 2.2.0; mean time 18.58 ms (1 us timer); cycles = t x 125,arm-none-eabi-gcc 12.2.1 -O3; Pico SDK 2.2.0; mean time 18.58 ms (1 us timer); cycles = t x 125,match,L317/329: gcc 12.2.1 -O3; Table IV ms values match note
+S2-0173,cycles,3017000,"3,017 k",unit-conversion-ok,"arXiv 2604.15868v1 p17 Table 3 (pdftotext): ML-DSA-44 m4f (asm) Signing 3,017 k / 44,832 / .total 19,592; kc x1000 exact; median of 100, -O3, 20 MHz"
+S2-0173,stack_bytes,44832,44832,match,"arXiv 2604.15868v1 p17 Table 3 (pdftotext): ML-DSA-44 m4f (asm) Signing 3,017 k / 44,832 / .total 19,592"
+S2-0173,flash_or_code_bytes,19592,19592,match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): .text=.total column
+S2-0173,scheme,ML-DSA,ML-DSA,match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): Table 3 row group
+S2-0173,parameter_set,ML-DSA-44,ML-DSA-44,match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): Table 3 row group
+S2-0173,operation,sign,sign,match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): Signing column
+S2-0173,device,NUCLEO-L4R5ZI (STM32L4R5ZI),NUCLEO-L4R5ZI (STM32L4R5ZI),match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): Table 3 caption: Nucleo-L4R5ZI
+S2-0173,core,Cortex-M4F,Cortex-M4F,match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): L999 Cortex-M4F
+S2-0173,clock_mhz,20,20,match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): caption: 20 MHz/0 WS (CLOCK_BENCHMARK)
+S2-0173,library,pqm4 'm4f' (asm),pqm4 'm4f' (asm),match,"arXiv 2604.15868v1 p17 Table 3 (pdftotext): m4f (asm) row, ML-DSA from pqm4"
+S2-0173,library_version,"arXiv:2604.15868v1, 17 Apr 2026 (preprint)","arXiv:2604.15868v1, 17 Apr 2026 (preprint)",match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): arXiv stamp v1 17 Apr 2026
+S2-0173,compiler_flags_or_notes,"arm-none-eabi-gcc 11.3.1; cycles -O3 median of 100 at 20 MHz (CLOCK_BENCHMARK, 0 WS); stack/size -Os; stack measured at ","arm-none-eabi-gcc 11.3.1; cycles -O3 median of 100 at 20 MHz (CLOCK_BENCHMARK, 0 WS); stack/size -Os; stack measured at ",match,"arXiv 2604.15868v1 p17 Table 3 (pdftotext): caption: -O3 cycles, -Os stack/size, median 100; stack at 120 MHz L1038-1039"
+S2-0173,comparability_warning,ML-DSA rows are the paper's reference columns taken from pqm4 (not the paper's contribution); cycles = MEDIAN of 100 at ,ML-DSA rows are the paper's reference columns taken from pqm4 (not the paper's contribution); cycles = MEDIAN of 100 at ,match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): consistent with caption
+S2-0179,cycles,5963000,"5,963 k",unit-conversion-ok,"arXiv 2604.15868v1 p17 Table 3 (pdftotext): ML-DSA-65 m4f (asm) Signing 5,963 k / 68,896 / .total 19,328; kc x1000 exact; median of 100, -O3, 20 MHz"
+S2-0179,stack_bytes,68896,68896,match,"arXiv 2604.15868v1 p17 Table 3 (pdftotext): ML-DSA-65 m4f (asm) Signing 5,963 k / 68,896 / .total 19,328"
+S2-0179,flash_or_code_bytes,19328,19328,match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): .text=.total column
+S2-0179,scheme,ML-DSA,ML-DSA,match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): Table 3 row group
+S2-0179,parameter_set,ML-DSA-65,ML-DSA-65,match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): Table 3 row group
+S2-0179,operation,sign,sign,match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): Signing column
+S2-0179,device,NUCLEO-L4R5ZI (STM32L4R5ZI),NUCLEO-L4R5ZI (STM32L4R5ZI),match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): Table 3 caption: Nucleo-L4R5ZI
+S2-0179,core,Cortex-M4F,Cortex-M4F,match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): L999 Cortex-M4F
+S2-0179,clock_mhz,20,20,match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): caption: 20 MHz/0 WS (CLOCK_BENCHMARK)
+S2-0179,library,pqm4 'm4f' (asm),pqm4 'm4f' (asm),match,"arXiv 2604.15868v1 p17 Table 3 (pdftotext): m4f (asm) row, ML-DSA from pqm4"
+S2-0179,library_version,"arXiv:2604.15868v1, 17 Apr 2026 (preprint)","arXiv:2604.15868v1, 17 Apr 2026 (preprint)",match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): arXiv stamp v1 17 Apr 2026
+S2-0179,compiler_flags_or_notes,"arm-none-eabi-gcc 11.3.1; cycles -O3 median of 100 at 20 MHz (CLOCK_BENCHMARK, 0 WS); stack/size -Os; stack measured at ","arm-none-eabi-gcc 11.3.1; cycles -O3 median of 100 at 20 MHz (CLOCK_BENCHMARK, 0 WS); stack/size -Os; stack measured at ",match,"arXiv 2604.15868v1 p17 Table 3 (pdftotext): caption: -O3 cycles, -Os stack/size, median 100; stack at 120 MHz L1038-1039"
+S2-0179,comparability_warning,ML-DSA rows are the paper's reference columns taken from pqm4 (not the paper's contribution); cycles = MEDIAN of 100 at ,ML-DSA rows are the paper's reference columns taken from pqm4 (not the paper's contribution); cycles = MEDIAN of 100 at ,match,arXiv 2604.15868v1 p17 Table 3 (pdftotext): consistent with caption
+S2-0213,cycles,6639000,6.639 x10^6 clk,unit-conversion-ok,"arXiv 1912.00916v4 Table II (pdftotext): ECDSA-secp256r1 Verify 6.639 M clk, 59.88 mW, 4.142 mJ, SigLen 64; 10^6 clk x1e6 exact"
+S2-0213,energy_uj,4142,4.142 mJ,unit-conversion-ok,"arXiv 1912.00916v4 Table II (pdftotext): ECDSA-secp256r1 Verify 6.639 M clk, 59.88 mW, 4.142 mJ, SigLen 64; mJ x1000"
+S2-0213,key_or_sig_size_bytes,64,64,match,"arXiv 1912.00916v4 Table II (pdftotext): ECDSA-secp256r1 Verify 6.639 M clk, 59.88 mW, 4.142 mJ, SigLen 64"
+S2-0213,scheme,ECDSA secp256r1 (classical baseline),ECDSA secp256r1 (classical baseline),match,arXiv 1912.00916v4 Table II (pdftotext): Table II row
+S2-0213,parameter_set,secp256r1,secp256r1,match,arXiv 1912.00916v4 Table II (pdftotext): Table II row
+S2-0213,operation,verify,verify,match,arXiv 1912.00916v4 Table II (pdftotext): Table II column group
+S2-0213,device,NUCLEO-F411RE (STM32F411RE),NUCLEO-F411RE (STM32F411RE),match,arXiv 1912.00916v4 Table II (pdftotext): L180 NUCLEO-F411RE
+S2-0213,core,Cortex-M4,Cortex-M4,match,arXiv 1912.00916v4 Table II (pdftotext): STM32F411RE Cortex-M4
+S2-0213,clock_mhz,96,96,match,arXiv 1912.00916v4 Table II (pdftotext): L235 MCU clocked at 96 MHz; table title 96 MHz
+S2-0213,library,micro-ecc (footnote 4 of paper; Mbed OS firmware),micro-ecc (footnote 4 of paper; Mbed OS firmware),match,arXiv 1912.00916v4 Table II (pdftotext): L196 micro-ecc (fn 4) / PQM4 ports to Mbed OS firmware
+S2-0213,library_version,"arXiv:1912.00916v4, 14 Apr 2020; PQPS code github.com/mjosaarinen/pqps","arXiv:1912.00916v4, 14 Apr 2020; PQPS code github.com/mjosaarinen/pqps",match,arXiv 1912.00916v4 Table II (pdftotext): arXiv stamp v4 14 Apr 2020; github.com/mjosaarinen/pqps cited L221
+S2-0213,compiler_flags_or_notes,avg power 59.88 mW,avg power 59.88 mW,match,arXiv 1912.00916v4 Table II (pdftotext): avg power in table matches; PowerShield 3.00 V
+S2-0213,comparability_warning,Same-source classical baseline for the Dilithium rows above; measured on same board and clock,Same-source classical baseline for the Dilithium rows above; measured on same board and clock,match,"arXiv 1912.00916v4 Table II (pdftotext): 3.00 V, 96 MHz, round-2 sizes: consistent"
+S2-0212,cycles,6185000,6.185 x10^6 clk,unit-conversion-ok,"arXiv 1912.00916v4 Table II (pdftotext): ECDSA-secp256r1 Sign 6.185 M clk, 59.97 mW, 3.864 mJ, SigLen 64; 10^6 clk x1e6 exact"
+S2-0212,energy_uj,3864,3.864 mJ,unit-conversion-ok,"arXiv 1912.00916v4 Table II (pdftotext): ECDSA-secp256r1 Sign 6.185 M clk, 59.97 mW, 3.864 mJ, SigLen 64; mJ x1000"
+S2-0212,key_or_sig_size_bytes,64,64,match,"arXiv 1912.00916v4 Table II (pdftotext): ECDSA-secp256r1 Sign 6.185 M clk, 59.97 mW, 3.864 mJ, SigLen 64"
+S2-0212,scheme,ECDSA secp256r1 (classical baseline),ECDSA secp256r1 (classical baseline),match,arXiv 1912.00916v4 Table II (pdftotext): Table II row
+S2-0212,parameter_set,secp256r1,secp256r1,match,arXiv 1912.00916v4 Table II (pdftotext): Table II row
+S2-0212,operation,sign,sign,match,arXiv 1912.00916v4 Table II (pdftotext): Table II column group
+S2-0212,device,NUCLEO-F411RE (STM32F411RE),NUCLEO-F411RE (STM32F411RE),match,arXiv 1912.00916v4 Table II (pdftotext): L180 NUCLEO-F411RE
+S2-0212,core,Cortex-M4,Cortex-M4,match,arXiv 1912.00916v4 Table II (pdftotext): STM32F411RE Cortex-M4
+S2-0212,clock_mhz,96,96,match,arXiv 1912.00916v4 Table II (pdftotext): L235 MCU clocked at 96 MHz; table title 96 MHz
+S2-0212,library,micro-ecc (footnote 4 of paper; Mbed OS firmware),micro-ecc (footnote 4 of paper; Mbed OS firmware),match,arXiv 1912.00916v4 Table II (pdftotext): L196 micro-ecc (fn 4) / PQM4 ports to Mbed OS firmware
+S2-0212,library_version,"arXiv:1912.00916v4, 14 Apr 2020; PQPS code github.com/mjosaarinen/pqps","arXiv:1912.00916v4, 14 Apr 2020; PQPS code github.com/mjosaarinen/pqps",match,arXiv 1912.00916v4 Table II (pdftotext): arXiv stamp v4 14 Apr 2020; github.com/mjosaarinen/pqps cited L221
+S2-0212,compiler_flags_or_notes,avg power 59.97 mW,avg power 59.97 mW,match,arXiv 1912.00916v4 Table II (pdftotext): avg power in table matches; PowerShield 3.00 V
+S2-0212,comparability_warning,Same-source classical baseline for the Dilithium rows above; measured on same board and clock,Same-source classical baseline for the Dilithium rows above; measured on same board and clock,match,"arXiv 1912.00916v4 Table II (pdftotext): 3.00 V, 96 MHz, round-2 sizes: consistent"
+S2-0202,cycles,1328000,1.328 x10^6 clk,unit-conversion-ok,"arXiv 1912.00916v4 Table II (pdftotext): Dilithium2 Keypair 1.328 M clk, 77.58 mW, 1.073 mJ, PubKey 1184; 10^6 clk x1e6 exact"
+S2-0202,energy_uj,1073,1.073 mJ,unit-conversion-ok,"arXiv 1912.00916v4 Table II (pdftotext): Dilithium2 Keypair 1.328 M clk, 77.58 mW, 1.073 mJ, PubKey 1184; mJ x1000"
+S2-0202,key_or_sig_size_bytes,1184,1184,match,"arXiv 1912.00916v4 Table II (pdftotext): Dilithium2 Keypair 1.328 M clk, 77.58 mW, 1.073 mJ, PubKey 1184"
+S2-0202,scheme,"Dilithium (pre-standard, NIST round 2)","Dilithium (pre-standard, NIST round 2)",match,arXiv 1912.00916v4 Table II (pdftotext): Table II row
+S2-0202,parameter_set,Dilithium2,Dilithium2,match,arXiv 1912.00916v4 Table II (pdftotext): Table II row
+S2-0202,operation,keygen,keygen,match,arXiv 1912.00916v4 Table II (pdftotext): Table II column group
+S2-0202,device,NUCLEO-F411RE (STM32F411RE),NUCLEO-F411RE (STM32F411RE),match,arXiv 1912.00916v4 Table II (pdftotext): L180 NUCLEO-F411RE
+S2-0202,core,Cortex-M4,Cortex-M4,match,arXiv 1912.00916v4 Table II (pdftotext): STM32F411RE Cortex-M4
+S2-0202,clock_mhz,96,96,match,arXiv 1912.00916v4 Table II (pdftotext): L235 MCU clocked at 96 MHz; table title 96 MHz
+S2-0202,library,PQM4 implementations adapted to Mbed OS firmware (PQPS),PQM4 implementations adapted to Mbed OS firmware (PQPS),match,arXiv 1912.00916v4 Table II (pdftotext): L196 micro-ecc (fn 4) / PQM4 ports to Mbed OS firmware
+S2-0202,library_version,"arXiv:1912.00916v4, 14 Apr 2020; PQPS code github.com/mjosaarinen/pqps","arXiv:1912.00916v4, 14 Apr 2020; PQPS code github.com/mjosaarinen/pqps",match,arXiv 1912.00916v4 Table II (pdftotext): arXiv stamp v4 14 Apr 2020; github.com/mjosaarinen/pqps cited L221
+S2-0202,compiler_flags_or_notes,avg power 77.58 mW; size column = public key bytes,avg power 77.58 mW; size column = public key bytes,match,arXiv 1912.00916v4 Table II (pdftotext): avg power in table matches; PowerShield 3.00 V
+S2-0202,comparability_warning,"MEASURED energy (PowerShield board at 3.00 V, 10 s acquisition per measurement) but on pre-standard NIST round-2 candida","MEASURED energy (PowerShield board at 3.00 V, 10 s acquisition per measurement) but on pre-standard NIST round-2 candida",match,"arXiv 1912.00916v4 Table II (pdftotext): 3.00 V, 96 MHz, round-2 sizes: consistent"
+S2-0193,cycles,978000,0.978 x10^6 clk,unit-conversion-ok,"arXiv 1912.00916v4 Table II (pdftotext): Kyber768 Keypair 0.978 M clk, 75.77 mW, 772.3 uJ, PubKey 1184; 10^6 clk x1e6 exact"
+S2-0193,energy_uj,772.3,772.3 uJ,unit-conversion-ok,"arXiv 1912.00916v4 Table II (pdftotext): Kyber768 Keypair 0.978 M clk, 75.77 mW, 772.3 uJ, PubKey 1184; printed in uJ, no conversion"
+S2-0193,key_or_sig_size_bytes,1184,1184,match,"arXiv 1912.00916v4 Table II (pdftotext): Kyber768 Keypair 0.978 M clk, 75.77 mW, 772.3 uJ, PubKey 1184"
+S2-0193,scheme,"Kyber (pre-standard, NIST round 2)","Kyber (pre-standard, NIST round 2)",match,arXiv 1912.00916v4 Table II (pdftotext): Table II row
+S2-0193,parameter_set,Kyber768,Kyber768,match,arXiv 1912.00916v4 Table II (pdftotext): Table II row
+S2-0193,operation,keygen,keygen,match,arXiv 1912.00916v4 Table II (pdftotext): Table II column group
+S2-0193,device,NUCLEO-F411RE (STM32F411RE),NUCLEO-F411RE (STM32F411RE),match,arXiv 1912.00916v4 Table II (pdftotext): L180 NUCLEO-F411RE
+S2-0193,core,Cortex-M4,Cortex-M4,match,arXiv 1912.00916v4 Table II (pdftotext): STM32F411RE Cortex-M4
+S2-0193,clock_mhz,96,96,match,arXiv 1912.00916v4 Table II (pdftotext): L235 MCU clocked at 96 MHz; table title 96 MHz
+S2-0193,library,PQM4 implementations adapted to Mbed OS firmware (PQPS),PQM4 implementations adapted to Mbed OS firmware (PQPS),match,arXiv 1912.00916v4 Table II (pdftotext): L196 micro-ecc (fn 4) / PQM4 ports to Mbed OS firmware
+S2-0193,library_version,"arXiv:1912.00916v4, 14 Apr 2020; PQPS code github.com/mjosaarinen/pqps","arXiv:1912.00916v4, 14 Apr 2020; PQPS code github.com/mjosaarinen/pqps",match,arXiv 1912.00916v4 Table II (pdftotext): arXiv stamp v4 14 Apr 2020; github.com/mjosaarinen/pqps cited L221
+S2-0193,compiler_flags_or_notes,ARM gcc cross compiler (version/flags not stated); avg power 75.77 mW; energy in source is printed in uJ or mJ and norma,ARM gcc cross compiler (version/flags not stated); avg power 75.77 mW; energy in source is printed in uJ or mJ and norma,match,arXiv 1912.00916v4 Table II (pdftotext): avg power in table matches; PowerShield 3.00 V
+S2-0193,comparability_warning,"MEASURED energy (PowerShield board at 3.00 V, 10 s acquisition per measurement) but on pre-standard NIST round-2 candida","MEASURED energy (PowerShield board at 3.00 V, 10 s acquisition per measurement) but on pre-standard NIST round-2 candida",match,"arXiv 1912.00916v4 Table II (pdftotext): 3.00 V, 96 MHz, round-2 sizes: consistent"
+S2-0390,cycles,9260000,9.26 M-cycles,unit-conversion-ok,"arXiv 2502.06033v1 (pdftotext) Table 2: 4.85 KB sig, 68 pk, 6,002 sk; Table 2 row XMSSMT-SHA2 20/2 256, 9.26 M-cycles; M-cycles x1e6 exact"
+S2-0390,compiler_flags_or_notes,signature 4.85 KB (rounded in source); public key 68 B; secret key 6002 B; mean of 1000 validations converted to cycles ,signature 4.85 KB (rounded in source); public key 68 B; secret key 6002 B; mean of 1000 validations converted to cycles ,match,arXiv 2502.06033v1 (pdftotext) Table 2: sig/pk/sk values match
+S2-0390,scheme,XMSS^MT,XMSS^MT,match,arXiv 2502.06033v1 (pdftotext): row label
+S2-0390,parameter_set,XMSSMT-SHA2 20/2 256,XMSSMT-SHA2 20/2 256,match,arXiv 2502.06033v1 (pdftotext): row label
+S2-0390,operation,verify,verify,match,arXiv 2502.06033v1 (pdftotext): Validation Time column
+S2-0390,device,x86 host (CPU model not stated),x86 host (CPU model not stated),match,"arXiv 2502.06033v1 (pdftotext): paper: x86 system, CPU model not stated"
+S2-0390,core,x86,x86,match,arXiv 2502.06033v1 (pdftotext): x86
+S2-0390,library,liboqs 0.11.1-dev,liboqs 0.11.1-dev,match,arXiv 2502.06033v1 (pdftotext): libOQS 0.11.1-dev; L276 openssl 3.0.13
+S2-0390,library_version,"arXiv:2502.06033v1, 9 Feb 2025 (preprint); liboqs 0.11.1-dev, OpenSSL 3.0.13 for ECDSA","arXiv:2502.06033v1, 9 Feb 2025 (preprint); liboqs 0.11.1-dev, OpenSSL 3.0.13 for ECDSA",match,arXiv 2502.06033v1 (pdftotext): v1 9 Feb 2025 stamp
+S2-0390,comparability_warning,"x86 HOST measurement published in a paper, NOT a microcontroller: CPU model/compiler not stated, cycles = mean time of 1","x86 HOST measurement published in a paper, NOT a microcontroller: CPU model/compiler not stated, cycles = mean time of 1",match,"arXiv 2502.06033v1 (pdftotext): method (1000 validations, system CPU freq) matches L120-123"
+S2-0390,location_in_source,"Table 3 (LMS/HSS rows), Table 2 (XMSS/XMSSMT rows) or Table 4 (ECDSA), row 'XMSSMT-SHA2 20/2 256', column Validation Tim",Table 2 only,match,Claimed location lists three alternative tables; correct table is Table 2. Imprecise but not wrong.
+S2-0385,cycles,1570000,1.57 M-cycles,unit-conversion-ok,"arXiv 2502.06033v1 (pdftotext) Table 3: 9.08 KB sig, 60 pk, 64 sk; Table 3 row LMS SHA256 H10 W2 H10 W2, 1.57 M-cycles; M-cycles x1e6 exact"
+S2-0385,compiler_flags_or_notes,signature 9.08 KB (rounded in source); public key 60 B; secret key 64 B; mean of 1000 validations converted to cycles by,signature 9.08 KB (rounded in source); public key 60 B; secret key 64 B; mean of 1000 validations converted to cycles by,match,arXiv 2502.06033v1 (pdftotext) Table 3: sig/pk/sk values match
+S2-0385,scheme,HSS,HSS,match,arXiv 2502.06033v1 (pdftotext): row label
+S2-0385,parameter_set,LMS SHA256 H10 W2 H10 W2,LMS SHA256 H10 W2 H10 W2,match,arXiv 2502.06033v1 (pdftotext): row label
+S2-0385,operation,verify,verify,match,arXiv 2502.06033v1 (pdftotext): Validation Time column
+S2-0385,device,x86 host (CPU model not stated),x86 host (CPU model not stated),match,"arXiv 2502.06033v1 (pdftotext): paper: x86 system, CPU model not stated"
+S2-0385,core,x86,x86,match,arXiv 2502.06033v1 (pdftotext): x86
+S2-0385,library,liboqs 0.11.1-dev,liboqs 0.11.1-dev,match,arXiv 2502.06033v1 (pdftotext): libOQS 0.11.1-dev; L276 openssl 3.0.13
+S2-0385,library_version,"arXiv:2502.06033v1, 9 Feb 2025 (preprint); liboqs 0.11.1-dev, OpenSSL 3.0.13 for ECDSA","arXiv:2502.06033v1, 9 Feb 2025 (preprint); liboqs 0.11.1-dev, OpenSSL 3.0.13 for ECDSA",match,arXiv 2502.06033v1 (pdftotext): v1 9 Feb 2025 stamp
+S2-0385,comparability_warning,"x86 HOST measurement published in a paper, NOT a microcontroller: CPU model/compiler not stated, cycles = mean time of 1","x86 HOST measurement published in a paper, NOT a microcontroller: CPU model/compiler not stated, cycles = mean time of 1",match,"arXiv 2502.06033v1 (pdftotext): method (1000 validations, system CPU freq) matches L120-123"
+S2-0385,location_in_source,"Table 3 (LMS/HSS rows), Table 2 (XMSS/XMSSMT rows) or Table 4 (ECDSA), row 'LMS SHA256 H10 W2 H10 W2', column Validation",Table 3 only,match,Claimed location lists three alternative tables; correct table is Table 3. Imprecise but not wrong.
+S2-0127,cycles,1739000,"1,739k",unit-conversion-ok,TCHES 2024(2) pdftotext Table 5 (p.20) Dilithium2 This work keygen 1 739k; k x1000 exact; averaged over 1000 executions
+S2-0127,scheme,Dilithium (pre-standard),Dilithium (pre-standard),match,TCHES 2024(2) pdftotext: table row
+S2-0127,parameter_set,Dilithium2,Dilithium2,match,TCHES 2024(2) pdftotext: table row
+S2-0127,operation,keygen,keygen,match,TCHES 2024(2) pdftotext: column group
+S2-0127,device,Arduino Due (ATSAM3X8E),Arduino Due (ATSAM3X8E),match,"TCHES 2024(2) pdftotext: Cortex-M3 Arduino Due ATSAM3X8E, 16 MHz, gcc 10.2.1 -O3 (L977-982)"
+S2-0127,core,Cortex-M3,Cortex-M3,match,"TCHES 2024(2) pdftotext: Cortex-M3 Arduino Due ATSAM3X8E, 16 MHz, gcc 10.2.1 -O3 (L977-982)"
+S2-0127,clock_mhz,16,16,match,"TCHES 2024(2) pdftotext: Cortex-M3 Arduino Due ATSAM3X8E, 16 MHz, gcc 10.2.1 -O3 (L977-982)"
+S2-0127,library,paper's implementation (pqm3 framework),paper's implementation (pqm3 framework),match,TCHES 2024(2) pdftotext: Keccak impl column (XKCP / This work) and pqm3/pqm4 framework (L978)
+S2-0127,library_version,"IACR TCHES 2024(2):1-24, DOI 10.46586/tches.v2024.i2.1-24","IACR TCHES 2024(2):1-24, DOI 10.46586/tches.v2024.i2.1-24",match,TCHES 2024(2) pdftotext: TCHES 2024(2):1-24 header
+S2-0127,compiler_flags_or_notes,arm-none-eabi-gcc 10.2.1 -O3; core clocked at 16 MHz for zero flash wait states (board max 84 MHz); mean of 1000 executi,arm-none-eabi-gcc 10.2.1 -O3; core clocked at 16 MHz for zero flash wait states (board max 84 MHz); mean of 1000 executi,match,"TCHES 2024(2) pdftotext: Cortex-M3 Arduino Due ATSAM3X8E, 16 MHz, gcc 10.2.1 -O3 (L977-982)"
+S2-0127,comparability_warning,Cortex-M3 (no DSP/UMULL-type tricks; constant-time 16-bit multi-moduli NTT) so not comparable to Cortex-M4 rows; pre-sta,Cortex-M3 (no DSP/UMULL-type tricks; constant-time 16-bit multi-moduli NTT) so not comparable to Cortex-M4 rows; pre-sta,match,TCHES 2024(2) pdftotext: consistent with source
+S2-0091,cycles,1595000,"1,595k",unit-conversion-ok,TCHES 2024(2) pdftotext Table 6 (p.21) Dilithium2 XKCP keygen 1 595k; k x1000 exact; averaged over 1000 executions
+S2-0091,scheme,Dilithium (pre-standard),Dilithium (pre-standard),match,TCHES 2024(2) pdftotext: table row
+S2-0091,parameter_set,Dilithium2,Dilithium2,match,TCHES 2024(2) pdftotext: table row
+S2-0091,operation,keygen,keygen,match,TCHES 2024(2) pdftotext: column group
+S2-0091,device,STM32F407VG (pqm4 framework board),STM32F407VG (pqm4 framework board),match,"TCHES 2024(2) pdftotext: STM32F407VG, 24 MHz (L1010), CCM 64KB (L988)"
+S2-0091,core,Cortex-M4,Cortex-M4,match,"TCHES 2024(2) pdftotext: STM32F407VG, 24 MHz (L1010), CCM 64KB (L988)"
+S2-0091,clock_mhz,24,24,match,"TCHES 2024(2) pdftotext: STM32F407VG, 24 MHz (L1010), CCM 64KB (L988)"
+S2-0091,library,pqm4 + XKCP Keccak,pqm4 + XKCP Keccak,match,TCHES 2024(2) pdftotext: Keccak impl column (XKCP / This work) and pqm3/pqm4 framework (L978)
+S2-0091,library_version,"IACR TCHES 2024(2):1-24, DOI 10.46586/tches.v2024.i2.1-24","IACR TCHES 2024(2):1-24, DOI 10.46586/tches.v2024.i2.1-24",match,TCHES 2024(2) pdftotext: TCHES 2024(2):1-24 header
+S2-0091,compiler_flags_or_notes,arm-none-eabi-gcc 10.2.1 -O3; CCM 64 KB RAM used; mean of 1000 executions; variant of pqm4 Dilithium not stated in lines,arm-none-eabi-gcc 10.2.1 -O3; CCM 64 KB RAM used; mean of 1000 executions; variant of pqm4 Dilithium not stated in lines,match,"TCHES 2024(2) pdftotext: STM32F407VG, 24 MHz (L1010), CCM 64KB (L988)"
+S2-0091,comparability_warning,"Pre-standard Dilithium/Kyber (names Dilithium2/3/5, Kyber512/768/1024), not final FIPS 204/203; 24 MHz zero-wait-state c","Pre-standard Dilithium/Kyber (names Dilithium2/3/5, Kyber512/768/1024), not final FIPS 204/203; 24 MHz zero-wait-state c",match,TCHES 2024(2) pdftotext: consistent with source
+S2-0107,cycles,7730000,"7,730k",unit-conversion-ok,TCHES 2024(2) pdftotext Table 6 (p.21) Dilithium5 This work sign 7 730k; k x1000 exact; averaged over 1000 executions
+S2-0107,scheme,Dilithium (pre-standard),Dilithium (pre-standard),match,TCHES 2024(2) pdftotext: table row
+S2-0107,parameter_set,Dilithium5,Dilithium5,match,TCHES 2024(2) pdftotext: table row
+S2-0107,operation,sign,sign,match,TCHES 2024(2) pdftotext: column group
+S2-0107,device,STM32F407VG (pqm4 framework board),STM32F407VG (pqm4 framework board),match,"TCHES 2024(2) pdftotext: STM32F407VG, 24 MHz"
+S2-0107,core,Cortex-M4,Cortex-M4,match,"TCHES 2024(2) pdftotext: STM32F407VG, 24 MHz"
+S2-0107,clock_mhz,24,24,match,"TCHES 2024(2) pdftotext: STM32F407VG, 24 MHz"
+S2-0107,library,pqm4 + paper's optimised Keccak,pqm4 + paper's optimised Keccak,match,TCHES 2024(2) pdftotext: Keccak impl column (XKCP / This work) and pqm3/pqm4 framework (L978)
+S2-0107,library_version,"IACR TCHES 2024(2):1-24, DOI 10.46586/tches.v2024.i2.1-24","IACR TCHES 2024(2):1-24, DOI 10.46586/tches.v2024.i2.1-24",match,TCHES 2024(2) pdftotext: TCHES 2024(2):1-24 header
+S2-0107,compiler_flags_or_notes,arm-none-eabi-gcc 10.2.1 -O3; CCM 64 KB RAM used; mean of 1000 executions; variant of pqm4 Dilithium not stated in lines,arm-none-eabi-gcc 10.2.1 -O3; CCM 64 KB RAM used; mean of 1000 executions; variant of pqm4 Dilithium not stated in lines,match,"TCHES 2024(2) pdftotext: STM32F407VG, 24 MHz"
+S2-0107,comparability_warning,"Pre-standard Dilithium/Kyber (names Dilithium2/3/5, Kyber512/768/1024), not final FIPS 204/203; 24 MHz zero-wait-state c","Pre-standard Dilithium/Kyber (names Dilithium2/3/5, Kyber512/768/1024), not final FIPS 204/203; 24 MHz zero-wait-state c",match,TCHES 2024(2) pdftotext: consistent with source
+S2-0123,cycles,1208000,"1,208k",unit-conversion-ok,TCHES 2024(2) pdftotext Table 6 (p.21) Kyber1024 XKCP verify/decaps 1 208k; k x1000 exact; averaged over 1000 executions
+S2-0123,scheme,Kyber (pre-standard),Kyber (pre-standard),match,TCHES 2024(2) pdftotext: table row
+S2-0123,parameter_set,Kyber1024,Kyber1024,match,TCHES 2024(2) pdftotext: table row
+S2-0123,operation,decaps,decaps,match,TCHES 2024(2) pdftotext: column group
+S2-0123,device,STM32F407VG (pqm4 framework board),STM32F407VG (pqm4 framework board),match,"TCHES 2024(2) pdftotext: STM32F407VG, 24 MHz"
+S2-0123,core,Cortex-M4,Cortex-M4,match,"TCHES 2024(2) pdftotext: STM32F407VG, 24 MHz"
+S2-0123,clock_mhz,24,24,match,"TCHES 2024(2) pdftotext: STM32F407VG, 24 MHz"
+S2-0123,library,pqm4 + XKCP Keccak,pqm4 + XKCP Keccak,match,TCHES 2024(2) pdftotext: Keccak impl column (XKCP / This work) and pqm3/pqm4 framework (L978)
+S2-0123,library_version,"IACR TCHES 2024(2):1-24, DOI 10.46586/tches.v2024.i2.1-24","IACR TCHES 2024(2):1-24, DOI 10.46586/tches.v2024.i2.1-24",match,TCHES 2024(2) pdftotext: TCHES 2024(2):1-24 header
+S2-0123,compiler_flags_or_notes,arm-none-eabi-gcc 10.2.1 -O3; CCM 64 KB RAM used; mean of 1000 executions; paper text says 'speed-version' Kyber from pq,arm-none-eabi-gcc 10.2.1 -O3; CCM 64 KB RAM used; mean of 1000 executions; paper text says 'speed-version' Kyber from pq,match,"TCHES 2024(2) pdftotext: STM32F407VG, 24 MHz"
+S2-0123,comparability_warning,"Pre-standard Kyber/Dilithium (names Dilithium2/3/5, Kyber512/768/1024), not final FIPS 204/203; 24 MHz zero-wait-state c","Pre-standard Kyber/Dilithium (names Dilithium2/3/5, Kyber512/768/1024), not final FIPS 204/203; 24 MHz zero-wait-state c",match,TCHES 2024(2) pdftotext: consistent with source
+S2-0158,cycles,2562000,"2,562k",unit-conversion-ok,"TCHES 2021(1) pdftotext Table 4 (p.19) Dilithium3 KeyGen (2 & 3): 2 562 kcc, 9 007 B; Cortex-M3 SAM3X8E 16 MHz; kcc x1000 exact; avg 10 000 exec"
+S2-0158,stack_bytes,9007,9007,match,"TCHES 2021(1) pdftotext Table 4 (p.19) Dilithium3 KeyGen (2 & 3): 2 562 kcc, 9 007 B; Cortex-M3 SAM3X8E 16 MHz"
+S2-0158,scheme,Dilithium (pre-standard),Dilithium (pre-standard),match,TCHES 2021(1) pdftotext: Dilithium (pre-standard)
+S2-0158,parameter_set,Dilithium3,Dilithium3,match,TCHES 2021(1) pdftotext: table row
+S2-0158,operation,keygen (strategies 2 and 3),keygen (strategies 2 and 3),match,TCHES 2021(1) pdftotext: row group
+S2-0158,device,Arduino Due (SAM3X8E),Arduino Due (SAM3X8E),match,TCHES 2021(1) pdftotext: L23 STM32F407-DISCOVERY / L391 Arduino Due
+S2-0158,core,Cortex-M3,Cortex-M3,match,TCHES 2021(1) pdftotext: Table 3 M4 / Table 4 M3 captions
+S2-0158,clock_mhz,16,16,match,TCHES 2021(1) pdftotext: table captions 24 / 16 MHz
+S2-0158,library,paper's implementation (constant-time Cortex-M3),paper's implementation (constant-time Cortex-M3),match,TCHES 2021(1) pdftotext: paper own implementation
+S2-0158,library_version,"IACR TCHES 2021(1):1-24, DOI 10.46586/tches.v2021.i1.1-24","IACR TCHES 2021(1):1-24, DOI 10.46586/tches.v2021.i1.1-24",match,TCHES 2021(1) pdftotext: TCHES 2021(1):1-24 header
+S2-0158,compiler_flags_or_notes,GCC 10.2.0; hardware RNG; cycles via CYCCNT; stack by sentinel filling,GCC 10.2.0; hardware RNG; cycles via CYCCNT; stack by sentinel filling,match,"TCHES 2021(1) pdftotext: L873-877 GCC 10.2.0, HW RNG, CYCCNT, sentinel stack"
+S2-0158,comparability_warning,Pre-standard Dilithium (names Dilithium2/3/4; 'Dilithium4' is not necessarily ML-DSA-87) not final FIPS 204; average of ,Pre-standard Dilithium (names Dilithium2/3/4; 'Dilithium4' is not necessarily ML-DSA-87) not final FIPS 204; average of ,match,TCHES 2021(1) pdftotext: consistent
+S2-0149,cycles,23550000,"23,550k",unit-conversion-ok,"TCHES 2021(1) pdftotext Table 3 (p.18) Dilithium3 Sign (3): 23 550 kcc, 9 948 B; STM32F407 24 MHz; kcc x1000 exact; avg 10 000 exec"
+S2-0149,stack_bytes,9948,9948,match,"TCHES 2021(1) pdftotext Table 3 (p.18) Dilithium3 Sign (3): 23 550 kcc, 9 948 B; STM32F407 24 MHz"
+S2-0149,scheme,Dilithium (pre-standard),Dilithium (pre-standard),match,TCHES 2021(1) pdftotext: Dilithium (pre-standard)
+S2-0149,parameter_set,Dilithium3,Dilithium3,match,TCHES 2021(1) pdftotext: table row
+S2-0149,operation,sign (strategy 3),sign (strategy 3),match,TCHES 2021(1) pdftotext: row group
+S2-0149,device,STM32F407-DISCOVERY,STM32F407-DISCOVERY,match,TCHES 2021(1) pdftotext: L23 STM32F407-DISCOVERY / L391 Arduino Due
+S2-0149,core,Cortex-M4,Cortex-M4,match,TCHES 2021(1) pdftotext: Table 3 M4 / Table 4 M3 captions
+S2-0149,clock_mhz,24,24,match,TCHES 2021(1) pdftotext: table captions 24 / 16 MHz
+S2-0149,library,"paper's implementation (pqm4-style, asm NTT)","paper's implementation (pqm4-style, asm NTT)",match,TCHES 2021(1) pdftotext: paper own implementation
+S2-0149,library_version,"IACR TCHES 2021(1):1-24, DOI 10.46586/tches.v2021.i1.1-24","IACR TCHES 2021(1):1-24, DOI 10.46586/tches.v2021.i1.1-24",match,TCHES 2021(1) pdftotext: TCHES 2021(1):1-24 header
+S2-0149,compiler_flags_or_notes,GCC 10.2.0; hardware RNG; Keccak from XKCP asm; stack measured by sentinel filling,GCC 10.2.0; hardware RNG; Keccak from XKCP asm; stack measured by sentinel filling,match,"TCHES 2021(1) pdftotext: L873-877 GCC 10.2.0, HW RNG, CYCCNT, sentinel stack"
+S2-0149,comparability_warning,Pre-standard Dilithium (names Dilithium2/3/4; 'Dilithium4' is not necessarily ML-DSA-87) not final FIPS 204; average of ,Pre-standard Dilithium (names Dilithium2/3/4; 'Dilithium4' is not necessarily ML-DSA-87) not final FIPS 204; average of ,match,TCHES 2021(1) pdftotext: consistent
+S2-0152,cycles,1917000,"1,917k",unit-conversion-ok,"TCHES 2021(1) pdftotext Table 3 (p.18) Dilithium3 Verify: 1 917 kcc, 10 028 B; STM32F407 24 MHz; kcc x1000 exact; avg 10 000 exec"
+S2-0152,stack_bytes,10028,10028,match,"TCHES 2021(1) pdftotext Table 3 (p.18) Dilithium3 Verify: 1 917 kcc, 10 028 B; STM32F407 24 MHz"
+S2-0152,scheme,Dilithium (pre-standard),Dilithium (pre-standard),match,TCHES 2021(1) pdftotext: Dilithium (pre-standard)
+S2-0152,parameter_set,Dilithium3,Dilithium3,match,TCHES 2021(1) pdftotext: table row
+S2-0152,operation,verify,verify,match,TCHES 2021(1) pdftotext: row group
+S2-0152,device,STM32F407-DISCOVERY,STM32F407-DISCOVERY,match,TCHES 2021(1) pdftotext: L23 STM32F407-DISCOVERY / L391 Arduino Due
+S2-0152,core,Cortex-M4,Cortex-M4,match,TCHES 2021(1) pdftotext: Table 3 M4 / Table 4 M3 captions
+S2-0152,clock_mhz,24,24,match,TCHES 2021(1) pdftotext: table captions 24 / 16 MHz
+S2-0152,library,"paper's implementation (pqm4-style, asm NTT)","paper's implementation (pqm4-style, asm NTT)",match,TCHES 2021(1) pdftotext: paper own implementation
+S2-0152,library_version,"IACR TCHES 2021(1):1-24, DOI 10.46586/tches.v2021.i1.1-24","IACR TCHES 2021(1):1-24, DOI 10.46586/tches.v2021.i1.1-24",match,TCHES 2021(1) pdftotext: TCHES 2021(1):1-24 header
+S2-0152,compiler_flags_or_notes,GCC 10.2.0; hardware RNG; Keccak from XKCP asm; stack measured by sentinel filling,GCC 10.2.0; hardware RNG; Keccak from XKCP asm; stack measured by sentinel filling,match,"TCHES 2021(1) pdftotext: L873-877 GCC 10.2.0, HW RNG, CYCCNT, sentinel stack"
+S2-0152,comparability_warning,Pre-standard Dilithium (names Dilithium2/3/4; 'Dilithium4' is not necessarily ML-DSA-87) not final FIPS 204; average of ,Pre-standard Dilithium (names Dilithium2/3/4; 'Dilithium4' is not necessarily ML-DSA-87) not final FIPS 204; average of ,match,TCHES 2021(1) pdftotext: consistent
+S3-012,cycles,1230000,1230K clock cycles,unit-conversion-ok,Abstract: masked signing of Dilithium3 requires 1230K clock cycles on average; K x1000 exact. Table 8 itself unreachable (PDF 403 Cloudflare)
+S3-012,scheme,ML-DSA (published as Dilithium),ML-DSA (published as Dilithium),match,eprint.iacr.org/2026/312 abstract page: abstract (Kyber768 / Dilithium3 masked signing; ML-KEM/ML-DSA naming)
+S3-012,parameter_set,Dilithium3,Dilithium3,match,eprint.iacr.org/2026/312 abstract page: abstract (Kyber768 / Dilithium3 masked signing; ML-KEM/ML-DSA naming)
+S3-012,operation,MaskedSign,MaskedSign,match,eprint.iacr.org/2026/312 abstract page: abstract (Kyber768 / Dilithium3 masked signing; ML-KEM/ML-DSA naming)
+S3-012,device,"Artix-7 XC7A100T-1CSG324C FPGA, HORNET 32-bit RISC-V core with accelerators",,unverifiable-source-unreachable,Not on abstract page; paper PDF eprint.iacr.org/2026/312.pdf returned 403 (Cloudflare)
+S3-012,core,"HORNET RISC-V (RV32) plus NTT-Lite, Keccak and X2X accelerators",,unverifiable-source-unreachable,Not on abstract page; paper PDF eprint.iacr.org/2026/312.pdf returned 403 (Cloudflare)
+S3-012,library,RISQrypt,,unverifiable-source-unreachable,Not on abstract page; paper PDF eprint.iacr.org/2026/312.pdf returned 403 (Cloudflare)
+S3-012,compiler_flags_or_notes,RISC-V toolchain -O3; mean over 1024 runs; published in thousands of cycles (value 1230),,unverifiable-source-unreachable,Not on abstract page; paper PDF eprint.iacr.org/2026/312.pdf returned 403 (Cloudflare)
+S3-012,comparability_warning,"Preprint; FPGA co-design, not a microcontroller; pre-final naming (Kyber/Dilithium) so may differ from FIPS 203/204 deta",,match,"Abstract consistent: preprint, masking, ""first revision""; FPGA/TVLA details not on abstract page"
+S3-007,cycles,35000,,unverifiable-source-unreachable,Value only in Table 8 of the PDF (Kyber768 Dec 35K); eprint PDF 403 Cloudflare; abstract page does not contain it (abstract gives masked Dec 109K only)
+S3-007,scheme,ML-KEM (published as Kyber),,unverifiable-source-unreachable,Value only in Table 8 of the PDF (Kyber768 Dec 35K); eprint PDF 403 Cloudflare; abstract page does not contain it (abstract gives masked Dec 109K only)
+S3-007,parameter_set,Kyber768,,unverifiable-source-unreachable,Value only in Table 8 of the PDF (Kyber768 Dec 35K); eprint PDF 403 Cloudflare; abstract page does not contain it (abstract gives masked Dec 109K only)
+S3-007,operation,Dec,,unverifiable-source-unreachable,Value only in Table 8 of the PDF (Kyber768 Dec 35K); eprint PDF 403 Cloudflare; abstract page does not contain it (abstract gives masked Dec 109K only)
+S3-007,device,"Artix-7 XC7A100T-1CSG324C FPGA, HORNET 32-bit RISC-V core with accelerators",,unverifiable-source-unreachable,Value only in Table 8 of the PDF (Kyber768 Dec 35K); eprint PDF 403 Cloudflare; abstract page does not contain it (abstract gives masked Dec 109K only)
+S3-007,core,"HORNET RISC-V (RV32) plus NTT-Lite, Keccak and X2X accelerators",,unverifiable-source-unreachable,Value only in Table 8 of the PDF (Kyber768 Dec 35K); eprint PDF 403 Cloudflare; abstract page does not contain it (abstract gives masked Dec 109K only)
+S3-007,library,RISQrypt,,unverifiable-source-unreachable,Value only in Table 8 of the PDF (Kyber768 Dec 35K); eprint PDF 403 Cloudflare; abstract page does not contain it (abstract gives masked Dec 109K only)
+S3-007,compiler_flags_or_notes,RISC-V toolchain -O3; mean over 1024 runs; published in thousands of cycles (value 35),,unverifiable-source-unreachable,Value only in Table 8 of the PDF (Kyber768 Dec 35K); eprint PDF 403 Cloudflare; abstract page does not contain it (abstract gives masked Dec 109K only)
+S3-007,comparability_warning,"Preprint; FPGA co-design, not a microcontroller; pre-final naming (Kyber/Dilithium) so may differ from FIPS 203/204 deta",,unverifiable-source-unreachable,Cannot assess without Table 8
+S3-005,cycles,23000,,unverifiable-source-unreachable,Value only in Table 8 of the PDF (Kyber768 KeyGen 23K); eprint PDF 403 Cloudflare; abstract page does not contain it (abstract gives masked Dec 109K only)
+S3-005,scheme,ML-KEM (published as Kyber),,unverifiable-source-unreachable,Value only in Table 8 of the PDF (Kyber768 KeyGen 23K); eprint PDF 403 Cloudflare; abstract page does not contain it (abstract gives masked Dec 109K only)
+S3-005,parameter_set,Kyber768,,unverifiable-source-unreachable,Value only in Table 8 of the PDF (Kyber768 KeyGen 23K); eprint PDF 403 Cloudflare; abstract page does not contain it (abstract gives masked Dec 109K only)
+S3-005,operation,KeyGen,,unverifiable-source-unreachable,Value only in Table 8 of the PDF (Kyber768 KeyGen 23K); eprint PDF 403 Cloudflare; abstract page does not contain it (abstract gives masked Dec 109K only)
+S3-005,device,"Artix-7 XC7A100T-1CSG324C FPGA, HORNET 32-bit RISC-V core with accelerators",,unverifiable-source-unreachable,Value only in Table 8 of the PDF (Kyber768 KeyGen 23K); eprint PDF 403 Cloudflare; abstract page does not contain it (abstract gives masked Dec 109K only)
+S3-005,core,"HORNET RISC-V (RV32) plus NTT-Lite, Keccak and X2X accelerators",,unverifiable-source-unreachable,Value only in Table 8 of the PDF (Kyber768 KeyGen 23K); eprint PDF 403 Cloudflare; abstract page does not contain it (abstract gives masked Dec 109K only)
+S3-005,library,RISQrypt,,unverifiable-source-unreachable,Value only in Table 8 of the PDF (Kyber768 KeyGen 23K); eprint PDF 403 Cloudflare; abstract page does not contain it (abstract gives masked Dec 109K only)
+S3-005,compiler_flags_or_notes,RISC-V toolchain -O3; mean over 1024 runs; published in thousands of cycles (value 23),,unverifiable-source-unreachable,Value only in Table 8 of the PDF (Kyber768 KeyGen 23K); eprint PDF 403 Cloudflare; abstract page does not contain it (abstract gives masked Dec 109K only)
+S3-005,comparability_warning,"Preprint; FPGA co-design, not a microcontroller; pre-final naming (Kyber/Dilithium) so may differ from FIPS 203/204 deta",,unverifiable-source-unreachable,Cannot assess without Table 8
+S3-014,clock_mhz,600,600,match,"eprint.iacr.org/2026/256 abstract: ""operating at 600 MHz"""
+S3-014,operation,"three stages of ML-KEM, 11 / 14 / 20 microseconds",11 / 14 / 20 us,match,"eprint.iacr.org/2026/256 abstract: ""ML-KEM takes 11, 14, and 20 us for its corresponding stages"""
+S3-014,scheme,ML-KEM,ML-KEM,match,"eprint.iacr.org/2026/256 abstract: 5 nm, Caliptra, Adams Bridge, Apache 2.0; parameter set not stated in abstract"
+S3-014,parameter_set,not stated in abstract,not stated in abstract,match,"eprint.iacr.org/2026/256 abstract: 5 nm, Caliptra, Adams Bridge, Apache 2.0; parameter set not stated in abstract"
+S3-014,device,5 nm synthesis (Caliptra Root of Trust accelerator 'Adams Bridge'),5 nm synthesis (Caliptra Root of Trust accelerator 'Adams Bridge'),match,"eprint.iacr.org/2026/256 abstract: 5 nm, Caliptra, Adams Bridge, Apache 2.0; parameter set not stated in abstract"
+S3-014,library,"Adams Bridge (open source, Apache 2.0)","Adams Bridge (open source, Apache 2.0)",match,"eprint.iacr.org/2026/256 abstract: 5 nm, Caliptra, Adams Bridge, Apache 2.0; parameter set not stated in abstract"
+S3-014,compiler_flags_or_notes,"published times in microseconds, not cycles; stage names not stated in abstract","published times in microseconds, not cycles; stage names not stated in abstract",match,"eprint.iacr.org/2026/256 abstract: 5 nm, Caliptra, Adams Bridge, Apache 2.0; parameter set not stated in abstract"
+S3-014,comparability_warning,Preprint; synthesized ASIC result; parameter set and stage definitions not in abstract,Preprint; synthesized ASIC result; parameter set and stage definitions not in abstract,match,"eprint.iacr.org/2026/256 abstract: 5 nm, Caliptra, Adams Bridge, Apache 2.0; parameter set not stated in abstract"
+S2-0409,key_or_sig_size_bytes,1952,1952,match,"FIPS 204 Table 2 (printed p.16), ML-DSA-65 Public Key 1952"
+S2-0409,scheme,ML-DSA,ML-DSA,match,"FIPS 204 Table 2 (printed p.16), ML-DSA-65 Public Key 1952"
+S2-0409,parameter_set,ML-DSA-65,ML-DSA-65,match,"FIPS 204 Table 2 (printed p.16), ML-DSA-65 Public Key 1952"
+S2-0409,operation,public key size,public key size,match,"FIPS 204 Table 2 (printed p.16), ML-DSA-65 Public Key 1952"
+S2-0409,library_version,"FIPS 204 final, published August 13, 2024","FIPS 204 final, published August 13, 2024",match,"Source header: FIPS published Aug 13, 2024 / RFC 8391 May 2018 Informational"
+S2-0409,comparability_warning,"Size defined by the standard, not a measurement","Size defined by the standard, not a measurement",match,Standard-defined size; text consistent
+S3-029,key_or_sig_size_bytes,2592,2592,match,"FIPS 204 Table 2, ML-DSA-87 Public Key 2592"
+S3-029,scheme,ML-DSA,ML-DSA,match,"FIPS 204 Table 2, ML-DSA-87 Public Key 2592"
+S3-029,parameter_set,ML-DSA-87,ML-DSA-87,match,"FIPS 204 Table 2, ML-DSA-87 Public Key 2592"
+S3-029,operation,size,size,match,"FIPS 204 Table 2, ML-DSA-87 Public Key 2592"
+S3-029,comparability_warning,Standard-defined size,Standard-defined size,match,Standard-defined size; text consistent
+S2-0399,key_or_sig_size_bytes,1184,1184,match,"FIPS 203 Table 3, ML-KEM-768 encapsulation key 1184"
+S2-0399,scheme,ML-KEM,ML-KEM,match,"FIPS 203 Table 3, ML-KEM-768 encapsulation key 1184"
+S2-0399,parameter_set,ML-KEM-768,ML-KEM-768,match,"FIPS 203 Table 3, ML-KEM-768 encapsulation key 1184"
+S2-0399,operation,encapsulation key size,encapsulation key size,match,"FIPS 203 Table 3, ML-KEM-768 encapsulation key 1184"
+S2-0399,library_version,"FIPS 203 final, published August 13, 2024","FIPS 203 final, published August 13, 2024",match,"Source header: FIPS published Aug 13, 2024 / RFC 8391 May 2018 Informational"
+S2-0399,comparability_warning,"Size defined by the standard, not a measurement","Size defined by the standard, not a measurement",match,Standard-defined size; text consistent
+S2-0397,key_or_sig_size_bytes,1632,1632,match,"FIPS 203 Table 3, ML-KEM-512 decapsulation key 1632"
+S2-0397,scheme,ML-KEM,ML-KEM,match,"FIPS 203 Table 3, ML-KEM-512 decapsulation key 1632"
+S2-0397,parameter_set,ML-KEM-512,ML-KEM-512,match,"FIPS 203 Table 3, ML-KEM-512 decapsulation key 1632"
+S2-0397,operation,decapsulation key size,decapsulation key size,match,"FIPS 203 Table 3, ML-KEM-512 decapsulation key 1632"
+S2-0397,library_version,"FIPS 203 final, published August 13, 2024","FIPS 203 final, published August 13, 2024",match,"Source header: FIPS published Aug 13, 2024 / RFC 8391 May 2018 Informational"
+S2-0397,comparability_warning,"Size defined by the standard, not a measurement","Size defined by the standard, not a measurement",match,Standard-defined size; text consistent
+S3-034,key_or_sig_size_bytes,1568,1568,match,"FIPS 203 Table 3, ML-KEM-1024 encapsulation key 1568; dk 3168 also listed"
+S3-034,scheme,ML-KEM,ML-KEM,match,"FIPS 203 Table 3, ML-KEM-1024 encapsulation key 1568; dk 3168 also listed"
+S3-034,parameter_set,ML-KEM-1024,ML-KEM-1024,match,"FIPS 203 Table 3, ML-KEM-1024 encapsulation key 1568; dk 3168 also listed"
+S3-034,operation,size,size,match,"FIPS 203 Table 3, ML-KEM-1024 encapsulation key 1568; dk 3168 also listed"
+S3-034,comparability_warning,Standard-defined size; decapsulation key 3168 bytes also listed,Standard-defined size; decapsulation key 3168 bytes also listed,match,Standard-defined size; text consistent
+S3-037,key_or_sig_size_bytes,17088,17088,match,"FIPS 205 Table 2, SLH-DSA-SHA2-128f sig bytes 17 088; pk 32"
+S3-037,scheme,SLH-DSA,SLH-DSA,match,"FIPS 205 Table 2, SLH-DSA-SHA2-128f sig bytes 17 088; pk 32"
+S3-037,parameter_set,SLH-DSA-SHA2-128f,SLH-DSA-SHA2-128f,match,"FIPS 205 Table 2, SLH-DSA-SHA2-128f sig bytes 17 088; pk 32"
+S3-037,operation,size,size,match,"FIPS 205 Table 2, SLH-DSA-SHA2-128f sig bytes 17 088; pk 32"
+S3-037,comparability_warning,Standard-defined size; SHAKE variants of the same parameter set share the size; public key 32 bytes,Standard-defined size; SHAKE variants of the same parameter set share the size; public key 32 bytes,match,Standard-defined size; text consistent
+S2-0428,key_or_sig_size_bytes,2820,2820,match,"RFC 8391 Table 3 (p.45, sec 5.3.1), XMSS-SHA2_20_256 |Sig| 2,820"
+S2-0428,scheme,XMSS,XMSS,match,"RFC 8391 Table 3 (p.45, sec 5.3.1), XMSS-SHA2_20_256 |Sig| 2,820"
+S2-0428,parameter_set,XMSS-SHA2_20_256,XMSS-SHA2_20_256,match,"RFC 8391 Table 3 (p.45, sec 5.3.1), XMSS-SHA2_20_256 |Sig| 2,820"
+S2-0428,operation,signature size,signature size,match,"RFC 8391 Table 3 (p.45, sec 5.3.1), XMSS-SHA2_20_256 |Sig| 2,820"
+S2-0428,library_version,"RFC 8391, Informational, May 2018","RFC 8391, Informational, May 2018",match,"Source header: FIPS published Aug 13, 2024 / RFC 8391 May 2018 Informational"
+S2-0428,comparability_warning,"Size defined by the standard, not a measurement","Size defined by the standard, not a measurement",match,Standard-defined size; text consistent
+S3-023,key_or_sig_size_bytes,1665,1665,match,RFC 10024 sec 4: server share 1665 B (1568 + 97); client share also 1665
+S3-023,scheme,PQ/T hybrid key agreement for TLS 1.3,PQ/T hybrid key agreement for TLS 1.3,match,RFC 10024 sec 4: server share 1665 B (1568 + 97); client share also 1665
+S3-023,parameter_set,SecP384r1MLKEM1024,SecP384r1MLKEM1024,match,RFC 10024 sec 4: server share 1665 B (1568 + 97); client share also 1665
+S3-023,operation,handshake key share size,handshake key share size,match,RFC 10024 sec 4: server share 1665 B (1568 + 97); client share also 1665
+S3-023,comparability_warning,"Protocol-defined size, not a benchmark; Proposed Standard dated August 2026 per datatracker; excludes certificates and s","Protocol-defined size, not a benchmark; Proposed Standard dated August 2026 per datatracker; excludes certificates and s",match,Standard-defined size; text consistent; RFC 10024 Aug 2026 Proposed Standard confirmed on datatracker
+S3-023,location_in_source,"Section 4 (Negotiated Groups: 4.1 Client Share, server share text)",Section 4.2 (server share) and 4.1,match,"Server share sentence is under 4.2 Server Share, not 4.1; value correct. Minor location imprecision."
+S2-0282,cycles,193651049,193651049,match,"sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 21 LMS Keccak-p[800,22] sign 193651049"
+S2-0282,stack_bytes,2356,2356,match,"sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1):  slide 22 LMS Keccak-p[800,x] sign stack 2356"
+S2-0282,scheme,LMS,LMS,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 21 design column
+S2-0282,parameter_set,"LMS w=16 h=5 n=256 hash=Keccak-p[800,22] (single tree)","LMS w=16 h=5 n=256 hash=Keccak-p[800,22] (single tree)",match,"sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): w=16,h=5,n=256,d/L=1 per slides 21-22"
+S2-0282,operation,sign,sign,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): column key gen/sign
+S2-0282,device,STM32F4DISCOVERY,STM32F4DISCOVERY,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 20: STM32F4DISCOVERY
+S2-0282,core,Cortex-M4,Cortex-M4,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 6: ARM Cortex-M4
+S2-0282,library,LMS: Cisco hash-sigs ref; XMSS: xmss-reference; variant 'LMS',LMS: Cisco hash-sigs ref; XMSS: xmss-reference; variant 'LMS',match,"sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 20: cisco/hash-sigs 5efb1d0, xmss-reference fb7e3f8, pqm4-based"
+S2-0282,library_version,"Africacrypt 2020 talk, slides dated July 19 2020; LMS: Cisco hash-sigs commit 5efb1d0; XMSS: xmss-reference commit fb7e3","Africacrypt 2020 talk, slides dated July 19 2020; LMS: Cisco hash-sigs commit 5efb1d0; XMSS: xmss-reference commit fb7e3",match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 20 footnotes; Africacrypt 2020 title page; date July 19 2020 not re-checked
+S2-0282,compiler_flags_or_notes,compiler/flags not stated on slides; cycles as given on slide 21; stack bytes from slide 22 (Keccak rows valid for both ,compiler/flags not stated on slides; cycles as given on slide 21; stack bytes from slide 22 (Keccak rows valid for both ,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): compiler/flags not stated: confirmed
+S2-0282,comparability_warning,"SLIDES, not the full paper (the ePrint 2020/470 full text could not be retrieved); STM32F4DISCOVERY board, measurement c","SLIDES, not the full paper (the ePrint 2020/470 full text could not be retrieved); STM32F4DISCOVERY board, measurement c",match,"sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): clock not stated, slide 6 gives 168 MHz board spec: confirmed"
+S2-0296,cycles,1569880839,1569880839,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 21 XMSS ROBUST SHAKE256 key gen 1569880839
+S2-0296,stack_bytes,4224,4224,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1):  slide 22 key gen stack 4224
+S2-0296,scheme,XMSS,XMSS,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 21 design column
+S2-0296,parameter_set,XMSS ROBUST w=16 h=5 n=256 hash=SHAKE256 (single tree),XMSS ROBUST w=16 h=5 n=256 hash=SHAKE256 (single tree),match,"sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): w=16,h=5,n=256,d/L=1 per slides 21-22"
+S2-0296,operation,keygen,keygen,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): column key gen/sign
+S2-0296,device,STM32F4DISCOVERY,STM32F4DISCOVERY,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 20: STM32F4DISCOVERY
+S2-0296,core,Cortex-M4,Cortex-M4,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 6: ARM Cortex-M4
+S2-0296,library,LMS: Cisco hash-sigs ref; XMSS: xmss-reference; variant 'XMSS ROBUST',LMS: Cisco hash-sigs ref; XMSS: xmss-reference; variant 'XMSS ROBUST',match,"sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 20: cisco/hash-sigs 5efb1d0, xmss-reference fb7e3f8, pqm4-based"
+S2-0296,library_version,"Africacrypt 2020 talk, slides dated July 19 2020; LMS: Cisco hash-sigs commit 5efb1d0; XMSS: xmss-reference commit fb7e3","Africacrypt 2020 talk, slides dated July 19 2020; LMS: Cisco hash-sigs commit 5efb1d0; XMSS: xmss-reference commit fb7e3",match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 20 footnotes; Africacrypt 2020 title page; date July 19 2020 not re-checked
+S2-0296,compiler_flags_or_notes,compiler/flags not stated on slides; cycles as given on slide 21; stack bytes from slide 22 (Keccak rows valid for both ,compiler/flags not stated on slides; cycles as given on slide 21; stack bytes from slide 22 (Keccak rows valid for both ,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): compiler/flags not stated: confirmed
+S2-0296,comparability_warning,"SLIDES, not the full paper (the ePrint 2020/470 full text could not be retrieved); STM32F4DISCOVERY board, measurement c","SLIDES, not the full paper (the ePrint 2020/470 full text could not be retrieved); STM32F4DISCOVERY board, measurement c",match,"sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): clock not stated, slide 6 gives 168 MHz board spec: confirmed"
+S2-0302,cycles,482690432,482690432,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 21 LMS SHAKE256 key gen 482690432
+S2-0302,stack_bytes,3844,3844,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1):  slide 22 key gen stack 3844
+S2-0302,scheme,LMS,LMS,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 21 design column
+S2-0302,parameter_set,LMS w=16 h=5 n=256 hash=SHAKE256 (single tree),LMS w=16 h=5 n=256 hash=SHAKE256 (single tree),match,"sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): w=16,h=5,n=256,d/L=1 per slides 21-22"
+S2-0302,operation,keygen,keygen,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): column key gen/sign
+S2-0302,device,STM32F4DISCOVERY,STM32F4DISCOVERY,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 20: STM32F4DISCOVERY
+S2-0302,core,Cortex-M4,Cortex-M4,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 6: ARM Cortex-M4
+S2-0302,library,LMS: Cisco hash-sigs ref; XMSS: xmss-reference; variant 'LMS',LMS: Cisco hash-sigs ref; XMSS: xmss-reference; variant 'LMS',match,"sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 20: cisco/hash-sigs 5efb1d0, xmss-reference fb7e3f8, pqm4-based"
+S2-0302,library_version,"Africacrypt 2020 talk, slides dated July 19 2020; LMS: Cisco hash-sigs commit 5efb1d0; XMSS: xmss-reference commit fb7e3","Africacrypt 2020 talk, slides dated July 19 2020; LMS: Cisco hash-sigs commit 5efb1d0; XMSS: xmss-reference commit fb7e3",match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): slide 20 footnotes; Africacrypt 2020 title page; date July 19 2020 not re-checked
+S2-0302,compiler_flags_or_notes,compiler/flags not stated on slides; cycles as given on slide 21; stack bytes from slide 22 (Keccak rows valid for both ,compiler/flags not stated on slides; cycles as given on slide 21; stack bytes from slide 22 (Keccak rows valid for both ,match,sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): compiler/flags not stated: confirmed
+S2-0302,comparability_warning,"SLIDES, not the full paper (the ePrint 2020/470 full text could not be retrieved); STM32F4DISCOVERY board, measurement c","SLIDES, not the full paper (the ePrint 2020/470 full text could not be retrieved); STM32F4DISCOVERY board, measurement c",match,"sopmac LMS_vs_XMSS.pdf (printed slide no.; PDF page = slide+1): clock not stated, slide 6 gives 168 MHz board spec: confirmed"
+S2-0327,compiler_flags_or_notes,"avg time 6.571 ms (wolfCrypt benchmark tool, ops in ~1 s); flags: WOLFSSL_ARMASM_THUMB2, WOLFSSL_SP_ARM_CORTEX_M_ASM, WO","avg time 6.571 ms (wolfCrypt benchmark tool, ops in ~1 s); flags: WOLFSSL_ARMASM_THUMB2, WOLFSSL_SP_ARM_CORTEX_M_ASM, WO",match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: ML-KEM 768 encap avg 6.571 ms; macro list WOLFSSL_ARMASM_THUMB2, SP_ARM_CORTEX_M_ASM, SP_SMALL, WC_DILITHIUM, DILITHIUM_SMALL, NO_HW_CRYPTO pre"
+S2-0327,scheme,ML-KEM,ML-KEM,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: listing"
+S2-0327,parameter_set,ML-KEM-768,ML-KEM-768,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: listing"
+S2-0327,operation,encaps,encaps,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: listing"
+S2-0327,device,STM32 NUCLEO-F439ZI,STM32 NUCLEO-F439ZI,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: ""STM32 NUCLEO-F439ZI ARM Cortex M4 running at 168 MHz"""
+S2-0327,core,Cortex-M4,Cortex-M4,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: same sentence"
+S2-0327,clock_mhz,168,168,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: same sentence"
+S2-0327,library,wolfSSL / wolfCrypt (own implementation),wolfSSL / wolfCrypt (own implementation),match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: wolfSSL own ML-KEM; ML-DSA plain C note"
+S2-0327,library_version,"wolfSSL/wolfCrypt (version not stated); page dated July 25 / August 8, 2025","wolfSSL/wolfCrypt (version not stated); page dated July 25 / August 8, 2025",match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: page dates August 8, 2025 / July 25, 2025; version not stated"
+S2-0327,comparability_warning,"Vendor blog post (not peer reviewed); library version and compiler not stated; wall-clock averages only, no cycle counts","Vendor blog post (not peer reviewed); library version and compiler not stated; wall-clock averages only, no cycle counts",match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: no cycles, no version: consistent"
+S2-0324,compiler_flags_or_notes,"avg time 3.817 ms (wolfCrypt benchmark tool, ops in ~1 s); flags: WOLFSSL_ARMASM_THUMB2, WOLFSSL_SP_ARM_CORTEX_M_ASM, WO","avg time 3.817 ms (wolfCrypt benchmark tool, ops in ~1 s); flags: WOLFSSL_ARMASM_THUMB2, WOLFSSL_SP_ARM_CORTEX_M_ASM, WO",match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: ML-KEM 512 encap avg 3.817 ms; macro list WOLFSSL_ARMASM_THUMB2, SP_ARM_CORTEX_M_ASM, SP_SMALL, WC_DILITHIUM, DILITHIUM_SMALL, NO_HW_CRYPTO pre"
+S2-0324,scheme,ML-KEM,ML-KEM,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: listing"
+S2-0324,parameter_set,ML-KEM-512,ML-KEM-512,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: listing"
+S2-0324,operation,encaps,encaps,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: listing"
+S2-0324,device,STM32 NUCLEO-F439ZI,STM32 NUCLEO-F439ZI,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: ""STM32 NUCLEO-F439ZI ARM Cortex M4 running at 168 MHz"""
+S2-0324,core,Cortex-M4,Cortex-M4,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: same sentence"
+S2-0324,clock_mhz,168,168,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: same sentence"
+S2-0324,library,wolfSSL / wolfCrypt (own implementation),wolfSSL / wolfCrypt (own implementation),match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: wolfSSL own ML-KEM; ML-DSA plain C note"
+S2-0324,library_version,"wolfSSL/wolfCrypt (version not stated); page dated July 25 / August 8, 2025","wolfSSL/wolfCrypt (version not stated); page dated July 25 / August 8, 2025",match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: page dates August 8, 2025 / July 25, 2025; version not stated"
+S2-0324,comparability_warning,"Vendor blog post (not peer reviewed); library version and compiler not stated; wall-clock averages only, no cycle counts","Vendor blog post (not peer reviewed); library version and compiler not stated; wall-clock averages only, no cycle counts",match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: no cycles, no version: consistent"
+S2-0326,compiler_flags_or_notes,"avg time 6.519 ms (wolfCrypt benchmark tool, ops in ~1 s); flags: WOLFSSL_ARMASM_THUMB2, WOLFSSL_SP_ARM_CORTEX_M_ASM, WO","avg time 6.519 ms (wolfCrypt benchmark tool, ops in ~1 s); flags: WOLFSSL_ARMASM_THUMB2, WOLFSSL_SP_ARM_CORTEX_M_ASM, WO",match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: ML-KEM 768 key gen avg 6.519 ms; macro list WOLFSSL_ARMASM_THUMB2, SP_ARM_CORTEX_M_ASM, SP_SMALL, WC_DILITHIUM, DILITHIUM_SMALL, NO_HW_CRYPTO p"
+S2-0326,scheme,ML-KEM,ML-KEM,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: listing"
+S2-0326,parameter_set,ML-KEM-768,ML-KEM-768,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: listing"
+S2-0326,operation,keygen,keygen,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: listing"
+S2-0326,device,STM32 NUCLEO-F439ZI,STM32 NUCLEO-F439ZI,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: ""STM32 NUCLEO-F439ZI ARM Cortex M4 running at 168 MHz"""
+S2-0326,core,Cortex-M4,Cortex-M4,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: same sentence"
+S2-0326,clock_mhz,168,168,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: same sentence"
+S2-0326,library,wolfSSL / wolfCrypt (own implementation),wolfSSL / wolfCrypt (own implementation),match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: wolfSSL own ML-KEM; ML-DSA plain C note"
+S2-0326,library_version,"wolfSSL/wolfCrypt (version not stated); page dated July 25 / August 8, 2025","wolfSSL/wolfCrypt (version not stated); page dated July 25 / August 8, 2025",match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: page dates August 8, 2025 / July 25, 2025; version not stated"
+S2-0326,comparability_warning,"Vendor blog post (not peer reviewed); library version and compiler not stated; wall-clock averages only, no cycle counts","Vendor blog post (not peer reviewed); library version and compiler not stated; wall-clock averages only, no cycle counts",match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: no cycles, no version: consistent"
+S2-0332,compiler_flags_or_notes,"avg time 19.442 ms (wolfCrypt benchmark tool, ops in ~1 s); flags: WOLFSSL_ARMASM_THUMB2, WOLFSSL_SP_ARM_CORTEX_M_ASM, W","avg time 19.442 ms (wolfCrypt benchmark tool, ops in ~1 s); flags: WOLFSSL_ARMASM_THUMB2, WOLFSSL_SP_ARM_CORTEX_M_ASM, W",match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: ML-DSA 44 key gen avg 19.442 ms; macro list WOLFSSL_ARMASM_THUMB2, SP_ARM_CORTEX_M_ASM, SP_SMALL, WC_DILITHIUM, DILITHIUM_SMALL, NO_HW_CRYPTO p"
+S2-0332,scheme,ML-DSA,ML-DSA,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: listing"
+S2-0332,parameter_set,ML-DSA-44,ML-DSA-44,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: listing"
+S2-0332,operation,keygen,keygen,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: listing"
+S2-0332,device,STM32 NUCLEO-F439ZI,STM32 NUCLEO-F439ZI,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: ""STM32 NUCLEO-F439ZI ARM Cortex M4 running at 168 MHz"""
+S2-0332,core,Cortex-M4,Cortex-M4,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: same sentence"
+S2-0332,clock_mhz,168,168,match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: same sentence"
+S2-0332,library,wolfSSL / wolfCrypt (own implementation),wolfSSL / wolfCrypt (own implementation),match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: wolfSSL own ML-KEM; ML-DSA plain C note"
+S2-0332,library_version,"wolfSSL/wolfCrypt (version not stated); page dated July 25 / August 8, 2025","wolfSSL/wolfCrypt (version not stated); page dated July 25 / August 8, 2025",match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: page dates August 8, 2025 / July 25, 2025; version not stated"
+S2-0332,comparability_warning,"Vendor blog post (not peer reviewed); library version and compiler not stated; wall-clock averages only, no cycle counts","Vendor blog post (not peer reviewed); library version and compiler not stated; wall-clock averages only, no cycle counts",match,"wolfssl.com ML-KEM/ML-DSA STM32 page, benchmark listing: no cycles, no version: consistent"
+S2-0348,stack_bytes,17568,17568,match,"wolfssl.com wolfBoot STM32H5 page, Benchmark Results table: row rsa2048 / SIGN=RSA2048 Stack size 17568"
+S2-0348,flash_or_code_bytes,17316,17316,match,"wolfssl.com wolfBoot STM32H5 page, Benchmark Results table: same row Bootloader size 17316"
+S2-0348,compiler_flags_or_notes,boot time 69.844 ms for ~100 KB app image (app size per table); measured from reset release to GPIO boot-complete signal,boot time 69.844 ms for ~100 KB app image (app size per table); measured from reset release to GPIO boot-complete signal,match,"wolfssl.com wolfBoot STM32H5 page, Benchmark Results table: boot time 69.844 ms, app size 103984, SIGN=NONE baseline 55.662 ms confirmed"
+S2-0348,scheme,RSA,RSA,match,"wolfssl.com wolfBoot STM32H5 page, Benchmark Results table: RSA-2048 row"
+S2-0348,parameter_set,"RSA-2048, SIGN=RSA2048","RSA-2048, SIGN=RSA2048",match,"wolfssl.com wolfBoot STM32H5 page, Benchmark Results table: Configuration SIGN=RSA2048"
+S2-0348,operation,secure boot total boot time (not verify only),secure boot total boot time (not verify only),match,"wolfssl.com wolfBoot STM32H5 page, Benchmark Results table: boot time metric"
+S2-0348,device,STM32H563 (NUCLEO/dev board not named),STM32H563 (NUCLEO/dev board not named),match,"wolfssl.com wolfBoot STM32H5 page, Benchmark Results table: STM32H563"
+S2-0348,clock_mhz,320,320,match,"wolfssl.com wolfBoot STM32H5 page, Benchmark Results table: page: 320MHz"
+S2-0348,library,wolfBoot + wolfCrypt,wolfBoot + wolfCrypt,match,"wolfssl.com wolfBoot STM32H5 page, Benchmark Results table: wolfBoot/wolfCrypt"
+S2-0348,library_version,"wolfBoot with wolfCrypt, version not stated; page dated April 7 / March 19, 2026; config stm32h5-no-tz.config","wolfBoot with wolfCrypt, version not stated; page dated April 7 / March 19, 2026; config stm32h5-no-tz.config",match,"wolfssl.com wolfBoot STM32H5 page, Benchmark Results table: dates April 7 / March 19, 2026; stm32h5-no-tz.config"
+S2-0348,comparability_warning,"Vendor blog post; metric is TOTAL BOOT TIME (hash of ~100 KB app image + signature verification + boot logic), measured ","Vendor blog post; metric is TOTAL BOOT TIME (hash of ~100 KB app image + signature verification + boot logic), measured ",match,"wolfssl.com wolfBoot STM32H5 page, Benchmark Results table: GPIO boot-time measurement confirmed"
