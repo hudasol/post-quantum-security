@@ -1,0 +1,4 @@
+set,rows,ok,error,unverifiable,wrong_value_rows,missing_only_rows,location_errors,populated,wrong_fields,missing_fields
+headline,157,144,5,8,1,4,0,369,1,4
+random,120,110,10,0,0,10,0,286,0,10
+combined,277,254,15,8,1,14,0,655,1,14
