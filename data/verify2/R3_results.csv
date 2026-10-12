@@ -1,0 +1,41 @@
+id,status,wrong_fields,correct_values,location_ok,notes
+S2-0155,OK,,,yes,"Table 4 (Cortex-M3, 16 MHz) on p.19: kcc and stack match; flash footnote matches where cited"
+S2-0156,OK,,,yes,"Table 4 (Cortex-M3, 16 MHz) on p.19: kcc and stack match; flash footnote matches where cited"
+S2-0157,OK,,,yes,"Table 4 (Cortex-M3, 16 MHz) on p.19: kcc and stack match; flash footnote matches where cited"
+S2-0159,OK,,,yes,"Table 4 (Cortex-M3, 16 MHz) on p.19: kcc and stack match; flash footnote matches where cited"
+S2-0161,OK,,,yes,"Table 4 (Cortex-M3, 16 MHz) on p.19: kcc and stack match; flash footnote matches where cited"
+S2-0163,OK,,,yes,"Table 4 (Cortex-M3, 16 MHz) on p.19: kcc and stack match; flash footnote matches where cited"
+S2-0165,OK,,,yes,"Table 4 (Cortex-M3, 16 MHz) on p.19: kcc and stack match; flash footnote matches where cited"
+S2-0364,OK,,,yes,Table I (p.1584) cycle count with dagger matches; 100 MHz assumption and sec233r1 text confirmed
+S2-0365,OK,,,yes,Table I (p.1584) cycle count with dagger matches; 100 MHz assumption and sec233r1 text confirmed
+S2-0262,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0263,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0265,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0266,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0267,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0271,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0273,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0275,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0280,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0281,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0284,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0288,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0289,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0300,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0301,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0303,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0305,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0306,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0309,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0310,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0317,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0320,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0321,OK,,,yes,Slide values for cycles and stack match; clock not stated on slides (empty is correct)
+S2-0323,OK,,,yes,Benchmark listing: avg ms in notes matches; 168 MHz and Cortex-M4 per page text
+S2-0329,OK,,,yes,Benchmark listing: avg ms in notes matches; 168 MHz and Cortex-M4 per page text
+S2-0331,OK,,,yes,Benchmark listing: avg ms in notes matches; 168 MHz and Cortex-M4 per page text
+S2-0336,OK,,,yes,Benchmark listing: avg ms in notes matches; 168 MHz and Cortex-M4 per page text
+S2-0337,OK,,,yes,Benchmark listing: avg ms in notes matches; 168 MHz and Cortex-M4 per page text
+S2-0343,OK,,,yes,Benchmark listing: avg ms in notes matches; 168 MHz and Cortex-M4 per page text
+S2-0344,OK,,,yes,Benchmark listing: avg ms in notes matches; 168 MHz and Cortex-M4 per page text
+S2-0357,OK,,,yes,"Page table row matches stack 25000, bootloader 43700, sig 4627, 320 MHz, boot 477.560 ms; core not stated on page (empty ok); SIGN=NONE baseline 55.662 ms is the first SHA2 only row"

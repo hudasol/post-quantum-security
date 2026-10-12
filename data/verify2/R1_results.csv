@@ -1,0 +1,41 @@
+id,status,wrong_fields,correct_values,location_ok,notes
+S2-0191,OK,,,yes,all populated fields match source; size 736 = ciphertext bytes per size_kind note; energy 534.0 uJ; 0.654 M clk
+S2-0194,OK,,,yes,all populated fields match source
+S2-0200,OK,,,yes,all populated fields match source
+S2-0205,OK,,,yes,all populated fields match source
+S2-0206,OK,,,yes,all populated fields match source
+S2-0210,OK,,,yes,all populated fields match source
+S2-0211,OK,,,yes,all populated fields match source
+S2-0377,ERROR,missing:key_or_sig_size_bytes,"Source row reports 1.27 KB sig; 60 B pk (completeness only; cycles, core, op match)",yes,"cycles verified in Table 2/3/4 of arXiv 2502.06033 (x86, M-cycles x1e6); clock empty is correct (source gives no MHz)"
+S2-0379,ERROR,missing:key_or_sig_size_bytes,"Source row reports 8.48 KB sig; 60 B pk (completeness only; cycles, core, op match)",yes,"cycles verified in Table 2/3/4 of arXiv 2502.06033 (x86, M-cycles x1e6); clock empty is correct (source gives no MHz)"
+S2-0380,ERROR,missing:key_or_sig_size_bytes,"Source row reports 8.64 KB sig; 60 B pk (completeness only; cycles, core, op match)",yes,"cycles verified in Table 2/3/4 of arXiv 2502.06033 (x86, M-cycles x1e6); clock empty is correct (source gives no MHz)"
+S2-0383,ERROR,missing:key_or_sig_size_bytes,"Source row reports 1.42 KB sig; 60 B pk (completeness only; cycles, core, op match)",yes,"cycles verified in Table 2/3/4 of arXiv 2502.06033 (x86, M-cycles x1e6); clock empty is correct (source gives no MHz)"
+S2-0384,ERROR,missing:key_or_sig_size_bytes,"Source row reports 2.58 KB sig; 60 B pk (completeness only; cycles, core, op match)",yes,"cycles verified in Table 2/3/4 of arXiv 2502.06033 (x86, M-cycles x1e6); clock empty is correct (source gives no MHz)"
+S2-0386,ERROR,missing:key_or_sig_size_bytes,"Source row reports 4.96 KB sig; 60 B pk (completeness only; cycles, core, op match)",yes,"cycles verified in Table 2/3/4 of arXiv 2502.06033 (x86, M-cycles x1e6); clock empty is correct (source gives no MHz)"
+S2-0388,ERROR,missing:key_or_sig_size_bytes,"Source row reports 2.44 KB sig; 68 B pk; 1,377 B sk (completeness only; cycles, core, op match)",yes,"cycles verified in Table 2/3/4 of arXiv 2502.06033 (x86, M-cycles x1e6); clock empty is correct (source gives no MHz)"
+S2-0391,ERROR,missing:key_or_sig_size_bytes,"Source row reports 0.06 KB sig; 32 B pk (completeness only; cycles, core, op match)",yes,"cycles verified in Table 2/3/4 of arXiv 2502.06033 (x86, M-cycles x1e6); clock empty is correct (source gives no MHz)"
+S2-0221,OK,,,yes,all populated fields match source
+S2-0224,OK,,,yes,all populated fields match source
+S2-0230,ERROR,missing:stack_bytes|missing:ram_bytes|missing:flash_or_code_bytes,"20.0 KB peak stack (~20480 B); total RAM 26.2 KB (~26829 B); code 6.7 KB (~6861 B); KB=1024, 1 decimal",yes,cycles match Table IV/V (kc); completeness only; location cites Table IX which reports these
+S2-0233,ERROR,missing:stack_bytes|missing:ram_bytes|missing:flash_or_code_bytes,"50.6 KB peak stack (~51814 B); total RAM 56.8 KB (~58163 B); code 8.9 KB (~9114 B); KB=1024, 1 decimal",yes,cycles match Table IV/V (kc); completeness only; location cites Table IX which reports these
+S2-0237,OK,,,yes,all populated fields match source
+S2-0238,OK,,,yes,all populated fields match source
+S2-0243,OK,,,yes,all populated fields match source
+S2-0250,OK,,,yes,"all populated fields match source; energy from appendix/text constants (46.71 and 39.41 mJ), datasheet model estimate not measurement; matches sum of op times x 79.2 uJ/ms"
+S2-0252,OK,,,yes,"all populated fields match source; energy from appendix/text constants (46.71 and 39.41 mJ), datasheet model estimate not measurement; matches sum of op times x 79.2 uJ/ms"
+S2-0172,OK,,,yes,all populated fields match source; Table 3 p.17 confirmed; stack column and .total (code) match
+S2-0177,OK,,,yes,all populated fields match source; Table 3 p.17 confirmed; stack column and .total (code) match
+S2-0178,OK,,,yes,all populated fields match source; Table 3 p.17 confirmed; stack column and .total (code) match
+S2-0181,OK,,,yes,all populated fields match source; Table 3 p.17 confirmed; stack column and .total (code) match
+S2-0185,OK,,,yes,all populated fields match source; Table 3 p.17 confirmed; stack column and .total (code) match
+S2-0187,OK,,,yes,all populated fields match source; Table 3 p.17 confirmed; stack column and .total (code) match
+S2-0189,OK,,,yes,all populated fields match source; Table 3 p.17 confirmed; stack column and .total (code) match
+S2-0092,OK,,,yes,all populated fields match source; Table 6 p.21 confirmed; 24 MHz stated in text (Sec. on Cortex-M4 config)
+S2-0093,OK,,,yes,all populated fields match source; Table 6 p.21 confirmed; 24 MHz stated in text (Sec. on Cortex-M4 config)
+S2-0096,OK,,,yes,all populated fields match source; Table 6 p.21 confirmed; 24 MHz stated in text (Sec. on Cortex-M4 config)
+S2-0097,OK,,,yes,all populated fields match source; Table 6 p.21 confirmed; 24 MHz stated in text (Sec. on Cortex-M4 config)
+S2-0105,OK,,,yes,all populated fields match source; Table 6 p.21 confirmed; 24 MHz stated in text (Sec. on Cortex-M4 config)
+S2-0108,OK,,,yes,all populated fields match source; Table 6 p.21 confirmed; 24 MHz stated in text (Sec. on Cortex-M4 config)
+S2-0111,OK,,,yes,all populated fields match source; Table 6 p.21 confirmed; 24 MHz stated in text (Sec. on Cortex-M4 config)
+S2-0114,OK,,,yes,all populated fields match source; Table 6 p.21 confirmed; 24 MHz stated in text (Sec. on Cortex-M4 config)
+S2-0117,OK,,,yes,all populated fields match source; Table 6 p.21 confirmed; 24 MHz stated in text (Sec. on Cortex-M4 config)
