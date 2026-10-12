@@ -1,0 +1,48 @@
+{
+ "seed": 20261012,
+ "n_headline": 157,
+ "n_random": 120,
+ "pool": 289,
+ "strata": {
+  "fpga-asic-soft-core|mlkem-native": [
+   5,
+   2
+  ],
+  "fpga-asic-soft-core|other": [
+   12,
+   5
+  ],
+  "host-cpu|liboqs": [
+   16,
+   7
+  ],
+  "host-cpu|openssl": [
+   1,
+   1
+  ],
+  "mcu|mbed": [
+   10,
+   4
+  ],
+  "mcu|other": [
+   88,
+   36
+  ],
+  "mcu|pqclean": [
+   17,
+   7
+  ],
+  "mcu|pqm4": [
+   110,
+   45
+  ],
+  "mcu|wolf": [
+   19,
+   8
+  ],
+  "standard-size|other": [
+   11,
+   5
+  ]
+ }
+}
