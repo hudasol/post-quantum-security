@@ -65,3 +65,38 @@ Synthetic inventory of 12 devices. Expected class for each is written in `docs/P
 ## Outcomes
 
 (Appended after the runs.)
+
+---
+
+# Outcomes (appended 2026-10-12)
+
+The prediction text above is unchanged: its first 67 lines hash to the value in `docs/PREDICTIONS.sha256` (`head -n 67 docs/PREDICTIONS.md | sha256sum`), and the commit that added it (`21dae54`) precedes every run. Scores below use my own stated thresholds. "Hit" means the statement held; "Miss" means it did not; "Partial" means it held under one reading only.
+
+| ID | Result | Evidence |
+|---|---|---|
+| P1.1 | **Partial** | Field level on the headline rows: 1 wrong value in 369 compared fields (0.3 percent, hit). Row level: strict rate 3.4 percent (5 of 149 verifiable) against my 3 percent limit (miss by 0.4 points). Only 1 of the 5 was a wrong value. `docs/VERIFICATION2.md` |
+| P1.2 | **Partial** | Random sample: 0 wrong values in 286 fields (hit). Strict row rate 8.3 percent (10 of 120) against my 8 percent limit (miss by 0.3 points); all 10 were rounded KB figures the table left empty. |
+| P1.3 | **Hit** | No numeric value was wrong. The one wrong item was a label (S3-003); the other 14 were gaps. |
+| P1.4 | **Hit** | pqm4 rows (cycles, stack, code) matched `benchmarks.csv` exactly in every batch, at the collected commit `5e5cc76d0b07`. |
+| P1.5 | **Hit** | Combined strict row error rate 5.6 percent, below the 11 percent of the earlier prose pass. |
+| P2.1 | **Hit, with a twist** | README names the NUCLEO-L4R5ZI as default board (README lines 58 and 75), but `benchmarks.py` defaults to the STM32F4 Discovery, and the result files name no board. |
+| P2.2 | **Hit** | The L4R5ZI benchmark clock in code is 20 MHz (`hal-opencm3.c:237`); 24 MHz is the F4 Discovery clock; the README sentence is from 2018 and was never edited. |
+| P2.3 | **Hit** | No commit or file ties benchmarks.csv to one board and clock. The answer is derived from code and stays unresolved. |
+| P2.4 | **Hit (inference)** | Both clock modes use zero flash wait states, so cycles should be about the same and only derived times change by 1.2 times. Not measured. |
+| P3.1 | **Partial** | Of 8 listed ePrint items, 2 were fully blocked, 4 gave abstracts only, 2 gave full text through a fetch summary. If abstract only counts as not retrieved, 6 of 8 (75 percent): hit. If only fully blocked counts, 2 of 8: miss. Most failures were unanswered permission prompts, not site blocks. |
+| P3.2 | **Hit** | NSA CNSA 2.0 documents stayed blocked. |
+| P3.3 | **Hit** | ePrint 2025/366 and 2020/470, unreachable by curl in phase 1, were readable through the fetch tool (as summaries; no number was added to the table). |
+| P3.4 | **Hit** | UAE National Encryption Policy primary text was not found. |
+| P4.1 | **Hit** | 1 MB at 57.6 kbps, no loss, selective repeat: 167.0 s wall (152.8 s of data air time, 138.9 s raw bits). Stop and wait gives 378.4 s. |
+| P4.2 | **Hit** | Handshake air time 0.94 s with framing; wall 1.16 s (selective repeat). Stop and wait wall time is 2.45 s, above my bound, but my statement was about air time. |
+| P4.3 | **Partial** | LoRaWAN DR0 air time 194.7 s (above 60 s, hit). Wall time about 19,300 s is 99 times the air time, just under my "more than 100 times" (miss by 1 percent; the 1 percent duty cycle makes about 100 times by construction). |
+| P4.4 | **Hit** | 76 fragments (77 with the confirmation message). |
+| P4.5 | **Miss** | LoRaWAN DR0 is slowest in all 220 variations, but the order among SiK, 802.15.4, BLE and the 1 Mbps link changes, because acknowledgement round trips dominate on fast links. |
+| P4.6 | **Miss** | 10 percent loss with stop and wait raises 1 MB delivery from 378.4 s to about 518.7 s (+37 percent). Selective repeat rises 16 percent (167.0 to 193.7 s), inside my range, but my statement named stop and wait. |
+| P5.1 | **Hit** | 12 of 12 agree (`scripts/compare_planner_predictions.py`). Caveat: my expectations and the implementation both follow `docs/PLANNER_RULES.md`, so this tests fidelity to the rules, not whether the rules are right. |
+| P5.2 | **Hit** | Every device with a missing required field is UNKNOWN (D05). Devices with missing optional fields are UNKNOWN only when the answer depends on them (D10, D12). D04 is classed without them, correctly. |
+| P5.3 | **Not tested** | There were no disagreements. |
+| P6.1 | **Hit for MAVLink; open for MCUboot** | MAVLink issues 2525 and 2527 exist and answer the question. MCUboot search could not be completed. |
+| P6.2 | **Open** | The SROS2 and DDS Security issue search could not be completed (connector disconnected, fetch prompts unanswered). |
+
+Tally of 24 predictions: 16 hits, 4 partial, 2 misses, 2 not scored (P5.3 not tested, P6.2 open). Counting partial as half, that is 18 of the 22 scored items. The misses are both in the simulator, where I underestimated how much acknowledgement behaviour shapes the result; the two verification row thresholds were missed by under half a point.
