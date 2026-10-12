@@ -1,11 +1,14 @@
 # Next steps
 
-## A. Fetch these sources yourself (the research environment could not reach them)
-1. NSA CNSA 2.0 advisory and FAQ (nsa.gov / media.defense.gov) for the algorithm set, dates and LMS/XMSS firmware signing guidance. No CNSA 2.0 claim is made in the report.
-2. CISA quantum pages (cisa.gov/quantum).
-3. IACR ePrint PDFs (Cloudflare blocked the sandbox): 2019/844 (pqm4 paper: board and clock), 2026/1333 (ML-DSA benchmarking pitfalls), 2022/323 (stack optimised Dilithium), 2025/366 (SLOTHY), 2020/470 (LMS vs XMSS), 2021/781 (software updates), 2026/312 (RISQrypt), 2026/2343 (UAV command authentication).
-4. UAE National Encryption Policy and executive regulation text (UAE Cybersecurity Council); ask the UAE National Cryptography Center for the algorithm profile for embedded and unmanned systems; search Arabic-language sources.
-5. Vendor facts: written answers from your SoC suppliers on whether the boot-ROM verifier and key can change, and ST X-CUBE-PQC / Microchip MEC175xB / Infineon PSOC Control C3 / NXP PQC pages (blocked or claim only).
+## A. Sources (status on 2026-10-12)
+Received from the author (see `docs/SOURCES_TO_UPLOAD.md`): ePrint 2019/844, 2020/470, 2021/781, 2022/323, 2025/366, 2026/312, 2026/1333, 2026/2343; the NSA CNSA 2.0 FAQ; two UAE National Encryption Policy documents; a CISA quantum readiness document.
+Done: 46 rows from 2025/366 and 2020/470 are in the table.
+Still to do:
+1. Read 2022/323 (stack figures), 2026/1333 (reporting rules), 2021/781 and 2026/2343 and add rows through `data/raw/` and `scripts/merge_evidence.py`.
+2. OCR or text copies of the CISA and uaelegislation.gov.ae files (image only).
+3. The NSA CNSA 2.0 algorithms advisory (only the FAQ was supplied).
+4. UAE National Cryptography Center algorithm profile for embedded and unmanned systems (ask them); Arabic language sources.
+5. Vendor facts: written answers from SoC suppliers (`docs/supplier/README.md`, log in `docs/supplier/response_tracker.csv`).
 6. NIST CAVP/CMVP PQC validation search (JavaScript pages).
 
 ## B. Re-check before you rely on them (in flux on 2026-10-11)
@@ -27,5 +30,6 @@ Targets: a Cortex-M33 board (for example NUCLEO-U575ZI-Q) and a Cortex-M4F board
 Cost: nothing. Do steps 1 to 2 and a build check in an emulator first (QEMU `mps2-an386` for Cortex-M4 and `mps2-an505` for Cortex-M33, or Renode), which gives correctness, flash size and stack size but no real cycle counts. For real cycles borrow a lab board for a few hours. See `docs/NO_PURCHASE_PLAN.md`.
 
 ## E. Housekeeping
-- The GitHub repository https://github.com/hudasol/post-quantum-security was empty and nothing has been pushed; the files are in the working directory. Say the word and I will commit them to a branch.
-- The research subagents used `curl` via the sandbox's configured proxy (deviation D1).
+- Licence decided: all rights reserved, permission on request (`LICENSE`, `docs/LICENCE_DECISION.md`). Release `v0.1.0` is published.
+- Upstream duplicate checks (SROS2, MCUboot, ROS Discourse) are still to be done by hand; drafts are in `docs/upstream/` and nothing has been filed.
+- The research subagents used `curl` via the sandbox's configured proxy in phase 1 (deviation D1).
