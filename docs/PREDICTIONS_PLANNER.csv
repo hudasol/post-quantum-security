@@ -1,0 +1,13 @@
+device_id,expected_class,reason
+D01,FIRMWARE_UPDATE,both exposed; bootrom updatable; free 400/128 kB above need 45/9
+D02,HYBRID,sig exposed (8>4); bootrom fixed; updatable stage; free 200/64 above 31/3
+D03,HARDWARE_REPLACEMENT,sig exposed; bootrom updatable but free flash 20 < 31
+D04,HARDWARE_REPLACEMENT,sig exposed (12>4); bootrom fixed; no updatable stage
+D05,UNKNOWN,bootrom_verifier_updatable missing
+D06,FIRMWARE_UPDATE,conf only (20>9; 3<=4); KEM headroom ok; handshake 6068*8/250=194 s < 300 s
+D07,HYBRID,conf only; headroom ok; handshake 6068*8/100=485 s > 300 s so gateway termination
+D08,HARDWARE_REPLACEMENT,both exposed; free RAM 6 < 9
+D09,HARDWARE_REPLACEMENT,both exposed; total RAM 8 < 9 so need cannot be met; free unknown does not matter
+D10,UNKNOWN,sig exposed; totals sufficient; free_flash and free_ram missing
+D11,NO_ACTION_BEFORE_RETIREMENT,boundary: life 4 not > 4, data 9 not > 9
+D12,UNKNOWN,sig exposed; bootrom fixed; updatable_bootloader_stage missing
