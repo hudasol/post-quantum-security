@@ -1,0 +1,24 @@
+Configuration info
+==================
+Target platform:  x86_64-Linux-6.18.44-fc-v114
+Compiler:         gcc (13.3.0)
+Compile options:  [-Wa,--noexecstack;-fomit-frame-pointer;-fdata-sections;-ffunction-sections;-Wl,--gc-sections;-Wbad-function-cast]
+OQS version:      0.16.0 (major: 0, minor: 16, patch: 0)
+Git commit:       unknown
+OpenSSL enabled:  No
+AES:              C
+SHA-2:            C
+SHA-3:            C
+OQS build flags:  OQS_LIBJADE_BUILD OQS_OPT_TARGET=generic CMAKE_BUILD_TYPE=Release 
+CPU exts compile-time:  SSE SSE2
+
+Speed test
+==========
+Started at 2026-10-11 07:34:10
+Operation                            | Iterations | Total time (s) | Time (us): mean | pop. stdev | CPU cycles: mean          | pop. stdev
+------------------------------------ | ----------:| --------------:| ---------------:| ----------:| -------------------------:| ----------:
+SLH_DSA_PURE_SHA2_128F               |            |                |                 |            |                           |           
+keypair                              |       2054 |          3.001 |        1460.976 |    370.604 |                   4090867 |    1037670
+sign                                 |         89 |          3.019 |       33922.045 |   3587.079 |                  94990722 |   10044953
+verify                               |       1515 |          3.002 |        1981.253 |    310.673 |                   5547756 |     869813
+Ended at 2026-10-11 07:34:19

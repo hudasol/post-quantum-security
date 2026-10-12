@@ -1,0 +1,23 @@
+Configuration info
+==================
+Target platform:  x86_64-Linux-6.18.44-fc-v114
+Compiler:         gcc (13.3.0)
+Compile options:  [-Wa,--noexecstack;-fomit-frame-pointer;-fdata-sections;-ffunction-sections;-Wl,--gc-sections;-Wbad-function-cast]
+OQS version:      0.16.0 (major: 0, minor: 16, patch: 0)
+Git commit:       unknown
+OpenSSL enabled:  No
+AES:              NI
+SHA-2:            C
+SHA-3:            AVX512VL
+OQS build flags:  OQS_DIST_BUILD OQS_LIBJADE_BUILD OQS_OPT_TARGET=generic CMAKE_BUILD_TYPE=Release 
+CPU exts active:  ADX AES AVX AVX2 AVX512 BMI1 BMI2 PCLMULQDQ POPCNT SSE SSE2 SSE3
+Speed test
+==========
+Started at 2026-10-11 07:23:38
+Operation                            | Iterations | Total time (s) | Time (us): mean | pop. stdev | CPU cycles: mean          | pop. stdev
+------------------------------------ | ----------:| --------------:| ---------------:| ----------:| -------------------------:| ----------:
+SLH_DSA_PURE_SHAKE_128S              |            |                |                 |            |                           |           
+keypair                              |         19 |          3.134 |      164935.263 |  10865.455 |                 461866663 |   30426576
+sign                                 |          3 |          3.867 |     1288876.000 |  38222.525 |                3609246362 |  107034740
+verify                               |       2273 |          3.000 |        1319.868 |    277.339 |                   3695655 |     776442
+Ended at 2026-10-11 07:23:48
