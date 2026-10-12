@@ -5,7 +5,7 @@ import os, re, subprocess, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ALLOWED_EMOJI = set('\U0001F337\U0001F338\U0001F34B\U0001F33F')
 EXT = {'.md', '.py', '.csv', '.txt', '.yml', '.yaml', '.sh', '.tex', '.dot'}
-SKIP = {'LICENSE', 'LICENSE-DOCS', 'scripts/check_style.py'}
+SKIP = {'scripts/check_style.py'}
 EMOJI = re.compile('[\U0001F300-\U0001FAFF☀-➿⭐⬆✅❌]')
 def files(root):
     try:
