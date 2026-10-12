@@ -140,6 +140,24 @@ def main():
                     sys.exit(f"correction {c['id']}.{c['field']}: old_value does not match current cell")
                 r[c["field"]] = c["new_value"]
                 print(f"corrected: {c['id']}.{c['field']} ({c['reason'][:60]})")
+    # pqm4 board and clock rule (data/pqm4_board_clock.csv, from data/raw/S6_pqm4_config.md).
+    rule_path = ROOT / "data" / "pqm4_board_clock.csv"
+    if rule_path.exists():
+        with open(rule_path, newline="", encoding="utf-8") as fh:
+            rule = {k["key"]: k["value"] for k in csv.DictReader(fh)}
+        n_pq = 0
+        for r in rows:
+            if "mupq/pqm4" not in r["source_url"]:
+                continue
+            if rule["warning_old_clause"] not in r["comparability_warning"]:
+                sys.exit(f"{r['id']}: pqm4 warning clause not found; rule file out of date")
+            r["device"] = rule["device_new"]
+            r["clock_mhz"] = rule["clock_mhz_new"]
+            r["comparability_warning"] = r["comparability_warning"].replace(
+                rule["warning_old_clause"], rule["warning_new_clause"], 1)
+            r["compiler_flags_or_notes"] = (r["compiler_flags_or_notes"].rstrip("; ") + "; " + rule["note_suffix"]).strip()
+            n_pq += 1
+        print(f"pqm4 board and clock rule applied to {n_pq} rows")
     ambiguous = [r["id"] for r in rows if re.search(r"\bor Table\b", r["location_in_source"])]
     print(f"rows whose location_in_source still names alternative tables: {len(ambiguous)}")
     with open(OUT, "w", newline="", encoding="utf-8") as fh:
