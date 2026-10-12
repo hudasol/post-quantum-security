@@ -1,0 +1,55 @@
+digraph G {
+  graph [rankdir=TB, fontname="Helvetica", fontsize=11, nodesep=0.35, ranksep=0.45, bgcolor="#fcfcfb", pad=0.2];
+  node  [fontname="Helvetica", fontsize=10, shape=box, style="rounded,filled", fillcolor="#ffffff", color="#8a8a86", margin="0.12,0.07"];
+  edge  [fontname="Helvetica", fontsize=9, color="#6b6b66"];
+
+  start [label="For each asset on the fleet\n(link, data store, update path, identity)", fillcolor="#e8f0fb", color="#2a78d6"];
+  q1 [shape=diamond, style=filled, fillcolor="#fff6e5", label="What must be protected?"];
+  start -> q1;
+
+  // confidentiality
+  c1 [shape=diamond, style=filled, fillcolor="#fff6e5", label="Would disclosure in 10+ years\nstill cause damage?\n(EU 'high risk' line)"];
+  q1 -> c1 [label="secrecy\n(HNDL applies)"];
+  c2 [label="Move the key establishment first:\nhybrid KEM (X25519+ML-KEM-768)\nin TLS/DTLS/IPsec at gateway or app layer.\nSchedule now."];
+  c3 [label="Medium priority: follow national\ntimeline (NCSC 2028/2031/2035,\nEU 2030/2035). Re-assess data shelf-life."];
+  c1 -> c2 [label="yes"]; c1 -> c3 [label="no"];
+
+  // authenticity
+  a1 [shape=diamond, style=filled, fillcolor="#fff6e5", label="Which authentication?"];
+  q1 -> a1 [label="authenticity /\nintegrity\n(forgery risk is prospective)"];
+  f1 [shape=diamond, style=filled, fillcolor="#fff6e5", label="Firmware / identity trust anchor\nin immutable ROM or OTP,\nclassical-only?"];
+  m1 [label="Command / telemetry\nauthentication"];
+  a1 -> f1 [label="firmware,\nboot, identity"];
+  a1 -> m1 [label="commands,\nlink frames"];
+
+  f2 [shape=diamond, style=filled, fillcolor="#fff6e5", label="Device in service\nbeyond ~2030-2035?"];
+  f1 -> f2 [label="yes"];
+  f2 -> r1 [label="no"];
+  r1 [label="Document and tolerate;\nrun to end of life.\n(NCSC option: 'tolerate the risk')", fillcolor="#eef6ee", color="#1baf7a"];
+  f2 -> f3 [label="yes"];
+  f3 [shape=diamond, style=filled, fillcolor="#fff6e5", label="Is there an updatable stage\nbefore application code,\nwith flash/RAM headroom?"];
+  f3 -> h1 [label="no"];
+  h1 [label="Hardware change: replace units, or\nfront them with a gateway that\nre-authenticates (crypto gateway).\nSpecify PQ verify in next-gen ROM/OTP.", fillcolor="#fdeee8", color="#eb6834"];
+  f3 -> s1 [label="yes"];
+  f1 -> s1 [label="no (stage\nis updatable)"];
+
+  s1 [shape=diamond, style=filled, fillcolor="#fff6e5", label="Can the release process\nguard signing state in an HSM\n(never sign twice)?"];
+  s2 [label="Stateful hash-based:\nLMS/HSS (or XMSS)\nverify-only on device, small code,\n~1.4-2.6 kB signatures"];
+  s3 [shape=diamond, style=filled, fillcolor="#fff6e5", label="Prefer stateless?"];
+  s1 -> s2 [label="yes"];
+  s1 -> s3 [label="no"];
+  s4 [label="ML-DSA-44/65 (FIPS 204):\n2.4/3.3 kB signatures, cheaper\nverify than hash-based SLH-DSA;\nlattice assumption"];
+  s5 [label="SLH-DSA (FIPS 205) or draft SP 800-230\nvariants: stateless, hash-only assumption,\n7.9-17 kB signatures (128s/128f)\nslow signing, fast-ish verify"];
+  s3 -> s4 [label="size and\nspeed matter"];
+  s3 -> s5 [label="conservative\nassumptions matter"];
+  d1 [label="Ship as DUAL signature (classical + PQ)\nvia manifest multi-signature; verify both;\nA/B slots, anti-rollback, revocation.\nDrop classical at the planned cut-over.", fillcolor="#e8f0fb", color="#2a78d6"];
+  s2 -> d1; s4 -> d1; s5 -> d1;
+
+  // commands
+  m2 [shape=diamond, style=filled, fillcolor="#fff6e5", label="Per-message PQ signature\nfit the frame?\n(MAVLink signature field = 13 bytes)"];
+  m1 -> m2;
+  m3 [label="No: ML-DSA-44 = 2420 B = 10+ full frames.\nUse a session key: authenticate once\n(PQ or hybrid handshake), then a short MAC\nper message; PQ-sign only rare critical commands.\nFix key provisioning (the weak link).", fillcolor="#e8f0fb", color="#2a78d6"];
+  m2 -> m3 [label="no"];
+  m4 [label="Yes (e.g. IP link, large MTU):\nhybrid TLS/DTLS or IPsec (RFC 9370)\nat the link or gateway."];
+  m2 -> m4 [label="yes"];
+}
