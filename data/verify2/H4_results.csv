@@ -1,0 +1,41 @@
+id,status,wrong_fields,correct_values,location_ok,notes
+S2-0044,OK,,,yes,"Compared to pqm4 5e5cc76d0b07 (cloned, checked out) benchmarks.csv; speed, stack and size values at cited lines match; README confirms 24MHz and gcc 11.3.1."
+S2-0045,OK,,,yes,"Compared to pqm4 5e5cc76d0b07 (cloned, checked out) benchmarks.csv; speed, stack and size values at cited lines match; README confirms 24MHz and gcc 11.3.1."
+S2-0046,OK,,,yes,"Compared to pqm4 5e5cc76d0b07 (cloned, checked out) benchmarks.csv; speed, stack and size values at cited lines match; README confirms 24MHz and gcc 11.3.1."
+S2-0047,OK,,,yes,"Compared to pqm4 5e5cc76d0b07 (cloned, checked out) benchmarks.csv; speed, stack and size values at cited lines match; README confirms 24MHz and gcc 11.3.1."
+S2-0048,OK,,,yes,"Compared to pqm4 5e5cc76d0b07 (cloned, checked out) benchmarks.csv; speed, stack and size values at cited lines match; README confirms 24MHz and gcc 11.3.1."
+S2-0049,OK,,,yes,"Compared to pqm4 5e5cc76d0b07 (cloned, checked out) benchmarks.csv; speed, stack and size values at cited lines match; README confirms 24MHz and gcc 11.3.1."
+S2-0050,OK,,,yes,"Compared to pqm4 5e5cc76d0b07 (cloned, checked out) benchmarks.csv; speed, stack and size values at cited lines match; README confirms 24MHz and gcc 11.3.1."
+S2-0051,OK,,,yes,"Compared to pqm4 5e5cc76d0b07 (cloned, checked out) benchmarks.csv; speed, stack and size values at cited lines match; README confirms 24MHz and gcc 11.3.1."
+S2-0052,OK,,,yes,"Compared to pqm4 5e5cc76d0b07 (cloned, checked out) benchmarks.csv; speed, stack and size values at cited lines match; README confirms 24MHz and gcc 11.3.1."
+S2-0053,OK,,,yes,"Compared to pqm4 5e5cc76d0b07 (cloned, checked out) benchmarks.csv; speed, stack and size values at cited lines match; README confirms 24MHz and gcc 11.3.1."
+S2-0054,OK,,,yes,"Compared to pqm4 5e5cc76d0b07 (cloned, checked out) benchmarks.csv; speed, stack and size values at cited lines match; README confirms 24MHz and gcc 11.3.1."
+S2-0055,OK,,,yes,"Compared to pqm4 5e5cc76d0b07 (cloned, checked out) benchmarks.csv; speed, stack and size values at cited lines match; README confirms 24MHz and gcc 11.3.1."
+S2-0056,OK,,,yes,"Compared to pqm4 5e5cc76d0b07 (cloned, checked out) benchmarks.csv; speed, stack and size values at cited lines match; README confirms 24MHz and gcc 11.3.1."
+S2-0057,OK,,,yes,"Compared to pqm4 5e5cc76d0b07 (cloned, checked out) benchmarks.csv; speed, stack and size values at cited lines match; README confirms 24MHz and gcc 11.3.1."
+S2-0058,OK,,,yes,"Compared to pqm4 5e5cc76d0b07 (cloned, checked out) benchmarks.csv; speed, stack and size values at cited lines match; README confirms 24MHz and gcc 11.3.1."
+S2-0059,OK,,,yes,"Compared to pqm4 5e5cc76d0b07 (cloned, checked out) benchmarks.csv; speed, stack and size values at cited lines match; README confirms 24MHz and gcc 11.3.1."
+S2-0060,OK,,,yes,"Compared to pqm4 5e5cc76d0b07 (cloned, checked out) benchmarks.csv; speed, stack and size values at cited lines match; README confirms 24MHz and gcc 11.3.1."
+S3-042,OK,,,yes,"wolfBoot docs/PQ.md (raw, master) LMS config shows IMAGE_SIGNATURE_SIZE=2644 for levels 2, height 5, winternitz 8."
+S3-043,OK,,,yes,wolfBoot docs/PQ.md XMSS config shows IMAGE_SIGNATURE_SIZE=2500 for XMSS-SHA2_10_256.
+S3-044,OK,,,yes,"TF-M BL1 page states SHA256_H10 and 1912-byte LMS signatures; the page does not state the Winternitz parameter (and 1912 is the page figure, not independently derived)."
+S2-0426,OK,,,yes,RFC 8391 Table 3 (page 45 by the [Page 44]/[Page 45] footer positions) |Sig| value matches.
+S2-0427,OK,,,yes,RFC 8391 Table 3 (page 45 by the [Page 44]/[Page 45] footer positions) |Sig| value matches.
+S2-0428,OK,,,yes,RFC 8391 Table 3 (page 45 by the [Page 44]/[Page 45] footer positions) |Sig| value matches.
+S2-0429,OK,,,yes,RFC 8391 Table 3 (page 45 by the [Page 44]/[Page 45] footer positions) |Sig| value matches.
+S2-0430,OK,,,yes,RFC 8391 Table 3 (page 45 by the [Page 44]/[Page 45] footer positions) |Sig| value matches.
+S2-0431,OK,,,yes,RFC 8391 Table 3 (page 45 by the [Page 44]/[Page 45] footer positions) |Sig| value matches.
+S2-0316,OK,,,yes,Slide deck PDF printed slides 21 (LMS SHA-256 h=5 w=16 verify 2576515) and 22 (stack 1044) match.
+S2-0319,OK,,,yes,Printed slide 19: LMS h=10 verify 2.65 x10^6 cycles = 2650000 (as rounded on slide).
+S2-0322,OK,,,yes,Printed slide 19: XMSS ROBUST h=10 verify 13.07 x10^6 = 13070000; also on printed slide 18.
+S2-0328,OK,,,yes,"wolfSSL page via WebFetch: Cortex-M4 NUCLEO-F439ZI at 168 MHz; row present in benchmark listing (reported in ms/ops, no cycles, consistent with empty cycles)."
+S2-0333,OK,,,yes,"wolfSSL page via WebFetch: Cortex-M4 NUCLEO-F439ZI at 168 MHz; row present in benchmark listing (reported in ms/ops, no cycles, consistent with empty cycles)."
+S2-0334,OK,,,yes,"wolfSSL page via WebFetch: Cortex-M4 NUCLEO-F439ZI at 168 MHz; row present in benchmark listing (reported in ms/ops, no cycles, consistent with empty cycles)."
+S2-0347,OK,,,yes,"wolfSSL wolfBoot STM32H5 page via WebFetch: STM32H563 at 320 MHz; bootloader size, stack size and signature size match the table row."
+S2-0349,OK,,,yes,"wolfSSL wolfBoot STM32H5 page via WebFetch: STM32H563 at 320 MHz; bootloader size, stack size and signature size match the table row."
+S2-0350,OK,,,yes,"wolfSSL wolfBoot STM32H5 page via WebFetch: STM32H563 at 320 MHz; bootloader size, stack size and signature size match the table row."
+S2-0351,OK,,,yes,"wolfSSL wolfBoot STM32H5 page via WebFetch: STM32H563 at 320 MHz; bootloader size, stack size and signature size match the table row."
+S2-0353,OK,,,yes,"wolfSSL wolfBoot STM32H5 page via WebFetch: STM32H563 at 320 MHz; bootloader size, stack size and signature size match the table row."
+S2-0354,OK,,,yes,"wolfSSL wolfBoot STM32H5 page via WebFetch: STM32H563 at 320 MHz; bootloader size, stack size and signature size match the table row."
+S2-0355,OK,,,yes,"wolfSSL wolfBoot STM32H5 page via WebFetch: STM32H563 at 320 MHz; bootloader size, stack size and signature size match the table row."
+S2-0356,OK,,,yes,"wolfSSL wolfBoot STM32H5 page via WebFetch: STM32H563 at 320 MHz; bootloader size, stack size and signature size match the table row."

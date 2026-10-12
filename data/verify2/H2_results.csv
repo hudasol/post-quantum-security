@@ -1,0 +1,40 @@
+id,status,wrong_fields,correct_values,location_ok,notes
+S2-0401,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S3-030,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S3-031,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S3-032,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S3-033,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S3-034,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S3-035,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S2-0405,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S2-0406,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S2-0407,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S2-0408,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S2-0409,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S2-0410,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S2-0411,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S2-0412,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S2-0413,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S3-024,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S3-025,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S3-026,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S3-027,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S3-028,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S3-029,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024)
+S2-0415,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024); Table 2 on printed p.43
+S2-0417,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024); Table 2 on printed p.43
+S2-0419,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024); Table 2 on printed p.43
+S2-0421,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024); Table 2 on printed p.43
+S2-0423,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024); Table 2 on printed p.43
+S2-0425,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024); Table 2 on printed p.43
+S3-036,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024); Table 2 on printed p.43
+S3-037,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024); Table 2 on printed p.43
+S3-038,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024); Table 2 on printed p.43
+S3-039,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024); Table 2 on printed p.43
+S3-040,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024); Table 2 on printed p.43
+S3-041,OK,,,yes,Value matches table in retrieved standard PDF (published Aug 13 2024); Table 2 on printed p.43
+S3-015,OK,,,yes,"Pdf: 258 cycles latency per 256-coeff polynomial, 322 MHz, 3821 LUT/2970 FF/20 DSP/5 BRAM (16+4 DSP) in Table 2 and text; n=256, 12/23-bit q in intro"
+S2-0001,OK,,,yes,"Matches pqm4 commit 5e5cc76d0b07 (HEAD, unchanged); cycles mean/min/max, stack, code size, 24 MHz, gcc 11.3.1 all match lines cited"
+S2-0002,OK,,,yes,"Matches pqm4 commit 5e5cc76d0b07 (HEAD, unchanged); cycles mean/min/max, stack, code size, 24 MHz, gcc 11.3.1 all match lines cited"
+S2-0003,OK,,,yes,"Matches pqm4 commit 5e5cc76d0b07 (HEAD, unchanged); cycles mean/min/max, stack, code size, 24 MHz, gcc 11.3.1 all match lines cited"
+S2-0004,OK,,,yes,"Matches pqm4 commit 5e5cc76d0b07 (HEAD, unchanged); cycles mean/min/max, stack, code size, 24 MHz, gcc 11.3.1 all match lines cited"
