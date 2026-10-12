@@ -1,0 +1,56 @@
+name: ci
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  policy:
+    name: no papers, no raw downloads, no secrets, style
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fail if papers, PDFs outside the allowlist, archives or saved web pages are committed
+        run: python3 scripts/check_repo_policy.py
+      - name: Secrets scan
+        run: python3 scripts/scan_secrets.py
+      - name: Style lint (no em dashes, no unapproved emojis, no affiliation)
+        run: python3 scripts/check_style.py
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 -m unittest discover -s tests -t .
+      - run: python3 -m unittest discover -s linksim/tests -t .
+      - run: cd planner && python3 -m unittest
+      - name: Planner agrees with the hand written expectations
+        run: python3 scripts/compare_planner_predictions.py
+  data:
+    name: generated files match the data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install matplotlib pandas
+      - name: Evidence table regenerates from raw notes, corrections and the pqm4 rule
+        run: |
+          python3 scripts/merge_evidence.py
+          git diff --exit-code data/evidence.csv
+      - name: Report markdown regenerates from the evidence table
+        run: |
+          python3 scripts/build_report.py
+          git diff --exit-code docs/REPORT.md
+      - name: Verification summary regenerates
+        run: |
+          python3 scripts/summarize_verification2.py > /dev/null
+          git diff --exit-code docs/VERIFICATION2.md data/verify2/summary.csv
