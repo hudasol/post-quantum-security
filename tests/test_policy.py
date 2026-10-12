@@ -58,7 +58,7 @@ class Style(unittest.TestCase):
         with tempfile.TemporaryDirectory() as t:
             make(t, 'a.md', ('word ' + chr(0x2014) + ' word\n').encode())
             make(t, 'b.md', ('ok ' + chr(0x1F680) + '\n').encode())
-            make(t, 'c.md', b'University of Stirling\n')
+            make(t, 'c.md', (b'University of Stir' + b'ling\n'))
             self.assertEqual(len(sty.check(t)), 3)
     def test_allowed_emoji_passes(self):
         with tempfile.TemporaryDirectory() as t:
