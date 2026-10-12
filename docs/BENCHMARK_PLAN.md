@@ -26,7 +26,9 @@ The published evidence has holes that only your own boards can fill (details in 
 
 Pre-stated expectations (so you can tell afterwards whether the result was a surprise; these are hypotheses, not findings): verification of ML-DSA is much cheaper than signing; hash-based verification is cheapest in code size but largest in signature bytes; none of the above fits MAVLink's 13-byte signature field. Report the outcome even if a hypothesis fails.
 
-## 3. Hardware and approximate cost
+## 3. Hardware (nothing needs to be bought)
+
+**No purchase is required.** Use the free path in `docs/NO_PURCHASE_PLAN.md` first: an emulator (QEMU or Renode) for correctness, flash size and stack size, and borrowed lab hardware for real cycle counts. The table below lists the boards that a lab or teammate may already own, with prices kept only for reference.
 
 Prices are single-unit list prices that seller pages showed on 2026-10-11 (shipping, tax and currency conversion not applied; the ST eStore string "$33.61|2u" is reproduced from the page and I do not know what "|2u" means). Specs are from Zephyr board docs and the pqm4 README (secondary), because st.com and nordicsemi.com did not load from the sandbox.
 
@@ -42,7 +44,7 @@ Prices are single-unit list prices that seller pages showed on 2026-10-11 (shipp
 | Do NOT use for per-op energy | INA219 ($9.95), INA228 ($14.95) | conversion 50 us to 4.12 ms (INA228) | n/a | Too slow to resolve one sub-millisecond operation; usable only with the loop method in section 6. |
 | Flight-controller class (later) | Pixhawk 6C (STM32H743, Cortex-M7, 480 MHz) | M7 | $199.00 (Holybro) | Different core family: never share an axis with M4/M33. |
 
-Minimum useful budget: U575ZI-Q + L4R5ZI + PPK2 is about $160 at the listed prices; Pico 2 adds about $6 plus a probe.
+Reference only: buying U575ZI-Q + L4R5ZI + PPK2 would cost about $160 at the listed prices. This is not required; see the free path above.
 
 ## 4. Pinned software (commits read on 2026-10-11)
 
