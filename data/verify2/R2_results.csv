@@ -1,0 +1,41 @@
+id,status,wrong_fields,correct_values,location_ok,notes
+S2-0119,OK,,,yes,Value seen in Table 6 This-work row (p.21); 24 MHz M4 / 16 MHz M3 per setup text
+S2-0120,OK,,,yes,Value seen in Table 6 This-work row (p.21); 24 MHz M4 / 16 MHz M3 per setup text
+S2-0124,OK,,,yes,Value seen in Table 6 This-work row (p.21); 24 MHz M4 / 16 MHz M3 per setup text
+S2-0125,OK,,,yes,Value seen in Table 6 This-work row (p.21); 24 MHz M4 / 16 MHz M3 per setup text
+S2-0126,OK,,,yes,Value seen in Table 6 This-work row (p.21); 24 MHz M4 / 16 MHz M3 per setup text
+S2-0128,OK,,,yes,Value seen in Table 6 This-work row (p.21); 24 MHz M4 / 16 MHz M3 per setup text
+S2-0130,OK,,,yes,Value seen in Table 6 This-work row (p.21); 24 MHz M4 / 16 MHz M3 per setup text
+S2-0132,OK,,,yes,Value seen in Table 6 This-work row (p.21); 24 MHz M4 / 16 MHz M3 per setup text
+S2-0256,OK,,,yes,11.49M cycles in Table 7.3 ctr t=10 column (p.158); K64F Cortex-M4 120 MHz; XMSS-SHA2_10_256 named in text
+S2-0358,OK,,,yes,Benchmark output line matches; ML-KEM parameter set not stated on page; ML-DSA44 stated in port header description
+S2-0361,OK,,,yes,Benchmark output line matches; ML-KEM parameter set not stated on page; ML-DSA44 stated in port header description
+S2-0215,OK,,,yes,Table II energy mJ converted to uJ (4.03 mJ / 9.00 mJ); 240 MHz LX6 DevKit v1 per text
+S2-0219,OK,,,yes,Table II energy mJ converted to uJ (4.03 mJ / 9.00 mJ); 240 MHz LX6 DevKit v1 per text
+S2-0398,OK,,,yes,Value matches table in NIST standard
+S2-0403,OK,,,yes,Value matches table in NIST standard
+S2-0404,OK,,,yes,Value matches table in NIST standard
+S2-0420,OK,,,yes,Value matches table in NIST standard
+S2-0422,OK,,,yes,Value matches table in NIST standard
+S2-0372,OK,,,yes,Matches table row; FMax column gives MHz
+S2-0374,OK,,,yes,Matches table row; FMax column gives MHz
+S2-0376,OK,,,yes,Matches table row; FMax column gives MHz
+S2-0062,OK,,,yes,"Diffed programmatically vs benchmarks.csv at pqm4 master 5e5cc76d0b072ee7077e58afcbc619a1a67a53b4 (same as evidence commit); cycles mean, stack, total size and row names match at cited lines; 24 MHz per README"
+S2-0065,OK,,,yes,"Diffed programmatically vs benchmarks.csv at pqm4 master 5e5cc76d0b072ee7077e58afcbc619a1a67a53b4 (same as evidence commit); cycles mean, stack, total size and row names match at cited lines; 24 MHz per README"
+S2-0067,OK,,,yes,"Diffed programmatically vs benchmarks.csv at pqm4 master 5e5cc76d0b072ee7077e58afcbc619a1a67a53b4 (same as evidence commit); cycles mean, stack, total size and row names match at cited lines; 24 MHz per README"
+S2-0069,OK,,,yes,"Diffed programmatically vs benchmarks.csv at pqm4 master 5e5cc76d0b072ee7077e58afcbc619a1a67a53b4 (same as evidence commit); cycles mean, stack, total size and row names match at cited lines; 24 MHz per README"
+S2-0072,OK,,,yes,"Diffed programmatically vs benchmarks.csv at pqm4 master 5e5cc76d0b072ee7077e58afcbc619a1a67a53b4 (same as evidence commit); cycles mean, stack, total size and row names match at cited lines; 24 MHz per README"
+S2-0073,OK,,,yes,"Diffed programmatically vs benchmarks.csv at pqm4 master 5e5cc76d0b072ee7077e58afcbc619a1a67a53b4 (same as evidence commit); cycles mean, stack, total size and row names match at cited lines; 24 MHz per README"
+S2-0075,OK,,,yes,"Diffed programmatically vs benchmarks.csv at pqm4 master 5e5cc76d0b072ee7077e58afcbc619a1a67a53b4 (same as evidence commit); cycles mean, stack, total size and row names match at cited lines; 24 MHz per README"
+S2-0076,OK,,,yes,"Diffed programmatically vs benchmarks.csv at pqm4 master 5e5cc76d0b072ee7077e58afcbc619a1a67a53b4 (same as evidence commit); cycles mean, stack, total size and row names match at cited lines; 24 MHz per README"
+S2-0080,OK,,,yes,"Diffed programmatically vs benchmarks.csv at pqm4 master 5e5cc76d0b072ee7077e58afcbc619a1a67a53b4 (same as evidence commit); cycles mean, stack, total size and row names match at cited lines; 24 MHz per README"
+S2-0081,OK,,,yes,"Diffed programmatically vs benchmarks.csv at pqm4 master 5e5cc76d0b072ee7077e58afcbc619a1a67a53b4 (same as evidence commit); cycles mean, stack, total size and row names match at cited lines; 24 MHz per README"
+S2-0083,OK,,,yes,"Diffed programmatically vs benchmarks.csv at pqm4 master 5e5cc76d0b072ee7077e58afcbc619a1a67a53b4 (same as evidence commit); cycles mean, stack, total size and row names match at cited lines; 24 MHz per README"
+S2-0085,OK,,,yes,"Diffed programmatically vs benchmarks.csv at pqm4 master 5e5cc76d0b072ee7077e58afcbc619a1a67a53b4 (same as evidence commit); cycles mean, stack, total size and row names match at cited lines; 24 MHz per README"
+S2-0087,OK,,,yes,"Diffed programmatically vs benchmarks.csv at pqm4 master 5e5cc76d0b072ee7077e58afcbc619a1a67a53b4 (same as evidence commit); cycles mean, stack, total size and row names match at cited lines; 24 MHz per README"
+S2-0136,OK,,,yes,"Matches Table 3/4 cell (kcc converted to cycles); 24 MHz M4, 16 MHz M3 per captions"
+S2-0140,OK,,,yes,"Matches Table 3/4 cell (kcc converted to cycles); 24 MHz M4, 16 MHz M3 per captions"
+S2-0142,OK,,,yes,"Matches Table 3/4 cell (kcc converted to cycles); 24 MHz M4, 16 MHz M3 per captions"
+S2-0150,OK,,,yes,"Matches Table 3/4 cell (kcc converted to cycles); 24 MHz M4, 16 MHz M3 per captions"
+S2-0151,OK,,,yes,"Matches Table 3/4 cell (kcc converted to cycles); 24 MHz M4, 16 MHz M3 per captions"
+S2-0154,OK,,,yes,"Matches Table 3/4 cell (kcc converted to cycles); 24 MHz M4, 16 MHz M3 per captions"
