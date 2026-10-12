@@ -1,7 +1,7 @@
 # On-device benchmark harness: ML-KEM and ML-DSA (experiment E1)
 
 **STATUS (read first).** This harness has been compiled and run **on a PC only** (`make host`, output in ns, labelled *host measurement*).
-**It has not been run on any microcontroller.** The DWT cycle-counter code, the stack-painting macro and the ARM Makefile target are written from the
+**It has also been built and run in QEMU on an emulated Cortex-M4** (`./run_qemu.sh`, results in `docs/EMULATOR_RESULTS.md`): correctness, stack and size only, no cycle counts. **It has not been run on any real microcontroller.** The DWT cycle-counter code, the stack-painting macro and the ARM Makefile target are written from the
 Arm CMSIS register layout and are untested on hardware. Expect to debug board bring-up. Nothing printed by a PC build may be quoted as an MCU result.
 
 No cryptography is implemented here. The harness calls two pinned, reviewed libraries:
@@ -40,7 +40,16 @@ Capture one log file per power cycle and analyse with `../stats/analyze_runs.py`
 python3 -I ../stats/analyze_runs.py host_selftest/run1/*.csv host_selftest/run2/*.csv host_selftest/run3/*.csv --out-csv s.csv --out-md s.md
 ```
 
-## Board bring-up (what you must supply; untested)
+## Emulator run (free, works today)
+
+```
+sudo apt install qemu-system-arm gcc-arm-none-eabi
+./fetch_libs.sh && ./run_qemu.sh
+```
+
+Board files for QEMU `mps2-an386` are in `board/qemu/`. QEMU has no DWT cycle counter, so BENCH rows print 0.
+
+## Board bring-up for real hardware (what you must supply; untested)
 
 The `make arm` target needs your own `STARTUP=` file and `LDSCRIPT=`. Pick one route:
 
