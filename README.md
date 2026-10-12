@@ -10,7 +10,7 @@ Every number in this repository carries one of four labels. They are never mixed
 
 | Label | Meaning | Where it lives | Count or status |
 |---|---|---|---|
-| **Published** | Copied from a source that was actually retrieved, with URL, retrieval date and location in the source | `data/evidence.csv` | 477 rows (431 benchmark and size rows, 46 protocol and size rows); 90 come from the pqm4 project |
+| **Published** | Copied from a source that was actually retrieved, with URL, retrieval date and location in the source | `data/evidence.csv` | 523 rows (431 benchmark and size rows, 46 protocol and size rows, 46 benchmark and size rows read from author supplied PDFs in phase 2); 90 come from the pqm4 project |
 | **Host measured** | Run on a PC or server, never on a microcontroller | `bench/host/` | 300 liboqs timing records |
 | **Estimated** | Arithmetic from published sizes or rates, formula shown, "estimated from published sizes, not measured" | `linksim/`, `docs/link_tables.md`, `docs/LINK_REFERENCE_DESIGN.md`, `docs/PLANNER_RULES.md` thresholds, derived times in the report | all derived |
 | **Planned** | An experiment that has not been run | `docs/BENCHMARK_PLAN.md` (E1 to E5), `docs/NO_PURCHASE_PLAN.md`, `bench/mcu/` | nothing has been measured on a microcontroller |
