@@ -4,8 +4,8 @@ Author: Huda Mueen. Generated facts in `data/third_party_licences.csv` by `scrip
 
 | Component | Used for | Pinned commit | Licence file | Licence as read |
 |---|---|---|---|---|
-| mlkem-native | E1 ML-KEM benchmark | `d1b2fe782888` | LICENSE | Apache-2.0; MIT; ISC |
-| mldsa-native | E1 ML-DSA benchmark | `834a90d5e846` | LICENSE | Apache-2.0; MIT; ISC |
+| mlkem native | E1 ML-KEM benchmark | `d1b2fe782888` | LICENSE | Apache-2.0; MIT; ISC |
+| mldsa native | E1 ML-DSA benchmark | `834a90d5e846` | LICENSE | Apache-2.0; MIT; ISC |
 | wolfSSL | E2 hash based signature verification | `3c5eead44904` | COPYING | GPL-3.0 |
 | wolfBoot | E4 boot time | `eb710fe1656f` | LICENSE | GPL-3.0 |
 | TF-PSA-Crypto | E2 comparison | `73c5da561c8e` | LICENSE | Apache-2.0; GPL-2.0 |
@@ -15,7 +15,7 @@ Author: Huda Mueen. Generated facts in `data/third_party_licences.csv` by `scrip
 
 Notes:
 
-- mlkem-native, mldsa-native and slhdsa-c carry a combined licence statement (Apache-2.0, MIT or ISC, as read). TF-PSA-Crypto offers Apache-2.0 or GPL-2.0 as read.
+- mlkem native, mldsa native and slhdsa-c carry a combined licence statement (Apache-2.0, MIT or ISC, as read). TF-PSA-Crypto offers Apache-2.0 or GPL-2.0 as read.
 - wolfSSL and wolfBoot are GPL-3.0 as read. They are downloaded by `bench/mcu/fetch_libs.sh e2` for local experiments only. Do not redistribute builds without checking the licence.
 - pqm4 has no licence file at the repository root at the pinned commit. Its licences are set per implementation directory. It is used only to read published benchmark rows and to read configuration files, never copied.
 - liboqs is MIT as read (LICENSE.txt). Host measurements in `bench/host/` are labelled host measured.
