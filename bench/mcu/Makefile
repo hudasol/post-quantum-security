@@ -38,11 +38,13 @@ FPU      ?= fpv4-sp-d16
 ALG      ?= mlkem
 SET      ?= 768
 CLOCK_HZ ?= 0
+RUN_ID   ?= 0
+STACK_SPAN ?= 16384
 LDSCRIPT ?=
 STARTUP  ?=
 ARM_OPT  ?= -O2
 ARM_FLAGS := -mcpu=$(CPU) -mthumb -mfpu=$(FPU) -mfloat-abi=hard -ffunction-sections -fdata-sections \
-  $(ARM_OPT) -std=c99 -Wall -DBENCH_ITERS=$(ITERS) -DBENCH_CLOCK_HZ=$(CLOCK_HZ) -DBENCH_RUN_ID=$(RUN_ID) \
+  $(ARM_OPT) -std=c99 -Wall -DBENCH_ITERS=$(ITERS) -DBENCH_CLOCK_HZ=$(CLOCK_HZ) -DBENCH_RUN_ID=$(RUN_ID) -DBENCH_STACK_SPAN=$(STACK_SPAN) \
   -DBENCH_DISABLE_IRQ -DBENCH_OPT_NOTE='"$(ARM_OPT)"' -Isrc
 ifeq ($(ALG),mlkem)
   ARM_SRC := src/bench_mlkem.c $(MLK_DIR)/mlkem_native.c
@@ -51,7 +53,6 @@ else
   ARM_SRC := src/bench_mldsa.c $(MLD_DIR)/mldsa_native.c
   ARM_DEF := -DMLD_CONFIG_NAMESPACE_PREFIX=mldsa -DMLD_CONFIG_PARAMETER_SET=$(SET) -I$(MLD_DIR)
 endif
-RUN_ID ?= 0
 arm:
 	@test -n "$(LDSCRIPT)" -a -n "$(STARTUP)" || { echo "Set LDSCRIPT= and STARTUP= (board files you must provide)"; exit 2; }
 	@mkdir -p $(BUILD)/arm
