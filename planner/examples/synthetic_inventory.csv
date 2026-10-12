@@ -1,0 +1,14 @@
+# SYNTHETIC: invented devices for testing. Not a real fleet, not measured, not from any supplier.
+device_id,ram_kb,flash_kb,bootrom_verifier_updatable,link_bandwidth_bps,service_life_remaining_years,data_lifetime_years,free_flash_kb,free_ram_kb,updatable_bootloader_stage,core,notes
+D01,256,1024,yes,57600,10,15,400,128,yes,Cortex-M33,SYNTHETIC
+D02,128,512,no,57600,8,2,200,64,yes,Cortex-M4,SYNTHETIC
+D03,64,256,yes,57600,10,1,20,30,no,Cortex-M4,SYNTHETIC
+D04,192,1024,no,9600,12,5,,,no,Cortex-M4,SYNTHETIC
+D05,256,2048,,57600,7,3,800,120,yes,Cortex-M7,SYNTHETIC
+D06,512,2048,yes,250,3,20,1000,200,yes,Cortex-M33,SYNTHETIC
+D07,256,1024,yes,100,3,20,500,100,yes,Cortex-M4,SYNTHETIC
+D08,96,512,yes,57600,9,12,100,6,no,Cortex-M4,SYNTHETIC
+D09,8,128,yes,57600,10,10,,,no,Cortex-M0+,SYNTHETIC
+D10,256,1024,yes,57600,10,1,,,yes,Cortex-M4,SYNTHETIC
+D11,128,512,no,57600,4,9,200,64,yes,Cortex-M4,SYNTHETIC
+D12,256,1024,no,57600,9,2,300,100,,Cortex-M33,SYNTHETIC
