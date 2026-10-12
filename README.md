@@ -57,7 +57,7 @@ cd planner && python3 -m unittest
 
 ## Licences
 
-Proposed, waiting for the author's confirmation: code under Apache-2.0 (`LICENSE`), documents and data under CC BY 4.0 (`LICENSE-DOCS`); see `docs/LICENSE_PROPOSAL.md`. Third party libraries are never committed; their licences are recorded in `docs/LICENSES.md`. No paper is redistributed.
+All rights reserved by Huda Mueen. This is not open source. Please contact the author through https://github.com/hudasol before you use, copy, modify, distribute or sell any part of it (`LICENSE`, `docs/LICENCE_DECISION.md`). Third party libraries are never committed; their licences are recorded in `docs/LICENSES.md`. No paper is redistributed.
 
 ## Safety
 
