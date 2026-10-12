@@ -24,7 +24,7 @@ Handshake payload with the key provisioned in advance: 4,772 B; about 20 message
 
 ## Open questions (no answers claimed)
 
-- Which message carries the flights, and whether a vendor extension fits the project's own rules for extensions.
+- Which message carries the handshake, and whether a vendor extension fits the project's own rules for extensions.
 - How the timestamp and replay rule interacts with a key that changes mid flight.
 - Whether a flight controller with a Cortex M7 has enough free RAM for the 9 kB handshake working set (see `docs/PLANNER_RULES.md` for how that number is derived).
 - Whether a gateway on the companion computer should terminate the exchange, leaving the flight controller untouched. This is the same pattern the planner calls HYBRID.
