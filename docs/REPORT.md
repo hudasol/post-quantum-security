@@ -14,7 +14,7 @@ date: "Evidence retrieved 2026-10-11 (Asia/Dubai)"
 **Headline findings** (each is developed and sourced below):
 
 1. **The hard problem is signatures and the frozen trust anchor, not key exchange.** Secrecy is exposed retroactively (harvest-now-decrypt-later), but authenticity is exposed prospectively: a forged firmware image only matters once a capable quantum computer exists *and* devices still trust the classical key. Where the verification key and algorithm sit in an immutable boot ROM or fuses, the scheme must outlive the device (NIST CSWP 39, RFC 9019, draft IR 8547, SP 800-208).
-2. **Compute cost on Cortex-M4F is moderate for ML-KEM and ML-DSA verification, large for ML-DSA signing and very large for SLH-DSA signing.** Published pqm4 figures (board and clock ambiguous, see 3.1): ML-KEM-768 decapsulation takes 707,827 cycles in the speed-optimised M4F code (about 29.5 ms if the clock is 24 MHz, derived) and ML-DSA-44 verification 1,421,623 cycles (about 59.2 ms). ML-DSA-44 signing averages 3,943,121 cycles with a long tail. Round-3 SPHINCS+ SHA2-128s signing, the predecessor of SLH-DSA, takes 7,657,558,168 cycles (about 319,064.9 ms derived, i.e. over five minutes at 24 MHz).
+2. **Compute cost on Cortex-M4F is moderate for ML-KEM and ML-DSA verification, large for ML-DSA signing and very large for SLH-DSA signing.** Published pqm4 figures (board and clock ambiguous, see 3.1): ML-KEM-768 decapsulation takes 707,827 cycles in the speed-optimised M4F code (derived: 29.5 ms at 24 MHz or 35.4 ms at 20 MHz) and ML-DSA-44 verification 1,421,623 cycles (derived: 59.2 ms at 24 MHz or 71.1 ms at 20 MHz). ML-DSA-44 signing averages 3,943,121 cycles with a long tail. Round-3 SPHINCS+ SHA2-128s signing, the predecessor of SLH-DSA, takes 7,657,558,168 cycles (derived: 319,064.9 ms at 24 MHz or 382,877.9 ms at 20 MHz).
 3. **Memory and flash decide feasibility more than cycles.** ML-DSA-44 signing needs 44,816 bytes of stack in the fast M4F code but 5,080 bytes in the stack-optimised code, which is 12,134,284 cycles. Verification can be done in 2,712 bytes of stack. Code is 19,592 to 24,844 bytes for the M4F-specific ML-DSA-44 variants.
 4. **Sizes, not speed, break the radio links.** An ML-DSA-44 signature is 2,420 bytes; MAVLink 2's signature field is 13 bytes (6-byte tag) and its largest payload is 255 bytes, so one ML-DSA-44 signature fills 10 full frames (derived). Per-message PQ signatures on MAVLink-class telemetry are not workable; session-key designs are.
 5. **No upstream support in the drone/robot stack yet.** I found no PQC in MAVLink, PX4/ArduPilot signing, the DDS-Security specification, mainline SROS2 or upstream MCUboot. wolfBoot (ML-DSA, LMS/HSS, XMSS, hybrid) and TF-M BL1 (LMS) implement PQ verification, and some vendors claim PQ or LMS verification in parts (press statements, unverified, see 4.7); the PSA Crypto API has a PQC extension (1.4 final, January 2026).
@@ -74,7 +74,7 @@ The protocol was written before any evidence was collected (`docs/PROTOCOL.md`).
 
 ## 4.1 The comparability warning that matters most
 
-The only maintained benchmark with the final ML-KEM/ML-DSA names on Cortex-M4F is **pqm4** (`benchmarks.csv`, last changed 2025-05-22). Its README says all cycle counts were taken at 24 MHz to avoid flash wait states, but its default board's (NUCLEO-L4R5ZI) benchmark clock path in code is 20 MHz and the CSV does not name the board; two other papers say the pqm4 reference numbers came from an L4R5ZI. **I therefore treat the pqm4 clock as unresolved**; the "ms at 24 MHz" figures here are derived with that stated assumption and are not claims about any particular board. pqm4 itself carries a notice that it will be archived read-only in or after January 2027. pqm4 times with SysTick, not the DWT counter. Its ML-DSA rows are means of 1000 runs and its KEM rows means of 10.
+The only maintained benchmark with the final ML-KEM/ML-DSA names on Cortex-M4F is **pqm4** (`benchmarks.csv`, last changed 2025-05-22). Its README says all cycle counts were taken at 24 MHz to avoid flash wait states, but its default board's (NUCLEO-L4R5ZI) benchmark clock path in code is 20 MHz and the CSV does not name the board; two other papers say the pqm4 reference numbers came from an L4R5ZI. **I therefore treat the pqm4 clock as unresolved**; every time figure here is derived at both candidate clocks (24 MHz from the README, 20 MHz from the code of the default board) and is not a claim about any particular board. The board and clock were checked in the project's own files (`data/raw/S6_pqm4_config.md`): the README default board is the NUCLEO-L4R5ZI, the benchmarks.py default platform is the STM32F4 Discovery, and the result files record neither. pqm4 itself carries a notice that it will be archived read-only in or after January 2027. pqm4 times with SysTick, not the DWT counter. Its ML-DSA rows are means of 1000 runs and its KEM rows means of 10.
 
 ## 4.2 ML-KEM (FIPS 203) on Cortex-M4F
 
@@ -102,7 +102,7 @@ For ML-DSA-44 verification, the operation a secure bootloader performs: 2,063,09
 
 *No final-parameter SLH-DSA or LMS cycle count on any microcontroller was found.* What exists:
 
-- **pqm4's SPHINCS+ rows are round-3 "simple" parameter sets, not FIPS 205**, reference C only. SHA2-128s: sign 7,657,558,168 cycles, verify 7,471,794; SHA2-128f: sign 368,575,228, verify 21,923,628 (about 913.5 ms derived at 24 MHz). Signatures are 7,856 (128s) and 17,088 (128f) bytes in FIPS 205 (published sizes). [Derived, assuming 24 MHz] verification takes about 311 ms (128s) to 913 ms (128f); [inference] signing on-device is impractical.
+- **pqm4's SPHINCS+ rows are round-3 "simple" parameter sets, not FIPS 205**, reference C only. SHA2-128s: sign 7,657,558,168 cycles, verify 7,471,794; SHA2-128f: sign 368,575,228, verify 21,923,628. Signatures are 7,856 (128s) and 17,088 (128f) bytes in FIPS 205 (published sizes). [Derived] verification takes 311.3 ms at 24 MHz or 373.6 ms at 20 MHz (128s) and 913.5 ms at 24 MHz or 1,096.2 ms at 20 MHz (128f); [inference] signing on-device is impractical.
 - **LMS/XMSS on Cortex-M4** come from conference *slides* (Campos et al., 2020; STM32F4DISCOVERY, clock not stated, pre-RFC-final variants): LMS h5 SHA-256 verify 2,576,515 cycles with 1,044 bytes of stack; LMS h10 verify 2,650,000; XMSS ROBUST h10 verify 13,070,000. The XMSS paper of Bos et al. (FRDM-K64F, 120 MHz) reports 13,850,000 cycles for reference XMSS-SHA2_10_256 verification and 7,870,000 with its speed-up techniques.
 - **Boot-time measurements** (wolfSSL blog, STM32H563 at 320 MHz, ~100 KB image, *total boot time, not verification-only*; vendor, unverified): SHA2-only baseline 55.662 ms; ECDSA P-256 75.611 ms; ML-DSA-44 82.791 ms; ML-DSA-87 127.807 ms; LMS 1-10-8 207.703 ms; XMSS-SHA2_10_256 189.553 ms; hybrid ECC+ML-DSA-65 341.706 ms. The blog gives 320 MHz for the STM32H563, above the 250 MHz maximum that Zephyr's board page lists for the NUCLEO-H563ZI, so the clock or part naming is doubtful. The same table lists Ed25519 at 1589.512 ms, which shows how much an unoptimised configuration can distort comparisons.
 - **TF-M BL1** states its LMS software verifier is about 3 KiB versus at least 6.5 KiB for RSA (vendor-documentation claim).
@@ -361,39 +361,39 @@ All rows are **published** numbers. Cycles are copied as published; `sz` = key/s
 
 | id | scheme / parameter / op | device, core, MHz | cycles | stack B | code B | sz B | status |
 |---|---|---|---|---|---|---|---|
-| S2-0019 | ML-KEM ML-KEM-768 keygen | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 988722 | 10248 | 5120 |  | final-FIPS-name |
-| S2-0020 | ML-KEM ML-KEM-768 encaps | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 1138225 | 13384 | 5120 |  | final-FIPS-name |
-| S2-0021 | ML-KEM ML-KEM-768 decaps | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 1387984 | 14480 | 5120 |  | final-FIPS-name |
-| S2-0022 | ML-KEM ML-KEM-768 keygen | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 642096 | 5396 | 16016 |  | final-FIPS-name |
-| S2-0023 | ML-KEM ML-KEM-768 encaps | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 658754 | 6468 | 16016 |  | final-FIPS-name |
-| S2-0024 | ML-KEM ML-KEM-768 decaps | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 707827 | 6452 | 16016 |  | final-FIPS-name |
-| S2-0025 | ML-KEM ML-KEM-768 keygen | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 644195 | 2820 | 13320 |  | final-FIPS-name |
-| S2-0026 | ML-KEM ML-KEM-768 encaps | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 664654 | 2860 | 13320 |  | final-FIPS-name |
-| S2-0027 | ML-KEM ML-KEM-768 decaps | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 714194 | 2844 | 13320 |  | final-FIPS-name |
-| S2-0028 | ML-DSA ML-DSA-44 keygen | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 1874405 | 38304 | 8212 |  | final-FIPS-name |
-| S2-0029 | ML-DSA ML-DSA-44 sign | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 7925955 | 51976 | 8212 |  | final-FIPS-name |
-| S2-0030 | ML-DSA ML-DSA-44 verify | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 2063096 | 36308 | 8212 |  | final-FIPS-name |
-| S2-0031 | ML-DSA ML-DSA-44 keygen | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 1426025 | 38296 | 19592 |  | final-FIPS-name |
-| S2-0032 | ML-DSA ML-DSA-44 sign | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 3943121 | 44816 | 19592 |  | final-FIPS-name |
-| S2-0033 | ML-DSA ML-DSA-44 verify | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 1421623 | 8912 | 19592 |  | final-FIPS-name |
-| S2-0034 | ML-DSA ML-DSA-44 keygen | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 1799062 | 4408 | 24844 |  | final-FIPS-name |
-| S2-0035 | ML-DSA ML-DSA-44 sign | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 12134284 | 5080 | 24844 |  | final-FIPS-name |
-| S2-0036 | ML-DSA ML-DSA-44 verify | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 3242333 | 2712 | 24844 |  | final-FIPS-name |
-| S2-0037 | ML-DSA ML-DSA-65 keygen | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 3205533 | 60832 | 7724 |  | final-FIPS-name |
-| S2-0038 | ML-DSA ML-DSA-65 sign | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 12359056 | 79624 | 7724 |  | final-FIPS-name |
-| S2-0039 | ML-DSA ML-DSA-65 verify | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 3377305 | 57736 | 7724 |  | final-FIPS-name |
-| S2-0040 | ML-DSA ML-DSA-65 keygen | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 2516006 | 60824 | 19328 |  | final-FIPS-name |
-| S2-0041 | ML-DSA ML-DSA-65 sign | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 6193171 | 68872 | 19328 |  | final-FIPS-name |
-| S2-0042 | ML-DSA ML-DSA-65 verify | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 2415944 | 9888 | 19328 |  | final-FIPS-name |
-| S2-0043 | ML-DSA ML-DSA-65 keygen | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 3412622 | 4408 | 24120 |  | final-FIPS-name |
-| S2-0044 | ML-DSA ML-DSA-65 sign | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 24421526 | 6616 | 24120 |  | final-FIPS-name |
-| S2-0045 | ML-DSA ML-DSA-65 verify | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 5732397 | 2712 | 24120 |  | final-FIPS-name |
-| S2-0055 | SPHINCS+ (round-3 'sim sphincs-sha2-128f-simple keygen | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 15742990 | 2856 | 4956 |  | pre-standard |
-| S2-0056 | SPHINCS+ (round-3 'sim sphincs-sha2-128f-simple sign | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 368575228 | 2468 | 4956 |  | pre-standard |
-| S2-0057 | SPHINCS+ (round-3 'sim sphincs-sha2-128f-simple verify | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 21923628 | 2664 | 4956 |  | pre-standard |
-| S2-0058 | SPHINCS+ (round-3 'sim sphincs-sha2-128s-simple keygen | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 1007731522 | 3084 | 5264 |  | pre-standard |
-| S2-0059 | SPHINCS+ (round-3 'sim sphincs-sha2-128s-simple sign | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 7657558168 | 2556 | 5264 |  | pre-standard |
-| S2-0060 | SPHINCS+ (round-3 'sim sphincs-sha2-128s-simple verify | STM32 Cortex-M4F devel, Cortex-M4F, 24 | 7471794 | 1968 | 5264 |  | pre-standard |
+| S2-0019 | ML-KEM ML-KEM-768 keygen | Board not recorded for, Cortex-M4F,  | 988722 | 10248 | 5120 |  | final-FIPS-name |
+| S2-0020 | ML-KEM ML-KEM-768 encaps | Board not recorded for, Cortex-M4F,  | 1138225 | 13384 | 5120 |  | final-FIPS-name |
+| S2-0021 | ML-KEM ML-KEM-768 decaps | Board not recorded for, Cortex-M4F,  | 1387984 | 14480 | 5120 |  | final-FIPS-name |
+| S2-0022 | ML-KEM ML-KEM-768 keygen | Board not recorded for, Cortex-M4F,  | 642096 | 5396 | 16016 |  | final-FIPS-name |
+| S2-0023 | ML-KEM ML-KEM-768 encaps | Board not recorded for, Cortex-M4F,  | 658754 | 6468 | 16016 |  | final-FIPS-name |
+| S2-0024 | ML-KEM ML-KEM-768 decaps | Board not recorded for, Cortex-M4F,  | 707827 | 6452 | 16016 |  | final-FIPS-name |
+| S2-0025 | ML-KEM ML-KEM-768 keygen | Board not recorded for, Cortex-M4F,  | 644195 | 2820 | 13320 |  | final-FIPS-name |
+| S2-0026 | ML-KEM ML-KEM-768 encaps | Board not recorded for, Cortex-M4F,  | 664654 | 2860 | 13320 |  | final-FIPS-name |
+| S2-0027 | ML-KEM ML-KEM-768 decaps | Board not recorded for, Cortex-M4F,  | 714194 | 2844 | 13320 |  | final-FIPS-name |
+| S2-0028 | ML-DSA ML-DSA-44 keygen | Board not recorded for, Cortex-M4F,  | 1874405 | 38304 | 8212 |  | final-FIPS-name |
+| S2-0029 | ML-DSA ML-DSA-44 sign | Board not recorded for, Cortex-M4F,  | 7925955 | 51976 | 8212 |  | final-FIPS-name |
+| S2-0030 | ML-DSA ML-DSA-44 verify | Board not recorded for, Cortex-M4F,  | 2063096 | 36308 | 8212 |  | final-FIPS-name |
+| S2-0031 | ML-DSA ML-DSA-44 keygen | Board not recorded for, Cortex-M4F,  | 1426025 | 38296 | 19592 |  | final-FIPS-name |
+| S2-0032 | ML-DSA ML-DSA-44 sign | Board not recorded for, Cortex-M4F,  | 3943121 | 44816 | 19592 |  | final-FIPS-name |
+| S2-0033 | ML-DSA ML-DSA-44 verify | Board not recorded for, Cortex-M4F,  | 1421623 | 8912 | 19592 |  | final-FIPS-name |
+| S2-0034 | ML-DSA ML-DSA-44 keygen | Board not recorded for, Cortex-M4F,  | 1799062 | 4408 | 24844 |  | final-FIPS-name |
+| S2-0035 | ML-DSA ML-DSA-44 sign | Board not recorded for, Cortex-M4F,  | 12134284 | 5080 | 24844 |  | final-FIPS-name |
+| S2-0036 | ML-DSA ML-DSA-44 verify | Board not recorded for, Cortex-M4F,  | 3242333 | 2712 | 24844 |  | final-FIPS-name |
+| S2-0037 | ML-DSA ML-DSA-65 keygen | Board not recorded for, Cortex-M4F,  | 3205533 | 60832 | 7724 |  | final-FIPS-name |
+| S2-0038 | ML-DSA ML-DSA-65 sign | Board not recorded for, Cortex-M4F,  | 12359056 | 79624 | 7724 |  | final-FIPS-name |
+| S2-0039 | ML-DSA ML-DSA-65 verify | Board not recorded for, Cortex-M4F,  | 3377305 | 57736 | 7724 |  | final-FIPS-name |
+| S2-0040 | ML-DSA ML-DSA-65 keygen | Board not recorded for, Cortex-M4F,  | 2516006 | 60824 | 19328 |  | final-FIPS-name |
+| S2-0041 | ML-DSA ML-DSA-65 sign | Board not recorded for, Cortex-M4F,  | 6193171 | 68872 | 19328 |  | final-FIPS-name |
+| S2-0042 | ML-DSA ML-DSA-65 verify | Board not recorded for, Cortex-M4F,  | 2415944 | 9888 | 19328 |  | final-FIPS-name |
+| S2-0043 | ML-DSA ML-DSA-65 keygen | Board not recorded for, Cortex-M4F,  | 3412622 | 4408 | 24120 |  | final-FIPS-name |
+| S2-0044 | ML-DSA ML-DSA-65 sign | Board not recorded for, Cortex-M4F,  | 24421526 | 6616 | 24120 |  | final-FIPS-name |
+| S2-0045 | ML-DSA ML-DSA-65 verify | Board not recorded for, Cortex-M4F,  | 5732397 | 2712 | 24120 |  | final-FIPS-name |
+| S2-0055 | SPHINCS+ (round-3 'sim sphincs-sha2-128f-simple keygen | Board not recorded for, Cortex-M4F,  | 15742990 | 2856 | 4956 |  | pre-standard |
+| S2-0056 | SPHINCS+ (round-3 'sim sphincs-sha2-128f-simple sign | Board not recorded for, Cortex-M4F,  | 368575228 | 2468 | 4956 |  | pre-standard |
+| S2-0057 | SPHINCS+ (round-3 'sim sphincs-sha2-128f-simple verify | Board not recorded for, Cortex-M4F,  | 21923628 | 2664 | 4956 |  | pre-standard |
+| S2-0058 | SPHINCS+ (round-3 'sim sphincs-sha2-128s-simple keygen | Board not recorded for, Cortex-M4F,  | 1007731522 | 3084 | 5264 |  | pre-standard |
+| S2-0059 | SPHINCS+ (round-3 'sim sphincs-sha2-128s-simple sign | Board not recorded for, Cortex-M4F,  | 7657558168 | 2556 | 5264 |  | pre-standard |
+| S2-0060 | SPHINCS+ (round-3 'sim sphincs-sha2-128s-simple verify | Board not recorded for, Cortex-M4F,  | 7471794 | 1968 | 5264 |  | pre-standard |
 | S2-0254 | XMSS XMSS-SHA2_10_256 verify (reference ve | NXP FRDM-K64F (Kinetis, Cortex-M4, 120 | 13850000 |  |  |  | n/a |
 | S2-0257 | XMSS XMSS-SHA2_10_256 verify (TMTO + ctr t | NXP FRDM-K64F (Kinetis, Cortex-M4, 120 | 7870000 |  |  |  | n/a |
 | S2-0316 | LMS LMS w=16 h=5 n=256 hash=SH verify | STM32F4DISCOVERY, Cortex-M4,  | 2576515 | 1044 |  |  | n/a |
@@ -420,7 +420,7 @@ All rows are **published** numbers. Cycles are copied as published; `sz` = key/s
 | S2-0413 | ML-DSA ML-DSA-87 signature size | n/a (standard), ,  |  |  |  | 4627 | final-FIPS-name |
 | S3-001 | Kyber (round-3, pre-st Kyber768 CCA decapsulation, f | not stated in abstract, Cortex-M4,  | 2978441 |  |  |  | pre-standard |
 | S3-002 | Kyber (round-3, pre-st not stated in abstract CCA decapsulation, f | not stated in abstract, Cortex-M4F,  | 3100000 |  |  |  | pre-standard |
-| S3-003 | Dilithium (round-3 var not stated in abstract masked operations (m | not stated in abstract, Cortex-M3,  |  |  |  |  | pre-standard |
+| S3-003 | Dilithium (2019 era NI not stated in abstract masked operations (m | not stated in abstract, Cortex-M3,  |  |  |  |  | pre-standard |
 | S3-004 | ML-DSA not stated in abstract rejection sampling s | not stated in abstract, ,  |  |  |  |  | final-FIPS-name |
 | S3-005 | ML-KEM (published as K Kyber768 KeyGen | Artix-7 XC7A100T-1CSG3, HORNET RIS,  | 23000 |  |  |  | check-source |
 | S3-006 | ML-KEM (published as K Kyber768 Enc | Artix-7 XC7A100T-1CSG3, HORNET RIS,  | 28000 |  |  |  | check-source |
