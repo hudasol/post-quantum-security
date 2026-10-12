@@ -17,20 +17,21 @@ A sourced review of what post quantum cryptography costs on microcontroller clas
 
 ## What is published, host measured, estimated and planned
 
-Every number in this repository carries one of four labels. They are never mixed in one table or one axis.
+Every number in this repository carries one of five labels (the fifth, emulated, was added in phase 2). They are never mixed in one table or one axis.
 
 | Label | Meaning | Where it lives | Count or status |
 |---|---|---|---|
 | **Published** | Copied from a source that was actually retrieved, with URL, retrieval date and location in the source | `data/evidence.csv` | {n_pub} rows ({n_s2} benchmark and size rows, {n_s3} protocol and size rows, {n_s7} benchmark and size rows read from author supplied PDFs in phase 2); {n_pq} come from the pqm4 project |
 | **Host measured** | Run on a PC or server, never on a microcontroller | `bench/host/` | {hk} liboqs timing records |
 | **Estimated** | Arithmetic from published sizes or rates, formula shown, "estimated from published sizes, not measured" | `linksim/`, `docs/link_tables.md`, `docs/LINK_REFERENCE_DESIGN.md`, `docs/PLANNER_RULES.md` thresholds, derived times in the report | all derived |
-| **Planned** | An experiment that has not been run | `docs/BENCHMARK_PLAN.md` (E1 to E5), `docs/NO_PURCHASE_PLAN.md`, `bench/mcu/` | nothing has been measured on a microcontroller |
+| **Emulated** | Run on an emulated Cortex-M4 (QEMU). Correctness, stack and image size only; no cycle counts | `docs/EMULATOR_RESULTS.md`, `bench/mcu/qemu_results/` | 6 builds, all checks passed |
+| **Planned** | An experiment that has not been run | `docs/BENCHMARK_PLAN.md` (E1 to E5), `docs/NO_PURCHASE_PLAN.md`, `bench/mcu/` | nothing has been measured on a real microcontroller |
 
 No purchase is needed for any planned step: an emulator (QEMU or Renode) checks correctness and sizes, and borrowed lab hardware gives real cycle counts (`docs/NO_PURCHASE_PLAN.md`).
 
 ## Verification
 
-Independent verifiers re-opened the sources. Phase 1 sampled 50 rows. Phase 2 checked all {S['headline']['rows']} rows behind a headline number and a seeded stratified random sample of {S['random']['rows']} further rows. Combined strict row error rate: {int(c['error'])} of {ver} verifiable rows ({100*int(c['error'])/ver:.1f} percent), with {c['wrong_fields']} wrong value in {c['populated']} compared fields; the other {c['missing_only_rows']} were rounded KB figures that the table left empty and now records verbatim. {c['unverifiable']} rows could not be verified because the source stayed blocked. Details: `docs/VERIFICATION.md` (phase 1) and `docs/VERIFICATION2.md` (phase 2). The pqm4 benchmark clock is unresolved in the project's own files and is stated as such (`data/raw/S6_pqm4_config.md`).
+Independent verifiers re-opened the sources. Phase 1 sampled 50 rows. Phase 2 checked all {S['headline']['rows']} rows behind a headline number and a seeded stratified random sample of {S['random']['rows']} further rows. Combined strict row error rate: {int(c['error'])} of {ver} verifiable rows ({100*int(c['error'])/ver:.1f} percent), with {c['wrong_fields']} wrong value in {c['populated']} compared fields; the other {c['missing_only_rows']} were rounded KB figures that the table left empty and now records verbatim. {c['unverifiable']} rows could not be verified because the source stayed blocked. The {n_s7} rows added later from author supplied PDFs were each checked by finding the value in the named table, not by the independent verifiers, and are outside these rates. Details: `docs/VERIFICATION.md` (phase 1) and `docs/VERIFICATION2.md` (phase 2). The pqm4 benchmark clock is unresolved in the project's own files and is stated as such (`data/raw/S6_pqm4_config.md`).
 
 Predictions were written before the phase 2 runs and are scored in `docs/PREDICTIONS.md`.
 
