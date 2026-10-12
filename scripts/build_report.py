@@ -2,7 +2,7 @@
 """Assemble docs/REPORT.md from docs/REPORT_body.md.
 Macros in the body pull numbers from data/evidence.csv so prose cannot drift from the table:
   {{cyc:ID}} {{stack:ID}} {{code:ID}} {{size:ID}} {{eng:ID}}  -> thousands-separated value of that column
-  {{ms24:ID}}   -> cycles/24e3 ms (DERIVED, assumes 24 MHz; label stays in the prose)
+  {{ms:ID}}     -> cycles converted at the two candidate pqm4 clocks in data/pqm4_board_clock.csv (DERIVED)
   {{note_ms:ID}}-> the 'boot time|avg time|mean time X ms' figure from compiler_flags_or_notes
   {{ratio:A/B}} -> cycles(A)/cycles(B) as 'N.NN x'
   {{nrows}}     -> number of evidence rows
@@ -24,6 +24,9 @@ def num(i, col):
 def fmt(x):
     return f"{x:,.0f}" if float(x).is_integer() else f"{x:,}"
 
+_rule = {r["key"]: r["value"] for r in csv.DictReader(open(ROOT / "data/pqm4_board_clock.csv", newline="", encoding="utf-8"))}
+CLK_HI = int(_rule["candidate_clock_mhz_readme"]); CLK_LO = int(_rule["candidate_clock_mhz_l4r5zi_code"])
+
 def expand(m):
     kind, arg = m.group(1), m.group(2)
     if kind == "cyc": return fmt(num(arg, "cycles"))
@@ -32,7 +35,9 @@ def expand(m):
     if kind == "size": return fmt(num(arg, "key_or_sig_size_bytes"))
     if kind == "eng":
         v = num(arg, "energy_uj"); return f"{v:,.1f}".rstrip("0").rstrip(".") if v != int(v) else f"{int(v):,}"
-    if kind == "ms24": return f"{num(arg,'cycles')/24000:,.1f} ms"
+    if kind == "ms":
+        c = num(arg, "cycles")
+        return f"{c/CLK_HI/1000:,.1f} ms at {CLK_HI} MHz or {c/CLK_LO/1000:,.1f} ms at {CLK_LO} MHz"
     if kind == "ratio":
         a, b = arg.split("/"); return f"{num(a,'cycles')/num(b,'cycles'):.2f}x"
     if kind == "note_ms":
@@ -42,7 +47,7 @@ def expand(m):
     sys.exit("unknown macro " + kind)
 
 body = (ROOT / "docs/REPORT_body.md").read_text(encoding="utf-8")
-body = re.sub(r"\{\{(cyc|stack|code|size|eng|ms24|ratio|note_ms):([^}]+)\}\}", expand, body)
+body = re.sub(r"\{\{(cyc|stack|code|size|eng|ms|ratio|note_ms):([^}]+)\}\}", expand, body)
 body = body.replace("{{nrows}}", str(len(rows)))
 
 def include(m):
