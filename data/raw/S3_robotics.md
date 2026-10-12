@@ -277,3 +277,5 @@ These ignore MAVLink framing (adds 12 bytes per frame), time-division sync, and 
 
 ## Correction (2026-10-11, report fact-check)
 Section 4.4 attributes the Mbed TLS hash-accelerator LMS-verification bug to CVE-2025-49601. The independent check found that bug is CVE-2025-49600; CVE-2025-49601 is a separate out-of-bounds read in LMS public-key import (matches S5's Zephyr row). Use 49600 for the verification-bypass hazard.
+
+- Phase 2 correction (2026-10-12): mavlink/mavlink issues #2525 (closed 2026-06-30) and #2527 (closed 2026-06-24) were read in phase 2 through the GitHub connector. #2525 records the maintainer position that MAVLink has no post quantum roadmap and the project does not think it needs one; see docs/upstream/README.md. The earlier line above, that #2527 was unreachable, is superseded.
