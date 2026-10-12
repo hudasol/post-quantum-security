@@ -31,4 +31,4 @@ Sizes: ML-DSA-44 signature 2,420 B (65: 3,309; 87: 4,627); ML-KEM-768 key 1,184 
 
 **What remains unmeasured:** any Cortex-M33 result; final parameter LMS and SLH-DSA on any MCU; measured energy for the final standards; flight controller (Cortex-M7) numbers; the harness itself on hardware. Verification: 0 wrong values in 48 verifiable sampled rows (about 6% upper bound).
 
-**First experiment (E1):** ML-DSA-44 verify and ML-KEM-768 decaps cycles, stack and flash on a NUCLEO-U575ZI-Q (M33) and a NUCLEO-L4R5ZI (M4F), pinned mlkem-native/mldsa-native v2.0.0, 3 power cycles, medians with bootstrap CIs (about $60 of boards).
+**First experiment (E1):** ML-DSA-44 verify and ML-KEM-768 decaps cycles, stack and flash on a Cortex-M33 and a Cortex-M4F board (for example NUCLEO-U575ZI-Q and NUCLEO-L4R5ZI), pinned mlkem-native/mldsa-native v2.0.0, 3 power cycles, medians with bootstrap CIs. No purchase is needed: run it first in an emulator (QEMU or Renode) for correctness, flash and stack, then borrow a lab board for real cycle counts.
