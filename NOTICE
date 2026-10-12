@@ -1,0 +1,7 @@
+Post quantum security review for drone and robot computers
+Copyright 2026 Huda Mueen
+
+Code (scripts/, bench/, linksim/, planner/, .github/) is under the Apache License 2.0 (file LICENSE).
+Documents, data and plots (docs/, data/, plots/) are under Creative Commons Attribution 4.0 International (file LICENSE-DOCS).
+Both licences are PROPOSED and wait for the author's confirmation; see docs/LICENSE_PROPOSAL.md.
+Third party libraries are not included; their licences are recorded in docs/LICENSES.md.
