@@ -100,7 +100,8 @@ def device_class(row):
 
 
 def main():
-    rows = read_rows(RAW / "S2_evidence.csv", "S2") + read_rows(RAW / "S3_evidence.csv", "S3")
+    rows = (read_rows(RAW / "S2_evidence.csv", "S2") + read_rows(RAW / "S3_evidence.csv", "S3")
+            + read_rows(RAW / "S7_verified.csv", "S7"))
     problems = []
     repaired = []
     seen = set()
