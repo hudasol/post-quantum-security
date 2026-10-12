@@ -1,0 +1,8 @@
+key,value,source
+candidate_clock_mhz_readme,24,pqm4 README.md line 222 (unchanged since commit 1f374f95, 2018); data/raw/S6_pqm4_config.md
+candidate_clock_mhz_l4r5zi_code,20,pqm4 common/hal-opencm3.c line 237 at 5e5cc76d0b07 (set in commit 46511c7, 2023-10-24); data/raw/S6_pqm4_config.md
+device_new,"Board not recorded for these results. README default board NUCLEO-L4R5ZI (STM32L4R5ZI); benchmarks.py default platform is STM32F4 Discovery (STM32F407VG)",data/raw/S6_pqm4_config.md section 7
+clock_mhz_new,,not reliably stated: README says 24, code for the default board says 20
+warning_old_clause,pqm4 numbers are at 24 MHz (zero flash wait states) so cycle counts are not comparable to other cores/clocks,exact leading clause in data/evidence.csv before this change
+warning_new_clause,"pqm4 README states 24 MHz (README.md:222) but the default board NUCLEO-L4R5ZI has a 20 MHz benchmark clock in common/hal-opencm3.c:237 (24 MHz is the STM32F4 Discovery clock); the board that produced benchmarks.csv is not recorded; both clock modes use zero flash wait states (derived from code); cycles are SysTick core cycles; not directly comparable to other cores or memory systems",data/raw/S6_pqm4_config.md section 7
+note_suffix,"Benchmark clock mode CLOCK_BENCHMARK; cycles via SysTick (hal-opencm3.c:344 and 382); benchmarks.csv last changed in commit 90bfb63 (2025-05-22)",data/raw/S6_pqm4_config.md section 7
