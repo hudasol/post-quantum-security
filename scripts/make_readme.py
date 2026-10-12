@@ -6,7 +6,7 @@ host = list(csv.DictReader(open('bench/host/host_measurements.csv')))
 S = {r['set']: r for r in csv.DictReader(open('data/verify2/summary.csv'))}
 c = S['combined']; ver = int(c['rows']) - int(c['unverifiable'])
 n_pub = sum(1 for r in ev if r['evidence_type'] == 'published')
-n_s2 = sum(1 for r in ev if r['stream'] == 'S2'); n_s3 = sum(1 for r in ev if r['stream'] == 'S3')
+n_s2 = sum(1 for r in ev if r['stream'] == 'S2'); n_s3 = sum(1 for r in ev if r['stream'] == 'S3'); n_s7 = sum(1 for r in ev if r['stream'] == 'S7')
 n_pq = sum(1 for r in ev if 'mupq/pqm4' in r['source_url'])
 hk = len(host)
 txt = f"""# Post quantum cryptography on drone and robot computers
@@ -21,7 +21,7 @@ Every number in this repository carries one of four labels. They are never mixed
 
 | Label | Meaning | Where it lives | Count or status |
 |---|---|---|---|
-| **Published** | Copied from a source that was actually retrieved, with URL, retrieval date and location in the source | `data/evidence.csv` | {n_pub} rows ({n_s2} benchmark and size rows, {n_s3} protocol and size rows); {n_pq} come from the pqm4 project |
+| **Published** | Copied from a source that was actually retrieved, with URL, retrieval date and location in the source | `data/evidence.csv` | {n_pub} rows ({n_s2} benchmark and size rows, {n_s3} protocol and size rows, {n_s7} benchmark and size rows read from author supplied PDFs in phase 2); {n_pq} come from the pqm4 project |
 | **Host measured** | Run on a PC or server, never on a microcontroller | `bench/host/` | {hk} liboqs timing records |
 | **Estimated** | Arithmetic from published sizes or rates, formula shown, "estimated from published sizes, not measured" | `linksim/`, `docs/link_tables.md`, `docs/LINK_REFERENCE_DESIGN.md`, `docs/PLANNER_RULES.md` thresholds, derived times in the report | all derived |
 | **Planned** | An experiment that has not been run | `docs/BENCHMARK_PLAN.md` (E1 to E5), `docs/NO_PURCHASE_PLAN.md`, `bench/mcu/` | nothing has been measured on a microcontroller |

@@ -80,7 +80,7 @@ add(lambda r: r["size_kind"] == "standard" and r["scheme"] in ("ML-DSA","ML-KEM"
 add(lambda r: r["stream"] == "S3")
 add(lambda r: r["id"] in ("S2-0195","S2-0203","S2-0204","S2-0213","S2-0218","S2-0248","S2-0234","S2-0244","S2-0328","S2-0333","S2-0334","S2-0363"))
 open("data/appendix_b_ids.txt","w").write("\n".join(sel)+"\n")
-B = ["", "# Appendix B. Key evidence rows (selected; all 477 rows are in data/evidence.csv)", "",
+B = ["", "# Appendix B. Key evidence rows (selected; all " + str(len(rows)) + " rows are in data/evidence.csv)", "",
      "All rows are **published** numbers. Cycles are copied as published; `sz` = key/signature/share bytes. **Do not compare rows with different core, clock, library, statistic or standard status** (see the comparability_warning column in the CSV; `pre-standard` = round-2/3 Kyber/Dilithium/SPHINCS+, not the final FIPS parameter sets).", "",
      "| id | scheme / parameter / op | device, core, MHz | cycles | stack B | code B | sz B | status |", "|---|---|---|---|---|---|---|---|"]
 for i in sel:
