@@ -1,0 +1,10 @@
+# third party code is downloaded by scripts, never committed
+bench/mcu/ext/
+bench/mcu/build/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+# local scratch
+scratch/
+*.log
