@@ -1,0 +1,42 @@
+name,value,unit,tag,source
+mav_header_bytes,10,B,cited,data/raw/S3_robotics.md:29
+mav_checksum_bytes,2,B,cited,data/raw/S3_robotics.md:29
+mav_max_payload_bytes,255,B,cited,data/raw/S3_robotics.md:29
+mav_sig_field_bytes,13,B,cited,data/raw/S3_robotics.md:19-20
+mav_sig_tag_bytes,6,B,cited,data/raw/S3_robotics.md:20
+mav_ftp_header_bytes,12,B,cited,data/raw/S3_robotics.md:61
+mav_ftp_data_bytes,239,B,cited,data/raw/S3_robotics.md:61
+sik_air_rate_bps,64000,bit/s,cited,data/raw/S3_robotics.md:69
+sik_usable_fraction,0.9,ratio,cited,data/raw/S3_robotics.md:69 (about 90 percent without ECC)
+sik_ecc_factor,0.5,ratio,cited,data/raw/S3_robotics.md:69 (ECC halves the supportable rate)
+lorawan_dr0_payload_bytes,51,B,cited,data/raw/S3_robotics.md:72
+lorawan_dr0_bitrate_bps,250,bit/s,cited,data/raw/S3_robotics.md:72
+lorawan_duty_cycle,0.01,ratio,cited,data/raw/S3_robotics.md:72
+ieee802154_data_bytes,81,B,cited,data/raw/S3_robotics.md:76
+ieee802154_phy_max_bytes,127,B,cited,data/raw/S3_robotics.md:76
+ieee802154_rate_bps,250000,bit/s,cited,data/raw/S3_robotics.md:76 (250 kbps entry of the 250/40/20 list)
+ble_upper_payload_bytes,23,B,cited,data/raw/S3_robotics.md:77
+ble_ll_mtu_bytes,27,B,cited,data/raw/S3_robotics.md:77
+x25519_share_bytes,32,B,cited,data/raw/S3_robotics.md:157 (and S4_migration.md:104)
+mlkem768_ek_bytes,1184,B,cited,data/evidence.csv:S2-0399
+mlkem768_ct_bytes,1088,B,cited,data/evidence.csv:S2-0401
+mldsa44_pk_bytes,1312,B,cited,data/evidence.csv:S2-0406
+mldsa44_sig_bytes,2420,B,cited,data/evidence.csv:S2-0407
+ed25519_sig_bytes,64,B,cited,data/raw/S3_robotics.md:125
+ed25519_pk_bytes,32,B,cited,data/raw/S3_robotics.md:125
+pq_image_header_bytes,5288,B,cited,data/raw/S3_robotics.md:121 (wolfBoot LMS example header; example configuration value)
+generic_fast_rate_bps,1000000,bit/s,assumption,ASSUMPTION generic 1 Mbps link requested in the task brief
+generic_slow_rate_bps,10000,bit/s,assumption,ASSUMPTION generic 10 kbps link requested in the task brief
+ble_rate_bps,1000000,bit/s,assumption,ASSUMPTION raw BLE rate; not in the data files
+kb_bytes,1000,B,assumption,ASSUMPTION decimal kilobyte (1 kB = 1000 B; 1 MB = 1000 kB)
+ack_payload_bytes,4,B,assumption,ASSUMPTION acknowledgement content (2 B sequence plus 2 B status)
+turnaround_s,0.05,s,assumption,ASSUMPTION receiver processing and radio turnaround before an acknowledgement
+turnaround_lorawan_s,1.0,s,assumption,ASSUMPTION class A style receive delay before a downlink
+rto_factor,2.0,ratio,assumption,ASSUMPTION retransmission timeout as a multiple of the nominal acknowledgement wait
+max_retries,20,count,assumption,ASSUMPTION retries per fragment or poll before the transfer is declared failed
+sr_window_frames,16,count,assumption,ASSUMPTION selective repeat window (fragments sent per block acknowledgement)
+confirm_bytes,16,B,assumption,ASSUMPTION key confirmation message at the end of the handshake
+frag_hdr_bytes,0,B,assumption,ASSUMPTION fragment header inside packet link payloads (cited chunk sizes treated as net data)
+lorawan_phy_mac_overhead_bytes,0,B,assumption,ASSUMPTION LoRaWAN PHY and MAC overhead is not in the data files and is ignored
+msg_payload_bytes,30,B,assumption,ASSUMPTION typical command or telemetry payload for the per message tag scenario
+tag_hypothetical_bytes,16,B,assumption,ASSUMPTION HYPOTHETICAL 16 B symmetric tag (not a standard field)
