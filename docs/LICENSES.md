@@ -26,4 +26,4 @@ Every row of `data/evidence.csv` cites a source URL. The repository stores extra
 
 ## Licence of this repository
 
-See `docs/LICENSE_PROPOSAL.md`. Code: Apache-2.0. Documents and data: CC BY 4.0. Both are proposed and wait for confirmation.
+All rights reserved by Huda Mueen. Permission is needed before use, copying, modification, distribution or sale; see `LICENSE` and `docs/LICENCE_DECISION.md`. The licences in the table above belong to third party libraries and are not changed by this.
