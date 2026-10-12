@@ -88,12 +88,12 @@ for i in sel:
     impl = md(r["library"])[:44]
     B.append(f"| {i} | {md(r['scheme'])[:22]} {md(r['parameter_set'])[:26]} {md(r['operation'])[:20]} | {md(r['device'])[:22]}, {md(r['core'])[:10]}, {r['clock_mhz']} | {r['cycles']} | {r['stack_bytes']} | {r['flash_or_code_bytes']} | {r['key_or_sig_size_bytes']} | {md(r['standard_status'])} |")
 C = ["", "# Appendix C. Sources I could not retrieve (please fetch manually)", "",
-     "None of these is used for any number or claim in this report.", "",
+     "None of these is used for any number or claim in this report. In phase 2 the fetch tools returned summaries or abstracts for ePrint 2025/366, 2020/470, 2026/1333, 2021/781, 2026/312 and 2026/2343 (data/raw/S7_retry.md); because a summary is not a verbatim read, no number from them is in the evidence table until the full text is checked. Please upload the PDFs listed in docs/SOURCES_TO_UPLOAD.md.", "",
      "| Source | Why it matters | Note |", "|---|---|---|",
      "| NSA CNSA 2.0 algorithms advisory and FAQ (media.defense.gov, nsa.gov) | algorithm set, dates, LMS/XMSS firmware-signing guidance | HTTP 403 |",
      "| CISA quantum-readiness pages (cisa.gov/quantum) | US federal migration material | HTTP 403; a NIST-hosted copy of the 2023 fact sheet was used instead |",
      "| UAE National Encryption Policy and executive regulation text; UAE National Cryptography Center algorithm list; Arabic-language sources | UAE requirements for embedded systems | only press copies of the WAM article were read |",
-     "| ePrint 2019/844 (pqm4 paper): board and clock | resolves the pqm4 24 MHz / 20 MHz ambiguity | Cloudflare 403 |",
+     "| ePrint 2019/844 (pqm4 paper) | background only; the board and clock question was answered from the project's own files (data/raw/S6_pqm4_config.md) | blocked for the fetch tools |",
      "| ePrint 2026/1333 (Riou et al., ML-DSA benchmarking pitfalls) | exact reporting recommendations | abstract only |",
      "| ePrint 2022/323 (Dilithium for memory-constrained devices, `m4fstack`), 2025/366 (SLOTHY, M4 to M7), 2020/470 (LMS vs XMSS full paper), 2021/781 (software updates on embedded devices) | stack-optimisation method; M7 numbers; full LMS/XMSS tables | Cloudflare 403 |",
      "| ePrint 2026/312 (RISQrypt), 2026/256 (Adams Bridge), 2026/2343 (KpqC command authentication for unmanned systems) | accelerator and UAV numbers | PDFs 403; abstracts or repository copies only |",
