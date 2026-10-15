@@ -18,7 +18,7 @@ date: "Evidence retrieved 2026-10-11 (Asia/Dubai)"
 3. **Memory and flash decide feasibility more than cycles.** ML-DSA-44 signing needs 44,816 bytes of stack in the fast M4F code but 5,080 bytes in the stack optimised code, which is 12,134,284 cycles. Verification can be done in 2,712 bytes of stack. Code is 19,592 to 24,844 bytes for the M4F-specific ML-DSA-44 variants.
 4. **Sizes, not speed, break the radio links.** An ML-DSA-44 signature is 2,420 bytes; MAVLink 2's signature field is 13 bytes (6-byte tag) and its largest payload is 255 bytes, so one ML-DSA-44 signature fills 10 full frames (derived). Per-message PQ signatures on MAVLink-class telemetry are not workable; session key designs are.
 5. **No upstream support in the drone/robot stack yet.** I found no PQC in MAVLink, PX4/ArduPilot signing, the DDS-Security specification, mainline SROS2 or upstream MCUboot. wolfBoot (ML-DSA, LMS/HSS, XMSS, hybrid) and TF-M BL1 (LMS) implement PQ verification, and some vendors claim PQ or LMS verification in parts (press statements, unverified, see 4.7); the PSA Crypto API has a PQC extension (1.4 final, January 2026).
-6. **Planning dates already exist.** UK NCSC 2028/2031/2035; EU end-2026 first steps, end-2030 high risk use cases, 2035 broad, and an explicit EU roadmap line that products with a life beyond 2030 should be upgradable to PQC with a post quantum signature path for firmware updates; NIST's *draft* IR 8547 proposes deprecating 112-bit-strength RSA/ECC after 2030 and disallowing all quantum vulnerable public key algorithms after 2035. **No UAE or Gulf algorithm level or embedded-device-level guidance was found**; a UAE National Encryption Policy was approved in November 2025 (policy text not retrieved).
+6. **Planning dates already exist.** UK NCSC 2028/2031/2035; EU end-2026 first steps, end-2030 high risk use cases, 2035 broad, and an explicit EU roadmap line that products with a life beyond 2030 should be upgradable to PQC with a post quantum signature path for firmware updates; NIST's *draft* IR 8547 proposes deprecating 112-bit-strength RSA/ECC after 2030 and disallowing all quantum vulnerable public key algorithms after 2035. **No UAE or Gulf algorithm level or embedded-device-level guidance was found**; the UAE National Encryption Policy (version 1.0, September 2025, Cyber Security Council) was read in full and its post quantum section names no algorithm, date or device class (section 3.3).
 7. **Big evidence holes remain** (section 6): no published ML-KEM/ML-DSA/SLH-DSA cycles on a named Cortex-M33; no final parameter LMS or SLH-DSA cycles on any MCU; no measured energy for the final standards on a Cortex-M; nothing from a flight controller part. The benchmark plan (docs/BENCHMARK_PLAN.md) is built to fill exactly these.
 
 **Recommendations in one paragraph.** Inventory every cryptographic use and each product's root of trust now; make signature algorithms and sizes configurable (crypto agility); put a PQ-capable verifier (stateful hash based LMS/HSS if you can run an HSM-backed single signer, otherwise ML-DSA) into the *updatable* stage of each bootloader and ship dual (classical plus PQ) signatures; move long secrecy links to hybrid ML-KEM key establishment; for MAVLink-class links authenticate sessions with a PQ/hybrid handshake and keep short symmetric tags per message; treat units with classical only immutable roots as a hardware replacement or gateway decision with a date; and measure before committing hardware.
@@ -27,7 +27,9 @@ date: "Evidence retrieved 2026-10-11 (Asia/Dubai)"
 
 The protocol was written before any evidence was collected (`docs/PROTOCOL.md`). Four research streams (standards, benchmarks, drone/robot specifics, migration/HNDL) plus two supporting streams (benchmark plan facts, host measurement) were run by separate subagents. Primary sources were preferred; search results were used only to locate sources, and no number comes from a search snippet.
 
-**Evidence table.** `data/evidence.csv` has 523 rows (431 benchmark and size rows from phase 1, 46 protocol and size rows, and 46 benchmark and size rows added in phase 2 from the author supplied PDFs of ePrint 2025/366 and 2020/470), each with source title, URL, retrieval date, location in the source, and a comparability warning. It is summarised in Appendices A and B. **Comparability rules**: rows share an axis only if operation, parameter set and core family agree; differences in library, compiler, statistic, RAM definition and pre standard versus final parameters are flagged.
+**Evidence table.** `data/evidence.csv` has 568 rows (431 benchmark and size rows from phase 1, 46 protocol and size rows, 46 benchmark and size rows added in phase 2 from the author supplied PDFs of ePrint 2025/366 and 2020/470, and 45 cycle and stack rows from the 2020/470 PDF found by a second, independent run of the brief and rechecked against the PDF), each with source title, URL, retrieval date, location in the source, and a comparability warning. It is summarised in Appendices A and B. **Comparability rules**: rows share an axis only if operation, parameter set and core family agree; differences in library, compiler, statistic, RAM definition and pre standard versus final parameters are flagged.
+
+**Second run.** The brief was run twice in separate sessions and the results merged here. Of the second run's 582 rows, 299 match a row in this table by value and source, 245 appear only in the second run, and 38 carry no number; the 210 comparable pqm4 rows all matched. Rows only in the second run are not used until their source is read (`docs/CROSSCHECK.md`).
 
 **Verification.** A separate subagent that did not collect the data drew 50 rows with a seeded random draw (seed 20261011) and re-opened each source. Of the 50, 48 could be checked against their source and **0 had a wrong numeric field (0/48 rows; 0/487 fields)**; three location citations were corrected; two rows and 31 field lines could not be verified because the source was blocked from the sandbox. With zero errors in 48 rows the upper 95% bound on the row error rate is about 6% (rule of three: 3/48), so this is evidence of good copying accuracy, not proof of none. Details: `docs/VERIFICATION.md`.
 
@@ -52,7 +54,8 @@ The protocol was written before any evidence was collected (`docs/PROTOCOL.md`).
 | SP 800-227 (KEM recommendations) | Final, September 2025 | |
 | CSWP 39 (crypto agility) | Final 2025-12-19; update 2026-06-29 | defines crypto agility; describes crypto gateways for legacy systems |
 | NSM-10 / OMB M-23-02 | Final policy, 2022 | 2035 goal; prioritised cryptographic inventory |
-| **NSA CNSA 2.0, CISA pages** | **Not retrieved** (access denied) | **No claim made.** Fetch manually (NEXT_STEPS) |
+| CISA PQC Initiative page (printed 2026-10-12, supplied by the author) | Read by OCR, 11 pages | The page describes CISA work since July 2022 on federal migration, a product category list, cryptographic discovery tools and a guidance document on post quantum considerations for operational technology; it states that NIST approved FIPS 203, 204 and 205 on 2024-08-13. It also cites a June 2026 executive order and OMB memorandum M-26-15; those cited documents were not read, so nothing is claimed about their content |
+| NSA CNSA 2.0 | FAQ supplied, not yet read for rows; the separate algorithms advisory is missing | No claim made yet |
 
 ## 3.2 United Kingdom, European Union and others
 
@@ -63,10 +66,12 @@ The protocol was written before any evidence was collected (`docs/PROTOCOL.md`).
 
 ## 3.3 UAE and the Gulf (stated plainly)
 
-*Official UAE sources found:* a **National Encryption Policy and executive regulation** approved in November 2025 (reported via wire copies of the WAM article; the policy text itself was not retrieved) that requires government entities to prepare approved transition plans from traditional encryption to PQC, overseen by the Cybersecurity Council; a **National Post-Quantum Migration Program** announced the same week (QuantumGate, ATRC); and a **May 2026 agreement** to deploy a Crypto Discovery Tool to requirements set by the UAE National Cryptography Center, using TII libraries. TII also launched a PQC C library and reports co-developing HQC.
-*Not found:* the text of the policy, any named algorithm list, any hybrid requirement, any deadline year, and any rule specific to drones, robots or embedded devices. Search coverage was English-language only; Arabic sources were not searched.
+*Primary text read.* The author supplied the National Encryption Policy of the UAE Cyber Security Council (version 1.0, September 2025, 51 pages, classification Open) and a printed copy of its summary page on uaelegislation.gov.ae (published 17 September 2025). Section 6, "Post Quantum Cryptography", has one subsection of six statements. In paraphrase, an entity must: keep an inventory of systems and applications that use public key cryptography (6.1.1); test the new post quantum standard in a lab before production (6.1.2); plan the transition, including dependency analysis, decommissioning of unsupported technology, and validation of products (6.1.3); write acquisition policies for post quantum cryptography (6.1.4); alert IT departments and vendors (6.1.5); and train its workforce (6.1.6). The scope clause covers federal government entities and critical information infrastructure entities, with emirate level bodies handled by an emirate lead where an emirate programme exists. **The section names no algorithm, no deadline, no hybrid requirement and no rule for embedded or unmanned devices.** The earlier press reports (a policy and executive regulation approved in November 2025, overseen by the Cybersecurity Council) were not checked against this text and the executive regulation was not supplied [unverified].
+
+*Other UAE items, from press and vendor reports:* a **National Post-Quantum Migration Program** announced the same week (QuantumGate, ATRC); and a **May 2026 agreement** to deploy a Crypto Discovery Tool to requirements set by the UAE National Cryptography Center, using TII libraries. TII also launched a PQC C library and reports co-developing HQC.
+
 *Rest of the Gulf:* a Saudi central bank (SAMA) circular with inventory deadlines (2026-12-31) and risk assessment deadlines (2027-03-31) is reported only by secondary sources and is **unverified**. For Qatar, Oman, Kuwait and Bahrain no migration guidance was found (Bahrain: a vendor press release about a tooling procurement only). CBUAE, ADGM, DIFC, Dubai Electronic Security Center and TDRA: nothing PQC-specific found.
-*Implication for you* [inference]: for UAE targets (TII/ATRC, EDGE, Al Ain University) the practical anchors are the national policy (inventory and plan), the EU/UK dates when exporting, and the NIST algorithms; ask the UAE National Cryptography Center which algorithm profile applies to embedded and unmanned systems.
+*Implication for you* [inference]: for UAE targets (TII/ATRC, EDGE, Al Ain University) the practical anchors are the national policy (inventory, lab testing, plan, acquisition policy), the EU/UK dates when exporting, and the NIST algorithms; ask the UAE National Cryptography Center which algorithm profile applies to embedded and unmanned systems.
 
 # 4. What the published numbers say
 
@@ -305,11 +310,11 @@ No purchase is required (emulator first, then borrowed lab hardware; `docs/NO_PU
 
 # 12. Limitations
 
-- Evidence is only as good as retrieval: eprint.iacr.org (including the pqm4 and SLOTHY papers), NSA, CISA and several vendor pages were unreachable; their content is not used.
+- Evidence is only as good as retrieval: some hosts (NSA, several vendor pages) were unreachable from the sandbox; the author supplied several of the papers and the CISA page by hand, and only what is read from those copies is used.
 - Many MCU figures come from vendor blogs, preprints and conference slides. They are labelled as such in the table.
 - The pqm4 board and clock are unresolved; pre standard Kyber/Dilithium rows are kept out of final standard comparisons.
 - Government pages change; items marked *in flux* must be re-checked before relying on them.
-- UAE coverage rests on press reports of the national policy, not the policy text; Arabic sources were not searched.
+- UAE coverage now rests on the policy text for section 6, plus press reports for everything else; the executive regulation was not supplied and Arabic sources were not searched.
 - The decision framework and classifications tagged *inference* are my reasoning and need review by a cryptographer before a product decision.
 - The 0/48 verification result bounds copying errors in the table, not the correctness of the sources themselves.
 
@@ -330,7 +335,7 @@ Retrieved on the date shown; `rows` = number of table rows taken from that sourc
 11. FIPS 205 Stateless Hash-Based Digital Signature Standard (published 2024-08-13) (6 rows; retrieved 2026-10-11) <https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.205.pdf>
 12. First-Order Masked Kyber on ARM Cortex-M4 (1 rows; retrieved 2026-10-11) <https://eprint.iacr.org/2022/058>
 13. High-Performance NTT Hardware Accelerator to Support ML-KEM and ML-DSA (ASHES 2024) (1 rows; retrieved 2026-10-11) <https://pqshield.com/wp-content/uploads/2024/10/High-Performance-NTT-Hardware-Accelerator-to-Support-ML-KEM-and-ML-DSA.pdf>
-14. LMS vs XMSS: Comparison of Stateful Hash-Based Signature Schemes on ARM Cortex-M4 (Campos, Kohlstadt, Reith, Stoettinger (22 rows; retrieved 2026-10-12) <https://eprint.iacr.org/2020/470.pdf>
+14. LMS vs XMSS: Comparison of Stateful Hash-Based Signature Schemes on ARM Cortex-M4 (Campos, Kohlstadt, Reith, Stoettinger (67 rows; retrieved 2026-10-12) <https://eprint.iacr.org/2020/470.pdf>
 15. LMS vs XMSS: Comparison of Stateful Hash-Based Signature Schemes on ARM Cortex-M4 (Campos, Kohlstadt, Reith, Stoettinger (63 rows; retrieved 2026-10-11) <https://www.sopmac.de/wp-content/uploads/2021/01/LMS_vs_XMSS.pdf>
 16. Low-Stack HAETAE for Memory-Constrained Microcontrollers (Banegas, Kim, Seo, van Vredendaal) (18 rows; retrieved 2026-10-11) <https://arxiv.org/pdf/2604.15868>
 17. Masking Dilithium: Efficient Implementation and Side-Channel Evaluation (ACNS 2019) (1 rows; retrieved 2026-10-11) <https://eprint.iacr.org/2019/394>
@@ -357,7 +362,7 @@ Retrieved on the date shown; `rows` = number of table rows taken from that sourc
 38. XMSS and Embedded Systems: XMSS Hardware Accelerators for RISC-V (Wang, Jungk, Waelde, Deng, Gupta, Szefer, Niederhagen) (9 rows; retrieved 2026-10-11) <https://par.nsf.gov//servlets/purl/10112210>
 
 
-# Appendix B. Key evidence rows (selected; all 523 rows are in data/evidence.csv)
+# Appendix B. Key evidence rows (selected; all 568 rows are in data/evidence.csv)
 
 All rows are **published** numbers. Cycles are copied as published; `sz` = key/signature/share bytes. **Do not compare rows with different core, clock, library, statistic or standard status** (see the comparability_warning column in the CSV; `pre-standard` = round-2/3 Kyber/Dilithium/SPHINCS+, not the final FIPS parameter sets).
 
@@ -481,7 +486,7 @@ All rows are **published** numbers. Cycles are copied as published; `sz` = key/s
 
 # Appendix C. Sources not yet used for a table row
 
-On 2026-10-12 the author supplied PDFs of ePrint 2019/844, 2020/470, 2021/781, 2022/323, 2025/366, 2026/312, 2026/1333 and 2026/2343, the NSA CNSA 2.0 FAQ, two UAE National Encryption Policy documents and a CISA quantum readiness document (docs/SOURCES_TO_UPLOAD.md). Rows from 2025/366 and 2020/470 are now in the table (stream S7, each value found in the PDF). The other papers are in hand but no number from them is in the table yet. Two supplied files (CISA, uaelegislation.gov.ae) are image only and need OCR or a text copy. The items below are still unretrieved.
+On 2026-10-12 the author supplied PDFs of ePrint 2019/844, 2020/470, 2021/781, 2022/323, 2025/366, 2026/312, 2026/1333 and 2026/2343, the NSA CNSA 2.0 FAQ, two UAE National Encryption Policy documents and a CISA quantum readiness document (docs/SOURCES_TO_UPLOAD.md). Rows from 2025/366 and 2020/470 are now in the table (stream S7, each value found in the PDF). The other papers are in hand but no number from them is in the table yet. Two supplied files (CISA, uaelegislation.gov.ae) are image only and were read by OCR on 2026-10-15. The items below are still unretrieved.
 
 | Source | Why it matters | Note |
 |---|---|---|
