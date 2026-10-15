@@ -5,7 +5,7 @@ Received from the author (see `docs/SOURCES_TO_UPLOAD.md`): ePrint 2019/844, 202
 Done: 46 rows from 2025/366 and 2020/470 are in the table.
 Still to do:
 1. Read 2022/323 (stack figures), 2026/1333 (reporting rules), 2021/781 and 2026/2343 and add rows through `data/raw/` and `scripts/merge_evidence.py`.
-2. OCR or text copies of the CISA and uaelegislation.gov.ae files (image only).
+2. Done: the CISA and uaelegislation.gov.ae files were read by OCR (English only). The executive regulation and the CISA cited orders are still unread.
 3. The NSA CNSA 2.0 algorithms advisory (only the FAQ was supplied).
 4. UAE National Cryptography Center algorithm profile for embedded and unmanned systems (ask them); Arabic language sources.
 5. Vendor facts: written answers from SoC suppliers (`docs/supplier/README.md`, log in `docs/supplier/response_tracker.csv`).
