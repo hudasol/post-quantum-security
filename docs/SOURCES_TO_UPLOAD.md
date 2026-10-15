@@ -15,14 +15,14 @@ Author: Huda Mueen. Status on 2026-10-12. The fetch tools (WebFetch and WebSearc
 | Enabling Microarchitectural Agility (SLOTHY, M4 to M7) | https://eprint.iacr.org/2025/366 | 16 | yes | fetch summary | cycle tables |
 | LMS versus XMSS on Cortex-M4 | https://eprint.iacr.org/2020/470 | 20 | yes | fetch summary | full LMS and XMSS tables |
 | NSA CNSA 2.0 FAQ | media.defense.gov (path not recorded) | 21 | yes | blocked | dates and algorithm set. This is the FAQ only; the separate algorithms advisory is not in the folder |
-| CISA quantum readiness pages | https://www.cisa.gov/quantum | 11 | no (image only) | blocked | needs OCR or a text copy before any statement is cited |
-| Public Policy Document National Encryption Policy | uaelegislation.gov.ae | 7 | no (image only) | no primary text | needs OCR or a text copy; possibly Arabic |
+| CISA quantum readiness pages | https://www.cisa.gov/quantum | 11 | no (image only) | blocked | read by OCR on 2026-10-15; statements in section 3.1 only |
+| Public Policy Document National Encryption Policy | uaelegislation.gov.ae | 7 | no (image only) | no primary text | read by OCR on 2026-10-15; English; summary page only, matches the policy scope |
 | UAE National Encryption Policy (Cyber Security Council), version 1.0, September 2025 | Cyber Security Council | 51 | yes | no primary text | primary text for the UAE section |
 
 ## Still open
 
 1. The NSA CNSA 2.0 algorithms advisory (separate from the FAQ).
-2. OCR or text copies of the two image only PDFs.
+2. The executive regulation of the UAE policy, and the documents cited on the CISA page.
 3. Everything listed in Appendix C of `docs/REPORT.md` that is not in the table above.
 
 ## Rules
