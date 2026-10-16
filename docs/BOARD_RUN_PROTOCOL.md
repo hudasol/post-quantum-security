@@ -60,7 +60,7 @@ make arm CPU=cortex-m4 FPU=fpv4-sp-d16 ALG=mlkem SET=768 ITERS=100 \
      LDSCRIPT=<board linker script> STARTUP=<board start up file>
 ```
 
-Repeat for `ALG=mlkem SET=512|768|1024` and `ALG=mldsa SET=44|65|87`. For a Cortex-M33 board use `CPU=cortex-m33 FPU=fpv5-sp-d16`. The board start up and linker files are the only new code; `bench/mcu/board/qemu/` is a working template (vector table, data copy, UART output) that needs the board's memory map, UART and clock set up. `bench/mcu/README.md` lists three routes (STM32CubeMX project, Zephyr, PlatformIO) and the mandatory checks. The span must fit below the stack pointer; the emulated ML-DSA-87 signing stack is about 113 KB (`bench/mcu/qemu_results/stack.csv`), so the F4 Discovery (192 KB RAM) can run it only if the linker script leaves enough room, and the L4R5ZI (640 KB RAM) has room.
+Repeat for `ALG=mlkem SET=512|768|1024` and `ALG=mldsa SET=44|65|87`. For a Cortex-M33 board use `CPU=cortex-m33 FPU=fpv5-sp-d16`. The board start up and linker files are the only new code; `bench/mcu/board/qemu/` is a working template (vector table, data copy, UART output) that needs the board's memory map, UART and clock set up. `bench/mcu/README.md` lists three routes (STM32CubeMX project, Zephyr, PlatformIO) and the mandatory checks. The span must fit below the stack pointer; the emulated ML-DSA-87 signing stack is about 113 KB (`bench/mcu/qemu_results/stack.csv`), so the F4 Discovery (192 KB RAM) can run it only if the linker script leaves enough room, and the L4R5ZI (640 KB RAM) has room. Set `STACK_SPAN` per board and per parameter set from the linker map, and check that the stack, the painted span and `.bss` fit in the one contiguous RAM region that holds the stack: a chip's total RAM may be split into separate regions.
 
 ## 6. Session steps
 
@@ -82,7 +82,7 @@ date,board,chip,core,clock_hz,flash_ws,cache,toolchain,flags,library,library_com
 
 ## 8. What this protocol will and will not show
 
-It will show real core cycle counts and stack for one board, one clock and one toolchain. It will not show energy (that needs a power analyser, `docs/BENCHMARK_PLAN.md` E4), behaviour on a production flight controller with its scheduler and interrupts running, or numbers for other boards.
+It will show real core cycle counts and stack for one board, one clock and one toolchain. It will not show energy (that needs a power analyser, `docs/BENCHMARK_PLAN.md` E3), behaviour on a production flight controller with its scheduler and interrupts running, or numbers for other boards.
 
 ## 9. Predictions before the run
 
