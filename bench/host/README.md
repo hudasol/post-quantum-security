@@ -1,5 +1,7 @@
 # HOST MEASUREMENT, not microcontroller result
 
+Second round (2026-10-16): `native/` times the same mlkem-native and mldsa-native code that runs in the emulator, natively on a laptop, with a stated method (warm up, five pinned runs, median per run). Results and limits: `native/RESULTS.md`. The rest of this file describes the first round liboqs timings.
+
 Sandbox timings of liboqs 0.16.0 `speed_kem` / `speed_sig`. Labelled `evidence_type=host-measured`.
 They exist to (a) exercise the analysis scripts and (b) show the order-of-magnitude gap between a
 server-class x86 core and a Cortex-M. They must never go into `data/evidence.csv` or onto the
