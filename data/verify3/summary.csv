@@ -1,0 +1,8 @@
+set,source,rows,any,value,location,row,warning
+S10A,"ePrint 2022/323, Tables 2 and 3",48,0,0,0,0,0
+S10B,"ePrint 2019/844, Sections 5.1, 5.2 and 5.4",40,0,0,0,0,0
+S10C,"ePrint 2026/1333, Tables 8 and 9",42,0,0,0,0,0
+S10D,"ePrint 2021/781, Tables 1, 2, 4, 5, 6 and 7",83,38,38,0,0,0
+S10E,"ePrint 2026/312, Tables 8, 9 and 10",40,3,0,0,0,3
+S10F,"ePrint 2026/2343, Tables 2, 3 and 5",150,0,0,0,0,0
+all,all six sets,403,41,38,0,0,3
