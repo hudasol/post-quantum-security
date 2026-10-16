@@ -41,5 +41,5 @@ NIST leaves hybrid use to each application and will accommodate hybrids in FIPS 
 |---|---|
 | Hybrid KEM in the application link layer | Boot ROM / fused key hash with classical only algorithm and nothing updatable before it |
 | PQ verifier in an updatable second stage bootloader (wolfBoot-class); dual manifest signatures | Secure elements with a fixed algorithm set |
-| Larger headers and certificate chains | Units with no flash headroom: published PQ code is 8-25 kB flash for ML-DSA [S2-0031..0036] and a 5 kB image header for LMS/ML-DSA in wolfBoot examples [S3 4.2] |
+| Larger headers and certificate chains | Units with no flash headroom: published PQ code is 8-25 kB flash for ML-DSA [S2-0028..0036] and a 5 kB image header for LMS/ML-DSA in wolfBoot examples [S3 4.2] |
 Worked example of the pattern: Caliptra 1.3 adds a software only ML-DSA-87 identity chain via runtime firmware without ROM changes, but the ROM-rooted classical chain remains and the PQ chain does not attest the ROM [S4 A19]. Not a drone part; shows what a firmware only fix can and cannot cover.
