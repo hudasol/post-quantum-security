@@ -54,3 +54,7 @@ jobs:
         run: |
           python3 scripts/summarize_verification2.py > /dev/null
           git diff --exit-code docs/VERIFICATION2.md data/verify2/summary.csv
+      - name: Third verification summary regenerates
+        run: |
+          python3 scripts/summarize_verification3.py > /dev/null
+          git diff --exit-code docs/VERIFICATION3.md data/verify3/summary.csv
