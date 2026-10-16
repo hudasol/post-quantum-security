@@ -43,7 +43,7 @@ Predictions are written and hashed before every run, then scored with misses kep
 3. Link model (*estimated*, with stated assumptions such as a 1 s LoRaWAN turnaround, a 16 fragment window and no LoRaWAN MAC overhead; `linksim/params.csv`): 1000 seeded trials per lossy cell, zero loss cells are deterministic. With no loss, the hybrid handshake takes 1.16 s on a SiK radio and 5.36 h on LoRaWAN EU868 DR0 (`docs/LINKSIM_STUDY.md`). Against the one published link figure the model underestimates absolute time by 29 to 43 percent but predicts the post quantum minus classical difference within 7 percent.
 4. Planner (*synthetic fleets*): property tests and fleets of up to 1000 devices show no recommendation that breaks the planner's own memory thresholds; under the default thresholds (stack optimised assembly) the inputs that move the most devices are sig horizon year and service life remaining years (11.2 percent of the fleet), and with portable C thresholds hardware replacements rise from 246 to 351 of 1000 (`docs/PLANNER_STUDY.md`).
 5. Host baseline (*host measured*): rank order agrees with published counts across scheme families (Spearman 0.975) but not between ML-DSA-65 and ML-DSA-87, and the coefficient of variation of run medians reaches 38 percent, so host times are used for nothing else (`bench/host/native/RESULTS.md`).
-6. Predictions: 19 hit, 1 partial, 5 miss, 2 not scored, of 27; one miss was a new row set contradicting a report headline, which was then corrected (`docs/PREDICTIONS_V2_SCORES.md`).
+6. Predictions: 20 hit, 1 partial, 5 miss, 1 not scored, of 27; one miss was a new row set contradicting a report headline, which was then corrected (`docs/PREDICTIONS_V2_SCORES.md`).
 
 ## 7. Risks
 
