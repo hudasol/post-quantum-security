@@ -53,14 +53,13 @@ def main():
     cnsa = [r for r in ev if "cnsa" in (r["source_title"] + r["source_url"]).lower()]
     S.append(("Q1.3", "hit" if not cnsa else "miss",
               f"{len(cnsa)} evidence rows cite the CNSA 2.0 FAQ; it went into data/raw/S10_cnsa_faq.md as 41 claims."))
-    head_ids = {r["id"] for r in rows("data/verify2_headline.csv")}
-    key = lambda r: (r["scheme_family"], r["parameter_set"], r["operation"], r["core"], r["library"])  # noqa: E731
-    head_keys = {key(r) for r in ev if r["id"] in head_ids}
-    clash = [r["id"] for r in s10 if key(r) in head_keys]
-    S.append(("Q1.4", "hit" if not clash else "partial",
-              f"{len(clash)} new rows share scheme family, parameter set, operation, core and library with one of the "
-              f"{len(head_ids)} headline rows, so no new row can contradict a headline number directly. The final "
-              "review also looked for contradictions."))
+    m33 = [r["id"] for r in s10 if "M33" in r["core"] and r["cycles"]
+           and r["scheme_family"] in ("ML-KEM", "ML-DSA", "SLH-DSA")]
+    S.append(("Q1.4", "miss" if m33 else "hit",
+              f"{len(m33)} new rows give ML-DSA cycles on a Cortex-M33 ({m33[0] if m33 else ''} onward), which "
+              "contradicts the earlier report headline that no such cycles were published. The report was corrected "
+              "and the correction is marked in it. (An earlier version of this script compared exact library strings, "
+              "a test that could not fail; the fresh review found this.)"))
     emu = 50008  # first round emulated ML-DSA-44 sign stack, read below from git history when available
     try:
         txt = subprocess.run(["git", "show", "1060a1d:bench/mcu/qemu_results/stack.csv"], cwd=ROOT,
@@ -94,7 +93,8 @@ def main():
     both = all(set(t) == {"payload", "rate_scale"} for t in tops.values())
     S.append(("Q2.1", "hit" if flat and both else ("partial" if flat or both else "miss"),
               "Zero loss wall time is " + ("unchanged" if flat else "CHANGED") + " by retry limit and timeout "
-              "factor. Two largest axes per link (over each axis's sweep range): "
+              "factor, so the refutation clause is not met, but the first claim fails: the two largest axes per link "
+              "(over each axis's sweep range) are "
               + "; ".join(f"{l}: {', '.join(t)}" for l, t in tops.items()) + "."))
     g = rows("linksim/results/mc_grid.csv")
     cell = lambda l, p, loss, v="hybrid", mr=20: [r for r in g if r["link"] == l and r["proto"] == p  # noqa: E731
@@ -124,8 +124,8 @@ def main():
               f"to {100 * f(sh['completion_hi']):.1f} percent)."))
     d0, d5 = f(fr("eu868_dr0", 0)["floor_wall_s"]), f(fr("eu868_dr5", 0)["floor_wall_s"])
     p1, p2 = d5 < 600, d0 / d5 > 20
-    S.append(("Q2.6", "hit" if p1 and p2 else ("partial" if p1 or p2 else "miss"),
-              f"DR5 lower bound {d5 / 60:.1f} min (predicted under 10 min: {'yes' if p1 else 'no'}); ratio DR0 over "
+    S.append(("Q2.6", "hit" if p1 and p2 else "miss",
+              f"Refutation clause met (DR5 at least 10 minutes). DR5 lower bound {d5 / 60:.1f} min (predicted under 10 min: {'yes' if p1 else 'no'}); ratio DR0 over "
               f"DR5 {d0 / d5:.1f} (predicted above 20: {'yes' if p2 else 'no'}). The DR5 figure is limited by the "
               "1 percent duty cycle, which I underweighted."))
     val = rows("linksim/results/validation.csv")
@@ -251,13 +251,14 @@ def main():
           "1. Q1.2: the extraction copied numbers correctly but twice put a correct number in a column whose meaning "
           "the paper does not support, or described a figure's scope wrongly. The fresh reader check is what caught "
           "this; a value only check would have passed every row.",
-          "2. Q2.1 (partial): over the swept ranges, loss up to 20 percent moves the handshake more than the "
+          "2. Q1.4: the new Cortex-M33 rows contradicted a report headline; the report was corrected.",
+          "3. Q2.1 (partial): over the swept ranges, loss up to 20 percent moves the handshake more than the "
           "fragment payload on most links; rate leads on the stream links and LoRaWAN.",
-          "3. Q2.6: the faster LoRaWAN rate does not rescue the handshake under a 1 percent duty cycle; silence "
+          "4. Q2.6: the faster LoRaWAN rate does not rescue the handshake under a 1 percent duty cycle; silence "
           "time dominates.",
-          "4. Q3.4: in a staged plan the unknown share grows, because devices that become exposed later still lack "
+          "5. Q3.4: in a staged plan the unknown share grows, because devices that become exposed later still lack "
           "free memory data. Collecting that data early is the cheap fix.",
-          "5. Q5.1: a laptop virtual machine is not a stable timing platform; only rank order survived.", ""]
+          "6. Q5.1: a laptop virtual machine is not a stable timing platform; only rank order survived.", ""]
     (ROOT / "docs" / "PREDICTIONS_V2_SCORES.md").write_text("\n".join(L), encoding="utf-8", newline="\n")
     print(cnt, "hash", "ok" if want == got else "MISMATCH")
 
