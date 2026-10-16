@@ -10,6 +10,9 @@ n_pub = sum(1 for r in ev if r['evidence_type'] == 'published')
 n_s2 = sum(1 for r in ev if r['stream'] == 'S2'); n_s3 = sum(1 for r in ev if r['stream'] == 'S3'); n_s7 = sum(1 for r in ev if r['stream'] == 'S7'); n_s8 = sum(1 for r in ev if r['stream'] == 'S8'); n_s10 = sum(1 for r in ev if r['stream'] == 'S10')
 n_pq = sum(1 for r in ev if 'mupq/pqm4' in r['source_url'])
 hk = len(host)
+import io, subprocess
+_pdf_commit = subprocess.run(['git', 'log', '-1', '--format=%H', '--', 'docs/REPORT.pdf'], capture_output=True, text=True).stdout.strip()
+n_pdf = len(list(csv.DictReader(io.StringIO(subprocess.run(['git', 'show', _pdf_commit + ':data/evidence.csv'], capture_output=True, text=True).stdout))))
 emu = list(csv.DictReader(open('bench/mcu/qemu_results/checks.csv'))); n_emu = len(emu); n_emu_ok = sum(1 for r in emu if r['fail'] == '0')
 txt = f"""# Post quantum cryptography on drone and robot computers
 
@@ -17,7 +20,7 @@ A sourced review of what post quantum cryptography costs on microcontroller clas
 
 **For a research director:** `docs/PROPOSAL_ATRC.md` (2 pages: problem, gap, questions, plan, ask).
 
-**Start here:** `docs/EXECUTIVE_BRIEF.pdf` (2 pages), then `docs/REPORT.pdf` (`docs/REPORT.md`).
+**Start here:** `docs/EXECUTIVE_BRIEF.pdf` (2 pages), then `docs/REPORT.pdf` (`docs/REPORT.md`). The two PDFs were last built on 2026-10-15 from the {n_pdf} row version of the table; `docs/REPORT.md` is current ({n_pub} rows). The PDF rebuild needs pandoc and XeLaTeX, which could not be installed here (`docs/NEEDS_FROM_AUTHOR.md`, item 5).
 
 ## What is published, host measured, estimated and planned
 
