@@ -43,9 +43,10 @@ STACK_SPAN ?= 16384
 LDSCRIPT ?=
 STARTUP  ?=
 ARM_OPT  ?= -O2
+ARM_EXTRA ?=
 ARM_FLAGS := -mcpu=$(CPU) -mthumb -mfpu=$(FPU) -mfloat-abi=hard -ffunction-sections -fdata-sections \
   $(ARM_OPT) -std=c99 -Wall -DBENCH_ITERS=$(ITERS) -DBENCH_CLOCK_HZ=$(CLOCK_HZ) -DBENCH_RUN_ID=$(RUN_ID) -DBENCH_STACK_SPAN=$(STACK_SPAN) \
-  -DBENCH_DISABLE_IRQ -DBENCH_OPT_NOTE='"$(ARM_OPT)"' -Isrc
+  -DBENCH_DISABLE_IRQ -DBENCH_OPT_NOTE='"$(ARM_OPT)"' $(ARM_EXTRA) -Isrc
 ifeq ($(ALG),mlkem)
   ARM_SRC := src/bench_mlkem.c $(MLK_DIR)/mlkem_native.c
   ARM_DEF := -DMLK_CONFIG_NAMESPACE_PREFIX=mlkem -DMLK_CONFIG_PARAMETER_SET=$(SET) -I$(MLK_DIR)

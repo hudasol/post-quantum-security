@@ -1,5 +1,8 @@
-/* Minimal start up and C library glue for QEMU mps2-an386. Board support only: no cryptography here.
- * Console is the CMSDK APB UART0 at 0x40004000 (DATA at +0x00, CTRL at +0x08, bit 0 = TX enable). */
+/* Minimal start up and C library glue for QEMU mps2-an386 (Cortex-M4) and mps2-an505 (Cortex-M33).
+ * Board support only: no cryptography here.
+ * Console is a CMSDK APB UART (DATA at +0x00, CTRL at +0x08, bit 0 = TX enable). UART0 sits at 0x40004000
+ * on mps2-an386; on mps2-an505 the build passes -DBENCH_UART_BASE=0x50200000u (UART0, secure alias,
+ * because the core starts in the secure state). */
 #include <stdint.h>
 #include <stddef.h>
 #include <errno.h>
@@ -7,8 +10,11 @@
 extern uint32_t _sidata, _sdata, _edata, _sbss, _ebss, _estack, _heap_start, _heap_end;
 extern int main(void);
 
-#define UART_DATA (*(volatile uint32_t *)0x40004000u)
-#define UART_CTRL (*(volatile uint32_t *)0x40004008u)
+#ifndef BENCH_UART_BASE
+#define BENCH_UART_BASE 0x40004000u
+#endif
+#define UART_DATA (*(volatile uint32_t *)(BENCH_UART_BASE + 0x0u))
+#define UART_CTRL (*(volatile uint32_t *)(BENCH_UART_BASE + 0x8u))
 #define CPACR (*(volatile uint32_t *)0xE000ED88u)
 
 void Reset_Handler(void)
