@@ -1,0 +1,6 @@
+# Shell scripts and C build files keep LF endings so they run under WSL or Linux from a Windows checkout.
+*.sh text eol=lf
+Makefile text eol=lf
+*.c text eol=lf
+*.h text eol=lf
+*.ld text eol=lf
