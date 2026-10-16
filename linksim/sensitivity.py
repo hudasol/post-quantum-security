@@ -16,7 +16,8 @@ FW_BYTES = 256000          # smaller image keeps the sweep fast
 SEEDS = (1, 2, 3)
 LOSS_LEVELS = (0.0, 0.01, 0.05, 0.10)
 PROBES = {"frag_hdr_bytes": 4, "lorawan_phy_mac_overhead_bytes": 10}
-SKIP = {"kb_bytes", "max_retries", "tag_hypothetical_bytes"}
+SKIP = {"kb_bytes", "max_retries", "tag_hypothetical_bytes",
+        "tls_round_trips", "tcp_mss_bytes", "tcp_ip_header_bytes"}
 INT_PARAMS = {"ack_payload_bytes", "sr_window_frames", "confirm_bytes",
               "msg_payload_bytes"}
 METRICS = ["hs_sr", "hs_sw", "fw_sr", "fw_sw", "tag16"]
