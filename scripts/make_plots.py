@@ -216,7 +216,17 @@ def fig6():
          "retransmission. Payload sizes: mavlink.io FTP page (251 B payload minus 12 B header); TTN LoRaWAN EU868 parameters.")
 
 
+def linksim_figures():
+    """Simulator figures (label estimated): the first round handshake figure and the second round study
+    figures, which read linksim/results/ written by python -m linksim.study."""
+    import sys
+    sys.path.insert(0, str(ROOT))
+    from linksim import make_plots as lm, plot_study
+    lm.main()
+    plot_study.main()
+
+
 if __name__ == "__main__":
-    for f in (fig1, fig2, fig3, fig4, fig5, fig6):
+    for f in (fig1, fig2, fig3, fig4, fig5, fig6, linksim_figures):
         f()
         print("ok", f.__name__)
