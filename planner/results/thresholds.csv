@@ -1,0 +1,3 @@
+thresholds,sig_flash_kb,sig_ram_kb,kem_flash_kb,kem_ram_kb,violations,FIRMWARE_UPDATE,HYBRID,HARDWARE_REPLACEMENT,NO_ACTION_BEFORE_RETIREMENT,UNKNOWN
+stack optimised pqm4 rows (default),31,3,14,9,0,431,168,246,105,50
+"portable C, emulated build",29,30,20,25,0,362,133,351,105,49
