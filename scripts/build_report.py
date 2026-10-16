@@ -6,6 +6,7 @@ Macros in the body pull numbers from data/evidence.csv so prose cannot drift fro
   {{note_ms:ID}}-> the 'boot time|avg time|mean time X ms' figure from compiler_flags_or_notes
   {{ratio:A/B}} -> cycles(A)/cycles(B) as 'N.NN x'
   {{nrows}}     -> number of evidence rows
+  {{n_s10}}     -> number of rows in stream S10
   {{INCLUDE:file|old first line|new first line}} -> embed another docs file
   {{APPENDICES}}-> generated appendices
 Fails loudly on any missing value."""
@@ -49,6 +50,7 @@ def expand(m):
 body = (ROOT / "docs/REPORT_body.md").read_text(encoding="utf-8")
 body = re.sub(r"\{\{(cyc|stack|code|size|eng|ms|ratio|note_ms):([^}]+)\}\}", expand, body)
 body = body.replace("{{nrows}}", str(len(rows)))
+body = body.replace("{{n_s10}}", str(sum(1 for r in rows if r["stream"] == "S10")))
 
 def include(m):
     f, old, new = m.group(1), m.group(2), m.group(3)
@@ -88,7 +90,7 @@ for i in sel:
     impl = md(r["library"])[:44]
     B.append(f"| {i} | {md(r['scheme'])[:22]} {md(r['parameter_set'])[:26]} {md(r['operation'])[:20]} | {md(r['device'])[:22]}, {md(r['core'])[:10]}, {r['clock_mhz']} | {r['cycles']} | {r['stack_bytes']} | {r['flash_or_code_bytes']} | {r['key_or_sig_size_bytes']} | {md(r['standard_status'])} |")
 C = ["", "# Appendix C. Sources not yet used for a table row", "",
-     "On 2026-10-12 the author supplied PDFs of ePrint 2019/844, 2020/470, 2021/781, 2022/323, 2025/366, 2026/312, 2026/1333 and 2026/2343, the NSA CNSA 2.0 FAQ, two UAE National Encryption Policy documents and a CISA quantum readiness document (docs/SOURCES_TO_UPLOAD.md). Rows from 2025/366 and 2020/470 are now in the table (stream S7, each value found in the PDF). The other papers are in hand but no number from them is in the table yet. Two supplied files (CISA, uaelegislation.gov.ae) are image only and were read by OCR on 2026-10-15. The items below are still unretrieved.", "",
+     "On 2026-10-12 the author supplied PDFs of ePrint 2019/844, 2020/470, 2021/781, 2022/323, 2025/366, 2026/312, 2026/1333 and 2026/2343, the NSA CNSA 2.0 FAQ, two UAE National Encryption Policy documents and a CISA quantum readiness document (docs/SOURCES_TO_UPLOAD.md). Rows from 2025/366 and 2020/470 are in the table (streams S7 and S8, each value found in the PDF). Rows from 2019/844, 2021/781, 2022/323, 2026/312, 2026/1333 and 2026/2343 were added on 2026-10-16 (stream S10, each rechecked by a fresh reader, docs/VERIFICATION3.md). The CNSA 2.0 FAQ is summarised in data/raw/S10_cnsa_faq.md. Two supplied files (CISA, uaelegislation.gov.ae) are image only and were read by OCR on 2026-10-15. The items below are still unretrieved.", "",
      "| Source | Why it matters | Note |", "|---|---|---|",
      "| NSA CNSA 2.0 algorithms advisory (separate from the FAQ) | algorithm set, dates, LMS/XMSS firmware-signing guidance | HTTP 403; only the FAQ was supplied |",
      "| UAE National Cryptography Center algorithm list; Arabic-language sources; executive regulation text | UAE requirements for embedded systems | not found |",

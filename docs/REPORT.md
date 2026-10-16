@@ -27,7 +27,7 @@ date: "Evidence retrieved 2026-10-11 (Asia/Dubai)"
 
 The protocol was written before any evidence was collected (`docs/PROTOCOL.md`). Four research streams (standards, benchmarks, drone/robot specifics, migration/HNDL) plus two supporting streams (benchmark plan facts, host measurement) were run by separate subagents. Primary sources were preferred; search results were used only to locate sources, and no number comes from a search snippet.
 
-**Evidence table.** `data/evidence.csv` has 568 rows (431 benchmark and size rows from phase 1, 46 protocol and size rows, 46 benchmark and size rows added in phase 2 from the author supplied PDFs of ePrint 2025/366 and 2020/470, and 45 cycle and stack rows from the 2020/470 PDF found by a second, independent run of the brief and rechecked against the PDF), each with source title, URL, retrieval date, location in the source, and a comparability warning. It is summarised in Appendices A and B. **Comparability rules**: rows share an axis only if operation, parameter set and core family agree; differences in library, compiler, statistic, RAM definition and pre standard versus final parameters are flagged.
+**Evidence table.** `data/evidence.csv` has 971 rows (431 benchmark and size rows from phase 1, 46 protocol and size rows, 46 benchmark and size rows added in phase 2 from the author supplied PDFs of ePrint 2025/366 and 2020/470, 45 cycle and stack rows from the 2020/470 PDF found by a second, independent run of the brief and rechecked against the PDF, and 403 rows added on 2026-10-16 from the author supplied PDFs of ePrint 2022/323, 2019/844, 2026/1333, 2021/781, 2026/312 and 2026/2343, each rechecked by a fresh reader, `docs/VERIFICATION3.md`), each with source title, URL, retrieval date, location in the source, and a comparability warning. It is summarised in Appendices A and B. **Comparability rules**: rows share an axis only if operation, parameter set and core family agree; differences in library, compiler, statistic, RAM definition and pre standard versus final parameters are flagged.
 
 **Second run.** The brief was run twice in separate sessions and the results merged here. Of the second run's 582 rows, 299 match a row in this table by value and source, 245 appear only in the second run, and 38 carry no number; the 210 comparable pqm4 rows all matched. Rows only in the second run are not used until their source is read (`docs/CROSSCHECK.md`).
 
@@ -323,46 +323,52 @@ No purchase is required (emulator first, then borrowed lab hardware; `docs/NO_PU
 Retrieved on the date shown; `rows` = number of table rows taken from that source. Per-row locations are in `data/evidence.csv`.
 
 1. Adams Bridge Accelerator: Bridging the Post-Quantum Transition (2 rows; retrieved 2026-10-11) <https://eprint.iacr.org/2026/256>
-2. Benchmarking NIST-Standardised ML-KEM and ML-DSA on ARM Cortex-M0+: Latency, Rejection-Sampling Variance, and Memory on  (34 rows; retrieved 2026-10-11) <https://arxiv.org/pdf/2603.19340>
-3. Compact Dilithium Implementations on Cortex-M3 and Cortex-M4 (Greconici, Kannwischer, Sprenkels) (36 rows; retrieved 2026-10-11) <https://tches.iacr.org/index.php/TCHES/article/download/8725/8325>
-4. Drop-In Masked Modular Reduction for ML-DSA: Cutting Side-Channel Cost in the Root-of-Trust (1 rows; retrieved 2026-10-11) <https://eprint.iacr.org/2026/711>
-5. Enabling Microarchitectural Agility: Taking ML-KEM & ML-DSA from Cortex-M4 to M7 with SLOTHY (Abdulrahman, Kannwischer,  (24 rows; retrieved 2026-10-12) <https://eprint.iacr.org/2025/366.pdf>
-6. FIPS 203 Module-Lattice-Based Key-Encapsulation Mechanism Standard (NIST) (9 rows; retrieved 2026-10-11) <https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf>
-7. FIPS 203 Module-Lattice-Based Key-Encapsulation Mechanism Standard (published 2024-08-13) (6 rows; retrieved 2026-10-11) <https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf>
-8. FIPS 204 Module-Lattice-Based Digital Signature Standard (NIST) (9 rows; retrieved 2026-10-11) <https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf>
-9. FIPS 204 Module-Lattice-Based Digital Signature Standard (published 2024-08-13) (6 rows; retrieved 2026-10-11) <https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf>
-10. FIPS 205 Stateless Hash-Based Digital Signature Standard (NIST) (12 rows; retrieved 2026-10-11) <https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.205.pdf>
-11. FIPS 205 Stateless Hash-Based Digital Signature Standard (published 2024-08-13) (6 rows; retrieved 2026-10-11) <https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.205.pdf>
-12. First-Order Masked Kyber on ARM Cortex-M4 (1 rows; retrieved 2026-10-11) <https://eprint.iacr.org/2022/058>
-13. High-Performance NTT Hardware Accelerator to Support ML-KEM and ML-DSA (ASHES 2024) (1 rows; retrieved 2026-10-11) <https://pqshield.com/wp-content/uploads/2024/10/High-Performance-NTT-Hardware-Accelerator-to-Support-ML-KEM-and-ML-DSA.pdf>
-14. LMS vs XMSS: Comparison of Stateful Hash-Based Signature Schemes on ARM Cortex-M4 (Campos, Kohlstadt, Reith, Stoettinger (67 rows; retrieved 2026-10-12) <https://eprint.iacr.org/2020/470.pdf>
-15. LMS vs XMSS: Comparison of Stateful Hash-Based Signature Schemes on ARM Cortex-M4 (Campos, Kohlstadt, Reith, Stoettinger (63 rows; retrieved 2026-10-11) <https://www.sopmac.de/wp-content/uploads/2021/01/LMS_vs_XMSS.pdf>
-16. Low-Stack HAETAE for Memory-Constrained Microcontrollers (Banegas, Kim, Seo, van Vredendaal) (18 rows; retrieved 2026-10-11) <https://arxiv.org/pdf/2604.15868>
-17. Masking Dilithium: Efficient Implementation and Side-Channel Evaluation (ACNS 2019) (1 rows; retrieved 2026-10-11) <https://eprint.iacr.org/2019/394>
-18. Masking Kyber: First- and Higher-Order Implementations (TCHES 2021) (1 rows; retrieved 2026-10-11) <https://eprint.iacr.org/2021/483>
-19. MAVLink Guide: Message Signing (Authentication) (1 rows; retrieved 2026-10-11) <https://mavlink.io/en/guide/message_signing.html>
-20. ML-DSA masking sweetened with SUCRE (TCHES 2026) (1 rows; retrieved 2026-10-11) <https://eprint.iacr.org/2026/2248>
-21. Mobile Energy Requirements of the Upcoming NIST Post-Quantum Cryptography Standards (Saarinen) (24 rows; retrieved 2026-10-11) <https://arxiv.org/pdf/1912.00916>
-22. Post-Quantum Cryptography on CHERIoT (David Chisnall, CHERIoT Platform blog) (6 rows; retrieved 2026-10-11) <https://cheriot.org/pqc/2025/12/12/pqc-on-cheriot.html>
-23. Post-Quantum Secure Boot (Kumar, Gupta, Chattopadhyay, Kasper, Krauss, Niederhagen) (4 rows; retrieved 2026-10-11) <https://www.date-conference.com/proceedings-archive/2020/pdf/0438.pdf>
-24. pqm4 benchmark results: benchmarks.csv (mupq/pqm4, GitHub) (90 rows; retrieved 2026-10-11) <https://raw.githubusercontent.com/mupq/pqm4/master/benchmarks.csv>
-25. PX4 Guide: Bootloader Secure Boot (1 rows; retrieved 2026-10-11) <https://docs.px4.io/main/en/advanced_config/bootloader_secure_boot>
-26. Rapidly Verifiable XMSS Signatures (Bos, Huelsing, Renes, van Vredendaal) (6 rows; retrieved 2026-10-11) <https://bmt.ub.rub.de/index.php/TCHES/article/download/8730/8330/5451>
-27. Revisiting Keccak and Dilithium Implementations on ARMv7-M (Huang, Adomnicai, Zhang, Dai, Liu, Cheung, Koc, Chen) (45 rows; retrieved 2026-10-11) <https://bmt.ub.rub.de/index.php/TCHES/article/download/11419/10922/11688>
-28. RFC 10024 Post-Quantum Traditional (PQ/T) Hybrid Key Agreement Mechanisms for TLS 1.3 (6 rows; retrieved 2026-10-11) <https://datatracker.ietf.org/doc/rfc10024/>
-29. RFC 8391 XMSS: eXtended Merkle Signature Scheme (IETF) (6 rows; retrieved 2026-10-11) <https://www.rfc-editor.org/rfc/rfc8391.txt>
-30. RISQrypt: Fast, Secure and Agile Hardware-Software Co-Design for Post-Quantum Cryptography (8 rows; retrieved 2026-10-11) <https://eprint.iacr.org/2026/312>
-31. Secure integration of extremely resource-constrained nodes on distributed ROS2 applications (Open Research Europe 2023) (1 rows; retrieved 2026-10-11) <https://cister.isep.ipp.pt/docs/secure_integration_of_extremely_resource_constrained_nodes_on_distributed_ros2_applications/1863/>
-32. Simultaneous Integration of Kyber and Dilithium on Embedded Microcontrollers: Towards Quantum-Resistant IoT Systems (Do, (6 rows; retrieved 2026-10-11) <https://mail.etasr.com/index.php/ETASR/article/download/17148/6422/84641>
-33. Stateful Hash-Based Signature (SHBS) Benchmark Data for XMSS and LMS (Romansky, Mazzuchi, Sarkani) (19 rows; retrieved 2026-10-11) <https://arxiv.org/pdf/2502.06033>
-34. Trusted Firmware-M BL1 Immutable bootloader (1 rows; retrieved 2026-10-11) <https://trustedfirmware-m.readthedocs.io/en/latest/design_docs/booting/bl1.html>
-35. Updated Post-Quantum Benchmarks for ML-KEM and ML-DSA on STM32 (wolfSSL blog) (24 rows; retrieved 2026-10-11) <https://www.wolfssl.com/updated-post-quantum-benchmarks-for-ml-kem-and-ml-dsa-on-stm32/>
-36. wolfBoot Cipher and Hash Algorithm Benchmarks on STM32H5 (wolfSSL blog) (11 rows; retrieved 2026-10-11) <https://www.wolfssl.com/wolfboot-cipher-and-hash-algorithm-benchmarks-on-stm32h5/>
-37. wolfBoot docs/PQ.md (Post-Quantum Signatures) (2 rows; retrieved 2026-10-11) <https://raw.githubusercontent.com/wolfSSL/wolfBoot/master/docs/PQ.md>
-38. XMSS and Embedded Systems: XMSS Hardware Accelerators for RISC-V (Wang, Jungk, Waelde, Deng, Gupta, Szefer, Niederhagen) (9 rows; retrieved 2026-10-11) <https://par.nsf.gov//servlets/purl/10112210>
+2. Apples, Oranges, and Signatures: Pitfalls and Methodology in ML-DSA Benchmarking. Sebastien Riou, Jong-Yeon Park, Liga A (42 rows; retrieved 2026-10-16) <https://eprint.iacr.org/2026/1333.pdf>
+3. Benchmarking NIST-Standardised ML-KEM and ML-DSA on ARM Cortex-M0+: Latency, Rejection-Sampling Variance, and Memory on  (34 rows; retrieved 2026-10-11) <https://arxiv.org/pdf/2603.19340>
+4. Compact Dilithium Implementations on Cortex-M3 and Cortex-M4 (Greconici, Kannwischer, Sprenkels) (36 rows; retrieved 2026-10-11) <https://tches.iacr.org/index.php/TCHES/article/download/8725/8325>
+5. Dilithium for Memory Constrained Devices. Joppe W. Bos, Joost Renes, and Amber Sprenkels (NXP Semiconductors) (48 rows; retrieved 2026-10-16) <https://eprint.iacr.org/2022/323.pdf>
+6. Drop-In Masked Modular Reduction for ML-DSA: Cutting Side-Channel Cost in the Root-of-Trust (1 rows; retrieved 2026-10-11) <https://eprint.iacr.org/2026/711>
+7. Enabling Microarchitectural Agility: Taking ML-KEM & ML-DSA from Cortex-M4 to M7 with SLOTHY (Abdulrahman, Kannwischer,  (24 rows; retrieved 2026-10-12) <https://eprint.iacr.org/2025/366.pdf>
+8. FIPS 203 Module-Lattice-Based Key-Encapsulation Mechanism Standard (NIST) (9 rows; retrieved 2026-10-11) <https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf>
+9. FIPS 203 Module-Lattice-Based Key-Encapsulation Mechanism Standard (published 2024-08-13) (6 rows; retrieved 2026-10-11) <https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf>
+10. FIPS 204 Module-Lattice-Based Digital Signature Standard (NIST) (9 rows; retrieved 2026-10-11) <https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf>
+11. FIPS 204 Module-Lattice-Based Digital Signature Standard (published 2024-08-13) (6 rows; retrieved 2026-10-11) <https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf>
+12. FIPS 205 Stateless Hash-Based Digital Signature Standard (NIST) (12 rows; retrieved 2026-10-11) <https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.205.pdf>
+13. FIPS 205 Stateless Hash-Based Digital Signature Standard (published 2024-08-13) (6 rows; retrieved 2026-10-11) <https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.205.pdf>
+14. First-Order Masked Kyber on ARM Cortex-M4 (1 rows; retrieved 2026-10-11) <https://eprint.iacr.org/2022/058>
+15. High-Performance NTT Hardware Accelerator to Support ML-KEM and ML-DSA (ASHES 2024) (1 rows; retrieved 2026-10-11) <https://pqshield.com/wp-content/uploads/2024/10/High-Performance-NTT-Hardware-Accelerator-to-Support-ML-KEM-and-ML-DSA.pdf>
+16. LMS vs XMSS: Comparison of Stateful Hash-Based Signature Schemes on ARM Cortex-M4 (Campos, Kohlstadt, Reith, Stoettinger (67 rows; retrieved 2026-10-12) <https://eprint.iacr.org/2020/470.pdf>
+17. LMS vs XMSS: Comparison of Stateful Hash-Based Signature Schemes on ARM Cortex-M4 (Campos, Kohlstadt, Reith, Stoettinger (63 rows; retrieved 2026-10-11) <https://www.sopmac.de/wp-content/uploads/2021/01/LMS_vs_XMSS.pdf>
+18. Low-Stack HAETAE for Memory-Constrained Microcontrollers (Banegas, Kim, Seo, van Vredendaal) (18 rows; retrieved 2026-10-11) <https://arxiv.org/pdf/2604.15868>
+19. Masking Dilithium: Efficient Implementation and Side-Channel Evaluation (ACNS 2019) (1 rows; retrieved 2026-10-11) <https://eprint.iacr.org/2019/394>
+20. Masking Kyber: First- and Higher-Order Implementations (TCHES 2021) (1 rows; retrieved 2026-10-11) <https://eprint.iacr.org/2021/483>
+21. MAVLink Guide: Message Signing (Authentication) (1 rows; retrieved 2026-10-11) <https://mavlink.io/en/guide/message_signing.html>
+22. ML-DSA masking sweetened with SUCRE (TCHES 2026) (1 rows; retrieved 2026-10-11) <https://eprint.iacr.org/2026/2248>
+23. Mobile Energy Requirements of the Upcoming NIST Post-Quantum Cryptography Standards (Saarinen) (24 rows; retrieved 2026-10-11) <https://arxiv.org/pdf/1912.00916>
+24. Post-Quantum Command Authentication for Unmanned Systems: A KpqC Feasibility Study under Real-Time and Bandwidth Constra (150 rows; retrieved 2026-10-16) <https://eprint.iacr.org/2026/2343.pdf>
+25. Post-Quantum Cryptography on CHERIoT (David Chisnall, CHERIoT Platform blog) (6 rows; retrieved 2026-10-11) <https://cheriot.org/pqc/2025/12/12/pqc-on-cheriot.html>
+26. Post-Quantum Secure Boot (Kumar, Gupta, Chattopadhyay, Kasper, Krauss, Niederhagen) (4 rows; retrieved 2026-10-11) <https://www.date-conference.com/proceedings-archive/2020/pdf/0438.pdf>
+27. pqm4 benchmark results: benchmarks.csv (mupq/pqm4, GitHub) (90 rows; retrieved 2026-10-11) <https://raw.githubusercontent.com/mupq/pqm4/master/benchmarks.csv>
+28. pqm4: Testing and Benchmarking NIST PQC on ARM Cortex-M4. Matthias J. Kannwischer, Joost Rijneveld, Peter Schwabe, and K (40 rows; retrieved 2026-10-16) <https://eprint.iacr.org/2019/844.pdf>
+29. PX4 Guide: Bootloader Secure Boot (1 rows; retrieved 2026-10-11) <https://docs.px4.io/main/en/advanced_config/bootloader_secure_boot>
+30. Quantum-Resistant Software Update Security on Low-power Networked Embedded Devices. Gustavo Banegas, Koen Zandberg, Emma (83 rows; retrieved 2026-10-16) <https://eprint.iacr.org/2021/781.pdf>
+31. Rapidly Verifiable XMSS Signatures (Bos, Huelsing, Renes, van Vredendaal) (6 rows; retrieved 2026-10-11) <https://bmt.ub.rub.de/index.php/TCHES/article/download/8730/8330/5451>
+32. Revisiting Keccak and Dilithium Implementations on ARMv7-M (Huang, Adomnicai, Zhang, Dai, Liu, Cheung, Koc, Chen) (45 rows; retrieved 2026-10-11) <https://bmt.ub.rub.de/index.php/TCHES/article/download/11419/10922/11688>
+33. RFC 10024 Post-Quantum Traditional (PQ/T) Hybrid Key Agreement Mechanisms for TLS 1.3 (6 rows; retrieved 2026-10-11) <https://datatracker.ietf.org/doc/rfc10024/>
+34. RFC 8391 XMSS: eXtended Merkle Signature Scheme (IETF) (6 rows; retrieved 2026-10-11) <https://www.rfc-editor.org/rfc/rfc8391.txt>
+35. RISQrypt - Fast, Secure and Agile Hardware-Software Co-Design for Post-Quantum Cryptography; Tolun Tosun, Atıl Utku Ay,  (40 rows; retrieved 2026-10-16) <https://eprint.iacr.org/2026/312.pdf>
+36. RISQrypt: Fast, Secure and Agile Hardware-Software Co-Design for Post-Quantum Cryptography (8 rows; retrieved 2026-10-11) <https://eprint.iacr.org/2026/312>
+37. Secure integration of extremely resource-constrained nodes on distributed ROS2 applications (Open Research Europe 2023) (1 rows; retrieved 2026-10-11) <https://cister.isep.ipp.pt/docs/secure_integration_of_extremely_resource_constrained_nodes_on_distributed_ros2_applications/1863/>
+38. Simultaneous Integration of Kyber and Dilithium on Embedded Microcontrollers: Towards Quantum-Resistant IoT Systems (Do, (6 rows; retrieved 2026-10-11) <https://mail.etasr.com/index.php/ETASR/article/download/17148/6422/84641>
+39. Stateful Hash-Based Signature (SHBS) Benchmark Data for XMSS and LMS (Romansky, Mazzuchi, Sarkani) (19 rows; retrieved 2026-10-11) <https://arxiv.org/pdf/2502.06033>
+40. Trusted Firmware-M BL1 Immutable bootloader (1 rows; retrieved 2026-10-11) <https://trustedfirmware-m.readthedocs.io/en/latest/design_docs/booting/bl1.html>
+41. Updated Post-Quantum Benchmarks for ML-KEM and ML-DSA on STM32 (wolfSSL blog) (24 rows; retrieved 2026-10-11) <https://www.wolfssl.com/updated-post-quantum-benchmarks-for-ml-kem-and-ml-dsa-on-stm32/>
+42. wolfBoot Cipher and Hash Algorithm Benchmarks on STM32H5 (wolfSSL blog) (11 rows; retrieved 2026-10-11) <https://www.wolfssl.com/wolfboot-cipher-and-hash-algorithm-benchmarks-on-stm32h5/>
+43. wolfBoot docs/PQ.md (Post-Quantum Signatures) (2 rows; retrieved 2026-10-11) <https://raw.githubusercontent.com/wolfSSL/wolfBoot/master/docs/PQ.md>
+44. XMSS and Embedded Systems: XMSS Hardware Accelerators for RISC-V (Wang, Jungk, Waelde, Deng, Gupta, Szefer, Niederhagen) (9 rows; retrieved 2026-10-11) <https://par.nsf.gov//servlets/purl/10112210>
 
 
-# Appendix B. Key evidence rows (selected; all 568 rows are in data/evidence.csv)
+# Appendix B. Key evidence rows (selected; all 971 rows are in data/evidence.csv)
 
 All rows are **published** numbers. Cycles are copied as published; `sz` = key/signature/share bytes. **Do not compare rows with different core, clock, library, statistic or standard status** (see the comparability_warning column in the CSV; `pre-standard` = round-2/3 Kyber/Dilithium/SPHINCS+, not the final FIPS parameter sets).
 
@@ -486,7 +492,7 @@ All rows are **published** numbers. Cycles are copied as published; `sz` = key/s
 
 # Appendix C. Sources not yet used for a table row
 
-On 2026-10-12 the author supplied PDFs of ePrint 2019/844, 2020/470, 2021/781, 2022/323, 2025/366, 2026/312, 2026/1333 and 2026/2343, the NSA CNSA 2.0 FAQ, two UAE National Encryption Policy documents and a CISA quantum readiness document (docs/SOURCES_TO_UPLOAD.md). Rows from 2025/366 and 2020/470 are now in the table (stream S7, each value found in the PDF). The other papers are in hand but no number from them is in the table yet. Two supplied files (CISA, uaelegislation.gov.ae) are image only and were read by OCR on 2026-10-15. The items below are still unretrieved.
+On 2026-10-12 the author supplied PDFs of ePrint 2019/844, 2020/470, 2021/781, 2022/323, 2025/366, 2026/312, 2026/1333 and 2026/2343, the NSA CNSA 2.0 FAQ, two UAE National Encryption Policy documents and a CISA quantum readiness document (docs/SOURCES_TO_UPLOAD.md). Rows from 2025/366 and 2020/470 are in the table (streams S7 and S8, each value found in the PDF). Rows from 2019/844, 2021/781, 2022/323, 2026/312, 2026/1333 and 2026/2343 were added on 2026-10-16 (stream S10, each rechecked by a fresh reader, docs/VERIFICATION3.md). The CNSA 2.0 FAQ is summarised in data/raw/S10_cnsa_faq.md. Two supplied files (CISA, uaelegislation.gov.ae) are image only and were read by OCR on 2026-10-15. The items below are still unretrieved.
 
 | Source | Why it matters | Note |
 |---|---|---|
