@@ -40,3 +40,11 @@ frag_hdr_bytes,0,B,assumption,ASSUMPTION fragment header inside packet link payl
 lorawan_phy_mac_overhead_bytes,0,B,assumption,ASSUMPTION LoRaWAN PHY and MAC overhead is not in the data files and is ignored
 msg_payload_bytes,30,B,assumption,ASSUMPTION typical command or telemetry payload for the per message tag scenario
 tag_hypothetical_bytes,16,B,assumption,ASSUMPTION HYPOTHETICAL 16 B symmetric tag (not a standard field)
+lorawan_dr5_payload_bytes,222,B,cited,data/raw/S3_robotics.md:72 (EU868 maximum application payload at DR4 to DR7)
+lorawan_dr5_bitrate_bps,5470,bit/s,cited,data/raw/S3_robotics.md:72 (EU868 DR5 SF7/125 kHz)
+lorawan_us915_dr0_payload_bytes,11,B,cited,data/raw/S3_robotics.md:73 (US915 maximum application payload at DR0; bit rate not in the data files)
+uav_profile_rate_bps,57600,bit/s,cited,data/evidence.csv:S10F-136 (ePrint 2026/2343 Section 4.1 UAV profile)
+uav_profile_delay_s,0.040,s,cited,data/evidence.csv:S10F-136 (ePrint 2026/2343 Section 4.1 UAV profile delay)
+tls_round_trips,2,count,assumption,ASSUMPTION round trips before the TLS 1.3 handshake completes (TCP connect plus one TLS round trip)
+tcp_mss_bytes,1448,B,assumption,ASSUMPTION TCP maximum segment size on the emulated link
+tcp_ip_header_bytes,52,B,assumption,ASSUMPTION IPv4 plus TCP header with timestamps per segment
