@@ -91,7 +91,7 @@ def device_class(row):
     core = row["core"].lower()
     if dev.startswith("n/a (standard)") or row["size_kind"] == "standard":
         return "standard-size"
-    if dev.startswith("x86") or core.startswith("x86"):
+    if dev.startswith("x86") or core.startswith("x86") or "ubuntu host" in dev:
         return "host-cpu"
     if any(k in dev + core for k in ("fpga", "5 nm", "zynq", "artix", "vexriscv", "ibex",
                                      "soc", "asic", "simulation")):
