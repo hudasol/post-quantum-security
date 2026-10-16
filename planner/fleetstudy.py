@@ -208,6 +208,25 @@ def staged(devices, years=(2026, 2027, 2028, 2029, 2030), replacement="H4"):
     return out
 
 
+def portable_c_params():
+    """Thresholds from this repository's own emulated portable C build instead of the stack optimised pqm4
+    rows (label: emulated inputs, estimated thresholds). Same derivation as docs/PLANNER_RULES.md: signature
+    flash = ML-DSA-44 image text plus the 5,288 B header, signature RAM = ML-DSA-44 verify stack, KEM flash =
+    ML-KEM-768 image text, KEM RAM = ML-KEM-768 decaps stack plus 6,004 B of buffers; kB = 1000 B, rounded up.
+    Image text includes the harness and the C library, so these are upper bounds."""
+    import math
+    qr = os.path.join(ROOT, "bench", "mcu", "qemu_results")
+    with open(os.path.join(qr, "stack.csv"), newline="", encoding="utf-8") as fh:
+        st = {(r["param"], r["op"]): int(r["stack_bytes"]) for r in csv.DictReader(fh)
+              if r["board"] == "an386" and r["opt"] == "-O2"}
+    with open(os.path.join(qr, "image_size.csv"), newline="", encoding="utf-8") as fh:
+        tx = {(r["alg"], r["param"]): int(r["text_bytes"]) for r in csv.DictReader(fh)
+              if r["board"] == "an386" and r["opt"] == "-O2"}
+    kb = lambda b: Fraction(math.ceil(b / 1000))  # noqa: E731
+    return Parameters(sig_flash_kb=kb(tx[("mldsa", "44")] + 5288), sig_ram_kb=kb(st[("ML-DSA-44", "verify")]),
+                      kem_flash_kb=kb(tx[("mlkem", "768")]), kem_ram_kb=kb(st[("ML-KEM-768", "decaps")] + 6004))
+
+
 def _write(name, rows, fields):
     os.makedirs(RES, exist_ok=True)
     with open(os.path.join(RES, name), "w", newline="", encoding="utf-8") as fh:
@@ -239,6 +258,15 @@ def main():
     stg = staged(fleets[1000])
     _write("staged.csv", stg, ["year", "in_wave"] + list(CLASSES)
            + ["migrated_this_wave", "migrated_total"])
+    pc = portable_c_params()
+    scen = []
+    for tag, p in (("stack optimised pqm4 rows (default)", Parameters()), ("portable C, emulated build", pc)):
+        res = classify_devices(fleets[1000], p)
+        scen.append({"thresholds": tag, "sig_flash_kb": p.sig_flash_kb, "sig_ram_kb": p.sig_ram_kb,
+                     "kem_flash_kb": p.kem_flash_kb, "kem_ram_kb": p.kem_ram_kb,
+                     "violations": len(violations(fleets[1000], res, p)), **counts(res)})
+    _write("thresholds.csv", scen, ["thresholds", "sig_flash_kb", "sig_ram_kb", "kem_flash_kb", "kem_ram_kb",
+                                    "violations"] + list(CLASSES))
     hw_rows = [{"class": h, "core": v[0], "ram_kb": " ".join(map(str, v[1])),
                 "flash_kb": " ".join(map(str, v[2])), "share": dict(MIX)[h]} for h, v in HW.items()]
     _write("hardware_classes.csv", hw_rows, ["class", "core", "ram_kb", "flash_kb", "share"])
@@ -273,11 +301,24 @@ def main():
     for s in stg:
         L.append("| %d | %d | %s | %d | %d |" % (s["year"], s["in_wave"], " | ".join(str(s[c]) for c in CLASSES),
                                                 s["migrated_this_wave"], s["migrated_total"]))
+    L += ["", "## 4. Which implementation the thresholds assume (1000 device fleet)", "",
+          "The default thresholds come from stack optimised pqm4 rows (hand written assembly; "
+          "`docs/PLANNER_RULES.md`). The second line uses this repository's own portable C build as run in the "
+          "emulator (`bench/mcu/qemu_results/`), which needs far more RAM. The violation count is an internal "
+          "consistency check against the thresholds in force, not evidence that the code fits a real device.", "",
+          "| thresholds | sig flash kB | sig RAM kB | KEM flash kB | KEM RAM kB | violations | " + " | ".join(CLASSES) + " |",
+          "|---|---|---|---|---|---|" + "---|" * len(CLASSES)]
+    for s_ in scen:
+        L.append("| %s | %s | %s | %s | %s | %d | %s |" % (s_["thresholds"], s_["sig_flash_kb"], s_["sig_ram_kb"],
+                 s_["kem_flash_kb"], s_["kem_ram_kb"], s_["violations"], " | ".join(str(s_[c]) for c in CLASSES)))
     L += ["", "## Limits", "",
           "1. The hardware classes, their shares and every distribution are invented; the tornado ranking "
           "depends on them. A real inventory would change every number here.",
           "2. The tornado moves one input at a time; interactions are not explored.",
-          "3. The staged model assumes every action in a wave succeeds and that replaced hardware leaves "
+          "3. The tornado and section 1 use the default thresholds, which assume stack optimised assembly; with "
+          "portable C thresholds (section 4) the memory inputs matter far more, so the ranking above holds only for "
+          "the default assumption.",
+          "4. The staged model assumes every action in a wave succeeds and that replaced hardware leaves "
           "the fleet; it does not model budgets, downtime or partial rollouts.", "",
           "_This tool supports planning. It is not a security guarantee._", ""]
     with open(DOC, "w", encoding="utf-8", newline="\n") as fh:
