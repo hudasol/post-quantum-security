@@ -82,4 +82,5 @@ Label: **emulated**. Produced by `bench/mcu/run_qemu.sh`; configuration in `conf
 
 Real cycle counts need a real board; the procedure is in `docs/BOARD_RUN_PROTOCOL.md`.
 EOF
+python3 analyze_qemu.py
 echo "results in $OUT/"
