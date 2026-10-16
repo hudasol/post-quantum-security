@@ -72,4 +72,4 @@ Huda Mueen
 - [ ] Read the Fast-DDS CONTRIBUTING "Issues and Support" section and ROS Discourse posting guidelines; reformat accordingly.
 - [ ] Confirm no change to DDS-Security status (final or not).
 - [ ] Check wording: no em dashes, no hyphens between words except in names, no emojis, no affiliation, no claim of authority, 4 questions or fewer, no attack details.
-- [ ] Huda to read and approve; nothing is posted by the drafting agent.
+- [ ] Huda to read and approve; nothing is posted until the author approves it.

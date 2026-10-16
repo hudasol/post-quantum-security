@@ -70,4 +70,4 @@ Huda Mueen
 - [ ] Confirm the mailing list and Discord are still active and decide whether to post there first.
 - [ ] Check wording: no em dashes, no hyphens between words except in names, no emojis, no affiliation, no claim of authority, 4 questions or fewer, no attack details, no side channel guidance.
 - [ ] Do not use the security reporting channel.
-- [ ] Huda to read and approve; nothing is posted by the drafting agent.
+- [ ] Huda to read and approve; nothing is posted until the author approves it.

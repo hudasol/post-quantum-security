@@ -66,4 +66,4 @@ Facts behind the questions (all from this repository's retrieved sources): the s
 - [ ] Confirm question 1 is not already covered by the current devguide text (read https://mavlink.io/en/guide/message_signing.html again).
 - [ ] Prefer a documentation pull request to a comment on a closed issue if the maintainers' answer to question 1 is yes.
 - [ ] Check wording: no em dashes, no hyphens between words except in names, no emojis, no affiliation, no claim of authority, no benchmark numbers from third parties.
-- [ ] Huda to read the final text and approve; nothing is posted by the drafting agent.
+- [ ] Huda to read the final text and approve; nothing is posted until the author approves it.

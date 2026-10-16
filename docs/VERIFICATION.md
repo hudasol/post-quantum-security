@@ -1,6 +1,6 @@
 # Verification of data/evidence.csv (independent re-check)
 
-Date: 2026-10-11. Verifier: independent subagent that did not collect the data. Protocol reference: docs/PROTOCOL.md sections 5, 6, 9 (and D1, D3).
+Date: 2026-10-11. Verifier: independent verification pass that did not collect the data. Protocol reference: docs/PROTOCOL.md sections 5, 6, 9 (and D1, D3).
 
 ## Method
 
@@ -105,4 +105,4 @@ Suggested documentation fixes (not value corrections): items 1 and 2 above.
 
 
 ## Second pass: prose claims in the report (2026-10-11)
-A separate subagent (not the data collector nor the report author) checked 54 non-table claims in REPORT.md, 26 against live primary sources (NIST, NCSC, EU roadmap, IETF, mavlink.io, PX4, wolfBoot, TF-M, GRI, arXiv) and the rest against the research notes; 1 was unverifiable (ASD page unreachable). It found 6 defects in 53 gradable claims (about 11%), one substantive (CVE number: 49601 should be 49600), the rest precision or labelling (IR 8547 deprecation applies to 112-bit strength only; ArduPilot's bootloader algorithm is not stated in the docs read; "some vendor parts ship PQ verification" overstated vendor claims; 36x should be 36.5x; two untagged inferences). All were corrected in REPORT_body.md; the CVE number was also corrected in data/raw/S3_robotics.md. It also flagged that the wolfBoot blog's 320 MHz for the STM32H563 exceeds the 250 MHz maximum Zephyr lists for the NUCLEO-H563ZI; the report now says so. No invented facts were found. Table-row verification (0/48) is reported above; this second figure covers prose, not table rows.
+A separate verification pass (not the data collector nor the report author) checked 54 non-table claims in REPORT.md, 26 against live primary sources (NIST, NCSC, EU roadmap, IETF, mavlink.io, PX4, wolfBoot, TF-M, GRI, arXiv) and the rest against the research notes; 1 was unverifiable (ASD page unreachable). It found 6 defects in 53 gradable claims (about 11%), one substantive (CVE number: 49601 should be 49600), the rest precision or labelling (IR 8547 deprecation applies to 112-bit strength only; ArduPilot's bootloader algorithm is not stated in the docs read; "some vendor parts ship PQ verification" overstated vendor claims; 36x should be 36.5x; two untagged inferences). All were corrected in REPORT_body.md; the CVE number was also corrected in data/raw/S3_robotics.md. It also flagged that the wolfBoot blog's 320 MHz for the STM32H563 exceeds the 250 MHz maximum Zephyr lists for the NUCLEO-H563ZI; the report now says so. No invented facts were found. Table-row verification (0/48) is reported above; this second figure covers prose, not table rows.

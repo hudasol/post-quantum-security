@@ -1,6 +1,6 @@
 # Predictions (written before any phase 2 run)
 
-Author: Huda Mueen. Written 2026-10-11, before the verification subagents, the retrieval retries, the simulator, or the planner were run. The SHA-256 of the prediction text, taken at the moment of writing, is stored in `docs/PREDICTIONS.sha256`. Hits and misses are appended in the "Outcomes" section at the end only; the prediction text above it is not edited.
+Author: Huda Mueen. Written 2026-10-11, before the verification passes, the retrieval retries, the simulator, or the planner were run. The SHA-256 of the prediction text, taken at the moment of writing, is stored in `docs/PREDICTIONS.sha256`. Hits and misses are appended in the "Outcomes" section at the end only; the prediction text above it is not edited.
 
 Confidence is my honest probability that the statement turns out true.
 

@@ -57,7 +57,7 @@ Status is from the RFC Editor index and datatracker pages. Draft-to-RFC mappings
 | draft-ietf-lamps-pq-composite-sigs (rev 19) and -kem (rev 22) | Active, Proposed Standard intended | Updated 2026-10-02 and 2026-10-10 | S27, S30 | 2026-10-11 | Y |
 | draft-ietf-uta-pqc-app (PQC recommendations for TLS-based applications) | Active, rev 03 | Updated 2026-07-04 | S28 | 2026-10-11 | Y |
 
-I did not retrieve datatracker status for CoAP, OSCORE, EDHOC or DTLS-specific PQC drafts. That gap belongs to the protocol-cost subagent or a follow-up search.
+I did not retrieve datatracker status for CoAP, OSCORE, EDHOC or DTLS-specific PQC drafts. That gap belongs to the protocol cost stream or a follow-up search.
 
 ## 3. Government migration guidance
 

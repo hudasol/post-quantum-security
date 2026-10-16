@@ -35,7 +35,7 @@ Suggested query families (each stream records the exact queries it ran in its ra
 ## 4. Inclusion criteria
 
 A source is included when ALL of the following hold:
-- It was actually retrieved by a subagent during this review (fetched page, paper text or repository file), and the retrieval date is recorded.
+- It was actually retrieved by a research pass during this review (fetched page, paper text or repository file), and the retrieval date is recorded.
 - It reports a number, status, requirement or protocol fact that is relevant to a sub question.
 - It names its setup (device, compiler or library version, parameter set) well enough to judge comparability, or the missing detail is recorded as "not stated".
 
@@ -80,7 +80,7 @@ Every standards or guidance claim carries: document identifier, status (draft / 
 1. Streams S1 to S4 run in parallel and each writes raw notes and evidence rows with source URLs and retrieval dates.
 2. The evidence rows are merged into `data/evidence.csv` after a schema check.
 3. Plots are produced only from `data/evidence.csv` rows of type `published` and carry the caption "Published numbers; setups differ; see comparability column".
-4. A separate verification subagent that did not collect the data draws a random sample of at least 25 rows (seeded, seed recorded), re-opens each source, and compares every populated numeric field. Error rate = rows with at least one wrong field / rows checked, and also field level error rate. Errors are corrected in the table and logged in `docs/VERIFICATION.md`.
+4. A separate verification pass that did not collect the data draws a random sample of at least 25 rows (seeded, seed recorded), re-opens each source, and compares every populated numeric field. Error rate = rows with at least one wrong field / rows checked, and also field level error rate. Errors are corrected in the table and logged in `docs/VERIFICATION.md`.
 5. The report is drafted only after the table is verified, so no figure in the prose can predate the check.
 
 ## 10. Deviations log
