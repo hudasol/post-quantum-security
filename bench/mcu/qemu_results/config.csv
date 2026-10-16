@@ -1,0 +1,13 @@
+key,value
+label,emulated
+date_utc,2026-10-16T00:14:12Z
+qemu,QEMU emulator version 10.2.1 (Debian 1:10.2.1+ds-1ubuntu3.2)
+compiler,arm-none-eabi-gcc (15:14.2.rel1-1) 14.2.1 20241119
+mlkem_native,d1b2fe782888bdb761a50336012923180be7f502
+mldsa_native,834a90d5e846ffa1e1611bd24e160bb2e9b86d35
+iterations_per_operation,3
+stack_paint_span_bytes,131072
+optimisation_levels,-O2 -Os -O3
+boards,an386 an505
+common_flags,-mthumb -mfloat-abi=hard -ffunction-sections -fdata-sections -std=c99 -DBENCH_DISABLE_IRQ; link -Wl --gc-sections --specs=nano.specs --specs=nosys.specs
+random_inputs,deterministic xorshift32 from src/bench_rng.c (insecure; benchmark inputs only); no seed argument
