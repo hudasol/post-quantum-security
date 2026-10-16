@@ -18,10 +18,9 @@ def main():
     ev = rows("data/evidence.csv")
     s10 = [r for r in ev if r["stream"] == "S10"]
     v3 = {r["set"]: r for r in rows("data/verify3/summary.csv")}["all"]
-    txt = subprocess.run(["git", "show", "1060a1d:bench/mcu/qemu_results/stack.csv"], cwd=ROOT,
-                         capture_output=True, text=True, check=True).stdout
-    emu = [int(l.split(",")[3]) for l in txt.splitlines() if l.startswith("ML-DSA,ML-DSA-44,sign,")][0]
-    mem = min((float(r["stack_bytes"] or r["ram_bytes"]), r["id"]) for r in s10 if r["operation"] == "sign"
+    emu = [int(r["stack_bytes"]) for r in rows("bench/mcu/qemu_results/stack.csv") if r["board"] == "an386"
+           and r["opt"] == "-O2" and r["param"] == "ML-DSA-44" and r["op"] == "sign"][0]
+    mem = min((float(r["stack_bytes"] or r["ram_bytes"]), r["id"]) for r in ev if r["operation"] == "sign"
               and (r["stack_bytes"] or r["ram_bytes"])
               and any(t in r["parameter_set"] for t in ("Dilithium-2", "Dilithium2", "ML-DSA-44")))
     ck = rows("bench/mcu/qemu_results/checks.csv")
@@ -58,6 +57,9 @@ def main():
         "tornado": f"{100 * float(tor[0]['swing']):.1f}",
         "tornado_inputs": " and ".join(r["input"].replace("_", " ") for r in tor if r["swing"] == tor[0]["swing"]),
         "rho": f"{rho:.3f}", "cv": f"{100 * max(float(r['cv_of_run_medians']) for r in hs):.0f}",
+        "p_ns": m.group(4),
+        "hr_default": [r["HARDWARE_REPLACEMENT"] for r in rows("planner/results/thresholds.csv") if "default" in r["thresholds"]][0],
+        "hr_portable": [r["HARDWARE_REPLACEMENT"] for r in rows("planner/results/thresholds.csv") if "portable" in r["thresholds"]][0],
         "p_hit": m.group(1), "p_partial": m.group(2), "p_miss": m.group(3), "p_total": m.group(5),
     }
     body = (ROOT / "docs" / "PROPOSAL_ATRC_body.md").read_text(encoding="utf-8")
