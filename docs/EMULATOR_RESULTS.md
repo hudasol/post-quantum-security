@@ -45,11 +45,22 @@ The span includes the harness frames above the library call, so it slightly over
 
 Each image includes the harness and the C library; the baseline image is not subtracted, so these are upper bounds for the library's flash cost. The bss figure is not interpreted here.
 
+## Second round (2026-10-16): Cortex-M33 and an optimisation sweep
+
+`bench/mcu/run_qemu.sh` now regenerates everything in `bench/mcu/qemu_results/` in one run: six parameter sets on `mps2-an386` (Cortex-M4) and `mps2-an505` (Cortex-M33, board files in `bench/mcu/board/qemu_an505/`), each at -O2, -Os and -O3, with QEMU 10.2.1 and arm-none-eabi-gcc 14.2.1 (`qemu_results/config.csv`). The tables above are the first round (QEMU 8.2.2, gcc 13.2.1) and are kept as they were. The comparison is generated in `qemu_results/ANALYSIS.md`; what the emulator cannot show is in `qemu_results/LIMITS.md`. In short:
+
+1. All 36 builds pass every correctness check.
+2. Stack high water marks are the same on the Cortex-M33 model as on the Cortex-M4 model for every operation (same C code and compiler; the emulator does not change stack use).
+3. The newer toolchain changes the first round figures by at most a few percent (exact values in `ANALYSIS.md`).
+4. Stack grows strictly with the parameter set for every operation, core and optimisation level; -Os gives the smallest text for every image.
+
+Renode was not tried: it has no ready platform description for the MPS2 boards used here, and porting the board files to one of its STM32 platforms is board bring up work that belongs with the real board run (`docs/BOARD_RUN_PROTOCOL.md`).
+
 ## Not done
 
-1. Real cycle counts, energy and flash wait state effects (a borrowed Cortex-M4F or M33 board is needed).
-2. Cortex-M33 (`mps2-an505`): needs a second linker script and UART address; not yet written.
-3. Assembly backends of the libraries; only the portable C backend was built.
+1. Real cycle counts, energy and flash wait state effects (a borrowed Cortex-M4F or M33 board is needed; see `docs/BOARD_RUN_PROTOCOL.md`).
+2. Assembly backends of the libraries; only the portable C backend was built.
+3. A second emulator (Renode) for cross checking stack figures.
 
 ## One bug found on the way
 
