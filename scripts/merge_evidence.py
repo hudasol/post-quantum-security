@@ -68,6 +68,8 @@ def scheme_family(s):
         return "hash-baseline"
     if "xmss" in t:
         return "XMSS"
+    if "falcon" in t or "fn-dsa" in t:
+        return "FN-DSA"
     return "other"
 
 
@@ -101,7 +103,8 @@ def device_class(row):
 
 def main():
     rows = (read_rows(RAW / "S2_evidence.csv", "S2") + read_rows(RAW / "S3_evidence.csv", "S3")
-            + read_rows(RAW / "S7_verified.csv", "S7") + read_rows(RAW / "S8_verified.csv", "S8"))
+            + read_rows(RAW / "S7_verified.csv", "S7") + read_rows(RAW / "S8_verified.csv", "S8")
+            + read_rows(RAW / "S10_verified.csv", "S10"))
     problems = []
     repaired = []
     seen = set()
