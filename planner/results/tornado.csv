@@ -1,0 +1,13 @@
+input,kind,low,high,changed_low,share_low,changed_high,share_high,swing
+sig_horizon_year,param,2028,2032,97,0.0970,112,0.1120,0.1120
+service_life_remaining_years,shift,-2,2,112,0.1120,97,0.0970,0.1120
+free_flash_kb,scale,1/2,3/2,41,0.0410,46,0.0460,0.0460
+free_ram_kb,scale,1/2,3/2,31,0.0310,38,0.0380,0.0380
+conf_horizon_year,param,2033,2037,34,0.0340,22,0.0220,0.0340
+data_lifetime_years,shift,-2,2,22,0.0220,34,0.0340,0.0340
+sig_flash_kb,param,31/2,93/2,19,0.0190,21,0.0210,0.0210
+sig_ram_kb,param,3/2,9/2,3,0.0030,9,0.0090,0.0090
+kem_ram_kb,param,9/2,27/2,4,0.0040,9,0.0090,0.0090
+kem_flash_kb,param,7,21,2,0.0020,4,0.0040,0.0040
+hs_bytes,param,3034,9102,0,0.0000,0,0.0000,0.0000
+hs_budget_s,param,150,450,0,0.0000,0,0.0000,0.0000
