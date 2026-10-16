@@ -1,0 +1,14 @@
+key,value
+label,host measured
+date_utc,2026-10-16T00:42:05Z
+cpu_model,AMD Ryzen 7 7730U with Radeon Graphics
+kernel,Linux 6.18.33.2-microsoft-standard-WSL2
+compiler,gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+flags,-std=c99 -O2 -DBENCH_HOST (bench/mcu/Makefile host target)
+mlkem_native,d1b2fe782888bdb761a50336012923180be7f502
+mldsa_native,834a90d5e846ffa1e1611bd24e160bb2e9b86d35
+runs,5
+iterations_per_operation_per_run,220
+pinned_cpu,2
+warm_up,one discarded run of every binary before the measured runs
+inputs,deterministic xorshift32 from bench/mcu/src/bench_rng.c (insecure; benchmark inputs only)
