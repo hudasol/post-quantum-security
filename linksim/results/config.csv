@@ -6,7 +6,7 @@ zero_loss_cells,deterministic; one run stands for all trials
 interval,mean plus or minus 1.96 sd / sqrt(n); completion by Wilson score
 loss_model,"independent Bernoulli per frame, data and acknowledgements"
 python,3.13.0
-run_seconds,192.5
+run_seconds,92.1
 param.mav_header_bytes,10
 param.mav_checksum_bytes,2
 param.mav_max_payload_bytes,255

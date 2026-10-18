@@ -206,4 +206,34 @@ Mean absolute error of the absolute times: 33.3% (plain), 31.0% (with TCP header
 
 Limits: the paper does not say whether netem delayed one or both directions, the TLS stack and TCP behaviour (slow start, acknowledgements) are not modelled, and the clear link time stands for all fixed costs. The check validates the bytes over rate part of the model on one bandwidth bound link; it does not validate the duty cycle, fragmentation or loss parts, for which no published figure is in the evidence table.
 
+### 4.1 Held out check of one calibrated constant (third round)
+
+One fixed overhead term is fitted by least squares on the groups P-256, SMAUG-T1 and tested on the held out groups ML-KEM-768, SMAUG-T3, NTRU+-768 (split fixed by name before the run, `docs/PREDICTIONS_V3.md` R7). Fitted overhead: 278 ms. Signed error = predicted / published minus 1.
+
+| group | split | published UAV ms (published) | predicted ms (estimated) | signed error |
+|---|---|---|---|---|
+| P-256 | train | 639 | 645 | +0.9% |
+| SMAUG-T1 | train | 820 | 814 | -0.7% |
+| ML-KEM-768 | test | 943 | 943 | -0.0% |
+| SMAUG-T3 | test | 923 | 916 | -0.7% |
+| NTRU+-768 | test | 941 | 947 | +0.7% |
+
+This is a weak test: all five groups differ only in key exchange bytes (1,338 to 3,504 B on the wire) on one emulated link, so a single constant can absorb TCP and TLS behaviour that would not carry over to another link or object size.
+
+### 4.2 Cross check against a prose figure (not calibration)
+
+ePrint 2021/781, pages 15 to 16, prose (not a table; not in the evidence table) states that 50 kB take 30 to 60 s over a low power IEEE 802.15.4 link, depending on link quality and network load. The model, with no loss and selective repeat on the 802.15.4 profile, gives 4.5 s for 50000 B, a factor of 6.6 below the low end. The model leaves out multi hop forwarding, medium access contention, 6LoWPAN headers and network load, so on 802.15.4 networks its times are optimistic by that order. The figure is not in `data/evidence.csv`, because it is not in a table.
+
+### 4.3 Which parts of the model are checked
+
+| model part | status | basis |
+|---|---|---|
+| rate (bytes over bit rate) | validated | Table 5 of ePrint 2026/2343, rows S10F-131 to S10F-150 |
+| round trips and fixed overhead | calibrated on 2 groups, tested on 3 held out groups | Table 5 of ePrint 2026/2343 |
+| fragmentation and per fragment overhead | unvalidated | no published measured figure; the 802.15.4 prose figure of ePrint 2021/781 mixes fragmentation with multi hop forwarding and network load and serves only as a cross check |
+| duty cycle | unvalidated | no published measured figure in the evidence table or the supplied PDFs |
+| loss and retransmission | unvalidated | no published measured figure in the evidence table or the supplied PDFs |
+
+Search: the evidence table holds published link timings only in Table 5 of ePrint 2026/2343; the supplied PDFs hold no measured duty cycle, loss or fragmentation timing. Every figure that depends on an unvalidated part carries that word in its caption.
+
 _estimated from published sizes, not measured_
