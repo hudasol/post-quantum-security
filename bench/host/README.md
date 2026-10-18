@@ -3,9 +3,9 @@
 Second round (2026-10-16): `native/` times the same mlkem-native and mldsa-native code that runs in the emulator, natively on a laptop, with a stated method (warm up, five pinned runs, median per run). Results and limits: `native/RESULTS.md`. Third round (2026-10-18): `native_v3/` repeats it with 15 interleaved runs per binary in a seeded order and reports the median absolute deviation (`native_v3/RESULTS.md`). The rest of this file describes the first round liboqs timings.
 
 Server timings of liboqs 0.16.0 `speed_kem` / `speed_sig`. Labelled `evidence_type=host-measured`.
-They exist to (a) exercise the analysis scripts and (b) show the order-of-magnitude gap between a
-server-class x86 core and a Cortex-M. They must never go into `data/evidence.csv` or onto the
-published-number plots.
+They exist to (a) exercise the analysis scripts and (b) show the order of magnitude gap between a
+server class x86 core and a Cortex-M. They must never go into `data/evidence.csv` or onto the
+published number plots.
 
 **Comparability warning:** x86-64 Xeon (AVX2/AVX-512, ~2.8 GHz, KVM guest, 33 MiB L3) versus an in-order Cortex-M with tens of KB of RAM and flash wait states: cycle counts and microseconds here are not comparable to MCU numbers and carry no MCU-ranking information.
 
@@ -28,7 +28,7 @@ Notes: the ML-KEM/ML-DSA sources are those vendored in liboqs (mlkem-native, mld
 - Falcon, other schemes: not built.
 
 ## Runs
-- 2 variants x 5 whole-run repeats, each repeat a separate process invocation per algorithm, `-d 3` (about 3 s per operation); runs executed sequentially (2 vCPUs). 300 rows (2 x 5 x 30 operations).
+- 2 variants x 5 whole run repeats, each repeat a separate process invocation per algorithm, `-d 3` (about 3 s per operation); runs executed sequentially (2 vCPUs). 300 rows (2 x 5 x 30 operations).
 - Caveat: SLH-DSA-128s `sign` completed only 3-4 iterations in 3 s, so its mean is from very few samples; treat as indicative only.
 - `cycles_mean` is the TSC-based "CPU cycles" the tool prints; on a VM it is not a reliable core-cycle count.
 
