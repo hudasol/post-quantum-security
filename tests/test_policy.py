@@ -1,5 +1,5 @@
 """Tests for the repository policy, secrets and style checks (run with: python -m unittest discover -s tests -t .)."""
-import os, sys, tempfile, unittest
+import hashlib, os, sys, tempfile, unittest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'scripts'))
 import check_repo_policy as pol, scan_secrets as sec, check_style as sty
 
@@ -58,12 +58,17 @@ class Style(unittest.TestCase):
         with tempfile.TemporaryDirectory() as t:
             make(t, 'a.md', ('word ' + chr(0x2014) + ' word\n').encode())
             make(t, 'b.md', ('ok ' + chr(0x1F680) + '\n').encode())
-            make(t, 'c.md', (b'University of Stir' + b'ling\n'))
-            self.assertEqual(len(sty.check(t)), 3)
-    def test_allowed_emoji_passes(self):
+            make(t, 'c.md', b'Department of Placeholderword\n')
+            saved = sty.BANNED_SHA256
+            sty.BANNED_SHA256 = {hashlib.sha256(b'placeholderword').hexdigest()}
+            try:
+                self.assertEqual(len(sty.check(t)), 3)
+            finally:
+                sty.BANNED_SHA256 = saved
+    def test_no_emoji_is_allowed(self):
         with tempfile.TemporaryDirectory() as t:
             make(t, 'a.md', (chr(0x1F338) + ' sakura\n').encode())
-            self.assertEqual(sty.check(t), [])
+            self.assertEqual(len(sty.check(t)), 1)
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""Style lint for published text: no em dashes, no emojis except the allowed set, no university affiliation.
+"""Style lint for published text: no em dashes, no emojis, no banned affiliation (matched by word hash).
 Applies to .md, .py, .csv, .txt, .yml, .sh files that are not licence texts. Exit 1 on any hit."""
-import os, re, subprocess, sys
+import hashlib, os, re, subprocess, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ALLOWED_EMOJI = set('\U0001F337\U0001F338\U0001F34B\U0001F33F')
+ALLOWED_EMOJI = set()
+# SHA-256 of each banned word (lower case), so the lint does not itself name the banned affiliation.
+BANNED_SHA256 = {'4011393f356a69582a25dfd73603b974b88e7df6fec0b75793c6155c365e691c'}
+WORD = re.compile(r'[a-z]+')
 EXT = {'.md', '.py', '.csv', '.txt', '.yml', '.yaml', '.sh', '.tex', '.dot'}
 SKIP = {'scripts/check_style.py'}
 EMOJI = re.compile('[\U0001F300-\U0001FAFF☀-➿⭐⬆✅❌]')
@@ -21,7 +24,8 @@ def check(root):
         if not os.path.isfile(p): continue
         for n, line in enumerate(open(p, encoding='utf-8', errors='replace'), 1):
             if '—' in line: hits.append(f'{rel}:{n}: em dash')
-            if re.search(r'stirling', line, re.I): hits.append(f'{rel}:{n}: university affiliation')
+            if any(hashlib.sha256(w.encode()).hexdigest() in BANNED_SHA256 for w in WORD.findall(line.lower())):
+                hits.append(f'{rel}:{n}: banned affiliation')
             for ch in EMOJI.findall(line):
                 if ch not in ALLOWED_EMOJI: hits.append(f'{rel}:{n}: emoji {ch!r}')
     return hits
