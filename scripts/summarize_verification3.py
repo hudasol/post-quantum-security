@@ -33,6 +33,52 @@ def wilson(k, n):
     return (max(0.0, c - h), min(1.0, c + h))
 
 
+def pass4_section():
+    """Verification pass 4 (2026-10-18): a second, independent check of a seeded stratified sample of the S10
+    rows, and a column lint over the whole table. Numbers come from data/verify4/."""
+    v4 = ROOT / "data" / "verify4"
+    if not (v4 / "sample_plan.csv").exists():
+        return []
+    plan = list(csv.DictReader(open(v4 / "sample_plan.csv", newline="", encoding="utf-8")))
+    oks = ("value_ok", "location_ok", "row_ok", "other_fields_ok", "warning_ok")
+    res = []
+    for s in SETS:
+        p = v4 / f"{s}_results.csv"
+        if p.exists():
+            res += list(csv.DictReader(open(p, newline="", encoding="utf-8")))
+    n = len(res)
+    bad = [r for r in res if any(r[k].strip().lower() != "yes" for k in oks)]
+    trans = [r for r in res if r["transcription_error"].strip().lower() == "yes"]
+    lo, hi = wilson(len(bad), n)
+    flags = list(csv.DictReader(open(v4 / "lint_flags.csv", newline="", encoding="utf-8")))
+    rev = list(csv.DictReader(open(v4 / "lint_review.csv", newline="", encoding="utf-8")))
+    true = [r for r in rev if r["verdict"] == "true"]
+    L = ["", "## Verification pass 4 (2026-10-18): second independent check and column lint", "",
+         f"Sample: {n} of the {sum(int(p['rows_in_stratum']) for p in plan)} S10 rows, drawn by "
+         "`scripts/draw_verification4_sample.py` with seed 20261018 from "
+         f"{len(plan)} strata (source by table, at least 2 rows each; `data/verify4/sample_plan.csv`). Three "
+         "readers that had seen neither the extraction notes nor the pass 3 results re-opened the PDFs and compared "
+         "every field, including whether each number sits in a column the paper supports "
+         "(`data/verify4/S10?_results.csv`).", "",
+         f"Rows with any error: {len(bad)} of {n}. Transcription errors: {len(trans)} of {n}."]
+    if not bad:
+        L.append(f"With zero errors the rule of three gives a 95 percent upper bound of 3/{n} = {100 * 3 / n:.1f} "
+                 f"percent on the row error rate of the S10 rows after the pass 3 fixes (Wilson upper bound "
+                 f"{100 * hi:.1f} percent).")
+    else:
+        L.append(f"Row error rate {100 * len(bad) / n:.1f} percent (Wilson 95 percent interval {100 * lo:.1f} to "
+                 f"{100 * hi:.1f} percent).")
+    L += ["", "Column lint: `scripts/lint_columns.py` checks all rows of `data/evidence.csv` for the error types "
+          "pass 3 found (a number in a column the source does not support, warning text that contradicts the row). "
+          f"The final run flags {len(flags)} rows; every one of the {len(rev)} flags raised before the fix was reviewed by hand "
+          f"(`data/verify4/lint_review.csv`): {len(true)} of {len(rev)} were real, all of one kind (cycle rows of "
+          "stream S8 whose warning described the stack rows), and were fixed through `data/corrections.csv` "
+          "without changing any value. The remaining flags are reviewed false positives.", "",
+          "Limits: the sample covers the S10 rows only; rows from earlier streams were checked by the phase 1 and "
+          "phase 2 samples and now by the lint, not by a second full reading.", ""]
+    return L
+
+
 def main():
     out = []
     tot = {"rows": 0, "any": 0, "value": 0, "location": 0, "row": 0, "warning": 0}
@@ -100,6 +146,7 @@ def main():
           "`docs/VERIFICATION2.md`.",
           "4. Prior works quoted inside RISQrypt (ePrint 2026/312) were checked against RISQrypt's tables, not "
           "against the original papers.", ""]
+    L += pass4_section()
     (ROOT / "docs" / "VERIFICATION3.md").write_text("\n".join(L), encoding="utf-8", newline="\n")
     print(f"rows {n}, rows with any error {k}, transcription errors {trans}")
 
