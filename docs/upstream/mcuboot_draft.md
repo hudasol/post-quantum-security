@@ -5,7 +5,7 @@ Author of the eventual text: Huda Mueen.
 
 ## Existing upstream items found
 
-NONE VERIFIED. The duplicate check for this draft is INCOMPLETE. The GitHub connector's search returned zero results in mcu-tools/mcuboot, but the same tool returned zero in mavlink/mavlink where relevant issues demonstrably exist, so that zero is not evidence of absence. The connector then disconnected, and a WebFetch of the GitHub issue search page was not permitted in time. I therefore could not read MCUboot issues, pull requests or discussions. The earlier review (docs/REPORT_body.md section 5.2) also records that "issue and PR search was blocked, so absence is not proof". MCUboot is a likely place for an existing request, since wolfBoot, TF-M BL1 and others already have post quantum verification; check carefully. If a thread exists, convert this draft into a short comment that links it.
+NONE VERIFIED. The duplicate check for this draft is INCOMPLETE. The GitHub repository search's search returned zero results in mcu-tools/mcuboot, but the same tool returned zero in mavlink/mavlink where relevant issues demonstrably exist, so that zero is not evidence of absence. The repository search then stopped, and a web fetch of the GitHub issue search page was not permitted in time. I therefore could not read MCUboot issues, pull requests or discussions. The earlier review (docs/REPORT_body.md section 5.2) also records that "issue and PR search was blocked, so absence is not proof". MCUboot is a likely place for an existing request, since wolfBoot, TF-M BL1 and others already have post quantum verification; check carefully. If a thread exists, convert this draft into a short comment that links it.
 
 ## What I did verify just now (files on the main branch, retrieved 2026-10-12)
 
@@ -65,7 +65,7 @@ Huda Mueen
 
 ## Pre filing checklist
 
-- [ ] Complete the duplicate search with the connector reconnected: mcu-tools/mcuboot issues, pull requests and discussions (including closed), the groups.io archive, and the Zephyr and TF-M trackers for MCUboot related PQ items; terms: post-quantum, PQC, quantum, ML-DSA, Dilithium, ML-KEM, Kyber, LMS, XMSS, SLH-DSA, hybrid signature.
+- [ ] Complete the duplicate search with the repository search reconnected: mcu-tools/mcuboot issues, pull requests and discussions (including closed), the groups.io archive, and the Zephyr and TF-M trackers for MCUboot related PQ items; terms: post-quantum, PQC, quantum, ML-DSA, Dilithium, ML-KEM, Kyber, LMS, XMSS, SLH-DSA, hybrid signature.
 - [ ] If any match is found, replace this draft with a short comment that links it.
 - [ ] Confirm the mailing list and Discord are still active and decide whether to post there first.
 - [ ] Check wording: no em dashes, no hyphens between words except in names, no emojis, no affiliation, no claim of authority, 4 questions or fewer, no attack details, no side channel guidance.

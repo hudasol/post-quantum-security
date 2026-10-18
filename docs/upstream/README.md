@@ -16,13 +16,13 @@ All three items are DRAFT NOT FILED. Nothing was posted, commented on, reacted t
 
 ## Important caveats
 
-1. The GitHub connector's issue search returned zero results for "post-quantum cryptography" and "quantum" in mavlink/mavlink even though #2525 and #2527 exist. Treat every zero from that tool as meaningless. Existing issues were only found by reading known numbers and listing recent issues.
-2. The GitHub connector disconnected mid task, the `gh` CLI was refused for these repositories, the public search API returned 403, and a WebFetch of GitHub search pages was not permitted. I did not use add_repo to widen access, because that attaches credentials and was not requested. Raw files on raw.githubusercontent.com were readable and were used for contribution guidance.
+1. The GitHub repository search's issue search returned zero results for "post-quantum cryptography" and "quantum" in mavlink/mavlink even though #2525 and #2527 exist. Treat every zero from that tool as meaningless. Existing issues were only found by reading known numbers and listing recent issues.
+2. The GitHub repository search stopped mid task, the `gh` CLI was refused for these repositories, the public search API returned 403, and a web fetch of GitHub search pages was not permitted. I did not widen repository access, because that attaches credentials and was not requested. Raw files on raw.githubusercontent.com were readable and were used for contribution guidance.
 3. Second consequence for the main report: data/raw/S3_robotics.md and docs/REPORT_body.md section 5.1 say mavlink #2527 was "not retrievable". It is retrievable, and the maintainer position in #2525 is a citable fact. The report has not been edited.
 4. Facts in drafts come only from data/raw/S3_robotics.md, data/raw/S4_migration.md, docs/REPORT_body.md, data/evidence.csv row S2-0407, and pages retrieved on 2026-10-11 or 2026-10-12, each cited with a URL. docs/PREDICTIONS*.md was not read. Items needing re verification are listed at the foot of each draft.
 
 ## To finish before anything is filed
 
-1. Reconnect the GitHub connector (or run the searches by hand) and complete the checklist in each draft, with terms: post-quantum, PQC, quantum, ML-DSA, Dilithium, ML-KEM, Kyber, LMS, XMSS, SLH-DSA, hybrid signature.
+1. Reconnect the GitHub repository search (or run the searches by hand) and complete the checklist in each draft, with terms: post-quantum, PQC, quantum, ML-DSA, Dilithium, ML-KEM, Kyber, LMS, XMSS, SLH-DSA, hybrid signature.
 2. Re run the style check: no em dashes, no hyphens between words except in names, no emojis, no affiliation, no claim of authority.
 3. Huda reads, edits and approves each text herself.
