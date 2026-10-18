@@ -1,7 +1,7 @@
 # Hardware benchmark plan: PQC on Cortex-M4 / M33 boards
 
 Author: Huda Mueen (plan drafted 2026-10-11). Status: **plan only; nothing in this file has been measured on a microcontroller.**
-Labels used throughout: **published** (copied from a retrieved source, in `data/evidence.csv`), **host measured** (run in the research server on an x86 server, never comparable to an MCU), **estimated/derived** (my arithmetic, formula shown), **planned** (to be measured by you).
+Labels used throughout: **published** (copied from a retrieved source, in `data/evidence.csv`), **host measured** (run on a PC (first an x86 server, later a laptop virtual machine), never comparable to an MCU), **estimated/derived** (my arithmetic, formula shown), **planned** (to be measured by you).
 
 ## 1. Why this plan exists
 
@@ -11,7 +11,7 @@ The published evidence has holes that only your own boards can fill (details in 
 2. The only maintained benchmark with final ML-KEM/ML-DSA names on Cortex-M4F (pqm4) does not name its board, quotes a 24 MHz clock whose board code path actually uses 20 MHz, and is scheduled to be archived read only in or after January 2027.
 3. There are no published *measured* energy figures for final ML-KEM/ML-DSA on a Cortex-M.
 4. There are no published final parameter LMS or SLH-DSA cycle counts on a Cortex-M.
-5. There are no published numbers from a flight-controller-class part (for example an STM32H7 on a Pixhawk).
+5. Cortex-M7 numbers exist on a Nucleo-F767ZI (rows S7-001 to S7-024), but none from a flight controller running its flight stack (for example an STM32H7 on a Pixhawk). *Correction 2026-10-18: this item earlier said there were no flight controller class numbers at all.*
 
 ## 2. Questions and what would answer them
 

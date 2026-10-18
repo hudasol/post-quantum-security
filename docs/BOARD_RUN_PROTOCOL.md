@@ -86,4 +86,4 @@ It will show real core cycle counts and stack for one board, one clock and one t
 
 ## 9. Predictions before the run
 
-Write them in a new hashed file before the session, as was done for this round (`docs/PREDICTIONS_V2.md`). Suggested questions: does B0 reproduce the published pqm4 cycle counts within a stated tolerance; does the B1 stack match the emulated stack within a stated tolerance; how do B1 cycle counts compare with the pqm4 `clean` rows for the same parameter set.
+Write them in a new hashed file before the session, as was done for each round (latest: `docs/PREDICTIONS_V3.md`). Suggested questions: does B0 reproduce the published pqm4 cycle counts within a stated tolerance; does the B1 stack match the emulated stack within a stated tolerance; how do B1 cycle counts compare with the pqm4 `clean` rows for the same parameter set.

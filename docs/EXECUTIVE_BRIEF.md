@@ -1,12 +1,12 @@
 ---
-title: "Post-quantum cryptography on drone and robot computers: 2-page brief"
+title: "Post quantum cryptography on drone and robot computers: 2-page brief"
 author: "Huda Mueen"
-date: "Evidence retrieved 2026-10-11"
+date: "Evidence retrieved 2026-10-11 to 2026-10-17"
 geometry: margin=1.8cm
 fontsize: 10pt
 ---
 
-**Bottom line.** Verification-only post quantum designs fit Cortex-M-class flight and robot computers; per message post quantum signatures do not fit MAVLink-class radio links; and the real deadline pressure is on **firmware signature trust anchors that cannot be changed after shipping**. Everything below is published or derived from retrieved sources; **nothing was measured on a microcontroller** (hardware plan included).
+**Bottom line.** Published code and stack figures suggest that verify only post quantum designs fit Cortex-M class flight and robot computers that have that much memory free (not yet measured on a flight controller); per message post quantum signatures do not fit MAVLink-class radio links; and the real deadline pressure is on **firmware signature trust anchors that cannot be changed after shipping**. Everything below is published or derived from retrieved sources; **nothing was measured on a microcontroller** (hardware plan included).
 
 **What costs what** (published; pqm4 on Cortex-M4F; board and clock unresolved (README says 24 MHz, default board code says 20 MHz); setups differ)
 
@@ -21,7 +21,7 @@ Sizes: ML-DSA-44 signature 2,420 B (65: 3,309; 87: 4,627); ML-KEM-768 key 1,184 
 
 **Headline findings**
 
-1. *Authenticity risk is prospective, secrecy risk is retroactive.* Move long-lived-secret links (video, site maps, customer data) to hybrid ML-KEM key exchange early; move **firmware trust anchors** early too, because a classical key frozen in boot ROM or fuses must outlive the device.
+1. *Authenticity risk is prospective, secrecy risk is retroactive.* Move long lived secret links (video, site maps, customer data) to hybrid ML-KEM key exchange early; move **firmware trust anchors** early too, because a classical key frozen in boot ROM or fuses must outlive the device.
 2. *Planning dates exist:* UK NCSC 2028 / 2031 / 2035; EU end-2026 / end-2030 / 2035 and an explicit line that products living beyond 2030 should have a post quantum signature path for updates (Cyber Resilience Act link, Dec 2027); NIST IR 8547 draft: deprecate after 2030, disallow after 2035 (*in flux*). **No UAE algorithm level or embedded specific guidance found**; the UAE National Encryption Policy (v1.0, September 2025, read in full) asks entities for a public key inventory, lab testing, a transition plan, acquisition policies and training, with no algorithm, date or device rule.
 3. *Upstream drone/robot software has no PQC yet:* none found in MAVLink, PX4/ArduPilot signing, DDS-Security 1.2, SROS2 or MCUboot. wolfBoot (ML-DSA, LMS/HSS, XMSS, hybrid), TF-M BL1 (LMS) and the PSA PQC API extension exist.
 4. *Scheme choice for firmware:* LMS/HSS if one HSM-backed signer can guard state (smallest code, 1.4-2.6 kB signatures); ML-DSA if not; SLH-DSA if conservative assumptions outweigh 7.9 kB+ signatures. Ship **dual** (classical + PQ) signatures, A/B slots, anti rollback.
