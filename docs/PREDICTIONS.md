@@ -97,6 +97,6 @@ The prediction text above is unchanged: its first 67 lines hash to the value in 
 | P5.2 | **Hit** | Every device with a missing required field is UNKNOWN (D05). Devices with missing optional fields are UNKNOWN only when the answer depends on them (D10, D12). D04 is classed without them, correctly. |
 | P5.3 | **Not tested** | There were no disagreements. |
 | P6.1 | **Hit for MAVLink; open for MCUboot** | MAVLink issues 2525 and 2527 exist and answer the question. MCUboot search could not be completed. |
-| P6.2 | **Open** | The SROS2 and DDS Security issue search could not be completed (connector disconnected, fetch prompts unanswered). |
+| P6.2 | **Open** | The SROS2 and DDS Security issue search could not be completed (repository search stopped, fetch prompts unanswered). |
 
 Tally of 24 predictions: 16 hits, 4 partial, 2 misses, 2 not scored (P5.3 not tested, P6.2 open). Counting partial as half, that is 18 of the 22 scored items. The misses are both in the simulator, where I underestimated how much acknowledgement behaviour shapes the result; the two verification row thresholds were missed by under half a point.

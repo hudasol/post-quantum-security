@@ -1,7 +1,7 @@
 # Hardware benchmark plan: PQC on Cortex-M4 / M33 boards
 
 Author: Huda Mueen (plan drafted 2026-10-11). Status: **plan only; nothing in this file has been measured on a microcontroller.**
-Labels used throughout: **published** (copied from a retrieved source, in `data/evidence.csv`), **host measured** (run in the research sandbox on an x86 server, never comparable to an MCU), **estimated/derived** (my arithmetic, formula shown), **planned** (to be measured by you).
+Labels used throughout: **published** (copied from a retrieved source, in `data/evidence.csv`), **host measured** (run in the research server on an x86 server, never comparable to an MCU), **estimated/derived** (my arithmetic, formula shown), **planned** (to be measured by you).
 
 ## 1. Why this plan exists
 
@@ -30,7 +30,7 @@ Pre-stated expectations (so you can tell afterwards whether the result was a sur
 
 **No purchase is required.** Use the free path in `docs/NO_PURCHASE_PLAN.md` first: an emulator (QEMU or Renode) for correctness, flash size and stack size, and borrowed lab hardware for real cycle counts. The table below lists the boards that a lab or teammate may already own, with prices kept only for reference.
 
-Prices are single unit list prices that seller pages showed on 2026-10-11 (shipping, tax and currency conversion not applied; the ST eStore string "$33.61|2u" is reproduced from the page and I do not know what "|2u" means). Specs are from Zephyr board docs and the pqm4 README (secondary), because st.com and nordicsemi.com did not load from the sandbox.
+Prices are single unit list prices that seller pages showed on 2026-10-11 (shipping, tax and currency conversion not applied; the ST eStore string "$33.61|2u" is reproduced from the page and I do not know what "|2u" means). Specs are from Zephyr board docs and the pqm4 README (secondary), because st.com and nordicsemi.com did not load from the work environment.
 
 | Role | Item | Core / clock (secondary source) | Approx. price | Notes |
 |---|---|---|---|---|

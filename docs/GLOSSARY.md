@@ -31,4 +31,4 @@
 **Cycles**: processor clock ticks; time = cycles / clock frequency.
 **Masking**: a defensive technique that splits secret values into random shares so single measurements of power or timing reveal nothing; it multiplies cost.
 **Side-channel / fault attack**: attacks on an implementation's physical behaviour (timing, power, glitches) rather than the maths. This report covers only the defensive concept.
-**Evidence labels**: *published* (from a retrieved source), *host measured* (run on a PC/server in the sandbox, not an MCU), *derived/estimated* (my arithmetic), *inference* (my reasoning).
+**Evidence labels**: *published* (from a retrieved source), *host measured* (run on a PC/server in the work environment, not an MCU), *derived/estimated* (my arithmetic), *inference* (my reasoning).

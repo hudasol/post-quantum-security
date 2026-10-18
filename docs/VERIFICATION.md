@@ -5,7 +5,7 @@ Date: 2026-10-11. Verifier: independent verification pass that did not collect t
 ## Method
 
 - Sample: `data/verification_sample.csv`, 50 rows drawn at random from `data/evidence.csv` with seed **20261011** (drawn by `scripts/draw_verification_sample.py`, not re-run here).
-- Retrieval: every distinct `source_url` (17 URLs) re-fetched by me with `curl -L` through the sandbox egress proxy (TLS verification on, proxy not unset, no mirrors, caches or archives). All 17 returned HTTP 200. PDFs were read with `pdftotext -layout`; HTML was stripped to text. Downloads were kept in a fresh scratch directory and treated as data only (python run with `-I`).
+- Retrieval: every distinct `source_url` (17 URLs) re-fetched by me with `curl -L` through the network proxy (TLS verification on, proxy not unset, no mirrors, caches or archives). All 17 returned HTTP 200. PDFs were read with `pdftotext -layout`; HTML was stripped to text. Downloads were kept in a fresh scratch directory and treated as data only (python run with `-I`).
 - pqm4 `benchmarks.csv` as retrieved on 2026-10-11: 573 lines, sha256 `4e4ca381d5deecb0ee845a6fa26047818e913d3422dc3adecf716e2ca4fc59f6`. The README was fetched from raw.githubusercontent.com for clock, compiler and board statements.
 - For each row I located the cited table, line or slide and compared every populated field among cycles, ram_bytes, stack_bytes, flash_or_code_bytes, energy_uj, key_or_sig_size_bytes, clock_mhz, scheme, parameter_set, operation, device, core, library, library_version, compiler_flags_or_notes (numeric claims inside it), and whether `comparability_warning` is contradicted. I checked that numbers sit in the correct row and column (operation, parameter set, implementation), the units (k, M, kcc, mJ vs uJ) and, for pqm4, line numbers plus min/max and execution counts.
 - Unit conversions (thousand-cycles, 10^6 clk, M-cycles, mJ) are recorded as `unit-conversion-ok` when the claimed value equals the published number times the exact factor.
@@ -85,7 +85,7 @@ Caveat on the zero: the sample contains 50 rows of a larger table. A 0/48 row re
 | S3-005 | all fields (Kyber768 KeyGen, claimed 23000 cycles) | Value only in Table 8 of eprint 2026/312 PDF. `eprint.iacr.org/2026/312.pdf` returns HTTP 403 (Cloudflare challenge, consistent with D3). The abstract page (HTTP 200) does not contain it. No mirror used. |
 | S3-007 | all fields (Kyber768 Dec, claimed 35000 cycles) | Same as S3-005. |
 | S3-012 | device, core, library, compiler_flags_or_notes | Cycles (1230K, masked Dilithium3 signing) is confirmed by the abstract text; Table 8 and the FPGA/toolchain details are not reachable. |
-| 9 pqm4 rows (S2-0086, 0028, 0019, 0007, 0032, 0033, 0063, 0059, 0026) | commit hashes inside `library_version` (HEAD 5e5cc76d0b07, 2026-09-04; file last changed 90bfb630e536, 2025-05-22) | Not in the file; GitHub API from this session returns 403 ("access not enabled"). The compiler (gcc 11.3.1 20220712), 24 MHz and board statements in the README did match. |
+| 9 pqm4 rows (S2-0086, 0028, 0019, 0007, 0032, 0033, 0063, 0059, 0026) | commit hashes inside `library_version` (HEAD 5e5cc76d0b07, 2026-09-04; file last changed 90bfb630e536, 2025-05-22) | Not in the file; GitHub API from this retrieval run returns 403 ("access not enabled"). The compiler (gcc 11.3.1 20220712), 24 MHz and board statements in the README did match. |
 
 ## Observations that are not value errors
 

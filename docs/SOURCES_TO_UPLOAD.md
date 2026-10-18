@@ -1,6 +1,6 @@
 # Sources received and sources still open
 
-Author: Huda Mueen. Status on 2026-10-12. The fetch tools (WebFetch and WebSearch) were the only route used for blocked sites. The author supplied the PDFs below from her own computer. They are kept outside this repository. Nothing is cited for a number until the full text has been read and the row passes the normal correction and merge route.
+Author: Huda Mueen. Status on 2026-10-12. Web fetch and web search were the only route used for blocked sites. The author supplied the PDFs below from her own computer. They are kept outside this repository. Nothing is cited for a number until the full text has been read and the row passes the normal correction and merge route.
 
 ## Received (12 files)
 
