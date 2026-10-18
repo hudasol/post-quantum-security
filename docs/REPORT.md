@@ -300,7 +300,7 @@ Criteria (set in advance): fleet coverage threshold, no classical only supplier 
 | Bricking at bootloader update | immutable first stage cannot be fixed [S4] | A/B, power fail tests, pilot ring |
 | Standards move | FN-DSA, IR 8547, SUIT MTI in flux | agility, re-check list, avoid pre standard Kyber/Dilithium parameter sets |
 | Side-channel/fault exposure on captured vehicles | keys on-vehicle are physically accessible; masking costs 3.5x for M4F Kyber decaps as published [S3 6] | keep long term signing keys off the vehicle; verify only on device; vendor reviewed libraries |
-| Unmeasured costs | no M33, flight controller or final LMS/SLH-DSA numbers | BENCHMARK_PLAN before committing hardware |
+| Unmeasured costs | Cortex-M33 cycles only for ML-DSA keygen and sign (rows S10C-001 to S10C-036); none for ML-KEM or ML-DSA verification on M33; nothing from a flight controller running its flight stack; no final SLH-DSA cycles (*correction 2026-10-18: this cell earlier said there were no M33 numbers*) | BENCHMARK_PLAN before committing hardware |
 
 
 # 11. Benchmark plan (summary; full plan in docs/BENCHMARK_PLAN.md)
