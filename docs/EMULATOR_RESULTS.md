@@ -60,7 +60,7 @@ Renode (third round, 2026-10-18): Renode 1.17.0, a free download, has an STM32F4
 
 1. Real cycle counts, energy and flash wait state effects (a borrowed Cortex-M4F or M33 board is needed; see `docs/BOARD_RUN_PROTOCOL.md`).
 2. Assembly backends of the libraries; only the portable C backend was built.
-3. ML-DSA-65 and ML-DSA-87 in Renode (their signing stack does not fit the 128 KB used for the STM32F407 together with the 64 KB paint span).
+3. ML-DSA-65 and ML-DSA-87 in Renode: only a subset was run in this round; their signing stack (about 75 KB and 114 KB in QEMU) needs a larger paint span, and ML-DSA-87 may not fit the 128 KB of contiguous SRAM at all.
 
 ## One bug found on the way
 
