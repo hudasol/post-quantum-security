@@ -7,6 +7,7 @@ Macros in the body pull numbers from data/evidence.csv so prose cannot drift fro
   {{ratio:A/B}} -> cycles(A)/cycles(B) as 'N.NN x'
   {{nrows}}     -> number of evidence rows
   {{n_s10}}     -> number of rows in stream S10
+  {{plan:FIELD:N}} -> a field of planner/results/scenario_range.csv for the fleet of N devices
   {{INCLUDE:file|old first line|new first line}} -> embed another docs file
   {{APPENDICES}}-> generated appendices
 Fails loudly on any missing value."""
@@ -51,6 +52,12 @@ body = (ROOT / "docs/REPORT_body.md").read_text(encoding="utf-8")
 body = re.sub(r"\{\{(cyc|stack|code|size|eng|ms|ratio|note_ms):([^}]+)\}\}", expand, body)
 body = body.replace("{{nrows}}", str(len(rows)))
 body = body.replace("{{n_s10}}", str(sum(1 for r in rows if r["stream"] == "S10")))
+_plan = {r["devices"]: r for r in csv.DictReader(open(ROOT / "planner/results/scenario_range.csv", newline="", encoding="utf-8"))}
+def plan(m):
+    field, n = m.group(1), m.group(2)
+    v = _plan[n][field]
+    return f"{100 * float(v):.1f}" if field == "share_changed" else v
+body = re.sub(r"\{\{plan:(\w+):(\d+)\}\}", plan, body)
 
 def include(m):
     f, old, new = m.group(1), m.group(2), m.group(3)
