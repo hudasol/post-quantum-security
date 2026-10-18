@@ -211,3 +211,29 @@ class TestValidate(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestValidationRound3(unittest.TestCase):
+    def test_held_out_never_fits_on_test(self):
+        with self.assertRaises(ValueError):
+            validate.held_out(P, train=("P-256",), test=("P-256",))
+
+    def test_held_out_constant_is_mean_training_residual(self):
+        out = validate.held_out(P)
+        t5 = validate.load_table5()
+        train = [r for r in out if r["split"] == "train"]
+        c = sum(t5[r["group"]]["uav_ms"] - validate.predict_ms(t5[r["group"]], P) for r in train) / len(train)
+        for r in out:
+            self.assertAlmostEqual(r["fitted_overhead_ms"], c)
+        self.assertEqual({r["group"] for r in out if r["split"] == "test"}, set(validate.TEST))
+
+    def test_crosscheck_uses_model_only(self):
+        cc = validate.crosscheck_802154(P)
+        # 50000 B on 81 B fragments: ceil(50000/81) = 618 fragments, each at least 127 B on air at 250 kbit/s
+        self.assertGreater(cc["model_s"], 618 * 8 * 127 / 250000.0)
+        self.assertAlmostEqual(cc["factor_below_low"], 30.0 / cc["model_s"])
+
+    def test_parts_inventory(self):
+        status = dict((p, s) for p, s, _ in validate.PARTS)
+        self.assertEqual(status["duty cycle"], "unvalidated")
+        self.assertEqual(status["loss and retransmission"], "unvalidated")
