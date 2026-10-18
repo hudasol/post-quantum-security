@@ -51,6 +51,14 @@ def pass4_section():
     trans = [r for r in res if r["transcription_error"].strip().lower() == "yes"]
     lo, hi = wilson(len(bad), n)
     flags = list(csv.DictReader(open(v4 / "lint_flags.csv", newline="", encoding="utf-8")))
+    import io
+    import subprocess
+    import sys
+    sys.path.insert(0, str(ROOT))
+    from scripts import lint_columns
+    old = subprocess.run(["git", "show", "efd8765:data/evidence.csv"], cwd=ROOT, capture_output=True, text=True,
+                         encoding="utf-8").stdout
+    first_n = len({r["id"] for r in csv.DictReader(io.StringIO(old)) if lint_columns.lint(r, first_version=True)})
     rev = list(csv.DictReader(open(v4 / "lint_review.csv", newline="", encoding="utf-8")))
     true = [r for r in rev if r["verdict"] == "true"]
     L = ["", "## Verification pass 4 (2026-10-18): second independent check and column lint", "",
@@ -62,18 +70,20 @@ def pass4_section():
          "(`data/verify4/S10?_results.csv`).", "",
          f"Rows with any error: {len(bad)} of {n}. Transcription errors: {len(trans)} of {n}."]
     if not bad:
-        L.append(f"With zero errors the rule of three gives a 95 percent upper bound of 3/{n} = {100 * 3 / n:.1f} "
-                 f"percent on the row error rate of the S10 rows after the pass 3 fixes (Wilson upper bound "
+        L.append(f"With zero errors the rule of three gives an approximate 95 percent upper bound of 3/{n} = {100 * 3 / n:.1f} "
+                 f"percent on the row error rate of the S10 rows after the pass 3 fixes; approximate because the sample is "
+                 f"stratified with unequal fractions and not reweighted (Wilson upper bound "
                  f"{100 * hi:.1f} percent).")
     else:
         L.append(f"Row error rate {100 * len(bad) / n:.1f} percent (Wilson 95 percent interval {100 * lo:.1f} to "
                  f"{100 * hi:.1f} percent).")
     L += ["", "Column lint: `scripts/lint_columns.py` checks all rows of `data/evidence.csv` for the error types "
           "pass 3 found (a number in a column the source does not support, warning text that contradicts the row). "
-          f"The final run flags {len(flags)} rows; every one of the {len(rev)} flags raised before the fix was reviewed by hand "
+          f"The rules as first written flagged {first_n} rows, mostly false (they matched SysTick and missed lists "
+          f"of tables); after refining them the lint raised {len(rev)} flags, every one reviewed by hand "
           f"(`data/verify4/lint_review.csv`): {len(true)} of {len(rev)} were real, all of one kind (cycle rows of "
           "stream S8 whose warning described the stack rows), and were fixed through `data/corrections.csv` "
-          "without changing any value. The remaining flags are reviewed false positives.", "",
+          f"without changing any value. The current rules flag {len(flags)} rows, all reviewed false positives.", "",
           "Limits: the sample covers the S10 rows only; rows from earlier streams were checked by the phase 1 and "
           "phase 2 samples and now by the lint, not by a second full reading.", ""]
     return L
@@ -138,8 +148,8 @@ def main():
           f"of three gives a 95 percent upper bound of 3/{n} = {100 * lo3:.2f} percent; the Wilson upper bound is "
           f"{100 * wilson(0, n)[1]:.2f} percent.", "",
           "## Limits", "",
-          "1. One fresh reader per set; a second independent reader was not used, so errors that two readers "
-          "would both miss are not bounded by this check.",
+          "1. One fresh reader per set read every row; a second reading covered a seeded sample of 120 rows "
+          "(pass 4, below), so errors in the unsampled rows that both readings would miss are not bounded.",
           "2. The readers followed the same reading method as the extractor (page renders, cell by cell) and were "
           "briefed separately; they are independent of the extraction notes, not of every habit of that method.",
           "3. The S10 rows sit outside the phase 1 and phase 2 verification rates in `docs/VERIFICATION.md` and "

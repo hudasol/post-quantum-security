@@ -70,7 +70,7 @@ Synthetic inventory of 12 devices. Expected class for each is written in `docs/P
 
 # Outcomes (appended 2026-10-12)
 
-The prediction text above is unchanged: its first 67 lines hash to the value in `docs/PREDICTIONS.sha256` (`head -n 67 docs/PREDICTIONS.md | sha256sum`), and the commit that added it (`21dae54`) precedes every run. Scores below use my own stated thresholds. "Hit" means the statement held; "Miss" means it did not; "Partial" means it held under one reading only.
+The prediction text above is unchanged: its first 67 lines hash to the value in `docs/PREDICTIONS.sha256` (`head -n 67 docs/PREDICTIONS.md | sha256sum`), and the commit that added it (`21dae54`) precedes every run. Scores below use my own stated thresholds. *Note added 2026-10-18: on 2026-10-16 one word in line 3 was changed, so the stored hash now verifies the text as committed, `git show 21dae54:docs/PREDICTIONS.md | head -n 67 | sha256sum`, not the working file. The claim that the predictions came before every run rests on the commit timestamp: `21dae54` was committed on 2026-10-12 at 14:54:46 +0400, one second before the commits with the verification results, because work was committed in bulk; git order alone does not prove it.* "Hit" means the statement held; "Miss" means it did not; "Partial" means it held under one reading only.
 
 | ID | Result | Evidence |
 |---|---|---|
