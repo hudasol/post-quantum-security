@@ -5,7 +5,7 @@ Author of the eventual text: Huda Mueen.
 
 ## Existing upstream items found
 
-NONE VERIFIED. The duplicate check for this draft is INCOMPLETE. The GitHub connector's search returned zero results for "post-quantum cryptography" in ros2/sros2 and eProsima/Fast-DDS, but the same search returned zero in mavlink/mavlink where issues #2525 and #2527 demonstrably exist, so a zero result from that tool is not evidence of absence. The connector then disconnected and the public API was blocked, so I could not read issue lists, pull requests or discussions for ros2/sros2, ros2/ros2, ros2/design, ros2/rmw, eProsima/Fast-DDS, ros2/rmw_zenoh, or ROS Discourse. Do not file until the checklist below is done. If an existing thread covers these questions, convert this draft into a short comment that links it.
+NONE VERIFIED. The duplicate check for this draft is INCOMPLETE. The GitHub repository search's search returned zero results for "post-quantum cryptography" in ros2/sros2 and eProsima/Fast-DDS, but the same search returned zero in mavlink/mavlink where issues #2525 and #2527 demonstrably exist, so a zero result from that tool is not evidence of absence. The repository search then stopped and the public API was blocked, so I could not read issue lists, pull requests or discussions for ros2/sros2, ros2/ros2, ros2/design, ros2/rmw, eProsima/Fast-DDS, ros2/rmw_zenoh, or ROS Discourse. Do not file until the checklist below is done. If an existing thread covers these questions, convert this draft into a short comment that links it.
 
 What this repository already recorded (data/raw/S3_robotics.md section 3.4, retrieved 2026-10-11) as research forks, not upstream threads: PQSec-DDS (Blanco Romero et al., JNIC 2024, https://idus.us.es/bitstream/handle/11441/160619/JNIC24_414.pdf), a master's thesis with a Dilithium3 SROS2 fork (https://dspace.umh.es/bitstream/11000/37017/1/Blanco_Romero_Francisco_Javier_TFM.pdf), and the AXON preprint (https://arxiv.org/pdf/2609.10024). If any of these authors opened upstream issues, they would be the first thing to find.
 
@@ -67,7 +67,7 @@ Huda Mueen
 
 ## Pre filing checklist
 
-- [ ] Complete the duplicate search with the connector reconnected (or by hand on GitHub): issues, pull requests and discussions in ros2/sros2, ros2/ros2, ros2/design, ros2/rmw, ros2/rmw_zenoh, ros2/rmw_fastrtps, ros2/rmw_cyclonedds, eProsima/Fast-DDS, eclipse-cyclonedds/cyclonedds; ROS Discourse, Zulip and Robotics Stack Exchange searches; terms: post-quantum, PQC, quantum, ML-DSA, Dilithium, ML-KEM, Kyber, LMS, XMSS, SLH-DSA, hybrid signature.
+- [ ] Complete the duplicate search with the repository search reconnected (or by hand on GitHub): issues, pull requests and discussions in ros2/sros2, ros2/ros2, ros2/design, ros2/rmw, ros2/rmw_zenoh, ros2/rmw_fastrtps, ros2/rmw_cyclonedds, eProsima/Fast-DDS, eclipse-cyclonedds/cyclonedds; ROS Discourse, Zulip and Robotics Stack Exchange searches; terms: post-quantum, PQC, quantum, ML-DSA, Dilithium, ML-KEM, Kyber, LMS, XMSS, SLH-DSA, hybrid signature.
 - [ ] If any match is found, replace this draft with a short comment that links it.
 - [ ] Read the Fast-DDS CONTRIBUTING "Issues and Support" section and ROS Discourse posting guidelines; reformat accordingly.
 - [ ] Confirm no change to DDS-Security status (final or not).

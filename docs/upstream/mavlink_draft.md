@@ -7,7 +7,7 @@ Author of the eventual text: Huda Mueen.
 
 Do not open a new issue. The question "does MAVLink have a post quantum plan?" has already been asked and answered upstream. If anything is posted, it should be a short, optional follow up that links the existing thread. If there is nothing new to add, post nothing.
 
-## Existing upstream items found (read directly through the GitHub connector, 2026-10-11/12)
+## Existing upstream items found (read directly through the GitHub repository search, 2026-10-11/12)
 
 | Item | State | Date | One line paraphrase |
 |---|---|---|---|
@@ -22,7 +22,7 @@ Note on this repository: data/raw/S3_robotics.md recorded #2527 as "not retrieva
 
 ## Completeness caveat (important)
 
-The connector's issue search returned zero results for "post-quantum cryptography" and "quantum" even though #2525 and #2527 exist, so it cannot be trusted for absence claims. I found the items above by reading known issue numbers and by listing the 10 most recently created issues. I did NOT page through all 682 issues, did NOT check pull requests, discussions, the mavlink/rfcs repository, the mavlink-devguide issue tracker or the dev meeting wiki pages. The connector then disconnected. Those checks must be completed before any posting.
+The repository search's issue search returned zero results for "post-quantum cryptography" and "quantum" even though #2525 and #2527 exist, so it cannot be trusted for absence claims. I found the items above by reading known issue numbers and by listing the 10 most recently created issues. I did NOT page through all 682 issues, did NOT check pull requests, discussions, the mavlink/rfcs repository, the mavlink-devguide issue tracker or the dev meeting wiki pages. The repository search then stopped. Those checks must be completed before any posting.
 
 ## Venue and process (from https://raw.githubusercontent.com/mavlink/mavlink-devguide/master/en/contributing/contributing.md)
 
