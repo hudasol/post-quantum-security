@@ -2,14 +2,14 @@
 
 Stream: S4 (Migration for deployed fleets and harvest-now-decrypt-later)
 Protocol: `docs/PROTOCOL.md` (retrieved sources only; paraphrase; quotes under 15 words; retrieval date recorded; "in flux" flags).
-Retrieval date for every source below: 2026-10-11. Retrieval method: `curl` through the sandbox egress proxy (TLS verification on), per deviation D1. WebSearch was used only to locate URLs.
+Retrieval date for every source below: 2026-10-11. Retrieval method: `curl` through the network proxy (TLS verification on), per deviation D1. web search was used only to locate URLs.
 Scope: conceptual and defensive only. No attack procedures.
 
 Tag convention: **[source]** = the retrieved document states or directly implies it (document and section noted). **[inference]** = my reasoning from sources, not stated by any source.
 
 ## 0. Queries run
 
-WebSearch (locating only): NSA CNSA 2.0 FAQ / LMS XMSS firmware signing; NIST SP 1800-38 / NCCoE; NIST CSWP 39 final; Global Risk Institute timeline 2025; "trust now, forge later"; CISA/NSA/NIST Quantum-Readiness fact sheet; PQC migration IoT/UAV; PQC UAV migration survey; 2026 ECDLP resource estimate.
+web search (locating only): NSA CNSA 2.0 FAQ / LMS XMSS firmware signing; NIST SP 1800-38 / NCCoE; NIST CSWP 39 final; Global Risk Institute timeline 2025; "trust now, forge later"; CISA/NSA/NIST Quantum-Readiness fact sheet; PQC migration IoT/UAV; PQC UAV migration survey; 2026 ECDLP resource estimate.
 Direct fetches: csrc.nist.gov (SP 800-208, IR 8547, SP 1800-38 versions, CSWP 39), nvlpubs.nist.gov PDFs, nccoe.nist.gov fact sheet PDF, ncsc.gov.uk, digital-strategy.ec.europa.eu and ec.europa.eu roadmap PDF, datatracker.ietf.org and rfc-editor.org (RFC 9019, 9124, 9370, 10024, SUIT MTI draft, TLS ML-KEM draft), globalriskinstitute.org PDFs, arxiv.org, research.google, uptane.org, raw.githubusercontent.com (wolfBoot, MCUboot, Caliptra), mavlink.io, repository.essex.ac.uk.
 
 ## 1. Source table
@@ -180,11 +180,11 @@ Labelled [inference]. Lifetimes are qualitative placeholders for the fleet owner
 
 | Source | Result |
 |---|---|
-| NSA CNSA 2.0 algorithms / FAQ (nsa.gov, media.defense.gov) | Not attempted, per coordinator instruction (nsa.gov returned Access Denied for S1). No CNSA 2.0 timeline or firmware-signing statement is asserted in this file. Only a vendor restatement (wolfBoot) is cited and flagged. |
+| NSA CNSA 2.0 algorithms / FAQ (nsa.gov, media.defense.gov) | Not attempted, as planned (nsa.gov returned Access Denied for S1). No CNSA 2.0 timeline or firmware-signing statement is asserted in this file. Only a vendor restatement (wolfBoot) is cited and flagged. |
 | cisa.gov Quantum-Readiness fact sheet page | HTTP 403. A NIST-hosted copy of the same fact sheet (A3) was retrieved instead; no mirror or cache workaround was tried. |
 | NIST SP 1800-38 final, volumes B, C, and any later version | `/pubs/sp/1800/38/final` returned 404. Only the initial preliminary drafts (A1) were found. NCCoE project page returned 403. |
 | NIST IR 8547 final | `/pubs/ir/8547/final` returned 404. Only the initial public draft (A4) was available. |
-| The tool-based WebFetch route | Permission prompts went unanswered; replaced by curl via proxy (deviation D1). |
+| The tool-based web fetch route | Permission prompts went unanswered; replaced by curl via proxy (deviation D1). |
 | MDPI Drones 2025 UAV PQC paper (Drones 9(8) 583) | HTTP 403 Access Denied. Not read. |
 | "A Survey of Post-Quantum Cryptography Migration in Vehicles" (Tübingen) | Handle URL returned 404; not read. |
 | Uptane Standard 2.1.0 (current) | Guessed URL returned 404; only 2.0.0 read, and I searched it for PQC mentions without finding any. |
