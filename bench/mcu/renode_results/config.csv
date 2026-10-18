@@ -1,0 +1,10 @@
+key,value
+label,emulated
+date_utc,2026-10-18T09:11:41Z
+renode,Renode v1.17.0
+platform,platforms/boards/stm32f4_discovery-kit.repl (Cortex-M4F)
+compiler,arm-none-eabi-gcc (15:14.2.rel1-1) 14.2.1 20241119
+flags,-O2 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard (bench/mcu/Makefile arm target)
+iterations_per_operation,3
+stack_paint_span_bytes,65536
+ram_limit,128 KB contiguous SRAM as on the STM32F407 (board/renode_stm32f4/link.ld)
