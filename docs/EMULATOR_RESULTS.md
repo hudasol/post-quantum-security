@@ -54,13 +54,13 @@ Each image includes the harness and the C library; the baseline image is not sub
 3. The newer toolchain changes the first round figures by at most a few percent (exact values in `ANALYSIS.md`).
 4. Stack grows strictly with the parameter set for every operation, core and optimisation level; -Os gives the smallest text for every image.
 
-Renode was not tried: it has no ready platform description for the MPS2 boards used here, and porting the board files to one of its STM32 platforms is board bring up work that belongs with the real board run (`docs/BOARD_RUN_PROTOCOL.md`).
+Renode (third round, 2026-10-18): Renode 1.17.0, a free download, has an STM32F4 Discovery (Cortex-M4F) platform. With board files for that platform (`bench/mcu/board/renode_stm32f4/`, RAM limited to the 128 KB of contiguous SRAM of the real STM32F407) `bench/mcu/run_renode.sh` runs ML-KEM-512, 768 and 1024 and ML-DSA-44: every check passes and every stack high water mark equals the QEMU value at -O2 to the byte (`bench/mcu/renode_results/COMPARISON.md`). Renode does not model the DWT cycle counter either, so it adds no cycle figures.
 
 ## Not done
 
 1. Real cycle counts, energy and flash wait state effects (a borrowed Cortex-M4F or M33 board is needed; see `docs/BOARD_RUN_PROTOCOL.md`).
 2. Assembly backends of the libraries; only the portable C backend was built.
-3. A second emulator (Renode) for cross checking stack figures.
+3. ML-DSA-65 and ML-DSA-87 in Renode (their signing stack does not fit the 128 KB used for the STM32F407 together with the 64 KB paint span).
 
 ## One bug found on the way
 
