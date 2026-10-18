@@ -1,4 +1,4 @@
-# Run log, second study round (2026-10-16)
+# Run log, second and third study rounds (2026-10-16 to 2026-10-18)
 
 Author: Huda Mueen. One line per decision, stop or deviation, in time order. Predictions for this round were hashed and committed before any run (`docs/PREDICTIONS_V2.md`, commit `59bd903`).
 
@@ -20,7 +20,7 @@ Author: Huda Mueen. One line per decision, stop or deviation, in time order. Pre
 | 14 | review | A fresh reviewer that had seen only the repository listed 38 findings (4 high, 17 medium, 17 low; `docs/REVIEW_FINDINGS.csv`). | 32 fixed, 2 partly fixed, 3 left with a reason, 1 open for the author. |
 | 15 | WP2, stop | **Stop condition met:** rows S10C-001 to S10C-036 (ePrint 2026/1333) give ML-DSA cycles on a Cortex-M33 and contradict the report headline that none were published. | The report and brief were corrected and the correction is marked in the report (commit `4a0b857`). Prediction Q1.4, whose first scoring rule could not fail, was rescored as a miss. |
 | 16 | review | Public notes described the research passes in tool specific terms, and one note held a local scratch path. | Reworded (commit `ba88503`). One word in the hashed `docs/PREDICTIONS.md` changed; its stored hash still verifies the text committed on 2026-10-11. The earlier commit author field remains open (item 2 of `docs/NEEDS_FROM_AUTHOR.md`). |
-| 17 | WP4 | The reviewer showed that the planner's default thresholds assume stack optimised assembly. | Added a portable C threshold scenario: hardware replacements in the 1000 device fleet rise from 246 to 351 (`docs/PLANNER_STUDY.md` section 4). |
+| 17 | WP4 | The reviewer showed that the planner's default thresholds assume stack optimised assembly. | Added a portable C threshold scenario: hardware replacements in the 1000 device fleet rise from 246 to 351 (`docs/PLANNER_STUDY.md` section 1). |
 | 18 | round 3 | Third round predictions written and hashed before any run (`docs/PREDICTIONS_V3.md`, commit `efd8765`). | Scored by `scripts/score_predictions_v3.py`. |
 | 19 | A | Three files still said or implied that no Cortex-M33 cycles were published (benchmark plan, playbook, board notes). | Corrected with dated notes; `scripts/check_claims.py` now fails CI if a retracted claim reappears without a correction marker. |
 | 20 | G | The first run of the improved host script failed: the repository path contains spaces and the binary list was split on them. | Fixed with relative paths and rerun; only the second run is recorded. |

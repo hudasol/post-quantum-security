@@ -4,11 +4,11 @@ A sourced review of what post quantum cryptography costs on microcontroller clas
 
 **For a research director:** `docs/PROPOSAL_ATRC.md` (2 pages: problem, gap, questions, plan, ask).
 
-**Start here:** `docs/EXECUTIVE_BRIEF.pdf` (2 pages), then `docs/REPORT.pdf` (`docs/REPORT.md`). The PDFs were built on 2026-10-18 from the same 971 row table as `docs/REPORT.md` (`scripts/build_pdfs.sh`, or `scripts/build_pdfs_docker.sh` without a local pandoc and XeLaTeX).
+**Start here:** `docs/EXECUTIVE_BRIEF.pdf` (2 pages), then `docs/REPORT.pdf` (`docs/REPORT.md`). The PDFs were last built on 2026-10-18 from an earlier text of `docs/REPORT.md` (971 rows then, 971 now). Rebuild with `scripts/build_pdfs.sh` or `scripts/build_pdfs_docker.sh`.
 
 ## What is published, host measured, estimated and planned
 
-Every number in this repository carries one of five labels (the fifth, emulated, was added in phase 2; a sixth, board measured, is reserved for `docs/BOARD_RUN_PROTOCOL.md`). Labels are never mixed in one table or axis without a label on each column; the deliberate comparisons are the model validation in `docs/LINKSIM_STUDY.md` section 4, the ratio table in `bench/host/native/RESULTS.md` and prediction Q1.5.
+Every number in this repository carries one of five labels (the fifth, emulated, was added in phase 2; a sixth, board measured, is reserved for `docs/BOARD_RUN_PROTOCOL.md`). Labels are never mixed in one table or axis without a label on each column; the deliberate comparisons are the model validation in `docs/LINKSIM_STUDY.md` section 4, the ratio tables in `bench/host/native/RESULTS.md` and `bench/host/native_v3/RESULTS.md`, prediction Q1.5, the stack range in `docs/PROPOSAL_ATRC.md` (published against emulated) and the portable C planner scenario, whose thresholds come from emulated figures.
 
 | Label | Meaning | Where it lives | Count or status |
 |---|---|---|---|
@@ -22,7 +22,7 @@ No purchase is needed for any planned step: an emulator (QEMU or Renode) checks 
 
 ## Verification
 
-Independent verifiers re-opened the sources. Phase 1 sampled 50 rows. Phase 2 checked all 157 rows behind a headline number and a seeded stratified random sample of 120 further rows. Phase 2 combined (headline plus random) strict row error rate: 15 of 269 verifiable rows (5.6 percent), with 1 wrong value in 655 compared fields; the other 14 were rounded KB figures that the table left empty and now records verbatim. 8 rows could not be verified because the source stayed blocked. The 46 + 45 rows added later from author supplied PDFs were each checked by finding the value in the named table, not by the independent verifiers, and are outside these rates. Details: `docs/VERIFICATION.md` (phase 1) and `docs/VERIFICATION2.md` (phase 2). The 403 S10 rows were each rechecked by a fresh reader: 0 transcription errors, and 41 of 403 rows needed a fix to a column mapping or a warning (`docs/VERIFICATION3.md`). A second reader then checked a seeded sample of 120 of those rows field by field and found 0 errors (95 percent upper bound 2.5 percent), and a column lint over all rows found 21 warning errors, now fixed (same file). The pqm4 benchmark clock is unresolved in the project's own files and is stated as such (`data/raw/S6_pqm4_config.md`). A second, independent run of the same brief was merged in: its 582 rows are kept as raw input in `data/second_run/` and compared with this table in `docs/CROSSCHECK.md`.
+Separate verification passes that did not collect the data re-opened the sources; no external reviewer has checked the table. Phase 1 sampled 50 rows. Phase 2 checked all 157 rows behind a headline number and a seeded stratified random sample of 120 further rows. Phase 2 combined (headline plus random) strict row error rate: 15 of 269 verifiable rows (5.6 percent), with 1 wrong value in 655 compared fields; the other 14 were rounded KB figures that the table left empty and now records verbatim. 8 rows could not be verified because the source stayed blocked. The 46 + 45 rows added later from author supplied PDFs were each checked by finding the value in the named table, not by the independent verifiers, and are outside these rates. Details: `docs/VERIFICATION.md` (phase 1) and `docs/VERIFICATION2.md` (phase 2). The 403 S10 rows were each rechecked by a fresh reader: 0 transcription errors, and 41 of 403 rows needed a fix to a column mapping or a warning (`docs/VERIFICATION3.md`). A second reading by three new readers then checked a seeded stratified sample of 120 of those rows field by field and found 0 errors (approximate 95 percent upper bound 2.5 percent), and a column lint over all rows found 21 warning errors, now fixed (same file). The pqm4 benchmark clock is unresolved in the project's own files and is stated as such (`data/raw/S6_pqm4_config.md`). A second, independent run of the same brief was merged in: its 582 rows are kept as raw input in `data/second_run/` and compared with the 523 row version of this table in `docs/CROSSCHECK.md`.
 
 Predictions were written before the phase 2 runs and are scored in `docs/PREDICTIONS.md`. The second round predictions were hashed before any run (`docs/PREDICTIONS_V2.md`) and are scored by script in `docs/PREDICTIONS_V2_SCORES.md`; decisions and deviations are in `docs/RUN_LOG.md`, and what only the author can supply is in `docs/NEEDS_FROM_AUTHOR.md`.
 
@@ -42,7 +42,7 @@ Predictions were written before the phase 2 runs and are scored in `docs/PREDICT
 | `docs/BENCHMARK_PLAN.md`, `docs/NEXT_STEPS.md`, `docs/SOURCES_TO_UPLOAD.md` | experiments, first steps, sources to fetch |
 | `data/` | evidence table, corrections, verification inputs and results, research notes in `data/raw/` |
 | `plots/` | figures from published rows, with the row ids behind each |
-| `bench/` | harness for on device tests (host tested only), statistics and power analysis, host measurements |
+| `bench/` | harness for on device tests (run on a PC and in two emulators, not yet on a board), statistics and power analysis, host measurements |
 | `scripts/`, `tests/`, `.github/workflows/ci.yml` | build, checks and continuous integration |
 
 ## Checks that run on every push
