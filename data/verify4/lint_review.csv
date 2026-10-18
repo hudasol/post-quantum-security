@@ -1,0 +1,41 @@
+id,rule,verdict,reason
+S3-015,U1,false,an NTT kernel on an FPGA genuinely takes a few hundred cycles
+S8-004,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-006,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-008,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-010,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-012,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-014,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-016,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-018,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-020,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-022,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-024,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-026,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-028,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-030,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-032,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-034,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-036,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-038,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-040,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-042,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S8-044,W1,true,cycles row whose warning describes the stack rows (Table 12); fixed through data/corrections.csv
+S10A-034,W1,false,"warning cites Table 2 for the measurement settings, which the paper states apply to Table 3"
+S10A-035,W1,false,"warning cites Table 2 for the measurement settings, which the paper states apply to Table 3"
+S10A-036,W1,false,"warning cites Table 2 for the measurement settings, which the paper states apply to Table 3"
+S10A-037,W1,false,"warning cites Table 2 for the measurement settings, which the paper states apply to Table 3"
+S10A-038,W1,false,"warning cites Table 2 for the measurement settings, which the paper states apply to Table 3"
+S10A-039,W1,false,"warning cites Table 2 for the measurement settings, which the paper states apply to Table 3"
+S10A-040,W1,false,"warning cites Table 2 for the measurement settings, which the paper states apply to Table 3"
+S10A-041,W1,false,"warning cites Table 2 for the measurement settings, which the paper states apply to Table 3"
+S10A-042,W1,false,"warning cites Table 2 for the measurement settings, which the paper states apply to Table 3"
+S10A-043,W1,false,"warning cites Table 2 for the measurement settings, which the paper states apply to Table 3"
+S10A-044,W1,false,"warning cites Table 2 for the measurement settings, which the paper states apply to Table 3"
+S10A-045,W1,false,"warning cites Table 2 for the measurement settings, which the paper states apply to Table 3"
+S10A-046,W1,false,"warning cites Table 2 for the measurement settings, which the paper states apply to Table 3"
+S10A-047,W1,false,"warning cites Table 2 for the measurement settings, which the paper states apply to Table 3"
+S10A-048,W1,false,"warning cites Table 2 for the measurement settings, which the paper states apply to Table 3"
+S10D-001,W1,false,warning cites Tables 5 to 7 for the tick definition; the lint reads only the first number of a range
+S10D-002,W1,false,warning cites Tables 5 to 7 for the tick definition; the lint reads only the first number of a range
+S10D-003,W1,false,warning cites Tables 5 to 7 for the tick definition; the lint reads only the first number of a range
