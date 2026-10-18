@@ -12,13 +12,13 @@ class ParameterTests(unittest.TestCase):
         self.assertEqual(p.today_year, 2026)
         self.assertEqual(p.sig_years, 4)
         self.assertEqual(p.conf_years, 9)
-        self.assertEqual(p.sig_flash_kb, 31)
-        self.assertEqual(p.sig_ram_kb, 3)
+        self.assertEqual(p.sig_flash_kb, 30)
+        self.assertEqual(p.sig_ram_kb, 7)
         self.assertEqual(p.kem_flash_kb, 14)
         self.assertEqual(p.kem_ram_kb, 9)
         self.assertEqual(p.hs_bytes, 6068)
         self.assertEqual(p.hs_budget_s, 300)
-        self.assertEqual(p.both_flash_kb, 45)
+        self.assertEqual(p.both_flash_kb, 44)
         self.assertEqual(p.both_ram_kb, 9)
 
     def test_hs_bytes_arithmetic(self):
@@ -28,7 +28,7 @@ class ParameterTests(unittest.TestCase):
         p = Parameters().override(today_year=2027, hs_budget_s=Fraction(10), sig_flash_kb=None)
         self.assertEqual(p.sig_years, 3)
         self.assertEqual(p.hs_budget_s, 10)
-        self.assertEqual(p.sig_flash_kb, 31)
+        self.assertEqual(p.sig_flash_kb, 30)
 
     def test_invalid_values(self):
         with self.assertRaises(ValueError):

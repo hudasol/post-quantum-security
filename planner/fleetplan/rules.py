@@ -34,12 +34,14 @@ PARAMETER_DOC = {
         2035, "assumption",
         "NCSC, EU, IR 8547 draft end dates (S1 rows 15, 33, 37)"),
     "sig_flash_kb": (
-        Fraction(31), "derived",
-        "ML-DSA-44 verify code 24,844 B (S2-0036) plus 5,288 B wolfBoot "
-        "example header (S3 4.2) = 30,132 B, rounded up; excludes hashing "
+        Fraction(30), "derived",
+        "ML-DSA-44 verify code 24,844 B (S2-0036) plus 4,840 B wolfBoot "
+        "ML-DSA-44 example header (S4 line 85) = 29,684 B, rounded up; excludes hashing "
         "and libc; lower bound"),
     "sig_ram_kb": (
-        Fraction(3), "derived", "ML-DSA-44 verify stack 2,712 B (S2-0036), rounded up"),
+        Fraction(7), "derived",
+        "ML-DSA-44 verify stack 2,712 B (S2-0036) plus the 1,312 B public key and the 2,420 B signature "
+        "the verifier must hold (the stack figure excludes caller buffers) = 6,444 B, rounded up"),
     "kem_flash_kb": (
         Fraction(14), "derived", "ML-KEM-768 code 13,320 B (S2-0027), rounded up"),
     "kem_ram_kb": (
@@ -67,8 +69,8 @@ class Parameters:
     today_year: int = 2026
     sig_horizon_year: int = 2030
     conf_horizon_year: int = 2035
-    sig_flash_kb: Fraction = Fraction(31)
-    sig_ram_kb: Fraction = Fraction(3)
+    sig_flash_kb: Fraction = Fraction(30)
+    sig_ram_kb: Fraction = Fraction(7)
     kem_flash_kb: Fraction = Fraction(14)
     kem_ram_kb: Fraction = Fraction(9)
     hs_bytes: int = 6068

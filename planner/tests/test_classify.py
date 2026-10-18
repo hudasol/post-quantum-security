@@ -140,12 +140,12 @@ class Rule3NoAction(unittest.TestCase):
 
 
 class Rule4And5Headroom(unittest.TestCase):
-    """Needs are 31/3 (signature), 14/9 (KEM) and 45/9 (both). Equal is enough."""
+    """Needs are 30/7 (signature), 14/9 (KEM) and 44/9 (both). Equal is enough."""
 
     def test_signature_only_need_boundary(self):
-        self.assertEqual(one(free_flash_kb="31", free_ram_kb="3", **SIG).cls, C.FIRMWARE_UPDATE)
-        self.assertEqual(one(free_flash_kb="30", free_ram_kb="3", **SIG).cls, C.HARDWARE_REPLACEMENT)
-        self.assertEqual(one(free_flash_kb="31", free_ram_kb="2", **SIG).cls, C.HARDWARE_REPLACEMENT)
+        self.assertEqual(one(free_flash_kb="30", free_ram_kb="7", **SIG).cls, C.FIRMWARE_UPDATE)
+        self.assertEqual(one(free_flash_kb="29", free_ram_kb="7", **SIG).cls, C.HARDWARE_REPLACEMENT)
+        self.assertEqual(one(free_flash_kb="30", free_ram_kb="6", **SIG).cls, C.HARDWARE_REPLACEMENT)
 
     def test_kem_only_need_boundary(self):
         self.assertEqual(one(free_flash_kb="14", free_ram_kb="9", **CONF).cls, C.FIRMWARE_UPDATE)
@@ -154,26 +154,26 @@ class Rule4And5Headroom(unittest.TestCase):
 
     def test_both_need_boundary(self):
         both = {**SIG, **CONF}
-        self.assertEqual(one(free_flash_kb="45", free_ram_kb="9", **both).cls, C.FIRMWARE_UPDATE)
-        self.assertEqual(one(free_flash_kb="44", free_ram_kb="9", **both).cls, C.HARDWARE_REPLACEMENT)
-        self.assertEqual(one(free_flash_kb="45", free_ram_kb="8", **both).cls, C.HARDWARE_REPLACEMENT)
-        # 31 flash would be enough for the signature alone but not for both
-        self.assertEqual(one(free_flash_kb="31", free_ram_kb="9", **both).cls, C.HARDWARE_REPLACEMENT)
+        self.assertEqual(one(free_flash_kb="44", free_ram_kb="9", **both).cls, C.FIRMWARE_UPDATE)
+        self.assertEqual(one(free_flash_kb="43", free_ram_kb="9", **both).cls, C.HARDWARE_REPLACEMENT)
+        self.assertEqual(one(free_flash_kb="44", free_ram_kb="8", **both).cls, C.HARDWARE_REPLACEMENT)
+        # 30 flash would be enough for the signature alone but not for both
+        self.assertEqual(one(free_flash_kb="30", free_ram_kb="9", **both).cls, C.HARDWARE_REPLACEMENT)
 
     def test_reason_states_need(self):
         r = one(**{**SIG, **CONF})
-        self.assertIn("45 kB flash and 9 kB RAM", " ".join(r.reasons))
+        self.assertIn("44 kB flash and 9 kB RAM", " ".join(r.reasons))
         self.assertTrue(has_rule(r, 4))
         self.assertTrue(has_rule(r, 5))
 
     def test_unknown_free_with_small_total_is_insufficient(self):
-        r = one(flash_kb="30", free_flash_kb="", free_ram_kb="", **SIG)
+        r = one(flash_kb="29", free_flash_kb="", free_ram_kb="", **SIG)
         self.assertEqual(r.cls, C.HARDWARE_REPLACEMENT)
-        r = one(ram_kb="2", free_flash_kb="", free_ram_kb="", **SIG)
+        r = one(ram_kb="6", free_flash_kb="", free_ram_kb="", **SIG)
         self.assertEqual(r.cls, C.HARDWARE_REPLACEMENT)
 
     def test_total_equal_to_need_is_not_below(self):
-        r = one(flash_kb="31", ram_kb="3", free_flash_kb="", free_ram_kb="", **SIG)
+        r = one(flash_kb="30", ram_kb="7", free_flash_kb="", free_ram_kb="", **SIG)
         self.assertEqual(r.cls, C.UNKNOWN)
 
     def test_unknown_free_with_large_total_is_unknown_and_named(self):

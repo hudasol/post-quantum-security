@@ -35,16 +35,16 @@ Lines starting with `#` are comments. The example inventory is labelled SYNTHETI
 | `conf_horizon_year` | 2035 | [assumption] | NCSC, EU, IR 8547 draft end dates (S1 rows 15, 33, 37) |
 | `SIG_YEARS` | sig_horizon_year - today_year = 4 | [derived] | |
 | `CONF_YEARS` | conf_horizon_year - today_year = 9 | [derived] | |
-| `SIG_FLASH_KB` | 31 | [derived] | ML-DSA-44 verify code 24,844 B (S2-0036) plus 5,288 B wolfBoot example header (S3 4.2) = 30,132 B, rounded up. Excludes hashing and libc. Lower bound. |
-| `SIG_RAM_KB` | 3 | [derived] | ML-DSA-44 verify stack 2,712 B (S2-0036), rounded up |
+| `SIG_FLASH_KB` | 30 | [derived] | ML-DSA-44 verify code 24,844 B (S2-0036) plus 4,840 B wolfBoot ML-DSA-44 example header (data/raw/S4_migration.md line 85) = 29,684 B, rounded up. Excludes hashing and libc. Lower bound. *Correction 2026-10-18: earlier 31, from the 5,288 B LMS example header.* |
+| `SIG_RAM_KB` | 7 | [derived] | ML-DSA-44 verify stack 2,712 B (S2-0036) plus the 1,312 B public key and 2,420 B signature the verifier must hold (the pqm4 stack figure excludes caller buffers) = 6,444 B, rounded up. *Correction 2026-10-18: earlier 3, stack only.* |
 | `KEM_FLASH_KB` | 14 | [derived] | ML-KEM-768 code 13,320 B (S2-0027), rounded up |
 | `KEM_RAM_KB` | 9 | [derived] | ML-KEM-768 decaps stack 2,844 B (S2-0027) plus buffers 6,004 B (FIPS sizes: 1184 + 1088 + 1312 + 2420) = 8,848 B, rounded up |
 | `HS_BYTES` | 6068 | [derived] | hybrid handshake bytes: 2 x 32 B X25519 + 1184 + 1088 + 1312 + 2420 |
 | `HS_BUDGET_S` | 300 | [assumption] | longest tolerable in band handshake |
 
-**These defaults are one of four scenarios, the one with the fewest hardware replacements.** They come from stack optimised assembly (pqm4 `m4fstack`). Since 2026-10-18 the planner study also runs speed optimised assembly (`m4f`, `m4fspeed`), this repository's emulated portable C build, and reference C (`clean`), each derived the same way; signature RAM rises from 3 kB to as much as 37 kB. Results depend on the scenario, so quote the range in `docs/PLANNER_STUDY.md` section 1, not the default alone.
+**These defaults are one of four scenarios, the one with the fewest hardware replacements.** They come from stack optimised assembly (pqm4 `m4fstack`). Since 2026-10-18 the planner study also runs speed optimised assembly (`m4f`, `m4fspeed`), this repository's emulated portable C build, and reference C (`clean`), each derived the same way; signature RAM rises from 7 kB to as much as 41 kB. Results depend on the scenario, so quote the range in `docs/PLANNER_STUDY.md` section 1, not the default alone.
 
-Both exposures combined need `SIG_FLASH_KB + KEM_FLASH_KB = 45` kB flash and `KEM_RAM_KB = 9` kB RAM (the two run one after the other).
+Both exposures combined need `SIG_FLASH_KB + KEM_FLASH_KB = 44` kB flash and `KEM_RAM_KB = 9` kB RAM (the two run one after the other).
 
 ## Algorithm
 
