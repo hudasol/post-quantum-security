@@ -7,7 +7,7 @@ Labels used throughout: **published** (copied from a retrieved source, in `data/
 
 The published evidence has holes that only your own boards can fill (details in REPORT section 6):
 
-1. There are no published ML-KEM, ML-DSA or SLH-DSA cycle counts for a *named* Cortex-M33 core.
+1. Published Cortex-M33 cycle counts cover only ML-DSA-44 and ML-DSA-87 key generation and signing, from one paper on an STM32U5A5 (rows S10C-001 to S10C-036 of `data/evidence.csv`); there are none for ML-KEM, ML-DSA verification or SLH-DSA. *Correction (2026-10-18): this item earlier said no such cycle counts were published for a named Cortex-M33; rows added on 2026-10-16 contradict that.*
 2. The only maintained benchmark with final ML-KEM/ML-DSA names on Cortex-M4F (pqm4) does not name its board, quotes a 24 MHz clock whose board code path actually uses 20 MHz, and is scheduled to be archived read only in or after January 2027.
 3. There are no published *measured* energy figures for final ML-KEM/ML-DSA on a Cortex-M.
 4. There are no published final parameter LMS or SLH-DSA cycle counts on a Cortex-M.
