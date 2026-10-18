@@ -1,0 +1,16 @@
+key,value
+label,host measured
+date_utc,2026-10-18T08:30:17Z
+cpu_model,AMD Ryzen 7 7730U with Radeon Graphics
+logical_cpus,16
+kernel,Linux 6.18.33.2-microsoft-standard-WSL2
+environment,Linux virtual machine (WSL2) on a laptop; CPU frequency governor not controllable without administrator rights
+compiler,gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+flags,-std=c99 -O2 -DBENCH_HOST (bench/mcu/Makefile host target)
+mlkem_native,d1b2fe782888bdb761a50336012923180be7f502
+mldsa_native,834a90d5e846ffa1e1611bd24e160bb2e9b86d35
+runs_per_binary,15
+iterations_per_operation_per_run,420
+pinned_cpu,2
+order_seed,20261018
+warm_up,one discarded pass over all binaries, then the first iterations of each run are dropped in analysis
