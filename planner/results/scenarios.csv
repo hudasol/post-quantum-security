@@ -1,0 +1,13 @@
+devices,scenario,label,basis,sig_flash_kb,sig_ram_kb,kem_flash_kb,kem_ram_kb,violations,FIRMWARE_UPDATE,HYBRID,HARDWARE_REPLACEMENT,NO_ACTION_BEFORE_RETIREMENT,UNKNOWN
+10,stack_asm,"stack optimised assembly (pqm4 m4fstack, published)","S2-0036, S2-0027",31,3,14,9,0,4,1,2,2,1
+10,speed_asm,"speed optimised assembly (pqm4 m4f and m4fspeed, published; middle case)","S2-0033, S2-0024",25,9,17,13,0,4,1,2,2,1
+10,portable_c,"portable C (repository build, emulated)",bench/mcu/qemu_results,29,30,20,25,0,4,0,3,2,1
+10,reference_c,"reference C (pqm4 clean, published)","S2-0030, S2-0021",14,37,6,21,0,4,0,3,2,1
+100,stack_asm,"stack optimised assembly (pqm4 m4fstack, published)","S2-0036, S2-0027",31,3,14,9,0,43,14,34,7,2
+100,speed_asm,"speed optimised assembly (pqm4 m4f and m4fspeed, published; middle case)","S2-0033, S2-0024",25,9,17,13,0,40,14,37,7,2
+100,portable_c,"portable C (repository build, emulated)",bench/mcu/qemu_results,29,30,20,25,0,36,12,43,7,2
+100,reference_c,"reference C (pqm4 clean, published)","S2-0030, S2-0021",14,37,6,21,0,34,10,47,7,2
+1000,stack_asm,"stack optimised assembly (pqm4 m4fstack, published)","S2-0036, S2-0027",31,3,14,9,0,431,168,246,105,50
+1000,speed_asm,"speed optimised assembly (pqm4 m4f and m4fspeed, published; middle case)","S2-0033, S2-0024",25,9,17,13,0,418,157,270,105,50
+1000,portable_c,"portable C (repository build, emulated)",bench/mcu/qemu_results,29,30,20,25,0,362,133,351,105,49
+1000,reference_c,"reference C (pqm4 clean, published)","S2-0030, S2-0021",14,37,6,21,0,348,128,371,105,48

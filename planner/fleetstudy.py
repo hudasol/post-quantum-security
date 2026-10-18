@@ -170,6 +170,9 @@ def tornado(devices, base_params=None):
     base = [r.cls for r in classify_devices(devices, p0)]
     rows = []
     for name, kind, lo, hi in TORNADO:
+        if kind == "param" and name not in ("sig_horizon_year", "conf_horizon_year"):
+            # minus and plus 50 percent of the value in force, so each scenario is varied around its own value
+            lo, hi = Fraction(getattr(p0, name)) / 2, Fraction(getattr(p0, name)) * 3 / 2
         row = {"input": name, "kind": kind, "low": lo, "high": hi}
         for tag, v in (("low", lo), ("high", hi)):
             if kind == "param":
@@ -227,6 +230,38 @@ def portable_c_params():
                       kem_flash_kb=kb(tx[("mlkem", "768")]), kem_ram_kb=kb(st[("ML-KEM-768", "decaps")] + 6004))
 
 
+def published_params(ids):
+    """Thresholds from published pqm4 rows of data/evidence.csv (label: published inputs, estimated thresholds),
+    with the derivation of docs/PLANNER_RULES.md: signature flash = ML-DSA-44 code size plus the 5,288 B header,
+    signature RAM = ML-DSA-44 verify stack, KEM flash = ML-KEM-768 code size, KEM RAM = ML-KEM-768 decaps stack
+    plus 6,004 B of buffers; kB = 1000 B, rounded up. pqm4 code sizes exclude hashing and libc."""
+    import math
+    with open(os.path.join(ROOT, "data", "evidence.csv"), newline="", encoding="utf-8") as fh:
+        ev = {r["id"]: r for r in csv.DictReader(fh)}
+    sig_v, kem_d = ev[ids["sig_verify"]], ev[ids["kem_decaps"]]
+    assert sig_v["parameter_set"] == "ML-DSA-44" and sig_v["operation"] == "verify"
+    assert kem_d["parameter_set"] == "ML-KEM-768" and kem_d["operation"] == "decaps"
+    kb = lambda b: Fraction(math.ceil(b / 1000))  # noqa: E731
+    return Parameters(sig_flash_kb=kb(int(sig_v["flash_or_code_bytes"]) + 5288),
+                      sig_ram_kb=kb(int(sig_v["stack_bytes"])),
+                      kem_flash_kb=kb(int(kem_d["flash_or_code_bytes"])),
+                      kem_ram_kb=kb(int(kem_d["stack_bytes"]) + 6004))
+
+
+def scenarios():
+    """(key, label, basis, Parameters) for the four threshold scenarios."""
+    return [
+        ("stack_asm", "stack optimised assembly (pqm4 m4fstack, published)", "S2-0036, S2-0027",
+         published_params({"sig_verify": "S2-0036", "kem_decaps": "S2-0027"})),
+        ("speed_asm", "speed optimised assembly (pqm4 m4f and m4fspeed, published; middle case)",
+         "S2-0033, S2-0024", published_params({"sig_verify": "S2-0033", "kem_decaps": "S2-0024"})),
+        ("portable_c", "portable C (repository build, emulated)", "bench/mcu/qemu_results",
+         portable_c_params()),
+        ("reference_c", "reference C (pqm4 clean, published)", "S2-0030, S2-0021",
+         published_params({"sig_verify": "S2-0030", "kem_decaps": "S2-0021"})),
+    ]
+
+
 def _write(name, rows, fields):
     os.makedirs(RES, exist_ok=True)
     with open(os.path.join(RES, name), "w", newline="", encoding="utf-8") as fh:
@@ -252,47 +287,86 @@ def main():
         scale.append({"devices": n, "seed": BASE_SEED + n, "seconds": dt,
                       "violations": len(violations(devs, res)), **c})
     _write("scale.csv", scale, ["devices", "seed", "seconds", "violations"] + list(CLASSES))
-    tor = tornado(fleets[1000])
-    _write("tornado.csv", tor, ["input", "kind", "low", "high", "changed_low", "share_low",
-                                "changed_high", "share_high", "swing"])
     stg = staged(fleets[1000])
     _write("staged.csv", stg, ["year", "in_wave"] + list(CLASSES)
            + ["migrated_this_wave", "migrated_total"])
-    pc = portable_c_params()
-    scen = []
-    for tag, p in (("stack optimised pqm4 rows (default)", Parameters()), ("portable C, emulated build", pc)):
-        res = classify_devices(fleets[1000], p)
-        scen.append({"thresholds": tag, "sig_flash_kb": p.sig_flash_kb, "sig_ram_kb": p.sig_ram_kb,
-                     "kem_flash_kb": p.kem_flash_kb, "kem_ram_kb": p.kem_ram_kb,
-                     "violations": len(violations(fleets[1000], res, p)), **counts(res)})
-    _write("thresholds.csv", scen, ["thresholds", "sig_flash_kb", "sig_ram_kb", "kem_flash_kb", "kem_ram_kb",
-                                    "violations"] + list(CLASSES))
+    sc = scenarios()
+    scen, tor_all, changed = [], [], []
+    for n in SIZES:
+        per = {}
+        for key, label, basis, p in sc:
+            res = classify_devices(fleets[n], p)
+            per[key] = [r.cls for r in res]
+            scen.append({"devices": n, "scenario": key, "label": label, "basis": basis,
+                         "sig_flash_kb": p.sig_flash_kb, "sig_ram_kb": p.sig_ram_kb, "kem_flash_kb": p.kem_flash_kb,
+                         "kem_ram_kb": p.kem_ram_kb, "violations": len(violations(fleets[n], res, p)), **counts(res)})
+            for r in tornado(fleets[n], p):
+                tor_all.append({"devices": n, "scenario": key, **r})
+        hr = {k: v.count(HARDWARE_REPLACEMENT) for k, v in per.items()}
+        lo_k = min(hr, key=lambda k: (hr[k], k))
+        hi_k = max(hr, key=lambda k: (hr[k], k))
+        diff = sum(1 for a, b in zip(per[lo_k], per[hi_k]) if a != b)
+        changed.append({"devices": n, "lowest": lo_k, "highest": hi_k, "hr_low": hr[lo_k], "hr_high": hr[hi_k],
+                        "changed": diff, "share_changed": diff / n})
+    _write("scenarios.csv", scen, ["devices", "scenario", "label", "basis", "sig_flash_kb", "sig_ram_kb",
+                                   "kem_flash_kb", "kem_ram_kb", "violations"] + list(CLASSES))
+    _write("scenario_range.csv", changed, ["devices", "lowest", "highest", "hr_low", "hr_high", "changed",
+                                           "share_changed"])
+    _write("tornado.csv", tor_all, ["devices", "scenario", "input", "kind", "low", "high", "changed_low",
+                                    "share_low", "changed_high", "share_high", "swing"])
     hw_rows = [{"class": h, "core": v[0], "ram_kb": " ".join(map(str, v[1])),
                 "flash_kb": " ".join(map(str, v[2])), "share": dict(MIX)[h]} for h, v in HW.items()]
     _write("hardware_classes.csv", hw_rows, ["class", "core", "ram_kb", "flash_kb", "share"])
+    r1000 = [c for c in changed if c["devices"] == 1000][0]
+    label = {k: lab for k, lab, _, _ in sc}
 
     L = ["# Planner study on synthetic fleets", "",
          "Author: Huda Mueen. Generated by `cd planner && python fleetstudy.py`; do not edit by hand. "
          "Label: **estimated**. Every fleet is **SYNTHETIC**: invented devices from five invented hardware "
          "classes (`planner/results/hardware_classes.csv`), seed %d plus the fleet size. Not a real fleet, "
          "not measured. The planner supports planning; it is not a security guarantee." % BASE_SEED, "",
-         "## 1. Scale and the memory limit property", "",
-         "| devices | seed | classify time (s) | violations | " + " | ".join(CLASSES) + " |",
-         "|---|---|---|---|" + "---|" * len(CLASSES)]
+         "**Headline.** How many devices need new hardware depends on which implementation the memory thresholds "
+         "assume. On the 1000 device fleet it ranges from %d (%s) to %d (%s); %d devices (%.1f percent) change "
+         "class between those two scenarios. The answer is the range, not one figure." % (
+             r1000["hr_low"], label[r1000["lowest"]], r1000["hr_high"], label[r1000["highest"]], r1000["changed"],
+             100 * r1000["share_changed"]), "",
+         "## 1. Threshold scenarios", "",
+         "Each scenario takes the four memory thresholds from one implementation, derived as in "
+         "`docs/PLANNER_RULES.md`. Three come from published pqm4 rows of `data/evidence.csv` (stack optimised "
+         "assembly, speed optimised assembly as the middle case, reference C); one from this repository's own "
+         "portable C build as run in the emulator. The violation count is an internal consistency check against "
+         "the thresholds in force, not evidence that code fits a real device.", "",
+         "| devices | scenario | basis | sig flash kB | sig RAM kB | KEM flash kB | KEM RAM kB | violations | "
+         + " | ".join(CLASSES) + " |", "|---|---|---|---|---|---|---|---|" + "---|" * len(CLASSES)]
+    for s_ in scen:
+        L.append("| %d | %s | %s | %s | %s | %s | %s | %d | %s |" % (
+            s_["devices"], s_["label"], s_["basis"], s_["sig_flash_kb"], s_["sig_ram_kb"], s_["kem_flash_kb"],
+            s_["kem_ram_kb"], s_["violations"], " | ".join(str(s_[c]) for c in CLASSES)))
+    L += ["", "Range of hardware replacements, and devices that change class between the scenario with the fewest "
+          "and the scenario with the most replacements:", "",
+          "| devices | fewest | most | hardware replacements | devices that change class |", "|---|---|---|---|---|"]
+    for c in changed:
+        L.append("| %d | %s | %s | %d to %d | %d (%.1f%%) |" % (c["devices"], c["lowest"], c["highest"], c["hr_low"],
+                                                             c["hr_high"], c["changed"], 100 * c["share_changed"]))
+    L += ["", "## 2. Tornado sensitivity per scenario and fleet size", "",
+          "Share of devices whose class changes when one input moves to its low or high value with the other inputs "
+          "at the scenario's values. Rule parameters move by minus and plus 50 percent (horizon years by 2 years); "
+          "device fields are scaled or shifted across the whole fleet. Full table: `planner/results/tornado.csv`. "
+          "Shown: the three inputs with the largest swing.", "",
+          "| devices | scenario | first | second | third |", "|---|---|---|---|---|"]
+    for n in SIZES:
+        for key, _, _, _ in sc:
+            top = [r for r in tor_all if r["devices"] == n and r["scenario"] == key][:3]
+            L.append("| %d | %s | %s |" % (n, key, " | ".join("%s %.1f%%" % (r["input"], 100 * r["swing"])
+                                                             for r in top)))
+    L += ["", "## 3. Scale and the memory limit property (stack optimised thresholds)", "",
+          "| devices | seed | classify time (s) | violations | " + " | ".join(CLASSES) + " |",
+          "|---|---|---|---|" + "---|" * len(CLASSES)]
     for s in scale:
         L.append("| %d | %d | %.3f | %d | %s |" % (s["devices"], s["seed"], s["seconds"], s["violations"],
                                                     " | ".join(str(s[c]) for c in CLASSES)))
-    L += ["", "A violation is a FIRMWARE_UPDATE or HYBRID device whose free RAM or free flash is below the "
-          "need that applied to it. Times are host wall time of the classifier on this machine.", "",
-          "## 2. Tornado sensitivity (1000 device fleet)", "",
-          "Share of devices whose class changes when one input moves to its low or high value; all other "
-          "inputs at their defaults. Rule parameters move by minus and plus 50 percent (horizon years by "
-          "2 years); device fields are scaled or shifted across the whole fleet.", "",
-          "| input | low | high | changed at low | changed at high |", "|---|---|---|---|---|"]
-    for r in tor:
-        L.append("| %s | %s | %s | %.1f%% | %.1f%% |" % (r["input"], r["low"], r["high"],
-                                                        100 * r["share_low"], 100 * r["share_high"]))
-    L += ["", "## 3. Staged migration (1000 device fleet, waves 2026 to 2030)", "",
+    L += ["", "Times are host wall time of the classifier on this machine.", "",
+          "## 4. Staged migration (1000 device fleet, stack optimised thresholds, waves 2026 to 2030)", "",
           "Each wave classifies the devices not yet migrated with the wave year as the planning year and "
           "remaining service life reduced by the years elapsed. FIRMWARE_UPDATE and HYBRID devices are "
           "migrated in that wave, HARDWARE_REPLACEMENT devices are replaced, and the rest carry over.", "",
@@ -301,23 +375,12 @@ def main():
     for s in stg:
         L.append("| %d | %d | %s | %d | %d |" % (s["year"], s["in_wave"], " | ".join(str(s[c]) for c in CLASSES),
                                                 s["migrated_this_wave"], s["migrated_total"]))
-    L += ["", "## 4. Which implementation the thresholds assume (1000 device fleet)", "",
-          "The default thresholds come from stack optimised pqm4 rows (hand written assembly; "
-          "`docs/PLANNER_RULES.md`). The second line uses this repository's own portable C build as run in the "
-          "emulator (`bench/mcu/qemu_results/`), which needs far more RAM. The violation count is an internal "
-          "consistency check against the thresholds in force, not evidence that the code fits a real device.", "",
-          "| thresholds | sig flash kB | sig RAM kB | KEM flash kB | KEM RAM kB | violations | " + " | ".join(CLASSES) + " |",
-          "|---|---|---|---|---|---|" + "---|" * len(CLASSES)]
-    for s_ in scen:
-        L.append("| %s | %s | %s | %s | %s | %d | %s |" % (s_["thresholds"], s_["sig_flash_kb"], s_["sig_ram_kb"],
-                 s_["kem_flash_kb"], s_["kem_ram_kb"], s_["violations"], " | ".join(str(s_[c]) for c in CLASSES)))
     L += ["", "## Limits", "",
-          "1. The hardware classes, their shares and every distribution are invented; the tornado ranking "
-          "depends on them. A real inventory would change every number here.",
+          "1. The hardware classes, their shares and every distribution are invented; every count here depends on "
+          "them. A real inventory would change every number.",
           "2. The tornado moves one input at a time; interactions are not explored.",
-          "3. The tornado and section 1 use the default thresholds, which assume stack optimised assembly; with "
-          "portable C thresholds (section 4) the memory inputs matter far more, so the ranking above holds only for "
-          "the default assumption.",
+          "3. The thresholds use one parameter set per family (ML-DSA-44, ML-KEM-768); a fleet that must use "
+          "ML-DSA-87 or ML-KEM-1024 needs more.",
           "4. The staged model assumes every action in a wave succeeds and that replaced hardware leaves "
           "the fleet; it does not model budgets, downtime or partial rollouts.", "",
           "_This tool supports planning. It is not a security guarantee._", ""]
