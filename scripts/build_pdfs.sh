@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Build the report and the brief as PDF from the generated markdown.
-# Needs pandoc and xelatex; fonts DejaVu Serif and DejaVu Sans Mono. The template is pandoc's default LaTeX template without lmodern.
+# Needs pandoc 3.1 and xelatex; fonts DejaVu Serif and DejaVu Sans Mono. Without them, use scripts/build_pdfs_docker.sh. The template is pandoc's default LaTeX template without lmodern.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 python3 scripts/build_report.py
