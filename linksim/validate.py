@@ -100,3 +100,59 @@ def run(p=None, path=EVIDENCE, baseline="P-256"):
                 r["diff_err_" + tag] = (pd / r["meas_diff"] - 1.0
                                         if r["meas_diff"] else float("nan"))
     return out
+
+
+# ---------------------------------------------------------------------------
+# Third round (2026-10-18): held out calibration, a prose cross check, and
+# which parts of the model any published figure can check at all.
+
+TRAIN = ("P-256", "SMAUG-T1")          # fixed by name in docs/PREDICTIONS_V3.md (R7)
+TEST = ("ML-KEM-768", "SMAUG-T3", "NTRU+-768")
+
+
+def held_out(p=None, path=EVIDENCE, train=TRAIN, test=TEST):
+    """Fit one fixed overhead term c (ms) on the training groups by least squares,
+    c = mean(published - predicted), then predict the held out groups with it.
+    Never fits and tests on the same group."""
+    p = p or model.load_params()
+    t5 = load_table5(path)
+    if set(train) & set(test):
+        raise ValueError("train and test overlap")
+    base = {g: predict_ms(t5[g], p) for g in list(train) + list(test)}
+    c = sum(t5[g]["uav_ms"] - base[g] for g in train) / len(train)
+    out = []
+    for g in list(train) + list(test):
+        pred = base[g] + c
+        out.append({"group": g, "split": "train" if g in train else "test", "uav_ms": t5[g]["uav_ms"],
+                    "pred_uncal_ms": base[g], "fitted_overhead_ms": c, "pred_cal_ms": pred,
+                    "err_cal": pred / t5[g]["uav_ms"] - 1.0})
+    return out
+
+
+# Prose statement, not a table, so it is not in data/evidence.csv: ePrint 2021/781 (author supplied PDF),
+# pages 15 to 16, says transferring 50 kB over a low power IEEE 802.15.4 link takes 30 to 60 s depending on
+# link quality and network load. Used only as a cross check, never to calibrate.
+PROSE_802154 = {"bytes": 50000, "low_s": 30.0, "high_s": 60.0,
+                "source": "ePrint 2021/781, pages 15 to 16, prose (not a table; not in the evidence table)"}
+
+
+def crosscheck_802154(p=None, proto="sr"):
+    """Model time for the prose object size on the 802.15.4 profile, no loss, and its factor to the prose range."""
+    from . import sim
+    p = p or model.load_params()
+    t = sim.run_firmware("ieee802154", PROSE_802154["bytes"], proto, 0.0, 1, p).wall_s
+    return {"bytes": PROSE_802154["bytes"], "proto": proto, "model_s": t, "prose_low_s": PROSE_802154["low_s"],
+            "prose_high_s": PROSE_802154["high_s"], "factor_below_low": PROSE_802154["low_s"] / t,
+            "source": PROSE_802154["source"]}
+
+
+PARTS = [
+    ("rate (bytes over bit rate)", "validated", "Table 5 of ePrint 2026/2343, rows S10F-131 to S10F-150"),
+    ("round trips and fixed overhead", "calibrated on 2 groups, tested on 3 held out groups",
+     "Table 5 of ePrint 2026/2343"),
+    ("fragmentation and per fragment overhead", "unvalidated",
+     "no published measured figure; the 802.15.4 prose figure of ePrint 2021/781 mixes fragmentation with "
+     "multi hop forwarding and network load and serves only as a cross check"),
+    ("duty cycle", "unvalidated", "no published measured figure in the evidence table or the supplied PDFs"),
+    ("loss and retransmission", "unvalidated", "no published measured figure in the evidence table or the supplied PDFs"),
+]
