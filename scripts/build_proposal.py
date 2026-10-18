@@ -58,8 +58,8 @@ def main():
         "tornado_inputs": " and ".join(r["input"].replace("_", " ") for r in tor if r["swing"] == tor[0]["swing"]),
         "rho": f"{rho:.3f}", "cv": f"{100 * max(float(r['cv_of_run_medians']) for r in hs):.0f}",
         "p_ns": m.group(4),
-        "hr_default": [r["HARDWARE_REPLACEMENT"] for r in rows("planner/results/thresholds.csv") if "default" in r["thresholds"]][0],
-        "hr_portable": [r["HARDWARE_REPLACEMENT"] for r in rows("planner/results/thresholds.csv") if "portable" in r["thresholds"]][0],
+        "hr_default": [r["hr_low"] for r in rows("planner/results/scenario_range.csv") if r["devices"] == "1000"][0],
+        "hr_portable": [r["hr_high"] for r in rows("planner/results/scenario_range.csv") if r["devices"] == "1000"][0],
         "p_hit": m.group(1), "p_partial": m.group(2), "p_miss": m.group(3), "p_total": m.group(5),
     }
     body = (ROOT / "docs" / "PROPOSAL_ATRC_body.md").read_text(encoding="utf-8")
