@@ -1,6 +1,6 @@
 # Board notes (secondary sources; none of this was run on hardware)
 
-Specs below come from Zephyr board documentation and the pqm4 README, not from the manufacturers' own pages (st.com and nordicsemi.com were not reachable from the research sandbox). Prices are what seller pages showed on 2026-10-11.
+Specs below come from Zephyr board documentation and the pqm4 README, not from the manufacturers' own pages (st.com and nordicsemi.com were not reachable from the research server). Prices are what seller pages showed on 2026-10-11.
 
 | Board | Core | Why it is in the plan | Watch out |
 |---|---|---|---|

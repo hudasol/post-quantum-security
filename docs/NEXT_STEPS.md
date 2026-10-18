@@ -32,4 +32,4 @@ Cost: nothing. Do steps 1 to 2 and a build check in an emulator first (QEMU `mps
 ## E. Housekeeping
 - Licence decided: all rights reserved, permission on request (`LICENSE`, `docs/LICENCE_DECISION.md`). Release `v0.1.0` is published.
 - Upstream duplicate checks (SROS2, MCUboot, ROS Discourse) are still to be done by hand; drafts are in `docs/upstream/` and nothing has been filed.
-- The research passes used `curl` via the sandbox's configured proxy in phase 1 (deviation D1).
+- The research passes used `curl` via the work environment's configured proxy in phase 1 (deviation D1).

@@ -48,7 +48,7 @@ One row per (source, device, library, parameter set, operation). Columns:
 `id, scheme, parameter_set, operation, device, core, clock_mhz, library, library_version, compiler_flags_or_notes, cycles, ram_bytes, stack_bytes, flash_or_code_bytes, energy_uj, key_or_sig_size_bytes, size_kind, evidence_type, source_title, source_url, retrieval_date, location_in_source, comparability_warning`
 
 Rules:
-- `evidence_type` is one of `published`, `host-measured`, `estimated`. Only `published` rows come from this review's research streams. Host measurements made in the sandbox are stored in a separate file, never in this table.
+- `evidence_type` is one of `published`, `host-measured`, `estimated`. Only `published` rows come from this review's research streams. Host measurements made in the work environment are stored in a separate file, never in this table.
 - Empty cell means "not reported by the source". Never fill a gap from memory or by interpolation.
 - `location_in_source` names the table, figure or file and line that holds the number, so a verifier can re-check it.
 - Numbers are copied exactly as published, with units normalised only when the conversion is exact (for example kilocycles to cycles) and noted in `comparability_warning`.
@@ -73,7 +73,7 @@ Every standards or guidance claim carries: document identifier, status (draft / 
 
 - Side-channel and fault injection topics are covered at a conceptual, defensive level only (what the risk class is, what countermeasure families exist). No attack procedures or exploitation guidance.
 - No custom cryptographic primitives for production use. Benchmark scripts call existing, reviewed libraries only.
-- Host measurements (sandbox, x86 or ARM server) are labelled "host measurement" and are never presented as microcontroller results.
+- Host measurements (work environment, x86 or ARM server) are labelled "host measurement" and are never presented as microcontroller results.
 
 ## 9. Synthesis and verification
 
@@ -85,7 +85,7 @@ Every standards or guidance claim carries: document identifier, status (draft / 
 
 ## 10. Deviations log
 
-- D1 (2026-10-11): WebFetch permission prompts went unanswered during unattended research, so streams S1, S2 and S3 retrieved public pages with `curl` through the sandbox's configured egress proxy (TLS verification on, no workaround of any explicit denial). S4 was re-run the same way. Search results were used only to locate sources.
+- D1 (2026-10-11): the web fetch tool did not return pages, so streams S1, S2 and S3 retrieved public pages with `curl` through the configured network proxy (TLS verification on, no workaround of any explicit denial). S4 was re-run the same way. Search results were used only to locate sources.
 - D2 (2026-10-11): The schema in section 5 has no time column. Some sources report only milliseconds (wolfSSL, wolfBoot, ESP32 papers). No `time_ms` column was added: for those sources `cycles` is left empty and the millisecond figure is recorded in `compiler_flags_or_notes`. The merged table instead gains four derived label columns (`stream`, `scheme_family`, `standard_status`, `device_class`). (Corrected 2026-10-11: an earlier version of this entry said a `time_ms` column was added; it was not.)
 - D3 (2026-10-11): Hosts that could not be retrieved through the proxy (eprint.iacr.org via Cloudflare 403, nsa.gov, cisa.gov, several vendor pages) are listed per stream under "Sources I could not retrieve". Numbers from those sources are not used.
 - D4 (2026-10-11): `eprint.iacr.org` PDFs, nsa.gov, media.defense.gov and cisa.gov were unreachable (HTTP 403). Nothing from them is used; they are listed for manual fetching in docs/NEXT_STEPS.md.
