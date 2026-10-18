@@ -31,4 +31,7 @@ Author: Huda Mueen. One line per decision, stop or deviation, in time order. Pre
 | 25 | H | Renode cannot parse paths with spaces, and in the background its monitor stopped the machine at end of input. | Files staged in a folder without spaces; the monitor input is kept open for the run. |
 | 26 | D | The only published link figure outside Table 5 is a prose statement in ePrint 2021/781, not a table. | Used only as a cross check in `docs/LINKSIM_STUDY.md` 4.2; it does not enter `data/evidence.csv`. |
 | 27 | E | `docs/AUTHOR_DECISIONS.md` was written for the author and, kept out of the repository. | Nothing acted on. |
+| 28 | J | A second fresh reviewer that had seen only the tracked files listed 53 findings (2 high, 17 medium, 34 low; `docs/REVIEW_FINDINGS2.csv`). | 50 fixed, 2 partly fixed, 1 open for the author (commit author field). |
+| 29 | C, stop | The reviewer showed two errors in the planner's signature thresholds (LMS header used for ML-DSA; verifier buffers left out). The headline range moved from 246 to 371 to 260 to 382. | Corrected (commit `e314046`), study rerun, and a dated correction note added to the report paragraph. |
+| 30 | J | The hashed `docs/PREDICTIONS_V3.md` names the fetch tool in R13. | Left unchanged to keep the hash valid; recorded here. |
 
