@@ -1,0 +1,20 @@
+set,stratum,rows_in_stratum,sampled
+S10A,Table 2,33,10
+S10A,Table 3,15,4
+S10B,Section 5.1,18,5
+S10B,Section 5.2,18,5
+S10B,Section 5.4,4,2
+S10C,Table 8,36,11
+S10C,Table 9,6,2
+S10D,Table 1,3,2
+S10D,Table 2,7,2
+S10D,Table 4,15,4
+S10D,Table 5,21,6
+S10D,Table 6,21,6
+S10D,Table 7,16,5
+S10E,Table 10,11,3
+S10E,Table 8,19,6
+S10E,Table 9,10,3
+S10F,Table 2,75,22
+S10F,Table 3,55,16
+S10F,Table 5,20,6
