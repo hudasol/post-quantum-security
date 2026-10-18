@@ -44,8 +44,9 @@ def _style():
 
 
 def _footer(fig, cfg, extra=""):
-    txt = ("Label: estimated (%s). %s trials per cell, seeds %s. %s" % (
-        model.FOOTER, cfg["trials_per_cell"], cfg["seeds"], extra)).strip()
+    txt = ("Label: estimated (%s). %s trials per cell with loss, seeds %s. %s Unvalidated against published "
+           "measurements: duty cycle, fragmentation and loss parts (docs/LINKSIM_STUDY.md 4.3)." % (
+               model.FOOTER, cfg["trials_per_cell"], cfg["seeds"], extra)).strip()
     fig.text(0.01, 0.005, txt, fontsize=6.5, color=INK, ha="left",
              va="bottom", wrap=True)
 
