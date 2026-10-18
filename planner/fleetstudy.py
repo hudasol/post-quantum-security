@@ -33,6 +33,7 @@ RES = os.path.join(HERE, "results")
 DOC = os.path.join(ROOT, "docs", "PLANNER_STUDY.md")
 BASE_SEED = 20261016
 SIZES = (10, 100, 1000)
+SEED_DRAWS = 5      # extra 1000 device fleets to show seed to seed variation
 COLUMNS = ["device_id", "ram_kb", "flash_kb", "bootrom_verifier_updatable",
            "link_bandwidth_bps", "service_life_remaining_years", "data_lifetime_years",
            "free_flash_kb", "free_ram_kb", "updatable_bootloader_stage", "core", "notes"]
@@ -137,8 +138,8 @@ def violations(devices, results, params=None):
 TORNADO = [
     ("sig_horizon_year", "param", 2028, 2032),
     ("conf_horizon_year", "param", 2033, 2037),
-    ("sig_flash_kb", "param", Fraction(31, 2), Fraction(93, 2)),
-    ("sig_ram_kb", "param", Fraction(3, 2), Fraction(9, 2)),
+    ("sig_flash_kb", "param", Fraction(30, 2), Fraction(90, 2)),
+    ("sig_ram_kb", "param", Fraction(7, 2), Fraction(21, 2)),
     ("kem_flash_kb", "param", Fraction(7), Fraction(21)),
     ("kem_ram_kb", "param", Fraction(9, 2), Fraction(27, 2)),
     ("hs_bytes", "param", 3034, 9102),
@@ -211,10 +212,15 @@ def staged(devices, years=(2026, 2027, 2028, 2029, 2030), replacement="H4"):
     return out
 
 
+HEADER = 4840        # wolfBoot ML-DSA-44 example image header (data/raw/S4_migration.md line 85)
+SIG_BUFFERS = 3732   # ML-DSA-44 public key 1,312 B plus signature 2,420 B held by the verifier
+
+
 def portable_c_params():
     """Thresholds from this repository's own emulated portable C build instead of the stack optimised pqm4
     rows (label: emulated inputs, estimated thresholds). Same derivation as docs/PLANNER_RULES.md: signature
-    flash = ML-DSA-44 image text plus the 5,288 B header, signature RAM = ML-DSA-44 verify stack, KEM flash =
+    flash = ML-DSA-44 image text plus the 4,840 B ML-DSA-44 header, signature RAM = ML-DSA-44 verify stack plus the
+    1,312 B public key and 2,420 B signature buffers, KEM flash =
     ML-KEM-768 image text, KEM RAM = ML-KEM-768 decaps stack plus 6,004 B of buffers; kB = 1000 B, rounded up.
     Image text includes the harness and the C library, so these are upper bounds."""
     import math
@@ -226,13 +232,13 @@ def portable_c_params():
         tx = {(r["alg"], r["param"]): int(r["text_bytes"]) for r in csv.DictReader(fh)
               if r["board"] == "an386" and r["opt"] == "-O2"}
     kb = lambda b: Fraction(math.ceil(b / 1000))  # noqa: E731
-    return Parameters(sig_flash_kb=kb(tx[("mldsa", "44")] + 5288), sig_ram_kb=kb(st[("ML-DSA-44", "verify")]),
+    return Parameters(sig_flash_kb=kb(tx[("mldsa", "44")] + HEADER), sig_ram_kb=kb(st[("ML-DSA-44", "verify")] + SIG_BUFFERS),
                       kem_flash_kb=kb(tx[("mlkem", "768")]), kem_ram_kb=kb(st[("ML-KEM-768", "decaps")] + 6004))
 
 
 def published_params(ids):
     """Thresholds from published pqm4 rows of data/evidence.csv (label: published inputs, estimated thresholds),
-    with the derivation of docs/PLANNER_RULES.md: signature flash = ML-DSA-44 code size plus the 5,288 B header,
+    with the derivation of docs/PLANNER_RULES.md: signature flash = ML-DSA-44 code size plus the 4,840 B header,
     signature RAM = ML-DSA-44 verify stack, KEM flash = ML-KEM-768 code size, KEM RAM = ML-KEM-768 decaps stack
     plus 6,004 B of buffers; kB = 1000 B, rounded up. pqm4 code sizes exclude hashing and libc."""
     import math
@@ -242,8 +248,8 @@ def published_params(ids):
     assert sig_v["parameter_set"] == "ML-DSA-44" and sig_v["operation"] == "verify"
     assert kem_d["parameter_set"] == "ML-KEM-768" and kem_d["operation"] == "decaps"
     kb = lambda b: Fraction(math.ceil(b / 1000))  # noqa: E731
-    return Parameters(sig_flash_kb=kb(int(sig_v["flash_or_code_bytes"]) + 5288),
-                      sig_ram_kb=kb(int(sig_v["stack_bytes"])),
+    return Parameters(sig_flash_kb=kb(int(sig_v["flash_or_code_bytes"]) + HEADER),
+                      sig_ram_kb=kb(int(sig_v["stack_bytes"]) + SIG_BUFFERS),
                       kem_flash_kb=kb(int(kem_d["flash_or_code_bytes"])),
                       kem_ram_kb=kb(int(kem_d["stack_bytes"]) + 6004))
 
@@ -314,6 +320,13 @@ def main():
                                            "share_changed"])
     _write("tornado.csv", tor_all, ["devices", "scenario", "input", "kind", "low", "high", "changed_low",
                                     "share_low", "changed_high", "share_high", "swing"])
+    seedvar = []
+    for k in range(SEED_DRAWS):
+        devs = make_fleet(1000, seed=BASE_SEED + 1000 + k)
+        for key, _, _, p in sc:
+            seedvar.append({"seed": BASE_SEED + 1000 + k, "scenario": key,
+                            "hr": counts(classify_devices(devs, p))[HARDWARE_REPLACEMENT]})
+    _write("seed_variation.csv", seedvar, ["seed", "scenario", "hr"])
     hw_rows = [{"class": h, "core": v[0], "ram_kb": " ".join(map(str, v[1])),
                 "flash_kb": " ".join(map(str, v[2])), "share": dict(MIX)[h]} for h, v in HW.items()]
     _write("hardware_classes.csv", hw_rows, ["class", "core", "ram_kb", "flash_kb", "share"])
@@ -348,6 +361,21 @@ def main():
     for c in changed:
         L.append("| %d | %s | %s | %d to %d | %d (%.1f%%) |" % (c["devices"], c["lowest"], c["highest"], c["hr_low"],
                                                              c["hr_high"], c["changed"], 100 * c["share_changed"]))
+    L += ["", "Seed to seed variation: %d fleets of 1000 devices (seeds %d to %d; the first is the fleet above), "
+          "hardware replacements per scenario (`planner/results/seed_variation.csv`):" % (SEED_DRAWS, BASE_SEED + 1000,
+                                                                BASE_SEED + 1000 + SEED_DRAWS - 1), "",
+          "| scenario | lowest | highest |", "|---|---|---|"]
+    for key, _, _, _ in sc:
+        v = [r["hr"] for r in seedvar if r["scenario"] == key]
+        L.append("| %s | %d | %d |" % (key, min(v), max(v)))
+    rng_ = {key: (min(r["hr"] for r in seedvar if r["scenario"] == key),
+                  max(r["hr"] for r in seedvar if r["scenario"] == key)) for key, _, _, _ in sc}
+    keys = [k for k, _, _, _ in sc]
+    over = [f"{a} and {b}" for a, b in zip(keys, keys[1:]) if rng_[a][1] >= rng_[b][0]]
+    ext = rng_[keys[0]][1] < rng_[keys[-1]][0]
+    L += ["", ("Neighbouring scenarios overlap between draws (" + "; ".join(over) + "), so their order is not "
+               "settled by one fleet; " if over else "No neighbouring scenarios overlap between draws; ")
+          + ("the two extremes do not overlap." if ext else "even the two extremes overlap.")]
     L += ["", "## 2. Tornado sensitivity per scenario and fleet size", "",
           "Share of devices whose class changes when one input moves to its low or high value with the other inputs "
           "at the scenario's values. Rule parameters move by minus and plus 50 percent (horizon years by 2 years); "
@@ -382,7 +410,9 @@ def main():
           "3. The thresholds use one parameter set per family (ML-DSA-44, ML-KEM-768); a fleet that must use "
           "ML-DSA-87 or ML-KEM-1024 needs more.",
           "4. The staged model assumes every action in a wave succeeds and that replaced hardware leaves "
-          "the fleet; it does not model budgets, downtime or partial rollouts.", "",
+          "the fleet; it does not model budgets, downtime or partial rollouts.",
+          "5. Each fleet is one draw from invented distributions; the seed table in section 1 shows how far the "
+          "counts move between draws.", "",
           "_This tool supports planning. It is not a security guarantee._", ""]
     with open(DOC, "w", encoding="utf-8", newline="\n") as fh:
         fh.write("\n".join(L))
