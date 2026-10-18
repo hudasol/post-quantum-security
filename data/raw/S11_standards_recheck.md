@@ -48,3 +48,7 @@ Not rechecked. cyber.gov.au could not be reached with WebFetch on 2026-10-17. Se
 2. Canada: no published report on departmental compliance with the 2026-04-01 deadline was found on cyber.gc.ca or canada.ca. ITSP.40.111 (the algorithm list the SPIN cites) was not read in this pass.
 3. Singapore: the Quantum Readiness Index V1 PDF was not read; only the handbook. Whether the CII milestones are, or will be, binding through a code of practice or other instrument is not stated in the handbook.
 4. BSI: no release date for the next TR-02102-2 was found.
+
+## 4. Retry on 2026-10-18 (Australia, ASD)
+
+Two further WebFetch requests on 2026-10-18 timed out after 60 seconds each: https://www.cyber.gov.au/business-government/secure-design/quantum/planning-for-post-quantum-cryptography and https://www.cyber.gov.au/ism/2026-09/guidelines-for-cryptography. No other route was used. The ASD item stays NOT RETRIEVED and IN FLUX; the report keeps its in flux flag.
