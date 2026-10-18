@@ -29,7 +29,7 @@ Transcription errors (a printed number copied wrongly): 0 of 403. With zero erro
 
 ## Limits
 
-1. One fresh reader per set; a second independent reader was not used, so errors that two readers would both miss are not bounded by this check.
+1. One fresh reader per set read every row; a second reading covered a seeded sample of 120 rows (pass 4, below), so errors in the unsampled rows that both readings would miss are not bounded.
 2. The readers followed the same reading method as the extractor (page renders, cell by cell) and were briefed separately; they are independent of the extraction notes, not of every habit of that method.
 3. The S10 rows sit outside the phase 1 and phase 2 verification rates in `docs/VERIFICATION.md` and `docs/VERIFICATION2.md`.
 4. Prior works quoted inside RISQrypt (ePrint 2026/312) were checked against RISQrypt's tables, not against the original papers.
@@ -40,8 +40,8 @@ Transcription errors (a printed number copied wrongly): 0 of 403. With zero erro
 Sample: 120 of the 403 S10 rows, drawn by `scripts/draw_verification4_sample.py` with seed 20261018 from 19 strata (source by table, at least 2 rows each; `data/verify4/sample_plan.csv`). Three readers that had seen neither the extraction notes nor the pass 3 results re-opened the PDFs and compared every field, including whether each number sits in a column the paper supports (`data/verify4/S10?_results.csv`).
 
 Rows with any error: 0 of 120. Transcription errors: 0 of 120.
-With zero errors the rule of three gives a 95 percent upper bound of 3/120 = 2.5 percent on the row error rate of the S10 rows after the pass 3 fixes (Wilson upper bound 3.1 percent).
+With zero errors the rule of three gives an approximate 95 percent upper bound of 3/120 = 2.5 percent on the row error rate of the S10 rows after the pass 3 fixes; approximate because the sample is stratified with unequal fractions and not reweighted (Wilson upper bound 3.1 percent).
 
-Column lint: `scripts/lint_columns.py` checks all rows of `data/evidence.csv` for the error types pass 3 found (a number in a column the source does not support, warning text that contradicts the row). The final run flags 19 rows; every one of the 40 flags raised before the fix was reviewed by hand (`data/verify4/lint_review.csv`): 21 of 40 were real, all of one kind (cycle rows of stream S8 whose warning described the stack rows), and were fixed through `data/corrections.csv` without changing any value. The remaining flags are reviewed false positives.
+Column lint: `scripts/lint_columns.py` checks all rows of `data/evidence.csv` for the error types pass 3 found (a number in a column the source does not support, warning text that contradicts the row). The rules as first written flagged 163 rows, mostly false (they matched SysTick and missed lists of tables); after refining them the lint raised 40 flags, every one reviewed by hand (`data/verify4/lint_review.csv`): 21 of 40 were real, all of one kind (cycle rows of stream S8 whose warning described the stack rows), and were fixed through `data/corrections.csv` without changing any value. The current rules flag 19 rows, all reviewed false positives.
 
 Limits: the sample covers the S10 rows only; rows from earlier streams were checked by the phase 1 and phase 2 samples and now by the lint, not by a second full reading.
