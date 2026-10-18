@@ -265,7 +265,7 @@ NIST leaves hybrid use to each application and will accommodate hybrids in FIPS 
 Worked example of the pattern: Caliptra 1.3 adds a software only ML-DSA-87 identity chain via runtime firmware without ROM changes, but the ROM-rooted classical chain remains and the PQ chain does not attest the ROM [S4 A19]. Not a drone part; shows what a firmware only fix can and cannot cover.
 
 
-**Fleet planner result (estimated, synthetic fleets).** How many devices need new hardware depends on which implementation the planner's memory thresholds assume. On a synthetic fleet of 1000 devices it ranges from 246 (thresholds from stack optimised assembly, published pqm4 rows) to 371 (reference C, published pqm4 rows), and 133 devices (13.3 percent) change class between the two; speed optimised assembly and this repository's portable C build fall in between (`docs/PLANNER_STUDY.md`). A plan should carry the range, not one of its ends.
+**Fleet planner result (estimated, synthetic fleets).** How many devices need new hardware depends on which implementation the planner's memory thresholds assume. On a synthetic fleet of 1000 devices it ranges from 260 (thresholds from stack optimised assembly, published pqm4 rows) to 382 (reference C, published pqm4 rows), and 126 devices (12.6 percent) change class between the two; speed optimised assembly and this repository's portable C build fall in between (`docs/PLANNER_STUDY.md`). A plan should carry the range, not one of its ends.
 
 # 10. Migration playbook
 

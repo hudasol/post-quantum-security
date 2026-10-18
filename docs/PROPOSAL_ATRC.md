@@ -36,7 +36,7 @@ Predictions are hashed before each run and scored by script against their refuta
 1. Evidence: 971 rows. A fresh reader rechecked all 403 rows added in October 2026 (0 numbers copied wrongly; 41 column or warning fixes), and a second reader found 0 errors in a seeded sample of 120 (95 percent upper bound 2.5 percent). A column lint over all rows found and fixed 21 more warning errors (`docs/VERIFICATION3.md`).
 2. Emulated: 36 builds on Cortex-M4 and Cortex-M33 models pass every check; a second emulator (Renode) gives the same stack to the byte for 4 builds. No cycles (`bench/mcu/qemu_results/ANALYSIS.md`).
 3. Estimated: the link model predicts the published rate bound handshakes within 0.7 percent on three held out groups after one constant is fitted on two others, but is 6.6 times faster than a published 802.15.4 transfer range; its duty cycle, fragmentation and loss parts are unvalidated (`docs/LINKSIM_STUDY.md`).
-4. Estimated, synthetic fleet: hardware replacements in 1000 devices range from 246 to 371 depending on the implementation the thresholds assume (`docs/PLANNER_STUDY.md`).
+4. Estimated, synthetic fleet: hardware replacements in 1000 devices range from 260 to 382 depending on the implementation the thresholds assume (`docs/PLANNER_STUDY.md`).
 5. Host measured: ranks agree with published cycle counts (Spearman 0.979), within run ratios lie within 22 percent of published ratios; used for ratios only (`bench/host/native_v3/RESULTS.md`).
 
 ## 7. What this study does not show
