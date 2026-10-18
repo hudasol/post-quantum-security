@@ -12,15 +12,21 @@ n_pq = sum(1 for r in ev if 'mupq/pqm4' in r['source_url'])
 hk = len(host)
 import io, subprocess
 _pdf_commit = subprocess.run(['git', 'log', '-1', '--format=%H', '--', 'docs/REPORT.pdf'], capture_output=True, text=True).stdout.strip()
+_pdf_date = subprocess.run(['git', 'log', '-1', '--format=%cs', '--', 'docs/REPORT.pdf'], capture_output=True, text=True).stdout.strip()
 n_pdf = len(list(csv.DictReader(io.StringIO(subprocess.run(['git', 'show', _pdf_commit + ':data/evidence.csv'], capture_output=True, text=True).stdout))))
 emu = list(csv.DictReader(open('bench/mcu/qemu_results/checks.csv'))); n_emu = len(emu); n_emu_ok = sum(1 for r in emu if r['fail'] == '0')
+pdf_note = (f"The PDFs were built on {_pdf_date} from the same {n_pdf} row table as `docs/REPORT.md` "
+            "(`scripts/build_pdfs.sh`, or `scripts/build_pdfs_docker.sh` without a local pandoc and XeLaTeX)."
+            if n_pdf == n_pub else
+            f"The PDFs were last built on {_pdf_date} from the {n_pdf} row version of the table; `docs/REPORT.md` "
+            f"is current ({n_pub} rows). Rebuild with `scripts/build_pdfs.sh` or `scripts/build_pdfs_docker.sh`.")
 txt = f"""# Post quantum cryptography on drone and robot computers
 
 A sourced review of what post quantum cryptography costs on microcontroller class computers in drones and robots, with a link simulator, a fleet migration planner and a benchmark plan. Author: Huda Mueen. Evidence retrieved 2026-10-11 and 2026-10-12; supplied papers read 2026-10-16.
 
 **For a research director:** `docs/PROPOSAL_ATRC.md` (2 pages: problem, gap, questions, plan, ask).
 
-**Start here:** `docs/EXECUTIVE_BRIEF.pdf` (2 pages), then `docs/REPORT.pdf` (`docs/REPORT.md`). The two PDFs were last built on 2026-10-15 from the {n_pdf} row version of the table; `docs/REPORT.md` is current ({n_pub} rows). The PDF rebuild needs pandoc and XeLaTeX, which could not be installed here (`docs/NEEDS_FROM_AUTHOR.md`, item 5).
+**Start here:** `docs/EXECUTIVE_BRIEF.pdf` (2 pages), then `docs/REPORT.pdf` (`docs/REPORT.md`). {pdf_note}
 
 ## What is published, host measured, estimated and planned
 

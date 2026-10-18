@@ -4,7 +4,7 @@ A sourced review of what post quantum cryptography costs on microcontroller clas
 
 **For a research director:** `docs/PROPOSAL_ATRC.md` (2 pages: problem, gap, questions, plan, ask).
 
-**Start here:** `docs/EXECUTIVE_BRIEF.pdf` (2 pages), then `docs/REPORT.pdf` (`docs/REPORT.md`). The two PDFs were last built on 2026-10-15 from the 568 row version of the table; `docs/REPORT.md` is current (971 rows). The PDF rebuild needs pandoc and XeLaTeX, which could not be installed here (`docs/NEEDS_FROM_AUTHOR.md`, item 5).
+**Start here:** `docs/EXECUTIVE_BRIEF.pdf` (2 pages), then `docs/REPORT.pdf` (`docs/REPORT.md`). The PDFs were built on 2026-10-18 from the same 971 row table as `docs/REPORT.md` (`scripts/build_pdfs.sh`, or `scripts/build_pdfs_docker.sh` without a local pandoc and XeLaTeX).
 
 ## What is published, host measured, estimated and planned
 
