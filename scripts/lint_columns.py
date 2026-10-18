@@ -29,11 +29,15 @@ def tables(text):
     return out
 
 
-def lint(r):
+def lint(r, first_version=False):
+    """first_version=True reproduces the rules as first written on 2026-10-18 (T1 matched any 'tick', also in
+    SysTick, and W1 read only 'Table N', not lists such as 'Tables 4 and 5'); kept so the scored prediction R3
+    can be recomputed. The current rules are the default."""
     w = r["comparability_warning"].lower()
     notes = r["compiler_flags_or_notes"].lower()
     flags = []
-    if r["cycles"] and re.search(r"(?<!sys)tick", w + " " + notes):
+    tick = ("tick" in w or "tick" in notes) if first_version else re.search(r"(?<!sys)tick", w + " " + notes)
+    if r["cycles"] and tick:
         flags.append(("T1", "cycles filled while the row speaks of ticks"))
     if r["cycles"] and "reported time:" in notes and not re.search(r"cycle|derived|x ?\d+|times the", w):
         flags.append(("T2", "cycles filled next to a reported time, with no stated derivation"))
@@ -43,8 +47,9 @@ def lint(r):
         flags.append(("S1", "size_kind without size"))
     if r["stack_bytes"] and "total" in w and "memory" in w and "stack" not in w:
         flags.append(("M1", "stack_bytes holds a figure the warning calls total memory"))
-    loc_t = tables(r["location_in_source"])
-    warn_t = tables(r["comparability_warning"])
+    tabs = (lambda t: set(re.findall(r"\bTable\s+(\d+)\b", t))) if first_version else tables
+    loc_t = tabs(r["location_in_source"])
+    warn_t = tabs(r["comparability_warning"])
     if loc_t and warn_t and not (warn_t & loc_t):
         flags.append(("W1", f"warning names Table {sorted(warn_t)}, location names Table {sorted(loc_t)}"))
     if r["device_class"] == "mcu" and re.search(r"not a microcontroller|host cpu result|not microcontroller", w):
