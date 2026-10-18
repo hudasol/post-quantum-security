@@ -1,7 +1,7 @@
 # On-device benchmark harness: ML-KEM and ML-DSA (experiment E1)
 
 **STATUS (read first).** This harness has been compiled and run **on a PC only** (`make host`, output in ns, labelled *host measurement*).
-**It has also been built and run in QEMU on an emulated Cortex-M4** (`./run_qemu.sh`, results in `docs/EMULATOR_RESULTS.md`): correctness, stack and size only, no cycle counts. **It has not been run on any real microcontroller.** The DWT cycle-counter code, the stack-painting macro and the ARM Makefile target are written from the
+**It has also been built and run in QEMU on emulated Cortex-M4 and Cortex-M33 models, and in Renode on an STM32F4 model** (`./run_qemu.sh`, results in `docs/EMULATOR_RESULTS.md`): correctness, stack and size only, no cycle counts. **It has not been run on any real microcontroller.** The DWT cycle-counter code, the stack-painting macro and the ARM Makefile target are written from the
 Arm CMSIS register layout and are untested on hardware. Expect to debug board bring-up. Nothing printed by a PC build may be quoted as an MCU result.
 
 No cryptography is implemented here. The harness calls two pinned, reviewed libraries:
