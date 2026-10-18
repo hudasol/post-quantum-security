@@ -163,3 +163,31 @@ class TestStudyFunctions(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestScenarios(unittest.TestCase):
+    """Threshold scenarios (docs/PLANNER_STUDY.md section 1)."""
+
+    def test_scenarios_have_no_violations(self):
+        for n in fs.SIZES:
+            devs = fs.make_fleet(n)
+            for key, _, _, p in fs.scenarios():
+                self.assertEqual(fs.violations(devs, fs.classify_devices(devs, p), p), [], (n, key))
+
+    def test_higher_needs_never_remove_a_replacement(self):
+        # Raising every memory need can only add hardware replacements, never remove one.
+        devs = fleet(4)
+        for key, _, _, p in fs.scenarios():
+            for k in (Fraction(5, 4), Fraction(2)):
+                q = p.override(sig_flash_kb=p.sig_flash_kb * k, sig_ram_kb=p.sig_ram_kb * k,
+                               kem_flash_kb=p.kem_flash_kb * k, kem_ram_kb=p.kem_ram_kb * k)
+                a, b = classes(devs, p), classes(devs, q)
+                for x, y in zip(a, b):
+                    if x == HARDWARE_REPLACEMENT:
+                        self.assertEqual(y, HARDWARE_REPLACEMENT, key)
+
+    def test_published_scenarios_trace_to_rows(self):
+        sc = {k: (basis, p) for k, _, basis, p in fs.scenarios()}
+        self.assertEqual(sc["stack_asm"][1], Parameters())  # the default thresholds are the m4fstack rows
+        for key in ("stack_asm", "speed_asm", "reference_c"):
+            self.assertRegex(sc[key][0], r"S2-\d{4}, S2-\d{4}")
