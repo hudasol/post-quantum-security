@@ -4,57 +4,51 @@ Author: Huda Mueen. Draft of {{date}}. Generated from `docs/PROPOSAL_ATRC_body.m
 
 ## 1. Problem
 
-Drones and robots authenticate commands, firmware and telemetry with classical public key cryptography on microcontroller class flight computers and narrow radio links. The replacements are standardised (ML-KEM and ML-DSA, FIPS 203 and 204; `docs/REPORT.md`), and some buyers now set dates. The NSA CNSA 2.0 FAQ (Ver. 2.1, December 2024) expects new US national security system acquisitions to comply from 1 January 2027 and non compliant fielded equipment to be phased out by 31 December 2030, unless otherwise noted, and it requires the highest parameter sets (ML-KEM-1024, ML-DSA-87) plus LMS or XMSS for firmware signing (`data/raw/S10_cnsa_faq.md`, rows 4, 5, 7, 24 and 25). It binds only those US systems; it is cited here as an example of buyer pressure, not as a requirement for other operators. An operator cannot yet answer three plain questions from evidence: what the new algorithms cost on the actual flight controller, what they cost on the actual link, and which devices in a fleet can be migrated by a firmware update.
+Drones and robots authenticate commands, firmware and telemetry with classical public key cryptography on microcontroller flight computers and narrow radio links. The replacements are standardised (ML-KEM and ML-DSA, FIPS 203 and 204; `docs/REPORT.md`), and buyers set dates: for US national security systems only, the CNSA 2.0 FAQ (Ver. 2.1, December 2024) expects compliant new acquisitions from 2027 and asks for ML-KEM-1024, ML-DSA-87 and LMS or XMSS for firmware (`data/raw/S10_cnsa_faq.md`, rows 4, 5, 7, 24). An operator still cannot say from evidence what the new algorithms cost on its flight controller, on its link, or across its fleet.
 
-## 2. Gap found in the evidence
+## 2. Gap in the evidence
 
-The repository holds {{n_rows}} published rows with source, location and comparability warning (`data/evidence.csv`), {{n_s10}} of them added in this round from six papers and each rechecked by a fresh reader (`docs/VERIFICATION3.md`). Four gaps remain:
-
-1. **No cycle count for one fixed firmware on one recorded board.** Published counts mix libraries, clocks and statistics; even the pqm4 benchmark clock is unresolved in the project's own files (`data/raw/S6_pqm4_config.md`).
-2. **Memory varies by an order of magnitude.** ML-DSA-44 signing needs {{emu_sign}} B of stack in the portable C build run in the emulator (*emulated*; the span includes harness frames), against {{min_sign}} B for the smallest published ML-DSA-44 or Dilithium2 signing memory figure in the table ({{min_sign_id}}, *published*; memory definitions differ between sources), a factor of about {{sign_ratio}} (`bench/mcu/qemu_results/stack.csv`, `data/evidence.csv`). Which one a flight controller can afford is a design decision, not a footnote.
-3. **Link costs are estimated, not measured.** Only one published link timing is in the table: a TLS handshake over an emulated 57.6 kbps link on a PC (ePrint 2026/2343, Table 5).
-4. **No real fleet profile.** The planner has been tested only on invented fleets (`docs/PLANNER_STUDY.md`).
+`data/evidence.csv` holds {{n_rows}} published rows, each with source, location and warning. Cortex-M33 cycles exist only for ML-DSA key generation and signing, from one paper (rows S10C); none for ML-KEM or verification. ML-DSA-44 signing memory spans a factor of about {{sign_ratio}} between implementations ({{min_sign}} B published, {{min_sign_id}}, against {{emu_sign}} B in this repository's emulated portable C build). Link costs rest on a model checked against one published link figure. No figure comes from a flight controller running its flight stack.
 
 ## 3. Research questions
 
-RQ1. What are the cycle counts and stack of all six ML-KEM and ML-DSA parameter sets (including ML-KEM-1024 and ML-DSA-87, which CNSA 2.0 requires) on a Cortex-M4F and a Cortex-M33 for one pinned firmware, and how far are they from the published figures? Firmware signing with LMS is a second step (`docs/BENCHMARK_PLAN.md`, E2).
-RQ2. How long do a hybrid handshake and a signed firmware update take on drone radio links, and how well does a size based model predict a measured link?
-RQ3. For a representative flight controller, which migration class (firmware update, hybrid, hardware replacement) follows, and which input decides it?
-RQ4. Which reporting rules make such numbers comparable across studies (starting from the recommendations of ePrint 2026/1333, rows S10C in `data/evidence.csv`)?
+RQ1. Cycles and stack of all six ML-KEM and ML-DSA parameter sets on a Cortex-M4F and a Cortex-M33 for one pinned firmware, against published figures.
+RQ2. Handshake and signed update time on drone radios, with the duty cycle, fragmentation and loss parts of the model checked against a measured link.
+RQ3. The migration class of each device for a real flight controller profile, as a range over implementations.
+RQ4. Reporting rules that make such numbers comparable (from ePrint 2026/1333, rows S10C).
 
 ## 4. Method
 
-Predictions are written and hashed before every run, then scored with misses kept (`docs/PREDICTIONS_V2.md`, `docs/PREDICTIONS_V2_SCORES.md`). From this round on, evidence enters the table only through staging, a fresh reader check of every row and a merge script; earlier rows were checked by sampling or by finding each value in its table (`README.md`, Verification). Five labels are never mixed: published, host measured, emulated, estimated, planned. Board runs follow `docs/BOARD_RUN_PROTOCOL.md`: reproduce pqm4 first, then the repository harness, three power cycles, clock and flash wait states read back at run time.
+Predictions are hashed before each run and scored by script against their refutation clauses; misses stay (`docs/PREDICTIONS_V3.md`). Rows enter the table through staging, a fresh reader check and a merge script. Five labels are kept apart: published, host measured, emulated, estimated, planned. Board runs follow `docs/BOARD_RUN_PROTOCOL.md`.
 
 ## 5. Work plan (six months, part time)
 
-| Month | Milestone | Output |
-|---|---|---|
-| 1 | Board session B0 and B1 on a borrowed Cortex-M4F | first board measured cycle and stack table; pqm4 clock question settled for that board |
-| 2 | Cortex-M33 board and stack optimised variants | second panel; memory against speed trade off |
-| 3 | Link measurement on a borrowed telemetry radio pair | measured handshake times to validate the duty cycle, fragmentation and loss parts of the link model |
-| 4 | Flight controller case study with the planner | migration class and sensitivity for one real profile |
-| 5 to 6 | Report, reporting checklist, paper draft | updated report and an open method note |
+| Month | Milestone |
+|---|---|
+| 1 | Borrowed Cortex-M4F board: reproduce pqm4, then run the repository firmware (first board measured table) |
+| 2 | Cortex-M33 board; stack against speed trade off |
+| 3 | Borrowed telemetry radio pair: measured handshake times to check duty cycle, fragmentation and loss |
+| 4 | Case study on [FLIGHT CONTROLLER PROFILE: to be supplied] |
+| 5 to 6 | Report, reporting checklist, paper draft |
 
-## 6. Already done in this repository
+## 6. Already done
 
-1. Evidence: {{n_rows}} rows; fresh reader check of the {{n_s10}} new rows found 0 transcription errors (rule of three upper bound {{rule3}} percent) but {{v3_any}} rows needing a column or warning fix ({{v3_rate}} percent) (`docs/VERIFICATION3.md`).
-2. Emulation (*emulated*): {{emu_builds}} builds (Cortex-M4 and Cortex-M33 models, three optimisation levels) pass every correctness check, with stack and image size recorded; no cycles (`bench/mcu/qemu_results/ANALYSIS.md`).
-3. Link model (*estimated*, with stated assumptions such as a 1 s LoRaWAN turnaround, a 16 fragment window and no LoRaWAN MAC overhead; `linksim/params.csv`): {{trials}} seeded trials per lossy cell, zero loss cells are deterministic. With no loss, the hybrid handshake takes {{sik_s}} s on a SiK radio and {{lora_h}} h on LoRaWAN EU868 DR0 (`docs/LINKSIM_STUDY.md`). Against the one published link figure the model underestimates absolute time by {{val_lo}} to {{val_hi}} percent but predicts the post quantum minus classical difference within {{val_diff}} percent.
-4. Planner (*synthetic fleets*): property tests and fleets of up to 1000 devices show no recommendation that breaks the planner's own memory thresholds; under the default thresholds (stack optimised assembly) the inputs that move the most devices are {{tornado_inputs}} ({{tornado}} percent of the fleet), and with portable C thresholds hardware replacements rise from {{hr_default}} to {{hr_portable}} of 1000 (`docs/PLANNER_STUDY.md`).
-5. Host baseline (*host measured*): rank order agrees with published counts across scheme families (Spearman {{rho}}) but not between ML-DSA-65 and ML-DSA-87, and the coefficient of variation of run medians reaches {{cv}} percent, so host times are used for nothing else (`bench/host/native/RESULTS.md`).
-6. Predictions: {{p_hit}} hit, {{p_partial}} partial, {{p_miss}} miss, {{p_ns}} not scored, of {{p_total}}; one miss was a new row set contradicting a report headline, which was then corrected (`docs/PREDICTIONS_V2_SCORES.md`).
+1. Evidence: {{n_rows}} rows. A fresh reader rechecked all {{n_s10}} rows added in October 2026 (0 numbers copied wrongly; {{v3_any}} column or warning fixes), and a second reader found {{v4_bad}} errors in a seeded sample of {{v4_n}} (95 percent upper bound {{v4_bound}} percent). A column lint over all rows found and fixed {{lint_true}} more warning errors (`docs/VERIFICATION3.md`).
+2. Emulated: {{emu_builds}} builds on Cortex-M4 and Cortex-M33 models pass every check; a second emulator (Renode) gives the same stack to the byte for {{renode_n}} builds. No cycles (`bench/mcu/qemu_results/ANALYSIS.md`).
+3. Estimated: the link model predicts the published rate bound handshakes within {{val_ho}} percent on three held out groups after one constant is fitted on two others, but is {{xc_factor}} times faster than a published 802.15.4 transfer range; its duty cycle, fragmentation and loss parts are unvalidated (`docs/LINKSIM_STUDY.md`).
+4. Estimated, synthetic fleet: hardware replacements in 1000 devices range from {{hr_default}} to {{hr_portable}} depending on the implementation the thresholds assume (`docs/PLANNER_STUDY.md`).
+5. Host measured: ranks agree with published cycle counts (Spearman {{rho3}}), within run ratios lie within {{ratio3}} percent of published ratios; used for ratios only (`bench/host/native_v3/RESULTS.md`).
 
-## 7. Risks
+## 7. What this study does not show
 
-Board access may slip (mitigation: the firmware is built and emulator tested, so a session takes half a day). pqm4 is announced for archiving after January 2027 (mitigation: clone at the pinned commit now). Standards are moving: as read on 2026-10-11, FIPS 206 for FN-DSA was not published and the HQC standard was pending (`data/raw/S1_standards.md`, rows 5 and 7 to 8). The fresh reader check used one reader per set. The link model is validated on one bandwidth bound link only.
+I have not measured anything on a microcontroller: every cycle count is someone else's, and the emulators give stack and size only. My link model is checked on one bandwidth bound link; on 802.15.4 it is several times too optimistic, and its duty cycle, fragmentation and loss parts have no published measurement behind them. My fleet results come from invented devices and swing by the implementation assumed. The table has had one full fresh reading and one sampled second reading for its newest rows; older rows were checked by sampling.
 
-## 8. The ask
+## 8. Risks
 
-1. **Supervision** by a researcher in embedded security or communications, about one hour a fortnight.
-2. **A borrowed STM32 board** (Cortex-M4F, ideally NUCLEO-L4R5ZI, and if possible a Cortex-M33 board) for half a day per month (`docs/NEEDS_FROM_AUTHOR.md`).
-3. **Access to one representative flight controller profile**: core, clock, free RAM and flash after the flight stack, link type and rate.
+Board access may slip (the firmware is emulator tested, so a session takes half a day). pqm4 may be archived after January 2027 (clone the pinned commit now). Standards move (FN-DSA and HQC standards were pending when read; `data/raw/S1_standards.md`).
 
-## 9. Limits, stated plainly
+## 9. The ask
 
-Nothing in this repository has yet been measured on a real microcontroller. The earlier commits of the repository carry an author field that is not the author's own; correcting it is an open decision (`docs/NEEDS_FROM_AUTHOR.md`). Emulated figures give stack and size, never cycles. Host timings on this laptop were unstable. Fleets are synthetic. The link model ignores TCP behaviour and assumes independent frame loss.
+1. Supervision: [SUPERVISOR: to be named], about one hour a fortnight.
+2. A borrowed STM32 Cortex-M4F board, and if possible a Cortex-M33 board, for half a day a month (`docs/NEEDS_FROM_AUTHOR.md`).
+3. One representative flight controller profile: core, clock, free RAM and flash after the flight stack, link type and rate.

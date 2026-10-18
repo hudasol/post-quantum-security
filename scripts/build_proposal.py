@@ -14,6 +14,36 @@ def rows(rel):
         return list(csv.DictReader(fh))
 
 
+def round3():
+    """Third round figures: second check, lint, Renode, held out validation, cross check, host baseline."""
+    v4 = []
+    for x in "ABCDEF":
+        p = ROOT / "data" / "verify4" / f"S10{x}_results.csv"
+        if p.exists():
+            v4 += rows(f"data/verify4/S10{x}_results.csv")
+    oks = ("value_ok", "location_ok", "row_ok", "other_fields_ok", "warning_ok")
+    bad = sum(1 for r in v4 if any(r[k].strip().lower() != "yes" for k in oks))
+    lint = rows("data/verify4/lint_review.csv")
+    ren = rows("bench/mcu/renode_results/checks.csv")
+    ho = [r for r in rows("linksim/results/validation_heldout.csv") if r["split"] == "test"]
+    xc = rows("linksim/results/validation_crosscheck.csv")[0]
+    hs = rows("bench/host/native_v3/summary.csv")
+    xs, ys = [float(r["median_ns"]) for r in hs], [float(r["pqm4_clean_cycles"]) for r in hs]
+    rk = lambda v: [sorted(v).index(x) + 1 for x in v]  # noqa: E731
+    n = len(xs)
+    rho = 1 - 6 * sum((a - b) ** 2 for a, b in zip(rk(xs), rk(ys))) / (n * (n * n - 1))
+    return {
+        "v4_n": str(len(v4)), "v4_bad": str(bad),
+        "v4_bound": f"{100 * 3 / len(v4):.1f}" if bad == 0 else "n/a",
+        "lint_true": str(sum(1 for r in lint if r["verdict"] == "true")),
+        "renode_n": str(sum(1 for r in ren if r["fail"] == "0")),
+        "val_ho": f"{max(abs(100 * float(r['err_cal'])) for r in ho):.1f}",
+        "xc_factor": f"{float(xc['factor_below_low']):.1f}",
+        "rho3": f"{rho:.3f}",
+        "ratio3": f"{max(abs(100 * float(r['ratio_diff'])) for r in hs):.0f}",
+    }
+
+
 def main():
     ev = rows("data/evidence.csv")
     s10 = [r for r in ev if r["stream"] == "S10"]
@@ -58,6 +88,7 @@ def main():
         "tornado_inputs": " and ".join(r["input"].replace("_", " ") for r in tor if r["swing"] == tor[0]["swing"]),
         "rho": f"{rho:.3f}", "cv": f"{100 * max(float(r['cv_of_run_medians']) for r in hs):.0f}",
         "p_ns": m.group(4),
+        **round3(),
         "hr_default": [r["hr_low"] for r in rows("planner/results/scenario_range.csv") if r["devices"] == "1000"][0],
         "hr_portable": [r["hr_high"] for r in rows("planner/results/scenario_range.csv") if r["devices"] == "1000"][0],
         "p_hit": m.group(1), "p_partial": m.group(2), "p_miss": m.group(3), "p_total": m.group(5),
