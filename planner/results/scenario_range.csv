@@ -1,4 +1,4 @@
 devices,lowest,highest,hr_low,hr_high,changed,share_changed
 10,speed_asm,reference_c,2,3,1,0.1000
-100,stack_asm,reference_c,34,47,17,0.1700
-1000,stack_asm,reference_c,246,371,133,0.1330
+100,stack_asm,reference_c,35,50,17,0.1700
+1000,stack_asm,reference_c,260,382,126,0.1260
