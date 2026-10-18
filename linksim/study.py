@@ -239,6 +239,45 @@ def write_doc(grid, sweeps, low, val, trials):
       "validate the duty cycle, fragmentation or loss parts, for which no published "
       "figure is in the evidence table.")
     a("")
+    ho = validate.held_out()
+    a("### 4.1 Held out check of one calibrated constant (third round)")
+    a("")
+    a("One fixed overhead term is fitted by least squares on the groups %s and tested on the held out "
+      "groups %s (split fixed by name before the run, `docs/PREDICTIONS_V3.md` R7). Fitted overhead: %.0f ms. "
+      "Signed error = predicted / published minus 1." % (", ".join(validate.TRAIN), ", ".join(validate.TEST),
+                                                          ho[0]["fitted_overhead_ms"]))
+    a("")
+    a("| group | split | published UAV ms (published) | predicted ms (estimated) | signed error |")
+    a("|---|---|---|---|---|")
+    for r in ho:
+        a("| %s | %s | %.0f | %.0f | %+.1f%% |" % (r["group"], r["split"], r["uav_ms"], r["pred_cal_ms"],
+                                                  100 * r["err_cal"]))
+    a("")
+    a("This is a weak test: all five groups differ only in key exchange bytes (1,338 to 3,504 B on the wire) "
+      "on one emulated link, so a single constant can absorb TCP and TLS behaviour that would not carry over "
+      "to another link or object size.")
+    a("")
+    cc = validate.crosscheck_802154()
+    a("### 4.2 Cross check against a prose figure (not calibration)")
+    a("")
+    a("%s states that 50 kB take 30 to 60 s over a low power IEEE 802.15.4 link, depending on link quality "
+      "and network load. The model, with no loss and selective repeat on the 802.15.4 profile, gives %.1f s for "
+      "%d B, a factor of %.1f below the low end. The model leaves out multi hop forwarding, medium access "
+      "contention, 6LoWPAN headers and network load, so on 802.15.4 networks its times are optimistic by that "
+      "order. The figure is not in `data/evidence.csv`, because it is not in a table." % (
+          cc["source"], cc["model_s"], cc["bytes"], cc["factor_below_low"]))
+    a("")
+    a("### 4.3 Which parts of the model are checked")
+    a("")
+    a("| model part | status | basis |")
+    a("|---|---|---|")
+    for part, status, basis in validate.PARTS:
+        a("| %s | %s | %s |" % (part, status, basis))
+    a("")
+    a("Search: the evidence table holds published link timings only in Table 5 of ePrint 2026/2343; the "
+      "supplied PDFs hold no measured duty cycle, loss or fragmentation timing. Every figure that depends on "
+      "an unvalidated part carries that word in its caption.")
+    a("")
     a("_" + model.FOOTER + "_")
     with open(DOC, "w", encoding="utf-8", newline="\n") as fh:
         fh.write("\n".join(L) + "\n")
@@ -265,6 +304,10 @@ def main(argv=None):
                                    "pred_plain", "err_plain", "pred_tcp", "err_tcp",
                                    "meas_diff", "pred_diff_plain", "diff_err_plain",
                                    "pred_diff_tcp", "diff_err_tcp"])
+    _write("validation_heldout.csv", validate.held_out(), ["group", "split", "uav_ms", "pred_uncal_ms",
+                                                           "fitted_overhead_ms", "pred_cal_ms", "err_cal"])
+    _write("validation_crosscheck.csv", [validate.crosscheck_802154()],
+           ["bytes", "proto", "model_s", "prose_low_s", "prose_high_s", "factor_below_low", "source"])
     write_config(p, a.trials, time.time() - t0)
     write_doc(grid, sweeps, low, val, a.trials)
     print("wrote linksim/results/ and docs/LINKSIM_STUDY.md in %.1f s" % (time.time() - t0))
