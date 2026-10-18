@@ -1,0 +1,5 @@
+alg,param,check,ok,fail
+ML-KEM,ML-KEM-512,roundtrip,12,0
+ML-KEM,ML-KEM-768,roundtrip,12,0
+ML-KEM,ML-KEM-1024,roundtrip,12,0
+ML-DSA,ML-DSA-44,sign_verify_and_reject,10,0
