@@ -147,7 +147,7 @@ def crosscheck_802154(p=None, proto="sr"):
 
 
 PARTS = [
-    ("rate (bytes over bit rate)", "validated", "Table 5 of ePrint 2026/2343, rows S10F-131 to S10F-150"),
+    ("rate (bytes over bit rate)", "consistent with one published link (5 groups; differences to the classical baseline within 6.6 percent, absolute times 29 to 43 percent too fast before calibration)", "Table 5 of ePrint 2026/2343, rows S10F-131 to S10F-150"),
     ("round trips and fixed overhead", "calibrated on 2 groups, tested on 3 held out groups",
      "Table 5 of ePrint 2026/2343"),
     ("fragmentation and per fragment overhead", "unvalidated",
