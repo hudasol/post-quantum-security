@@ -1,10 +1,10 @@
 # S7: retry of sources blocked in the earlier review
 
-Method: WebFetch and WebSearch only, as instructed. No curl, wget, mirrors, caches or archives. Each item tried once or twice, including the abstract-page form where one exists. Retrieval date recorded as 2026-10-11 as instructed (the system clock reported 2026-10-12 partway through the session).
+Method: web fetch and web search only, by design. No curl, wget, mirrors, caches or archives. Each item tried once or twice, including the abstract-page form where one exists. Retrieval date recorded as 2026-10-11 as instructed (the system clock reported 2026-10-12 partway through the session).
 
-Important: most failures were NOT site blocks. WebFetch returned `PROVENANCE_REQUIRED` ("permission request for this URL was not answered in time"), meaning no one approved the fetch prompt. Those items are recorded as BLOCKED because nothing was retrieved, but they may succeed if the user approves the prompts or includes the URL in a message. The only site-side refusal seen was `ROBOTS_DISALLOWED` for the 2026/312 PDF.
+Important: most failures were NOT site blocks. web fetch returned a provenance error ("permission request for this URL was not answered in time"), meaning no one approved the fetch prompt. Those items are recorded as BLOCKED because nothing was retrieved, but they may succeed if the user approves the prompts or includes the URL in a message. The only site-side refusal seen was `ROBOTS_DISALLOWED` for the 2026/312 PDF.
 
-All content below comes from WebFetch's summary of the page, not a verbatim read. Numbers should be re-checked against the PDF before they go into the report.
+All content below comes from the web fetch tool's summary of the page, not a verbatim read. Numbers should be re-checked against the PDF before they go into the report.
 
 ## Items
 
@@ -56,23 +56,23 @@ All content below comes from WebFetch's summary of the page, not a verbatim read
 
 ### 7. ePrint 2019/844, pqm4 paper (board and clock)
 - URL: https://eprint.iacr.org/2019/844.pdf and https://eprint.iacr.org/2019/844.
-- Status: BLOCKED (WebFetch `PROVENANCE_REQUIRED`, tried PDF twice and abstract page once). Nothing retrieved.
+- Status: BLOCKED (web fetch provenance error, tried PDF twice and abstract page once). Nothing retrieved.
 
 ### 8. ePrint 2022/323, Dilithium for memory-constrained devices (`m4fstack`)
 - URL: https://eprint.iacr.org/2022/323.pdf and https://eprint.iacr.org/2022/323. A Springer URL guess (https://link.springer.com/chapter/10.1007/978-3-031-17433-9_1) was also tried and was not answered; the DOI there is an unverified guess.
-- Status: BLOCKED (`PROVENANCE_REQUIRED`). Nothing retrieved.
+- Status: BLOCKED (a provenance error). Nothing retrieved.
 
 ### 9. NSA CNSA 2.0 algorithms advisory and FAQ
 - URLs tried: https://media.defense.gov/2022/Sep/07/2003071834/-1/-1/0/CSA_CNSA_2.0_ALGORITHMS_.PDF (twice), https://media.defense.gov/2022/Sep/07/2003071836/-1/-1/0/CSI_CNSA_2.0_FAQ_.PDF (once), and an nsa.gov news article URL (once). The two media.defense.gov paths and the nsa.gov article path are from memory, not verified.
-- Status: BLOCKED (`PROVENANCE_REQUIRED`). Nothing retrieved. A WebSearch returned only secondary pages (encryptionconsulting.com, entrust.com, atsec.de, thalestct.com), which I did not treat as a substitute and did not fetch. No CNSA 2.0 claim should be made from this pass.
+- Status: BLOCKED (a provenance error). Nothing retrieved. A web search returned only secondary pages (encryptionconsulting.com, entrust.com, atsec.de, thalestct.com), which I did not treat as a substitute and did not fetch. No CNSA 2.0 claim should be made from this pass.
 
 ### 10. CISA quantum pages
 - URLs tried: https://www.cisa.gov/quantum (twice), https://www.cisa.gov/resources-tools/resources/quantum-readiness-migration-post-quantum-cryptography (once; path from memory, unverified).
-- Status: BLOCKED (`PROVENANCE_REQUIRED`). Nothing retrieved.
+- Status: BLOCKED (a provenance error). Nothing retrieved.
 
 ### 11. UAE National Encryption Policy and executive regulation text
 - URL tried: https://www.wam.ae/en/article/15w563h-uae-announces-approval-national-encryption-policy.
-- Status: BLOCKED for the policy text. The fetch returned only the WAM homepage metadata, no article or policy text. A WebSearch gave press and commentary links (WAM, Tribune India, Khaleej Times, MIT Sloan ME, postquantum.com, PQShield, Aletihad); none is the primary policy text and none was fetched, so no UAE requirement is recorded. Arabic-language and Cybersecurity Council / National Cryptography Center sources were not tried.
+- Status: BLOCKED for the policy text. The fetch returned only the WAM homepage metadata, no article or policy text. A web search gave press and commentary links (WAM, Tribune India, Khaleej Times, MIT Sloan ME, postquantum.com, PQShield, Aletihad); none is the primary policy text and none was fetched, so no UAE requirement is recorded. Arabic-language and Cybersecurity Council / National Cryptography Center sources were not tried.
 
 ### Not retried in this pass
 NIST CAVP/CMVP validation search, vendor pages (ST X-CUBE-PQC, Microchip, Infineon, NXP, Nordic, Arm), Bluetooth/LoRa/802.15.4 specs, micro-ROS docs, GitHub issues for MCUboot/PX4/ArduPilot, other jurisdictions (China, SAMA, NCA, TNO, ASD), Uptane, ISO/SAE 21434, Noise PQ, ePrint 2026/256. Reason: the fetch permission prompts were going unanswered, so further attempts would have repeated the same failure.

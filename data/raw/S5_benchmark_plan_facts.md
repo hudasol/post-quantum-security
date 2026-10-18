@@ -1,7 +1,7 @@
 # S5: Benchmark-plan facts (on-hardware PQC benchmarking on Cortex-M4/M33-class boards)
 
 Stream S5, written 2026-10-11. All retrieval dates below are 2026-10-11 unless stated.
-Method: deviation D1 (curl through the sandbox egress proxy, TLS verification on, default curl User-Agent, no mirrors or caches). For GitHub repositories, `git clone --depth 1` worked through the proxy, so repository files were read locally from clones; GitHub HTML pages and api.github.com returned 403, and `gh api` refused ("access not enabled", add_repo not used). raw.githubusercontent.com worked. Where a vendor page was blocked it is listed in section 8; no numbers from blocked pages are used.
+Method: deviation D1 (curl through the network proxy, TLS verification on, default curl User-Agent, no mirrors or caches). For GitHub repositories, `git clone --depth 1` worked through the proxy, so repository files were read locally from clones; GitHub HTML pages and api.github.com returned 403, and `gh api` refused ("access not enabled", a wider repository access request not used). raw.githubusercontent.com worked. Where a vendor page was blocked it is listed in section 8; no numbers from blocked pages are used.
 
 Conventions:
 - "Tag commit date" is the committer date of the commit the tag points to. It is NOT necessarily the publication date of a GitHub Release (release pages were not retrievable). The tag name is exact.
@@ -137,7 +137,7 @@ What this implies for the user's benchmark plan (my synthesis; each point maps t
 
 ---------------------------------------------------------------------------------------------------
 
-## 5. Host-measurement option (what the sandbox can do; nothing built yet)
+## 5. Host-measurement option (what the work environment can do; nothing built yet)
 
 Checked 2026-10-11:
 
@@ -146,10 +146,10 @@ Checked 2026-10-11:
 | `which cmake gcc arm-none-eabi-gcc qemu-system-arm` | cmake 3.28.3 (`/usr/bin/cmake`), gcc 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1), ninja 1.11.1, make, openssl, git present. **`arm-none-eabi-gcc` and `qemu-system-arm` are NOT installed.** Python 3.13.16. |
 | Machine | x86_64, Intel Xeon @ 2.80 GHz (virtualised), 2 cores (`nproc`), 8 GB RAM, running as uid 0. Shared VM: any timing here is a labelled "host measurement" only. |
 | `git clone --depth 1` through the proxy | **Works** for https://github.com/open-quantum-safe/liboqs, https://github.com/PQClean/PQClean, https://github.com/mupq/pqm4, plus mupq, libopencm3, mlkem-native, mldsa-native, slhdsa-c, wolfSSL, wolfBoot, mbedtls, TF-PSA-Crypto, hash-sigs, xmss-reference, liboqs-python. (pqm4's `libopencm3` and `mupq` submodules are not populated by a plain clone; they were cloned separately.) |
-| Other GitHub access | github.com HTML pages: 403. api.github.com: 403. `gh api`: refused ("GitHub access to this repository is not enabled", add_repo flow not used). github archive tarballs: 403/404. raw.githubusercontent.com: works. |
+| Other GitHub access | github.com HTML pages: 403. api.github.com: 403. `gh api`: refused ("GitHub access to this repository is not enabled", a wider repository access request flow not used). github archive tarballs: 403/404. raw.githubusercontent.com: works. |
 | PyPI | pypi.org reachable. `pip download liboqs-python --no-deps` works (0.16.0.1, pure-Python wrapper, needs a built liboqs shared library). Also downloaded (not inspected): `pqcrypto-1.0.0` (cp39-abi3 manylinux wheel), `kyber_py-1.2.0`, `dilithium_py-1.4.0`, `pyoqs_sdk-1.0`. |
 | apt / toolchain | archive.ubuntu.com reachable (HTTP and HTTPS 200). Package indexes for Ubuntu noble show: `gcc-arm-none-eabi 15:13.2.rel1-2`, `libnewlib-arm-none-eabi 4.4.0.20231231-2`, `openocd 0.12.0-1build2`, `stlink-tools 1.8.0-1build2` (universe) and `qemu-system-arm 1:8.2.2+ds-0ubuntu1` (main). `liboqs-dev` and `libopencm3` packages: not found in noble main/universe. I did not run `apt-get install` (not authorised as part of "do not build"); installability by uid 0 is likely but untested. Arm GNU Toolchain 13.3.rel1 x86_64 tarball: HEAD request follows a redirect to armkeil.blob.core.windows.net and returns 200; pqm4's documented 11.3.Rel1 URL was not tested. |
-| What is possible next | (1) Build liboqs 0.16.0 with cmake/ninja on the host and run `speed_kem`/`speed_sig`/`speed_sig_stfl` (stateful verify only unless the hazardous flag is set), labelled "host measurement". (2) Build PQClean/mlkem-native/mldsa-native test harnesses on the host. (3) With the apt packages above, cross-compile pqm4 for `mps2-an386` and run it in QEMU 8.2.2 to check that code builds and tests pass (pqm4 README: QEMU cycle counts "meaningless"; stack measurement uses QEMU). (4) Hardware cycle numbers cannot be produced in the sandbox. |
+| What is possible next | (1) Build liboqs 0.16.0 with cmake/ninja on the host and run `speed_kem`/`speed_sig`/`speed_sig_stfl` (stateful verify only unless the hazardous flag is set), labelled "host measurement". (2) Build PQClean/mlkem-native/mldsa-native test harnesses on the host. (3) With the apt packages above, cross-compile pqm4 for `mps2-an386` and run it in QEMU 8.2.2 to check that code builds and tests pass (pqm4 README: QEMU cycle counts "meaningless"; stack measurement uses QEMU). (4) Hardware cycle numbers cannot be produced in the work environment. |
 
 ---------------------------------------------------------------------------------------------------
 

@@ -82,6 +82,6 @@ Fragmentation mechanics (conceptual): DTLS 1.3 fragments handshake messages and 
 ## 8. Gaps and inaccessible sources
 
 - Blocked (HTTP 403 / Cloudflare): Nordic nRF Connect SDK crypto docs and CRACEN pages; eprint.iacr.org PDF downloads (2022/1712, 2022/1198, 2025/2178, 2024/1192, 2026/666); GitHub discussions/search for MCUboot; All About Circuits (Infineon); the SNU Korean paper on PQ-EDHOC under MTU limits (TLS connection reset); ST X-CUBE-PQC product page (HTTP/2 error); NXP PQC blog (404).
-- WebFetch tool required per-URL permission that was not granted; all retrieval was done via curl through the sandbox proxy.
+- web fetch tool required per-URL permission that was not granted; all retrieval was done via curl through the work environment proxy.
 - Not verified: current LoRaWAN Regional Parameters maximum payloads; MCUboot PQ roadmap; Zephyr/Mbed TLS PQ status; MQTT-over-PQ-TLS MCU measurements; KEMTLS embedded table numbers; IEEE Access PQ-EDHOC (P35) numeric results; draft-ietf-lake-authkem-edhoc and draft-ietf-lake-pqsuites current versions (only older/individual versions fetched).
 - Excluded from the evidence table: wolfSSL LMS/XMSS/SLH-DSA verification table (P44, no device stated); arXiv:2609.21273 (P47, model-derived); arXiv:2607.03988 (Raspberry Pi 5 over 5G, not MCU-class; read abstract only).

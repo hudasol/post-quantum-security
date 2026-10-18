@@ -39,7 +39,7 @@ Retrieved 2026-10-11. Evidence table: `./data/evidence_benchmarks.csv` (476 rows
 ## Excluded or partial sources
 
 - **Excluded under protocol (no stated library version or non-MCU)**: wolfSSL STM32 ML-KEM/ML-DSA blog (Cortex-M4 168 MHz; version not stated; board naming inconsistent), wolfBoot KL26 LMS footprint post (Cortex-M0+ 48 MHz, LMS H20 W8: 14.9 KB code, 1.4 KB peak verify stack, 1,776 B signature; no verify time), and the SHBS benchmark arXiv paper (x86 timings). Details in `sources_benchmarks.csv` so they can be reconsidered as corroboration.
-- **Abstract-only**: Compact Dilithium on Cortex-M3/M4 (TCHES 2021), SLOTHY M4-to-M7 (ePrint 2025/366, only relative speedups), Stateless hash-based signatures for security keys (ePrint 2025/298). eprint.iacr.org PDFs return HTTP 403 via curl; WebFetch gives abstract pages only.
+- **Abstract-only**: Compact Dilithium on Cortex-M3/M4 (TCHES 2021), SLOTHY M4-to-M7 (ePrint 2025/366, only relative speedups), Stateless hash-based signatures for security keys (ePrint 2025/298). eprint.iacr.org PDFs return HTTP 403 via curl; web fetch gives abstract pages only.
 - **Inaccessible**: ePrint 2022/323 (Dilithium for memory constrained devices): fetch permission went unanswered.
 
 ## Gaps for follow-up

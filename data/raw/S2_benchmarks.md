@@ -2,7 +2,7 @@
 
 Stream S2, protocol `docs/PROTOCOL.md` sections 4-6. Retrieval date for everything below: 2026-10-11.
 Evidence table: `data/raw/S2_evidence.csv` (431 rows, 23 columns in the section 5 order, all `evidence_type=published`).
-Every numeric cell was copied from a page, PDF or repository file retrieved in this session. An automated check confirmed that every cycles / stack / code-size / energy / size value in the CSV appears in the retrieved source text (486 values, 0 missing). This is only an occurrence check; the independent verification step of section 9 is still required.
+Every numeric cell was copied from a page, PDF or repository file retrieved in this retrieval run. An automated check confirmed that every cycles / stack / code-size / energy / size value in the CSV appears in the retrieved source text (486 values, 0 missing). This is only an occurrence check; the independent verification step of section 9 is still required.
 
 ## 1. Sources retrieved and used
 
@@ -26,7 +26,7 @@ Every numeric cell was copied from a page, PDF or repository file retrieved in t
 | 16 | FIPS 203 / FIPS 204 / FIPS 205 (final, published 13 Aug 2024) | NIST | standards | https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf (.204, .205) | 9 + 9 + 12 (`size_kind=standard`) |
 | 17 | RFC 8391 (XMSS), Table 3 | IETF | May 2018 | https://www.rfc-editor.org/rfc/rfc8391.txt | 6 (`size_kind=standard`) |
 
-## 2. Queries run (WebSearch, standard mode)
+## 2. Queries run (web search, standard mode)
 
 1. `ML-DSA Cortex-M4 cycles stack-optimised implementation eprint`
 2. `post-quantum Cortex-M33 Dilithium Kyber benchmark`
@@ -45,7 +45,7 @@ Every numeric cell was copied from a page, PDF or repository file retrieved in t
 15. `wolfBoot ML-DSA LMS XMSS STM32H5 OR STM32U5 OR nRF5340 boot time benchmark post-quantum secure boot`
 16. `MCUboot LMS OR XMSS OR ML-DSA post-quantum signature verification embedded benchmark Zephyr`
 
-The literal query `pqm4` was not run as a web search; pqm4 was retrieved directly from its repository (raw.githubusercontent.com worked; `api.github.com` returned 403 from the proxy, but the attached GitHub connector could read commit metadata, which is where the commit ids above come from).
+The literal query `pqm4` was not run as a web search; pqm4 was retrieved directly from its repository (raw.githubusercontent.com worked; `api.github.com` returned 403 from the proxy, but the attached GitHub repository search could read commit metadata, which is where the commit ids above come from).
 
 ## 3. How the setups differ (read before plotting)
 
@@ -105,14 +105,14 @@ Fields not reported by a source are empty. In particular the schema has no wall-
 Cloudflare challenge ("Just a moment", HTTP 403) blocks **eprint.iacr.org** from this environment, including the web.archive.org route (connection reset). Affected, in priority order:
 1. pqm4 paper, Kannwischer, Rijneveld, Schwabe, Stoffelen, ePrint 2019/844 (original round-2 M4 tables, board and clock).
 2. Bos, Renes, Sprenkels, Dilithium for memory constrained devices, ePrint 2022/323 (the `m4fstack` strategy; also AFRICACRYPT 2022).
-3. Abdulrahman, Kannwischer, Lim, SLOTHY: Cortex-M4 to M7 migration of ML-KEM/ML-DSA, ePrint 2025/366 (WebFetch of the abstract page gave only speed-up percentages: NTT 1.97x/1.69x, full schemes 11-33%; no cycle tables; full PDF not read).
+3. Abdulrahman, Kannwischer, Lim, SLOTHY: Cortex-M4 to M7 migration of ML-KEM/ML-DSA, ePrint 2025/366 (web fetch of the abstract page gave only speed-up percentages: NTT 1.97x/1.69x, full schemes 11-33%; no cycle tables; full PDF not read).
 4. Campos, Kohlstadt, Reith, Stoettinger, LMS vs XMSS full paper, ePrint 2020/470 (only the slides were obtained).
 5. Banegas et al., Quantum-resistant security for software updates on low-power networked embedded devices, ePrint 2021/781 (RIOT/SUIT, hash-based signatures on Cortex-M).
 6. Riou et al., Apples, Oranges, and Signatures: pitfalls in ML-DSA benchmarking, ePrint 2026/1333 (methodology; MAgiCS 2026).
 7. Wang et al., XMSS and Embedded Systems, ePrint 2018/1225 (read via the NSF PAR manuscript instead).
 8. Other IACR hits not opened: ePrint 2026/1576, 2025/2337, 2026/235, 2025/909, 2026/2352; TCHES article 9305 (Polynomial multiplication on embedded vector architectures, Helium; download URL tried returned 404).
 Other failures:
-- `api.github.com` (403 "GitHub access not enabled for this session"); worked around with the GitHub connector for commit metadata. `github.com` HTML pages were not needed.
+- `api.github.com` (403 "GitHub access not enabled for this retrieval run"); worked around with the GitHub repository search for commit metadata. `github.com` HTML pages were not needed.
 - Nordic nRF Connect SDK ML-DSA sample page (nrfconnectdocs.nordicsemi.com, HTTP 403): may hold nRF54/nRF53 timing; fetch manually.
-- ST product page for STM32H563 (WebFetch permission not granted): needed to confirm its core for the wolfBoot rows.
+- ST product page for STM32H563 (web fetch permission not granted): needed to confirm its core for the wolfBoot rows.
 - Not attempted: Cortex-M33 vendor application notes (ST, NXP, Nordic, Renesas) for hardware PQC accelerators, and Zephyr/MCUboot PQ signature pull requests.
