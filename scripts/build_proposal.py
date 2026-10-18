@@ -14,6 +14,15 @@ def rows(rel):
         return list(csv.DictReader(fh))
 
 
+def min_stack():
+    """Lowest published ML-DSA-44 (or Dilithium2) stack figure that covers signing, over the whole table."""
+    ev = rows("data/evidence.csv")
+    c = [(float(r["stack_bytes"]), r["id"]) for r in ev if r["stack_bytes"] and "sign" in r["operation"]
+         and any(t in r["parameter_set"] for t in ("ML-DSA-44", "Dilithium2", "Dilithium-2"))]
+    v, i = min(c)
+    return {"min_any": f"{v:,.0f}", "min_any_id": i}
+
+
 def round3():
     """Third round figures: second check, lint, Renode, held out validation, cross check, host baseline."""
     v4 = []
@@ -37,10 +46,14 @@ def round3():
         "v4_bound": f"{100 * 3 / len(v4):.1f}" if bad == 0 else "n/a",
         "lint_true": str(sum(1 for r in lint if r["verdict"] == "true")),
         "renode_n": str(sum(1 for r in ren if r["fail"] == "0")),
-        "val_ho": f"{max(abs(100 * float(r['err_cal'])) for r in ho):.1f}",
+        "val_ho": f"{max(abs(100 * float(r['err_cal'])) for r in ho):.2f}",
+        "val_unc_lo": f"{min(-100 * float(r['err_plain']) for r in rows('linksim/results/validation.csv')):.0f}",
+        "val_unc_hi": f"{max(-100 * float(r['err_plain']) for r in rows('linksim/results/validation.csv')):.0f}",
+        "spread3": f"{max(100 * float(r['spread']) for r in hs):.0f}",
+        **min_stack(),
         "xc_factor": f"{float(xc['factor_below_low']):.1f}",
         "rho3": f"{rho:.3f}",
-        "ratio3": f"{max(abs(100 * float(r['ratio_diff'])) for r in hs):.0f}",
+        "ratio3": f"{max(abs(100 * float(r['ratio_diff'])) for r in hs):.1f}",
     }
 
 
@@ -72,7 +85,8 @@ def main():
     m = re.search(r"Totals: (\d+) hit, (\d+) partial, (\d+) miss, (\d+) not scored, of (\d+)", sc)
     cfg = {r["key"]: r["value"] for r in rows("linksim/results/config.csv")}
     vals = {
-        "date": "2026-10-16",
+        "date": subprocess.run(["git", "log", "-1", "--format=%cs", "--", "docs/PROPOSAL_ATRC_body.md"], cwd=ROOT,
+                               capture_output=True, text=True).stdout.strip() or "undated",
         "n_rows": f"{len(ev):,}", "n_s10": str(len(s10)),
         "emu_sign": f"{emu:,}", "min_sign": f"{mem[0]:,.0f}", "min_sign_id": mem[1],
         "sign_ratio": f"{emu / mem[0]:.1f}",
