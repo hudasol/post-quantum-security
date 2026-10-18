@@ -42,6 +42,8 @@ Lines starting with `#` are comments. The example inventory is labelled SYNTHETI
 | `HS_BYTES` | 6068 | [derived] | hybrid handshake bytes: 2 x 32 B X25519 + 1184 + 1088 + 1312 + 2420 |
 | `HS_BUDGET_S` | 300 | [assumption] | longest tolerable in band handshake |
 
+**These defaults are one of four scenarios, the one with the fewest hardware replacements.** They come from stack optimised assembly (pqm4 `m4fstack`). Since 2026-10-18 the planner study also runs speed optimised assembly (`m4f`, `m4fspeed`), this repository's emulated portable C build, and reference C (`clean`), each derived the same way; signature RAM rises from 3 kB to as much as 37 kB. Results depend on the scenario, so quote the range in `docs/PLANNER_STUDY.md` section 1, not the default alone.
+
 Both exposures combined need `SIG_FLASH_KB + KEM_FLASH_KB = 45` kB flash and `KEM_RAM_KB = 9` kB RAM (the two run one after the other).
 
 ## Algorithm

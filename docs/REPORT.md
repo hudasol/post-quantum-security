@@ -265,6 +265,8 @@ NIST leaves hybrid use to each application and will accommodate hybrids in FIPS 
 Worked example of the pattern: Caliptra 1.3 adds a software only ML-DSA-87 identity chain via runtime firmware without ROM changes, but the ROM-rooted classical chain remains and the PQ chain does not attest the ROM [S4 A19]. Not a drone part; shows what a firmware only fix can and cannot cover.
 
 
+**Fleet planner result (estimated, synthetic fleets).** How many devices need new hardware depends on which implementation the planner's memory thresholds assume. On a synthetic fleet of 1000 devices it ranges from 246 (thresholds from stack optimised assembly, published pqm4 rows) to 371 (reference C, published pqm4 rows), and 133 devices (13.3 percent) change class between the two; speed optimised assembly and this repository's portable C build fall in between (`docs/PLANNER_STUDY.md`). A plan should carry the range, not one of its ends.
+
 # 10. Migration playbook
 
 Tags as in DECISION_FRAMEWORK.md. Dates are planning anchors, not predictions: UK NCSC 2028 (discovery, plan) / 2031 (highest priority migrated) / 2035 (done) [S1 row 33]; EU roadmap end-2026 (national first steps) / end-2030 (high risk use cases) / 2035 [S1 row 37] and, for products with lifetime beyond 2030, upgradable to PQC with a post quantum signature path for firmware updates, tied to the Cyber Resilience Act from December 2027 [S1 row 39]; NIST IR 8547 *draft* proposes deprecating 112-bit classical public key algorithms after 2030 and disallowing all after 2035 [S1 row 15, in flux]. **No UAE algorithm level or embedded-device-level deadline was found**; UAE national policy exists (version 1.0, September 2025) and tasks government entities to prepare transition plans [S1 row 62-64].

@@ -220,6 +220,8 @@ The practical rule: **move secrecy to hybrid KEM early because delay costs you r
 
 {{INCLUDE:DECISION_FRAMEWORK.md|# Decision framework|9. Decision framework}}
 
+**Fleet planner result (estimated, synthetic fleets).** How many devices need new hardware depends on which implementation the planner's memory thresholds assume. On a synthetic fleet of 1000 devices it ranges from {{plan:hr_low:1000}} (thresholds from stack optimised assembly, published pqm4 rows) to {{plan:hr_high:1000}} (reference C, published pqm4 rows), and {{plan:changed:1000}} devices ({{plan:share_changed:1000}} percent) change class between the two; speed optimised assembly and this repository's portable C build fall in between (`docs/PLANNER_STUDY.md`). A plan should carry the range, not one of its ends.
+
 {{INCLUDE:MIGRATION_PLAYBOOK.md|# Migration playbook for a deployed drone/robot fleet|10. Migration playbook}}
 
 # 11. Benchmark plan (summary; full plan in docs/BENCHMARK_PLAN.md)
