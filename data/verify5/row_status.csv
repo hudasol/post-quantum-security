@@ -1,0 +1,547 @@
+id,kind,status,reason
+S12A-001,row,confirmed,
+S12A-002,row,confirmed,
+S12A-003,row,confirmed,
+S12A-004,row,confirmed,
+S12A-005,row,confirmed,
+S12A-006,row,confirmed,
+S12A-007,row,confirmed,
+S12A-008,row,confirmed,
+S12A-009,row,confirmed,
+S12A-010,row,confirmed,
+S12A-011,row,confirmed,
+S12A-012,row,confirmed,
+S12A-013,row,confirmed,
+S12A-014,row,confirmed,
+S12A-015,row,confirmed,
+S12A-016,row,confirmed,
+S12A-017,row,confirmed,
+S12A-018,row,confirmed,
+S12A-019,row,confirmed,
+S12A-020,row,confirmed,
+S12A-021,row,confirmed,
+S12A-022,row,confirmed,
+S12A-023,row,confirmed,
+S12A-024,row,confirmed,
+S12A-025,row,confirmed,
+S12A-026,row,confirmed,
+S12A-027,row,confirmed,
+S12A-028,row,confirmed,
+S12A-029,row,confirmed,
+S12A-030,row,confirmed,
+S12A-031,row,confirmed,
+S12A-032,row,confirmed,
+S12A-033,row,confirmed,
+S12A-034,row,confirmed,
+S12A-035,row,confirmed,
+S12A-036,row,confirmed,
+S12A-037,row,confirmed,
+S12A-038,row,confirmed,
+S12A-039,row,confirmed,
+S12A-040,row,confirmed,
+S12A-041,row,confirmed,
+S12A-042,row,confirmed,
+S12A-043,row,confirmed,
+S12A-044,row,confirmed,
+S12A-045,row,confirmed,
+S12A-046,row,confirmed,
+S12A-047,row,confirmed,
+S12A-048,row,confirmed,
+S12A-049,row,confirmed,
+S12A-050,row,confirmed,
+S12A-051,row,confirmed,
+S12A-052,row,confirmed,
+S12A-053,row,confirmed,
+S12A-054,row,confirmed,
+S12A-055,row,confirmed,
+S12A-056,row,confirmed,
+S12A-057,row,confirmed,
+S12A-058,row,confirmed,
+S12A-059,row,confirmed,
+S12A-060,row,confirmed,
+S12A-061,row,confirmed,
+S12A-062,row,confirmed,
+S12A-063,row,confirmed,
+S12A-064,row,confirmed,
+S12A-065,row,confirmed,
+S12A-066,row,confirmed,
+S12A-067,row,confirmed,
+S12A-068,row,confirmed,
+S12A-069,row,confirmed,
+S12A-070,row,confirmed,
+S12A-071,row,confirmed,
+S12A-072,row,confirmed,
+S12A-073,row,confirmed,
+S12A-074,row,confirmed,
+S12A-075,row,confirmed,
+S12A-076,row,confirmed,
+S12A-077,row,confirmed,
+S12A-078,row,confirmed,
+S12A-079,row,confirmed,
+S12A-080,row,confirmed,
+S12A-081,row,confirmed,
+S12A-082,row,confirmed,
+S12A-083,row,confirmed,
+S12A-084,row,confirmed,
+S12A-085,row,confirmed,
+S12A-086,row,confirmed,
+S12A-087,row,confirmed,
+S12A-088,row,confirmed,
+S12A-089,row,confirmed,
+S12A-090,row,confirmed,
+S12A-091,row,confirmed,
+S12A-092,row,confirmed,
+S12A-093,row,confirmed,
+S12A-094,row,confirmed,
+S12A-095,row,confirmed,
+S12A-096,row,confirmed,
+S12A-097,row,confirmed,
+S12A-098,row,confirmed,
+S12A-099,row,confirmed,
+S12A-100,row,confirmed,
+S12A-101,row,single_reader,flash_or_code_bytes confirmed by fewer than two readers
+S12A-102,row,single_reader,flash_or_code_bytes confirmed by fewer than two readers
+S12A-103,row,confirmed,
+S12A-104,row,single_reader,flash_or_code_bytes confirmed by fewer than two readers
+S12A-105,row,single_reader,flash_or_code_bytes confirmed by fewer than two readers
+S12A-106,row,confirmed,
+S12A-107,row,single_reader,flash_or_code_bytes confirmed by fewer than two readers
+S12A-108,row,single_reader,flash_or_code_bytes confirmed by fewer than two readers
+S12A-109,row,confirmed,
+S12A-110,row,single_reader,flash_or_code_bytes confirmed by fewer than two readers
+S12A-111,row,single_reader,flash_or_code_bytes confirmed by fewer than two readers
+S12A-112,row,confirmed,
+S12A-113,row,confirmed,
+S12A-114,row,confirmed,
+S12A-115,row,confirmed,
+S12A-116,row,confirmed,
+S12A-117,row,confirmed,
+S12A-118,row,confirmed,
+S12A-119,row,confirmed,
+S12A-120,row,confirmed,
+S12A-121,row,confirmed,
+S12A-122,row,confirmed,
+S12A-123,row,confirmed,
+S12A-124,row,confirmed,
+S12A-125,row,confirmed,
+S12A-126,row,confirmed,
+S12A-127,row,confirmed,
+S12A-128,row,confirmed,
+S12A-129,row,confirmed,
+S12A-130,row,confirmed,
+S12A-131,row,confirmed,
+S12A-132,row,confirmed,
+S12A-133,row,confirmed,
+S12A-134,row,confirmed,
+S12A-135,row,confirmed,
+S12A-136,row,confirmed,
+S12A-137,row,confirmed,
+S12A-138,row,confirmed,
+S12A-139,row,confirmed,
+S12A-140,row,confirmed,
+S12A-141,row,confirmed,
+S12A-142,row,confirmed,
+S12A-143,row,confirmed,
+S12A-144,row,confirmed,
+S12A-145,row,confirmed,
+S12A-146,row,confirmed,
+S12A-147,row,confirmed,
+S12A-148,row,confirmed,
+S12A-149,row,confirmed,
+S12A-150,row,confirmed,
+S12A-151,row,confirmed,
+S12A-152,row,confirmed,
+S12A-153,row,confirmed,
+S12A-154,row,confirmed,
+S12A-155,row,confirmed,
+S12A-156,row,confirmed,
+S12A-157,row,confirmed,
+S12A-158,row,confirmed,
+S12A-159,row,confirmed,
+S12A-160,row,confirmed,
+S12A-161,row,confirmed,
+S12A-162,row,confirmed,
+S12A-163,row,confirmed,
+S12A-164,row,confirmed,
+S12A-165,row,confirmed,
+S12A-166,row,confirmed,
+S12A-167,row,confirmed,
+S12A-168,row,confirmed,
+S12A-169,row,confirmed,
+S12A-170,row,confirmed,
+S12A-171,row,confirmed,
+S12A-172,row,confirmed,
+S12A-173,row,confirmed,
+S12A-174,row,confirmed,
+S12A-175,row,confirmed,
+S12A-176,row,confirmed,
+S12A-177,row,confirmed,
+S12A-178,row,confirmed,
+S12A-179,row,confirmed,
+S12A-180,row,confirmed,
+S12A-181,row,confirmed,
+S12A-182,row,confirmed,
+S12A-183,row,confirmed,
+S12A-184,row,confirmed,
+S12A-185,row,confirmed,
+S12A-186,row,confirmed,
+S12A-187,row,confirmed,
+S12A-188,row,confirmed,
+S12A-189,row,confirmed,
+S12A-190,row,confirmed,
+S12A-191,row,confirmed,
+S12A-192,row,confirmed,
+S12A-193,row,confirmed,
+S12A-194,row,confirmed,
+S12A-195,row,confirmed,
+S12A-196,row,confirmed,
+S12A-197,row,confirmed,
+S12A-198,row,confirmed,
+S12A-199,row,confirmed,
+S12A-200,row,confirmed,
+S12A-201,row,confirmed,
+S12A-202,row,confirmed,
+S12A-203,row,confirmed,
+S12A-204,row,confirmed,
+S12A-205,row,confirmed,
+S12A-206,row,confirmed,
+S12A-207,row,confirmed,
+S12A-208,row,confirmed,
+S12A-209,row,confirmed,
+S12A-210,row,confirmed,
+S12A-211,row,confirmed,
+S12A-212,row,confirmed,
+S12A-213,row,confirmed,
+S12A-214,row,confirmed,
+S12A-215,row,confirmed,
+S12A-216,row,confirmed,
+S12A-217,row,confirmed,
+S12A-218,row,confirmed,
+S12A-219,row,confirmed,
+S12A-220,row,confirmed,
+S12A-221,row,confirmed,
+S12A-222,row,confirmed,
+S12A-223,row,confirmed,
+S12A-224,row,confirmed,
+S12A-225,row,confirmed,
+S12A-226,row,confirmed,
+S12A-227,row,confirmed,
+S12A-228,row,confirmed,
+S12A-229,row,confirmed,
+S12A-230,row,confirmed,
+S12A-231,row,confirmed,
+S12A-232,row,confirmed,
+S12A-233,row,confirmed,
+S12A-234,row,confirmed,
+S12A-235,row,confirmed,
+S12A-236,row,confirmed,
+S12A-237,row,confirmed,
+S12A-238,row,confirmed,
+S12A-239,row,confirmed,
+S12A-240,row,confirmed,
+S12A-241,row,confirmed,
+S12A-242,row,confirmed,
+S12A-243,row,confirmed,
+S12A-244,row,confirmed,
+S12A-245,row,confirmed,
+S12A-246,row,corrected,
+S12A-247,row,corrected,
+S12A-248,row,corrected,
+S12A-249,row,corrected,
+S12A-250,row,corrected,
+S12A-251,row,corrected,
+S12A-252,row,corrected,
+S12A-253,row,corrected,
+S12A-254,row,confirmed,
+S12A-255,row,confirmed,
+S12A-256,row,confirmed,
+S12A-257,row,confirmed,
+S12A-258,row,confirmed,
+S12A-259,row,confirmed,
+S12A-260,row,confirmed,
+S12A-261,row,confirmed,
+S12A-262,row,confirmed,
+S12A-263,row,confirmed,
+S12A-264,row,confirmed,
+S12A-265,row,confirmed,
+S12A-266,row,confirmed,
+S12A-267,row,confirmed,
+S12A-268,row,confirmed,
+S12A-269,row,single_reader,cycles confirmed by fewer than two readers
+S12A-270,row,single_reader,cycles confirmed by fewer than two readers
+S12A-271,row,single_reader,cycles confirmed by fewer than two readers
+S12A-272,row,single_reader,cycles confirmed by fewer than two readers
+S12A-273,row,single_reader,cycles confirmed by fewer than two readers
+S12A-274,row,single_reader,cycles confirmed by fewer than two readers
+S12A-275,row,single_reader,cycles confirmed by fewer than two readers
+S12A-276,row,single_reader,cycles confirmed by fewer than two readers
+S12A-277,row,single_reader,cycles confirmed by fewer than two readers
+S12A-278,row,single_reader,cycles confirmed by fewer than two readers
+S12A-279,row,single_reader,cycles confirmed by fewer than two readers
+S12A-280,row,single_reader,cycles confirmed by fewer than two readers
+S12A-281,row,single_reader,cycles confirmed by fewer than two readers
+S12A-282,row,single_reader,cycles confirmed by fewer than two readers
+S12A-283,row,single_reader,cycles confirmed by fewer than two readers
+S12A-284,row,single_reader,cycles confirmed by fewer than two readers
+S12A-285,row,single_reader,cycles confirmed by fewer than two readers
+S12A-286,row,single_reader,cycles confirmed by fewer than two readers
+S12A-287,row,single_reader,cycles confirmed by fewer than two readers
+S12A-288,row,single_reader,cycles confirmed by fewer than two readers
+S12A-289,row,single_reader,cycles confirmed by fewer than two readers
+S12A-290,row,single_reader,cycles confirmed by fewer than two readers
+S12A-291,row,single_reader,cycles confirmed by fewer than two readers
+S12A-292,row,single_reader,cycles confirmed by fewer than two readers
+S12A-293,row,single_reader,cycles confirmed by fewer than two readers
+S12A-294,row,single_reader,cycles confirmed by fewer than two readers
+S12A-295,row,single_reader,cycles confirmed by fewer than two readers
+S12A-296,row,single_reader,cycles confirmed by fewer than two readers
+S12A-297,row,single_reader,cycles confirmed by fewer than two readers
+S12A-298,row,single_reader,cycles confirmed by fewer than two readers
+S12A-299,row,single_reader,cycles confirmed by fewer than two readers
+S12A-300,row,single_reader,cycles confirmed by fewer than two readers
+S12A-301,row,single_reader,cycles confirmed by fewer than two readers
+S12A-302,row,single_reader,cycles confirmed by fewer than two readers
+S12A-303,row,single_reader,cycles confirmed by fewer than two readers
+S12A-304,row,single_reader,cycles confirmed by fewer than two readers
+S12A-305,row,single_reader,cycles confirmed by fewer than two readers
+S12A-306,row,single_reader,cycles confirmed by fewer than two readers
+S12A-307,row,single_reader,cycles confirmed by fewer than two readers
+S12A-308,row,single_reader,cycles confirmed by fewer than two readers
+S12A-309,row,single_reader,cycles confirmed by fewer than two readers
+S12A-310,row,single_reader,cycles confirmed by fewer than two readers
+S12A-311,row,single_reader,cycles confirmed by fewer than two readers
+S12A-312,row,single_reader,cycles confirmed by fewer than two readers
+S12A-313,row,single_reader,cycles confirmed by fewer than two readers
+S12A-314,row,single_reader,cycles confirmed by fewer than two readers
+S12A-315,row,single_reader,cycles confirmed by fewer than two readers
+S12A-316,row,single_reader,cycles confirmed by fewer than two readers
+S12A-317,row,confirmed,
+S12A-318,row,confirmed,
+S12A-319,row,confirmed,
+S12A-320,row,confirmed,
+S12A-321,row,confirmed,
+S12A-322,row,confirmed,
+S12A-323,row,confirmed,
+S12A-324,row,confirmed,
+S12A-325,row,confirmed,
+S12A-326,row,confirmed,
+S12A-327,row,confirmed,
+S12A-328,row,confirmed,
+S12A-329,row,confirmed,
+S12A-330,row,confirmed,
+S12A-331,row,confirmed,
+S12A-332,row,confirmed,
+S12A-333,row,confirmed,
+S12A-334,row,confirmed,
+S12A-335,row,confirmed,
+S12A-336,row,confirmed,
+S12A-337,row,confirmed,
+S12A-338,row,confirmed,
+S12A-339,row,confirmed,
+S12A-340,row,confirmed,
+S12A-341,row,confirmed,
+S12A-342,row,confirmed,
+S12A-343,row,confirmed,
+S12A-344,row,confirmed,
+S12A-345,row,confirmed,
+S12A-346,row,confirmed,
+S12A-347,row,confirmed,
+S12A-348,row,confirmed,
+S12A-349,row,confirmed,
+S12A-350,row,confirmed,
+S12A-351,row,confirmed,
+S12A-352,row,confirmed,
+S12A-353,row,confirmed,
+S12A-354,row,single_reader,no value field to confirm
+S12A-355,row,single_reader,no value field to confirm
+S12A-356,row,single_reader,no value field to confirm
+S12A-357,row,single_reader,no value field to confirm
+S12A-358,row,single_reader,no value field to confirm
+S12A-359,row,single_reader,no value field to confirm
+S12A-360,row,single_reader,no value field to confirm
+S12A-361,row,single_reader,no value field to confirm
+S12A-362,row,single_reader,no value field to confirm
+S12A-363,row,single_reader,no value field to confirm
+S12A-364,row,single_reader,no value field to confirm
+S12A-365,row,single_reader,no value field to confirm
+S12A-366,row,single_reader,no value field to confirm
+S12A-367,row,confirmed,
+S12A-368,row,confirmed,
+S12A-369,row,confirmed,
+S12A-370,row,confirmed,
+S12A-371,row,confirmed,
+S12A-372,row,confirmed,
+S12A-373,row,confirmed,
+S12A-374,row,confirmed,
+S12A-375,row,confirmed,
+S12A-376,row,confirmed,
+S12A-377,row,confirmed,
+S12A-378,row,confirmed,
+S12A-379,row,confirmed,
+S12A-380,row,confirmed,
+S12A-381,row,confirmed,
+S12A-382,row,confirmed,
+S12A-383,row,confirmed,
+S12A-384,row,confirmed,
+S12A-385,row,confirmed,
+S12A-386,row,confirmed,
+S12A-387,row,confirmed,
+S12A-388,row,confirmed,
+S12A-389,row,confirmed,
+S12A-390,row,confirmed,
+S12A-391,row,confirmed,
+S12A-392,row,confirmed,
+S12A-393,row,confirmed,
+S12A-394,row,confirmed,
+S12A-395,row,confirmed,
+S12A-396,row,confirmed,
+S12A-397,row,confirmed,
+S12A-398,row,confirmed,
+S12A-399,row,confirmed,
+S12A-400,row,confirmed,
+S12A-401,row,confirmed,
+S12A-402,row,confirmed,
+S12A-403,row,confirmed,
+S12A-404,row,confirmed,
+S12A-405,row,confirmed,
+S12A-406,row,confirmed,
+S12A-407,row,confirmed,
+S12A-408,row,confirmed,
+S12A-409,row,confirmed,
+S12A-410,row,confirmed,
+S12A-411,row,confirmed,
+S12A-412,row,confirmed,
+S12A-413,row,confirmed,
+S12A-414,row,confirmed,
+S12A-415,row,confirmed,
+S12A-416,row,confirmed,
+S12A-417,row,confirmed,
+S12A-418,row,confirmed,
+S12A-419,row,confirmed,
+S12A-420,row,single_reader,cycles confirmed by fewer than two readers
+S12A-421,row,single_reader,cycles confirmed by fewer than two readers
+S12A-422,row,single_reader,cycles confirmed by fewer than two readers
+S12A-423,row,single_reader,cycles confirmed by fewer than two readers
+S12A-424,row,single_reader,cycles confirmed by fewer than two readers
+S12A-425,row,single_reader,cycles confirmed by fewer than two readers
+S12A-426,row,single_reader,cycles confirmed by fewer than two readers
+S12A-427,row,single_reader,cycles confirmed by fewer than two readers
+S12A-428,row,single_reader,cycles confirmed by fewer than two readers
+S12A-429,row,single_reader,cycles confirmed by fewer than two readers
+S12A-430,row,single_reader,cycles confirmed by fewer than two readers
+S12A-431,row,single_reader,cycles confirmed by fewer than two readers
+S12A-432,row,single_reader,cycles confirmed by fewer than two readers
+S12A-433,row,single_reader,cycles confirmed by fewer than two readers
+S12A-434,row,single_reader,cycles confirmed by fewer than two readers
+S12A-435,row,single_reader,cycles confirmed by fewer than two readers
+S12A-436,row,single_reader,cycles confirmed by fewer than two readers
+S12A-437,row,confirmed,
+S12A-438,row,confirmed,
+S12A-439,row,confirmed,
+S12A-440,row,confirmed,
+S12A-441,row,confirmed,
+S12A-442,row,confirmed,
+S12A-443,row,confirmed,
+S12B-001,row,single_reader,no value field to confirm
+S12B-002,row,single_reader,no value field to confirm
+S12B-003,row,single_reader,key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-004,row,single_reader,no value field to confirm
+S12B-005,row,single_reader,no value field to confirm
+S12B-006,row,single_reader,key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-007,row,single_reader,no value field to confirm
+S12B-008,row,single_reader,no value field to confirm
+S12B-009,row,single_reader,key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-010,row,single_reader,no value field to confirm
+S12B-011,row,single_reader,no value field to confirm
+S12B-012,row,single_reader,key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-013,row,single_reader,no value field to confirm
+S12B-014,row,single_reader,no value field to confirm
+S12B-015,row,single_reader,key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-016,row,single_reader,no value field to confirm
+S12B-017,row,single_reader,no value field to confirm
+S12B-018,row,single_reader,key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-019,row,single_reader,no value field to confirm
+S12B-020,row,single_reader,no value field to confirm
+S12B-021,row,single_reader,key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-022,row,single_reader,no value field to confirm
+S12B-023,row,single_reader,no value field to confirm
+S12B-024,row,single_reader,key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-025,row,single_reader,no value field to confirm
+S12B-026,row,single_reader,no value field to confirm
+S12B-027,row,single_reader,key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-028,row,single_reader,no value field to confirm
+S12B-029,row,single_reader,no value field to confirm
+S12B-030,row,single_reader,no value field to confirm
+S12B-031,row,single_reader,no value field to confirm
+S12B-032,row,single_reader,no value field to confirm
+S12B-033,row,single_reader,no value field to confirm
+S12B-034,row,single_reader,no value field to confirm
+S12B-035,row,single_reader,no value field to confirm
+S12B-036,row,single_reader,no value field to confirm
+S12B-037,row,single_reader,no value field to confirm
+S12B-038,row,single_reader,no value field to confirm
+S12B-039,row,single_reader,no value field to confirm
+S12B-040,row,single_reader,no value field to confirm
+S12BL-001,fact,confirmed,
+S12BL-002,fact,confirmed,
+S12BL-003,fact,confirmed,
+S12BL-004,fact,confirmed,
+S12BL-005,fact,confirmed,
+S12BL-006,fact,confirmed,
+S12BL-007,fact,confirmed,
+S12BL-008,fact,confirmed,
+S12BL-009,fact,confirmed,
+S12BL-010,fact,confirmed,
+S12BL-011,fact,confirmed,
+S12BL-012,fact,confirmed,
+S12BL-013,fact,confirmed,
+S12BL-014,fact,confirmed,
+S12BL-015,fact,confirmed,
+S12BL-016,fact,confirmed,
+S12BL-017,fact,confirmed,
+S12BL-018,fact,confirmed,
+S12BL-019,fact,confirmed,
+S12BL-020,fact,confirmed,
+S12BL-021,fact,confirmed,
+S12BL-022,fact,confirmed,
+S12BL-023,fact,confirmed,
+S12BL-024,fact,confirmed,
+S12BL-025,fact,confirmed,
+S12BL-026,fact,confirmed,
+S12BL-027,fact,confirmed,
+S12BL-028,fact,confirmed,
+S12BL-029,fact,confirmed,
+S12BL-030,fact,confirmed,
+S12BL-031,fact,confirmed,
+S12BL-032,fact,confirmed,
+S12BL-033,fact,confirmed,
+S12BL-034,fact,confirmed,
+S12BL-035,fact,confirmed,
+S12BL-036,fact,confirmed,
+S12BL-037,fact,confirmed,
+S12BL-038,fact,confirmed,
+S12BL-039,fact,confirmed,
+S12BL-040,fact,confirmed,
+S12BL-041,fact,confirmed,
+S12BL-042,fact,confirmed,
+S12BL-043,fact,blocked,value: ambiguous_source
+S12BL-044,fact,blocked,value: ambiguous_source
+S12BL-045,fact,confirmed,
+S12BL-046,fact,confirmed,
+S12BL-047,fact,confirmed,
+S12BL-048,fact,confirmed,
+S12BL-049,fact,blocked,value: ambiguous_source
+S12BL-050,fact,confirmed,
+S12BL-051,fact,confirmed,
+S12BL-052,fact,blocked,value: ambiguous_source
+S12BL-053,fact,confirmed,
+S12BL-054,fact,confirmed,
+S12BL-055,fact,confirmed,
+S12BL-056,fact,confirmed,
+S12BL-057,fact,confirmed,
+S12BL-058,fact,confirmed,
+S12BL-059,fact,confirmed,
+S12BL-060,fact,confirmed,
+S12BL-061,fact,confirmed,
+S12BL-062,fact,confirmed,
+S12BL-063,fact,confirmed,

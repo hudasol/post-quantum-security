@@ -1,0 +1,84 @@
+id,field,verdict,correct_value,note
+S12A-246,ram_bytes,reader_right,14271,"Table 1 RAM cell printed '13343 + 928'; caption: 'RAM consists of a configurable transient work area, and some additional stack use', so RAM total = 14271. value_A is the work area term only."
+S12A-247,ram_bytes,reader_right,42015,"Table 1 RAM cell printed '39967 + 2048'; caption: 'RAM consists of a configurable transient work area, and some additional stack use', so RAM total = 42015. value_A is the work area term only."
+S12A-248,ram_bytes,reader_right,2951,"Table 1 RAM cell printed '2079 + 872'; caption: 'RAM consists of a configurable transient work area, and some additional stack use', so RAM total = 2951. value_A is the work area term only."
+S12A-249,ram_bytes,reader_right,2951,"Table 1 RAM cell printed '2079 + 872'; caption: 'RAM consists of a configurable transient work area, and some additional stack use', so RAM total = 2951. value_A is the work area term only."
+S12A-250,ram_bytes,reader_right,27583,"Table 1 RAM cell printed '26655 + 928'; caption: 'RAM consists of a configurable transient work area, and some additional stack use', so RAM total = 27583. value_A is the work area term only."
+S12A-251,ram_bytes,reader_right,82063,"Table 1 RAM cell printed '79903 + 2160'; caption: 'RAM consists of a configurable transient work area, and some additional stack use', so RAM total = 82063. value_A is the work area term only."
+S12A-252,ram_bytes,reader_right,4999,"Table 1 RAM cell printed '4127 + 872'; caption: 'RAM consists of a configurable transient work area, and some additional stack use', so RAM total = 4999. value_A is the work area term only."
+S12A-253,ram_bytes,reader_right,4999,"Table 1 RAM cell printed '4127 + 872'; caption: 'RAM consists of a configurable transient work area, and some additional stack use', so RAM total = 4999. value_A is the work area term only."
+S12A-334,stack_bytes,staged_right,,"README stack tables: key generation, Cortex-M0: p256-m 608, TinyCrypt 824. value_B is the TinyCrypt column."
+S12A-335,stack_bytes,staged_right,,"README stack tables: ECDH shared secret, Cortex-M0: p256-m 640, TinyCrypt 728. value_B is the TinyCrypt column."
+S12A-336,stack_bytes,staged_right,,"README stack tables: ECDSA sign, Cortex-M0: p256-m 664, TinyCrypt 880. value_B is the TinyCrypt column."
+S12A-337,stack_bytes,staged_right,,"README stack tables: ECDSA verify, Cortex-M0: p256-m 752, TinyCrypt 824. value_B is the TinyCrypt column."
+S12A-344,stack_bytes,staged_right,,"README stack tables: key generation, Cortex-M4: p256-m 564, TinyCrypt 796. value_B is the TinyCrypt column."
+S12A-345,stack_bytes,staged_right,,"README stack tables: ECDH shared secret, Cortex-M4: p256-m 596, TinyCrypt 700. value_B is the TinyCrypt column."
+S12A-346,stack_bytes,staged_right,,"README stack tables: ECDSA sign, Cortex-M4: p256-m 604, TinyCrypt 844. value_B is the TinyCrypt column."
+S12A-347,stack_bytes,staged_right,,"README stack tables: ECDSA verify, Cortex-M4: p256-m 700, TinyCrypt 808. value_B is the TinyCrypt column."
+S12BL-022,value,staged_right,,"Sec 4.1 lists SATCOM 2.4 kbps 500 ms delay and UAV 57.6 kbps 40 ms delay (plus clear, no figures); source does not tie ids to profiles, but staged quantity for this id names the UAV profile, so 57.6 kbps / 40 ms is consistent and correct."
+S12BL-023,value,staged_right,,"Sec 4.1: 'low-rate satellite link (SATCOM, 2.4 kbps, 500 ms delay)'; complements S12BL-022 staged as UAV."
+S12BL-043,value,ambiguous_source,,"Section 2 states SF 9, 115 B max payload, 530 downlinks/hour (~1 per 7 s), ~100 KB firmware, more than 900 fragments of 112 B, duration exceeding 100 minutes. value_A merges the fragments and duration facts; B/C chose duration (>100 min). Source does not tie this id to one figure."
+S12BL-044,value,ambiguous_source,,Abstract: client and server exchange more than 10 signaling packets; handshake takes between a handful of seconds and several tens of seconds; constrained nodes maintain 3-5 simultaneous DTLS sessions. value_A ('more than 10') is stated but the source does not say which figure this id is.
+S12BL-049,value,ambiguous_source,,"Conclusion: preamble sampling handshake can exceed 50 s; beacon-enabled up to 35 s (largest BI ~4 s); TSCH 101 slots, single dedicated cell 5.5 s average, 2.6 s with 3 cells. value_A ('up to 35') is stated but id-to-figure link is unclear."
+S12BL-051,value,staged_right,,"Summary p.iii: 7000 byte firmware transmission times of less than one hour at SF 7, 8 and 9."
+S12BL-052,value,ambiguous_source,,"Summary p.iii: between 3 and 9 hours at SF 10 and 12 respectively; Abstract p.iv: rises to 9 hours at the lowest data rate, closer to 5 hours expected after module bug fix. value_A (3 to 9) and B/C (9) are both stated; source does not make clear which this id is."
+S12A-049,operation,staged_right,,Column 'Key Generation' in pqm4 signature table; keygen is a fair naming.
+S12A-058,operation,staged_right,,Column 'Key Generation' in pqm4 signature table; keygen is a fair naming.
+S12A-076,operation,staged_right,,Column 'Key Generation' in pqm4 signature table; keygen is a fair naming.
+S12A-092,operation,staged_right,,"Table 1 'Keccak benchmarking results', row [17] (XKCP), Before M7 cc 6262; measures one Keccak permutation (paper refers to 'Cortex-M7 Keccak permutation from [4]')."
+S12A-094,library,staged_right,,"Row 'M4 [4]'; ref [4] Alexandre Adomnicai 2023, 'An update on Keccak performance on ARMv7-M', ePrint 2023/773; Before M4 cc 9397."
+S12A-098,library,staged_right,,"Row 'M7 [4]'; ref [4] Adomnicai, ePrint 2023/773, Cortex-M7-tuned; Before M7 cc 5573."
+S12A-128,library,staged_right,,"Row 'M7 Ours' = authors' SLOTHY-optimised Cortex-M7 code starting from pqm4 implementation, m4fstack block (Table 5 ML-DSA-44 Sign 7633106 / Verify 1983998; Table 6 ML-KEM-768 Encaps 386586)."
+S12A-129,library,staged_right,,"Row 'M7 Ours' = authors' SLOTHY-optimised Cortex-M7 code starting from pqm4 implementation, m4fstack block (Table 5 ML-DSA-44 Sign 7633106 / Verify 1983998; Table 6 ML-KEM-768 Encaps 386586)."
+S12A-179,library,staged_right,,"Row 'M7 Ours' = authors' SLOTHY-optimised Cortex-M7 code starting from pqm4 implementation, m4fstack block (Table 5 ML-DSA-44 Sign 7633106 / Verify 1983998; Table 6 ML-KEM-768 Encaps 386586)."
+S12A-220,operation,staged_right,,"Table 2 row 'Falcon-1024-EMU Key Gen', Avg 342,533 KCycles."
+S12A-223,operation,staged_right,,"Falcon stack table is numbered Table 5 in the paper (Table 4 is Dilithium RAM); Falcon-512-FPU Sign Dyn 1,920 B. Paper names op 'sign dynamic' but does not spell out the LDL-tree gloss."
+S12A-226,operation,staged_right,,"Table 2 row 'Falcon-1024-FPU Sign Dyn' Avg 10,243 KCycles; paper calls it 'sign dynamic' (tree gloss not stated in paper)."
+S12A-232,operation,staged_right,,"Table 2 row 'Falcon-512-EMU Sign Tree' Avg 13,298 KCycles; paper lists 'sign tree' and a separate 'Exp SK' (expand private key) operation."
+S12A-316,library,staged_right,,"Saarinen, 'Accelerating SLH-DSA by Two Orders of Magnitude with a Single Hash Unit'; Table 6 'protected SLotH (TI Keccak)'; SHAKE-256s Sign 391,246,520."
+S12A-317,operation,staged_right,,"Table 3 column X25519 (ECDH key exchange on Curve25519, Montgomery ladder); M4 @ 48 MHz 925.7 x10^3 cycles."
+S12A-320,operation,staged_right,,"Caption: verification of a 5-byte message in Ed25519; M4 @ 48 MHz Verify 1,323 x10^3 cycles."
+S12A-321,operation,staged_right,,"Table 3 X25519, M4 @ 72 MHz 1,036.6 x10^3 cycles."
+S12A-322,operation,staged_right,,"Table 3 'Ed25519 Key Gen.', M4 @ 72 MHz 385.6 x10^3 cycles."
+S12A-325,operation,staged_right,,"Table 3 X25519, M4 @ 84 MHz (STM32F401C) 913.8 x10^3 cycles."
+S12A-338,scheme,staged_right,,README: 'Minimal implementation of ECDH & ECDSA on NIST P-256'; code size Cortex-M0 p256-m 2988.
+S12A-345,scheme,staged_right,,Row p256_ecdh_shared_secret is ECDH on NIST P-256 (library implements ECDH & ECDSA on P-256).
+S12A-347,library,staged_right,,Column is p256-m (700 B on Cortex-M4); TinyCrypt is the comparison column (808). Repo owner mpg (Manuel Pegourie-Gonnard).
+S12A-364,library,staged_right,,"Page: 'Benchmark generated with CycloneCRYPTO 2.6.4'; NuMaker-M5531, M5531 includes crypto hardware acceleration; hardware column."
+S12A-365,library,staged_right,,Same page; Hash Algorithms 'Speed (Hardware)' column; CycloneCRYPTO 2.6.4.
+S12A-367,operation,staged_right,,Table 9 column 'key gen'; LMS SHA-256 w=256 h=5 d=1 key gen 941182086.
+S12A-367,parameter_set,staged_right,,"Row LMS, SHA-256, w=256, h=5, d=1; paper uses n=256 for SHA-256 (n = digest length in bits); d=1 is a single tree."
+S12A-368,core,staged_right,,Table 9 LMS SHA-256 w=256 h=5 d=1 sign 1009663117. Page header 'LMS vs XMSS: Comparison on ARM Cortex-M4'; Sec 5: STM32F4DISCOVERY '32-bit ARM Cortex-M4 with FPU core' (= Cortex-M4F).
+S12A-386,parameter_set,staged_right,,"Table 10 row LMS, SHAKE256, w=256, h=10, d=1 (sign 124768084452); n=256 per paper convention; d=1 single tree."
+S12A-391,core,staged_right,,Table 11 XMSSMT SIMPLE SHA-256 key gen 243495342. Page header 'LMS vs XMSS: Comparison on ARM Cortex-M4'; Sec 5: STM32F4DISCOVERY '32-bit ARM Cortex-M4 with FPU core' (= Cortex-M4F).
+S12A-394,scheme,staged_right,,"Table 11 row 'XMSSMT SIMPLE+PRE, SHA-256, w=16, h=10, d=2'; scheme is XMSS^MT (SIMPLE+PRE is the variant)."
+S12A-398,core,staged_right,,Table 11 HSS SHA-256 w=256 sign 2140447370. Page header 'LMS vs XMSS: Comparison on ARM Cortex-M4'; Sec 5: STM32F4DISCOVERY '32-bit ARM Cortex-M4 with FPU core' (= Cortex-M4F).
+S12A-399,core,staged_right,,Table 11 HSS SHA-256 w=256 verify 26690663. Page header 'LMS vs XMSS: Comparison on ARM Cortex-M4'; Sec 5: STM32F4DISCOVERY '32-bit ARM Cortex-M4 with FPU core' (= Cortex-M4F).
+S12A-400,parameter_set,staged_right,,"Table 11 row XMSSMT ROBUST, SHAKE256, w=16, h=10, d=2 (key gen 1569879645); n=256, d=2 = 2 layers."
+S12A-403,core,staged_right,,Table 11 XMSSMT SIMPLE SHAKE256 key gen 515090566. Page header 'LMS vs XMSS: Comparison on ARM Cortex-M4'; Sec 5: STM32F4DISCOVERY '32-bit ARM Cortex-M4 with FPU core' (= Cortex-M4F).
+S12A-405,core,staged_right,,Table 11 XMSSMT SIMPLE SHAKE256 verify 16371600. Page header 'LMS vs XMSS: Comparison on ARM Cortex-M4'; Sec 5: STM32F4DISCOVERY '32-bit ARM Cortex-M4 with FPU core' (= Cortex-M4F).
+S12A-408,core,staged_right,,Table 11 HSS SHAKE256 w=16 verify 12421365. Page header 'LMS vs XMSS: Comparison on ARM Cortex-M4'; Sec 5: STM32F4DISCOVERY '32-bit ARM Cortex-M4 with FPU core' (= Cortex-M4F).
+S12A-409,core,staged_right,,Table 11 HSS SHAKE256 w=256 key gen 3882761056. Page header 'LMS vs XMSS: Comparison on ARM Cortex-M4'; Sec 5: STM32F4DISCOVERY '32-bit ARM Cortex-M4 with FPU core' (= Cortex-M4F).
+S12A-418,device,staged_right,,"Slide 9: 'RISC-V based PULPino microcontroller', CV32e40p; area table Xilinx UltraScale+ and GF 22nm; GF 22nm ASIC layout (slide 3). Slide 10 Falcon-512 base Verify 830,597."
+S12A-432,parameter_set,staged_right,,"Table 3 (E31 RISC-V) AES-128 encryption rows; 'Semi-fixsliced' is the implementation variant, the parameter set is AES-128. Read via WebFetch summary, not verbatim."
+S12B-001,scheme,staged_right,,"Dil2-Kyb1 = Dilithium2 auth + Kyber512 KEM (Table 1); client 96.318 ms. Paper does not name a NIST round explicitly (says NIST had selected 4 algorithms), so 'round 3' is inferred, not stated."
+S12B-002,operation,staged_right,,"Table 2 PQ TLS 1.3 Handshake Measurements, server 91.062 ms; peers 'mutually authenticated'; devices connected 'through the Ethernet interface'."
+S12B-014,operation,staged_right,,"Table 2 Dil3-Kyb5 server 152.537 ms; TLS 1.3, mutual authentication, Ethernet."
+S12B-019,scheme,staged_right,,Sph1s-Kyb1 = Sphincs128s auth + Kyber512 (Table 1); client 66 977.000 ms. NIST round not stated explicitly.
+S12B-024,scheme,staged_right,,"Table 2 row RSA-ECDHE, Communication Sizes 3742 bytes; classical baseline."
+S12B-029,operation,staged_right,,"Table A1 TLS 1.2 handshakes with PQ KEMs, KYBER512 mean 1572.51 ms sigma 42.83; measured on edge device (client) from ClientHello to server Finished; BLE, 6LoWPAN, IPv6, TCP."
+S12B-036,operation,staged_right,,Sec 8 pqc_boot_verify: 'Under bootloader conditions (~80 MHz CPU context)'; 'ML-DSA-65 verify: ~68 ms (software path)'.
+S12BL-003,conditions,staged_right,,"Table 8 'Relative costs for SUIT with quantum resistance (ARM Cortex M4)', base U3 = 53kB; RIOT on nRF52840dk; U3 = small firmware update including crypto libraries (~50kB)."
+S12BL-007,unit,staged_right,,"Table 8 LMS/SHA3-256 U3 printed '+43%', relative to base w. Ed25519/SHA256."
+S12BL-008,conditions,staged_right,,"Table 8 Dilithium/SHA3-256 U2 '+4.3%'; U2 = small firmware update without crypto libraries (~50kB); nRF52840dk Cortex-M4, RIOT."
+S12BL-009,conditions,staged_right,,Table 8 Dilithium/SHA3-256 U3 '+34%'; U3 = including crypto libraries (~50kB).
+S12BL-021,conditions,staged_right,,"Table 4 row SATCOM-SBD: 0.1 Hz, 2.4 kbps, MTU 340 B, budget 1500 B, cmd 20 s, hs 60 s; text: 'low-rate SATCOM link (MTU 340 B)', Iridium SBD cited."
+S12BL-022,quantity,staged_right,,"Sec 4.1: profiles shaped with netem on the two-node testbed; 'a UAV telemetry radio (UAV, 57.6 kbps, 40 ms delay)'; Table 5 two-node handshake over clear and UAV profiles."
+S12BL-022,unit,reader_right,kbps; ms,"Source gives '57.6 kbps, 40 ms delay'; it does not say the delay is one way, so value_A adds an unstated qualifier and names no unit."
+S12BL-024,conditions,reader_right,"Table III: Bytes-Over-The Air, measured using Mbed TLS","PSK AES-128-CCM 1.2 = 627. Caption 'Bytes-Over-The Air, measured using Mbed TLS'. Paper names P256r1 and P521r1 as setup variations but never states which curve Table III used, so value_A's 'NIST P-256' is unsupported."
+S12BL-027,conditions,reader_right,"Table III: Bytes-Over-The Air, measured using Mbed TLS","ECDHE-ECDSA AES-128-CCM 1.3 = 1500. Caption 'Bytes-Over-The Air, measured using Mbed TLS'. Paper names P256r1 and P521r1 as setup variations but never states which curve Table III used, so value_A's 'NIST P-256' is unsupported."
+S12BL-028,conditions,reader_right,"Table III: Bytes-Over-The Air, measured using Mbed TLS","ECDHE-ECDSA AES-256-CCM 1.2 = 1879. Caption 'Bytes-Over-The Air, measured using Mbed TLS'. Paper names P256r1 and P521r1 as setup variations but never states which curve Table III used, so value_A's 'NIST P-256' is unsupported."
+S12BL-029,conditions,reader_right,"Table III: Bytes-Over-The Air, measured using Mbed TLS","ECDHE-ECDSA AES-256-CCM 1.3 = 1542. Caption 'Bytes-Over-The Air, measured using Mbed TLS'. Paper names P256r1 and P521r1 as setup variations but never states which curve Table III used, so value_A's 'NIST P-256' is unsupported."
+S12BL-038,conditions,staged_right,,"Table 4 caption 'Energy and time reduction for update using bpatch on Repository 1', first row 975|114|12.17|395|46|4.93|2.47|7.24; STM32WL55JC (Sec 5); 868 MHz, SF 9, 112 B fragments, 530 downlinks/hour (Sec 2)."
+S12BL-051,conditions,reader_right,"LoRa Class A, RN2483 module, Piggybacked Selective Repeat ARQ",Summary: Stop and Wait ARQ 'only tested for illustrative purposes'; experiments used RN2483 with the Piggybacked Selective Repeat ARQ (Class A). EU868 is not mentioned in Summary or Abstract.
+S12BL-060,conditions,staged_right,,"Table 1 row '5 (I->R)', KEM-based EDHOC 35 bytes; initiator to responder."
