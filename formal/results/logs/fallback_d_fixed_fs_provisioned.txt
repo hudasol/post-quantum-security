@@ -1,0 +1,3 @@
+goal reachable: event(VKey((nv_2,ng_2),kdfp(kp[],nv_2,ng_2))) && attacker_p1(kdfp(kp[],nv_2,ng_2))
+RESULT not (event(VKey(s,k)) && attacker_p1(k)) is false.
+Query not (event(VKey(s,k)) && attacker_p1(k)) is false.

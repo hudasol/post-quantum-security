@@ -1,0 +1,11 @@
+goal reachable: event(Booted(dev_3,3,3))
+goal reachable: event(Booted(dev_3,2,3))
+goal reachable: event(Booted(dev_3,2,2))
+goal reachable: event(Booted(dev_3,1,3))
+goal reachable: event(Booted(dev_3,1,2))
+goal reachable: event(Booted(dev_3,1,1))
+goal reachable: event(Booted(dev_3,0,3))
+goal reachable: event(Booted(dev_3,0,2))
+goal reachable: event(Booted(dev_3,0,1))
+RESULT event(Booted(d,p,n)) ==> n ≥ p is true.
+Query event(Booted(d,p,n)) ==> n ≥ p is true.

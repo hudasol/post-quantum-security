@@ -1,0 +1,4 @@
+goal reachable: @sid ≠ @sid_1 && b-inj-event(Send(1,m1_2),@occ5_1) && b-inj-event(Send(2,m2_2),@occ8_1) && b-inj-event(Send(1,m1_3),@occ5_2) && b-inj-event(Send(1,m1_4),@occ5_3) -> inj-event(Acc(2,m2_2),@occ19_1) && inj-event(Acc(2,m2_2),@occ19_2)
+RESULT inj-event(Acc(t,m)) ==> inj-event(Send(t,m)) is false.
+RESULT (but event(Acc(t,m)) ==> event(Send(t,m)) is true.)
+Query inj-event(Acc(t,m)) ==> inj-event(Send(t,m)) is false.
