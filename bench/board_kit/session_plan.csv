@@ -17,4 +17,4 @@ estimated,15,B1,b1_mlkem_1024,ML-KEM-1024,portable_c,harness,3,100,stand in: pqm
 estimated,16,B1,b1_mldsa_44,ML-DSA-44,portable_c,harness,3,100,stand in: pqm4 clean S2-0028+S2-0029+S2-0030,59.3,3.6,20.0,90.0,298.7
 estimated,17,B1,b1_mldsa_65,ML-DSA-65,portable_c,harness,3,100,stand in: pqm4 clean S2-0037+S2-0038+S2-0039,94.7,3.6,20.0,90.0,404.8
 estimated,18,B1,b1_mldsa_87,ML-DSA-87,portable_c,harness,3,100,stand in: pqm4 clean S2-0046+S2-0047+S2-0048,132.7,3.6,20.0,90.0,518.7
-estimated (assumed),19,both,"set up, counter check, wiring",,,,,,assumed,,,,900.0,900.0
+estimated,19,both,"set up, counter check, wiring",,,,,,assumed,,,,900.0,900.0

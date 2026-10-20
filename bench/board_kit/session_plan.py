@@ -96,7 +96,7 @@ def plan(evidence, logdir, flash_s, power_s, setup_s):
                      "iterations": it, "cycles_source": src,
                      "compute_s_per_run": round(compute, 1), "uart_s_per_run": round(uart, 1),
                      "flash_s": flash_s, "handling_s": handling, "total_s": round(total, 1)})
-    rows.append({"label": "estimated (assumed)", "step": len(rows) + 1, "experiment": "both",
+    rows.append({"label": "estimated", "step": len(rows) + 1, "experiment": "both",
                  "image": "set up, counter check, wiring", "scheme": "", "variant": "", "kind": "",
                  "runs": "", "iterations": "", "cycles_source": "assumed",
                  "compute_s_per_run": "", "uart_s_per_run": "", "flash_s": "", "handling_s": setup_s,
