@@ -65,6 +65,10 @@ jobs:
         run: |
           python3 scripts/summarize_verification3.py > /dev/null
           git diff --exit-code docs/VERIFICATION3.md data/verify3/summary.csv
+      - name: Meta analysis regenerates from the evidence table
+        run: |
+          python3 scripts/meta_analysis.py
+          git diff --exit-code docs/META_ANALYSIS.md data/meta/
       - name: Proposal regenerates from the result files
         run: |
           python3 scripts/build_proposal.py
