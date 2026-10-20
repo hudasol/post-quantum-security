@@ -1,0 +1,4 @@
+input,low,high,S1,S1_conf,ST,ST_conf,label
+data_lifetime_years,1.0000,25.0000,0.3993,0.0549,0.9061,0.0546,modelled
+migration_years,1.0000,8.0000,0.0412,0.0252,0.4642,0.0540,modelled
+horizon_year,2030,2036,0.0231,0.0301,0.3653,0.0478,modelled

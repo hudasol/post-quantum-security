@@ -1,0 +1,11 @@
+fleet,thresholds,draws,median,p2_5,p97_5,median_ci_low,median_ci_high,label
+synthetic,stack_asm,1,0.2600,0.2600,0.2600,0.2600,0.2600,estimated
+synthetic,speed_asm,1,0.2770,0.2770,0.2770,0.2770,0.2770,estimated
+synthetic,portable_c,1,0.3680,0.3680,0.3680,0.3680,0.3680,estimated
+synthetic,reference_c,1,0.3820,0.3820,0.3820,0.3820,0.3820,estimated
+synthetic,uncertain,200,0.3140,0.2619,0.3740,0.3050,0.3245,estimated
+profile,stack_asm,200,0.1860,0.1860,0.1860,0.1860,0.1860,estimated
+profile,speed_asm,200,0.1890,0.1860,0.1920,0.1880,0.1890,estimated
+profile,portable_c,200,0.2220,0.2110,0.2340,0.2210,0.2230,estimated
+profile,reference_c,200,0.2340,0.2230,0.2480,0.2330,0.2350,estimated
+profile,uncertain,200,0.2010,0.1860,0.2320,0.1990,0.2060,estimated

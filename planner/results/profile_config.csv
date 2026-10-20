@@ -1,0 +1,15 @@
+key,value,label
+seed,20261020,assumption
+round3_fleet_seed,20262016,synthetic
+draws,200,assumption
+devices,1000,synthetic
+profile_mix,equal shares over 9 boards,synthetic
+free_share_main,"(0.05, 0.5)",assumption
+free_share_low,"(0.02, 0.2)",assumption
+free_share_high,"(0.2, 0.8)",assumption
+data_lifetime_years,"(1.0, 25.0)",assumption
+migration_years,"(1.0, 8.0)",assumption
+horizon_years,2035 2030 2031 2035 2030 2035 2031 2035 2031 2035 2031,published
+horizon_rows,P02 P05 P06 P07 P09 P10 P12 P13 P18 P19 P22,published
+sobol_n,4096,assumption
+today_year,2026,assumption
