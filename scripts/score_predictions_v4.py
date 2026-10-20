@@ -53,8 +53,11 @@ def main():
     e = R("energy/results/energy_per_op.csv")
     ee = e[e.op == "mldsa44_verify"]
     worst = ee.loc[ee.energy_uj_estimated.idxmax()]
+    kf = float(R("energy/results/validation_split.csv").query("set == 'calibration'").ratio_published_over_estimated.median())
+    n_cal = int((ee.energy_uj_estimated * kf > 1000).sum())
     S["V8"] = (verdict(float(ee.energy_uj_estimated.max()) < 1000),
-               f"Largest estimate {worst.energy_uj_estimated:.0f} uJ on {worst.part}; every other part below 1 mJ.")
+               f"Largest estimate {worst.energy_uj_estimated:.0f} uJ on {worst.part}; every other part below 1 mJ on the uncalibrated estimate the prediction names. "
+               f"The one board with published energy reads {kf:.2f} times the uncalibrated estimate; scaled by that factor, {n_cal} parts exceed 1 mJ, so the verdict does not survive calibration.")
     mn = R("energy/results/mission_nominal.csv")
     hy = mn[mn.design.str.contains("HMAC")]
     S["V9"] = (verdict(float(hy.battery_pct_per_h_modelled.max()) < 0.1, float(hy.battery_pct_per_h_modelled.max()) <= 1),
@@ -64,9 +67,9 @@ def main():
     top = so.loc[so.S1.idxmax()]
     S["V10"] = ("not scored", f"Battery capacity, named in the refutation clause, was not an input of the sensitivity run, and the indices were computed for the per command ML-DSA-44 design rather than the session workload; the prediction could not fail as run. For information: largest first order index {top.input} ({top.S1:.2f}).")
     va = R("linksim/results/validation_v4.csv")
-    lora = va[va.figure.str.startswith("LoRa example") & (va.model.str.contains("formula", case=False) | (va.pct_error.abs() < 10))]
+    lora = va[va.figure.str.startswith("LoRa example") & va.model.str.startswith("time on air formula")]
     worst_l = float(lora.pct_error.abs().max())
-    S["V11"] = ("between", f"Only one published example states every parameter, and it matches exactly; for the others the unstated settings were chosen because they reproduce the published value, so they are not independent checks. Largest error over all examples {worst_l:.2f} percent.")
+    S["V11"] = (verdict(worst_l <= 1.0, worst_l <= 5.0), f"Largest error of the time on air formula over {len(lora)} published examples: {worst_l:.2f} percent (the third round model, kept in the table for comparison, is not the model this prediction names). Weak: only one example states every parameter; for the others the unstated settings were chosen because they reproduce the published value.")
     dg = R("linksim/results/diagnosis_v4.csv")
     fac = float(dg[dg.step.astype(str) == "6"].factor_below_low_after.iloc[0])
     S["V12"] = (verdict(fac >= 2, fac >= 1.5), f"After every cited cost the model is {fac:.1f} times below the 30 s low end.")
@@ -77,7 +80,7 @@ def main():
     import subprocess, sys as _sys
     t = subprocess.run([_sys.executable, "-m", "unittest", "linksim.tests.test_v4.TestMac802154.test_fragment_counts_independent"], cwd=ROOT, capture_output=True, text=True)
     frag_ok = t.returncode == 0
-    S["V13"] = (verdict(ok_duty and frag_ok), f"Duty cycle waits equal the closed form ({len(duty)} cases); the fragment count test against an independent RFC 4944 count {'passes' if frag_ok else 'fails'} when run by this script.")
+    S["V13"] = (verdict(ok_duty and frag_ok), f"Duty cycle waits equal the closed form ({len(duty)} cases; this compares the code with the formula it implements, so it checks arithmetic only, on the LoRaWAN profile of the link simulator); the fragment count test against an independent RFC 4944 count {'passes' if frag_ok else 'fails'} when run by this script.")
     sw = cf[cf.check.str.startswith("stop and wait")]
     sim = cf[cf.check.str.startswith("supplementary")]
     S["V14"] = (verdict(bool(sim.inside.all())), f"Scored on the simulator the studies use (stop and wait with data and acknowledgement loss against 1/(1-p)^2): closed form inside the interval at {int(sim.inside.sum())} of {len(sim)} loss rates, and the simulator sits above it at every rate. A purpose written sampler agrees at {int(sw.inside.sum())} of {len(sw)}, but it cannot disagree by construction. Selective repeat, used by the protocol and mission studies, has no closed form check.")
@@ -97,13 +100,17 @@ def main():
     S["V18"] = (verdict(topm.input == "data_lifetime_years"), f"Largest first order index: {topm.input} ({topm.S1:.2f}).")
     dry = json.load(open(ROOT / "bench/board_kit/dry_run/dry_run_summary.json"))
     sizes = R("bench/board_kit/image_sizes.csv")
-    S["V19"] = (verdict(dry["recognised_percent"] == 100.0 and len(sizes) > 0),
+    both = {"ml-kem-768", "ml-dsa-44"} <= set(sizes.scheme.str.lower())
+    S["V19"] = (verdict(dry["recognised_percent"] == 100.0 and both),
                 f"{len(sizes)} images built; {dry['recognised_percent']} percent of {dry['lines']} log lines parsed.")
     lat = float(mb[(mb.vehicle == "drone") & (mb.arch == "B") & (mb.link == "sik")].added_latency_ms_median.iloc[0])
     S["V20"] = (verdict(lat < 50), f"Hybrid session on the SiK radio adds {lat:.2f} ms per command.")
     lr = mb[(mb.arch == "B") & (mb.link == "lora_dr0")]
     sik = float(mb[(mb.vehicle == "drone") & (mb.arch == "B") & (mb.link == "sik")].ttra_s_median.iloc[0])
-    S["V21"] = ("miss", f"On LoRaWAN DR0 the hybrid handshake never completes, so the metric is undefined there; on the slowest link where it completes (the SiK radio) recovery after a session teardown takes {sik:.2f} s, below 1 s, which meets the refutation clause.")
+    rb_ = mb[(mb.arch == "B") & mb.ttra_s_median.notna()]
+    slow = rb_.loc[rb_.ttra_s_median.idxmax()]
+    dr0 = float(lr.first_session_s_median.min())
+    S["V21"] = (verdict(float(slow.ttra_s_median) > 1.0), f"Hybrid session: on the slowest link with a recorded teardown ({slow.link}, {slow.vehicle}) recovery takes {float(slow.ttra_s_median):.0f} s. On LoRaWAN DR0 no teardown occurred in the runs, so recovery is not recorded, but the first session alone takes at least {dr0:.0f} s. On the SiK radio recovery takes {sik:.2f} s, below 1 s, but it is not the slowest link.")
     rf = ROOT / "docs/REVIEW_FINDINGS3.csv"
     if rf.exists():
         f = list(csv.DictReader(open(rf, encoding="utf-8")))
