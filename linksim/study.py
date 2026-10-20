@@ -341,11 +341,11 @@ def write_round4(a):
     a("")
     a("%d of %d checks fall outside their 95 percent interval%s." % (len(miss), len(cf), (" (" + "; ".join(r["check"] for r in miss) + ")") if miss else ""))
     sim = [r for r in cf if r["check"].startswith("supplementary")]
-    above = sum(1 for r in sim if r["value_modelled"] > r["closed_form"])
-    a("The purpose written sampler (rows marked stop and wait transmissions) agrees with 1/(1-p) by construction and so tests little. "
-      "The simulator the studies use (rows marked supplementary) sits above its closed form 1/(1-p)^2 at %d of %d loss rates, "
-      "which is a systematic excess, not chance; its cause is not yet found. Selective repeat, used by the protocol and mission "
-      "studies, has no closed form check." % (above, len(sim)))
+    inside = sum(1 for r in sim if r["inside"])
+    a("The rows marked stop and wait transmissions test a sampler written for this check, which shares the loss model "
+      "but not the event simulation. The rows marked supplementary test the event simulation the studies use, with its own seed "
+      "block per loss rate: its mean lies inside the 95 percent interval around 1/(1-p)^2 at %d of %d loss rates. "
+      "Selective repeat, used by the protocol and mission studies, has no closed form check." % (inside, len(sim)))
     a("")
     a("Updated status after round 4:")
     a("")
@@ -356,7 +356,7 @@ def write_round4(a):
     a("| fragmentation (6LoWPAN) | counts checked against RFC 4944 rules by an independent counting function; timing still unvalidated |")
     a("| 802.15.4 MAC timing | constants cited; end to end still a factor of %.1f faster than the only published figure |" % last["factor_below_low_after"])
     a("| duty cycle | the code equals the closed form 99 x air time at 1 percent (an arithmetic check of the formula it implements); not validated against a measurement |")
-    a("| loss and retransmission | the stop and wait simulator sits above its closed form at every tested loss rate (outside the interval at one); selective repeat unchecked; not validated against a measurement |")
+    a("| loss and retransmission | stop and wait agrees with its closed forms within Monte Carlo intervals (counts in the table above); selective repeat unchecked; not validated against a measurement |")
     a("")
 
 

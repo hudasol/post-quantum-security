@@ -157,6 +157,9 @@ def validation(p=None):
     return rows
 
 
+SIM_TRIALS = 8000
+
+
 def closed_form_rows(p=None):
     """Duty cycle and Monte Carlo closed form checks (also unit tests)."""
     p = p or model.load_params()
@@ -172,12 +175,14 @@ def closed_form_rows(p=None):
         rows.append({"label": "modelled", "check": "stop and wait transmissions per fragment, data loss %g" % q,
                      "value_modelled": r["mean_tx"], "ci_lo": r["ci_lo"], "ci_hi": r["ci_hi"],
                      "closed_form": r["closed_form"], "inside": r["inside"], "trials": 2000, "seed": SEED})
-    for q in (0.01, 0.05, 0.1, 0.2, 0.3):
-        r = checks.check_row(q, checks.sw_transmissions_sim("sik", q, 2000, SEED, p), 1.0 / (1.0 - q) ** 2)
+    # Each loss rate gets its own seed block, so the five checks are independent of each other.
+    for k, q in enumerate((0.01, 0.05, 0.1, 0.2, 0.3)):
+        s0 = SEED + 100000 * (k + 1)
+        r = checks.check_row(q, checks.sw_transmissions_sim("sik", q, SIM_TRIALS, s0, p), 1.0 / (1.0 - q) ** 2)
         rows.append({"label": "modelled", "check": "supplementary: existing sim.stop_and_wait, data and ack loss %g, closed form 1/(1-p)^2" % q,
                      "value_modelled": r["mean_tx"], "ci_lo": r["ci_lo"], "ci_hi": r["ci_hi"],
-                     "closed_form": r["closed_form"], "inside": r["inside"], "trials": 2000,
-                     "seed": "%d to %d" % (SEED, SEED + 1999)})
+                     "closed_form": r["closed_form"], "inside": r["inside"], "trials": SIM_TRIALS,
+                     "seed": "%d to %d" % (s0, s0 + SIM_TRIALS - 1)})
     return rows
 
 

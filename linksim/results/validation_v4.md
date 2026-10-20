@@ -56,8 +56,8 @@ Closed form checks (label modelled; 95 percent interval of the mean, normal appr
 | stop and wait transmissions per fragment, data loss 0.1 | 1.114 | 1.0989 to 1.1291 | 1.11111 | yes |
 | stop and wait transmissions per fragment, data loss 0.2 | 1.253 | 1.2286 to 1.2774 | 1.25 | yes |
 | stop and wait transmissions per fragment, data loss 0.3 | 1.4185 | 1.3852 to 1.4518 | 1.42857 | yes |
-| supplementary: existing sim.stop_and_wait, data and ack loss 0.01, closed form 1/(1-p)^2 | 1.0285 | 1.0211 to 1.0359 | 1.0203 | no |
-| supplementary: existing sim.stop_and_wait, data and ack loss 0.05, closed form 1/(1-p)^2 | 1.114 | 1.0988 to 1.1292 | 1.10803 | yes |
-| supplementary: existing sim.stop_and_wait, data and ack loss 0.1, closed form 1/(1-p)^2 | 1.255 | 1.2306 to 1.2794 | 1.23457 | yes |
-| supplementary: existing sim.stop_and_wait, data and ack loss 0.2, closed form 1/(1-p)^2 | 1.5975 | 1.5549 to 1.6401 | 1.5625 | yes |
-| supplementary: existing sim.stop_and_wait, data and ack loss 0.3, closed form 1/(1-p)^2 | 2.0575 | 1.9929 to 2.1221 | 2.04082 | yes |
+| supplementary: existing sim.stop_and_wait, data and ack loss 0.01, closed form 1/(1-p)^2 | 1.02 | 1.0169 to 1.0231 | 1.0203 | yes |
+| supplementary: existing sim.stop_and_wait, data and ack loss 0.05, closed form 1/(1-p)^2 | 1.1115 | 1.1037 to 1.1193 | 1.10803 | yes |
+| supplementary: existing sim.stop_and_wait, data and ack loss 0.1, closed form 1/(1-p)^2 | 1.23063 | 1.2191 to 1.2422 | 1.23457 | yes |
+| supplementary: existing sim.stop_and_wait, data and ack loss 0.2, closed form 1/(1-p)^2 | 1.56638 | 1.5456 to 1.5871 | 1.5625 | yes |
+| supplementary: existing sim.stop_and_wait, data and ack loss 0.3, closed form 1/(1-p)^2 | 2.06013 | 2.0276 to 2.0926 | 2.04082 | yes |
