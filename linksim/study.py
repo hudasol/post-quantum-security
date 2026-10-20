@@ -339,8 +339,13 @@ def write_round4(a):
                                              "yes" if r["inside"] else "no"))
     miss = [r for r in cf if not r["inside"]]
     a("")
-    a("%d of %d checks fall outside their 95 percent interval%s. With independent checks at 95 percent, about one "
-      "miss in twenty is expected by chance." % (len(miss), len(cf), (" (" + "; ".join(r["check"] for r in miss) + ")") if miss else ""))
+    a("%d of %d checks fall outside their 95 percent interval%s." % (len(miss), len(cf), (" (" + "; ".join(r["check"] for r in miss) + ")") if miss else ""))
+    sim = [r for r in cf if r["check"].startswith("supplementary")]
+    above = sum(1 for r in sim if r["value_modelled"] > r["closed_form"])
+    a("The purpose written sampler (rows marked stop and wait transmissions) agrees with 1/(1-p) by construction and so tests little. "
+      "The simulator the studies use (rows marked supplementary) sits above its closed form 1/(1-p)^2 at %d of %d loss rates, "
+      "which is a systematic excess, not chance; its cause is not yet found. Selective repeat, used by the protocol and mission "
+      "studies, has no closed form check." % (above, len(sim)))
     a("")
     a("Updated status after round 4:")
     a("")
@@ -350,8 +355,8 @@ def write_round4(a):
     a("| LoRa air time | formula reproduces four published examples (three exactly under parameter sets the sources leave partly unstated, one within 0.4 percent of a rounded value) |")
     a("| fragmentation (6LoWPAN) | counts checked against RFC 4944 rules by an independent counting function; timing still unvalidated |")
     a("| 802.15.4 MAC timing | constants cited; end to end still a factor of %.1f faster than the only published figure |" % last["factor_below_low_after"])
-    a("| duty cycle | matches the closed form 99 x air time at 1 percent; not validated against a measurement |")
-    a("| loss and retransmission | stop and wait mean transmissions match 1/(1-p); not validated against a measurement |")
+    a("| duty cycle | the code equals the closed form 99 x air time at 1 percent (an arithmetic check of the formula it implements); not validated against a measurement |")
+    a("| loss and retransmission | the stop and wait simulator sits above its closed form at every tested loss rate (outside the interval at one); selective repeat unchecked; not validated against a measurement |")
     a("")
 
 
