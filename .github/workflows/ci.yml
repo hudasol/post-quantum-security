@@ -36,10 +36,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install matplotlib pandas SALib
+      - run: pip install matplotlib pandas SALib unicorn capstone
       - run: python3 -m unittest discover -s tests -t .
       - run: python3 -m unittest discover -s linksim/tests -t .
       - run: cd planner && python3 -m unittest
+      - name: Round 4 model tests (energy, boot chain, mission, cycle model, board kit)
+        run: |
+          python3 -m unittest discover -s energy -t .
+          python3 -m unittest discover -s bootchain -t .
+          python3 -m unittest discover -s mission -t .
+          python3 -m unittest discover -s cyclemodel -t .
+          python3 -m unittest discover -s bench/board_kit/tests
       - name: Planner agrees with the hand written expectations
         run: python3 scripts/compare_planner_predictions.py
   data:
