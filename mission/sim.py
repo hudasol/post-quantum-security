@@ -97,7 +97,7 @@ def sample_handshake(rng, cfg):
                                cfg['loss'], cfg['ack_air'], cfg['p']['rto_factor'], int(cfg['p']['max_retries']))
         t += dt
         air[direction] += da
-    t += cfg['ap']['hs_cycles'] * cfg['ws'] / cfg['clock']
+    t += cfg['hs_eff'] / cfg['clock']
     return t, air
 
 
@@ -194,9 +194,16 @@ def build_config(vehicle, arch, link_name, params=None, **over):
     ack_air = sum(model.link_frames(model.mav_frame_bytes(p['ack_payload_bytes'], 0, p), link))
     phases = model.mission_phases(vehicle, a)
     ts = float(over.get('tel_scale', 1.0))  # scales all non command traffic (0 = commands only)
+    ws = a['wait_state_factor']
+    cyc = model.cycle_table()
+    # wait state factor only on rows measured at zero wait states; the tag cost assumption is used as given
+    hs_eff = model.effective_cycles(ap['hs_parts'], ws, cyc)
+    cmd_eff = model.effective_cycles(ap['cmd_parts'], ws, cyc)
+    boot_eff = model.effective_cycles(ap['boot_parts'], ws, cyc)
     return dict(vehicle=vehicle, arch=arch, link_name=link_name, p=p, a=a, link=link, ap=ap,
                 cmd_auth=cmd_auth, cmd_base=cmd_base, tel_air=tel_air * ts, tel_msgs=tel_msgs * ts, tel_frame=tel_frame,
                 tel_up=by_dir['up'] * ts, tel_down=by_dir['down'] * ts, ack_air=ack_air, tel_scale=ts,
+                hs_eff=hs_eff, cmd_eff=cmd_eff, boot_eff=boot_eff,
                 loss=a['frame_loss'], rekey=a['rekey_interval_s'], timeout=a['session_timeout_s'],
                 grace=a['grace_s'], clock=a['clock_hz'], ws=a['wait_state_factor'], mac=a['mac_cycles'],
                 outage_rate=a['outage_rate_per_h'], outage_mean=a['outage_mean_s'], deadline=a['deadline_s'],
@@ -241,7 +248,7 @@ def run_once(rng, cfg, deadlines):
     rng.bit_generator.state = state
     air_b, extra_b, _ = _retry_time(rng, cfg['cmd_base'], n, cfg['loss'], link, cfg['ack_air'], cfg['p']['rto_factor'])
     mac = cfg['mac'] if cfg['ap']['tag_bytes'] else 0.0
-    comp = (cfg['ap']['cmd_cycles'] + mac) * cfg['ws'] / cfg['clock']
+    comp = (cfg['cmd_eff'] + mac) / cfg['clock']
     occ_a = air_a + extra_a + (air_a / duty - air_a) * (1 if duty < 1 else 0)
     occ_b = air_b + extra_b + (air_b / duty - air_b) * (1 if duty < 1 else 0)
     start_a = lindley(arrivals, occ_a)
@@ -273,10 +280,10 @@ def run_once(rng, cfg, deadlines):
         # share of each transmitter's duty cycle budget (ground transmitter carries the commands)
         out['utilisation'] = (cfg['tel_up'] * T + cmd_air_total + st['air']['up']) / (T * duty)
         out['utilisation_down'] = (cfg['tel_down'] * T + st['air']['down']) / (T * duty)
-    cyc = (st['n_hs'] * cfg['ap']['hs_cycles'] + cfg['ap']['boot_cycles'] + n_all * cfg['ap']['cmd_cycles'])
+    cyc = (st['n_hs'] * cfg['hs_eff'] + cfg['boot_eff'] + n_all * cfg['cmd_eff'])
     if cfg['ap']['tag_bytes']:
         cyc += (n_all + cfg['tel_msgs'] * T) * cfg['mac']
-    out['compute_share'] = cyc * cfg['ws'] / (T * cfg['clock'])
+    out['compute_share'] = cyc / (T * cfg['clock'])
     out['n_handshakes'] = st['n_hs']
     out['n_teardowns'] = len(st['ttra'])
     out['ttra_s'] = float(np.mean(st['ttra'])) if st['ttra'] else float('nan')

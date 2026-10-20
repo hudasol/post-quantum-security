@@ -1,5 +1,5 @@
-arch,operation,cycles,ms_at_168MHz,ms_at_480MHz,label
-A,handshake or rekey,3188400.0,18.978571428571428,6.6425,derived from published
-B,handshake or rekey,3907977.0,23.261767857142857,8.14161875,derived from published
-C,per command check,1421623.0,8.462041666666666,2.9617145833333334,derived from published
-D,boot verify,2576515.0,15.33639880952381,5.367739583333334,derived from published
+arch,operation,cycles,cycles_with_wait_state_factor,ms_at_168MHz,ms_at_480MHz,label
+A,handshake or rekey,1819746.0,1819746.0,10.831821428571429,3.7911375,derived from published
+B,handshake or rekey,3178123.0,3178123.0,18.91739880952381,6.621089583333333,derived from published
+C,per command check,1421623.0,1421623.0,8.462041666666666,2.9617145833333334,derived from published
+D,boot verify,2576515.0,2576515.0,15.33639880952381,5.367739583333334,derived from published

@@ -50,43 +50,53 @@ def evidence_cycles(ids, path=os.path.join(ROOT, 'data', 'evidence.csv')):
     return out
 
 
-# Classical rows (stream S12, published, double read). Chosen rows and the reason:
-# X25519: S12A-325, Fujii and Aranha, STM32F401 (Cortex-M4) at 84 MHz, 913,800 cycles per scalar multiplication.
-#   Chosen because it is an STM32F4 part with the board and clock stated, and the highest stated clock of the
-#   M4 rows, so it is closest to a 168 MHz STM32F405 flight controller. The vehicle does two scalar
-#   multiplications per handshake (ephemeral key generation and shared secret), so the row is counted twice;
-#   a fixed base key generation can be faster, so this is conservative.
-# Ed25519 verify: S12A-328, same paper, same board and clock, 1,360,800 cycles, chosen for consistency with
-#   the X25519 row.
+# Classical rows (stream S12, published, double read), the same rows as the energy study so that the two agree:
+# X25519: S12A-332, Emill X25519-Cortex-M4 README, integer only version, 548,873 cycles per scalar
+#   multiplication (board and clock not stated). The vehicle does two scalar multiplications per handshake
+#   (ephemeral key generation and shared secret), so the row is counted twice (conservative, since a fixed base
+#   key generation can be faster).
+# Ed25519 verify: S12A-331, Owens et al., STM32F407 at 24 MHz, 722,000 cycles.
 # Ranges over all S12A rows for the same operation are carried beside the chosen value.
+#
+# Flash wait states: the wait state factor (mission/assumptions.csv) is applied only to rows measured under
+# zero wait state conditions (zero_ws True below). pqm4 rows: zero wait states derived from the pqm4 code
+# (comparability warning of the rows). S12A-331: measured at 24 MHz and treated as zero wait state conditions,
+# as in the energy study; the row itself does not state the wait state setting. Rows whose clock or wait state
+# setting is not stated (S12A-332, S2-0316) are used as published without the factor.
 CYCLE_SOURCES = {
-    # name: (evidence ids summed, note, ids spanning the range for one operation, multiplier for the range)
-    'x25519_two_mults': (['S12A-325', 'S12A-325'],
-                         'X25519, two scalar multiplications (key generation plus shared secret), Fujii and Aranha, STM32F401 at 84 MHz',
-                         ['S12A-317', 'S12A-321', 'S12A-325', 'S12A-332', 'S12A-333'], 2),
-    'ed25519_verify': (['S12A-328'], 'Ed25519 verify, Fujii and Aranha, STM32F401 at 84 MHz',
-                       ['S12A-320', 'S12A-324', 'S12A-328', 'S12A-331'], 1),
-    'mlkem768_encaps': (['S2-0023'], 'ML-KEM-768 encaps, pqm4 m4fspeed', ['S2-0023'], 1),
-    'mldsa44_verify': (['S2-0033'], 'ML-DSA-44 verify, pqm4 m4f', ['S2-0033'], 1),
-    'lms_verify': (['S2-0316'], 'LMS w=16 h=5 SHA-256 verify, Cortex-M4 (slides)', ['S2-0316'], 1),
+    # name: (ids summed, note, ids spanning the range for one operation, range multiplier, zero_ws)
+    'x25519_two_mults': (['S12A-332', 'S12A-332'],
+                         'X25519, two scalar multiplications (key generation plus shared secret), Emill integer version, board and clock not stated',
+                         ['S12A-317', 'S12A-321', 'S12A-325', 'S12A-332', 'S12A-333'], 2, False),
+    'ed25519_verify': (['S12A-331'], 'Ed25519 verify, Owens et al., STM32F407 at 24 MHz',
+                       ['S12A-320', 'S12A-324', 'S12A-328', 'S12A-331'], 1, True),
+    'mlkem768_encaps': (['S2-0023'], 'ML-KEM-768 encaps, pqm4 m4fspeed', ['S2-0023'], 1, True),
+    'mldsa44_verify': (['S2-0033'], 'ML-DSA-44 verify, pqm4 m4f', ['S2-0033'], 1, True),
+    'lms_verify': (['S2-0316'], 'LMS w=16 h=5 SHA-256 verify, Cortex-M4 (slides), clock not stated', ['S2-0316'], 1, False),
 }
 
 
 def cycle_table():
-    """Return {operation: (cycles, label, source, range_min, range_max, range_ids)} for vehicle side operations.
+    """Return {operation: (cycles, label, source, range_min, range_max, range_ids, zero_ws)}.
 
     The range is the minimum and maximum over the listed published rows for the same operation, times the
-    multiplier (two scalar multiplications for X25519).
+    multiplier (two scalar multiplications for X25519). zero_ws marks rows measured at zero flash wait states.
     """
     ids = sorted(set(sum((v[0] + v[2] for v in CYCLE_SOURCES.values()), [])))
     ev = evidence_cycles(ids)
     t = {}
-    for name, (rows, note, rng_ids, mult) in CYCLE_SOURCES.items():
+    for name, (rows, note, rng_ids, mult, zws) in CYCLE_SOURCES.items():
         vals = [ev[i] * mult for i in rng_ids]
         label = 'published' if len(rows) == 1 else 'derived from published'
         t[name] = (sum(ev[i] for i in rows), label, '+'.join(rows) + '; ' + note, min(vals), max(vals),
-                   ' '.join(rng_ids))
+                   ' '.join(rng_ids), zws)
     return t
+
+
+def effective_cycles(parts, ws, cyc=None):
+    """Sum cycles of the named operations, applying the wait state factor only to zero wait state rows."""
+    cyc = cyc or cycle_table()
+    return sum(cyc[n][0] * (ws if cyc[n][6] else 1.0) for n in parts)
 
 
 # ---------------------------------------------------------------- links
@@ -185,21 +195,25 @@ def arch_profile(arch, p=None, cyc=None):
     tag = p['mav_sig_field_bytes']
     if arch == 'A':
         flights = [('up', x), ('down', x), ('up', p['ed25519_sig_bytes'] + p['confirm_bytes'])]
-        hs = cyc['x25519_two_mults'][0] + cyc['ed25519_verify'][0]
+        parts = ['x25519_two_mults', 'ed25519_verify']
+        hs = sum(cyc[n][0] for n in parts)
         return dict(flights=flights, tag_bytes=tag, cmd_extra_bytes=0, hs_cycles=hs, cmd_cycles=0.0, boot_cycles=0.0,
-                    session=True, quantum_safe=False)
+                    hs_parts=parts, cmd_parts=[], boot_parts=[], session=True, quantum_safe=False)
     if arch == 'B':
         flights = [('up', x + p['mlkem768_ek_bytes']), ('down', x + p['mlkem768_ct_bytes']),
                    ('up', p['mldsa44_sig_bytes'] + p['confirm_bytes'])]
-        hs = cyc['x25519_two_mults'][0] + cyc['mlkem768_encaps'][0] + cyc['mldsa44_verify'][0]
+        parts = ['x25519_two_mults', 'mlkem768_encaps', 'mldsa44_verify']
+        hs = sum(cyc[n][0] for n in parts)
         return dict(flights=flights, tag_bytes=tag, cmd_extra_bytes=0, hs_cycles=hs, cmd_cycles=0.0, boot_cycles=0.0,
-                    session=True, quantum_safe=True)
+                    hs_parts=parts, cmd_parts=[], boot_parts=[], session=True, quantum_safe=True)
     if arch == 'C':
         return dict(flights=[], tag_bytes=0, cmd_extra_bytes=p['mldsa44_sig_bytes'], hs_cycles=0.0,
-                    cmd_cycles=cyc['mldsa44_verify'][0], boot_cycles=0.0, session=False, quantum_safe=True)
+                    cmd_cycles=cyc['mldsa44_verify'][0], boot_cycles=0.0, hs_parts=[], cmd_parts=['mldsa44_verify'],
+                    boot_parts=[], session=False, quantum_safe=True)
     if arch == 'D':
         return dict(flights=[], tag_bytes=tag, cmd_extra_bytes=0, hs_cycles=0.0, cmd_cycles=0.0,
-                    boot_cycles=cyc['lms_verify'][0], session=False, quantum_safe=True)
+                    boot_cycles=cyc['lms_verify'][0], hs_parts=[], cmd_parts=[], boot_parts=['lms_verify'],
+                    session=False, quantum_safe=True)
     raise ValueError(arch)
 
 
