@@ -1,0 +1,25 @@
+{
+ "started_utc": "2026-10-20T08:48:02Z",
+ "qemu": "QEMU emulator version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)",
+ "runs": 3,
+ "images": 18,
+ "logs": 54,
+ "lines": 55938,
+ "unrecognised": 0,
+ "recognised_percent": 100.0,
+ "result_rows": 25290,
+ "check_rows": 66,
+ "failed_checks": 0,
+ "ok_checks": 7281,
+ "ends": [
+  "marker"
+ ],
+ "qemu_rc": [
+  "0"
+ ],
+ "compare_groups": 30,
+ "cycles_compared": 0,
+ "cycles_excluded": 30,
+ "published_matched": 12,
+ "predictions_file": false
+}
