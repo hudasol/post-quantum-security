@@ -197,7 +197,7 @@ def parts_text(fill):
         "3. The link model is too fast on IEEE 802.15.4 by a factor the study cannot yet explain; duty cycle and loss handling are checked against closed forms, not measurements.\n"
         "4. Fleets are drawn from real board classes but their counts and free memory shares are synthetic or assumed.\n"
         "5. Energy rests on typical datasheet currents for five parts and one calibration source.\n"
-        "6. The classical baselines differ between studies within the published range (for example the Ed25519 row chosen by the energy and mission models), which is stated beside each result.\n"
+        "6. The classical baselines (Ed25519, X25519) are single published rows chosen within a published range that spans about a factor of two; the energy and mission studies use the same rows and show the range beside each result.\n"
         "7. The studies do not yet share one set of inputs everywhere: the protocol and mission models describe the MAVLink style handshake differently, and the energy and mission models use different published LMS rows and per message costs; each choice is stated in its study.\n"
         "8. Several sources could not be retrieved (listed in `docs/NEEDS_FROM_AUTHOR.md` and the source notes); 126 new rows that only one reader could confirm were left out of the table.")
 
