@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE_COLS = {
-    "id": "row id; the prefix names the stream that added the row (S2, S3, S7, S8, S10, S12)",
+    "id": "row id; the prefix names the stream that added the row (S2, S3, S7, S8, S10, S12, S13)",
     "scheme": "algorithm family as named by the source (for example ML-KEM, ML-DSA, LMS)",
     "parameter_set": "parameter set as named by the source; pre standard names are kept",
     "operation": "operation as named by the source (keygen, encaps, decaps, sign, verify, or a longer phrase)",
