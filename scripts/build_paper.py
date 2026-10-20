@@ -198,7 +198,7 @@ def parts_text(fill):
         "Where the models overlap they are not independent: the mission model reads the link simulator's parameters, so their agreement on a single handshake is a consistency check, not a validation, and the two still differ noticeably on the time to set up a hybrid session on the telemetry radio, a difference this round did not explain. The energy and mission studies both find CPU time, not energy, to be the binding budget. "
         "They disagree with the evidence in one place that matters, the 802.15.4 transfer time, and the study reports that gap rather than closing it by fitting.")
     fill["limitations"] = (
-        "1. Nothing was measured on a microcontroller. The board experiment is prepared and its outcome registered, but not run.\n"
+        "1. Nothing was measured on a microcontroller. The board experiment is prepared and its outcome registered, but not run, and the kit cannot yet switch caches off, which the registered predictions assume (`docs/PREDICTIONS_V4_BOARD_NOTES.md`).\n"
         "2. The cycle model is validated within one code base; its transfer to other libraries rests on a single small external check.\n"
         "3. The link model is too fast on IEEE 802.15.4 by a factor the study cannot yet explain; duty cycle and fragmentation are checked only arithmetically, and loss handling only against closed forms for stop and wait, with no measurement.\n"
         "4. Fleets are drawn from real board classes but their counts and free memory shares are synthetic or assumed.\n"
