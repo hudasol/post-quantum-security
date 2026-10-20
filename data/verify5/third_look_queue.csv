@@ -1,0 +1,84 @@
+id,field,why
+S12A-246,ram_bytes,value disagreement
+S12A-247,ram_bytes,value disagreement
+S12A-248,ram_bytes,value disagreement
+S12A-249,ram_bytes,value disagreement
+S12A-250,ram_bytes,value disagreement
+S12A-251,ram_bytes,value disagreement
+S12A-252,ram_bytes,value disagreement
+S12A-253,ram_bytes,value disagreement
+S12A-334,stack_bytes,value disagreement
+S12A-335,stack_bytes,value disagreement
+S12A-336,stack_bytes,value disagreement
+S12A-337,stack_bytes,value disagreement
+S12A-344,stack_bytes,value disagreement
+S12A-345,stack_bytes,value disagreement
+S12A-346,stack_bytes,value disagreement
+S12A-347,stack_bytes,value disagreement
+S12BL-022,value,value disagreement
+S12BL-023,value,value disagreement
+S12BL-043,value,value disagreement
+S12BL-044,value,value disagreement
+S12BL-049,value,value disagreement
+S12BL-051,value,value disagreement
+S12BL-052,value,value disagreement
+S12A-049,operation,seeded text sample
+S12A-058,operation,seeded text sample
+S12A-076,operation,seeded text sample
+S12A-092,operation,seeded text sample
+S12A-094,library,seeded text sample
+S12A-098,library,seeded text sample
+S12A-128,library,seeded text sample
+S12A-129,library,seeded text sample
+S12A-179,library,seeded text sample
+S12A-220,operation,seeded text sample
+S12A-223,operation,seeded text sample
+S12A-226,operation,seeded text sample
+S12A-232,operation,seeded text sample
+S12A-316,library,seeded text sample
+S12A-317,operation,seeded text sample
+S12A-320,operation,seeded text sample
+S12A-321,operation,seeded text sample
+S12A-322,operation,seeded text sample
+S12A-325,operation,seeded text sample
+S12A-338,scheme,seeded text sample
+S12A-345,scheme,seeded text sample
+S12A-347,library,seeded text sample
+S12A-364,library,seeded text sample
+S12A-365,library,seeded text sample
+S12A-367,operation,seeded text sample
+S12A-367,parameter_set,seeded text sample
+S12A-368,core,seeded text sample
+S12A-386,parameter_set,seeded text sample
+S12A-391,core,seeded text sample
+S12A-394,scheme,seeded text sample
+S12A-398,core,seeded text sample
+S12A-399,core,seeded text sample
+S12A-400,parameter_set,seeded text sample
+S12A-403,core,seeded text sample
+S12A-405,core,seeded text sample
+S12A-408,core,seeded text sample
+S12A-409,core,seeded text sample
+S12A-418,device,seeded text sample
+S12A-432,parameter_set,seeded text sample
+S12B-001,scheme,seeded text sample
+S12B-002,operation,seeded text sample
+S12B-014,operation,seeded text sample
+S12B-019,scheme,seeded text sample
+S12B-024,scheme,seeded text sample
+S12B-029,operation,seeded text sample
+S12B-036,operation,seeded text sample
+S12BL-003,conditions,seeded text sample
+S12BL-007,unit,seeded text sample
+S12BL-008,conditions,seeded text sample
+S12BL-009,conditions,seeded text sample
+S12BL-021,conditions,seeded text sample
+S12BL-022,quantity,seeded text sample
+S12BL-022,unit,seeded text sample
+S12BL-024,conditions,seeded text sample
+S12BL-027,conditions,seeded text sample
+S12BL-028,conditions,seeded text sample
+S12BL-029,conditions,seeded text sample
+S12BL-038,conditions,seeded text sample
+S12BL-051,conditions,seeded text sample
+S12BL-060,conditions,seeded text sample
