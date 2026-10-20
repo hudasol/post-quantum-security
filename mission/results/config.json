@@ -1,0 +1,83 @@
+{
+ "seed": 20261020,
+ "runs": 1000,
+ "morris_runs_per_point": 200,
+ "deadlines": [
+  0.1,
+  0.25,
+  0.5,
+  1.0,
+  2.0,
+  5.0,
+  10.0
+ ],
+ "sweeps": {
+  "frame_loss": [
+   "0.0",
+   "0.01",
+   "0.05",
+   "0.1",
+   "0.2"
+  ],
+  "rekey_interval_s": [
+   "60.0",
+   "900.0",
+   "inf"
+  ],
+  "outage_rate_per_h": [
+   "0.0",
+   "2.0",
+   "20.0",
+   "60.0"
+  ],
+  "outage_mean_s": [
+   "2.0",
+   "30.0"
+  ],
+  "clock_hz": [
+   "480000000.0"
+  ],
+  "wait_state_factor": [
+   "1.5"
+  ],
+  "mac_cycles": [
+   "2000.0",
+   "50000.0"
+  ]
+ },
+ "sweep_links": [
+  "sik",
+  "ieee802154",
+  "lora_dr5"
+ ],
+ "lowrate": {
+  "cmd_rate": 0.016666666666666666,
+  "tel_scale": 0.0
+ },
+ "assumptions": {
+  "seed": 20261020.0,
+  "runs": 1000.0,
+  "drone_preflight_s": 60.0,
+  "drone_takeoff_s": 30.0,
+  "drone_cruise_s": 600.0,
+  "drone_landing_s": 60.0,
+  "robot_preflight_s": 60.0,
+  "robot_drive_s": 900.0,
+  "frame_loss": 0.02,
+  "outage_rate_per_h": 6.0,
+  "outage_mean_s": 5.0,
+  "session_timeout_s": 10.0,
+  "rekey_interval_s": 300.0,
+  "grace_s": 30.0,
+  "deadline_s": 0.5,
+  "clock_hz": 168000000.0,
+  "clock_alt_hz": 480000000.0,
+  "wait_state_factor": 1.0,
+  "mac_cycles": 10000.0,
+  "ground_compute_s": 0.0,
+  "ftp_header_bytes": 12.0,
+  "chunk_data_bytes": 239.0,
+  "feasible_availability": 0.99,
+  "c_timestamp_bytes": 0.0
+ }
+}

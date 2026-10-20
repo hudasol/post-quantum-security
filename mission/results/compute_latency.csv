@@ -1,0 +1,5 @@
+arch,operation,cycles,ms_at_168MHz,ms_at_480MHz,label
+A,handshake or rekey,14189000.0,84.45833333333333,29.560416666666665,derived from published
+B,handshake or rekey,13709377.0,81.60343452380953,28.561202083333335,derived from published
+C,per command check,1421623.0,8.462041666666666,2.9617145833333334,derived from published
+D,boot verify,2576515.0,15.33639880952381,5.367739583333334,derived from published

@@ -1,0 +1,3 @@
+link,mission_model_s,linksim_selective_repeat_s,relative_difference,air_s,label,note
+sik,0.8927777777777778,0.8986,-0.006479214580705735,0.7427777777777778,estimated,"model to model comparison of two estimates, not a validation against measurement"
+ieee802154,0.491376,0.5008,-0.018817891373802003,0.341376,estimated,"model to model comparison of two estimates, not a validation against measurement"
