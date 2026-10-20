@@ -4,7 +4,7 @@ A sourced study of what post quantum cryptography costs on microcontroller class
 
 **For a research director:** `docs/PAPER.md` (the study, every number checked against its data file), `docs/PROPOSAL_ROBOTICS.md` (follow on robotics project, with short variants `docs/PROPOSAL_ROBOTICS_ATRC.md`, `_EDGE.md`, `_ADEO.md`) and `docs/PROPOSAL_ATRC.md` (2 pages). Progress against a stated definition of a complete study: `docs/COMPLETENESS_RUBRIC.md`.
 
-**Start here:** `docs/EXECUTIVE_BRIEF.pdf` (2 pages), then `docs/REPORT.pdf` (`docs/REPORT.md`). The PDFs were last built on 2026-10-18 from an earlier text of `docs/REPORT.md` (971 rows then, 1328 now). Rebuild with `scripts/build_pdfs.sh` or `scripts/build_pdfs_docker.sh`.
+**Start here:** `docs/EXECUTIVE_BRIEF.pdf` (2 pages), then `docs/REPORT.pdf` (`docs/REPORT.md`). The PDFs were built on 2026-10-20 from the current `docs/REPORT.md` (`scripts/build_pdfs.sh`, or `scripts/build_pdfs_docker.sh` without a local pandoc and XeLaTeX).
 
 ## What is published, host measured, emulated, estimated, modelled, RTL simulated and planned
 
