@@ -139,7 +139,8 @@ def compute_latency_table():
             rows.append(dict(arch=arch, operation=what, cycles=c,
                              ms_at_168MHz=c * a['wait_state_factor'] / a['clock_hz'] * 1e3,
                              ms_at_480MHz=c / a['clock_alt_hz'] * 1e3, label='derived from published'))
-    src = pd.DataFrame([dict(operation=k, cycles=v[0], label=v[1], source=v[2]) for k, v in cyc.items()])
+    src = pd.DataFrame([dict(operation=k, cycles=v[0], label=v[1], source=v[2], range_min_cycles=v[3],
+                             range_max_cycles=v[4], range_ids=v[5]) for k, v in cyc.items()])
     return pd.DataFrame(rows), src
 
 

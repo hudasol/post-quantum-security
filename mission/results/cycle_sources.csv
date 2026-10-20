@@ -1,6 +1,6 @@
-operation,cycles,label,source
-ecdh_proxy,11629000.0,published,"S2-0199+S2-0201; X25519 has no cycle row; ECDH secp256r1 keygen plus shared secret (micro-ecc, Cortex-M4 at 96 MHz) used as a proxy"
-mlkem768_encaps,658754.0,published,"S2-0023; ML-KEM-768 encaps, pqm4 m4fspeed"
-mldsa44_verify,1421623.0,published,"S2-0033; ML-DSA-44 verify, pqm4 m4f"
-lms_verify,2576515.0,published,"S2-0316; LMS w=16 h=5 SHA-256 verify, Cortex-M4 (slides)"
-ed25519_verify,2560000.0,derived from published,"S10D-031: 40 ms x 64 MHz (Monocypher, nRF52840)"
+operation,cycles,label,source,range_min_cycles,range_max_cycles,range_ids
+x25519_two_mults,1827600.0,derived from published,"S12A-325+S12A-325; X25519, two scalar multiplications (key generation plus shared secret), Fujii and Aranha, STM32F401 at 84 MHz",952550.0,2073200.0,S12A-317 S12A-321 S12A-325 S12A-332 S12A-333
+ed25519_verify,1360800.0,published,"S12A-328; Ed25519 verify, Fujii and Aranha, STM32F401 at 84 MHz",722000.0,1463600.0,S12A-320 S12A-324 S12A-328 S12A-331
+mlkem768_encaps,658754.0,published,"S2-0023; ML-KEM-768 encaps, pqm4 m4fspeed",658754.0,658754.0,S2-0023
+mldsa44_verify,1421623.0,published,"S2-0033; ML-DSA-44 verify, pqm4 m4f",1421623.0,1421623.0,S2-0033
+lms_verify,2576515.0,published,"S2-0316; LMS w=16 h=5 SHA-256 verify, Cortex-M4 (slides)",2576515.0,2576515.0,S2-0316

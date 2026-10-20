@@ -50,29 +50,42 @@ def evidence_cycles(ids, path=os.path.join(ROOT, 'data', 'evidence.csv')):
     return out
 
 
-# Ed25519 verify has no cycle column in data/evidence.csv; S10D-031 reports 40 ms at 64 MHz
-# (Monocypher on nRF52840, Cortex-M4F). Cycles are derived as time x clock.
-ED25519_VERIFY_MS_S10D031 = 40.0
-ED25519_CLOCK_MHZ_S10D031 = 64.0
-
+# Classical rows (stream S12, published, double read). Chosen rows and the reason:
+# X25519: S12A-325, Fujii and Aranha, STM32F401 (Cortex-M4) at 84 MHz, 913,800 cycles per scalar multiplication.
+#   Chosen because it is an STM32F4 part with the board and clock stated, and the highest stated clock of the
+#   M4 rows, so it is closest to a 168 MHz STM32F405 flight controller. The vehicle does two scalar
+#   multiplications per handshake (ephemeral key generation and shared secret), so the row is counted twice;
+#   a fixed base key generation can be faster, so this is conservative.
+# Ed25519 verify: S12A-328, same paper, same board and clock, 1,360,800 cycles, chosen for consistency with
+#   the X25519 row.
+# Ranges over all S12A rows for the same operation are carried beside the chosen value.
 CYCLE_SOURCES = {
-    # name: (evidence ids, note)
-    'ecdh_proxy': (['S2-0199', 'S2-0201'], 'X25519 has no cycle row; ECDH secp256r1 keygen plus shared secret (micro-ecc, Cortex-M4 at 96 MHz) used as a proxy'),
-    'mlkem768_encaps': (['S2-0023'], 'ML-KEM-768 encaps, pqm4 m4fspeed'),
-    'mldsa44_verify': (['S2-0033'], 'ML-DSA-44 verify, pqm4 m4f'),
-    'lms_verify': (['S2-0316'], 'LMS w=16 h=5 SHA-256 verify, Cortex-M4 (slides)'),
+    # name: (evidence ids summed, note, ids spanning the range for one operation, multiplier for the range)
+    'x25519_two_mults': (['S12A-325', 'S12A-325'],
+                         'X25519, two scalar multiplications (key generation plus shared secret), Fujii and Aranha, STM32F401 at 84 MHz',
+                         ['S12A-317', 'S12A-321', 'S12A-325', 'S12A-332', 'S12A-333'], 2),
+    'ed25519_verify': (['S12A-328'], 'Ed25519 verify, Fujii and Aranha, STM32F401 at 84 MHz',
+                       ['S12A-320', 'S12A-324', 'S12A-328', 'S12A-331'], 1),
+    'mlkem768_encaps': (['S2-0023'], 'ML-KEM-768 encaps, pqm4 m4fspeed', ['S2-0023'], 1),
+    'mldsa44_verify': (['S2-0033'], 'ML-DSA-44 verify, pqm4 m4f', ['S2-0033'], 1),
+    'lms_verify': (['S2-0316'], 'LMS w=16 h=5 SHA-256 verify, Cortex-M4 (slides)', ['S2-0316'], 1),
 }
 
 
 def cycle_table():
-    """Return {operation: (cycles, label, source)} for the vehicle side operations."""
-    ids = sum((v[0] for v in CYCLE_SOURCES.values()), [])
+    """Return {operation: (cycles, label, source, range_min, range_max, range_ids)} for vehicle side operations.
+
+    The range is the minimum and maximum over the listed published rows for the same operation, times the
+    multiplier (two scalar multiplications for X25519).
+    """
+    ids = sorted(set(sum((v[0] + v[2] for v in CYCLE_SOURCES.values()), [])))
     ev = evidence_cycles(ids)
     t = {}
-    for name, (rows, note) in CYCLE_SOURCES.items():
-        t[name] = (sum(ev[i] for i in rows), 'published', '+'.join(rows) + '; ' + note)
-    ed = ED25519_VERIFY_MS_S10D031 * 1e-3 * ED25519_CLOCK_MHZ_S10D031 * 1e6
-    t['ed25519_verify'] = (ed, 'derived from published', 'S10D-031: 40 ms x 64 MHz (Monocypher, nRF52840)')
+    for name, (rows, note, rng_ids, mult) in CYCLE_SOURCES.items():
+        vals = [ev[i] * mult for i in rng_ids]
+        label = 'published' if len(rows) == 1 else 'derived from published'
+        t[name] = (sum(ev[i] for i in rows), label, '+'.join(rows) + '; ' + note, min(vals), max(vals),
+                   ' '.join(rng_ids))
     return t
 
 
@@ -172,13 +185,13 @@ def arch_profile(arch, p=None, cyc=None):
     tag = p['mav_sig_field_bytes']
     if arch == 'A':
         flights = [('up', x), ('down', x), ('up', p['ed25519_sig_bytes'] + p['confirm_bytes'])]
-        hs = cyc['ecdh_proxy'][0] + cyc['ed25519_verify'][0]
+        hs = cyc['x25519_two_mults'][0] + cyc['ed25519_verify'][0]
         return dict(flights=flights, tag_bytes=tag, cmd_extra_bytes=0, hs_cycles=hs, cmd_cycles=0.0, boot_cycles=0.0,
                     session=True, quantum_safe=False)
     if arch == 'B':
         flights = [('up', x + p['mlkem768_ek_bytes']), ('down', x + p['mlkem768_ct_bytes']),
                    ('up', p['mldsa44_sig_bytes'] + p['confirm_bytes'])]
-        hs = cyc['ecdh_proxy'][0] + cyc['mlkem768_encaps'][0] + cyc['mldsa44_verify'][0]
+        hs = cyc['x25519_two_mults'][0] + cyc['mlkem768_encaps'][0] + cyc['mldsa44_verify'][0]
         return dict(flights=flights, tag_bytes=tag, cmd_extra_bytes=0, hs_cycles=hs, cmd_cycles=0.0, boot_cycles=0.0,
                     session=True, quantum_safe=True)
     if arch == 'C':
