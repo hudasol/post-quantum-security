@@ -1,0 +1,271 @@
+target,core_class,clock_mhz,scheme,image_bytes,hash,cycles_per_byte_derived,sig_cycles,cycle_source_label,cycle_source,hash_ms_estimated,sig_ms_estimated,total_ms_estimated,label
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,Ed25519,100000,software SHA-256,76.27,2560000,derived from published,S10D-031 (time x clock),45.4,15.238,60.638,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,Ed25519,100000,hardware HASH,2.38,2560000,derived from published,S10D-031 (time x clock),1.414,15.238,16.652,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,Ed25519,250000,software SHA-256,76.27,2560000,derived from published,S10D-031 (time x clock),113.499,15.238,128.737,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,Ed25519,250000,hardware HASH,2.38,2560000,derived from published,S10D-031 (time x clock),3.536,15.238,18.774,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,Ed25519,500000,software SHA-256,76.27,2560000,derived from published,S10D-031 (time x clock),226.998,15.238,242.236,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,Ed25519,500000,hardware HASH,2.38,2560000,derived from published,S10D-031 (time x clock),7.071,15.238,22.31,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,Ed25519,1000000,software SHA-256,76.27,2560000,derived from published,S10D-031 (time x clock),453.995,15.238,469.233,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,Ed25519,1000000,hardware HASH,2.38,2560000,derived from published,S10D-031 (time x clock),14.143,15.238,29.381,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,Ed25519,2000000,software SHA-256,76.27,2560000,derived from published,S10D-031 (time x clock),907.99,15.238,923.228,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,Ed25519,2000000,hardware HASH,2.38,2560000,derived from published,S10D-031 (time x clock),28.286,15.238,43.524,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ECDSA P-256,100000,software SHA-256,76.27,6639000,published,S2-0213,45.4,39.518,84.917,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ECDSA P-256,100000,hardware HASH,2.38,6639000,published,S2-0213,1.414,39.518,40.932,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ECDSA P-256,250000,software SHA-256,76.27,6639000,published,S2-0213,113.499,39.518,153.017,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ECDSA P-256,250000,hardware HASH,2.38,6639000,published,S2-0213,3.536,39.518,43.054,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ECDSA P-256,500000,software SHA-256,76.27,6639000,published,S2-0213,226.998,39.518,266.515,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ECDSA P-256,500000,hardware HASH,2.38,6639000,published,S2-0213,7.071,39.518,46.589,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ECDSA P-256,1000000,software SHA-256,76.27,6639000,published,S2-0213,453.995,39.518,493.513,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ECDSA P-256,1000000,hardware HASH,2.38,6639000,published,S2-0213,14.143,39.518,53.661,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ECDSA P-256,2000000,software SHA-256,76.27,6639000,published,S2-0213,907.99,39.518,947.508,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ECDSA P-256,2000000,hardware HASH,2.38,6639000,published,S2-0213,28.286,39.518,67.804,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-44,100000,software SHA-256,76.27,1421623,published,S2-0033,45.4,8.462,53.862,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-44,100000,hardware HASH,2.38,1421623,published,S2-0033,1.414,8.462,9.876,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-44,250000,software SHA-256,76.27,1421623,published,S2-0033,113.499,8.462,121.961,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-44,250000,hardware HASH,2.38,1421623,published,S2-0033,3.536,8.462,11.998,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-44,500000,software SHA-256,76.27,1421623,published,S2-0033,226.998,8.462,235.46,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-44,500000,hardware HASH,2.38,1421623,published,S2-0033,7.071,8.462,15.534,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-44,1000000,software SHA-256,76.27,1421623,published,S2-0033,453.995,8.462,462.457,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-44,1000000,hardware HASH,2.38,1421623,published,S2-0033,14.143,8.462,22.605,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-44,2000000,software SHA-256,76.27,1421623,published,S2-0033,907.99,8.462,916.452,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-44,2000000,hardware HASH,2.38,1421623,published,S2-0033,28.286,8.462,36.748,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-65,100000,software SHA-256,76.27,2415944,published,S2-0042,45.4,14.381,59.78,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-65,100000,hardware HASH,2.38,2415944,published,S2-0042,1.414,14.381,15.795,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-65,250000,software SHA-256,76.27,2415944,published,S2-0042,113.499,14.381,127.879,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-65,250000,hardware HASH,2.38,2415944,published,S2-0042,3.536,14.381,17.916,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-65,500000,software SHA-256,76.27,2415944,published,S2-0042,226.998,14.381,241.378,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-65,500000,hardware HASH,2.38,2415944,published,S2-0042,7.071,14.381,21.452,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-65,1000000,software SHA-256,76.27,2415944,published,S2-0042,453.995,14.381,468.376,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-65,1000000,hardware HASH,2.38,2415944,published,S2-0042,14.143,14.381,28.524,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-65,2000000,software SHA-256,76.27,2415944,published,S2-0042,907.99,14.381,922.371,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-65,2000000,hardware HASH,2.38,2415944,published,S2-0042,28.286,14.381,42.667,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-87,100000,software SHA-256,76.27,4193104,published,S2-0051,45.4,24.959,70.358,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-87,100000,hardware HASH,2.38,4193104,published,S2-0051,1.414,24.959,26.373,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-87,250000,software SHA-256,76.27,4193104,published,S2-0051,113.499,24.959,138.458,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-87,250000,hardware HASH,2.38,4193104,published,S2-0051,3.536,24.959,28.495,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-87,500000,software SHA-256,76.27,4193104,published,S2-0051,226.998,24.959,251.957,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-87,500000,hardware HASH,2.38,4193104,published,S2-0051,7.071,24.959,32.03,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-87,1000000,software SHA-256,76.27,4193104,published,S2-0051,453.995,24.959,478.954,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-87,1000000,hardware HASH,2.38,4193104,published,S2-0051,14.143,24.959,39.102,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-87,2000000,software SHA-256,76.27,4193104,published,S2-0051,907.99,24.959,932.949,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,ML-DSA-87,2000000,hardware HASH,2.38,4193104,published,S2-0051,28.286,24.959,53.245,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,LMS,100000,software SHA-256,76.27,2658884,published,S8-026,45.4,15.827,61.226,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,LMS,100000,hardware HASH,2.38,2658884,published,S8-026,1.414,15.827,17.241,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,LMS,250000,software SHA-256,76.27,2658884,published,S8-026,113.499,15.827,129.325,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,LMS,250000,hardware HASH,2.38,2658884,published,S8-026,3.536,15.827,19.362,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,LMS,500000,software SHA-256,76.27,2658884,published,S8-026,226.998,15.827,242.824,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,LMS,500000,hardware HASH,2.38,2658884,published,S8-026,7.071,15.827,22.898,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,LMS,1000000,software SHA-256,76.27,2658884,published,S8-026,453.995,15.827,469.822,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,LMS,1000000,hardware HASH,2.38,2658884,published,S8-026,14.143,15.827,29.97,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,LMS,2000000,software SHA-256,76.27,2658884,published,S8-026,907.99,15.827,923.817,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,LMS,2000000,hardware HASH,2.38,2658884,published,S8-026,28.286,15.827,44.113,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,XMSS,100000,software SHA-256,76.27,13071813,published,S8-032,45.4,77.808,123.208,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,XMSS,100000,hardware HASH,2.38,13071813,published,S8-032,1.414,77.808,79.223,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,XMSS,250000,software SHA-256,76.27,13071813,published,S8-032,113.499,77.808,191.307,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,XMSS,250000,hardware HASH,2.38,13071813,published,S8-032,3.536,77.808,81.344,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,XMSS,500000,software SHA-256,76.27,13071813,published,S8-032,226.998,77.808,304.806,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,XMSS,500000,hardware HASH,2.38,13071813,published,S8-032,7.071,77.808,84.88,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,XMSS,1000000,software SHA-256,76.27,13071813,published,S8-032,453.995,77.808,531.804,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,XMSS,1000000,hardware HASH,2.38,13071813,published,S8-032,14.143,77.808,91.951,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,XMSS,2000000,software SHA-256,76.27,13071813,published,S8-032,907.99,77.808,985.799,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,XMSS,2000000,hardware HASH,2.38,13071813,published,S8-032,28.286,77.808,106.094,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128s,100000,software SHA-256,76.27,7471794,published,S2-0060,45.4,44.475,89.874,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128s,100000,hardware HASH,2.38,7471794,published,S2-0060,1.414,44.475,45.889,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128s,250000,software SHA-256,76.27,7471794,published,S2-0060,113.499,44.475,157.974,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128s,250000,hardware HASH,2.38,7471794,published,S2-0060,3.536,44.475,48.011,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128s,500000,software SHA-256,76.27,7471794,published,S2-0060,226.998,44.475,271.473,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128s,500000,hardware HASH,2.38,7471794,published,S2-0060,7.071,44.475,51.546,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128s,1000000,software SHA-256,76.27,7471794,published,S2-0060,453.995,44.475,498.47,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128s,1000000,hardware HASH,2.38,7471794,published,S2-0060,14.143,44.475,58.618,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128s,2000000,software SHA-256,76.27,7471794,published,S2-0060,907.99,44.475,952.465,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128s,2000000,hardware HASH,2.38,7471794,published,S2-0060,28.286,44.475,72.761,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128f,100000,software SHA-256,76.27,21923628,published,S2-0057,45.4,130.498,175.897,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128f,100000,hardware HASH,2.38,21923628,published,S2-0057,1.414,130.498,131.912,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128f,250000,software SHA-256,76.27,21923628,published,S2-0057,113.499,130.498,243.997,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128f,250000,hardware HASH,2.38,21923628,published,S2-0057,3.536,130.498,134.034,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128f,500000,software SHA-256,76.27,21923628,published,S2-0057,226.998,130.498,357.495,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128f,500000,hardware HASH,2.38,21923628,published,S2-0057,7.071,130.498,137.569,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128f,1000000,software SHA-256,76.27,21923628,published,S2-0057,453.995,130.498,584.493,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128f,1000000,hardware HASH,2.38,21923628,published,S2-0057,14.143,130.498,144.641,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128f,2000000,software SHA-256,76.27,21923628,published,S2-0057,907.99,130.498,1038.488,estimated
+Crazyflie 2.1 (STM32F405),Cortex-M4,168.0,SLH-DSA-128f,2000000,hardware HASH,2.38,21923628,published,S2-0057,28.286,130.498,158.784,estimated
+STM32H563,Cortex-M33,250.0,Ed25519,100000,software SHA-256,76.27,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,S10D-031 (time x clock),30.508,10.24,40.748,estimated
+STM32H563,Cortex-M33,250.0,Ed25519,100000,hardware HASH,2.38,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,S10D-031 (time x clock),0.95,10.24,11.19,estimated
+STM32H563,Cortex-M33,250.0,Ed25519,250000,software SHA-256,76.27,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,S10D-031 (time x clock),76.271,10.24,86.511,estimated
+STM32H563,Cortex-M33,250.0,Ed25519,250000,hardware HASH,2.38,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,S10D-031 (time x clock),2.376,10.24,12.616,estimated
+STM32H563,Cortex-M33,250.0,Ed25519,500000,software SHA-256,76.27,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,S10D-031 (time x clock),152.542,10.24,162.782,estimated
+STM32H563,Cortex-M33,250.0,Ed25519,500000,hardware HASH,2.38,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,S10D-031 (time x clock),4.752,10.24,14.992,estimated
+STM32H563,Cortex-M33,250.0,Ed25519,1000000,software SHA-256,76.27,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,S10D-031 (time x clock),305.085,10.24,315.325,estimated
+STM32H563,Cortex-M33,250.0,Ed25519,1000000,hardware HASH,2.38,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,S10D-031 (time x clock),9.504,10.24,19.744,estimated
+STM32H563,Cortex-M33,250.0,Ed25519,2000000,software SHA-256,76.27,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,S10D-031 (time x clock),610.169,10.24,620.409,estimated
+STM32H563,Cortex-M33,250.0,Ed25519,2000000,hardware HASH,2.38,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,S10D-031 (time x clock),19.008,10.24,29.248,estimated
+STM32H563,Cortex-M33,250.0,ECDSA P-256,100000,software SHA-256,76.27,6639000,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0213,30.508,26.556,57.064,estimated
+STM32H563,Cortex-M33,250.0,ECDSA P-256,100000,hardware HASH,2.38,6639000,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0213,0.95,26.556,27.506,estimated
+STM32H563,Cortex-M33,250.0,ECDSA P-256,250000,software SHA-256,76.27,6639000,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0213,76.271,26.556,102.827,estimated
+STM32H563,Cortex-M33,250.0,ECDSA P-256,250000,hardware HASH,2.38,6639000,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0213,2.376,26.556,28.932,estimated
+STM32H563,Cortex-M33,250.0,ECDSA P-256,500000,software SHA-256,76.27,6639000,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0213,152.542,26.556,179.098,estimated
+STM32H563,Cortex-M33,250.0,ECDSA P-256,500000,hardware HASH,2.38,6639000,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0213,4.752,26.556,31.308,estimated
+STM32H563,Cortex-M33,250.0,ECDSA P-256,1000000,software SHA-256,76.27,6639000,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0213,305.085,26.556,331.641,estimated
+STM32H563,Cortex-M33,250.0,ECDSA P-256,1000000,hardware HASH,2.38,6639000,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0213,9.504,26.556,36.06,estimated
+STM32H563,Cortex-M33,250.0,ECDSA P-256,2000000,software SHA-256,76.27,6639000,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0213,610.169,26.556,636.725,estimated
+STM32H563,Cortex-M33,250.0,ECDSA P-256,2000000,hardware HASH,2.38,6639000,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0213,19.008,26.556,45.564,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-44,100000,software SHA-256,76.27,1421623,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0033,30.508,5.686,36.195,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-44,100000,hardware HASH,2.38,1421623,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0033,0.95,5.686,6.637,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-44,250000,software SHA-256,76.27,1421623,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0033,76.271,5.686,81.958,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-44,250000,hardware HASH,2.38,1421623,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0033,2.376,5.686,8.063,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-44,500000,software SHA-256,76.27,1421623,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0033,152.542,5.686,158.229,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-44,500000,hardware HASH,2.38,1421623,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0033,4.752,5.686,10.439,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-44,1000000,software SHA-256,76.27,1421623,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0033,305.085,5.686,310.771,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-44,1000000,hardware HASH,2.38,1421623,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0033,9.504,5.686,15.191,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-44,2000000,software SHA-256,76.27,1421623,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0033,610.169,5.686,615.856,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-44,2000000,hardware HASH,2.38,1421623,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0033,19.008,5.686,24.695,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-65,100000,software SHA-256,76.27,2415944,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0042,30.508,9.664,40.172,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-65,100000,hardware HASH,2.38,2415944,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0042,0.95,9.664,10.614,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-65,250000,software SHA-256,76.27,2415944,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0042,76.271,9.664,85.935,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-65,250000,hardware HASH,2.38,2415944,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0042,2.376,9.664,12.04,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-65,500000,software SHA-256,76.27,2415944,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0042,152.542,9.664,162.206,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-65,500000,hardware HASH,2.38,2415944,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0042,4.752,9.664,14.416,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-65,1000000,software SHA-256,76.27,2415944,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0042,305.085,9.664,314.749,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-65,1000000,hardware HASH,2.38,2415944,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0042,9.504,9.664,19.168,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-65,2000000,software SHA-256,76.27,2415944,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0042,610.169,9.664,619.833,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-65,2000000,hardware HASH,2.38,2415944,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0042,19.008,9.664,28.672,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-87,100000,software SHA-256,76.27,4193104,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0051,30.508,16.772,47.281,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-87,100000,hardware HASH,2.38,4193104,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0051,0.95,16.772,17.723,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-87,250000,software SHA-256,76.27,4193104,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0051,76.271,16.772,93.044,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-87,250000,hardware HASH,2.38,4193104,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0051,2.376,16.772,19.148,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-87,500000,software SHA-256,76.27,4193104,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0051,152.542,16.772,169.315,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-87,500000,hardware HASH,2.38,4193104,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0051,4.752,16.772,21.524,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-87,1000000,software SHA-256,76.27,4193104,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0051,305.085,16.772,321.857,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-87,1000000,hardware HASH,2.38,4193104,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0051,9.504,16.772,26.276,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-87,2000000,software SHA-256,76.27,4193104,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0051,610.169,16.772,626.942,estimated
+STM32H563,Cortex-M33,250.0,ML-DSA-87,2000000,hardware HASH,2.38,4193104,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0051,19.008,16.772,35.781,estimated
+STM32H563,Cortex-M33,250.0,LMS,100000,software SHA-256,76.27,2658884,published; proxy: Cortex-M4 row used for Cortex-M33,S8-026,30.508,10.636,41.144,estimated
+STM32H563,Cortex-M33,250.0,LMS,100000,hardware HASH,2.38,2658884,published; proxy: Cortex-M4 row used for Cortex-M33,S8-026,0.95,10.636,11.586,estimated
+STM32H563,Cortex-M33,250.0,LMS,250000,software SHA-256,76.27,2658884,published; proxy: Cortex-M4 row used for Cortex-M33,S8-026,76.271,10.636,86.907,estimated
+STM32H563,Cortex-M33,250.0,LMS,250000,hardware HASH,2.38,2658884,published; proxy: Cortex-M4 row used for Cortex-M33,S8-026,2.376,10.636,13.012,estimated
+STM32H563,Cortex-M33,250.0,LMS,500000,software SHA-256,76.27,2658884,published; proxy: Cortex-M4 row used for Cortex-M33,S8-026,152.542,10.636,163.178,estimated
+STM32H563,Cortex-M33,250.0,LMS,500000,hardware HASH,2.38,2658884,published; proxy: Cortex-M4 row used for Cortex-M33,S8-026,4.752,10.636,15.388,estimated
+STM32H563,Cortex-M33,250.0,LMS,1000000,software SHA-256,76.27,2658884,published; proxy: Cortex-M4 row used for Cortex-M33,S8-026,305.085,10.636,315.72,estimated
+STM32H563,Cortex-M33,250.0,LMS,1000000,hardware HASH,2.38,2658884,published; proxy: Cortex-M4 row used for Cortex-M33,S8-026,9.504,10.636,20.14,estimated
+STM32H563,Cortex-M33,250.0,LMS,2000000,software SHA-256,76.27,2658884,published; proxy: Cortex-M4 row used for Cortex-M33,S8-026,610.169,10.636,620.805,estimated
+STM32H563,Cortex-M33,250.0,LMS,2000000,hardware HASH,2.38,2658884,published; proxy: Cortex-M4 row used for Cortex-M33,S8-026,19.008,10.636,29.644,estimated
+STM32H563,Cortex-M33,250.0,XMSS,100000,software SHA-256,76.27,13071813,published; proxy: Cortex-M4 row used for Cortex-M33,S8-032,30.508,52.287,82.796,estimated
+STM32H563,Cortex-M33,250.0,XMSS,100000,hardware HASH,2.38,13071813,published; proxy: Cortex-M4 row used for Cortex-M33,S8-032,0.95,52.287,53.238,estimated
+STM32H563,Cortex-M33,250.0,XMSS,250000,software SHA-256,76.27,13071813,published; proxy: Cortex-M4 row used for Cortex-M33,S8-032,76.271,52.287,128.558,estimated
+STM32H563,Cortex-M33,250.0,XMSS,250000,hardware HASH,2.38,13071813,published; proxy: Cortex-M4 row used for Cortex-M33,S8-032,2.376,52.287,54.663,estimated
+STM32H563,Cortex-M33,250.0,XMSS,500000,software SHA-256,76.27,13071813,published; proxy: Cortex-M4 row used for Cortex-M33,S8-032,152.542,52.287,204.83,estimated
+STM32H563,Cortex-M33,250.0,XMSS,500000,hardware HASH,2.38,13071813,published; proxy: Cortex-M4 row used for Cortex-M33,S8-032,4.752,52.287,57.039,estimated
+STM32H563,Cortex-M33,250.0,XMSS,1000000,software SHA-256,76.27,13071813,published; proxy: Cortex-M4 row used for Cortex-M33,S8-032,305.085,52.287,357.372,estimated
+STM32H563,Cortex-M33,250.0,XMSS,1000000,hardware HASH,2.38,13071813,published; proxy: Cortex-M4 row used for Cortex-M33,S8-032,9.504,52.287,61.791,estimated
+STM32H563,Cortex-M33,250.0,XMSS,2000000,software SHA-256,76.27,13071813,published; proxy: Cortex-M4 row used for Cortex-M33,S8-032,610.169,52.287,662.457,estimated
+STM32H563,Cortex-M33,250.0,XMSS,2000000,hardware HASH,2.38,13071813,published; proxy: Cortex-M4 row used for Cortex-M33,S8-032,19.008,52.287,71.295,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128s,100000,software SHA-256,76.27,7471794,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0060,30.508,29.887,60.396,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128s,100000,hardware HASH,2.38,7471794,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0060,0.95,29.887,30.838,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128s,250000,software SHA-256,76.27,7471794,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0060,76.271,29.887,106.158,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128s,250000,hardware HASH,2.38,7471794,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0060,2.376,29.887,32.263,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128s,500000,software SHA-256,76.27,7471794,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0060,152.542,29.887,182.43,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128s,500000,hardware HASH,2.38,7471794,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0060,4.752,29.887,34.639,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128s,1000000,software SHA-256,76.27,7471794,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0060,305.085,29.887,334.972,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128s,1000000,hardware HASH,2.38,7471794,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0060,9.504,29.887,39.391,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128s,2000000,software SHA-256,76.27,7471794,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0060,610.169,29.887,640.057,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128s,2000000,hardware HASH,2.38,7471794,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0060,19.008,29.887,48.895,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128f,100000,software SHA-256,76.27,21923628,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0057,30.508,87.695,118.203,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128f,100000,hardware HASH,2.38,21923628,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0057,0.95,87.695,88.645,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128f,250000,software SHA-256,76.27,21923628,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0057,76.271,87.695,163.966,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128f,250000,hardware HASH,2.38,21923628,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0057,2.376,87.695,90.071,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128f,500000,software SHA-256,76.27,21923628,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0057,152.542,87.695,240.237,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128f,500000,hardware HASH,2.38,21923628,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0057,4.752,87.695,92.447,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128f,1000000,software SHA-256,76.27,21923628,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0057,305.085,87.695,392.779,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128f,1000000,hardware HASH,2.38,21923628,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0057,9.504,87.695,97.199,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128f,2000000,software SHA-256,76.27,21923628,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0057,610.169,87.695,697.864,estimated
+STM32H563,Cortex-M33,250.0,SLH-DSA-128f,2000000,hardware HASH,2.38,21923628,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0057,19.008,87.695,106.703,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,Ed25519,100000,software SHA-256,76.27,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M7,S10D-031 (time x clock),35.311,11.852,47.163,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,Ed25519,100000,hardware HASH,2.38,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M7,S10D-031 (time x clock),1.1,11.852,12.952,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,Ed25519,250000,software SHA-256,76.27,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M7,S10D-031 (time x clock),88.277,11.852,100.129,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,Ed25519,250000,hardware HASH,2.38,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M7,S10D-031 (time x clock),2.75,11.852,14.602,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,Ed25519,500000,software SHA-256,76.27,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M7,S10D-031 (time x clock),176.554,11.852,188.406,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,Ed25519,500000,hardware HASH,2.38,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M7,S10D-031 (time x clock),5.5,11.852,17.352,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,Ed25519,1000000,software SHA-256,76.27,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M7,S10D-031 (time x clock),353.107,11.852,364.959,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,Ed25519,1000000,hardware HASH,2.38,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M7,S10D-031 (time x clock),11.0,11.852,22.852,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,Ed25519,2000000,software SHA-256,76.27,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M7,S10D-031 (time x clock),706.215,11.852,718.067,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,Ed25519,2000000,hardware HASH,2.38,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M7,S10D-031 (time x clock),22.0,11.852,33.852,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ECDSA P-256,100000,software SHA-256,76.27,6639000,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0213,35.311,30.736,66.047,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ECDSA P-256,100000,hardware HASH,2.38,6639000,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0213,1.1,30.736,31.836,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ECDSA P-256,250000,software SHA-256,76.27,6639000,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0213,88.277,30.736,119.013,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ECDSA P-256,250000,hardware HASH,2.38,6639000,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0213,2.75,30.736,33.486,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ECDSA P-256,500000,software SHA-256,76.27,6639000,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0213,176.554,30.736,207.29,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ECDSA P-256,500000,hardware HASH,2.38,6639000,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0213,5.5,30.736,36.236,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ECDSA P-256,1000000,software SHA-256,76.27,6639000,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0213,353.107,30.736,383.843,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ECDSA P-256,1000000,hardware HASH,2.38,6639000,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0213,11.0,30.736,41.736,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ECDSA P-256,2000000,software SHA-256,76.27,6639000,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0213,706.215,30.736,736.951,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ECDSA P-256,2000000,hardware HASH,2.38,6639000,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0213,22.0,30.736,52.736,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-44,100000,software SHA-256,76.27,813339,published,S7-009,35.311,3.765,39.076,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-44,100000,hardware HASH,2.38,813339,published,S7-009,1.1,3.765,4.865,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-44,250000,software SHA-256,76.27,813339,published,S7-009,88.277,3.765,92.042,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-44,250000,hardware HASH,2.38,813339,published,S7-009,2.75,3.765,6.515,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-44,500000,software SHA-256,76.27,813339,published,S7-009,176.554,3.765,180.319,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-44,500000,hardware HASH,2.38,813339,published,S7-009,5.5,3.765,9.266,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-44,1000000,software SHA-256,76.27,813339,published,S7-009,353.107,3.765,356.873,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-44,1000000,hardware HASH,2.38,813339,published,S7-009,11.0,3.765,14.766,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-44,2000000,software SHA-256,76.27,813339,published,S7-009,706.215,3.765,709.98,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-44,2000000,hardware HASH,2.38,813339,published,S7-009,22.0,3.765,25.766,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-65,100000,software SHA-256,76.27,1380098,published,S7-003,35.311,6.389,41.7,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-65,100000,hardware HASH,2.38,1380098,published,S7-003,1.1,6.389,7.489,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-65,250000,software SHA-256,76.27,1380098,published,S7-003,88.277,6.389,94.666,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-65,250000,hardware HASH,2.38,1380098,published,S7-003,2.75,6.389,9.139,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-65,500000,software SHA-256,76.27,1380098,published,S7-003,176.554,6.389,182.943,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-65,500000,hardware HASH,2.38,1380098,published,S7-003,5.5,6.389,11.889,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-65,1000000,software SHA-256,76.27,1380098,published,S7-003,353.107,6.389,359.497,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-65,1000000,hardware HASH,2.38,1380098,published,S7-003,11.0,6.389,17.389,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-65,2000000,software SHA-256,76.27,1380098,published,S7-003,706.215,6.389,712.604,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-65,2000000,hardware HASH,2.38,1380098,published,S7-003,22.0,6.389,28.39,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-87,100000,software SHA-256,76.27,2401930,published,S7-012,35.311,11.12,46.431,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-87,100000,hardware HASH,2.38,2401930,published,S7-012,1.1,11.12,12.22,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-87,250000,software SHA-256,76.27,2401930,published,S7-012,88.277,11.12,99.397,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-87,250000,hardware HASH,2.38,2401930,published,S7-012,2.75,11.12,13.87,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-87,500000,software SHA-256,76.27,2401930,published,S7-012,176.554,11.12,187.674,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-87,500000,hardware HASH,2.38,2401930,published,S7-012,5.5,11.12,16.62,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-87,1000000,software SHA-256,76.27,2401930,published,S7-012,353.107,11.12,364.227,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-87,1000000,hardware HASH,2.38,2401930,published,S7-012,11.0,11.12,22.12,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-87,2000000,software SHA-256,76.27,2401930,published,S7-012,706.215,11.12,717.335,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,ML-DSA-87,2000000,hardware HASH,2.38,2401930,published,S7-012,22.0,11.12,33.12,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,LMS,100000,software SHA-256,76.27,2658884,published; proxy: Cortex-M4 row used for Cortex-M7,S8-026,35.311,12.31,47.62,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,LMS,100000,hardware HASH,2.38,2658884,published; proxy: Cortex-M4 row used for Cortex-M7,S8-026,1.1,12.31,13.41,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,LMS,250000,software SHA-256,76.27,2658884,published; proxy: Cortex-M4 row used for Cortex-M7,S8-026,88.277,12.31,100.586,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,LMS,250000,hardware HASH,2.38,2658884,published; proxy: Cortex-M4 row used for Cortex-M7,S8-026,2.75,12.31,15.06,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,LMS,500000,software SHA-256,76.27,2658884,published; proxy: Cortex-M4 row used for Cortex-M7,S8-026,176.554,12.31,188.863,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,LMS,500000,hardware HASH,2.38,2658884,published; proxy: Cortex-M4 row used for Cortex-M7,S8-026,5.5,12.31,17.81,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,LMS,1000000,software SHA-256,76.27,2658884,published; proxy: Cortex-M4 row used for Cortex-M7,S8-026,353.107,12.31,365.417,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,LMS,1000000,hardware HASH,2.38,2658884,published; proxy: Cortex-M4 row used for Cortex-M7,S8-026,11.0,12.31,23.31,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,LMS,2000000,software SHA-256,76.27,2658884,published; proxy: Cortex-M4 row used for Cortex-M7,S8-026,706.215,12.31,718.524,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,LMS,2000000,hardware HASH,2.38,2658884,published; proxy: Cortex-M4 row used for Cortex-M7,S8-026,22.0,12.31,34.31,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,XMSS,100000,software SHA-256,76.27,13071813,published; proxy: Cortex-M4 row used for Cortex-M7,S8-032,35.311,60.518,95.828,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,XMSS,100000,hardware HASH,2.38,13071813,published; proxy: Cortex-M4 row used for Cortex-M7,S8-032,1.1,60.518,61.618,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,XMSS,250000,software SHA-256,76.27,13071813,published; proxy: Cortex-M4 row used for Cortex-M7,S8-032,88.277,60.518,148.794,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,XMSS,250000,hardware HASH,2.38,13071813,published; proxy: Cortex-M4 row used for Cortex-M7,S8-032,2.75,60.518,63.268,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,XMSS,500000,software SHA-256,76.27,13071813,published; proxy: Cortex-M4 row used for Cortex-M7,S8-032,176.554,60.518,237.071,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,XMSS,500000,hardware HASH,2.38,13071813,published; proxy: Cortex-M4 row used for Cortex-M7,S8-032,5.5,60.518,66.018,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,XMSS,1000000,software SHA-256,76.27,13071813,published; proxy: Cortex-M4 row used for Cortex-M7,S8-032,353.107,60.518,413.625,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,XMSS,1000000,hardware HASH,2.38,13071813,published; proxy: Cortex-M4 row used for Cortex-M7,S8-032,11.0,60.518,71.518,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,XMSS,2000000,software SHA-256,76.27,13071813,published; proxy: Cortex-M4 row used for Cortex-M7,S8-032,706.215,60.518,766.732,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,XMSS,2000000,hardware HASH,2.38,13071813,published; proxy: Cortex-M4 row used for Cortex-M7,S8-032,22.0,60.518,82.518,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128s,100000,software SHA-256,76.27,7471794,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0060,35.311,34.592,69.902,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128s,100000,hardware HASH,2.38,7471794,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0060,1.1,34.592,35.692,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128s,250000,software SHA-256,76.27,7471794,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0060,88.277,34.592,122.868,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128s,250000,hardware HASH,2.38,7471794,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0060,2.75,34.592,37.342,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128s,500000,software SHA-256,76.27,7471794,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0060,176.554,34.592,211.145,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128s,500000,hardware HASH,2.38,7471794,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0060,5.5,34.592,40.092,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128s,1000000,software SHA-256,76.27,7471794,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0060,353.107,34.592,387.699,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128s,1000000,hardware HASH,2.38,7471794,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0060,11.0,34.592,45.592,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128s,2000000,software SHA-256,76.27,7471794,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0060,706.215,34.592,740.806,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128s,2000000,hardware HASH,2.38,7471794,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0060,22.0,34.592,56.592,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128f,100000,software SHA-256,76.27,21923628,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0057,35.311,101.498,136.809,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128f,100000,hardware HASH,2.38,21923628,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0057,1.1,101.498,102.598,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128f,250000,software SHA-256,76.27,21923628,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0057,88.277,101.498,189.775,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128f,250000,hardware HASH,2.38,21923628,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0057,2.75,101.498,104.248,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128f,500000,software SHA-256,76.27,21923628,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0057,176.554,101.498,278.052,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128f,500000,hardware HASH,2.38,21923628,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0057,5.5,101.498,106.998,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128f,1000000,software SHA-256,76.27,21923628,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0057,353.107,101.498,454.606,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128f,1000000,hardware HASH,2.38,21923628,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0057,11.0,101.498,112.498,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128f,2000000,software SHA-256,76.27,21923628,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0057,706.215,101.498,807.713,estimated
+TurtleBot3 Burger board,Cortex-M7,216.0,SLH-DSA-128f,2000000,hardware HASH,2.38,21923628,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0057,22.0,101.498,123.498,estimated

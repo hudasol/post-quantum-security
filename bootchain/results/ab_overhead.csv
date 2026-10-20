@@ -1,0 +1,15 @@
+scheme,flash,flash_bytes,bootloader_bytes_published,header_bytes,max_image_bytes_ab_estimated,overhead_fraction_of_flash_estimated,label
+Ed25519,fmuv2_flash_limit_bytes,1000000.0,29664.0,320.0,482800,0.0344,estimated
+Ed25519,fmuv3_flash_bytes,2000000.0,29664.0,320.0,982800,0.0172,estimated
+ECDSA P-256,fmuv2_flash_limit_bytes,1000000.0,24784.0,327.0,485233,0.0295,estimated
+ECDSA P-256,fmuv3_flash_bytes,2000000.0,24784.0,327.0,985233,0.0148,estimated
+ML-DSA-44,fmuv2_flash_limit_bytes,1000000.0,21524.0,5288.0,481902,0.0362,estimated
+ML-DSA-44,fmuv3_flash_bytes,2000000.0,21524.0,5288.0,981902,0.0181,estimated
+ML-DSA-65,fmuv2_flash_limit_bytes,1000000.0,22164.0,5288.0,481582,0.0368,estimated
+ML-DSA-65,fmuv3_flash_bytes,2000000.0,22164.0,5288.0,981582,0.0184,estimated
+ML-DSA-87,fmuv2_flash_limit_bytes,1000000.0,22804.0,5288.0,481262,0.0375,estimated
+ML-DSA-87,fmuv3_flash_bytes,2000000.0,22804.0,5288.0,981262,0.0187,estimated
+LMS,fmuv2_flash_limit_bytes,1000000.0,13416.0,5288.0,485956,0.0281,estimated
+LMS,fmuv3_flash_bytes,2000000.0,13416.0,5288.0,985956,0.014,estimated
+XMSS,fmuv2_flash_limit_bytes,1000000.0,14236.0,5288.0,485546,0.0289,estimated
+XMSS,fmuv3_flash_bytes,2000000.0,14236.0,5288.0,985546,0.0145,estimated
