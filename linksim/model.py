@@ -112,7 +112,13 @@ def frames_for_bytes(n_bytes, cap):
 
 
 def fragment_wire_sizes(link, n_bytes):
-    """Wire size of each fragment of an n_bytes object."""
+    """Wire size of each fragment of an n_bytes object. A link object that
+    defines its own fragment_wire_sizes method (fourth round link models in
+    mac802154.py and lora.py) is asked directly; the six original links are
+    unchanged."""
+    own = getattr(link, "fragment_wire_sizes", None)
+    if own is not None:
+        return own(n_bytes)
     nf = frames_for_bytes(n_bytes, link.cap)
     if nf == 0:
         return []
