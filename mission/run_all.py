@@ -22,7 +22,7 @@ FIG = os.path.join(HERE, '..', 'docs', 'figures', 'mission')
 DOC_STUDY = os.path.join(ROOT, 'docs', 'MISSION_STUDY.md')
 DOC_ARCH = os.path.join(ROOT, 'docs', 'REFERENCE_ARCHITECTURE.md')
 PINK = ['#d63384', '#ad1457', '#f48fb1', '#880e4f', '#f8bbd0']
-LABEL = '_estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_'
+LABEL = '_estimated (computed from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_'
 
 
 def fmt(x, nd=3):
