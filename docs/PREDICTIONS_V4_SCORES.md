@@ -30,7 +30,7 @@ Totals: 12 hit, 1 between, 5 miss, 6 not scored, of 24.
 | V18 | hit | Largest first order index: data_lifetime_years (0.40). |
 | V19 | hit | 36 images built; 100.0 percent of 55938 log lines parsed. |
 | V20 | hit | Hybrid session on the SiK radio adds 1.87 ms per command. |
-| V21 | miss | On LoRaWAN DR0 the hybrid handshake never completes, so the metric is undefined there; on the slowest link where it completes (the SiK radio) recovery after a session teardown takes 0.92 s, below 1 s, which meets the refutation clause. |
+| V21 | miss | On LoRaWAN DR0 the hybrid handshake never completes, so the metric is undefined there; on the slowest link where it completes (the SiK radio) recovery after a session teardown takes 0.91 s, below 1 s, which meets the refutation clause. |
 | V22 | not scored | Not yet scored. |
 | V23 | not scored | Not yet scored. |
 | V24 | not scored | Not yet scored. |
