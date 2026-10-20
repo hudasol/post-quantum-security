@@ -23,6 +23,8 @@ jobs:
         run: python3 scripts/check_style.py
       - name: Retracted claims do not reappear
         run: python3 scripts/check_claims.py
+      - name: Bibliography is current and every cited key exists
+        run: python3 scripts/check_citations.py
   tests:
     runs-on: ubuntu-latest
     steps:
