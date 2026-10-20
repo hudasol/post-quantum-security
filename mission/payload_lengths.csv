@@ -1,0 +1,24 @@
+message,msg_id,max_payload_bytes,crc_extra,label,method
+HEARTBEAT,0,9,50,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+SYS_STATUS,1,43,124,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+ATTITUDE,30,28,39,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+GLOBAL_POSITION_INT,33,28,104,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+LOCAL_POSITION_NED,32,28,185,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+GPS_RAW_INT,24,52,24,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+VFR_HUD,74,20,20,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+BATTERY_STATUS,147,54,154,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+COMMAND_LONG,76,33,152,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+COMMAND_ACK,77,10,143,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+SET_POSITION_TARGET_LOCAL_NED,84,53,143,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+SET_POSITION_TARGET_GLOBAL_INT,86,53,5,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+MISSION_ITEM_INT,73,38,38,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+RC_CHANNELS,65,42,118,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+POSITION_TARGET_GLOBAL_INT,87,51,150,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+NAV_CONTROLLER_OUTPUT,62,26,183,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+SERVO_OUTPUT_RAW,36,37,222,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+RAW_IMU,27,29,144,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+SCALED_PRESSURE,29,16,115,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+SYSTEM_TIME,2,12,137,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+MISSION_CURRENT,42,6,28,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+VIBRATION,241,32,90,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions
+POWER_STATUS,125,6,203,host measured,pymavlink 2.4.50 dialects.v20.common struct size incl. extensions

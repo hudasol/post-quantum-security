@@ -1,0 +1,20 @@
+vehicle,direction,message,role,rate_hz,label,source
+drone,down,HEARTBEAT,telemetry,1.0,published,data/raw/S12_traffic_sources.md T5 (HEARTBEAT at 1 Hz)
+drone,down,ATTITUDE,telemetry,4.0,assumption,ASSUMPTION rate; stream group SRx_EXTRA1 per S12 T1; default rate not stated
+drone,down,GLOBAL_POSITION_INT,telemetry,2.0,assumption,ASSUMPTION rate; stream group SRx_POSITION per S12 T1
+drone,down,VFR_HUD,telemetry,2.0,assumption,ASSUMPTION rate; stream group SRx_EXTRA2 per S12 T1
+drone,down,SYS_STATUS,telemetry,1.0,assumption,ASSUMPTION rate; stream group SRx_EXT_STAT per S12 T1
+drone,down,GPS_RAW_INT,telemetry,1.0,assumption,ASSUMPTION rate; stream group SRx_EXT_STAT per S12 T1
+drone,down,BATTERY_STATUS,telemetry,0.5,assumption,ASSUMPTION rate; stream group SRx_EXTRA3 per S12 T1
+drone,down,COMMAND_ACK,ack,1.0,assumption,ASSUMPTION one acknowledgement per command
+drone,up,HEARTBEAT,telemetry,1.0,published,data/raw/S12_traffic_sources.md T5 (each system sends HEARTBEAT at 1 Hz)
+drone,up,SET_POSITION_TARGET_GLOBAL_INT,command,1.0,assumption,ASSUMPTION guided setpoint stream used as the authenticated command probe
+robot,down,HEARTBEAT,telemetry,1.0,published,data/raw/S12_traffic_sources.md T5
+robot,down,LOCAL_POSITION_NED,telemetry,5.0,assumption,ASSUMPTION odometry style position stream; group SRx_POSITION per S12 T1
+robot,down,ATTITUDE,telemetry,2.0,assumption,ASSUMPTION rate
+robot,down,SYS_STATUS,telemetry,1.0,assumption,ASSUMPTION rate
+robot,down,BATTERY_STATUS,telemetry,0.5,assumption,ASSUMPTION rate
+robot,down,COMMAND_ACK,ack,0.0,assumption,ASSUMPTION velocity setpoints are not acknowledged
+robot,up,HEARTBEAT,telemetry,1.0,published,data/raw/S12_traffic_sources.md T5
+robot,up,SET_POSITION_TARGET_LOCAL_NED,command,5.0,assumption,ASSUMPTION velocity setpoint stream (MAVLink framing; ROS 2 DDS overhead unverified)
+any,cap,PX4_TELEM1_MAV_0_RATE_Bps,limit,1200,published,data/raw/S12_traffic_sources.md T3 (bytes per second; PX4 v1.13 docs)
