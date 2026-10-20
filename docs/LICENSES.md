@@ -12,6 +12,7 @@ Author: Huda Mueen. Generated facts in `data/third_party_licences.csv` by `scrip
 | pqm4 | reference rows only | `5e5cc76d0b07` | (none found at root) | not retrieved |
 | slhdsa-c | SLH-DSA cross check | `174c02e42257` | LICENSE | Apache-2.0; MIT; ISC |
 | liboqs | host measurements | `5a1a854b0dc9` | LICENSE.txt | MIT |
+| ProVerif | WP4 formal verification of the session and update design (tool only, built outside the repository by `formal/install.sh`) | version 2.05, tarball SHA-256 in `formal/proverif.sha256` | LICENSE in the tarball | GPL-2.0 |
 
 Notes:
 
