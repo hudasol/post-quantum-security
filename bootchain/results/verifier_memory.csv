@@ -1,0 +1,13 @@
+scheme,id,bootloader_flash_bytes_published,stack_bytes_published,source,label
+Ed25519,S2-0350,29664,5000,wolfBoot on STM32H563,published
+ECDSA P-256,S2-0349,24784,7632,wolfBoot on STM32H563,published
+ML-DSA-44,S2-0351,21524,25000,wolfBoot on STM32H563,published
+ML-DSA-65,S2-0352,22164,25000,wolfBoot on STM32H563,published
+ML-DSA-87,S2-0353,22804,25000,wolfBoot on STM32H563,published
+LMS,S2-0354,13416,1320,wolfBoot on STM32H563,published
+XMSS,S2-0355,14236,9352,wolfBoot on STM32H563,published
+ML-DSA-44 verify (pqm4 implementation 'm4f (Cortex-M4F-spe),S2-0033,19592,8912,library row (code size excludes common code where stated),published
+ML-DSA-44 verify (pqm4 implementation 'm4fstack (Cortex-M4),S2-0036,24844,2712,library row (code size excludes common code where stated),published
+LMS SHA-256 n=256 w=16 h=10 (single tree) verify (LMS: cisco/hash-sigs (modified); XMSS: x),S8-027,,1044,library row (code size excludes common code where stated),published
+XMSS SIMPLE SHA-256 n=256 w=16 h=10 (single tree) verify (LMS: cisco/hash-sigs (modified); XMSS: x),S8-039,,3848,library row (code size excludes common code where stated),published
+sphincs-sha2-128s-simple verify (pqm4 implementation 'clean (PQClean refe),S2-0060,5264,1968,library row (code size excludes common code where stated),published

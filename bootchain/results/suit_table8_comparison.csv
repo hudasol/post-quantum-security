@@ -1,0 +1,4 @@
+scheme_in_paper,u2_pct_published,u2_pct_modelled,u2_error_points,u3_pct_published,u3_pct_modelled_low,u3_pct_modelled_high,u3_published_inside_range,label
+Falcon,1.1,1.28,0.18,120.0,85.0,101.5,False,modelled
+LMS,9.0,9.98,0.98,43.0,8.3,24.8,False,modelled
+Dilithium,4.3,5.01,0.71,34.0,1.6,46.4,True,modelled

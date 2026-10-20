@@ -1,0 +1,57 @@
+link,rate_tag,effective_bps,scheme,image_bytes,sig_bytes_published,transfer_s_estimated,signature_share_pct_estimated,label
+"SiK 64 kbit/s air rate, 90 percent usable",cited,57600.0,Ed25519,100000,64.0,13.9,0.064,estimated
+"SiK 64 kbit/s air rate, 90 percent usable",cited,57600.0,Ed25519,1000000,64.0,138.9,0.006,estimated
+"SiK 64 kbit/s air rate, 90 percent usable",cited,57600.0,ML-DSA-44,100000,2420.0,14.22,2.363,estimated
+"SiK 64 kbit/s air rate, 90 percent usable",cited,57600.0,ML-DSA-44,1000000,2420.0,139.22,0.241,estimated
+"SiK 64 kbit/s air rate, 90 percent usable",cited,57600.0,ML-DSA-87,100000,4627.0,14.53,4.422,estimated
+"SiK 64 kbit/s air rate, 90 percent usable",cited,57600.0,ML-DSA-87,1000000,4627.0,139.53,0.461,estimated
+"SiK 64 kbit/s air rate, 90 percent usable",cited,57600.0,LMS,100000,2644.0,14.26,2.576,estimated
+"SiK 64 kbit/s air rate, 90 percent usable",cited,57600.0,LMS,1000000,2644.0,139.26,0.264,estimated
+"SiK 64 kbit/s air rate, 90 percent usable",cited,57600.0,XMSS,100000,2500.0,14.24,2.439,estimated
+"SiK 64 kbit/s air rate, 90 percent usable",cited,57600.0,XMSS,1000000,2500.0,139.24,0.249,estimated
+"SiK 64 kbit/s air rate, 90 percent usable",cited,57600.0,SLH-DSA-128s,100000,7856.0,14.98,7.284,estimated
+"SiK 64 kbit/s air rate, 90 percent usable",cited,57600.0,SLH-DSA-128s,1000000,7856.0,139.98,0.779,estimated
+"SiK 64 kbit/s air rate, 90 percent usable",cited,57600.0,SLH-DSA-128f,100000,17088.0,16.26,14.594,estimated
+"SiK 64 kbit/s air rate, 90 percent usable",cited,57600.0,SLH-DSA-128f,1000000,17088.0,141.26,1.68,estimated
+IEEE 802.15.4 250 kbit/s,cited,250000.0,Ed25519,100000,64.0,3.2,0.064,estimated
+IEEE 802.15.4 250 kbit/s,cited,250000.0,Ed25519,1000000,64.0,32.0,0.006,estimated
+IEEE 802.15.4 250 kbit/s,cited,250000.0,ML-DSA-44,100000,2420.0,3.28,2.363,estimated
+IEEE 802.15.4 250 kbit/s,cited,250000.0,ML-DSA-44,1000000,2420.0,32.08,0.241,estimated
+IEEE 802.15.4 250 kbit/s,cited,250000.0,ML-DSA-87,100000,4627.0,3.35,4.422,estimated
+IEEE 802.15.4 250 kbit/s,cited,250000.0,ML-DSA-87,1000000,4627.0,32.15,0.461,estimated
+IEEE 802.15.4 250 kbit/s,cited,250000.0,LMS,100000,2644.0,3.28,2.576,estimated
+IEEE 802.15.4 250 kbit/s,cited,250000.0,LMS,1000000,2644.0,32.08,0.264,estimated
+IEEE 802.15.4 250 kbit/s,cited,250000.0,XMSS,100000,2500.0,3.28,2.439,estimated
+IEEE 802.15.4 250 kbit/s,cited,250000.0,XMSS,1000000,2500.0,32.08,0.249,estimated
+IEEE 802.15.4 250 kbit/s,cited,250000.0,SLH-DSA-128s,100000,7856.0,3.45,7.284,estimated
+IEEE 802.15.4 250 kbit/s,cited,250000.0,SLH-DSA-128s,1000000,7856.0,32.25,0.779,estimated
+IEEE 802.15.4 250 kbit/s,cited,250000.0,SLH-DSA-128f,100000,17088.0,3.75,14.594,estimated
+IEEE 802.15.4 250 kbit/s,cited,250000.0,SLH-DSA-128f,1000000,17088.0,32.55,1.68,estimated
+BLE 1 Mbit/s raw,assumption,1000000.0,Ed25519,100000,64.0,0.8,0.064,estimated
+BLE 1 Mbit/s raw,assumption,1000000.0,Ed25519,1000000,64.0,8.0,0.006,estimated
+BLE 1 Mbit/s raw,assumption,1000000.0,ML-DSA-44,100000,2420.0,0.82,2.363,estimated
+BLE 1 Mbit/s raw,assumption,1000000.0,ML-DSA-44,1000000,2420.0,8.02,0.241,estimated
+BLE 1 Mbit/s raw,assumption,1000000.0,ML-DSA-87,100000,4627.0,0.84,4.422,estimated
+BLE 1 Mbit/s raw,assumption,1000000.0,ML-DSA-87,1000000,4627.0,8.04,0.461,estimated
+BLE 1 Mbit/s raw,assumption,1000000.0,LMS,100000,2644.0,0.82,2.576,estimated
+BLE 1 Mbit/s raw,assumption,1000000.0,LMS,1000000,2644.0,8.02,0.264,estimated
+BLE 1 Mbit/s raw,assumption,1000000.0,XMSS,100000,2500.0,0.82,2.439,estimated
+BLE 1 Mbit/s raw,assumption,1000000.0,XMSS,1000000,2500.0,8.02,0.249,estimated
+BLE 1 Mbit/s raw,assumption,1000000.0,SLH-DSA-128s,100000,7856.0,0.86,7.284,estimated
+BLE 1 Mbit/s raw,assumption,1000000.0,SLH-DSA-128s,1000000,7856.0,8.06,0.779,estimated
+BLE 1 Mbit/s raw,assumption,1000000.0,SLH-DSA-128f,100000,17088.0,0.94,14.594,estimated
+BLE 1 Mbit/s raw,assumption,1000000.0,SLH-DSA-128f,1000000,17088.0,8.14,1.68,estimated
+LoRaWAN DR0 250 bit/s at 1 percent duty cycle,cited,2.5,Ed25519,100000,64.0,320204.8,0.064,estimated
+LoRaWAN DR0 250 bit/s at 1 percent duty cycle,cited,2.5,Ed25519,1000000,64.0,3200204.8,0.006,estimated
+LoRaWAN DR0 250 bit/s at 1 percent duty cycle,cited,2.5,ML-DSA-44,100000,2420.0,327744.0,2.363,estimated
+LoRaWAN DR0 250 bit/s at 1 percent duty cycle,cited,2.5,ML-DSA-44,1000000,2420.0,3207744.0,0.241,estimated
+LoRaWAN DR0 250 bit/s at 1 percent duty cycle,cited,2.5,ML-DSA-87,100000,4627.0,334806.4,4.422,estimated
+LoRaWAN DR0 250 bit/s at 1 percent duty cycle,cited,2.5,ML-DSA-87,1000000,4627.0,3214806.4,0.461,estimated
+LoRaWAN DR0 250 bit/s at 1 percent duty cycle,cited,2.5,LMS,100000,2644.0,328460.8,2.576,estimated
+LoRaWAN DR0 250 bit/s at 1 percent duty cycle,cited,2.5,LMS,1000000,2644.0,3208460.8,0.264,estimated
+LoRaWAN DR0 250 bit/s at 1 percent duty cycle,cited,2.5,XMSS,100000,2500.0,328000.0,2.439,estimated
+LoRaWAN DR0 250 bit/s at 1 percent duty cycle,cited,2.5,XMSS,1000000,2500.0,3208000.0,0.249,estimated
+LoRaWAN DR0 250 bit/s at 1 percent duty cycle,cited,2.5,SLH-DSA-128s,100000,7856.0,345139.2,7.284,estimated
+LoRaWAN DR0 250 bit/s at 1 percent duty cycle,cited,2.5,SLH-DSA-128s,1000000,7856.0,3225139.2,0.779,estimated
+LoRaWAN DR0 250 bit/s at 1 percent duty cycle,cited,2.5,SLH-DSA-128f,100000,17088.0,374681.6,14.594,estimated
+LoRaWAN DR0 250 bit/s at 1 percent duty cycle,cited,2.5,SLH-DSA-128f,1000000,17088.0,3254681.6,1.68,estimated

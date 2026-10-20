@@ -1,0 +1,11 @@
+scheme,verify_op,sig_bytes_ref,suit_name,suit_sig_bytes_ref,suit_lib_flash_ref,boot_row
+Ed25519,ed25519_verify,S10D-013,Ed25519,S10D-013,S10D-026|S10D-029,S2-0350
+ECDSA P-256,ecdsa_p256_verify,S10F-002,,,,S2-0349
+ML-DSA-44,mldsa44_verify,S3-024,Dilithium,S10D-022,S10D-038|S10D-041,S2-0351
+ML-DSA-65,mldsa65_verify,S3-026,,,,S2-0352
+ML-DSA-87,mldsa87_verify,S3-028,,,,S2-0353
+LMS,lms_verify,S3-042,LMS,S10D-025,S10D-044,S2-0354
+XMSS,xmss_verify,S3-043,,,,S2-0355
+SLH-DSA-128s,slhdsa128s_verify,S3-036,,,,
+SLH-DSA-128f,slhdsa128f_verify,S3-037,,,,
+Falcon-512,,S10D-019,Falcon,S10D-019,S10D-035,
