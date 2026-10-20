@@ -30,7 +30,7 @@ Totals: 16 hit, 0 between, 4 miss, 4 not scored, of 24.
 | V18 | hit | Largest first order index: data_lifetime_years (0.40). |
 | V19 | hit | 36 images built; 100.0 percent of 55938 log lines parsed. |
 | V20 | hit | Hybrid session on the SiK radio adds 1.87 ms per command. |
-| V21 | hit | Hybrid session: on the slowest link with a recorded teardown (lora_dr5, robot) recovery takes 735 s. On LoRaWAN DR0 no teardown occurred in the runs, so recovery is not recorded, but the first session alone takes at least 16681 s. On the SiK radio recovery takes 0.91 s, below 1 s, but it is not the slowest link. |
+| V21 | hit | Hybrid session: on the slowest link with a recorded teardown (lora_dr5, robot) recovery takes 735 s. On LoRaWAN DR0 no teardown occurred in the runs, so recovery is not recorded, but the first session alone takes at least 16681 s. On the SiK radio recovery takes at most 0.96 s (median over runs, either vehicle), below 1 s, but it is not the slowest link. |
 | V22 | hit | First pass: 73 findings. |
 | V23 | miss | Second pass: 4 high severity findings. |
 | V24 | not scored | Not yet scored. |
