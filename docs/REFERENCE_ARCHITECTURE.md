@@ -29,27 +29,27 @@ Checks of this recommendation against the result files (computed by `mission/run
 
 | vehicle | link | arch | mean availability at 0.5 s [95% CI] | added latency ms [95% CI] | utilisation | compute share | recovery s after teardown | feasible |
 |---|---|---|---|---|---|---|---|---|
-| drone | SiK 64 kbit/s | A | 0.9919 [0.9913, 0.9926] | 1.87 [1.87, 1.87] | 0.107 | 0.0009 | 0.21 | yes |
-| drone | SiK 64 kbit/s | B | 0.9915 [0.9908, 0.9922] | 1.87 [1.87, 1.87] | 0.110 | 0.0010 | 0.92 | yes |
+| drone | SiK 64 kbit/s | A | 0.9919 [0.9913, 0.9926] | 1.87 [1.87, 1.87] | 0.107 | 0.0009 | 0.20 | yes |
+| drone | SiK 64 kbit/s | B | 0.9915 [0.9908, 0.9922] | 1.87 [1.87, 1.87] | 0.110 | 0.0009 | 0.91 | yes |
 | drone | SiK 64 kbit/s | C | 0.7943 [0.7932, 0.7953] | 379.57 [379.57, 379.57] | 0.429 | 0.0078 | n/a | no |
 | drone | SiK 64 kbit/s | D | 0.9912 [0.9905, 0.9920] | 1.87 [1.87, 1.87] | 0.107 | 0.0009 | n/a | yes |
-| drone | IEEE 802.15.4 | A | 0.9919 [0.9913, 0.9926] | 0.06 [0.06, 0.06] | 0.059 | 0.0009 | 0.20 | yes |
-| drone | IEEE 802.15.4 | B | 0.9917 [0.9911, 0.9924] | 0.06 [0.06, 0.06] | 0.060 | 0.0010 | 0.58 | yes |
+| drone | IEEE 802.15.4 | A | 0.9919 [0.9913, 0.9926] | 0.06 [0.06, 0.06] | 0.059 | 0.0009 | 0.19 | yes |
+| drone | IEEE 802.15.4 | B | 0.9917 [0.9911, 0.9924] | 0.06 [0.06, 0.06] | 0.060 | 0.0009 | 0.57 | yes |
 | drone | IEEE 802.15.4 | C | 0.9337 [0.9329, 0.9345] | 287.28 [287.28, 287.28] | 0.215 | 0.0078 | n/a | no |
 | drone | IEEE 802.15.4 | D | 0.9916 [0.9909, 0.9923] | 0.06 [0.06, 0.06] | 0.059 | 0.0009 | n/a | yes |
-| drone | LoRaWAN DR5 | A | 6.67e-05 [4.93e-05, 8.55e-05] | 19.07 [19.07, 19.07] | 15.808 | 0.0009 | 3.41 | no |
-| drone | LoRaWAN DR5 | B | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 16.494 | 0.0009 | 734.36 | no |
+| drone | LoRaWAN DR5 | A | 6.67e-05 [4.93e-05, 8.55e-05] | 19.07 [19.07, 19.07] | 15.808 | 0.0009 | 3.40 | no |
+| drone | LoRaWAN DR5 | B | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 16.494 | 0.0009 | 734.35 | no |
 | drone | LoRaWAN DR5 | C | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 378.833 | 0.0078 | n/a | no |
 | drone | LoRaWAN DR5 | D | 7.39e-05 [5.51e-05, 9.57e-05] | 19.07 [19.07, 19.07] | 15.681 | 0.0009 | n/a | no |
-| robot | SiK 64 kbit/s | A | 0.9916 [0.9910, 0.9921] | 1.87 [1.87, 1.87] | 0.128 | 0.0010 | 0.21 | yes |
+| robot | SiK 64 kbit/s | A | 0.9916 [0.9910, 0.9921] | 1.87 [1.87, 1.87] | 0.128 | 0.0009 | 0.20 | yes |
 | robot | SiK 64 kbit/s | B | 0.9917 [0.9911, 0.9923] | 1.87 [1.87, 1.87] | 0.131 | 0.0010 | 0.96 | yes |
 | robot | SiK 64 kbit/s | C | 0.0002 [0.0002, 0.0002] | 379.57 [379.57, 379.57] | 1.875 | 0.0397 | n/a | no |
 | robot | SiK 64 kbit/s | D | 0.9920 [0.9915, 0.9926] | 1.87 [1.87, 1.87] | 0.128 | 0.0009 | n/a | yes |
-| robot | IEEE 802.15.4 | A | 0.9915 [0.9909, 0.9921] | 0.06 [0.06, 0.06] | 0.062 | 0.0010 | 0.20 | yes |
-| robot | IEEE 802.15.4 | B | 0.9914 [0.9908, 0.9920] | 0.06 [0.06, 0.06] | 0.064 | 0.0010 | 0.58 | yes |
+| robot | IEEE 802.15.4 | A | 0.9915 [0.9909, 0.9921] | 0.06 [0.06, 0.06] | 0.062 | 0.0009 | 0.19 | yes |
+| robot | IEEE 802.15.4 | B | 0.9914 [0.9908, 0.9920] | 0.06 [0.06, 0.06] | 0.064 | 0.0010 | 0.57 | yes |
 | robot | IEEE 802.15.4 | C | 0.0010 [0.0010, 0.0011] | 340.85 [334.21, 355.50] | 0.859 | 0.0397 | n/a | no |
 | robot | IEEE 802.15.4 | D | 0.9921 [0.9916, 0.9927] | 0.06 [0.06, 0.06] | 0.062 | 0.0009 | n/a | yes |
-| robot | LoRaWAN DR5 | A | 1.11e-05 [8.22e-06, 1.42e-05] | 19.07 [19.07, 19.07] | 59.656 | 0.0010 | 3.41 | no |
+| robot | LoRaWAN DR5 | A | 1.11e-05 [8.22e-06, 1.42e-05] | 19.07 [19.07, 19.07] | 59.656 | 0.0009 | 3.40 | no |
 | robot | LoRaWAN DR5 | B | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 60.175 | 0.0009 | 735.44 | no |
 | robot | LoRaWAN DR5 | C | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 1917.689 | 0.0397 | n/a | no |
 | robot | LoRaWAN DR5 | D | 1.16e-05 [8.67e-06, 1.47e-05] | 19.07 [19.07, 19.07] | 59.539 | 0.0009 | n/a | no |
@@ -60,7 +60,7 @@ Feasible at the 0.5 s deadline (base assumptions): drone: A on IEEE 802.15.4, A 
 
 ## 3. Quantified trade offs (estimated)
 
-- **B against A on SiK (drone):** availability 0.9915 [0.9908, 0.9922] against 0.9919 [0.9913, 0.9926]; the per message cost is identical (same 13 B field), so the difference is only the session start: first session after 0.92 s against 0.21 s, and recovery after a teardown 0.92 s against 0.21 s. Handshake air bytes 4772 against 144.
+- **B against A on SiK (drone):** availability 0.9915 [0.9908, 0.9922] against 0.9919 [0.9913, 0.9926]; the per message cost is identical (same 13 B field), so the difference is only the session start: first session after 0.91 s against 0.20 s, and recovery after a teardown 0.91 s against 0.20 s. Handshake air bytes 4772 against 144.
 
 - **C on SiK:** added latency 379.6 [379.6, 379.6] ms per command and availability 0.7943 [0.7932, 0.7953] for the 1 Hz drone stream; for the 5 Hz robot stream utilisation reaches 1.875 and availability 0.0002 [0.0002, 0.0002].
 
@@ -71,8 +71,8 @@ Feasible at the 0.5 s deadline (base assumptions): drone: A on IEEE 802.15.4, A 
 
 | arch | operation | cycles | ms_at_168MHz | ms_at_480MHz | label |
 |---|---|---|---|---|---|
-| A | handshake or rekey | 3.19e+06 | 18.979 | 6.643 | derived from published |
-| B | handshake or rekey | 3.91e+06 | 23.262 | 8.142 | derived from published |
+| A | handshake or rekey | 1.82e+06 | 10.832 | 3.791 | derived from published |
+| B | handshake or rekey | 3.18e+06 | 18.917 | 6.621 | derived from published |
 | C | per command check | 1.42e+06 | 8.462 | 2.962 | derived from published |
 | D | boot verify | 2.58e+06 | 15.336 | 5.368 | derived from published |
 
@@ -92,7 +92,7 @@ Feasible at the 0.5 s deadline (base assumptions): drone: A on IEEE 802.15.4, A 
 
 - If the link cannot complete the B handshake inside preflight (LoRaWAN class links in this study), use provisioned keys (D) and accept the key management burden: keys must be loaded over a wire before each mission and a captured vehicle exposes them until they expire.
 
-- If the safety case requires renewed authentication within a bound shorter than the B recovery time after a teardown (median 0.92 s at no frame loss and 1.41 s at a frame loss of 0.2 on SiK), keep the session alive through outages (longer session timeout) or fall back to D keys.
+- If the safety case requires renewed authentication within a bound shorter than the B recovery time after a teardown (median 0.91 s at no frame loss and 1.41 s at a frame loss of 0.2 on SiK), keep the session alive through outages (longer session timeout) or fall back to D keys.
 
 - If command streams are rare (one per minute in the low rate profile) and each command is high value, C is feasible on: SiK 64 kbit/s at a 5 s deadline, because its per command delay no longer competes with a stream.
 

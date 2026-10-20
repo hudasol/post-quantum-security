@@ -132,15 +132,18 @@ def compute_latency_table():
     rows = []
     for arch in model.ARCHS:
         ap = model.arch_profile(arch)
-        for what, c in [('handshake or rekey', ap['hs_cycles']), ('per command check', ap['cmd_cycles']),
-                        ('boot verify', ap['boot_cycles'])]:
+        for what, c, parts in [('handshake or rekey', ap['hs_cycles'], ap['hs_parts']),
+                               ('per command check', ap['cmd_cycles'], ap['cmd_parts']),
+                               ('boot verify', ap['boot_cycles'], ap['boot_parts'])]:
             if c == 0:
                 continue
-            rows.append(dict(arch=arch, operation=what, cycles=c,
-                             ms_at_168MHz=c * a['wait_state_factor'] / a['clock_hz'] * 1e3,
+            eff = model.effective_cycles(parts, a['wait_state_factor'], cyc)
+            rows.append(dict(arch=arch, operation=what, cycles=c, cycles_with_wait_state_factor=eff,
+                             ms_at_168MHz=eff / a['clock_hz'] * 1e3,
                              ms_at_480MHz=c / a['clock_alt_hz'] * 1e3, label='derived from published'))
     src = pd.DataFrame([dict(operation=k, cycles=v[0], label=v[1], source=v[2], range_min_cycles=v[3],
-                             range_max_cycles=v[4], range_ids=v[5]) for k, v in cyc.items()])
+                             range_max_cycles=v[4], range_ids=v[5], zero_wait_state_row=v[6],
+                             wait_state_factor_applied=v[6]) for k, v in cyc.items()])
     return pd.DataFrame(rows), src
 
 

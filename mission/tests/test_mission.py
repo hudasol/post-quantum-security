@@ -30,14 +30,26 @@ class TestModel(unittest.TestCase):
     def test_cycle_table(self):
         c = model.cycle_table()
         self.assertEqual(c['mldsa44_verify'][0], 1421623)
-        self.assertEqual(c['ed25519_verify'][0], 1360800)
-        self.assertEqual(c['x25519_two_mults'][0], 2 * 913800)
+        self.assertEqual(c['ed25519_verify'][0], 722000)
+        self.assertEqual(c['x25519_two_mults'][0], 2 * 548873)
+        self.assertTrue(c['ed25519_verify'][6])
+        self.assertFalse(c['x25519_two_mults'][6])
+        self.assertFalse(c['lms_verify'][6])
         self.assertEqual(c['x25519_two_mults'][3], 2 * 476275)
         self.assertEqual(c['x25519_two_mults'][4], 2 * 1036600)
         self.assertEqual(c['ed25519_verify'][3], 722000)
         self.assertEqual(c['ed25519_verify'][4], 1463600)
         with self.assertRaises(KeyError):
             model.evidence_cycles(['NO-SUCH-ROW'])
+
+    def test_effective_cycles_wait_states(self):
+        c = model.cycle_table()
+        self.assertEqual(model.effective_cycles(['x25519_two_mults'], 1.5, c), c['x25519_two_mults'][0])
+        self.assertAlmostEqual(model.effective_cycles(['mldsa44_verify'], 1.5, c), 1.5 * c['mldsa44_verify'][0])
+        self.assertAlmostEqual(model.effective_cycles(['x25519_two_mults', 'ed25519_verify'], 2.0, c),
+                               c['x25519_two_mults'][0] + 2 * c['ed25519_verify'][0])
+        cfg = sim.build_config('drone', 'B', 'sik', wait_state_factor=1.5)
+        self.assertAlmostEqual(cfg['hs_eff'], c['x25519_two_mults'][0] + 1.5 * (c['mlkem768_encaps'][0] + c['mldsa44_verify'][0]))
 
     def test_handshake_bytes(self):
         self.assertEqual(model.handshake_bytes('B'), 4772)
