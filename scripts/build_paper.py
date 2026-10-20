@@ -71,7 +71,7 @@ def results_text():
         "Energy per operation was estimated from published cycles and cited run currents of five parts and checked against published energy rows: "
         f"uncalibrated, the estimate is low by a median of {claim('en_uncal', 'energy/results/validation_split.csv', 'abs_pct_error_uncalibrated', 'set == \"validation\"', 'median', '{:.1f}', label='modelled')} percent on the held out rows; "
         f"after one scale factor fitted on the other half, the median error is {claim('en_cal', 'energy/results/validation_split.csv', 'abs_pct_error_calibrated', 'set == \"validation\"', 'median', '{:.1f}', label='modelled')} percent "
-        "(`docs/ENERGY_STUDY.md`). The check uses one board and one source, so it calibrates a factor rather than validating the model in general. "
+        "(`docs/ENERGY_STUDY.md`). The check uses one board and one source, so it calibrates a factor rather than validating the model in general, and the energy figures elsewhere in this paper are uncalibrated and therefore likely low by about that factor; the message rates below depend only on cycles and are unaffected. "
         f"At 20 percent CPU headroom a 168 MHz Cortex-M4 flight controller can verify about {claim('rate_mldsa', er, 'msgs_per_s_at_20pct_estimated', 'target == \"Crazyflie 2.1\" and design == \"ML-DSA-44\"', fmt='{:.1f}', label='estimated')} ML-DSA-44 signatures per second, "
         f"{claim('rate_ed', er, 'msgs_per_s_at_20pct_estimated', 'target == \"Crazyflie 2.1\" and design == \"Ed25519\"', fmt='{:.1f}', label='estimated')} Ed25519 signatures and "
         f"{claim('rate_lms', er, 'msgs_per_s_at_20pct_estimated', 'target == \"Crazyflie 2.1\" and design == \"LMS\"', fmt='{:.1f}', label='estimated')} LMS signatures, against about "
@@ -87,7 +87,8 @@ def results_text():
         f"takes a 50 kB transfer from {claim('d_base', dg, 'time_s_modelled_after', 'step == \"0\"', fmt='{:.1f}', label='modelled')} s to "
         f"{claim('d_final', dg, 'time_s_modelled_after', 'step == \"6\"', fmt='{:.1f}', label='modelled')} s, which is still "
         f"{claim('d_factor', dg, 'factor_below_low_after', 'step == \"6\"', fmt='{:.1f}', label='modelled')} times faster than the published 30 to 60 s. "
-        "Most of that gap is unexplained by single hop costs; four hops would close it, but the source gives no hop count, so the model is reported as optimistic on 802.15.4 networks.\n")
+        "Most of that gap is unexplained by single hop costs; four hops would bring the model to 28.5 s, near the low end, but the source gives no hop count, so the model is reported as optimistic on 802.15.4 networks. "
+        "The rate part was checked against one published table of handshakes over an emulated link, with one constant fitted on two of its rows; that is a weak test on one testbed.\n")
     pg = "linksim/results/protocols_grid.csv"
     if exists(pg):
         L.append("The protocol simulation (1000 seeded trials per cell, `docs/PROTOCOL_SIM.md`) gives the time to the first authenticated message. "
@@ -117,7 +118,7 @@ def results_text():
         f"{claim('prof_med', pm, 'median', 'fleet == \"profile\" and thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')} "
         f"(2.5 to 97.5 percentile {claim('prof_lo', pm, 'p2_5', 'fleet == \"profile\" and thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')} to "
         f"{claim('prof_hi', pm, 'p97_5', 'fleet == \"profile\" and thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')}). "
-        "No retrieved page states how much flash or RAM a flight stack leaves free, so the free share is an assumption, and it moves the result more than the choice of implementation does (`docs/PLANNER_STUDY.md` section 5). "
+        "The share is close to 0.20 and its intervals cross that value, so whether fewer than a fifth of devices need replacement depends on the threshold scenario. No retrieved page states how much flash or RAM a flight stack leaves free, so the free share is an assumption, and it moves the result more than the choice of implementation does (`docs/PLANNER_STUDY.md` section 5). "
         f"Under the Mosca inequality with stated ranges, data lifetime has the largest total Sobol index ({claim('mosca_st', 'planner/results/mosca_sobol.csv', 'ST', 'input == \"data_lifetime_years\"', fmt='{:.2f}', label='modelled')}), largely because its range is the widest. "
         "Policy dates come from primary texts (`docs/POLICY_TIMELINE.md`); the supplied UAE policy texts give no post quantum date.\n")
     # RQ6 mission
@@ -180,7 +181,7 @@ def parts_text(fill):
                             else "no open core simulation")
     es = "cyclemodel/results/error_summary.csv"
     fill["abstract_results"] = (
-        f"A cycle model fitted on half of the published rows predicts the other half with a median error of {claim('ab_cm', es, 'median_abs_pct', 'model == \"fitted\" and subset == \"test, all\"', fmt='{:.1f}', label='modelled')} percent, though signing misses by up to a fifth. "
+        f"Within one code base, a cycle model fitted on half of the published rows predicts the other half with a median error of {claim('ab_cm', es, 'median_abs_pct', 'model == \"fitted\" and subset == \"test, all\"', fmt='{:.1f}', label='modelled')} percent, though signing misses by up to a fifth. "
         "On telemetry class radios a hybrid key establishment followed by a symmetric session keeps command availability where it is without authentication, while a post quantum signature on every command does not. "
         "For firmware, hashing the image costs more than any signature check unless the device has hash hardware. "
         "The largest open uncertainties are the free memory a flight stack leaves and the real timing of mesh links.")
@@ -188,7 +189,7 @@ def parts_text(fill):
         "Three results change what an engineer should do. First, the algorithm is not the main source of uncertainty in a published cycle count: implementation and measurement conditions move the same operation on the same core class by a factor that the meta analysis quantifies, so a migration decision should rest on a measurement of the deployed code, which the board kit makes cheap. "
         "Second, on the links drones and robots use, the cost of post quantum authentication is a one time handshake, not a per message burden, provided the design uses a session: per message signatures are the only option that fails. "
         "Third, the fleet answer depends more on how much memory the flight stack leaves free than on which implementation of ML-DSA is chosen; operators can settle this from their own build output, which no public page states.\n\n"
-        "The models agree where they overlap: the mission model's handshake time matches the link simulator within a few percent, and the energy study and the mission study reach the same conclusion that CPU time, not energy, is the binding budget. "
+        "Where the models overlap they are not independent: the mission model reads the link simulator's parameters, so their agreement on a single handshake is a consistency check, not a validation, and the two still differ noticeably on the time to set up a hybrid session on the telemetry radio, a difference this round did not explain. The energy and mission studies both find CPU time, not energy, to be the binding budget. "
         "They disagree with the evidence in one place that matters, the 802.15.4 transfer time, and the study reports that gap rather than closing it by fitting.")
     fill["limitations"] = (
         "1. Nothing was measured on a microcontroller. The board experiment is prepared and its outcome registered, but not run.\n"
