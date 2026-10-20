@@ -2,6 +2,7 @@ claim_id,document,text_in_document,value,source_file,column,query,aggregate,tole
 abs_rows,docs/PAPER.md,"1,328",1328.0,data/evidence.csv,id,,count,0.005,published,
 abs_sources,docs/PAPER.md,51,51.0,data/evidence.csv,source_url,,nunique,0.005,published,
 n_s10,docs/PAPER.md,403,403.0,data/evidence.csv,id,"stream == ""S10""",count,0.005,published,
+abs_s12,docs/PAPER.md,357,357.0,data/evidence.csv,id,"stream == ""S12""",count,0.005,published,
 n_rows,docs/PAPER.md,"1,328",1328.0,data/evidence.csv,id,,count,0.005,published,
 n_mcu_cycles,docs/PAPER.md,722,722.0,data/evidence.csv,cycles,"device_class == ""mcu"" and cycles == cycles",count,0.005,published,
 n_cores,docs/PAPER.md,8,8.0,data/evidence.csv,core,"device_class == ""mcu"" and cycles == cycles",nunique,0.005,published,
