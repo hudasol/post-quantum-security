@@ -1,7 +1,7 @@
 ---
 title: "Post quantum cryptography on drone and robot computers: 2-page brief"
 author: "Huda Mueen"
-date: "Evidence retrieved 2026-10-11 to 2026-10-17"
+date: "Evidence retrieved 2026-10-11 to 2026-10-20"
 geometry: margin=1.8cm
 fontsize: 10pt
 ---
