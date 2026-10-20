@@ -352,7 +352,7 @@ def write_round4(a):
     a("| model part | status |")
     a("|---|---|")
     a("| rate | unchanged: consistent with Table 5 of ePrint 2026/2343 (absolute times 29 to 43 percent too fast before calibration) |")
-    a("| LoRa air time | formula reproduces four published examples (three exactly under parameter sets the sources leave partly unstated, one within 0.4 percent of a rounded value) |")
+    a("| LoRa air time | formula reproduces four published examples; only one states every parameter, and the other three reproduce under settings chosen after the fact (one within 0.4 percent of a rounded value) |")
     a("| fragmentation (6LoWPAN) | counts checked against RFC 4944 rules by an independent counting function; timing still unvalidated |")
     a("| 802.15.4 MAC timing | constants cited; end to end still a factor of %.1f faster than the only published figure |" % last["factor_below_low_after"])
     a("| duty cycle | the code equals the closed form 99 x air time at 1 percent (an arithmetic check of the formula it implements); not validated against a measurement |")

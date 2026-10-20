@@ -72,7 +72,8 @@ def results_text():
         "Energy per operation was estimated from published cycles and cited run currents of five parts and checked against published energy rows: "
         f"uncalibrated, the estimate is low by a median of {claim('en_uncal', 'energy/results/validation_split.csv', 'abs_pct_error_uncalibrated', 'set == \"validation\"', 'median', '{:.1f}', label='modelled')} percent on the held out rows; "
         f"after one scale factor fitted on the other half, the median error is {claim('en_cal', 'energy/results/validation_split.csv', 'abs_pct_error_calibrated', 'set == \"validation\"', 'median', '{:.1f}', label='modelled')} percent "
-        "(`docs/ENERGY_STUDY.md`). The check uses one board and one source, so it calibrates a factor rather than validating the model in general, and the energy figures elsewhere in this paper are uncalibrated and therefore likely low by about that factor; the message rates below depend only on cycles and are unaffected. "
+        "(`docs/ENERGY_STUDY.md`). The check uses one board and one source, so it calibrates a factor rather than validating the model in general, and the energy figures elsewhere in this paper are uncalibrated; on that board the published energy is "
+        f"{claim('en_k', 'energy/results/validation_split.csv', 'ratio_published_over_estimated', 'set == \"calibration\"', 'median', '{:.2f}', label='modelled')} times the estimate, so they are likely low by a similar factor; the message rates below depend only on cycles and are unaffected. "
         f"At 20 percent CPU headroom a 168 MHz Cortex-M4 flight controller can verify about {claim('rate_mldsa', er, 'msgs_per_s_at_20pct_estimated', 'target == \"Crazyflie 2.1\" and design == \"ML-DSA-44\"', fmt='{:.1f}', label='estimated')} ML-DSA-44 signatures per second, "
         f"{claim('rate_ed', er, 'msgs_per_s_at_20pct_estimated', 'target == \"Crazyflie 2.1\" and design == \"Ed25519\"', fmt='{:.1f}', label='estimated')} Ed25519 signatures and "
         f"{claim('rate_lms', er, 'msgs_per_s_at_20pct_estimated', 'target == \"Crazyflie 2.1\" and design == \"LMS\"', fmt='{:.1f}', label='estimated')} LMS signatures, against about "
@@ -83,7 +84,7 @@ def results_text():
     L.append("### 4.3 RQ3: links and protocols\n")
     L.append(
         "The link model was repaired one cited cause at a time and checked against published figures and closed forms (`docs/LINKSIM_STUDY.md` section 4.4). "
-        "The LoRa time on air formula reproduces the published examples, but this is a weak check: two of them leave the CRC, header and low data rate settings unstated, and the settings that reproduce them were chosen after the fact, so only the fully specified example is a test. Fragment counts agree with an independent count and the duty cycle wait equals its formula, an arithmetic check; stop and wait retransmissions in the event simulation agree with their closed form within Monte Carlo intervals, but selective repeat, which the protocol and mission studies use, is not checked. "
+        "The LoRa time on air formula reproduces the published examples, but this is a weak check: only one of the four examples states every parameter, and for the other three the unstated settings were chosen after the fact because they reproduce the published value. Fragment counts agree with an independent count and the duty cycle wait equals its formula, an arithmetic check; stop and wait retransmissions in the event simulation agree with their closed form within Monte Carlo intervals, but selective repeat, which the protocol and mission studies use, is not checked. "
         "For IEEE 802.15.4, adding every cited cost (PHY header, 6LoWPAN fragment headers and alignment, acknowledgements, inter frame spacing, clear channel assessment and backoff, turnaround) "
         f"takes a 50 kB transfer from {claim('d_base', dg, 'time_s_modelled_after', 'step == \"0\"', fmt='{:.1f}', label='modelled')} s to "
         f"{claim('d_final', dg, 'time_s_modelled_after', 'step == \"6\"', fmt='{:.1f}', label='modelled')} s, which is still "
@@ -150,7 +151,7 @@ def cycle_model_text():
         "Fitted on half of the matched published rows and tested on the other half, split by binary so that no test row shares a binary with a training row, its median absolute error is "
         f"{claim('cm_med', es, 'median_abs_pct', q.format(m='fitted', s='test, all'), fmt='{:.1f}', label='modelled')} percent "
         f"(95 percent interval {claim('cm_lo', es, 'median_abs_ci_lo', q.format(m='fitted', s='test, all'), fmt='{:.1f}', label='modelled')} to "
-        f"{claim('cm_hi', es, 'median_abs_ci_hi', q.format(m='fitted', s='test, all'), fmt='{:.1f}', label='modelled')}) on "
+        f"{claim('cm_hi', es, 'median_abs_ci_hi', q.format(m='fitted', s='test, all'), fmt='{:.1f}', label='modelled')}, too narrow because rows cluster by binary) on "
         f"{claim('cm_n', es, 'n', q.format(m='fitted', s='test, all'), fmt='{:.0f}', label='modelled')} held out rows, and "
         f"{claim('cm_nosign', es, 'median_abs_pct', q.format(m='fitted', s='test, excluding sign'), fmt='{:.1f}', label='modelled')} percent without signing; "
         f"signing misses by up to {claim('cm_worst', es, 'worst_abs_pct', q.format(m='fitted', s='test, all'), fmt='{:.1f}', label='modelled')} percent because its cost varies from message to message. "
@@ -221,7 +222,7 @@ def main():
     }
     v5 = ROOT / "docs" / "VERIFICATION5.md"
     m = re.search(r"\| evidence rows with a confirmed wrong value in staging \| (\d+) \| (\d+) \| ([\d.]+) percent \| ([\d.]+) to ([\d.]+) percent", v5.read_text())
-    fill["v5_sentence"] = (f"{m.group(1)} of {m.group(2)} new rows with values had a wrong value before correction, {m.group(3)} percent, Wilson interval {m.group(4)} to {m.group(5)} percent; `docs/VERIFICATION5.md`"
+    fill["v5_sentence"] = (f"{m.group(1)} of {m.group(2)} staged rows with values had a wrong value before correction, {m.group(3)} percent, Wilson interval {m.group(4)} to {m.group(5)} percent; `docs/VERIFICATION5.md`"
                            if m else "see `docs/VERIFICATION5.md`")
     fill["v2_rate_sentence"] = "details in `docs/VERIFICATION.md`, `docs/VERIFICATION2.md` and `docs/VERIFICATION3.md`"
     fill["pred_sentence"] = "`docs/PREDICTIONS.md`, `docs/PREDICTIONS_V2.md`, `docs/PREDICTIONS_V3.md`, `docs/PREDICTIONS_V4.md`"
