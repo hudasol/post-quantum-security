@@ -2,8 +2,8 @@ platform,design,battery_pct_p2_5,battery_pct_median,battery_pct_p97_5,cpu_pct_p2
 Crazyflie 2.1,ML-DSA-44 per command,0.03064,0.16847,0.60197,5.0101,22.2305,57.8509,0.0,20000,20261020,modelled
 Crazyflie 2.1,HMAC-SHA256 per command after PQ handshake,0.00094,0.00393,0.01318,0.1692,0.5084,1.2559,0.0,20000,20261020,modelled
 Crazyflie 2.1,LMS verify per command,0.05704,0.31439,1.12465,9.2859,41.4994,108.0646,0.0409,20000,20261020,modelled
-Crazyflie 2.1,Ed25519 and X25519 baseline,0.05514,0.30326,1.08404,9.0029,40.0248,104.1564,0.0333,20000,20261020,modelled
+Crazyflie 2.1,Ed25519 and X25519 baseline,0.01564,0.08568,0.30593,2.56,11.3045,29.4052,0.0,20000,20261020,modelled
 TurtleBot3 Burger,ML-DSA-44 per command,0.01796,0.09832,0.34996,2.2351,9.8961,25.7543,0.0,20000,20261020,modelled
 TurtleBot3 Burger,HMAC-SHA256 per command after PQ handshake,0.00084,0.00372,0.01277,0.1111,0.3686,0.9403,0.0,20000,20261020,modelled
 TurtleBot3 Burger,LMS verify per command,0.05797,0.32035,1.14201,7.1987,32.252,83.9948,0.0067,20000,20261020,modelled
-TurtleBot3 Burger,Ed25519 and X25519 baseline,0.05631,0.30911,1.10095,7.0023,31.1304,81.0105,0.0049,20000,20261020,modelled
+TurtleBot3 Burger,Ed25519 and X25519 baseline,0.01598,0.08734,0.3108,1.9911,8.7924,22.8707,0.0,20000,20261020,modelled

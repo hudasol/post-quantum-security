@@ -16,26 +16,26 @@ Energy = cycles x (current / frequency) x voltage. Multiple = cycles of the oper
 
 | Part, supply | Operation | Cycles | Cycle source label | Energy (uJ, estimated) | Multiple of baseline |
 |---|---|---|---|---|---|
-| STM32L4R5, 43.0 uA/MHz at 3.3 V | ed25519_verify | 2,560,000 | derived from published (S10D-031 (time x clock)) | 363 |  |
+| STM32L4R5, 43.0 uA/MHz at 3.3 V | ed25519_verify | 722,000 | published (S12A-331) | 102 |  |
 | STM32L4R5, 43.0 uA/MHz at 3.3 V | ecdsa_p256_verify | 6,639,000 | published (S2-0213) | 942 |  |
-| STM32L4R5, 43.0 uA/MHz at 3.3 V | mldsa44_verify | 1,421,623 | published (S2-0033) | 202 | 0.555 |
-| STM32L4R5, 43.0 uA/MHz at 3.3 V | mldsa87_verify | 4,193,104 | published (S2-0051) | 595 | 1.64 |
-| STM32L4R5, 43.0 uA/MHz at 3.3 V | lms_verify | 2,658,884 | published (S8-026) | 377 | 1.04 |
-| STM32L4R5, 43.0 uA/MHz at 3.3 V | xmss_verify | 13,071,813 | published (S8-032) | 1,855 | 5.11 |
-| STM32L4R5, 43.0 uA/MHz at 3.3 V | slhdsa128s_verify | 7,471,794 | published (S2-0060) | 1,060 | 2.92 |
-| STM32L4R5, 43.0 uA/MHz at 3.3 V | mlkem768_decaps | 707,827 | published (S2-0024) | 100 | 0.442 |
-| STM32L4R5, 43.0 uA/MHz at 3.3 V | x25519_shared | 1,602,000 | derived from published (energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards)) | 227 |  |
-| STM32L4R5, 43.0 uA/MHz at 3.3 V | hmac_sha256_msg | 24,407 | estimated (SHA-256 software throughput median (energy/retrieved_benchmarks.csv)) | 3.46 | 0.01 |
-| STM32U5A5, 18.5 uA/MHz at 3.3 V | ed25519_verify | 2,560,000 | derived from published; proxy: Cortex-M4 row used for Cortex-M33 (S10D-031 (time x clock)) | 156 |  |
+| STM32L4R5, 43.0 uA/MHz at 3.3 V | mldsa44_verify | 1,421,623 | published (S2-0033) | 202 | 1.97 |
+| STM32L4R5, 43.0 uA/MHz at 3.3 V | mldsa87_verify | 4,193,104 | published (S2-0051) | 595 | 5.81 |
+| STM32L4R5, 43.0 uA/MHz at 3.3 V | lms_verify | 2,658,884 | published (S8-026) | 377 | 3.68 |
+| STM32L4R5, 43.0 uA/MHz at 3.3 V | xmss_verify | 13,071,813 | published (S8-032) | 1,855 | 18.1 |
+| STM32L4R5, 43.0 uA/MHz at 3.3 V | slhdsa128s_verify | 7,471,794 | published (S2-0060) | 1,060 | 10.3 |
+| STM32L4R5, 43.0 uA/MHz at 3.3 V | mlkem768_decaps | 707,827 | published (S2-0024) | 100 | 1.29 |
+| STM32L4R5, 43.0 uA/MHz at 3.3 V | x25519_shared | 548,873 | published (S12A-332) | 77.9 |  |
+| STM32L4R5, 43.0 uA/MHz at 3.3 V | hmac_sha256_msg | 24,407 | estimated (SHA-256 software throughput median (energy/retrieved_benchmarks.csv)) | 3.46 | 0.034 |
+| STM32U5A5, 18.5 uA/MHz at 3.3 V | ed25519_verify | 722,000 | published; proxy: Cortex-M4 row used for Cortex-M33 (S12A-331) | 44.1 |  |
 | STM32U5A5, 18.5 uA/MHz at 3.3 V | ecdsa_p256_verify | 6,639,000 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0213) | 405 |  |
-| STM32U5A5, 18.5 uA/MHz at 3.3 V | mldsa44_verify | 1,421,623 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0033) | 86.8 | 0.555 |
-| STM32U5A5, 18.5 uA/MHz at 3.3 V | mldsa87_verify | 4,193,104 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0051) | 256 | 1.64 |
-| STM32U5A5, 18.5 uA/MHz at 3.3 V | lms_verify | 2,658,884 | published; proxy: Cortex-M4 row used for Cortex-M33 (S8-026) | 162 | 1.04 |
-| STM32U5A5, 18.5 uA/MHz at 3.3 V | xmss_verify | 13,071,813 | published; proxy: Cortex-M4 row used for Cortex-M33 (S8-032) | 798 | 5.11 |
-| STM32U5A5, 18.5 uA/MHz at 3.3 V | slhdsa128s_verify | 7,471,794 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0060) | 456 | 2.92 |
-| STM32U5A5, 18.5 uA/MHz at 3.3 V | mlkem768_decaps | 707,827 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0024) | 43.2 | 0.442 |
-| STM32U5A5, 18.5 uA/MHz at 3.3 V | x25519_shared | 1,602,000 | derived from published; proxy: Cortex-M4 row used for Cortex-M33 (energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards)) | 97.8 |  |
-| STM32U5A5, 18.5 uA/MHz at 3.3 V | hmac_sha256_msg | 24,407 | estimated; proxy: Cortex-M4 row used for Cortex-M33 (SHA-256 software throughput median (energy/retrieved_benchmarks.csv)) | 1.49 | 0.01 |
+| STM32U5A5, 18.5 uA/MHz at 3.3 V | mldsa44_verify | 1,421,623 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0033) | 86.8 | 1.97 |
+| STM32U5A5, 18.5 uA/MHz at 3.3 V | mldsa87_verify | 4,193,104 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0051) | 256 | 5.81 |
+| STM32U5A5, 18.5 uA/MHz at 3.3 V | lms_verify | 2,658,884 | published; proxy: Cortex-M4 row used for Cortex-M33 (S8-026) | 162 | 3.68 |
+| STM32U5A5, 18.5 uA/MHz at 3.3 V | xmss_verify | 13,071,813 | published; proxy: Cortex-M4 row used for Cortex-M33 (S8-032) | 798 | 18.1 |
+| STM32U5A5, 18.5 uA/MHz at 3.3 V | slhdsa128s_verify | 7,471,794 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0060) | 456 | 10.3 |
+| STM32U5A5, 18.5 uA/MHz at 3.3 V | mlkem768_decaps | 707,827 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0024) | 43.2 | 1.29 |
+| STM32U5A5, 18.5 uA/MHz at 3.3 V | x25519_shared | 548,873 | published; proxy: Cortex-M4 row used for Cortex-M33 (S12A-332) | 33.5 |  |
+| STM32U5A5, 18.5 uA/MHz at 3.3 V | hmac_sha256_msg | 24,407 | estimated; proxy: Cortex-M4 row used for Cortex-M33 (SHA-256 software throughput median (energy/retrieved_benchmarks.csv)) | 1.49 | 0.034 |
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | ed25519_verify | 2,952,000 | derived from published (S10D-073 (time x clock)) | 1,400 |  |
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | ecdsa_p256_verify | 22,176,000 | derived from published (S10D-076 (time x clock)) | 10,520 |  |
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | mldsa44_verify | 3,674,071 | published (S2-0363) | 1,743 | 1.25 |
@@ -43,12 +43,23 @@ Energy = cycles x (current / frequency) x voltage. Multiple = cycles of the oper
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | lms_verify | 8,784,000 | derived from published (S10D-083 (time x clock)) | 4,167 | 2.98 |
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | xmss_verify | 13,071,813 | published; proxy: Cortex-M4 row used for RISC-V (S8-032) | 6,201 | 4.43 |
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | slhdsa128s_verify | 7,471,794 | published; proxy: Cortex-M4 row used for RISC-V (S2-0060) | 3,544 | 2.53 |
-| ESP32-C3, 143.75 uA/MHz at 3.3 V | mlkem768_decaps | 707,827 | published; proxy: Cortex-M4 row used for RISC-V (S2-0024) | 336 | 0.442 |
-| ESP32-C3, 143.75 uA/MHz at 3.3 V | x25519_shared | 1,602,000 | derived from published; proxy: Cortex-M4 row used for RISC-V (energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards)) | 760 |  |
+| ESP32-C3, 143.75 uA/MHz at 3.3 V | mlkem768_decaps | 707,827 | published; proxy: Cortex-M4 row used for RISC-V (S2-0024) | 336 | 1.29 |
+| ESP32-C3, 143.75 uA/MHz at 3.3 V | x25519_shared | 548,873 | published; proxy: Cortex-M4 row used for RISC-V (S12A-332) | 260 |  |
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | hmac_sha256_msg | 24,407 | estimated; proxy: Cortex-M4 row used for RISC-V (SHA-256 software throughput median (energy/retrieved_benchmarks.csv)) | 11.6 | 0.008 |
 
 SHA-256 software cycles per byte (derived from published throughput, three Cortex-M4 boards): median 76.3, range 75.1 to 109.6, bootstrap 95 percent interval of the median 75.1 to 109.6 (n = 3, so the interval is coarse). HMAC-SHA256 has no published cycles row in the evidence table; the HMAC figures are `estimated` from this SHA-256 throughput for a 64 byte message and are not published values.
-Ed25519 verify on Cortex-M4, derived from four published times (three CycloneCRYPTO boards and row S10D-031): 2,534,400 to 3,216,000 cycles. The study uses S10D-031. The C25519 library on the same board took far longer (row S10D-028), so the classical baseline depends strongly on the library chosen.
+
+### Classical baselines on Cortex-M4
+
+Ed25519 and X25519 cycles are published rows (ids S12A). Where several exist, the table gives the chosen row, the published range over all candidate rows, and the post quantum multiple over that range. Full table: `energy/results/classical_baselines.csv`.
+
+| Operation | Chosen row | Cycles | Published range | Compared with | Multiple (chosen) | Multiple range | Why this row |
+|---|---|---|---|---|---|---|---|
+| ed25519_verify | S12A-331 | 722,000 | 722,000 to 1,463,600 (S12A-331 S12A-320 S12A-324 S12A-328) | mldsa44_verify | 1.969 | 0.971 to 1.969 | Owens et al. Ed25519 on STM32F407VG at 24 MHz (arm-none-eabi-gcc -O3; kilocycles converted); chosen because board family and 24 MHz clock match the pqm4 rows |
+| ed25519_sign | S12A-330 | 239,000 | 239,000 to 549,000 (S12A-330 S12A-319 S12A-323 S12A-327) | mldsa44_sign | 16.498 | 7.182 to 16.498 | Owens et al. Ed25519 on STM32F407VG at 24 MHz; same choice as verify |
+| x25519_shared | S12A-332 | 548,873 | 476,275 to 1,036,600 (S12A-332 S12A-333 S12A-317 S12A-321 S12A-325) | mlkem768_decaps | 1.29 | 0.683 to 1.486 | Emill X25519-Cortex-M4 integer version (hand optimised assembly like the pqm4 m4f rows; clock and compiler not stated) |
+
+Earlier passes used Ed25519 verify derived from published times (three CycloneCRYPTO boards and row S10D-031): 2,534,400 to 3,216,000 cycles. Those time based values include unknown flash wait states and library choices and are no longer used. The Fujii and Aranha rows were run at 48 to 84 MHz, where wait states may apply, which is one reason the 24 MHz Owens et al. row was preferred. The C25519 library on the nRF52840 took far longer (row S10D-028), so the classical baseline still depends strongly on the library chosen.
 
 ### Check against published energy
 
@@ -60,15 +71,15 @@ Rate = headroom x clock / cycles per verification. Platform clocks: Crazyflie 2.
 
 | Target | Design | Cycles per message | Cycle source label | 10 percent | 20 percent | 50 percent |
 |---|---|---|---|---|---|---|
-| Crazyflie 2.1 | Ed25519 | 2,560,000 | derived from published | 6.6 | 13.1 | 32.8 |
+| Crazyflie 2.1 | Ed25519 | 722,000 | published | 23.3 | 46.5 | 116 |
 | Crazyflie 2.1 | ML-DSA-44 | 1,421,623 | published | 11.8 | 23.6 | 59.1 |
 | Crazyflie 2.1 | LMS | 2,658,884 | published | 6.3 | 12.6 | 31.6 |
 | Crazyflie 2.1 | HMAC-SHA256 session | 24,407 | estimated | 688 | 1,377 | 3,442 |
-| TurtleBot3 Burger | Ed25519 | 2,560,000 | derived from published; proxy: Cortex-M4 row used for Cortex-M7 | 8.4 | 16.9 | 42.2 |
+| TurtleBot3 Burger | Ed25519 | 722,000 | published; proxy: Cortex-M4 row used for Cortex-M7 | 29.9 | 59.8 | 150 |
 | TurtleBot3 Burger | ML-DSA-44 | 813,339 | published | 26.6 | 53.1 | 133 |
 | TurtleBot3 Burger | LMS | 2,658,884 | published; proxy: Cortex-M4 row used for Cortex-M7 | 8.1 | 16.2 | 40.6 |
 | TurtleBot3 Burger | HMAC-SHA256 session | 24,407 | estimated; proxy: Cortex-M4 row used for Cortex-M7 | 885 | 1,770 | 4,425 |
-| STM32U5A5 | Ed25519 | 2,560,000 | derived from published; proxy: Cortex-M4 row used for Cortex-M33 | 6.2 | 12.5 | 31.2 |
+| STM32U5A5 | Ed25519 | 722,000 | published; proxy: Cortex-M4 row used for Cortex-M33 | 22.2 | 44.3 | 111 |
 | STM32U5A5 | ML-DSA-44 | 1,421,623 | published; proxy: Cortex-M4 row used for Cortex-M33 | 11.3 | 22.5 | 56.3 |
 | STM32U5A5 | LMS | 2,658,884 | published; proxy: Cortex-M4 row used for Cortex-M33 | 6 | 12 | 30.1 |
 | STM32U5A5 | HMAC-SHA256 session | 24,407 | estimated; proxy: Cortex-M4 row used for Cortex-M33 | 656 | 1,311 | 3,278 |
@@ -100,11 +111,11 @@ The platform MCU run currents were not retrieved, so the current per MHz is a pr
 | Crazyflie 2.1 | ML-DSA-44 per command | 0.089 | 0.168 (0.0306 to 0.602) | 8.49 | 22.2 (5.01 to 57.9) | 0.0 |
 | Crazyflie 2.1 | HMAC-SHA256 per command after PQ handshake | 0.00178 | 0.00393 (0.00094 to 0.0132) | 0.17 | 0.508 (0.169 to 1.26) | 0.0 |
 | Crazyflie 2.1 | LMS verify per command | 0.166 | 0.314 (0.057 to 1.12) | 15.9 | 41.5 (9.29 to 108) | 0.0409 |
-| Crazyflie 2.1 | Ed25519 and X25519 baseline | 0.16 | 0.303 (0.0551 to 1.08) | 15.3 | 40 (9 to 104) | 0.0333 |
+| Crazyflie 2.1 | Ed25519 and X25519 baseline | 0.0453 | 0.0857 (0.0156 to 0.306) | 4.32 | 11.3 (2.56 to 29.4) | 0.0 |
 | TurtleBot3 Burger | ML-DSA-44 per command | 0.0505 | 0.0983 (0.018 to 0.35) | 3.78 | 9.9 (2.24 to 25.8) | 0.0 |
 | TurtleBot3 Burger | HMAC-SHA256 per command after PQ handshake | 0.00169 | 0.00372 (0.00084 to 0.0128) | 0.126 | 0.369 (0.111 to 0.94) | 0.0 |
 | TurtleBot3 Burger | LMS verify per command | 0.165 | 0.32 (0.058 to 1.14) | 12.3 | 32.3 (7.2 to 84) | 0.0067 |
-| TurtleBot3 Burger | Ed25519 and X25519 baseline | 0.159 | 0.309 (0.0563 to 1.1) | 11.9 | 31.1 (7 to 81) | 0.0049 |
+| TurtleBot3 Burger | Ed25519 and X25519 baseline | 0.0449 | 0.0873 (0.016 to 0.311) | 3.36 | 8.79 (1.99 to 22.9) | 0.0 |
 
 Monte Carlo: 20000 draws, seed 20261020. These intervals reflect the assumed input ranges only, not measurement error.
 
@@ -119,8 +130,8 @@ Full indices with bootstrap confidence: `energy/results/sobol.csv`. Figure: `doc
 
 ## 6. Findings, including null results
 
-- Energy is not the binding constraint in this model: at the nominal workload the ML-DSA-44 design uses 0.089 percent of the Crazyflie battery energy per hour against 0.16 percent for the Ed25519 baseline (modelled). CPU time is the tighter budget, and it is driven by the command rate.
-- On Cortex-M4, ML-DSA-44 verification takes 0.555 times the cycles of the Ed25519 verify row used here, so post quantum verification is not the slower operation in this comparison. Other multiples: ML-DSA-87 1.638, LMS 1.039, SLH-DSA-128s (pre standard SPHINCS+ row) 2.919, XMSS 5.106; ML-DSA-44 signing 3.624 times Ed25519 signing. The classical figure depends strongly on the library chosen (section 2).
+- Energy is not the binding constraint in this model: at the nominal workload the ML-DSA-44 design uses 0.089 percent of the Crazyflie battery energy per hour against 0.0453 percent for the Ed25519 baseline (modelled). CPU time is the tighter budget, and it is driven by the command rate.
+- On Cortex-M4, ML-DSA-44 verification takes 1.969 times the cycles of the Ed25519 verify row used here (slower than the classical baseline; range over the published Ed25519 rows 0.971 to 1.969). Other multiples: ML-DSA-87 5.808, LMS 3.683, SLH-DSA-128s (pre standard SPHINCS+ row) 10.349, XMSS 18.105; ML-DSA-44 signing 16.498 times Ed25519 signing. The classical figure depends strongly on the library chosen (section 2).
 - No published HMAC cycle counts exist in the evidence table; the symmetric session design is estimated only.
 - The energy method was checked against 24 published energy rows on one Cortex-M4 board; the uncalibrated estimate is low by a factor near 2.2. No energy check exists for the Cortex-M33, Cortex-M7 or RISC-V parts, and the mission shares have no validation data.
 

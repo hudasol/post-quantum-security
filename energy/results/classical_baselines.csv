@@ -1,0 +1,4 @@
+op,chosen_id,cycles_published,alternative_ids,range_low_published,range_high_published,pq_op,multiple_chosen_estimated,multiple_low_estimated,multiple_high_estimated,reason,label
+ed25519_verify,S12A-331,722000,S12A-320 S12A-324 S12A-328,722000,1463600,mldsa44_verify,1.969,0.971,1.969,Owens et al. Ed25519 on STM32F407VG at 24 MHz (arm-none-eabi-gcc -O3; kilocycles converted); chosen because board family and 24 MHz clock match the pqm4 rows,published
+ed25519_sign,S12A-330,239000,S12A-319 S12A-323 S12A-327,239000,549000,mldsa44_sign,16.498,7.182,16.498,Owens et al. Ed25519 on STM32F407VG at 24 MHz; same choice as verify,published
+x25519_shared,S12A-332,548873,S12A-333 S12A-317 S12A-321 S12A-325,476275,1036600,mlkem768_decaps,1.29,0.683,1.486,Emill X25519-Cortex-M4 integer version (hand optimised assembly like the pqm4 m4f rows; clock and compiler not stated),published
