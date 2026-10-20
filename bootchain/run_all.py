@@ -298,6 +298,8 @@ def write_doc(R, inp):
     L.append("Caveat on the hardware HASH rows: the STM32F405 of the Crazyflie 2.1 has no hash peripheral; parts of the same "
              "family with a cryptographic block have one. The hardware HASH rows for that target are a what if for such a part "
              "at the same clock, not a property of the Crazyflie.\n")
+    L.append("Naming: the SLH-DSA-128s and SLH-DSA-128f rows use pqm4 rows of SPHINCS+ (round 3, sha2, simple), the pre standard "
+             "design that SLH-DSA was derived from; they stand in for SLH-DSA, whose own microcontroller rows were not found.\n")
     L.append("Image size: no retrieved source states a PX4 or ArduPilot binary size. The cited limits are 1 MB (early FMUv2 "
              "flash) and 2 MB (FMUv3), and the Crazyflie MCU has 1 MB of flash. Image sizes of 0.1 to 2 MB are therefore "
              "assumptions bounded by cited limits (`unverified`).\n")
