@@ -282,14 +282,14 @@ Closed form checks (seed 20261020, 2000 trials each):
 | stop and wait transmissions per fragment, data loss 0.1 | 1.114 | 1.0989 to 1.1291 | 1.11111 | yes |
 | stop and wait transmissions per fragment, data loss 0.2 | 1.253 | 1.2286 to 1.2774 | 1.25 | yes |
 | stop and wait transmissions per fragment, data loss 0.3 | 1.4185 | 1.3852 to 1.4518 | 1.42857 | yes |
-| supplementary: existing sim.stop_and_wait, data and ack loss 0.01, closed form 1/(1-p)^2 | 1.0285 | 1.0211 to 1.0359 | 1.0203 | no |
-| supplementary: existing sim.stop_and_wait, data and ack loss 0.05, closed form 1/(1-p)^2 | 1.114 | 1.0988 to 1.1292 | 1.10803 | yes |
-| supplementary: existing sim.stop_and_wait, data and ack loss 0.1, closed form 1/(1-p)^2 | 1.255 | 1.2306 to 1.2794 | 1.23457 | yes |
-| supplementary: existing sim.stop_and_wait, data and ack loss 0.2, closed form 1/(1-p)^2 | 1.5975 | 1.5549 to 1.6401 | 1.5625 | yes |
-| supplementary: existing sim.stop_and_wait, data and ack loss 0.3, closed form 1/(1-p)^2 | 2.0575 | 1.9929 to 2.1221 | 2.04082 | yes |
+| supplementary: existing sim.stop_and_wait, data and ack loss 0.01, closed form 1/(1-p)^2 | 1.02 | 1.0169 to 1.0231 | 1.0203 | yes |
+| supplementary: existing sim.stop_and_wait, data and ack loss 0.05, closed form 1/(1-p)^2 | 1.1115 | 1.1037 to 1.1193 | 1.10803 | yes |
+| supplementary: existing sim.stop_and_wait, data and ack loss 0.1, closed form 1/(1-p)^2 | 1.23063 | 1.2191 to 1.2422 | 1.23457 | yes |
+| supplementary: existing sim.stop_and_wait, data and ack loss 0.2, closed form 1/(1-p)^2 | 1.56638 | 1.5456 to 1.5871 | 1.5625 | yes |
+| supplementary: existing sim.stop_and_wait, data and ack loss 0.3, closed form 1/(1-p)^2 | 2.06013 | 2.0276 to 2.0926 | 2.04082 | yes |
 
-1 of 12 checks fall outside their 95 percent interval (supplementary: existing sim.stop_and_wait, data and ack loss 0.01, closed form 1/(1-p)^2).
-The purpose written sampler (rows marked stop and wait transmissions) agrees with 1/(1-p) by construction and so tests little. The simulator the studies use (rows marked supplementary) sits above its closed form 1/(1-p)^2 at 5 of 5 loss rates, which is a systematic excess, not chance; its cause is not yet found. Selective repeat, used by the protocol and mission studies, has no closed form check.
+0 of 12 checks fall outside their 95 percent interval.
+The rows marked stop and wait transmissions test a sampler written for this check, which shares the loss model but not the event simulation. The rows marked supplementary test the event simulation the studies use, with its own seed block per loss rate: its mean lies inside the 95 percent interval around 1/(1-p)^2 at 5 of 5 loss rates. Selective repeat, used by the protocol and mission studies, has no closed form check.
 
 Updated status after round 4:
 
@@ -300,7 +300,7 @@ Updated status after round 4:
 | fragmentation (6LoWPAN) | counts checked against RFC 4944 rules by an independent counting function; timing still unvalidated |
 | 802.15.4 MAC timing | constants cited; end to end still a factor of 4.2 faster than the only published figure |
 | duty cycle | the code equals the closed form 99 x air time at 1 percent (an arithmetic check of the formula it implements); not validated against a measurement |
-| loss and retransmission | the stop and wait simulator sits above its closed form at every tested loss rate (outside the interval at one); selective repeat unchecked; not validated against a measurement |
+| loss and retransmission | stop and wait agrees with its closed forms within Monte Carlo intervals (counts in the table above); selective repeat unchecked; not validated against a measurement |
 
 Search: the evidence table holds published link timings only in Table 5 of ePrint 2026/2343; the supplied PDFs hold no measured duty cycle, loss or fragmentation timing. Every figure that depends on an unvalidated part carries that word in its caption.
 

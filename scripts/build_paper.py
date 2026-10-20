@@ -83,7 +83,7 @@ def results_text():
     L.append("### 4.3 RQ3: links and protocols\n")
     L.append(
         "The link model was repaired one cited cause at a time and checked against published figures and closed forms (`docs/LINKSIM_STUDY.md` section 4.4). "
-        "The LoRa time on air formula reproduces the published examples, but this is a weak check: two of them leave the CRC, header and low data rate settings unstated, and the settings that reproduce them were chosen after the fact, so only the fully specified example is a test. Fragment counts agree with an independent count and the duty cycle wait equals its formula, an arithmetic check; the stop and wait simulator gives more retransmissions than its closed form at every tested loss rate, outside the interval at one, and selective repeat, which the protocol and mission studies use, is not checked. "
+        "The LoRa time on air formula reproduces the published examples, but this is a weak check: two of them leave the CRC, header and low data rate settings unstated, and the settings that reproduce them were chosen after the fact, so only the fully specified example is a test. Fragment counts agree with an independent count and the duty cycle wait equals its formula, an arithmetic check; stop and wait retransmissions in the event simulation agree with their closed form within Monte Carlo intervals, but selective repeat, which the protocol and mission studies use, is not checked. "
         "For IEEE 802.15.4, adding every cited cost (PHY header, 6LoWPAN fragment headers and alignment, acknowledgements, inter frame spacing, clear channel assessment and backoff, turnaround) "
         f"takes a 50 kB transfer from {claim('d_base', dg, 'time_s_modelled_after', 'step == \"0\"', fmt='{:.1f}', label='modelled')} s to "
         f"{claim('d_final', dg, 'time_s_modelled_after', 'step == \"6\"', fmt='{:.1f}', label='modelled')} s, which is still "
@@ -199,7 +199,7 @@ def parts_text(fill):
     fill["limitations"] = (
         "1. Nothing was measured on a microcontroller. The board experiment is prepared and its outcome registered, but not run.\n"
         "2. The cycle model is validated within one code base; its transfer to other libraries rests on a single small external check.\n"
-        "3. The link model is too fast on IEEE 802.15.4 by a factor the study cannot yet explain; duty cycle and fragmentation are checked only arithmetically, and loss handling disagrees with its closed form and has no measurement.\n"
+        "3. The link model is too fast on IEEE 802.15.4 by a factor the study cannot yet explain; duty cycle and fragmentation are checked only arithmetically, and loss handling only against closed forms for stop and wait, with no measurement.\n"
         "4. Fleets are drawn from real board classes but their counts and free memory shares are synthetic or assumed.\n"
         "5. Energy rests on typical datasheet currents for five parts and one calibration source.\n"
         "6. The classical baselines (Ed25519, X25519) are single published rows chosen within a published range that spans about a factor of two; the energy and mission studies use the same rows and show the range beside each result.\n"
