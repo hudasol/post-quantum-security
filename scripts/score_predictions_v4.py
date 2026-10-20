@@ -18,7 +18,7 @@ R = lambda p: pd.read_csv(ROOT / p)
 
 
 def verdict(ok, partial=False):
-    return "hit" if ok else ("partial" if partial else "miss")
+    return "hit" if ok else ("between" if partial else "miss")
 
 
 def main():
@@ -29,25 +29,27 @@ def main():
     v5 = (ROOT / "docs/VERIFICATION5.md").read_text()
     m = re.search(r"confirmed wrong value in staging \| (\d+) \| (\d+) \| ([\d.]+) percent", v5)
     k, n, pct = int(m.group(1)), int(m.group(2)), float(m.group(3))
-    S["V2"] = (verdict(pct <= 5, pct <= 10), f"{k} of {n} rows with values had a wrong value before adjudication ({pct} percent).")
+    md = re.search(r"any value disagreement between staging and a reader \| (\d+) \| (\d+) \| ([\d.]+) percent", v5)
+    k2, n2, p2 = int(md.group(1)), int(md.group(2)), float(md.group(3))
+    S["V2"] = (verdict(p2 <= 5, p2 <= 10), f"{k2} of {n2} rows with values had a value that a reader read differently from staging before adjudication ({p2} percent); after the third look {k} had a confirmed wrong value ({pct} percent).")
     summ = R("data/verify5/summary.csv")
     ids = set(summ.id)
     dis = set(summ[summ.status == "disagree"].id)
     share = 100 * (len(ids) - len(dis)) / len(ids)
     S["V3"] = (verdict(share >= 80, share >= 60),
-               f"{len(ids) - len(dis)} of {len(ids)} staged rows and facts ({share:.1f} percent) had no field where a reader disagreed with staging; "
-               "most disagreements were wording (operation, scheme, library), not values.")
+               f"{len(ids) - len(dis)} of {len(ids)} staged rows and facts ({share:.1f} percent) had no filled field where either reader differed from staging (fields a reader left blank, being stated away from the cited location, are not counted); "
+               "most differences were wording (operation, scheme, library), not values.")
     es = R("cyclemodel/results/error_summary.csv")
     g = lambda mo, su, col: float(es[(es.model == mo) & (es.subset == su)][col].iloc[0])
     fit = g("fitted", "test, all", "median_abs_pct")
     S["V4"] = (verdict(fit <= 15, fit <= 30), f"Fitted model, held out median absolute error {fit:.1f} percent.")
     apr = g("apriori", "all rows", "median_abs_pct")
-    S["V5"] = (verdict(apr <= 25, apr <= 40), f"A priori model, median absolute error {apr:.1f} percent on all traced rows.")
+    S["V5"] = ("not scored", f"The registered method (costs from the Arm instruction timing tables) could not be run: the Arm page was refused, and the model run uses per class costs assumed by the author after registration. For information only: median absolute error {apr:.1f} percent, no better than one cycle per instruction.")
     sig = g("apriori", "all rows", "median_signed_pct")
-    S["V6"] = (verdict(sig < 0), f"A priori median signed error {sig:+.1f} percent: it overestimates, so the predicted sign was wrong.")
+    S["V6"] = ("not scored", f"As V5: the registered model could not be built. For information only: the assumed cost model has a median signed error of {sig:+.1f} percent.")
     ex = R("cyclemodel/results/external_check.csv")
     exm = float(ex.err_pct_fitted.abs().median())
-    S["V7"] = (verdict(exm > fit), f"Cortex-M33 external check median absolute error {exm:.1f} percent against {fit:.1f} percent held out on Cortex-M4.")
+    S["V7"] = (verdict(exm > fit), f"Cortex-M33 external check median absolute error {exm:.1f} percent against {fit:.1f} percent held out on Cortex-M4. Informed and weak: the six rows give two distinct predictions, and a larger error off the training code was nearly certain.")
     e = R("energy/results/energy_per_op.csv")
     ee = e[e.op == "mldsa44_verify"]
     worst = ee.loc[ee.energy_uj_estimated.idxmax()]
@@ -60,12 +62,11 @@ def main():
     so = R("energy/results/sobol.csv")
     so = so[so.output.str.startswith("battery")]
     top = so.loc[so.S1.idxmax()]
-    S["V10"] = (verdict("battery" not in top.input and "capacity" not in top.input),
-                f"Largest first order index: {top.input} ({top.S1:.2f}).")
+    S["V10"] = ("not scored", f"Battery capacity, named in the refutation clause, was not an input of the sensitivity run, and the indices were computed for the per command ML-DSA-44 design rather than the session workload; the prediction could not fail as run. For information: largest first order index {top.input} ({top.S1:.2f}).")
     va = R("linksim/results/validation_v4.csv")
     lora = va[va.figure.str.startswith("LoRa example") & (va.model.str.contains("formula", case=False) | (va.pct_error.abs() < 10))]
     worst_l = float(lora.pct_error.abs().max())
-    S["V11"] = (verdict(worst_l <= 1, worst_l <= 5), f"Largest error of the time on air formula against published examples: {worst_l:.2f} percent.")
+    S["V11"] = ("between", f"Only one published example states every parameter, and it matches exactly; for the others the unstated settings were chosen because they reproduce the published value, so they are not independent checks. Largest error over all examples {worst_l:.2f} percent.")
     dg = R("linksim/results/diagnosis_v4.csv")
     fac = float(dg[dg.step.astype(str) == "6"].factor_below_low_after.iloc[0])
     S["V12"] = (verdict(fac >= 2, fac >= 1.5), f"After every cited cost the model is {fac:.1f} times below the 30 s low end.")
@@ -73,13 +74,17 @@ def main():
     duty = cf[cf.check.str.startswith("duty")]
     ok_duty = bool(((duty.value_modelled - duty.closed_form).abs() <= 0.001 * duty.closed_form).all())
     frag_ok = "fragment" not in " ".join(cf.check) or bool(cf[cf.check.str.contains("fragment")].inside.all())
-    S["V13"] = (verdict(ok_duty and frag_ok), f"Duty cycle waits equal the closed form ({len(duty)} cases); fragment counts agree with the independent count (tests in `linksim/tests/test_v4.py`).")
+    import subprocess, sys as _sys
+    t = subprocess.run([_sys.executable, "-m", "unittest", "linksim.tests.test_v4.TestMac802154.test_fragment_counts_independent"], cwd=ROOT, capture_output=True, text=True)
+    frag_ok = t.returncode == 0
+    S["V13"] = (verdict(ok_duty and frag_ok), f"Duty cycle waits equal the closed form ({len(duty)} cases); the fragment count test against an independent RFC 4944 count {'passes' if frag_ok else 'fails'} when run by this script.")
     sw = cf[cf.check.str.startswith("stop and wait")]
-    S["V14"] = (verdict(bool(sw.inside.all())), f"Closed form inside the 95 percent interval at {int(sw.inside.sum())} of {len(sw)} loss rates (the supplementary check of the older simulator misses once, reported separately).")
+    sim = cf[cf.check.str.startswith("supplementary")]
+    S["V14"] = (verdict(bool(sim.inside.all())), f"Scored on the simulator the studies use (stop and wait with data and acknowledgement loss against 1/(1-p)^2): closed form inside the interval at {int(sim.inside.sum())} of {len(sim)} loss rates, and the simulator sits above it at every rate. A purpose written sampler agrees at {int(sw.inside.sum())} of {len(sw)}, but it cannot disagree by construction. Selective repeat, used by the protocol and mission studies, has no closed form check.")
     mb = R("mission/results/base.csv")
     dr = float(mb[(mb.vehicle == "drone") & (mb.arch == "C") & (mb.link == "sik")].utilisation_median.iloc[0])
     rb = float(mb[(mb.vehicle == "robot") & (mb.arch == "C") & (mb.link == "sik")].utilisation_median.iloc[0])
-    S["V15"] = ("partial", f"Per message ML-DSA-44 on the SiK radio: utilisation {rb:.2f} for the 5 Hz robot stream (above 100 percent) but {dr:.2f} for the drone stream (below); refuted for the drone traffic, held for the robot.")
+    S["V15"] = (verdict(min(dr, rb) > 1.0), f"Per message ML-DSA-44 on the SiK radio: utilisation {dr:.2f} for the drone stream, which meets the refutation clause (at or below 100 percent), and {rb:.2f} for the 5 Hz robot stream.")
     vt = R("bootchain/results/verify_time.csv")
     q = vt[(vt.target == "Crazyflie 2.1 (STM32F405)") & (vt.image_bytes == 1000000) & (vt.hash == "software SHA-256") & vt.scheme.isin(["LMS", "ML-DSA-44"])]
     shares = (q.hash_ms_estimated / q.total_ms_estimated * 100)
@@ -97,7 +102,8 @@ def main():
     lat = float(mb[(mb.vehicle == "drone") & (mb.arch == "B") & (mb.link == "sik")].added_latency_ms_median.iloc[0])
     S["V20"] = (verdict(lat < 50), f"Hybrid session on the SiK radio adds {lat:.2f} ms per command.")
     lr = mb[(mb.arch == "B") & (mb.link == "lora_dr0")]
-    S["V21"] = (verdict(True), "On the slowest link (LoRaWAN DR0) the hybrid handshake does not complete within the mission at all, so recovery exceeds 1 s; on the SiK radio it takes about 0.9 s (`docs/MISSION_STUDY.md`).")
+    sik = float(mb[(mb.vehicle == "drone") & (mb.arch == "B") & (mb.link == "sik")].ttra_s_median.iloc[0])
+    S["V21"] = ("miss", f"On LoRaWAN DR0 the hybrid handshake never completes, so the metric is undefined there; on the slowest link where it completes (the SiK radio) recovery after a session teardown takes {sik:.2f} s, below 1 s, which meets the refutation clause.")
     rf = ROOT / "docs/REVIEW_FINDINGS3.csv"
     if rf.exists():
         f = list(csv.DictReader(open(rf, encoding="utf-8")))
@@ -121,13 +127,17 @@ def main():
         v, why = S.get(vid, ("not scored", "Not yet scored."))
         counts[v] = counts.get(v, 0) + 1
         rows.append(f"| {vid} | {v} | {why} |")
+    definition = ("Verdicts: hit when the prediction holds; miss when the refutation clause is met; between when neither holds "
+                  "(this third verdict was not defined when the predictions were registered; it was defined on 2026-10-20 after a reviewer noted the gap); "
+                  "not scored when the registered metric could not be computed as registered, with the reason.")
     L = ["# Scores for the round 4 predictions", "",
          "Author: Huda Mueen. Generated by `scripts/score_predictions_v4.py` from committed files; do not edit by hand. Predictions: `docs/PREDICTIONS_V4.md`, unchanged since hashed.", "",
          f"Hash check: stored {stored[:16]}..., file now {now[:16]}... ({'match' if stored == now else 'MISMATCH'}).", "",
-         "Totals: " + ", ".join(f"{counts.get(k, 0)} {k}" for k in ("hit", "partial", "miss", "not scored")) + ", of 24.", "",
+         definition, "",
+         "Totals: " + ", ".join(f"{counts.get(k, 0)} {k}" for k in ("hit", "between", "miss", "not scored")) + ", of 24.", "",
          "| ID | verdict | evidence |", "|---|---|---|"] + rows
     (ROOT / "docs/PREDICTIONS_V4_SCORES.md").write_text("\n".join(L) + "\n", encoding="utf-8")
-    print(L[6])
+    print(L[8])
 
 
 if __name__ == "__main__":
