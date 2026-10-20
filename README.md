@@ -4,11 +4,11 @@ A sourced study of what post quantum cryptography costs on microcontroller class
 
 **For a research director:** `docs/PAPER.md` (the study, every number checked against its data file), `docs/PROPOSAL_ROBOTICS.md` (follow on robotics project, with short variants `docs/PROPOSAL_ROBOTICS_ATRC.md`, `_EDGE.md`, `_ADEO.md`) and `docs/PROPOSAL_ATRC.md` (2 pages). Progress against a stated definition of a complete study: `docs/COMPLETENESS_RUBRIC.md`.
 
-**Start here:** `docs/EXECUTIVE_BRIEF.pdf` (2 pages), then `docs/REPORT.pdf` (`docs/REPORT.md`). The PDFs were built on 2026-10-20 from the current `docs/REPORT.md` (`scripts/build_pdfs.sh`, or `scripts/build_pdfs_docker.sh` without a local pandoc and XeLaTeX).
+**Start here:** `docs/EXECUTIVE_BRIEF.pdf` (2 pages), then `docs/REPORT.pdf` (`docs/REPORT.md`). The PDFs were last built on 2026-10-20 from an earlier text of `docs/REPORT.md` (1328 rows then, 1328 now). Rebuild with `scripts/build_pdfs.sh` or `scripts/build_pdfs_docker.sh`.
 
 ## What is published, host measured, emulated, estimated, modelled, RTL simulated and planned
 
-Every number in this repository carries one of seven labels (emulated was added in phase 2; modelled and RTL simulated in round 4; board measured is reserved for `docs/BOARD_RUN_PROTOCOL.md`). Round 4 result files carry a `label` column checked by `scripts/check_labels.py`. Labels are never mixed in one table or axis without a label on each column; the deliberate comparisons are the model validation in `docs/LINKSIM_STUDY.md` section 4, the ratio tables in `bench/host/native/RESULTS.md` and `bench/host/native_v3/RESULTS.md`, prediction Q1.5, the stack range in `docs/PROPOSAL_ATRC.md` (published against emulated) and the portable C planner scenario, whose thresholds come from emulated figures.
+Every number in this repository carries one of seven labels (emulated was added in phase 2; modelled and RTL simulated in round 4; board measured is reserved for `docs/BOARD_RUN_PROTOCOL.md`). Round 4 result files carry a `label` column checked by `scripts/check_labels.py`. Five earlier result files that hold several labels have a label for every column in `data/column_labels.csv`, checked by a test. Labels are never mixed in one table or axis without a label on each column; the deliberate comparisons are the model validation in `docs/LINKSIM_STUDY.md` section 4, the ratio tables in `bench/host/native/RESULTS.md` and `bench/host/native_v3/RESULTS.md`, prediction Q1.5, the stack range in `docs/PROPOSAL_ATRC.md` (published against emulated) and the portable C planner scenario, whose thresholds come from emulated figures.
 
 | Label | Meaning | Where it lives | Count or status |
 |---|---|---|---|
