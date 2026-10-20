@@ -50,7 +50,7 @@ Rules for both experiments:
 1. Run at the benchmark clock with 0 wait states, so cycle counts are comparable with pqm4. Optionally add a second pass at full speed, in a separate table, never mixed.
 2. Read back and print, at run time, the core clock in Hz, the flash latency field of the flash access control register, and the cache and prefetch enable bits. The harness prints `META` lines; add these three values as `META,clock_hz`, `META,flash_ws`, `META,cache` in the board start up file.
 3. State interrupts: the harness builds with `-DBENCH_DISABLE_IRQ`; print only outside timed regions.
-4. The registered cycle predictions assume no cache and no prefetch. Where the board allows it, add one pass of the B1 images with instruction cache, data cache and prefetch switched off at zero wait states, in its own table. Only rows from that pass count toward the refutation rule of `docs/PREDICTIONS_V4_BOARD_NOTES.md` (note 7); rows measured with caches on are reported beside their verdicts.
+4. The registered cycle predictions assume no cache and no prefetch. Where the board allows it, add one pass of the B1 images with instruction cache, data cache and prefetch switched off at zero wait states, in its own table. Only rows from that pass count toward the refutation rule of `docs/PREDICTIONS_V4_BOARD_NOTES.md` (note 7); rows measured with caches on are reported beside their verdicts. The kit does not yet switch caches off (`docs/PREDICTIONS_V4_BOARD_NOTES.md` note 8): that change to the start up code must be made and tested first.
 
 ## 5. Firmware build (B1)
 
