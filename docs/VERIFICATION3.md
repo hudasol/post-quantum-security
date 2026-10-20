@@ -37,7 +37,7 @@ Transcription errors (a printed number copied wrongly): 0 of 403. With zero erro
 
 ## Verification pass 4 (2026-10-18): second independent check and column lint
 
-Sample: 120 of the 403 S10 rows, drawn by `scripts/draw_verification4_sample.py` with seed 20261018 from 19 strata (source by table, at least 2 rows each; `data/verify4/sample_plan.csv`). Three readers that had seen neither the extraction notes nor the pass 3 results re-opened the PDFs and compared every field, including whether each number sits in a column the paper supports (`data/verify4/S10?_results.csv`).
+Sample: 120 of the 403 S10 rows, drawn by `scripts/draw_verification4_sample.py` with seed 20261018 from 19 strata (source by table, at least 2 rows each; `data/verify4/sample_plan.csv`). Three readers that had seen neither the extraction notes nor the pass 3 results reopened the PDFs and compared every field, including whether each number sits in a column the paper supports (`data/verify4/S10?_results.csv`).
 
 Rows with any error: 0 of 120. Transcription errors: 0 of 120.
 With zero errors the rule of three gives an approximate 95 percent upper bound of 3/120 = 2.5 percent on the row error rate of the S10 rows after the pass 3 fixes; approximate because the sample is stratified with unequal fractions and not reweighted (Wilson upper bound 3.1 percent).

@@ -65,7 +65,7 @@ def pass4_section():
          f"Sample: {n} of the {sum(int(p['rows_in_stratum']) for p in plan)} S10 rows, drawn by "
          "`scripts/draw_verification4_sample.py` with seed 20261018 from "
          f"{len(plan)} strata (source by table, at least 2 rows each; `data/verify4/sample_plan.csv`). Three "
-         "readers that had seen neither the extraction notes nor the pass 3 results re-opened the PDFs and compared "
+         "readers that had seen neither the extraction notes nor the pass 3 results reopened the PDFs and compared "
          "every field, including whether each number sits in a column the paper supports "
          "(`data/verify4/S10?_results.csv`).", "",
          f"Rows with any error: {len(bad)} of {n}. Transcription errors: {len(trans)} of {n}."]
