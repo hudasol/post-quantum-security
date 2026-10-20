@@ -30,6 +30,19 @@ A research question counts as complete only when it is answered by at least two 
 
 Weighted score at the start: 0.20 x 7 + 0.20 x 3 + 0.20 x 1 + 0.15 x 8 + 0.10 x 7 + 0.15 x 4 = **4.7 of 10**.
 
-## Score at the end of round 4
+## Score at the end of round 4 (2026-10-20, commit c688fa0)
 
-Filled in at the end of the round in a separate section, with the commit it refers to.
+Scored after three review passes (`docs/REVIEW_FINDINGS3.csv`). Each score rests on files a reader can open; where a score rose, the reason says what new evidence carries it, and where it did not rise further, what is missing.
+
+| Criterion | Score | Reason |
+|---|---|---|
+| Evidence coverage | 8 | 1328 rows (357 new, each read by two readers); Cortex-M4 X25519 and Ed25519 baselines added; per operation energy estimated for five parts with cited currents; boot and link figures and a policy timeline of 25 rows. Still few Cortex-M33 rows, no SLH-DSA cycle rows, and the 168 MHz Ed25519 rows of one source are not yet in the table |
+| Model validation | 4 | the cycle model predicts held out pqm4 rows with a median error of 1.0 percent, but within one code base, with intervals that are too narrow, and 5.6 percent on six Cortex-M33 rows; energy is calibrated on one board; the boot model is checked on three rows; the link model is still 4.2 times too fast on 802.15.4, its LoRa check has one fully specified example and its duty and fragment checks are arithmetic. Most models are now checked, but weakly |
+| Hardware evidence | 2 | a cycle accurate RTL simulation of an open source core (Ibex) for all six ML-KEM and ML-DSA sets; still nothing measured on a microcontroller, and the board kit cannot yet switch caches off |
+| Reproducibility | 9 | every number in the paper and proposals is in a claims register checked in CI (88 claims); evidence, report, paper, proposals, verification and meta analysis summaries, data dictionary and prediction scores regenerate from files; requirements pinned; the full mission and RTL runs are not repeated in CI |
+| Review depth | 8 | every new row read by two independent readers with a third look on value disagreements; three fresh reviewers in three passes (152 findings, every high fixed); only a sample of wording disagreements was adjudicated and two readers shared a scratch path |
+| External validity | 5 | nine real board classes, retrieved link parameters, MAVLink payload lengths measured on the host from pymavlink, a policy timeline from primary texts; the free memory after a flight stack is still assumed, and 802.15.4 timing is unexplained |
+
+Weighted score at the end: 0.20 x 8 + 0.20 x 4 + 0.20 x 2 + 0.15 x 9 + 0.10 x 8 + 0.15 x 5 = **5.7 of 10**.
+
+The rise of 1.0 comes mostly from reproducibility, review depth and coverage, which are the parts this round could change without a board. Hardware evidence, the largest weight still near zero, needs the board session in `docs/NEEDS_FROM_AUTHOR.md` item 1.
