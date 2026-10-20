@@ -105,6 +105,8 @@ def main():
     rows = (read_rows(RAW / "S2_evidence.csv", "S2") + read_rows(RAW / "S3_evidence.csv", "S3")
             + read_rows(RAW / "S7_verified.csv", "S7") + read_rows(RAW / "S8_verified.csv", "S8")
             + read_rows(RAW / "S10_verified.csv", "S10"))
+    if (RAW / "S12_verified.csv").exists():  # round 4 rows, promoted only after two independent readers
+        rows += read_rows(RAW / "S12_verified.csv", "S12")
     problems = []
     repaired = []
     seen = set()
