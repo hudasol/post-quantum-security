@@ -97,7 +97,11 @@ def build():
                 base = BASELINE.get(op)
                 mult = None
                 if base:
-                    mult = r["cycles"] / model.cycles_for(base, core, ev, bench, cmap)["cycles"]
+                    rb = model.cycles_for(base, core, ev, bench, cmap)
+                    # A multiple is only stated when both rows come from the same core: a native row over a
+                    # proxy row (or the reverse) would mix cores in one ratio.
+                    if ("proxy" in r["cycle_label"]) == ("proxy" in rb["cycle_label"]):
+                        mult = r["cycles"] / rb["cycles"]
                 e_rows.append({"part": p["part"], "supply_mode": mode, "ua_per_mhz_published": round(ua, 2),
                                "volts": volts, "volts_label": vlabel, "op": op, "cycles": round(r["cycles"]),
                                "cycle_source_label": r["cycle_label"], "cycle_source": r["source"],
@@ -307,7 +311,8 @@ def write_doc(res, assume, plats):
     L.append("## 2. Energy per operation (estimated)\n")
     L.append("Energy = cycles x (current / frequency) x voltage. Multiple = cycles of the operation over cycles of the classical "
              "baseline on the same core (Ed25519 verify for verification, Ed25519 sign for signing, X25519 for key "
-             "encapsulation). Full table: `energy/results/energy_per_op.csv`.\n")
+             "encapsulation). The multiple is left blank where one of the two rows is a proxy from another core and the other is native, "
+             "because that ratio would mix cores. Full table: `energy/results/energy_per_op.csv`.\n")
     L.append("| Part, supply | Operation | Cycles | Cycle source label | Energy (uJ, estimated) | Multiple of baseline |")
     L.append("|---|---|---|---|---|---|")
     for part, mode in (("STM32L4R5", "SMPS or stated"), ("STM32U5A5", "SMPS or stated"), ("ESP32-C3", "mA at stated MHz")):
