@@ -166,7 +166,10 @@ def rtl_text():
         if (ps, op) in have:
             parts.append(f"{ps} {op} {claim('rtl_' + ps + op, rt, 'cycles', q.format(p=ps, o=op), label='RTL simulated')} cycles")
     return ("Cycle accurate simulation of an open source core. The portable C code of mlkem-native and mldsa-native was run on a cycle accurate simulation of the open source Ibex RV32IMC core (small configuration, memory without wait states; RTL simulated, `docs/RTL_SIM_RESULTS.md`): "
-            + "; ".join(parts) + ". These are measurements of a core design in simulation, not of Arm silicon; they sit within a small factor of the published portable C rows for the Cortex-M4 and give a microcontroller class reference that no vendor setting can change.")
+            + "; ".join(parts) + " (signing is the median of five messages and varies several fold). These are measurements of a core design in simulation, not of Arm silicon. "
+            f"They are {claim('rtl_ratio_lo', 'rtlsim/results/ibex_vs_cortex_m4.csv', 'ratio_to_clean', '', 'min', '{:.2f}', label='RTL simulated')} to "
+            f"{claim('rtl_ratio_hi', 'rtlsim/results/ibex_vs_cortex_m4.csv', 'ratio_to_clean', '', 'max', '{:.2f}', label='RTL simulated')} times the published portable C rows for the Cortex-M4 "
+            "(different library, compiler, instruction set and statistic, so only the order of magnitude is compared) and give a microcontroller class reference that no vendor setting can change.")
 
 
 def parts_text(fill):
