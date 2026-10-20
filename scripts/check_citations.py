@@ -27,7 +27,7 @@ def main():
         if "Cited by" not in body and "Used by" not in body:
             problems.append(f"entry {k} is used by no row and no source note")
     for doc in sorted((ROOT / "docs").glob("*.md")):
-        for k in re.findall(r"\[@([A-Za-z0-9_]+)\]", doc.read_text(encoding="utf-8")):
+        for k in re.findall(r"\[@([A-Za-z0-9_.-]+)\]", doc.read_text(encoding="utf-8")):
             if k not in keys:
                 problems.append(f"{doc.relative_to(ROOT)} cites missing key {k}")
     for p in problems:
