@@ -1,0 +1,5 @@
+scenario,free_memory,FIRMWARE_UPDATE,HYBRID,HARDWARE_REPLACEMENT,NO_ACTION_BEFORE_RETIREMENT,UNKNOWN,label
+stack_asm,not known (published totals only),0,0,186,105,709,estimated
+speed_asm,not known (published totals only),0,0,186,105,709,estimated
+portable_c,not known (published totals only),0,0,186,105,709,estimated
+reference_c,not known (published totals only),0,0,186,105,709,estimated

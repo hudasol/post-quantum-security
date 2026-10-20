@@ -416,6 +416,9 @@ def main():
           "_This tool supports planning. It is not a security guarantee._", ""]
     with open(DOC, "w", encoding="utf-8", newline="\n") as fh:
         fh.write("\n".join(L))
+    # Keep section 5 (written by profile_study.py from its saved results) when this file is rewritten.
+    import profile_study
+    profile_study.refresh_doc()
     print("wrote planner/results/ and docs/PLANNER_STUDY.md in %.1f s" % (time.time() - t_all))
 
 

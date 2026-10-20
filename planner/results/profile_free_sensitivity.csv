@@ -1,0 +1,13 @@
+free_range,low,high,scenario,hr,label
+low,0.0200,0.2000,stack_asm,206,estimated
+low,0.0200,0.2000,speed_asm,214,estimated
+low,0.0200,0.2000,portable_c,354,estimated
+low,0.0200,0.2000,reference_c,380,estimated
+mid,0.0500,0.5000,stack_asm,186,estimated
+mid,0.0500,0.5000,speed_asm,189,estimated
+mid,0.0500,0.5000,portable_c,213,estimated
+mid,0.0500,0.5000,reference_c,232,estimated
+high,0.2000,0.8000,stack_asm,186,estimated
+high,0.2000,0.8000,speed_asm,186,estimated
+high,0.2000,0.8000,portable_c,186,estimated
+high,0.2000,0.8000,reference_c,189,estimated

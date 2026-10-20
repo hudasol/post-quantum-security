@@ -1,0 +1,5 @@
+threshold,low_bytes,high_bytes,rows,label
+sig_flash_kb,13052,29684,S2-0030 S2-0033 S2-0036 S2-0174 S2-0177,derived from published
+sig_ram_kb,6444,40040,S2-0030 S2-0033 S2-0036 S2-0174 S2-0177,derived from published
+kem_flash_kb,5120,16016,S2-0021 S2-0024 S2-0027,derived from published
+kem_ram_kb,8848,20484,S2-0021 S2-0024 S2-0027,derived from published
