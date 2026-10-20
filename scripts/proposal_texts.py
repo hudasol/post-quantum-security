@@ -24,8 +24,8 @@ def numbers(claim, doc):
         "rows": c("rows", "data/evidence.csv", "id", aggregate="count", label="published"),
         "cm_med": c("cm_med", es, "median_abs_pct", 'model == "fitted" and subset == "test, all"', fmt="{:.1f}", label="modelled"),
         "cm_sign": c("cm_sign", es, "worst_abs_pct", 'model == "fitted" and subset == "test, all"', fmt="{:.0f}", label="modelled"),
-        "m_b": c("m_b", mb, "avail_median", qm.format(v="drone", a="B", l="sik"), fmt="{:.3f}", label="estimated"),
-        "m_c": c("m_c", mb, "avail_median", qm.format(v="drone", a="C", l="sik"), fmt="{:.3f}", label="estimated"),
+        "m_b": c("m_b", mb, "avail_mean", qm.format(v="drone", a="B", l="sik"), fmt="{:.3f}", label="estimated"),
+        "m_c": c("m_c", mb, "avail_mean", qm.format(v="drone", a="C", l="sik"), fmt="{:.3f}", label="estimated"),
         "m_c_lat": c("m_c_lat", mb, "added_latency_ms_median", qm.format(v="drone", a="C", l="sik"), fmt="{:.0f}", label="estimated"),
         "d_factor": c("d_factor", dg, "factor_below_low_after", 'step == "6"', fmt="{:.1f}", label="modelled"),
         "prof_med": c("prof_med", pm, "median", 'fleet == "profile" and thresholds == "uncertain"', fmt="{:.2f}", label="estimated"),
@@ -51,7 +51,7 @@ Unmanned aircraft and ground robots accept commands and firmware over narrow rad
 
 1. A provenance controlled table of {n['rows']} published rows, every new row read by two independent readers (`docs/VERIFICATION5.md`).
 2. A trace driven cycle model that predicts published Cortex-M4 cycle counts on held out rows of the same code base with a median error of {n['cm_med']} percent (modelled; interpolation within one code base, not transfer; signing misses by up to {n['cm_sign']} percent), with predictions for a board session registered in advance (`docs/PREDICTIONS_V4_BOARD.md`).
-3. A mission simulation in which a hybrid session keeps a drone's command availability on a telemetry radio at {n['m_b']} (estimated), as without authentication, while a post quantum signature on every command lowers it to {n['m_c']} and adds about {n['m_c_lat']} ms per command (`docs/MISSION_STUDY.md`).
+3. A mission simulation in which a hybrid session keeps a drone's command availability on a telemetry radio at a mean of {n['m_b']} (estimated), as without authentication, while a post quantum signature on every command lowers it to {n['m_c']} and adds about {n['m_c_lat']} ms per command (`docs/MISSION_STUDY.md`).
 4. A boot model in which verifying a 1 MB image with LMS takes about {n['boot_sw']} ms with a software hash and {n['boot_hw']} ms with hash hardware on a 168 MHz Cortex-M4 (estimated; `docs/BOOT_UPDATE_STUDY.md`).
 5. A fleet study on real board classes with a median of {n['prof_med']} of devices needing replacement under stated assumptions (estimated; `docs/PLANNER_STUDY.md`).
 6. The main known gap: on IEEE 802.15.4 the link model is still {n['d_factor']} times faster than a published transfer time (`docs/LINKSIM_STUDY.md`).

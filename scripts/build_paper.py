@@ -104,7 +104,7 @@ def results_text():
         f"{claim('b_lms_sw', vt, 'total_ms_estimated', q.format(s='LMS', h='software SHA-256'), fmt='{:.0f}', label='estimated')} ms with LMS, of which hashing the image is "
         f"{claim('b_hash_sw', vt, 'hash_ms_estimated', q.format(s='LMS', h='software SHA-256'), fmt='{:.0f}', label='estimated')} ms. "
         f"With a hardware hash block, the totals fall to {claim('b_mldsa_hw', vt, 'total_ms_estimated', q.format(s='ML-DSA-44', h='hardware HASH'), fmt='{:.0f}', label='estimated')} ms and "
-        f"{claim('b_lms_hw', vt, 'total_ms_estimated', q.format(s='LMS', h='hardware HASH'), fmt='{:.0f}', label='estimated')} ms, and the signature becomes the larger part. "
+        f"{claim('b_lms_hw', vt, 'total_ms_estimated', q.format(s='LMS', h='hardware HASH'), fmt='{:.0f}', label='estimated')} ms; the signature then becomes the larger part for most schemes, though for ML-DSA-44 the hash still costs more. "
         "The choice of signature scheme changes boot time far less than image size and hash hardware do (`docs/BOOT_UPDATE_STUDY.md`). "
         "Against published bootloader timings the uncalibrated model is far off and the calibrated check rests on three rows, so these are estimates of order, not predictions. "
         "A fixed first stage root of trust that verifies only a classical signature cannot be changed by any of this; such devices need hardware replacement for signing migration.\n")
@@ -127,9 +127,9 @@ def results_text():
     L.append("### 4.6 RQ6: mission level design\n")
     L.append(
         "In the mission simulation (1000 runs per configuration, `docs/MISSION_STUDY.md`), a classical session, a hybrid session and hash signed firmware with session keys keep the drone's control link available "
-        f"about as often as an unauthenticated stream on a telemetry radio (median {claim('m_b_sik', mb, 'avail_median', qm.format(v='drone', a='B', l='sik'), fmt='{:.3f}', label='estimated')} for the hybrid session): link outages, not authentication, set availability. "
+        f"about as often as an unauthenticated stream on a telemetry radio (mean over runs {claim('m_b_sik', mb, 'avail_mean', qm.format(v='drone', a='B', l='sik'), fmt='{:.3f}', label='estimated')} for the hybrid session): link outages, not authentication, set availability. "
         f"A post quantum signature on every command adds about {claim('m_c_lat', mb, 'added_latency_ms_median', qm.format(v='drone', a='C', l='sik'), fmt='{:.0f}', label='estimated')} ms per command on that radio, "
-        f"lowers availability to {claim('m_c_sik', mb, 'avail_median', qm.format(v='drone', a='C', l='sik'), fmt='{:.3f}', label='estimated')}, and overloads the link for a ground robot streaming commands at 5 Hz "
+        f"lowers availability to {claim('m_c_sik', mb, 'avail_mean', qm.format(v='drone', a='C', l='sik'), fmt='{:.3f}', label='estimated')}, and overloads the link for a ground robot streaming commands at 5 Hz "
         f"(utilisation {claim('m_c_rob', mb, 'utilisation_median', qm.format(v='robot', a='C', l='sik'), fmt='{:.2f}', label='estimated')}). "
         "LoRaWAN carries none of the command streams within its duty cycle. The resulting reference architecture (`docs/REFERENCE_ARCHITECTURE.md`): hash based signatures (LMS) for firmware, "
         "a hybrid key establishment followed by a symmetric MAC session for commands on telemetry class links or faster, and no per command signatures on streamed commands.\n")
@@ -181,7 +181,7 @@ def parts_text(fill):
                             else "no open core simulation")
     es = "cyclemodel/results/error_summary.csv"
     fill["abstract_results"] = (
-        f"Within one code base, a cycle model fitted on half of the published rows predicts the other half with a median error of {claim('ab_cm', es, 'median_abs_pct', 'model == \"fitted\" and subset == \"test, all\"', fmt='{:.1f}', label='modelled')} percent, though signing misses by up to a fifth. "
+        f"Within one code base, a cycle model fitted on half of the published rows predicts the other half with a median error of {claim('ab_cm', es, 'median_abs_pct', 'model == \"fitted\" and subset == \"test, all\"', fmt='{:.1f}', label='modelled')} percent, though signing misses by up to {claim('ab_cm_worst', es, 'worst_abs_pct', 'model == \"fitted\" and subset == \"test, all\"', fmt='{:.0f}', label='modelled')} percent. "
         "On telemetry class radios a hybrid key establishment followed by a symmetric session keeps command availability where it is without authentication, while a post quantum signature on every command does not. "
         "For firmware, hashing the image costs more than any signature check unless the device has hash hardware. "
         "The largest open uncertainties are the free memory a flight stack leaves and the real timing of mesh links.")
