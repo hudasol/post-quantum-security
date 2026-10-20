@@ -93,6 +93,10 @@ def build():
       f'Baseline of one cycle per instruction: median absolute {f1(base_test.median_abs_pct)} percent, worst {f1(base_test.worst_abs_pct)} percent, '
       f'median signed {f1(base_test.median_signed_pct)} percent.')
     A('')
+    A('Caveat on these intervals: the bootstrap resamples rows as if independent, but rows cluster by binary (three '
+      'operations each) and every test binary has a sibling of the same implementation in training. The intervals are '
+      'therefore too narrow, and the result shows interpolation within one code base, not transfer to new code or silicon.')
+    A('')
     for model, title in (('fitted', 'Fitted model (non negative least squares on the training half)'),
                          ('reduced', 'Reduced fitted model (four feature groups; sensitivity check)'),
                          ('apriori', 'A priori model (per class costs are unverified assumptions)'),
@@ -241,7 +245,7 @@ def build():
     A('')
     A('Last column: number of features whose share lies outside the training range (names in the CSV).')
     A('')
-    A('### 5.2 Signing spread over ten messages (modelled)')
+    A('### 5.2 Signing spread over several messages (modelled)')
     A('')
     A(table(['source', 'set', 'implementation', 'messages', 'mean modelled cycles', 'sd', 'min', 'max', 'coefficient of variation, percent'],
             [[r.source, r.parameter_set, r.implementation, r.n_messages, big(r.cycles_modelled_mean), big(r.cycles_modelled_sd),

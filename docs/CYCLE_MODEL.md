@@ -27,6 +27,8 @@ Split: 54 matched pqm4 rows from 18 binaries; the split is by binary (parameter 
 
 Headline (test half, n=27): fitted model median absolute error 1.0 percent (95% CI 0.7 to 1.7), worst 22.8 percent, median signed error 0.0 percent. A priori model (unverified costs): median absolute 12.6 percent, worst 28.4 percent, median signed 12.6 percent. Baseline of one cycle per instruction: median absolute 11.9 percent, worst 35.3 percent, median signed -11.9 percent.
 
+Caveat on these intervals: the bootstrap resamples rows as if independent, but rows cluster by binary (three operations each) and every test binary has a sibling of the same implementation in training. The intervals are therefore too narrow, and the result shows interpolation within one code base, not transfer to new code or silicon.
+
 **Fitted model (non negative least squares on the training half)**
 
 | subset | n rows | median abs error, percent (95% CI) | worst abs error, percent | median signed error, percent (95% CI) |
@@ -213,7 +215,7 @@ The harness rows are extrapolations: their instruction mix (share of each featur
 
 Last column: number of features whose share lies outside the training range (names in the CSV).
 
-### 5.2 Signing spread over ten messages (modelled)
+### 5.2 Signing spread over several messages (modelled)
 
 | source | set | implementation | messages | mean modelled cycles | sd | min | max | coefficient of variation, percent |
 |---|---|---|---|---|---|---|---|---|
