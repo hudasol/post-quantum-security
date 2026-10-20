@@ -38,21 +38,395 @@ Labels used across the repository: published, host measured, emulated, estimated
 
 ## Result files
 
+### `bootchain/results/ab_overhead.csv`
+
+8 columns.
+
+| column | type | example |
+|---|---|---|
+| scheme | text | Ed25519 |
+| flash | text | fmuv2_flash_limit_bytes |
+| flash_bytes | number | 1000000.0 |
+| bootloader_bytes_published | number | 29664.0 |
+| header_bytes | number | 320.0 |
+| max_image_bytes_ab_estimated | number | 482800 |
+| overhead_fraction_of_flash_estimated | number | 0.0344 |
+| label | text | estimated |
+
+### `bootchain/results/boot_mc.csv`
+
+8 columns.
+
+| column | type | example |
+|---|---|---|
+| scheme | text | Ed25519 |
+| boot_ms_p2_5 | number | 132.9 |
+| boot_ms_median | number | 496.9 |
+| boot_ms_p97_5 | number | 990.61 |
+| sig_share_median_pct | number | 1.14 |
+| n | number | 20000 |
+| seed | number | 20261020 |
+| label | text | modelled |
+
+### `bootchain/results/boot_sobol.csv`
+
+7 columns.
+
+| column | type | example |
+|---|---|---|
+| scheme | text | Ed25519 |
+| input | text | image_bytes |
+| S1 | number | 0.8671 |
+| ST | number | 0.8911 |
+| ST_conf | number | 0.0692 |
+| seed | number | 20261020 |
+| label | text | modelled |
+
+### `bootchain/results/suit_table8_comparison.csv`
+
+9 columns.
+
+| column | type | example |
+|---|---|---|
+| scheme_in_paper | text | Falcon |
+| u2_pct_published | number | 1.1 |
+| u2_pct_modelled | number | 1.28 |
+| u2_error_points | number | 0.18 |
+| u3_pct_published | number | 120.0 |
+| u3_pct_modelled_low | number | 85.0 |
+| u3_pct_modelled_high | number | 101.5 |
+| u3_published_inside_range | text | False |
+| label | text | modelled |
+
+### `bootchain/results/transfer_time.csv`
+
+9 columns.
+
+| column | type | example |
+|---|---|---|
+| link | text | SiK 64 kbit/s air rate, 90 percent usable |
+| rate_tag | text | cited |
+| effective_bps | number | 57600.0 |
+| scheme | text | Ed25519 |
+| image_bytes | number | 100000 |
+| sig_bytes_published | number | 64.0 |
+| transfer_s_estimated | number | 13.9 |
+| signature_share_pct_estimated | number | 0.064 |
+| label | text | estimated |
+
+### `bootchain/results/verifier_memory.csv`
+
+6 columns.
+
+| column | type | example |
+|---|---|---|
+| scheme | text | Ed25519 |
+| id | text | S2-0350 |
+| bootloader_flash_bytes_published | number | 29664 |
+| stack_bytes_published | number | 5000 |
+| source | text | wolfBoot on STM32H563 |
+| label | text | published |
+
+### `bootchain/results/verify_time.csv`
+
+14 columns.
+
+| column | type | example |
+|---|---|---|
+| target | text | Crazyflie 2.1 (STM32F405) |
+| core_class | text | Cortex-M4 |
+| clock_mhz | number | 168.0 |
+| scheme | text | Ed25519 |
+| image_bytes | number | 100000 |
+| hash | text | software SHA-256 |
+| cycles_per_byte_derived | number | 76.27 |
+| sig_cycles | number | 722000 |
+| cycle_source_label | text | published |
+| cycle_source | text | S12A-331 |
+| hash_ms_estimated | number | 45.4 |
+| sig_ms_estimated | number | 4.298 |
+| total_ms_estimated | number | 49.697 |
+| label | text | estimated |
+
+### `bootchain/results/wolfboot_comparison.csv`
+
+13 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S2-0347 |
+| configuration | text | SHA2 only, SIGN=NONE |
+| boot_ms_published | number | 55.662 |
+| verify_ms_modelled | number | 23.835 |
+| error_pct_modelled | number | -57.2 |
+| increment_over_hash_only_ms_published | number | 0.0 |
+| sig_ms_modelled | number | 20.747 |
+| cycle_source | text | hash only |
+| label | text | modelled |
+| set | text | not predicted |
+| boot_ms_modelled_calibrated | number | 55.662 |
+| error_pct_calibrated | number | 0.0 |
+| seed | number | 20261020 |
+
+### `cyclemodel/results/board_predictions.csv`
+
+22 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | modelled |
+| target | text | harness (bench/mcu) |
+| parameter_set | text | ML-DSA-44 |
+| implementation | text | mldsa-native v2.0.0 -O2 |
+| operation | text | keygen |
+| board | text | Cortex-M4 at zero flash wait states (no cache, no contention... |
+| cycles_modelled | number | 2952835 |
+| pi95_lo_modelled | number | 2690028 |
+| pi95_hi_modelled | number | 3472512 |
+| cycles_modelled_reduced | number | 2361327 |
+| pi95_lo_modelled_reduced | number | 2169561 |
+| pi95_hi_modelled_reduced | number | 2823947 |
+| pi95_envelope_lo_modelled | number | 2169561 |
+| pi95_envelope_hi_modelled | number | 3472512 |
+| cycles_modelled_baseline | number | 2100756 |
+| extrapolation_flags | text | mul_mac;load;store;dual_extra;ldm_stm_insn;ldm_stm_regs;pc_w... |
+| n_runs_emulated | number | 11 |
+| instructions_mean_emulated | number | 2.10076e+06 |
+| instructions_sd_emulated | number | 19058.8 |
+| keccak_share_emulated | number | 0.800596 |
+| model | text | fitted NNLS, seed 20261020 |
+| toolchain | text | arm-none-eabi-gcc 13.2.1 20231009 |
+
+### `cyclemodel/results/config.csv`
+
+3 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | assumption |
+| key | text | seed |
+| value | text | 20261020 |
+
+### `cyclemodel/results/error_summary.csv`
+
+13 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | modelled |
+| model | text | fitted |
+| subset | text | test, all |
+| seed | number | 20261020 |
+| n_boot | number | 10000 |
+| n | number | 27 |
+| median_abs_pct | number | 1.04777 |
+| median_abs_ci_lo | number | 0.669738 |
+| median_abs_ci_hi | number | 1.72035 |
+| worst_abs_pct | number | 22.8321 |
+| median_signed_pct | number | 0.0229951 |
+| median_signed_ci_lo | number | -1.04777 |
+| median_signed_ci_hi | number | 0.789422 |
+
+### `cyclemodel/results/external_check.csv`
+
+16 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | modelled |
+| id | text | S10C-001 |
+| parameter_set | text | ML-DSA-44 |
+| operation | text | keygen (key expansion from seed) |
+| statistic_published | text | minimum |
+| core_published | text | Cortex-M33 (STM32U5A5, 160 MHz, caches on) |
+| core_modelled | text | Cortex-M4 (model fitted on pqm4 rows) |
+| n_seeds_emulated | number | 3 |
+| instructions_mean_emulated | number | 2.88411e+06 |
+| cycles_published | number | 3.55e+06 |
+| cycles_modelled_fitted | number | 3.80584e+06 |
+| cycles_modelled_apriori | number | 3.90342e+06 |
+| pi95_lo_modelled | number | 3.46711e+06 |
+| pi95_hi_modelled | number | 4.47564e+06 |
+| err_pct_fitted | number | 7.20678 |
+| inside_pi95 | text | True |
+
+### `cyclemodel/results/fitted_costs.csv`
+
+6 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | modelled |
+| feature | text | single_issue |
+| classes | text | alu+it+other |
+| cost_fitted_cycles | number | 0.236235 |
+| cost_apriori_cycles_assumption | number | 1 |
+| apriori_status | text | unverified (TRM fetch refused) |
+
+### `cyclemodel/results/matched_rows.csv`
+
+20 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | modelled |
+| id | text | S2-0028 |
+| parameter_set | text | ML-DSA-44 |
+| implementation | text | clean |
+| operation | text | keygen |
+| half | text | test |
+| family | text | hash heavy |
+| impl_kind | text | clean C |
+| keccak_share_emulated | number | 0.669065 |
+| n_runs_emulated | number | 50 |
+| instructions_emulated | number | 1.55739e+06 |
+| cycles_published | number | 1.8744e+06 |
+| cycles_modelled_baseline | number | 1.55739e+06 |
+| cycles_modelled_apriori | number | 2.08923e+06 |
+| cycles_modelled_fitted | number | 1.8443e+06 |
+| err_pct_baseline | number | -16.9128 |
+| err_pct_apriori | number | 11.4608 |
+| err_pct_fitted | number | -1.60609 |
+| cycles_modelled_reduced | number | 1.84252e+06 |
+| err_pct_reduced | number | -1.7011 |
+
+### `cyclemodel/results/sign_variability.csv`
+
+13 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | modelled |
+| source | text | bench_mcu_harness |
+| parameter_set | text | ML-DSA-44 |
+| implementation | text | mldsa-native v2.0.0 -O2 |
+| n_messages | number | 11 |
+| instructions_mean_emulated | number | 4.24815e+06 |
+| instructions_min_emulated | number | 2901489 |
+| instructions_max_emulated | number | 7444243 |
+| cycles_modelled_mean | number | 6.62714e+06 |
+| cycles_modelled_sd | number | 2.46068e+06 |
+| cycles_modelled_min | number | 4.4734e+06 |
+| cycles_modelled_max | number | 1.17268e+07 |
+| cv_pct | number | 37.1304 |
+
+### `cyclemodel/results/split.csv`
+
+8 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | assumption |
+| id | text | S2-0028 |
+| parameter_set | text | ML-DSA-44 |
+| implementation | text | clean |
+| operation | text | keygen |
+| binary | text | ML-DSA-44 clean |
+| half | text | test |
+| seed | number | 20261020 |
+
+### `cyclemodel/results/tracer_validation.csv`
+
+4 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | emulated |
+| check | text | hand derived counts, sum of squares, n=3 |
+| passed | text | True |
+| detail | text | r0=29; counts match hand derivation: True |
+
+### `cyclemodel/results/traces.csv`
+
+31 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | emulated |
+| source | text | bench_mcu_harness |
+| parameter_set | text | ML-DSA-44 |
+| implementation | text | mldsa-native v2.0.0 -O2 |
+| operation | text | keygen |
+| iteration | number | 0 |
+| elf | text | mldsa_44.elf |
+| elf_sha256_16 | text | d391c586a461c5af |
+| stop_reason | text | exception 7 at pc 0x00003c66 |
+| instructions | number | 2043292 |
+| keccak_instructions | number | 1625038 |
+| alu | number | 1047263 |
+| mul | number | 18432 |
+| mac | number | 5120 |
+| div | number | 0 |
+| load | number | 560158 |
+| store | number | 361772 |
+| ldm_insn | number | 231 |
+| ldm_regs | number | 1603 |
+| stm_insn | number | 275 |
+| stm_regs | number | 1767 |
+| branch_uncond | number | 2663 |
+| branch_cond_taken | number | 30834 |
+| branch_cond_not_taken | number | 16533 |
+| it | number | 11 |
+| fpu_move | number | 0 |
+| fpu_ldst | number | 0 |
+| fpu_arith | number | 0 |
+| other | number | 0 |
+| pc_write | number | 229 |
+| dual_extra | number | 15868 |
+
+### `cyclemodel/results/traces_external.csv`
+
+31 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | emulated |
+| source | text | external_check_2026_1333 |
+| parameter_set | text | ML-DSA-44 |
+| implementation | text | pqcrystals-lowram -Ofast |
+| operation | text | keygen |
+| iteration | number | 0 |
+| elf | text | lowram_keyexp_44.elf |
+| elf_sha256_16 | text | 0f52403293b4d93f |
+| stop_reason | text | exception 7 at pc 0x000048ea |
+| instructions | number | 2873399 |
+| keccak_instructions | number | 1935306 |
+| alu | number | 1440832 |
+| mul | number | 25602 |
+| mac | number | 25604 |
+| div | number | 0 |
+| load | number | 760260 |
+| store | number | 455591 |
+| ldm_insn | number | 627 |
+| ldm_regs | number | 3713 |
+| stm_insn | number | 26235 |
+| stm_regs | number | 29321 |
+| branch_uncond | number | 64924 |
+| branch_cond_taken | number | 42316 |
+| branch_cond_not_taken | number | 23158 |
+| it | number | 8250 |
+| fpu_move | number | 0 |
+| fpu_ldst | number | 0 |
+| fpu_arith | number | 0 |
+| other | number | 0 |
+| pc_write | number | 631 |
+| dual_extra | number | 7043 |
+
 ### `data/meta/core_ratios.csv`
 
 9 columns.
 
 | column | type | example |
 |---|---|---|
-| scheme_family | text | ML-DSA |
-| parameter_set | text | Dilithium2 |
+| scheme_family | text | FN-DSA |
+| parameter_set | text | Falcon-1024 |
 | operation | text | keygen |
-| core_class | text | Cortex-M3 |
-| median_cycles | number | 1739000.0 |
-| cortex_m4_median_cycles | number | 1357000.0 |
-| ratio_to_cortex_m4 | number | 1.281503316138541 |
-| rows | number | 1 |
-| cortex_m4_rows | number | 3 |
+| core_class | text | Cortex-M7 |
+| median_cycles | number | 268120000.0 |
+| cortex_m4_median_cycles | number | 284031714.0 |
+| ratio_to_cortex_m4 | number | 0.9439790938275294 |
+| rows | number | 2 |
+| cortex_m4_rows | number | 1 |
 
 ### `data/meta/cycle_groups.csv`
 
@@ -61,20 +435,330 @@ Labels used across the repository: published, host measured, emulated, estimated
 | column | type | example |
 |---|---|---|
 | scheme_family | text | FN-DSA |
-| parameter_set | text | falcon512 |
+| parameter_set | text | Falcon-1024 |
 | operation | text | keygen |
 | core_class | text | Cortex-M4 |
 | rows | number | 1 |
 | sources | number | 1 |
 | libraries | number | 1 |
-| median_cycles | number | 197793925.0 |
+| median_cycles | number | 284031714.0 |
 | ci95_low | number | 2270000.0 |
 | ci95_high | number | 3650000.0 |
-| min_cycles | number | 197793925.0 |
-| max_cycles | number | 197793925.0 |
+| min_cycles | number | 284031714.0 |
+| max_cycles | number | 284031714.0 |
 | max_over_min | number | 1.0 |
 | clocks_mhz | text | 24.0 |
-| row_ids | text | S10B-013 |
+| row_ids | text | S12A-250 |
+
+### `data/verify5/adjudication.csv`
+
+5 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12A-246 |
+| field | text | ram_bytes |
+| verdict | text | reader_right |
+| correct_value | text | 14271 |
+| note | text | Table 1 RAM cell printed '13343 + 928'; caption: 'RAM consis... |
+
+### `data/verify5/lint_review_s12.csv`
+
+4 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12A-196 |
+| rule | text | W1 |
+| verdict | text | false |
+| reason | text | the warning cites Table 5 of a different paper (ePrint 2025/... |
+
+### `data/verify5/not_promoted.csv`
+
+2 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12A-101 |
+| reason | text | single_reader: flash_or_code_bytes confirmed by fewer than t... |
+
+### `data/verify5/reader1_facts.csv`
+
+9 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12BL-001 |
+| source_title | text | Quantum-Resistant Security for Software Updates on Low-power... |
+| source_url | text | https://eprint.iacr.org/2021/781.pdf |
+| location_in_source | text | PDF pages 15 to 16, Section 6.4 |
+| quantity | text | Time to transfer 50 kB over low-power IEEE 802.15.4 radio li... |
+| value | text | 30-60 |
+| unit | text | s |
+| conditions | text | "it takes 30-60s to transfer 50kB on a low-power IEEE802.15.... |
+| reader_note | text | Section 6.4 spans pp.15-16. Same passage: "plus-or-minus 2s ... |
+
+### `data/verify5/reader1_rows.csv`
+
+18 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12B-001 |
+| source_title | text | Performance Evaluation of Post-Quantum TLS 1.3 on Resource-C... |
+| source_url | text | https://eprint.iacr.org/2021/1553.pdf |
+| location_in_source | text | PDF page 14, Table 2, row 'Dil2-Kyb1', column 'Avg Handshake... |
+| scheme | text | Dil2-Kyb1 |
+| parameter_set | text | ML-DSA-65 |
+| operation | text | TLS 1.3 handshake (Table 2: PQ TLS 1.3 Handshake Measurement... |
+| device | text | ESP32-C5 |
+| core | text | Cortex-M4 |
+| clock_mhz | number | 80 |
+| library | text | esp-liboqs |
+| cycles | number | 13368 |
+| ram_bytes | number | 14271 |
+| stack_bytes | number | 928 |
+| flash_or_code_bytes | number | 734 |
+| energy_uj | empty |  |
+| key_or_sig_size_bytes | empty |  |
+| reader_note | text | Table 2 row Dil2-Kyb1: Avg Handshake Time client = 96.318 ms... |
+
+### `data/verify5/reader2_facts.csv`
+
+9 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12BL-001 |
+| source_title | text | Quantum-Resistant Security for Software Updates on Low-power... |
+| source_url | text | https://eprint.iacr.org/2021/781.pdf |
+| location_in_source | text | PDF pages 15 to 16, Section 6.4 |
+| quantity | text | time to transfer 50 kB on low-power IEEE 802.15.4 radio link |
+| value | text | 30-60 |
+| unit | text | s |
+| conditions | text | depending on link quality and network load (assuming non-ext... |
+| reader_note | text | Also in 6.4: Falcon advantage for U1/U2; LMS best tradeoff f... |
+
+### `data/verify5/reader2_rows.csv`
+
+18 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12B-001 |
+| source_title | text | Performance Evaluation of Post-Quantum TLS 1.3 on Resource-C... |
+| source_url | text | https://eprint.iacr.org/2021/1553.pdf |
+| location_in_source | text | PDF page 14, Table 2, row 'Dil2-Kyb1', column 'Avg Handshake... |
+| scheme | text | Dil2-Kyb1 |
+| parameter_set | text | ML-DSA-65 |
+| operation | text | TLS 1.3 handshake (client) |
+| device | text | ESP32-C5 |
+| core | text | Cortex-M4 |
+| clock_mhz | number | 80 |
+| library | text | esp-liboqs |
+| cycles | number | 13368 |
+| ram_bytes | number | 13343 |
+| stack_bytes | number | 112 |
+| flash_or_code_bytes | number | 9504 |
+| energy_uj | empty |  |
+| key_or_sig_size_bytes | empty |  |
+| reader_note | text | Table 2 Avg Handshake Time client = 96.318 ms (time, not cyc... |
+
+### `data/verify5/row_status.csv`
+
+4 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12A-001 |
+| kind | text | row |
+| status | text | confirmed |
+| reason | text | flash_or_code_bytes confirmed by fewer than two readers |
+
+### `data/verify5/summary.csv`
+
+6 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12A-001 |
+| field | text | scheme |
+| reader | text | reader1 |
+| staged | text | SPHINCS+ (round 2) |
+| read | text | SPHINCS+ |
+| status | text | agree |
+
+### `data/verify5/third_look_queue.csv`
+
+3 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12A-246 |
+| field | text | ram_bytes |
+| why | text | value disagreement |
+
+### `energy/results/classical_baselines.csv`
+
+12 columns.
+
+| column | type | example |
+|---|---|---|
+| op | text | ed25519_verify |
+| chosen_id | text | S12A-331 |
+| cycles_published | number | 722000 |
+| alternative_ids | text | S12A-320 S12A-324 S12A-328 |
+| range_low_published | number | 722000 |
+| range_high_published | number | 1463600 |
+| pq_op | text | mldsa44_verify |
+| multiple_chosen_estimated | number | 1.969 |
+| multiple_low_estimated | number | 0.971 |
+| multiple_high_estimated | number | 1.969 |
+| reason | text | Owens et al. Ed25519 on STM32F407VG at 24 MHz (arm-none-eabi... |
+| label | text | published |
+
+### `energy/results/cycles_by_core.csv`
+
+6 columns.
+
+| column | type | example |
+|---|---|---|
+| core_class | text | Cortex-M4 |
+| op | text | mldsa44_verify |
+| cycles | number | 1421623 |
+| label | text | published |
+| cycle_source_label | text | published |
+| source | text | S2-0033 |
+
+### `energy/results/energy_per_op.csv`
+
+13 columns.
+
+| column | type | example |
+|---|---|---|
+| part | text | STM32L4R5 |
+| supply_mode | text | LDO |
+| ua_per_mhz_published | number | 110.0 |
+| volts | number | 3.3 |
+| volts_label | text | assumption (VDD nominal) |
+| op | text | mldsa44_verify |
+| cycles | number | 1421623 |
+| cycle_source_label | text | published |
+| cycle_source | text | S2-0033 |
+| energy_uj_estimated | number | 516.049 |
+| baseline_op | text | ed25519_verify |
+| multiple_of_baseline_estimated | number | 1.969 |
+| label | text | estimated |
+
+### `energy/results/max_rates.csv`
+
+10 columns.
+
+| column | type | example |
+|---|---|---|
+| target | text | Crazyflie 2.1 |
+| core_class | text | Cortex-M4 |
+| clock_mhz | number | 168.0 |
+| design | text | Ed25519 |
+| cycles | number | 722000 |
+| cycle_source_label | text | published |
+| msgs_per_s_at_10pct_estimated | number | 23.3 |
+| msgs_per_s_at_20pct_estimated | number | 46.5 |
+| msgs_per_s_at_50pct_estimated | number | 116.3 |
+| label | text | estimated |
+
+### `energy/results/mission_mc.csv`
+
+12 columns.
+
+| column | type | example |
+|---|---|---|
+| platform | text | Crazyflie 2.1 |
+| design | text | ML-DSA-44 per command |
+| battery_pct_p2_5 | number | 0.03064 |
+| battery_pct_median | number | 0.16847 |
+| battery_pct_p97_5 | number | 0.60197 |
+| cpu_pct_p2_5 | number | 5.0101 |
+| cpu_pct_median | number | 22.2305 |
+| cpu_pct_p97_5 | number | 57.8509 |
+| cpu_over_100pct_fraction | number | 0.0 |
+| n | number | 20000 |
+| seed | number | 20261020 |
+| label | text | modelled |
+
+### `energy/results/mission_nominal.csv`
+
+5 columns.
+
+| column | type | example |
+|---|---|---|
+| platform | text | Crazyflie 2.1 |
+| design | text | ML-DSA-44 per command |
+| battery_pct_per_h_modelled | number | 0.08901 |
+| cpu_pct_modelled | number | 8.4864 |
+| label | text | modelled |
+
+### `energy/results/sha256_cpb.csv`
+
+4 columns.
+
+| column | type | example |
+|---|---|---|
+| board | text | NUCLEO-F439ZI (STM32F439ZI) |
+| kind | text | sw |
+| cycles_per_byte | number | 76.27 |
+| label | text | derived from published |
+
+### `energy/results/sobol.csv`
+
+10 columns.
+
+| column | type | example |
+|---|---|---|
+| platform | text | Crazyflie 2.1 |
+| output | text | battery share, ML-DSA-44 per command |
+| input | text | handshakes_per_h |
+| S1 | number | 0.00013102000572154658 |
+| S1_conf | number | 9.39477488768741e-05 |
+| ST | number | 1.2896387128863435e-06 |
+| ST_conf | number | 2.0617190621912986e-07 |
+| n_base | number | 1024 |
+| seed | number | 20261020 |
+| label | text | modelled |
+
+### `energy/results/validation_split.csv`
+
+11 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S2-0190 |
+| set | text | calibration |
+| cycles_published | number | 516000.0 |
+| energy_uj_published | number | 413.6 |
+| energy_uj_estimated_uncalibrated | number | 187.31 |
+| ratio_published_over_estimated | number | 2.2081 |
+| energy_uj_modelled_calibrated | number | 414.69 |
+| abs_pct_error_calibrated | number | 0.26 |
+| abs_pct_error_uncalibrated | number | 54.71 |
+| seed | number | 20261020 |
+| label | text | modelled |
+
+### `linksim/results/closed_form_v4.csv`
+
+9 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | modelled |
+| check | text | duty cycle wait, 11 B at DR0, 1 percent |
+| value_modelled | number | 34.848 |
+| ci_lo | number | 1.00908 |
+| ci_hi | number | 1.01992 |
+| closed_form | number | 34.848 |
+| inside | text | True |
+| trials | number | 2000 |
+| seed | text | 20261020 |
 
 ### `linksim/results/config.csv`
 
@@ -84,6 +768,27 @@ Labels used across the repository: published, host measured, emulated, estimated
 |---|---|---|
 | key | text | label |
 | value | text | estimated |
+
+### `linksim/results/diagnosis_v4.csv`
+
+14 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | modelled |
+| step | text | 0 |
+| cause | text | baseline (third round model) |
+| applied | text | baseline |
+| flags | text | none |
+| source | text | linksim/validate.py crosscheck_802154 |
+| frames | number | 618 |
+| time_s_modelled_before | number | 4.52459 |
+| time_s_modelled_after | number | 4.52459 |
+| err_low_pct_before | number | -84.918 |
+| err_low_pct_after | number | -84.918 |
+| err_high_pct_after | number | -92.459 |
+| factor_below_low_after | number | 6.63043 |
+| seed | number | 20261020 |
 
 ### `linksim/results/lowrate.csv`
 
@@ -124,6 +829,156 @@ Labels used across the repository: published, host measured, emulated, estimated
 | sd | number | 0 |
 | base_seed | number | 20261016 |
 | deterministic | text | True |
+
+### `linksim/results/protocols_added_latency.csv`
+
+11 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | modelled |
+| link | text | lora_dr0 |
+| protocol | text | dtls13 |
+| overhead_bytes | number | 29 |
+| loss | number | 0 |
+| trials | number | 1000 |
+| deterministic | text | True |
+| seed_first | number | 20261020 |
+| added_mean_s | number | 278.692 |
+| added_ci_lo | number | 278.692 |
+| added_ci_hi | number | 278.692 |
+
+### `linksim/results/protocols_config.csv`
+
+2 columns.
+
+| column | type | example |
+|---|---|---|
+| key | text | label |
+| value | text | modelled |
+
+### `linksim/results/protocols_flights.csv`
+
+7 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | derived from published |
+| scenario | text | ttfam |
+| protocol | text | dtls13 |
+| variant | text | classical |
+| sender | text | A |
+| message | text | ClientHello |
+| bytes | number | 152 |
+
+### `linksim/results/protocols_grid.csv`
+
+49 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | modelled |
+| scenario | text | ttfam |
+| link | text | lora_dr0 |
+| protocol | text | dtls13 |
+| variant | text | classical |
+| loss | number | 0 |
+| trials | number | 1000 |
+| seed_first | number | 20261020 |
+| seed_last | number | 20262019 |
+| deterministic | text | True |
+| bytes_total | number | 1215 |
+| flights | number | 4 |
+| completion | number | 1 |
+| completion_lo | number | 0.996173 |
+| completion_hi | number | 1 |
+| wall_mean | number | 6600.54 |
+| wall_ci_lo | number | 6600.54 |
+| wall_ci_hi | number | 6600.54 |
+| wall_median | number | 6600.54 |
+| wall_p05 | number | 6600.54 |
+| wall_p95 | number | 6600.54 |
+| handshake_mean_s | number | 6140.15 |
+| p_within_1s | number | 0 |
+| p_within_1s_lo | number | 2.1684e-19 |
+| p_within_1s_hi | number | 0.00382676 |
+| p_within_2s | number | 0 |
+| p_within_2s_lo | number | 2.1684e-19 |
+| p_within_2s_hi | number | 0.00382676 |
+| p_within_5s | number | 0 |
+| p_within_5s_lo | number | 2.1684e-19 |
+| p_within_5s_hi | number | 0.00382676 |
+| p_within_10s | number | 0 |
+| p_within_10s_lo | number | 2.1684e-19 |
+| p_within_10s_hi | number | 0.00382676 |
+| p_within_60s | number | 0 |
+| p_within_60s_lo | number | 2.1684e-19 |
+| p_within_60s_hi | number | 0.00382676 |
+| p_within_600s | number | 0 |
+| p_within_600s_lo | number | 2.1684e-19 |
+| p_within_600s_hi | number | 0.00382676 |
+| p_within_1800s | number | 0 |
+| p_within_1800s_lo | number | 2.1684e-19 |
+| p_within_1800s_hi | number | 0.00382676 |
+| p_within_3600s | number | 0 |
+| p_within_3600s_lo | number | 2.1684e-19 |
+| p_within_3600s_hi | number | 0.00382676 |
+| air_mean_s | number | 74.3014 |
+| utilisation_mean | number | 0.0112569 |
+| duty_budget_hours | number | 1.14597 |
+
+### `linksim/results/protocols_rank_flips.csv`
+
+8 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | modelled |
+| scenario | text | ttfam |
+| link | text | ieee802154 |
+| loss | number | 0.1 |
+| now_faster | text | raw_mldsa44/per_message |
+| now_slower | text | dtls13/classical |
+| order_at_zero_loss | text | dtls13/classical before raw_mldsa44/per_message |
+| intervals_overlap | text | False |
+
+### `linksim/results/protocols_sobol.csv`
+
+15 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | modelled |
+| link | text | ieee802154 |
+| protocol | text | dtls13 |
+| variant | text | hybrid |
+| input | text | loss |
+| low | number | 0 |
+| high | number | 0.2 |
+| S1 | number | 0.202064 |
+| S1_conf | number | 0.138088 |
+| ST | number | 0.325058 |
+| ST_conf | number | 0.213672 |
+| samples | number | 1152 |
+| failed_runs_set_to_max | number | 0 |
+| N | number | 128 |
+| seed | number | 20261020 |
+
+### `linksim/results/protocols_sobol_flips.csv`
+
+9 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | modelled |
+| link | text | ieee802154 |
+| comparison | text | dtls13 hybrid faster than edhoc_oscore hybrid |
+| samples | number | 1152 |
+| count | number | 0 |
+| fraction | number | 0 |
+| fraction_lo | number | 0 |
+| fraction_hi | number | 0.00332352 |
+| seed | number | 20261020 |
 
 ### `linksim/results/sweeps.csv`
 
@@ -200,6 +1055,307 @@ Labels used across the repository: published, host measured, emulated, estimated
 | pred_cal_ms | number | 645 |
 | err_cal | number | 0.00938967 |
 
+### `linksim/results/validation_v4.csv`
+
+10 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | modelled |
+| figure | text | ePrint 2026/2343 Table 5, ML-KEM-768, UAV profile handshake |
+| source | text | data/evidence.csv:S10F-135;S10F-136;S10F-137;S10F-138 |
+| unit | text | ms |
+| value_published | number | 943 |
+| value_modelled | number | 664.522 |
+| abs_error | number | -278.478 |
+| pct_error | number | -29.531 |
+| model | text | third round bytes over rate plus 2 round trips (uncalibrated... |
+| role | text | validation |
+
+### `mission/results/base.csv`
+
+60 columns.
+
+| column | type | example |
+|---|---|---|
+| vehicle | text | drone |
+| arch | text | A |
+| link | text | sik |
+| tag | text | base |
+| runs | number | 1000 |
+| seed | number | 20261020 |
+| config_key | text | base/{} |
+| deadline_s | number | 0.5 |
+| label | text | estimated |
+| avail_median | number | 0.9971014492753624 |
+| avail_lo | number | 0.9956521739130435 |
+| avail_hi | number | 0.9971014492753624 |
+| added_latency_ms_median | number | 1.8650793650793664 |
+| added_latency_ms_lo | number | 1.8650793650793664 |
+| added_latency_ms_hi | number | 1.8650793650793664 |
+| latency_ms_median | number | 10.892857142857144 |
+| latency_ms_lo | number | 10.892857142857144 |
+| latency_ms_hi | number | 10.892857142857144 |
+| utilisation_median | number | 0.10692 |
+| utilisation_lo | number | 0.10691277777777779 |
+| utilisation_hi | number | 0.10692722222222223 |
+| utilisation_down_median | number | 96.78800731261427 |
+| utilisation_down_lo | number | 96.78800731261427 |
+| utilisation_down_hi | number | 96.78800731261427 |
+| compute_share_median | number | 0.0009342476190476191 |
+| compute_share_lo | number | 0.0009342476190476191 |
+| compute_share_hi | number | 0.0009342476190476191 |
+| ttra_s_median | number | 0.2056452380952578 |
+| ttra_s_lo | number | 0.2056452380952578 |
+| ttra_s_hi | number | 0.2056452380952578 |
+| first_session_s_median | number | 0.2056452380952381 |
+| first_session_s_lo | number | 0.2056452380952381 |
+| first_session_s_hi | number | 0.2056452380952381 |
+| avail_mean | number | 0.9919376811594203 |
+| avail_mean_lo | number | 0.991268115942029 |
+| avail_mean_hi | number | 0.992598695652174 |
+| avail_med_0.1 | number | 0.9739130434782609 |
+| avail_mean_0.1 | number | 0.9718 |
+| avail_base_mean_0.1 | number | 0.9718565217391304 |
+| avail_med_0.25 | number | 0.9971014492753624 |
+| avail_mean_0.25 | number | 0.9919318840579711 |
+| avail_base_mean_0.25 | number | 0.9919884057971015 |
+| avail_med_0.5 | number | 0.9971014492753624 |
+| avail_mean_0.5 | number | 0.9919376811594203 |
+| avail_base_mean_0.5 | number | 0.9919942028985509 |
+| avail_med_1 | number | 0.9971014492753624 |
+| avail_mean_1 | number | 0.9919376811594203 |
+| avail_base_mean_1 | number | 0.9919942028985509 |
+| avail_med_2 | number | 0.9971014492753624 |
+| avail_mean_2 | number | 0.9919376811594203 |
+| avail_base_mean_2 | number | 0.9919942028985509 |
+| avail_med_5 | number | 0.9971014492753624 |
+| avail_mean_5 | number | 0.9919376811594203 |
+| avail_base_mean_5 | number | 0.9919942028985509 |
+| avail_med_10 | number | 0.9971014492753624 |
+| avail_mean_10 | number | 0.9919376811594203 |
+| avail_base_mean_10 | number | 0.9919942028985509 |
+| teardowns_per_run_mean | number | 0.174 |
+| handshakes_per_run_mean | number | 3.099 |
+| share_runs_with_teardown | number | 0.161 |
+
+### `mission/results/compute_latency.csv`
+
+6 columns.
+
+| column | type | example |
+|---|---|---|
+| arch | text | A |
+| operation | text | handshake or rekey |
+| cycles | number | 3188400.0 |
+| ms_at_168MHz | number | 18.978571428571428 |
+| ms_at_480MHz | number | 6.6425 |
+| label | text | derived from published |
+
+### `mission/results/cycle_sources.csv`
+
+7 columns.
+
+| column | type | example |
+|---|---|---|
+| operation | text | x25519_two_mults |
+| cycles | number | 1827600.0 |
+| label | text | derived from published |
+| source | text | S12A-325+S12A-325; X25519, two scalar multiplications (key g... |
+| range_min_cycles | number | 952550.0 |
+| range_max_cycles | number | 2073200.0 |
+| range_ids | text | S12A-317 S12A-321 S12A-325 S12A-332 S12A-333 |
+
+### `mission/results/envelope.csv`
+
+10 columns.
+
+| column | type | example |
+|---|---|---|
+| vehicle | text | drone |
+| link | text | sik |
+| arch | text | A |
+| tag | text | base |
+| deadline_s | number | 0.1 |
+| avail_mean | number | 0.9718 |
+| utilisation_median | number | 0.10692 |
+| feasible | text | False |
+| reason | text | deadline missed or link loss |
+| label | text | estimated |
+
+### `mission/results/link_crosscheck.csv`
+
+7 columns.
+
+| column | type | example |
+|---|---|---|
+| link | text | sik |
+| mission_model_s | number | 0.8927777777777778 |
+| linksim_selective_repeat_s | number | 0.8986 |
+| relative_difference | number | -0.006479214580705735 |
+| air_s | number | 0.7427777777777778 |
+| label | text | estimated |
+| note | text | model to model comparison of two estimates, not a validation... |
+
+### `mission/results/lowrate.csv`
+
+62 columns.
+
+| column | type | example |
+|---|---|---|
+| vehicle | text | drone |
+| arch | text | A |
+| link | text | sik |
+| tag | text | lowrate |
+| runs | number | 1000 |
+| seed | number | 20261020 |
+| config_key | text | lowrate/{"cmd_rate": 0.016666666666666666, "tel_scale": 0.0} |
+| deadline_s | number | 0.5 |
+| label | text | estimated |
+| over_cmd_rate | number | 0.016666666666666666 |
+| over_tel_scale | number | 0.0 |
+| avail_median | number | 1.0 |
+| avail_lo | number | 1.0 |
+| avail_hi | number | 1.0 |
+| added_latency_ms_median | number | 1.8650793650793664 |
+| added_latency_ms_lo | number | 1.8650793650793664 |
+| added_latency_ms_hi | number | 1.8650793650793664 |
+| latency_ms_median | number | 10.892857142857144 |
+| latency_ms_lo | number | 10.892857142857144 |
+| latency_ms_hi | number | 10.892857142857144 |
+| utilisation_median | number | 0.00030555555555555555 |
+| utilisation_lo | number | 0.00030555555555555555 |
+| utilisation_hi | number | 0.00030555555555555555 |
+| utilisation_down_median | number | 0.04212065813528336 |
+| utilisation_down_lo | number | 0.04212065813528336 |
+| utilisation_down_hi | number | 0.04212065813528336 |
+| compute_share_median | number | 7.678730158730158e-05 |
+| compute_share_lo | number | 7.678730158730158e-05 |
+| compute_share_hi | number | 7.678730158730158e-05 |
+| ttra_s_median | number | 0.2056452380952578 |
+| ttra_s_lo | number | 0.2056452380952578 |
+| ttra_s_hi | number | 0.2056452380952578 |
+| first_session_s_median | number | 0.2056452380952381 |
+| first_session_s_lo | number | 0.2056452380952381 |
+| first_session_s_hi | number | 0.2056452380952381 |
+| avail_mean | number | 0.992 |
+| avail_mean_lo | number | 0.9902727272727273 |
+| avail_mean_hi | number | 0.9935454545454545 |
+| avail_med_0.1 | number | 1.0 |
+| avail_mean_0.1 | number | 0.9704545454545453 |
+| avail_base_mean_0.1 | number | 0.9704545454545453 |
+| avail_med_0.25 | number | 1.0 |
+| avail_mean_0.25 | number | 0.992 |
+| avail_base_mean_0.25 | number | 0.992 |
+| avail_med_0.5 | number | 1.0 |
+| avail_mean_0.5 | number | 0.992 |
+| avail_base_mean_0.5 | number | 0.992 |
+| avail_med_1 | number | 1.0 |
+| avail_mean_1 | number | 0.992 |
+| avail_base_mean_1 | number | 0.992 |
+| avail_med_2 | number | 1.0 |
+| avail_mean_2 | number | 0.992 |
+| avail_base_mean_2 | number | 0.992 |
+| avail_med_5 | number | 1.0 |
+| avail_mean_5 | number | 0.992 |
+| avail_base_mean_5 | number | 0.992 |
+| avail_med_10 | number | 1.0 |
+| avail_mean_10 | number | 0.992 |
+| avail_base_mean_10 | number | 0.992 |
+| teardowns_per_run_mean | number | 0.188 |
+| handshakes_per_run_mean | number | 3.11 |
+| share_runs_with_teardown | number | 0.167 |
+
+### `mission/results/morris.csv`
+
+9 columns.
+
+| column | type | example |
+|---|---|---|
+| arch | text | A |
+| input | text | frame_loss |
+| mu_star | number | 0.06398913043478255 |
+| sigma | number | 0.09511188455661543 |
+| mu_star_conf | number | 0.05071641815723609 |
+| runs_per_point | number | 200 |
+| trajectories | number | 10 |
+| seed | number | 20261020 |
+| label | text | estimated |
+
+### `mission/results/sweeps.csv`
+
+67 columns.
+
+| column | type | example |
+|---|---|---|
+| vehicle | text | drone |
+| arch | text | A |
+| link | text | sik |
+| tag | text | sweep:frame_loss |
+| runs | number | 1000 |
+| seed | number | 20261020 |
+| config_key | text | sweep:frame_loss/{"frame_loss": 0.0} |
+| deadline_s | number | 0.5 |
+| label | text | estimated |
+| over_frame_loss | number | 0.0 |
+| avail_median | number | 0.9956521739130435 |
+| avail_lo | number | 0.9956521739130435 |
+| avail_hi | number | 0.9971014492753624 |
+| added_latency_ms_median | number | 1.8650793650793664 |
+| added_latency_ms_lo | number | 1.8650793650793664 |
+| added_latency_ms_hi | number | 1.8650793650793664 |
+| latency_ms_median | number | 10.892857142857144 |
+| latency_ms_lo | number | 10.892857142857144 |
+| latency_ms_hi | number | 10.892857142857144 |
+| utilisation_median | number | 0.10671055555555556 |
+| utilisation_lo | number | 0.10671055555555556 |
+| utilisation_hi | number | 0.10671055555555556 |
+| utilisation_down_median | number | 96.78800731261427 |
+| utilisation_down_lo | number | 96.78800731261427 |
+| utilisation_down_hi | number | 96.78800731261427 |
+| compute_share_median | number | 0.0009342476190476191 |
+| compute_share_lo | number | 0.0009342476190476191 |
+| compute_share_hi | number | 0.0009342476190476191 |
+| ttra_s_median | number | 0.2056452380952578 |
+| ttra_s_lo | number | 0.2056452380952578 |
+| ttra_s_hi | number | 0.2056452380952578 |
+| first_session_s_median | number | 0.2056452380952381 |
+| first_session_s_lo | number | 0.2056452380952381 |
+| first_session_s_hi | number | 0.2056452380952381 |
+| avail_mean | number | 0.9921434782608697 |
+| avail_mean_lo | number | 0.9914912681159421 |
+| avail_mean_hi | number | 0.9927537681159421 |
+| avail_med_0.1 | number | 0.9956521739130435 |
+| avail_mean_0.1 | number | 0.9921434782608697 |
+| avail_base_mean_0.1 | number | 0.9921826086956522 |
+| avail_med_0.25 | number | 0.9956521739130435 |
+| avail_mean_0.25 | number | 0.9921434782608697 |
+| avail_base_mean_0.25 | number | 0.9921826086956522 |
+| avail_med_0.5 | number | 0.9956521739130435 |
+| avail_mean_0.5 | number | 0.9921434782608697 |
+| avail_base_mean_0.5 | number | 0.9921826086956522 |
+| avail_med_1 | number | 0.9956521739130435 |
+| avail_mean_1 | number | 0.9921434782608697 |
+| avail_base_mean_1 | number | 0.9921826086956522 |
+| avail_med_2 | number | 0.9956521739130435 |
+| avail_mean_2 | number | 0.9921434782608697 |
+| avail_base_mean_2 | number | 0.9921826086956522 |
+| avail_med_5 | number | 0.9956521739130435 |
+| avail_mean_5 | number | 0.9921434782608697 |
+| avail_base_mean_5 | number | 0.9921826086956522 |
+| avail_med_10 | number | 0.9956521739130435 |
+| avail_mean_10 | number | 0.9921434782608697 |
+| avail_base_mean_10 | number | 0.9921826086956522 |
+| teardowns_per_run_mean | number | 0.144 |
+| handshakes_per_run_mean | number | 3.086 |
+| share_runs_with_teardown | number | 0.135 |
+| over_rekey_interval_s | number | 60.0 |
+| over_outage_rate_per_h | number | 0.0 |
+| over_outage_mean_s | number | 2.0 |
+| over_clock_hz | number | 480000000.0 |
+| over_wait_state_factor | number | 1.5 |
+| over_mac_cycles | number | 2000.0 |
+
 ### `planner/results/hardware_classes.csv`
 
 5 columns.
@@ -211,6 +1367,182 @@ Labels used across the repository: published, host measured, emulated, estimated
 | ram_kb | text | 8 16 32 |
 | flash_kb | text | 64 128 256 |
 | share | number | 0.1500 |
+
+### `planner/results/mosca_curve.csv`
+
+4 columns.
+
+| column | type | example |
+|---|---|---|
+| data_lifetime_years | number | 0 |
+| p_exposed | number | 0.2575 |
+| planner_rule | number | 0.0000 |
+| label | text | modelled |
+
+### `planner/results/mosca_flip_lifetimes.csv`
+
+5 columns.
+
+| column | type | example |
+|---|---|---|
+| migration_years | number | 0 |
+| x_star_2030 | number | 4 |
+| x_star_2031 | number | 5 |
+| x_star_2035 | number | 9 |
+| label | text | modelled |
+
+### `planner/results/mosca_planner_flips.csv`
+
+7 columns.
+
+| column | type | example |
+|---|---|---|
+| fleet | text | synthetic |
+| migration_years | number | 0 |
+| conf_horizon_year | number | 2035 |
+| changed | number | 0 |
+| share_changed | number | 0.0000 |
+| changed_to_hr | number | 0 |
+| label | text | estimated |
+
+### `planner/results/mosca_sobol.csv`
+
+8 columns.
+
+| column | type | example |
+|---|---|---|
+| input | text | data_lifetime_years |
+| low | number | 1.0000 |
+| high | number | 25.0000 |
+| S1 | number | 0.3993 |
+| S1_conf | number | 0.0549 |
+| ST | number | 0.9061 |
+| ST_conf | number | 0.0546 |
+| label | text | modelled |
+
+### `planner/results/profile_config.csv`
+
+3 columns.
+
+| column | type | example |
+|---|---|---|
+| key | text | seed |
+| value | text | 20261020 |
+| label | text | assumption |
+
+### `planner/results/profile_free_sensitivity.csv`
+
+6 columns.
+
+| column | type | example |
+|---|---|---|
+| free_range | text | low |
+| low | number | 0.0200 |
+| high | number | 0.2000 |
+| scenario | text | stack_asm |
+| hr | number | 206 |
+| label | text | estimated |
+
+### `planner/results/profile_main.csv`
+
+14 columns.
+
+| column | type | example |
+|---|---|---|
+| scenario | text | stack_asm |
+| seed | number | 20261020 |
+| hr | number | 186 |
+| hr_share | number | 0.1860 |
+| wilson_low | number | 0.1631 |
+| wilson_high | number | 0.2113 |
+| round3_hr | number | 260 |
+| violations | number | 0 |
+| FIRMWARE_UPDATE | number | 458 |
+| HYBRID | number | 201 |
+| HARDWARE_REPLACEMENT | number | 186 |
+| NO_ACTION_BEFORE_RETIREMENT | number | 105 |
+| UNKNOWN | number | 50 |
+| label | text | estimated |
+
+### `planner/results/profile_mc_draws.csv`
+
+6 columns.
+
+| column | type | example |
+|---|---|---|
+| draw | number | 0 |
+| seed | number | 20261021 |
+| fleet | text | synthetic |
+| thresholds | text | uncertain |
+| hr_share | number | 0.2930 |
+| label | text | estimated |
+
+### `planner/results/profile_mc_summary.csv`
+
+9 columns.
+
+| column | type | example |
+|---|---|---|
+| fleet | text | synthetic |
+| thresholds | text | stack_asm |
+| draws | number | 1 |
+| median | number | 0.2600 |
+| p2_5 | number | 0.2600 |
+| p97_5 | number | 0.2600 |
+| median_ci_low | number | 0.2600 |
+| median_ci_high | number | 0.2600 |
+| label | text | estimated |
+
+### `planner/results/profile_per_board.csv`
+
+6 columns.
+
+| column | type | example |
+|---|---|---|
+| scenario | text | stack_asm |
+| board | text | Holybro Pixhawk 6X (FMUv6X) |
+| devices | number | 114 |
+| hr | number | 15 |
+| hr_share | number | 0.1316 |
+| label | text | estimated |
+
+### `planner/results/profile_reproduce.csv`
+
+4 columns.
+
+| column | type | example |
+|---|---|---|
+| scenario | text | stack_asm |
+| hr | number | 260 |
+| seed | number | 20262016 |
+| label | text | estimated |
+
+### `planner/results/profile_threshold_ranges.csv`
+
+5 columns.
+
+| column | type | example |
+|---|---|---|
+| threshold | text | sig_flash_kb |
+| low_bytes | number | 13052 |
+| high_bytes | number | 29684 |
+| rows | text | S2-0030 S2-0033 S2-0036 S2-0174 S2-0177 |
+| label | text | derived from published |
+
+### `planner/results/profile_totals_only.csv`
+
+8 columns.
+
+| column | type | example |
+|---|---|---|
+| scenario | text | stack_asm |
+| free_memory | text | not known (published totals only) |
+| FIRMWARE_UPDATE | number | 0 |
+| HYBRID | number | 0 |
+| HARDWARE_REPLACEMENT | number | 186 |
+| NO_ACTION_BEFORE_RETIREMENT | number | 105 |
+| UNKNOWN | number | 709 |
+| label | text | estimated |
 
 ### `planner/results/scale.csv`
 
@@ -306,3 +1638,132 @@ Labels used across the repository: published, host measured, emulated, estimated
 | changed_high | number | 1 |
 | share_high | number | 0.1000 |
 | swing | number | 0.1000 |
+
+### `rtlsim/results/ibex_cycles.csv`
+
+20 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | RTL simulated |
+| core | text | lowRISC Ibex (RTL, Verilator) |
+| core_configuration | text | Ibex simple system, named configuration 'small': RV32IMC (RV... |
+| memory_model | text | single 1 MB dual port RAM shared by instruction and data por... |
+| compiler | text | riscv64-unknown-elf-gcc (13.2.0-11ubuntu1+12) 13.2.0 |
+| compiler_flags | text | -march=rv32imc_zicsr -mabi=ilp32 -O3 -fomit-frame-pointer -s... |
+| library | text | mlkem-native |
+| library_commit | text | d1b2fe782888bdb761a50336012923180be7f502 v2.0.0 |
+| backend | text | portable C |
+| parameter_set | text | ML-KEM-512 |
+| operation | text | keygen |
+| statistic | text | min |
+| cycles | number | 1411365 |
+| n_runs | number | 5 |
+| median_ci95_low | number | 1411365.0 |
+| median_ci95_high | number | 1412094.0 |
+| correctness_check | text | keygen returned success: 5/5 pass |
+| log_complete | text | True |
+| seed | number | 20261020 |
+| timer_overhead_subtracted_cycles | number | 4 |
+
+### `rtlsim/results/ibex_vs_cortex_m4.csv`
+
+20 columns.
+
+| column | type | example |
+|---|---|---|
+| parameter_set | text | ML-KEM-512 |
+| operation | text | keygen |
+| label | text | RTL simulated |
+| cycles_median | number | 1411651 |
+| cycles_median_ci95_low | number | 1411365.0 |
+| cycles_median_ci95_high | number | 1412094.0 |
+| label_published | text | published |
+| id_clean_published | text | S2-0010 |
+| cycles_clean_published | number | 595793 |
+| id_asm_published | text | S2-0013 |
+| variant_asm_published | text | pqm4 implementation 'm4fspeed (Cortex-M4F-specific, label as... |
+| cycles_asm_published | number | 392423 |
+| ratio_to_clean | number | 2.369 |
+| ratio_to_clean_ci95_low | number | 2.369 |
+| ratio_to_clean_ci95_high | number | 2.37 |
+| magnitude_vs_clean | text | same order of magnitude |
+| ratio_to_asm | number | 3.597 |
+| ratio_to_asm_ci95_low | number | 3.597 |
+| ratio_to_asm_ci95_high | number | 3.598 |
+| magnitude_vs_asm | text | same order of magnitude |
+
+### `data/reference_profiles.csv`
+
+15 columns.
+
+| column | type | example |
+|---|---|---|
+| board | text | Holybro Pixhawk 6X (FMUv6X) |
+| core | text | Cortex-M7 (STM32H753) |
+| clock_mhz | number | 480 |
+| flash_bytes | number | 2097152 |
+| ram_bytes | number | 1048576 |
+| flight_stack | text | PX4 |
+| flight_stack_size_or_flash_limit_bytes | number | 2097152 |
+| free_flash_bytes_derived | empty |  |
+| free_ram_bytes_derived | empty |  |
+| arithmetic | text | flash 2 MB x 1048576 B per MB = 2097152 B; RAM 1 MB x 104857... |
+| source_url | text | https://docs.px4.io/v1.15/en/flight_controller/pixhawk6x.htm... |
+| retrieval_date | text | 2026-10-20 |
+| location_in_source | text | Introduction |
+| note | text | clock stated as up to 480 MHz; IO processor not stated in th... |
+| label | text | published |
+
+### `data/policy_timeline.csv`
+
+14 columns.
+
+| column | type | example |
+|---|---|---|
+| row_id | text | P01 |
+| jurisdiction | text | United States |
+| document | text | NIST IR 8547 Transition to Post-Quantum Cryptography Standar... |
+| document_date | text | 2024-11-12 |
+| status | text | draft |
+| milestone_date | text | 2030-12-31 |
+| milestone_kind | text | interim |
+| milestone | text | quantum vulnerable public key at 112 bit strength deprecated... |
+| paraphrase | text | The draft lists RSA, ECDSA, DH and ECDH at 112 bit strength ... |
+| url_or_file | text | https://csrc.nist.gov/pubs/ir/8547/ipd ; https://nvlpubs.nis... |
+| retrieval_date | text | 2026-10-20 |
+| location | text | CSRC page header and Document History (status); signature an... |
+| evidence_ref | text | data/raw/S1_standards.md rows 14 and 15; data/raw/S12_policy... |
+| label | text | published |
+
+### `data/claims_register.csv`
+
+11 columns.
+
+| column | type | example |
+|---|---|---|
+| claim_id | text | abs_rows |
+| document | text | docs/PAPER.md |
+| text_in_document | number | 1,328 |
+| value | number | 1328.0 |
+| source_file | text | data/evidence.csv |
+| column | text | id |
+| query | text | stream == "S10" |
+| aggregate | text | count |
+| tolerance_rel | number | 0.005 |
+| label | text | published |
+| note | empty |  |
+
+### `data/context_entities.csv`
+
+7 columns.
+
+| column | type | example |
+|---|---|---|
+| organisation | text | TII and ATRC |
+| fact_id | text | TII-01 |
+| paraphrase | text | ATRC describes itself as having three parts: ASPIRE for prog... |
+| url | text | https://www.atrc.gov.ae/our-structure |
+| retrieval_date | text | 2026-10-20 |
+| page_section | text | Our Structure (ASPIRE; TII; VentureOne) |
+| relevance | text | engagement route: shows which arm funds and runs challenges ... |
