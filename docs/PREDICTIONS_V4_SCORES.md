@@ -6,7 +6,7 @@ Hash check: stored b49c1f93369456fb..., file now b49c1f93369456fb... (match).
 
 Verdicts: hit when the prediction holds; miss when the refutation clause is met; between when neither holds (this third verdict was not defined when the predictions were registered; it was defined on 2026-10-20 after a reviewer noted the gap); not scored when the registered metric could not be computed as registered, with the reason.
 
-Totals: 16 hit, 0 between, 4 miss, 4 not scored, of 24.
+Totals: 17 hit, 0 between, 4 miss, 3 not scored, of 24.
 
 | ID | verdict | evidence |
 |---|---|---|
@@ -33,4 +33,4 @@ Totals: 16 hit, 0 between, 4 miss, 4 not scored, of 24.
 | V21 | hit | Hybrid session: on the slowest link with a recorded teardown (lora_dr5, robot) recovery takes 735 s. On LoRaWAN DR0 no teardown occurred in the runs, so recovery is not recorded, but the first session alone takes at least 16681 s. On the SiK radio recovery takes at most 0.96 s (median over runs, either vehicle), below 1 s, but it is not the slowest link. |
 | V22 | hit | First pass: 73 findings. |
 | V23 | miss | Second pass: 4 high severity findings. |
-| V24 | not scored | Not yet scored. |
+| V24 | hit | Rubric from 4.7 to 5.7 (change +1.0). |
