@@ -8,7 +8,7 @@ Drones and robots authenticate commands, firmware and telemetry with classical p
 
 ## 2. Gap in the evidence
 
-`data/evidence.csv` holds {{n_rows}} published rows, each with source, location and warning. Cortex-M33 cycles exist only for ML-DSA key generation and signing, from one paper (rows S10C); none for ML-KEM or verification. ML-DSA-44 stack ranges from {{min_any}} B ({{min_any_id}}, published: the most any of key generation, signing and verification needs, for a low RAM library on a Cortex-M33) to {{emu_sign}} B (signing in this repository's portable C build, emulated); memory definitions differ between sources. Link costs rest on a model checked against one published link table, and against one prose figure that it misses by a factor of {{xc_factor}}. No figure comes from a flight controller running its flight stack.
+`data/evidence.csv` holds {{n_rows}} published rows, each with source, location and warning. Cortex-M33 cycles exist only for ML-DSA key generation and signing, from one paper (rows S10C); none for ML-KEM or verification. ML-DSA-44 stack ranges from {{min_any}} B ({{min_any_id}}, published: the most any of key generation, signing and verification needs, for a low RAM library on a Cortex-M33) to {{emu_sign}} B (signing in this repository's portable C build, emulated); memory definitions differ between sources. Link costs rest on a model checked against one published link table, and against one prose figure that it still misses by a factor of {{xc_factor4}} after the round 4 repair. No figure comes from a flight controller running its flight stack.
 
 ## 3. Research questions
 
@@ -19,7 +19,7 @@ RQ4. Reporting rules that make such numbers comparable (from ePrint 2026/1333, r
 
 ## 4. Method
 
-Predictions are hashed before each run and scored by script against their refutation clauses; misses stay (`docs/PREDICTIONS_V3.md`). Rows enter the table through staging, a fresh reader check and a merge script. Five labels are kept apart: published, host measured, emulated, estimated, planned. Board runs follow `docs/BOARD_RUN_PROTOCOL.md`.
+Predictions are hashed before each run and scored by script against their refutation clauses; misses stay (`docs/PREDICTIONS_V3.md`). Rows enter the table through staging, a fresh reader check and a merge script. Seven labels are kept apart: published, host measured, emulated, estimated, modelled, RTL simulated, planned. Board runs follow `docs/BOARD_RUN_PROTOCOL.md`.
 
 ## 5. Work plan (six months, part time)
 
@@ -33,9 +33,9 @@ Predictions are hashed before each run and scored by script against their refuta
 
 ## 6. Already done
 
-1. Evidence: {{n_rows}} rows. A fresh reader rechecked all {{n_s10}} rows added on 2026-10-16 (0 numbers copied wrongly; {{v3_any}} column or warning fixes), and a second reading by three new readers found {{v4_bad}} errors in a seeded stratified sample of {{v4_n}} (approximate 95 percent upper bound {{v4_bound}} percent). A column lint over all rows found and fixed {{lint_true}} more warning errors (`docs/VERIFICATION3.md`).
+1. Evidence: {{n_rows}} rows. A fresh reader rechecked all {{n_s10}} rows added on 2026-10-16 (0 numbers copied wrongly; {{v3_any}} column or warning fixes), and a second reading by three new readers found {{v4_bad}} errors in a seeded stratified sample of {{v4_n}} (approximate 95 percent upper bound {{v4_bound}} percent). A column lint over all rows found and fixed {{lint_true}} more warning errors (`docs/VERIFICATION3.md`). In round 4 every new row was read by two independent readers (`docs/VERIFICATION5.md`).
 2. Emulated: {{emu_builds}} builds on Cortex-M4 and Cortex-M33 models pass every check, and {{renode_n}} builds also run and pass on a second emulator (Renode), with stack equal as expected for the same compiled code. No cycles (`bench/mcu/qemu_results/ANALYSIS.md`).
-3. Estimated: uncalibrated, the link model is {{val_unc_lo}} to {{val_unc_hi}} percent too fast for the five published rate bound handshakes; with one constant fitted on two of them it predicts the other three within {{val_ho}} percent, a weak test on one link. It was {{xc_factor}} times faster than a published 802.15.4 transfer range; after every cited MAC and fragmentation cost was added in round 4 it is still {{xc_factor4}} times faster. Its duty cycle and fragment counts are checked only arithmetically, and its loss handling disagrees with its closed form (`docs/LINKSIM_STUDY.md` section 4.4).
+3. Modelled: uncalibrated, the link model is {{val_unc_lo}} to {{val_unc_hi}} percent too fast for the five published rate bound handshakes; with one constant fitted on two of them it predicts the other three within {{val_ho}} percent, a weak test on one link. It was {{xc_factor}} times faster than a published 802.15.4 transfer range; after every cited MAC and fragmentation cost was added in round 4 it is still {{xc_factor4}} times faster. Its duty cycle and fragment counts are checked only arithmetically, and its loss handling disagrees with its closed form (`docs/LINKSIM_STUDY.md` section 4.4).
 4. Estimated, synthetic fleet: hardware replacements in 1000 devices range from {{hr_default}} to {{hr_portable}} depending on the implementation the thresholds assume (`docs/PLANNER_STUDY.md`).
 5. Host measured: on a laptop, with different code from the published rows, ranks agree with published cycle counts (Spearman {{rho3}}) and within run ratios lie within {{ratio3}} percent of published ratios, but run to run spread reaches {{spread3}} percent; used for ratios only (`bench/host/native_v3/RESULTS.md`).
 
