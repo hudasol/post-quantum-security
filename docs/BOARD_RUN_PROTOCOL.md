@@ -2,6 +2,8 @@
 
 Author: Huda Mueen. Written 2026-10-16. Status: **planned**. Nothing in this file has been run on a real board, and no number in it is a result. Every board number that will come from this protocol is labelled planned until the run happens, and then board measured, in its own table, never mixed with published, host measured, emulated or estimated numbers.
 
+**Board kit (added 2026-10-20, status planned).** `bench/board_kit/` holds everything needed to run this protocol in one short session: build scripts for B0 (`build_b0.py`, pqm4's own build at the pin) and B1 (`build_b1.py`, the harness linked against pqm4's platform layer), UART capture (`capture.py`), parsing (`parse.py`), comparison with published, modelled and RTL simulated rows (`compare.py`), the result template (`RESULT_TEMPLATE.csv`), the one page session checklist with an estimated session length (`CHECKLIST.md`, from `session_plan.py`), the build log and image sizes (`build_log.md`, `image_sizes.csv`) and an emulator dry run of the whole pipeline (`DRY_RUN.md`, label emulated). The kit has not been used on a board: all board numbers remain planned.
+
 ## 1. Purpose
 
 The repository has published cycle counts (pqm4 and papers), emulated stack and size (QEMU, no cycles) and host timings (not transferable). It has no cycle count of its own from a microcontroller. This protocol closes that gap in one bench session of about half a day, with no purchase: a borrowed board, free tools and the firmware already in `bench/mcu/`.
@@ -51,6 +53,9 @@ Rules for both experiments:
 
 ## 5. Firmware build (B1)
 
+**Kit route (preferred, no new start up, clock or UART code).** `python3 bench/board_kit/build_b1.py --platform nucleo-l4r5zi` builds all six images with pqm4's start up (libopencm3 vector table and reset handler), clock set up (`hal_setup(CLOCK_BENCHMARK)`), LPUART1 output and linker script at the pinned commit. The only new file is `bench/board_kit/b1/b1_main.c`, which reads back the clock, flash wait states and cache bits as META lines and runs the counter check. The run id comes from `capture.py --run`, so one image serves all power cycles. The manual route below remains as a fallback.
+
+
 From `bench/mcu/`:
 
 ```
@@ -64,7 +69,7 @@ Repeat for `ALG=mlkem SET=512|768|1024` and `ALG=mldsa SET=44|65|87`. For a Cort
 
 ## 6. Session steps
 
-1. Before the session: build every image at home, run them in QEMU (`./run_qemu.sh`) to confirm correctness, write the board prediction file (section 9) and hash it.
+1. Before the session: build every image at home, run the kit dry run (`bench/board_kit/run_dry_run.py`, or `./run_qemu.sh` for the manual route) to confirm correctness, write the board prediction file (section 9) and hash it. Follow `bench/board_kit/CHECKLIST.md` at the board.
 2. Connect the board; record board name, chip marking, core, and the ST-LINK firmware version.
 3. Counter check: time 1,000,000 iterations of a known loop with the DWT cycle counter and compare with the expected count. A mismatch stops the session: the counter is not counting core cycles.
 4. B0: build and run pqm4 for ML-KEM-768 and ML-DSA-44 at the pin; save the raw output.
@@ -73,6 +78,8 @@ Repeat for `ALG=mlkem SET=512|768|1024` and `ALG=mldsa SET=44|65|87`. For a Cort
 7. Copy every raw log, the exact commands and the toolchain version into `bench/mcu/board_results/<date>/`.
 
 ## 7. Result template (CSV, one row per measurement)
+
+The kit writes its own documented schema (`bench/board_kit/RESULT_TEMPLATE.csv`, columns described in `bench/board_kit/parse.py`); it carries the same information as the template below, with `label` set from the capture header.
 
 ```
 date,board,chip,core,clock_hz,flash_ws,cache,toolchain,flags,library,library_commit,alg,param,op,run_id,iter,cycles,stack_bytes,label
