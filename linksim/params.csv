@@ -48,3 +48,46 @@ uav_profile_delay_s,0.040,s,cited,data/evidence.csv:S10F-136 (ePrint 2026/2343 S
 tls_round_trips,2,count,assumption,ASSUMPTION round trips before the TLS 1.3 handshake completes (TCP connect plus one TLS round trip)
 tcp_mss_bytes,1448,B,assumption,ASSUMPTION TCP maximum segment size on the emulated link
 tcp_ip_header_bytes,52,B,assumption,ASSUMPTION IPv4 plus TCP header with timestamps per segment
+sixlowpan_frag1_hdr_bytes,4,B,cited,data/raw/S12_link_sources.md:8 (RFC 4944 Section 5.3 Figure 4)
+sixlowpan_fragn_hdr_bytes,5,B,cited,data/raw/S12_link_sources.md:9 (RFC 4944 Section 5.3 Figure 5)
+sixlowpan_offset_unit_bytes,8,B,cited,data/raw/S12_link_sources.md:10-11 (RFC 4944 Section 5.3)
+ieee802154_mac_frame_max_bytes,102,B,cited,data/raw/S12_link_sources.md:12 (RFC 4944 Section 4)
+ieee802154_shr_phr_bytes,6,B,cited,data/raw/S12_link_sources.md:38 (preamble 4 + SFD 1 + PHR 1)
+ieee802154_ack_psdu_bytes,5,B,cited,data/raw/S12_link_sources.md:22 (RIOT IEEE802154_ACK_FRAME_LEN)
+ieee802154_max_mac_hdr_bytes,23,B,cited,data/raw/S12_link_sources.md:23 (RIOT IEEE802154_MAX_HDR_LEN)
+ieee802154_fcs_bytes,2,B,cited,data/raw/S12_link_sources.md:23 (RIOT IEEE802154_FCS_LEN)
+ieee802154_symbol_s,0.000016,s,cited,data/raw/S12_link_sources.md:28 (RIOT IEEE802154_SYMBOL_TIME_US; also S12 line 34)
+ieee802154_sifs_symbols,12,symbols,cited,data/raw/S12_link_sources.md:24 (RIOT IEEE802154_SIFS_SYMS)
+ieee802154_lifs_symbols,40,symbols,cited,data/raw/S12_link_sources.md:24 (RIOT IEEE802154_LIFS_SYMS)
+ieee802154_sifs_max_frame_bytes,18,B,cited,data/raw/S12_link_sources.md:24 (RIOT IEEE802154_SIFS_MAX_FRAME_SIZE)
+ieee802154_turnaround_symbols,12,symbols,cited,data/raw/S12_link_sources.md:25 (aTurnaroundTime; also S12 line 34)
+ieee802154_cca_symbols,8,symbols,cited,data/raw/S12_link_sources.md:26 (also S12 line 34)
+ieee802154_ack_wait_symbols,54,symbols,cited,data/raw/S12_link_sources.md:27 (macAckWaitDuration; also S12 line 34)
+ieee802154_unit_backoff_symbols,20,symbols,cited,data/raw/S12_link_sources.md:32 (aUnitBackoffPeriod)
+ieee802154_min_be,3,count,cited,data/raw/S12_link_sources.md:29 (also S12 line 33)
+ieee802154_max_be,5,count,cited,data/raw/S12_link_sources.md:29 (also S12 line 33)
+ieee802154_max_csma_backoffs,4,count,cited,data/raw/S12_link_sources.md:29 (also S12 line 33)
+lora_preamble_symbols,8,symbols,assumption,ASSUMPTION LoRaWAN preamble length; the retrieved pages give the formula term (n_preamble + 4.25) but not the LoRaWAN value
+lora_coding_rate_index,1,count,assumption,ASSUMPTION coding rate 4/5 (CR index 1); the retrieved forum thread says CR is not fixed
+lora_header_extra_symbols,4.25,symbols,cited,data/raw/S12_link_sources.md:48 (secondary; attributed to the SX1276 data sheet)
+lora_bw_hz,125000,Hz,cited,data/raw/S12_link_sources.md:67 (DR0 and DR5 use 125 kHz)
+lora_dr0_sf,12,count,cited,data/raw/S12_link_sources.md:67
+lora_dr5_sf,7,count,cited,data/raw/S12_link_sources.md:67
+lorawan_frame_overhead_bytes,13,B,cited,data/raw/S12_link_sources.md:55 (MHDR 1 + DevAddr 4 + FCtrl 1 + FCnt 2 + FPort 1 + MIC 4; also line 60)
+lorawan_eu868_band_l_duty,0.01,ratio,cited,data/raw/S12_link_sources.md:66 (also line 65)
+lorawan_eu868_band_p_duty,0.10,ratio,cited,data/raw/S12_link_sources.md:66
+lorawan_eu868_band_k_duty,0.001,ratio,cited,data/raw/S12_link_sources.md:66
+edhoc_sig_kid_m1_bytes,37,B,cited,data/raw/S12_link_sources.md:79 (draft-ietf-lake-edhoc-17 Section 1.2 Figure 1)
+edhoc_sig_kid_m2_bytes,102,B,cited,data/raw/S12_link_sources.md:79
+edhoc_sig_kid_m3_bytes,77,B,cited,data/raw/S12_link_sources.md:79
+x25519mlkem768_client_share_bytes,1216,B,cited,data/evidence.csv:S3-018 (1184 ML-KEM encapsulation key + 32 X25519)
+x25519mlkem768_server_share_bytes,1120,B,cited,data/evidence.csv:S3-019 (1088 ML-KEM ciphertext + 32 X25519)
+proto_cert_overhead_bytes,200,B,assumption,ASSUMPTION certificate bytes besides the public key and signature (names, validity, extensions); swept 100 to 400
+proto_dtls_record_overhead_bytes,29,B,assumption,ASSUMPTION DTLS 1.3 record header plus AEAD tag per protected record (13 B header + 16 B tag); swept
+proto_dtls_handshake_framing_bytes,120,B,assumption,ASSUMPTION DTLS 1.3 handshake message headers, extensions and Finished per flight; swept
+proto_oscore_overhead_bytes,16,B,assumption,ASSUMPTION OSCORE option plus 8 B tag per protected CoAP message; swept
+proto_coap_header_bytes,8,B,assumption,ASSUMPTION CoAP header and token carrying EDHOC or OSCORE
+proto_dds_handshake_framing_bytes,400,B,assumption,ASSUMPTION DDS Security handshake tokens, permissions and governance references per flight; swept
+proto_dds_message_overhead_bytes,44,B,assumption,ASSUMPTION RTPS submessage and SRTPS protection overhead per message; swept
+fw_image_bytes,50000,B,assumption,ASSUMPTION firmware image size for the protocol simulation (same order as the 50 kB of ePrint 2021/781 pages 15 to 16)
+sixlowpan_datagram_bytes,1280,B,assumption,ASSUMPTION IPv6 datagram size used to carry a large object over 6LoWPAN (one datagram per 1280 B; not retrieved)
