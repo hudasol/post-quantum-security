@@ -1,0 +1,16 @@
+board,core,clock_mhz,metric,value,unit,label,source_url,location_in_source
+NUCLEO-F439ZI (STM32F439ZI),Cortex-M4,180,sha256_sw_throughput,2.36,MB/s,published,https://oryx-embedded.com/benchmark/st/crypto-stm32f4.html,table Hash Algorithms (CycloneCRYPTO 2.5.0; ARMCC -O3)
+NUCLEO-F439ZI (STM32F439ZI),Cortex-M4,180,sha256_hw_throughput,75.757,MB/s,published,https://oryx-embedded.com/benchmark/st/crypto-stm32f4.html,table Hash Algorithms
+NUCLEO-F439ZI (STM32F439ZI),Cortex-M4,180,ed25519_verify_time,14.5,ms,published,https://oryx-embedded.com/benchmark/st/crypto-stm32f4.html,table EC Signature Algorithms
+NUCLEO-F439ZI (STM32F439ZI),Cortex-M4,180,ecdsa_p256_verify_time,59.2,ms,published,https://oryx-embedded.com/benchmark/st/crypto-stm32f4.html,table EC Signature Algorithms
+NUCLEO-F439ZI (STM32F439ZI),Cortex-M4,180,x25519_shared_time,8.9,ms,published,https://oryx-embedded.com/benchmark/st/crypto-stm32f4.html,table EC Key Exchange Algorithms
+ATSAM4C32-EK (SAM4C),Cortex-M4,120,sha256_sw_throughput,1.095,MB/s,published,https://www.oryx-embedded.com/benchmark/microchip/crypto-sam4c.html,table Hash Algorithms (CycloneCRYPTO 2.5.0; ARMCC -O3)
+ATSAM4C32-EK (SAM4C),Cortex-M4,120,sha256_hw_throughput,62.893,MB/s,published,https://www.oryx-embedded.com/benchmark/microchip/crypto-sam4c.html,table Hash Algorithms
+ATSAM4C32-EK (SAM4C),Cortex-M4,120,ed25519_verify_time,26.8,ms,published,https://www.oryx-embedded.com/benchmark/microchip/crypto-sam4c.html,table EC Signature Algorithms
+ATSAM4C32-EK (SAM4C),Cortex-M4,120,ecdsa_p256_verify_time,114.9,ms,published,https://www.oryx-embedded.com/benchmark/microchip/crypto-sam4c.html,table EC Signature Algorithms (software)
+ATSAM4C32-EK (SAM4C),Cortex-M4,120,x25519_shared_time,16.3,ms,published,https://www.oryx-embedded.com/benchmark/microchip/crypto-sam4c.html,table EC Key Exchange Algorithms
+NuMaker-IoT-M487 (M487),Cortex-M4,192,sha256_sw_throughput,2.557,MB/s,published,https://www.oryx-embedded.com/benchmark/nuvoton/crypto-m487.html,table Hash Algorithms (CycloneCRYPTO 2.5.0; ARMCC -O3)
+NuMaker-IoT-M487 (M487),Cortex-M4,192,sha256_hw_throughput,37.313,MB/s,published,https://www.oryx-embedded.com/benchmark/nuvoton/crypto-m487.html,table Hash Algorithms
+NuMaker-IoT-M487 (M487),Cortex-M4,192,ed25519_verify_time,13.2,ms,published,https://www.oryx-embedded.com/benchmark/nuvoton/crypto-m487.html,table EC Signature Algorithms
+NuMaker-IoT-M487 (M487),Cortex-M4,192,ecdsa_p256_verify_time,56.8,ms,published,https://www.oryx-embedded.com/benchmark/nuvoton/crypto-m487.html,table EC Signature Algorithms (software)
+NuMaker-IoT-M487 (M487),Cortex-M4,192,x25519_shared_time,8.3,ms,published,https://www.oryx-embedded.com/benchmark/nuvoton/crypto-m487.html,table EC Key Exchange Algorithms

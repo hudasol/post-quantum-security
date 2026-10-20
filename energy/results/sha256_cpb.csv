@@ -1,0 +1,7 @@
+board,kind,cycles_per_byte,label
+NUCLEO-F439ZI (STM32F439ZI),sw,76.27,derived from published
+ATSAM4C32-EK (SAM4C),sw,109.59,derived from published
+NuMaker-IoT-M487 (M487),sw,75.09,derived from published
+NUCLEO-F439ZI (STM32F439ZI),hw,2.38,derived from published
+ATSAM4C32-EK (SAM4C),hw,1.91,derived from published
+NuMaker-IoT-M487 (M487),hw,5.15,derived from published

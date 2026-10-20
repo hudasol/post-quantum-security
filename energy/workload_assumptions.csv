@@ -1,0 +1,12 @@
+name,low,nominal,high,unit,label,note
+handshakes_per_h,1,4,60,per hour,assumption,full authenticated session starts per hour (link drops and reconnects)
+rekeys_per_h,6,60,360,per hour,assumption,key encapsulation only rekeys per hour inside a session
+commands_per_s,1,10,50,per second,assumption,signed or authenticated commands verified per second
+boots_per_h,0,1,4,per hour,assumption,boots with full image verification per hour of operation
+image_mb,0.25,0.5,1.0,MB (10^6 B),assumption,firmware image hashed at boot; upper bound is the cited 1 MB flash of the Crazyflie MCU and the FMUv2 limit
+ua_per_mhz,18.5,100,110,uA/MHz,assumption,proxy run current for the platform MCU whose own figure was not retrieved; range spans the cited parts in energy/parts.csv
+proxy_factor,1,1.5,3,ratio,assumption,multiplier for the proxy current because the platform MCUs are not the low power parts that were cited (unverified)
+vdd_v,1.8,3.3,3.6,V,assumption,MCU supply voltage; cited VDD ranges run from 1.71 to 3.6 V
+impl_factor,1,1,2.3,ratio,assumption,multiplier on published cycles for slower implementations; upper value near the ratio of m4fstack to m4f ML-DSA-44 verify (S2-0036 over S2-0033)
+crazyflie_cell_v,3.5,3.7,4.2,V,assumption,one cell LiPo voltage; not stated in the Crazyflie datasheet (unverified)
+command_msg_bytes,32,64,255,B,assumption,command payload length covered by the MAC; 255 B is the cited MAVLink maximum payload in linksim/params.csv
