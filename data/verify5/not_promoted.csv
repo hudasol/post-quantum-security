@@ -1,0 +1,127 @@
+id,reason
+S12A-101,single_reader: flash_or_code_bytes confirmed by fewer than two readers
+S12A-102,single_reader: flash_or_code_bytes confirmed by fewer than two readers
+S12A-104,single_reader: flash_or_code_bytes confirmed by fewer than two readers
+S12A-105,single_reader: flash_or_code_bytes confirmed by fewer than two readers
+S12A-107,single_reader: flash_or_code_bytes confirmed by fewer than two readers
+S12A-108,single_reader: flash_or_code_bytes confirmed by fewer than two readers
+S12A-110,single_reader: flash_or_code_bytes confirmed by fewer than two readers
+S12A-111,single_reader: flash_or_code_bytes confirmed by fewer than two readers
+S12A-269,single_reader: cycles confirmed by fewer than two readers
+S12A-270,single_reader: cycles confirmed by fewer than two readers
+S12A-271,single_reader: cycles confirmed by fewer than two readers
+S12A-272,single_reader: cycles confirmed by fewer than two readers
+S12A-273,single_reader: cycles confirmed by fewer than two readers
+S12A-274,single_reader: cycles confirmed by fewer than two readers
+S12A-275,single_reader: cycles confirmed by fewer than two readers
+S12A-276,single_reader: cycles confirmed by fewer than two readers
+S12A-277,single_reader: cycles confirmed by fewer than two readers
+S12A-278,single_reader: cycles confirmed by fewer than two readers
+S12A-279,single_reader: cycles confirmed by fewer than two readers
+S12A-280,single_reader: cycles confirmed by fewer than two readers
+S12A-281,single_reader: cycles confirmed by fewer than two readers
+S12A-282,single_reader: cycles confirmed by fewer than two readers
+S12A-283,single_reader: cycles confirmed by fewer than two readers
+S12A-284,single_reader: cycles confirmed by fewer than two readers
+S12A-285,single_reader: cycles confirmed by fewer than two readers
+S12A-286,single_reader: cycles confirmed by fewer than two readers
+S12A-287,single_reader: cycles confirmed by fewer than two readers
+S12A-288,single_reader: cycles confirmed by fewer than two readers
+S12A-289,single_reader: cycles confirmed by fewer than two readers
+S12A-290,single_reader: cycles confirmed by fewer than two readers
+S12A-291,single_reader: cycles confirmed by fewer than two readers
+S12A-292,single_reader: cycles confirmed by fewer than two readers
+S12A-293,single_reader: cycles confirmed by fewer than two readers
+S12A-294,single_reader: cycles confirmed by fewer than two readers
+S12A-295,single_reader: cycles confirmed by fewer than two readers
+S12A-296,single_reader: cycles confirmed by fewer than two readers
+S12A-297,single_reader: cycles confirmed by fewer than two readers
+S12A-298,single_reader: cycles confirmed by fewer than two readers
+S12A-299,single_reader: cycles confirmed by fewer than two readers
+S12A-300,single_reader: cycles confirmed by fewer than two readers
+S12A-301,single_reader: cycles confirmed by fewer than two readers
+S12A-302,single_reader: cycles confirmed by fewer than two readers
+S12A-303,single_reader: cycles confirmed by fewer than two readers
+S12A-304,single_reader: cycles confirmed by fewer than two readers
+S12A-305,single_reader: cycles confirmed by fewer than two readers
+S12A-306,single_reader: cycles confirmed by fewer than two readers
+S12A-307,single_reader: cycles confirmed by fewer than two readers
+S12A-308,single_reader: cycles confirmed by fewer than two readers
+S12A-309,single_reader: cycles confirmed by fewer than two readers
+S12A-310,single_reader: cycles confirmed by fewer than two readers
+S12A-311,single_reader: cycles confirmed by fewer than two readers
+S12A-312,single_reader: cycles confirmed by fewer than two readers
+S12A-313,single_reader: cycles confirmed by fewer than two readers
+S12A-314,single_reader: cycles confirmed by fewer than two readers
+S12A-315,single_reader: cycles confirmed by fewer than two readers
+S12A-316,single_reader: cycles confirmed by fewer than two readers
+S12A-354,single_reader: no value field to confirm
+S12A-355,single_reader: no value field to confirm
+S12A-356,single_reader: no value field to confirm
+S12A-357,single_reader: no value field to confirm
+S12A-358,single_reader: no value field to confirm
+S12A-359,single_reader: no value field to confirm
+S12A-360,single_reader: no value field to confirm
+S12A-361,single_reader: no value field to confirm
+S12A-362,single_reader: no value field to confirm
+S12A-363,single_reader: no value field to confirm
+S12A-364,single_reader: no value field to confirm
+S12A-365,single_reader: no value field to confirm
+S12A-366,single_reader: no value field to confirm
+S12A-420,single_reader: cycles confirmed by fewer than two readers
+S12A-421,single_reader: cycles confirmed by fewer than two readers
+S12A-422,single_reader: cycles confirmed by fewer than two readers
+S12A-423,single_reader: cycles confirmed by fewer than two readers
+S12A-424,single_reader: cycles confirmed by fewer than two readers
+S12A-425,single_reader: cycles confirmed by fewer than two readers
+S12A-426,single_reader: cycles confirmed by fewer than two readers
+S12A-427,single_reader: cycles confirmed by fewer than two readers
+S12A-428,single_reader: cycles confirmed by fewer than two readers
+S12A-429,single_reader: cycles confirmed by fewer than two readers
+S12A-430,single_reader: cycles confirmed by fewer than two readers
+S12A-431,single_reader: cycles confirmed by fewer than two readers
+S12A-432,single_reader: cycles confirmed by fewer than two readers
+S12A-433,single_reader: cycles confirmed by fewer than two readers
+S12A-434,single_reader: cycles confirmed by fewer than two readers
+S12A-435,single_reader: cycles confirmed by fewer than two readers
+S12A-436,single_reader: cycles confirmed by fewer than two readers
+S12B-001,single_reader: no value field to confirm
+S12B-002,single_reader: no value field to confirm
+S12B-003,single_reader: key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-004,single_reader: no value field to confirm
+S12B-005,single_reader: no value field to confirm
+S12B-006,single_reader: key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-007,single_reader: no value field to confirm
+S12B-008,single_reader: no value field to confirm
+S12B-009,single_reader: key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-010,single_reader: no value field to confirm
+S12B-011,single_reader: no value field to confirm
+S12B-012,single_reader: key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-013,single_reader: no value field to confirm
+S12B-014,single_reader: no value field to confirm
+S12B-015,single_reader: key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-016,single_reader: no value field to confirm
+S12B-017,single_reader: no value field to confirm
+S12B-018,single_reader: key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-019,single_reader: no value field to confirm
+S12B-020,single_reader: no value field to confirm
+S12B-021,single_reader: key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-022,single_reader: no value field to confirm
+S12B-023,single_reader: no value field to confirm
+S12B-024,single_reader: key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-025,single_reader: no value field to confirm
+S12B-026,single_reader: no value field to confirm
+S12B-027,single_reader: key_or_sig_size_bytes confirmed by fewer than two readers
+S12B-028,single_reader: no value field to confirm
+S12B-029,single_reader: no value field to confirm
+S12B-030,single_reader: no value field to confirm
+S12B-031,single_reader: no value field to confirm
+S12B-032,single_reader: no value field to confirm
+S12B-033,single_reader: no value field to confirm
+S12B-034,single_reader: no value field to confirm
+S12B-035,single_reader: no value field to confirm
+S12B-036,single_reader: no value field to confirm
+S12B-037,single_reader: no value field to confirm
+S12B-038,single_reader: no value field to confirm
+S12B-039,single_reader: no value field to confirm
+S12B-040,single_reader: no value field to confirm
