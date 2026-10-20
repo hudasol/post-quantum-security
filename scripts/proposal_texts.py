@@ -124,7 +124,7 @@ Drones and robots authenticate commands and firmware on microcontroller flight c
 ## What already exists
 
 - {n['rows']} published rows with provenance, every new row read by two independent readers.
-- A cycle model with a median held out error of {n['cm_med']} percent within one code base (modelled), and board predictions registered in advance.
+- A cycle model with a median held out error of {n['cm_med']} percent within one code base (modelled; signing misses by up to {n['cm_sign']} percent, and transfer to other code is untested), and board predictions registered in advance.
 - A mission simulation: with a hybrid session, command availability on a telemetry radio stays at {n['m_b']}; a signature on every command lowers it to {n['m_c']} and adds about {n['m_c_lat']} ms per command (estimated).
 - Firmware verification of a 1 MB image with LMS: about {n['boot_sw']} ms with a software hash, {n['boot_hw']} ms with hash hardware (estimated).
 - Known gap: the link model is {n['d_factor']} times faster than a published 802.15.4 transfer time.
