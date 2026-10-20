@@ -1,0 +1,4 @@
+goal reachable: b-inj-event(Send(s_3,3,m2_2),@occ10_1) && b-inj-event(Send(s_3,1,m1_2),@occ7_1) -> inj-event(Acc(s_3,3,m2_2),@occ17_1) && inj-event(Acc(s_3,3,m2_2),@occ21_1)
+RESULT inj-event(Acc(s_3,t,m)) ==> inj-event(Send(s_3,t,m)) cannot be proved.
+RESULT (but event(Acc(s_3,t,m)) ==> event(Send(s_3,t,m)) is true.)
+Query inj-event(Acc(s_3,t,m)) ==> inj-event(Send(s_3,t,m)) cannot be proved.

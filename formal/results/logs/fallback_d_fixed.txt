@@ -1,0 +1,10 @@
+goal reachable: b-inj-event(Send((nv_2,ng_2),2,m2_2),@occ13_1) && b-inj-event(Send((nv_2,ng_2),1,m1_2),@occ10_1) -> inj-event(Acc((nv_2,ng_2),2,m2_2),@occ31_1)
+goal reachable: b-inj-event(Send((nv_2,ng_2),1,m1_2),@occ10_1) -> inj-event(Acc((nv_2,ng_2),1,m1_2),@occ27_1)
+RESULT inj-event(Acc(s,t,m)) ==> inj-event(Send(s,t,m)) is true.
+goal reachable: b-event(Send((nv_2,ng_2),2,m2_2)) && b-event(Send((nv_2,ng_2),1,m1_2)) -> event(Acc((nv_2,ng_2),2,m2_2))
+goal reachable: b-event(Send((nv_2,ng_2),1,m1_2)) -> event(Acc((nv_2,ng_2),1,m1_2))
+RESULT event(Acc(s,t,m)) ==> event(Send(s,t,m)) is true.
+RESULT not (event(VKey(s,k)) && attacker(k)) is true.
+Query inj-event(Acc(s,t,m)) ==> inj-event(Send(s,t,m)) is true.
+Query event(Acc(s,t,m)) ==> event(Send(s,t,m)) is true.
+Query not (event(VKey(s,k)) && attacker(k)) is true.

@@ -1,0 +1,12 @@
+goal reachable: event(VAccept(h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),kdf(exp(exp(g,y_1),x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1)))))) && attacker_p1(kdf(exp(exp(g,y_1),x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1)))))
+RESULT not (event(VAccept(s,k_2)) && attacker_p1(k_2)) is false.
+goal reachable: event(GSAccept(h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),kdf(exp(exp(g,y_1),x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1)))))) && attacker_p1(kdf(exp(exp(g,y_1),x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1)))))
+RESULT not (event(GSAccept(s,k_2)) && attacker_p1(k_2)) is false.
+goal reachable: attacker(gx2_2) && attacker(sk) && attacker(m1_2) -> event(VRekey(h((h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),gx2_2,kpk(sk),exp(g,y2_1),kct(kpk(sk),r2_1))),kdf(exp(gx2_2,y2_1),kss(kpk(sk),r2_1),h((h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),gx2_2,kpk(sk),exp(g,y2_1),kct(kpk(sk),r2_1)))))) && attacker_p1(kdf(exp(gx2_2,y2_1),kss(kpk(sk),r2_1),h((h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),gx2_2,kpk(sk),exp(g,y2_1),kct(kpk(sk),r2_1)))))
+RESULT not (event(VRekey(s,k_2)) && attacker_p1(k_2)) is false.
+goal reachable: attacker(gy2_2) && attacker(r_1) -> event(GSRekey(h((h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_2))),exp(g,x2_1),kpk(dk2_1),gy2_2,kct(kpk(dk2_1),r_1))),kdf(exp(gy2_2,x2_1),kss(kpk(dk2_1),r_1),h((h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_2))),exp(g,x2_1),kpk(dk2_1),gy2_2,kct(kpk(dk2_1),r_1)))))) && attacker_p1(kdf(exp(gy2_2,x2_1),kss(kpk(dk2_1),r_1),h((h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_2))),exp(g,x2_1),kpk(dk2_1),gy2_2,kct(kpk(dk2_1),r_1)))))
+RESULT not (event(GSRekey(s,k_2)) && attacker_p1(k_2)) is false.
+Query not (event(VAccept(s,k_2)) && attacker_p1(k_2)) is false.
+Query not (event(GSAccept(s,k_2)) && attacker_p1(k_2)) is false.
+Query not (event(VRekey(s,k_2)) && attacker_p1(k_2)) is false.
+Query not (event(GSRekey(s,k_2)) && attacker_p1(k_2)) is false.
