@@ -4,7 +4,7 @@ A sourced study of what post quantum cryptography costs on microcontroller class
 
 **For a research director:** `docs/PAPER.md` (the study, every number checked against its data file), `docs/PROPOSAL_ROBOTICS.md` (follow on robotics project, with short variants `docs/PROPOSAL_ROBOTICS_ATRC.md`, `_EDGE.md`, `_ADEO.md`) and `docs/PROPOSAL_ATRC.md` (2 pages). Progress against a stated definition of a complete study: `docs/COMPLETENESS_RUBRIC.md`.
 
-**Start here:** `docs/EXECUTIVE_BRIEF.pdf` (2 pages), then `docs/REPORT.pdf` (`docs/REPORT.md`). The PDFs were last built on 2026-10-20 from an earlier text of `docs/REPORT.md` (1328 rows then, 1328 now). Rebuild with `scripts/build_pdfs.sh` or `scripts/build_pdfs_docker.sh`.
+**Start here:** `docs/EXECUTIVE_BRIEF.pdf` (2 pages), then `docs/REPORT.pdf` (`docs/REPORT.md`). The PDFs were last built on 2026-10-20 from an earlier text of `docs/REPORT.md` (1328 rows then, 1562 now). Rebuild with `scripts/build_pdfs.sh` or `scripts/build_pdfs_docker.sh`.
 
 ## What is published, host measured, emulated, estimated, modelled, RTL simulated and planned
 
@@ -12,7 +12,7 @@ Every number in this repository carries one of seven labels (emulated was added 
 
 | Label | Meaning | Where it lives | Count or status |
 |---|---|---|---|
-| **Published** | Copied from a source that was actually retrieved, with URL, retrieval date and location in the source | `data/evidence.csv` | 1328 rows (431 benchmark and size rows, 46 protocol and size rows, 46 benchmark and size rows read from author supplied PDFs in phase 2, 45 cycle and stack rows from the LMS and XMSS paper found by the second run and rechecked against the PDF, 403 rows read on 2026-10-16 from six more author supplied PDFs and rechecked in full by a fresh reader, 357 rows added on 2026-10-20 after two independent readers); 90 come from the pqm4 project |
+| **Published** | Copied from a source that was actually retrieved, with URL, retrieval date and location in the source | `data/evidence.csv` | 1562 rows (431 benchmark and size rows, 46 protocol and size rows, 46 benchmark and size rows read from author supplied PDFs in phase 2, 45 cycle and stack rows from the LMS and XMSS paper found by the second run and rechecked against the PDF, 403 rows read on 2026-10-16 from six more author supplied PDFs and rechecked in full by a fresh reader, 357 rows added on 2026-10-20 after two independent readers); 90 come from the pqm4 project |
 | **Host measured** | Run on a PC or server, never on a microcontroller | `bench/host/` | 300 liboqs timing records; native timings of the emulated code in `bench/host/native/` and, with an interleaved method, `bench/host/native_v3/` (ratios and rank order only) |
 | **Estimated** | Arithmetic from published sizes or rates, formula shown, "estimated from published sizes, not measured" | `linksim/`, `docs/link_tables.md`, `docs/LINKSIM_STUDY.md` (Monte Carlo, sweeps, validation), `docs/LINK_REFERENCE_DESIGN.md`, `docs/PLANNER_RULES.md` thresholds, `docs/PLANNER_STUDY.md` (synthetic fleets; hardware replacements in 1000 devices range from 260 to 382 by implementation), derived times in the report | all derived |
 | **Emulated** | Run on emulated Cortex-M4 and Cortex-M33 models (QEMU), cross checked in Renode. Correctness, stack and image size only; no cycle counts | `docs/EMULATOR_RESULTS.md`, `bench/mcu/qemu_results/` | 36 builds (Cortex-M4 and Cortex-M33, three optimisation levels), 36 passed every check; 4 Renode builds give the same stack to the byte |
