@@ -14,8 +14,8 @@ Image size: no retrieved source states a PX4 or ArduPilot binary size. The cited
 
 | Target | Scheme | Image | Hash | Hash ms | Signature ms | Total ms | Cycle source label |
 |---|---|---|---|---|---|---|---|
-| Crazyflie 2.1 (STM32F405) | Ed25519 | 1 MB | software SHA-256 | 454 | 15.2 | 469 | derived from published (S10D-031 (time x clock)) |
-| Crazyflie 2.1 (STM32F405) | Ed25519 | 1 MB | hardware HASH | 14.1 | 15.2 | 29.4 | derived from published (S10D-031 (time x clock)) |
+| Crazyflie 2.1 (STM32F405) | Ed25519 | 1 MB | software SHA-256 | 454 | 4.3 | 458 | published (S12A-331) |
+| Crazyflie 2.1 (STM32F405) | Ed25519 | 1 MB | hardware HASH | 14.1 | 4.3 | 18.4 | published (S12A-331) |
 | Crazyflie 2.1 (STM32F405) | ECDSA P-256 | 1 MB | software SHA-256 | 454 | 39.5 | 494 | published (S2-0213) |
 | Crazyflie 2.1 (STM32F405) | ECDSA P-256 | 1 MB | hardware HASH | 14.1 | 39.5 | 53.7 | published (S2-0213) |
 | Crazyflie 2.1 (STM32F405) | ML-DSA-44 | 1 MB | software SHA-256 | 454 | 8.46 | 462 | published (S2-0033) |
@@ -32,8 +32,8 @@ Image size: no retrieved source states a PX4 or ArduPilot binary size. The cited
 | Crazyflie 2.1 (STM32F405) | SLH-DSA-128s | 1 MB | hardware HASH | 14.1 | 44.5 | 58.6 | published (S2-0060) |
 | Crazyflie 2.1 (STM32F405) | SLH-DSA-128f | 1 MB | software SHA-256 | 454 | 130 | 584 | published (S2-0057) |
 | Crazyflie 2.1 (STM32F405) | SLH-DSA-128f | 1 MB | hardware HASH | 14.1 | 130 | 145 | published (S2-0057) |
-| STM32H563 | Ed25519 | 1 MB | software SHA-256 | 305 | 10.2 | 315 | derived from published; proxy: Cortex-M4 row used for Cortex-M33 (S10D-031 (time x clock)) |
-| STM32H563 | Ed25519 | 1 MB | hardware HASH | 9.5 | 10.2 | 19.7 | derived from published; proxy: Cortex-M4 row used for Cortex-M33 (S10D-031 (time x clock)) |
+| STM32H563 | Ed25519 | 1 MB | software SHA-256 | 305 | 2.89 | 308 | published; proxy: Cortex-M4 row used for Cortex-M33 (S12A-331) |
+| STM32H563 | Ed25519 | 1 MB | hardware HASH | 9.5 | 2.89 | 12.4 | published; proxy: Cortex-M4 row used for Cortex-M33 (S12A-331) |
 | STM32H563 | ECDSA P-256 | 1 MB | software SHA-256 | 305 | 26.6 | 332 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0213) |
 | STM32H563 | ECDSA P-256 | 1 MB | hardware HASH | 9.5 | 26.6 | 36.1 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0213) |
 | STM32H563 | ML-DSA-44 | 1 MB | software SHA-256 | 305 | 5.69 | 311 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0033) |
@@ -51,7 +51,7 @@ Image size: no retrieved source states a PX4 or ArduPilot binary size. The cited
 | STM32H563 | SLH-DSA-128f | 1 MB | software SHA-256 | 305 | 87.7 | 393 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0057) |
 | STM32H563 | SLH-DSA-128f | 1 MB | hardware HASH | 9.5 | 87.7 | 97.2 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0057) |
 
-All sizes and targets: `bootchain/results/verify_time.csv`. On the Cortex-M4 at 168 MHz with a 1 MB image, schemes whose signature term exceeds the software hash term: none. With the hardware HASH figure: ECDSA P-256, Ed25519, LMS, ML-DSA-65, ML-DSA-87, SLH-DSA-128f, SLH-DSA-128s, XMSS. With a software hash the hash path, not the signature choice, sets most of the boot verification time.
+All sizes and targets: `bootchain/results/verify_time.csv`. On the Cortex-M4 at 168 MHz with a 1 MB image, schemes whose signature term exceeds the software hash term: none. With the hardware HASH figure: ECDSA P-256, LMS, ML-DSA-65, ML-DSA-87, SLH-DSA-128f, SLH-DSA-128s, XMSS. With a software hash the hash path, not the signature choice, sets most of the boot verification time.
 
 ## 2. Comparison with published boot and update measurements
 
@@ -64,7 +64,7 @@ The published figure is total boot time from reset to a GPIO signal, not verific
 | S2-0347 | SHA2 only, SIGN=NONE | 55.662 | 23.835 | -57.2 | 55.662 | 0.0 | not predicted |
 | S2-0348 | RSA-2048, SIGN=RSA2048 | 69.844 |  |  |  |  | not predicted |
 | S2-0349 | ECDSA P-256, SIGN=ECC256 | 75.611 | 44.582 | -41.0 | 153.004 | 102.4 | calibration |
-| S2-0350 | Ed25519 fast, SIGN=ED25519 NO_ASM=0 | 1589.512 | 31.835 | -98.0 | 93.197 | -94.1 | calibration |
+| S2-0350 | Ed25519 fast, SIGN=ED25519 NO_ASM=0 | 1589.512 | 26.091 | -98.4 | 66.247 | -95.8 | calibration |
 | S2-0351 | ML_DSA-44 (ML_DSA_LEVEL=2) | 82.791 | 28.277 | -65.8 | 76.508 | -7.6 | calibration |
 | S2-0352 | ML_DSA-65 (ML_DSA_LEVEL=3) | 99.279 | 31.385 | -68.4 | 91.086 | -8.3 | validation |
 | S2-0353 | ML_DSA-87 (ML_DSA_LEVEL=5) | 127.807 | 36.938 | -71.1 | 117.139 | -8.3 | validation |
@@ -166,7 +166,7 @@ Uniform inputs: image 250,000 to 2,000,000 B (assumption), cycles per byte 75.1 
 
 | Scheme | Boot ms median (2.5 to 97.5 percentile) | Signature share of time, median percent | Dominant input (total Sobol index) |
 |---|---|---|---|
-| Ed25519 | 512 (147 to 1,008) | 3.93 | image_bytes (0.89) |
+| Ed25519 | 497 (133 to 991) | 1.14 | image_bytes (0.89) |
 | ML-DSA-44 | 499 (136 to 1,000) | 2.24 | image_bytes (0.89) |
 | ML-DSA-87 | 523 (158 to 1,032) | 6.36 | image_bytes (0.88) |
 | LMS | 516 (147 to 1,015) | 4.1 | image_bytes (0.89) |
