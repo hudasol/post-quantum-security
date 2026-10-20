@@ -1,0 +1,34 @@
+# Predictions for the fourth study round (written before any run)
+
+Author: Huda Mueen. Written 2026-10-20, before any experiment of this round was run. The SHA-256 of this file as committed is in `docs/PREDICTIONS_V4.sha256`. This file is never edited after the hash is taken; corrections go in a dated note in `docs/RUN_LOG.md`. Scores are written by script into `docs/PREDICTIONS_V4_SCORES.md`, each against its refutation clause. Misses stay. Predictions for the board session are written in a separate hashed file before any board is used.
+
+What I already knew when writing: everything committed up to `08f9554`, including 971 evidence rows, the published pqm4 cycle rows, the Cortex-M33 rows of ePrint 2026/1333 (STM32U5A5, 160 MHz, caches on), Table 5 of ePrint 2026/2343, the prose figure of ePrint 2021/781 (50 kB in 30 to 60 s over IEEE 802.15.4), the round 3 planner range (260 to 382 hardware replacements of 1000) and RFC 4944 fragment header sizes (4 and 5 octets, offsets in units of 8 octets). Predictions that lean on these are marked informed.
+
+Seeds: round 4 uses seed `20261020` for every split, sample and Monte Carlo draw unless a script states another; every output stores its seeds.
+
+| ID | Package | Question | Metric | Prediction | Refuted if |
+|---|---|---|---|---|---|
+| V1 | WP1 | How many new rows survive two independent readers? | rows added to the evidence table in round 4 after double reading | at least 120 | fewer than 60 |
+| V2 | WP1 | How accurate are new rows after two readers and adjudication? | wrong value rate on new rows found by the readers before adjudication | at most 5 percent of rows have a wrong value before adjudication | above 10 percent |
+| V3 | WP1 | Do the two readers agree? | share of new rows where both readers report every field correct | at least 80 percent | below 60 percent |
+| V4 | WP2 | How well does a fitted instruction class timing model predict published Cortex-M4 cycles of the same code? | median absolute percent error on the held out half of traced pqm4 rows | at most 15 percent | above 30 percent |
+| V5 | WP2 | How well does an a priori model from the Arm instruction timing tables do, without fitting? | median absolute percent error on all traced pqm4 rows | at most 25 percent | above 40 percent |
+| V6 | WP2 | Does the a priori model have a sign bias? | median signed error on all traced rows | negative (it underestimates, because it leaves out stalls not in the tables) | positive median signed error |
+| V7 | WP2 | Does the model transfer to an independent Cortex-M33 source without refitting? | median absolute percent error on comparable published Cortex-M33 rows | larger than the Cortex-M4 held out error | smaller than or equal to the Cortex-M4 held out error |
+| V8 | WP3 | What does one ML-DSA-44 verification cost in energy on the listed parts? | estimated energy per verification from published or modelled cycles and datasheet run mode current | below 1 mJ on every part at its stated operating point | above 1 mJ on any part |
+| V9 | WP3 | What share of a small drone battery does a session based security workload take? | estimated share of battery energy per flight hour for a hybrid key establishment plus symmetric MAC design | below 0.1 percent | above 1 percent |
+| V10 | WP3 | Which input dominates the energy share? | first order Sobol index | the security workload rate (messages and rekeys per hour) or the cycle count, not the battery capacity | battery capacity has the largest first order index |
+| V11 | WP4 | Does the model reproduce published LoRa time on air examples? | absolute percent error against each published example value | at most 1 percent on every example | above 5 percent on any example |
+| V12 | WP4 | Do sourced 802.15.4 MAC costs close the gap to the prose figure? (informed) | model time for 50 kB on 802.15.4, one hop, no loss, after adding sourced headers, acknowledgements, inter frame spacing and backoff | still below 30 s by a factor of at least 2 | inside 30 to 60 s, or below by less than a factor of 1.5 |
+| V13 | WP4 | Are the duty cycle and fragmentation parts arithmetically correct? | difference against closed forms and an independent counting script | exact for fragment counts, within 0.1 percent for duty cycle waits | any fragment count differs or a wait differs by more than 0.1 percent |
+| V14 | WP4 | Does the loss model agree with closed forms? | Monte Carlo mean transmissions per fragment against 1/(1-p) for independent loss with stop and wait | closed form inside the 95 percent interval at every tested loss rate | outside the interval at any tested loss rate |
+| V15 | WP4 | Are raw post quantum signatures per message feasible on a MAVLink class telemetry radio? | link utilisation for signed command and telemetry streams at documented rates | above 100 percent for ML-DSA-44 per message at documented telemetry rates | at or below 100 percent |
+| V16 | WP5 | What dominates verification of a firmware image of at least 1 MB? | share of hashing in total verification time with software SHA-256 | above 70 percent for LMS and ML-DSA-44 | below 50 percent for either |
+| V17 | WP6 | Do real flight controller classes need fewer replacements than the synthetic fleet? (informed) | share of hardware replacements in a fleet drawn from retrieved board profiles, stack optimised thresholds | below 20 percent | at or above 26 percent |
+| V18 | WP6 | Which input dominates the probability of confidentiality exposure? | first order Sobol index under the Mosca inequality | data lifetime | another input has the largest first order index |
+| V19 | WP7 | Does the board kit build and does its pipeline run end to end on emulator logs? | pqm4 images for the NUCLEO-L4R5ZI built for ML-KEM-768 and ML-DSA-44; share of emulator log lines parsed into the result CSV | all images build and 100 percent of log records parse | any image fails to build or any record fails to parse |
+| V20 | WP8 | Is a hybrid session design within a command latency budget once established? | added latency per authenticated command after the handshake, MAVLink class radio | below 50 ms | above 50 ms |
+| V21 | WP8 | How long does authentication take to recover after a link loss on the slowest robotics link? | time from link recovery to the first authenticated command with a full hybrid rekey | above 1 s | below 1 s |
+| V22 | WP11 | What does the first fresh review pass find? | findings in the first pass of three reviewers | at least 20 findings in total | fewer than 10 |
+| V23 | WP11 | Does a second pass find a high severity problem after the fixes? | high severity findings in the second pass | none | at least one |
+| V24 | WP12 | Does the completeness score rise? | weighted rubric score, start against end | rises by at least 1.0 | rises by less than 0.5 |
