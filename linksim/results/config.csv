@@ -5,8 +5,8 @@ seeds,20261016 to 20262015 (seed of trial i is 20261016 + i)
 zero_loss_cells,deterministic; one run stands for all trials
 interval,mean plus or minus 1.96 sd / sqrt(n); completion by Wilson score
 loss_model,"independent Bernoulli per frame, data and acknowledgements"
-python,3.13.0
-run_seconds,57.5
+python,3.13.16
+run_seconds,65.4
 param.mav_header_bytes,10
 param.mav_checksum_bytes,2
 param.mav_max_payload_bytes,255
@@ -56,3 +56,46 @@ param.uav_profile_delay_s,0.040
 param.tls_round_trips,2
 param.tcp_mss_bytes,1448
 param.tcp_ip_header_bytes,52
+param.sixlowpan_frag1_hdr_bytes,4
+param.sixlowpan_fragn_hdr_bytes,5
+param.sixlowpan_offset_unit_bytes,8
+param.ieee802154_mac_frame_max_bytes,102
+param.ieee802154_shr_phr_bytes,6
+param.ieee802154_ack_psdu_bytes,5
+param.ieee802154_max_mac_hdr_bytes,23
+param.ieee802154_fcs_bytes,2
+param.ieee802154_symbol_s,0.000016
+param.ieee802154_sifs_symbols,12
+param.ieee802154_lifs_symbols,40
+param.ieee802154_sifs_max_frame_bytes,18
+param.ieee802154_turnaround_symbols,12
+param.ieee802154_cca_symbols,8
+param.ieee802154_ack_wait_symbols,54
+param.ieee802154_unit_backoff_symbols,20
+param.ieee802154_min_be,3
+param.ieee802154_max_be,5
+param.ieee802154_max_csma_backoffs,4
+param.lora_preamble_symbols,8
+param.lora_coding_rate_index,1
+param.lora_header_extra_symbols,4.25
+param.lora_bw_hz,125000
+param.lora_dr0_sf,12
+param.lora_dr5_sf,7
+param.lorawan_frame_overhead_bytes,13
+param.lorawan_eu868_band_l_duty,0.01
+param.lorawan_eu868_band_p_duty,0.10
+param.lorawan_eu868_band_k_duty,0.001
+param.edhoc_sig_kid_m1_bytes,37
+param.edhoc_sig_kid_m2_bytes,102
+param.edhoc_sig_kid_m3_bytes,77
+param.x25519mlkem768_client_share_bytes,1216
+param.x25519mlkem768_server_share_bytes,1120
+param.proto_cert_overhead_bytes,200
+param.proto_dtls_record_overhead_bytes,29
+param.proto_dtls_handshake_framing_bytes,120
+param.proto_oscore_overhead_bytes,16
+param.proto_coap_header_bytes,8
+param.proto_dds_handshake_framing_bytes,400
+param.proto_dds_message_overhead_bytes,44
+param.fw_image_bytes,50000
+param.sixlowpan_datagram_bytes,1280
