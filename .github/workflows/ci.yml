@@ -48,6 +48,7 @@ jobs:
           python3 -m unittest discover -s cyclemodel -t .
           python3 -m unittest discover -s bench/board_kit/tests
           python3 -m unittest discover -s rtlsim -t .
+          python3 -m unittest discover -s formal -t .
       - name: Planner agrees with the hand written expectations
         run: python3 scripts/compare_planner_predictions.py
   data:
