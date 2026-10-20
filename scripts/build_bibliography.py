@@ -2,11 +2,12 @@
 """Build data/bibliography.bib from the evidence table and the round 4 source notes.
 
 Every source cited by a row of data/evidence.csv gets one entry (with the number of rows that
-cite it). Every URL recorded in a round 4 source note or parameter file (data/raw/S12_*) gets
+cite it). Every URL recorded in a committed round 4 source note or parameter file (data/raw/S12_*) gets
 an entry too, with the file that uses it. Nothing is typed by hand; rerun after any change.
 """
 import csv
 import re
+import subprocess
 import sys
 from collections import OrderedDict
 from pathlib import Path
@@ -42,7 +43,8 @@ def collect():
             e["rows"] += 1
             if row.get("retrieval_date"):
                 e["dates"].add(row["retrieval_date"])
-    for path in sorted((ROOT / "data" / "raw").glob("S12*")):
+    tracked = subprocess.run(["git", "ls-files", "data/raw"], cwd=ROOT, capture_output=True, text=True).stdout.split()
+    for path in sorted(ROOT / t for t in tracked if Path(t).name.startswith("S12")):
         if path.suffix not in (".md", ".csv"):
             continue
         rel = path.relative_to(ROOT).as_posix()
