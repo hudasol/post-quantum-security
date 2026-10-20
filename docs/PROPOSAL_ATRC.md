@@ -8,7 +8,7 @@ Drones and robots authenticate commands, firmware and telemetry with classical p
 
 ## 2. Gap in the evidence
 
-`data/evidence.csv` holds 971 published rows, each with source, location and warning. Cortex-M33 cycles exist only for ML-DSA key generation and signing, from one paper (rows S10C); none for ML-KEM or verification. ML-DSA-44 stack ranges from 1,229 B (S10C-039, published: the most any of key generation, signing and verification needs, for a low RAM library on a Cortex-M33) to 50,040 B (signing in this repository's portable C build, emulated); memory definitions differ between sources. Link costs rest on a model checked against one published link table, and against one prose figure that it misses by a factor of 6.6. No figure comes from a flight controller running its flight stack.
+`data/evidence.csv` holds 1,328 published rows, each with source, location and warning. Cortex-M33 cycles exist only for ML-DSA key generation and signing, from one paper (rows S10C); none for ML-KEM or verification. ML-DSA-44 stack ranges from 1,229 B (S10C-039, published: the most any of key generation, signing and verification needs, for a low RAM library on a Cortex-M33) to 50,040 B (signing in this repository's portable C build, emulated); memory definitions differ between sources. Link costs rest on a model checked against one published link table, and against one prose figure that it misses by a factor of 6.6. No figure comes from a flight controller running its flight stack.
 
 ## 3. Research questions
 
@@ -33,7 +33,7 @@ Predictions are hashed before each run and scored by script against their refuta
 
 ## 6. Already done
 
-1. Evidence: 971 rows. A fresh reader rechecked all 403 rows added on 2026-10-16 (0 numbers copied wrongly; 41 column or warning fixes), and a second reading by three new readers found 0 errors in a seeded stratified sample of 120 (approximate 95 percent upper bound 2.5 percent). A column lint over all rows found and fixed 21 more warning errors (`docs/VERIFICATION3.md`).
+1. Evidence: 1,328 rows. A fresh reader rechecked all 403 rows added on 2026-10-16 (0 numbers copied wrongly; 41 column or warning fixes), and a second reading by three new readers found 0 errors in a seeded stratified sample of 120 (approximate 95 percent upper bound 2.5 percent). A column lint over all rows found and fixed 21 more warning errors (`docs/VERIFICATION3.md`).
 2. Emulated: 36 builds on Cortex-M4 and Cortex-M33 models pass every check, and 4 builds also run and pass on a second emulator (Renode), with stack equal as expected for the same compiled code. No cycles (`bench/mcu/qemu_results/ANALYSIS.md`).
 3. Estimated: uncalibrated, the link model is 29 to 43 percent too fast for the five published rate bound handshakes; with one constant fitted on two of them it predicts the other three within 0.75 percent, a weak test on one link. It is 6.6 times faster than a published 802.15.4 transfer range, and its duty cycle, fragmentation and loss parts are unvalidated (`docs/LINKSIM_STUDY.md`).
 4. Estimated, synthetic fleet: hardware replacements in 1000 devices range from 260 to 382 depending on the implementation the thresholds assume (`docs/PLANNER_STUDY.md`).
