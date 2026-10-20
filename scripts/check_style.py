@@ -10,7 +10,7 @@ WORD = re.compile(r'[a-z]+')
 EXT = {'.md', '.py', '.csv', '.txt', '.yml', '.yaml', '.sh', '.tex', '.dot'}
 SKIP = {'scripts/check_style.py'}
 # Hyphenated compounds that reviews found in prose; written as separate words in this repository.
-COMPOUNDS = re.compile(r'\b(HSM-backed|PQ-capable|hardware-fault-safe|re-opened|re-run|Host-measured|time-management)\b')
+COMPOUNDS = re.compile(r'\b(HSM-backed|PQ-capable|hardware-fault-safe|re-opened|re-run|Host-measured|time-management|PQC-specific|hybrid-protected|long-lived-secret)\b')
 EMOJI = re.compile('[\U0001F300-\U0001FAFF☀-➿⭐⬆✅❌]')
 def files(root):
     try:
