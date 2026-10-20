@@ -108,11 +108,11 @@ def main():
     lat = float(mb[(mb.vehicle == "drone") & (mb.arch == "B") & (mb.link == "sik")].added_latency_ms_median.iloc[0])
     S["V20"] = (verdict(lat < 50), f"Hybrid session on the SiK radio adds {lat:.2f} ms per command.")
     lr = mb[(mb.arch == "B") & (mb.link == "lora_dr0")]
-    sik = float(mb[(mb.vehicle == "drone") & (mb.arch == "B") & (mb.link == "sik")].ttra_s_median.iloc[0])
+    sik = float(mb[(mb.arch == "B") & (mb.link == "sik")].ttra_s_median.max())
     rb_ = mb[(mb.arch == "B") & mb.ttra_s_median.notna()]
     slow = rb_.loc[rb_.ttra_s_median.idxmax()]
     dr0 = float(lr.first_session_s_median.min())
-    S["V21"] = (verdict(float(slow.ttra_s_median) > 1.0), f"Hybrid session: on the slowest link with a recorded teardown ({slow.link}, {slow.vehicle}) recovery takes {float(slow.ttra_s_median):.0f} s. On LoRaWAN DR0 no teardown occurred in the runs, so recovery is not recorded, but the first session alone takes at least {dr0:.0f} s. On the SiK radio recovery takes {sik:.2f} s, below 1 s, but it is not the slowest link.")
+    S["V21"] = (verdict(float(slow.ttra_s_median) > 1.0), f"Hybrid session: on the slowest link with a recorded teardown ({slow.link}, {slow.vehicle}) recovery takes {float(slow.ttra_s_median):.0f} s. On LoRaWAN DR0 no teardown occurred in the runs, so recovery is not recorded, but the first session alone takes at least {dr0:.0f} s. On the SiK radio recovery takes at most {sik:.2f} s (median over runs, either vehicle), below 1 s, but it is not the slowest link.")
     rf = ROOT / "docs/REVIEW_FINDINGS3.csv"
     if rf.exists():
         f = list(csv.DictReader(open(rf, encoding="utf-8")))

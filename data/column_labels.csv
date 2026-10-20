@@ -9,7 +9,7 @@ linksim/results/validation.csv,pred_plain,modelled,bytes over rate prediction
 linksim/results/validation.csv,err_plain,modelled,relative error of pred_plain against uav_ms
 linksim/results/validation.csv,pred_tcp,modelled,prediction with TCP framing
 linksim/results/validation.csv,err_tcp,modelled,relative error of pred_tcp
-linksim/results/validation.csv,meas_diff,estimated,uav_ms minus a clear link time (arithmetic on published values)
+linksim/results/validation.csv,meas_diff,estimated,uav_ms minus the uav_ms of the classical baseline group (arithmetic on published values)
 linksim/results/validation.csv,pred_diff_plain,modelled,predicted difference
 linksim/results/validation.csv,diff_err_plain,modelled,relative error of the predicted difference
 linksim/results/validation.csv,pred_diff_tcp,modelled,predicted difference with TCP framing
