@@ -82,7 +82,7 @@ def results_text():
     L.append("### 4.3 RQ3: links and protocols\n")
     L.append(
         "The link model was repaired one cited cause at a time and checked against published figures and closed forms (`docs/LINKSIM_STUDY.md` section 4.4). "
-        "The LoRa time on air formula reproduces the published examples; the duty cycle wait, fragment counts and stop and wait retransmissions agree with closed forms. "
+        "The LoRa time on air formula reproduces the published examples, but this is a weak check: two of them leave the CRC, header and low data rate settings unstated, and the settings that reproduce them were chosen after the fact, so only the fully specified example is a test; the duty cycle wait, fragment counts and stop and wait retransmissions agree with closed forms. "
         "For IEEE 802.15.4, adding every cited cost (PHY header, 6LoWPAN fragment headers and alignment, acknowledgements, inter frame spacing, clear channel assessment and backoff, turnaround) "
         f"takes a 50 kB transfer from {claim('d_base', dg, 'time_s_modelled_after', 'step == \"0\"', fmt='{:.1f}', label='modelled')} s to "
         f"{claim('d_final', dg, 'time_s_modelled_after', 'step == \"6\"', fmt='{:.1f}', label='modelled')} s, which is still "
