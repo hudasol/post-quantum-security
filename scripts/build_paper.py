@@ -99,11 +99,11 @@ def results_text():
     q = 'target == "Crazyflie 2.1 (STM32F405)" and image_bytes == 1000000 and scheme == "{s}" and hash == "{h}"'
     L.append("### 4.4 RQ4: signed boot and update\n")
     L.append(
-        "For a 1 MB image on a 168 MHz Cortex-M4 with software SHA-256, verification takes about "
+        "For a 1 MB image on a 168 MHz Cortex-M4 (the STM32F405 class of a small drone flight controller) with software SHA-256, verification takes about "
         f"{claim('b_mldsa_sw', vt, 'total_ms_estimated', q.format(s='ML-DSA-44', h='software SHA-256'), fmt='{:.0f}', label='estimated')} ms with ML-DSA-44 and "
         f"{claim('b_lms_sw', vt, 'total_ms_estimated', q.format(s='LMS', h='software SHA-256'), fmt='{:.0f}', label='estimated')} ms with LMS, of which hashing the image is "
         f"{claim('b_hash_sw', vt, 'hash_ms_estimated', q.format(s='LMS', h='software SHA-256'), fmt='{:.0f}', label='estimated')} ms. "
-        f"With a hardware hash block, the totals fall to {claim('b_mldsa_hw', vt, 'total_ms_estimated', q.format(s='ML-DSA-44', h='hardware HASH'), fmt='{:.0f}', label='estimated')} ms and "
+        f"With a hash peripheral, which the STM32F405 itself lacks but parts of the same family such as the STM32F415 have, the totals fall to {claim('b_mldsa_hw', vt, 'total_ms_estimated', q.format(s='ML-DSA-44', h='hardware HASH'), fmt='{:.0f}', label='estimated')} ms and "
         f"{claim('b_lms_hw', vt, 'total_ms_estimated', q.format(s='LMS', h='hardware HASH'), fmt='{:.0f}', label='estimated')} ms; the signature then becomes the larger part for most schemes, though for ML-DSA-44 the hash still costs more. "
         "The choice of signature scheme changes boot time far less than image size and hash hardware do (`docs/BOOT_UPDATE_STUDY.md`). "
         "Against published bootloader timings the uncalibrated model is far off and the calibrated check rests on three rows, so these are estimates of order, not predictions. "
@@ -198,7 +198,8 @@ def parts_text(fill):
         "4. Fleets are drawn from real board classes but their counts and free memory shares are synthetic or assumed.\n"
         "5. Energy rests on typical datasheet currents for five parts and one calibration source.\n"
         "6. The classical baselines differ between studies within the published range (for example the Ed25519 row chosen by the energy and mission models), which is stated beside each result.\n"
-        "7. Several sources could not be retrieved (listed in `docs/NEEDS_FROM_AUTHOR.md` and the source notes); 126 new rows that only one reader could confirm were left out of the table.")
+        "7. The studies do not yet share one set of inputs everywhere: the protocol and mission models describe the MAVLink style handshake differently, and the energy and mission models use different published LMS rows and per message costs; each choice is stated in its study.\n"
+        "8. Several sources could not be retrieved (listed in `docs/NEEDS_FROM_AUTHOR.md` and the source notes); 126 new rows that only one reader could confirm were left out of the table.")
 
 
 def main():
