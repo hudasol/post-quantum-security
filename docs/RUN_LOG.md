@@ -1,4 +1,4 @@
-# Run log, second and third study rounds (2026-10-16 to 2026-10-18)
+# Run log, study rounds two to four (2026-10-16 to 2026-10-20)
 
 Author: Huda Mueen. One line per decision, stop or deviation, in time order. Predictions for this round were hashed and committed before any run (`docs/PREDICTIONS_V2.md`, commit `59bd903`).
 
@@ -35,3 +35,25 @@ Author: Huda Mueen. One line per decision, stop or deviation, in time order. Pre
 | 29 | C, stop | The reviewer showed two errors in the planner's signature thresholds (LMS header used for ML-DSA; verifier buffers left out). The headline range moved from 246 to 371 to 260 to 382. | Corrected (commit `e314046`), study rerun, and a dated correction note added to the report paragraph. |
 | 30 | J | The hashed `docs/PREDICTIONS_V3.md` names the fetch tool in R13. | Left unchanged to keep the hash valid; recorded here. |
 
+
+## Round 4 (2026-10-20)
+
+Predictions hashed before any run: `docs/PREDICTIONS_V4.md` (commit `1490f37`); board predictions hashed separately: `docs/PREDICTIONS_V4_BOARD.md` (commit `79ab368`). Work was split into parallel streams, each with a written brief, its inputs, its output path and an acceptance test; verification streams saw no notes, only the source and a blank sheet.
+
+| # | Package | Event | Decision |
+|---|---|---|---|
+| 31 | setup | Baseline gates green at `08f9554`; completeness rubric scored 4.7 of 10 before any work. | Recorded in `docs/COMPLETENESS_RUBRIC.md`. |
+| 32 | all | The author's supplied PDFs were read from the author's sources folder with read only access; none was copied into the repository. | As in earlier rounds. |
+| 33 | WP1 | Several fetches were refused or timed out (permission prompts not answered, robots rules). | Not worked around; listed in the S12 source notes. |
+| 34 | WP1 | Two independent readers read all 483 staged rows and 63 facts; the first comparison counted a blank reader field as a disagreement, which mixed "not stated at this location" (for example a clock given in the body text) with errors. | The rule was changed before any adjudication: blank means not at location; only filled values are compared; values need both readers. Stated in the script header. |
+| 35 | WP1 | Two compute readers wrote helper scripts to the same scratch path by accident; each reader's sheet was produced from its own fetches and saved to its own folder. | Recorded as a limit on independence; the value agreement (0 disagreements on cycles) is unaffected but cannot exclude shared tooling. |
+| 36 | WP1 | 126 rows could be confirmed by only one reader (a fetch one reader could not use, or no numeric field). | Left in staging, not merged (`data/verify5/not_promoted.csv`). |
+| 37 | WP3, WP8 | The energy and mission models first used a time based Ed25519 proxy and an ECDH proxy for X25519; after the merge, published Cortex-M4 rows existed. | Both reran with S12A rows; the ML-DSA-44 against Ed25519 verify multiple reversed from 0.56 to 1.97. The two studies chose different Ed25519 rows within the published range (S12A-331 at 24 MHz, S12A-328 at 84 MHz); both report the range; not harmonised in this round. |
+| 38 | policy | `scripts/check_repo_policy.py` allows PNG files only under `plots/` and `docs/figures/`. | Round 4 figures moved to `docs/figures/<package>/`; link study figures saved as SVG. |
+| 39 | CI | The test job was red from `b711640` to `d3e2af8` (the new claims check test needed pandas) and again from `95884c2` to `601a125` (ten new column lint flags were unreviewed); the bibliography check failed once at `fdb84a7` (built before the promoted files were committed). | Fixed in `92971d5`, `24a9b61` and `1f3f4b6`; not every push was checked against CI before the next commit, a deviation from the rule that a red CI is fixed first. |
+| 40 | WP2 | The Arm instruction timing page was refused. | The a priori model's per class costs are assumptions labelled unverified; the fitted model does not depend on them. |
+| 41 | WP2 | The train and test halves of the cycle model share algorithms and much code. | Stated beside the result: it shows interpolation within one code base, not transfer. |
+| 42 | WP4 | Every cited 802.15.4 and 6LoWPAN cost closes only part of the gap to the published transfer time (from 6.6 to 4.2 times too fast). | Reported as a negative result; multi hop shown only as a sweep; not tuned to the published figure. |
+| 43 | WP6 | No retrieved page states free flash or RAM after a flight stack. | The free share is an explicit assumption with a sweep; it moves the result more than the threshold scenario. |
+| 44 | WP8 | The MAVLink message page was refused; payload lengths were measured on the host from pymavlink. | Labelled host measured. |
+| 45 | WP2 | The open core simulation ran on Ibex in Verilator, installed from the package archive. | Label RTL simulated; never compared on one axis with Arm silicon. |
