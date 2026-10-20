@@ -288,7 +288,8 @@ Closed form checks (seed 20261020, 2000 trials each):
 | supplementary: existing sim.stop_and_wait, data and ack loss 0.2, closed form 1/(1-p)^2 | 1.5975 | 1.5549 to 1.6401 | 1.5625 | yes |
 | supplementary: existing sim.stop_and_wait, data and ack loss 0.3, closed form 1/(1-p)^2 | 2.0575 | 1.9929 to 2.1221 | 2.04082 | yes |
 
-1 of 12 checks fall outside their 95 percent interval (supplementary: existing sim.stop_and_wait, data and ack loss 0.01, closed form 1/(1-p)^2). With independent checks at 95 percent, about one miss in twenty is expected by chance.
+1 of 12 checks fall outside their 95 percent interval (supplementary: existing sim.stop_and_wait, data and ack loss 0.01, closed form 1/(1-p)^2).
+The purpose written sampler (rows marked stop and wait transmissions) agrees with 1/(1-p) by construction and so tests little. The simulator the studies use (rows marked supplementary) sits above its closed form 1/(1-p)^2 at 5 of 5 loss rates, which is a systematic excess, not chance; its cause is not yet found. Selective repeat, used by the protocol and mission studies, has no closed form check.
 
 Updated status after round 4:
 
@@ -298,8 +299,8 @@ Updated status after round 4:
 | LoRa air time | formula reproduces four published examples (three exactly under parameter sets the sources leave partly unstated, one within 0.4 percent of a rounded value) |
 | fragmentation (6LoWPAN) | counts checked against RFC 4944 rules by an independent counting function; timing still unvalidated |
 | 802.15.4 MAC timing | constants cited; end to end still a factor of 4.2 faster than the only published figure |
-| duty cycle | matches the closed form 99 x air time at 1 percent; not validated against a measurement |
-| loss and retransmission | stop and wait mean transmissions match 1/(1-p); not validated against a measurement |
+| duty cycle | the code equals the closed form 99 x air time at 1 percent (an arithmetic check of the formula it implements); not validated against a measurement |
+| loss and retransmission | the stop and wait simulator sits above its closed form at every tested loss rate (outside the interval at one); selective repeat unchecked; not validated against a measurement |
 
 Search: the evidence table holds published link timings only in Table 5 of ePrint 2026/2343; the supplied PDFs hold no measured duty cycle, loss or fragmentation timing. Every figure that depends on an unvalidated part carries that word in its caption.
 
