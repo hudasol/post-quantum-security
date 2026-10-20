@@ -70,3 +70,5 @@ Predictions hashed before any run: `docs/PREDICTIONS_V4.md` (commit `1490f37`); 
 | 56 | WP1 | Left for the next round: the 168 MHz Ed25519 rows of Owens et al. (would give a cited wait state anchor), a selective repeat closed form check, and adjudication of all wording disagreements. | Recorded as open; none is needed for a claim the paper makes. |
 | 57 | WP12 | Rubric rescored: 4.7 to 5.7 of 10 (`docs/COMPLETENESS_RUBRIC.md`). V24 is a hit exactly at its threshold. Final V4 totals: 17 hit, 4 miss, 3 not scored. | Scores computed by `scripts/score_predictions_v4.py`. |
 | 58 | WP9 | Report, brief and paper PDFs rebuilt from the final markdown; the round is tagged `round4`. | No release published. |
+| 59 | WP0 | Round 5 opened at `256d7c5`. The tag `round4` is still missing on the remote; pushing a tag from this run's environment was refused again (HTTP 403 on tag writes). | Not worked around. Pushing the tag stays with the author (`docs/NEEDS_FROM_AUTHOR.md`). |
+| 60 | WP0 | The run has two cores and about 7 GB of memory. | Heavy builds (flight stacks, ns-3, open cores) are serialised so that at most two run at once; light packages run in parallel. |
