@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build docs/PAPER.md from docs/PAPER_body.md and the result files, and write the claims register.
+"""Build docs/PAPER.md and the round 4 proposals from the result files, and write the claims register.
 
 Every number placed in the paper comes from a call to `claim()`, which reads it from a result file
 with a pandas query and an aggregate, formats it, and records one row in data/claims_register.csv
@@ -228,6 +228,12 @@ def main():
     if left:
         sys.exit(f"unfilled placeholders: {sorted(set(left))}")
     (ROOT / DOC).write_text(text, encoding="utf-8")
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import proposal_texts
+    for pdoc, ptext in proposal_texts.all_docs(claim):
+        (ROOT / pdoc).write_text(ptext, encoding="utf-8")
+        # a number prepared for a document but not used in it is not a claim of that document
+        CLAIMS[:] = [c for c in CLAIMS if c["document"] != pdoc or c["text_in_document"] in ptext]
     fields = ["claim_id", "document", "text_in_document", "value", "source_file", "column", "query", "aggregate", "tolerance_rel", "label", "note"]
     with open(ROOT / "data" / "claims_register.csv", "w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=fields)
