@@ -27,8 +27,10 @@ class TestLintColumns(unittest.TestCase):
 
     def test_all_current_flags_reviewed_as_false_positives(self):
         rows = list(csv.DictReader(open(os.path.join(ROOT, "data", "evidence.csv"), newline="", encoding="utf-8")))
-        review = {r["id"]: r["verdict"] for r in csv.DictReader(
-            open(os.path.join(ROOT, "data", "verify4", "lint_review.csv"), newline="", encoding="utf-8"))}
+        review = {}
+        for rel in (("data", "verify4", "lint_review.csv"), ("data", "verify5", "lint_review_s12.csv")):
+            review.update({r["id"]: r["verdict"] for r in csv.DictReader(
+                open(os.path.join(ROOT, *rel), newline="", encoding="utf-8"))})
         for r in rows:
             for rule, why in lint_columns.lint(r):
                 self.assertEqual(review.get(r["id"]), "false", f"{r['id']} {rule}: {why} (not reviewed)")
