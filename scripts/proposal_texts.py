@@ -71,7 +71,7 @@ Aim: test the models of this repository against measurements, and turn them into
 
 | Phase | Months | Milestone | Decision gate |
 |---|---|---|---|
-| 1 | 1 | Borrowed Cortex-M4F board: run `bench/board_kit/`, score `docs/PREDICTIONS_V4_BOARD.md` | if H1 fails, refit the cycle model on the board data before any further claim |
+| 1 | 1 | Borrowed Cortex-M4F board: add and test a cache off option in `bench/board_kit/`, run it, score `docs/PREDICTIONS_V4_BOARD.md` | if H1 fails, refit the cycle model on the board data before any further claim |
 | 2 | 2 to 3 | Software in the loop: an autopilot simulation with a session layer in front of the command stream, using existing libraries as benchmark subjects | if added latency exceeds the deadline, stop and redesign the session layer |
 | 3 | 3 to 5 | Hardware in the loop: the board from phase 1 with a borrowed telemetry radio pair; measure handshake, rekey and update transfer | if H2 fails, model the radio's MAC behaviour from measurements |
 | 4 | 5 to 7 | Free memory from real flight stack builds for the board classes in `data/reference_profiles.csv`; rerun the fleet study | replaces the assumed free share |
