@@ -1,0 +1,164 @@
+"""Policy timeline: render data/policy_timeline.csv to docs/POLICY_TIMELINE.md
+and a figure, and give the policy horizon years used by planner/profile_study.py.
+
+Author: Huda Mueen
+
+Run from planner/:  python policy_timeline.py
+Every row is a paraphrase of a retrieved page or a supplied PDF; the raw
+retrieval notes are in data/raw/S12_policy_sources.md and the files they cite.
+"""
+
+import csv
+import os
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+CSV_PATH = os.path.join(ROOT, "data", "policy_timeline.csv")
+DOC = os.path.join(ROOT, "docs", "POLICY_TIMELINE.md")
+FIG_DIR = os.path.join(HERE, "..", "docs", "figures", "planner")
+FIG = os.path.join(FIG_DIR, "policy_timeline.png")
+FIELDS = ("row_id", "jurisdiction", "document", "document_date", "status", "milestone_date",
+          "milestone_kind", "milestone", "paraphrase", "url_or_file", "retrieval_date", "location",
+          "evidence_ref", "label")
+STATUSES = ("final", "draft", "in flux")
+KINDS = ("completion", "interim", "procurement", "none")
+
+
+def load(path=CSV_PATH):
+    """Rows of the timeline as dicts; raises ValueError on a malformed row."""
+    with open(path, newline="", encoding="utf-8") as fh:
+        rows = list(csv.DictReader(fh))
+    for r in rows:
+        missing = [f for f in FIELDS if f not in r]
+        if missing:
+            raise ValueError(f"{r.get('row_id')}: missing columns {missing}")
+        if r["status"] not in STATUSES:
+            raise ValueError(f"{r['row_id']}: status {r['status']!r} not in {STATUSES}")
+        if r["milestone_kind"] not in KINDS:
+            raise ValueError(f"{r['row_id']}: milestone_kind {r['milestone_kind']!r}")
+        if r["milestone_kind"] != "none" and not r["milestone_date"]:
+            raise ValueError(f"{r['row_id']}: dated kind without a date")
+    return rows
+
+
+def year(row):
+    """Milestone year as int, or None when the row has no dated milestone."""
+    d = row["milestone_date"]
+    return int(d[:4]) if d else None
+
+
+def completion_years(rows, include_unverified=False):
+    """Years of dated completion milestones (one entry per row). Rows labelled
+    unverified are left out unless include_unverified is True."""
+    out = []
+    for r in rows:
+        if r["milestone_kind"] != "completion" or not r["milestone_date"]:
+            continue
+        if r["label"] == "unverified" and not include_unverified:
+            continue
+        out.append(year(r))
+    return out
+
+
+def horizon_rows(rows, include_unverified=False):
+    """Row ids behind completion_years, for citation."""
+    return [r["row_id"] for r in rows if r["milestone_kind"] == "completion" and r["milestone_date"]
+            and (include_unverified or r["label"] != "unverified")]
+
+
+def figure(rows, path=FIG):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    juris = []
+    for r in rows:
+        if r["jurisdiction"] not in juris:
+            juris.append(r["jurisdiction"])
+    colour = {"completion": "#ad1457", "interim": "#f48fb1", "procurement": "#d63384"}
+    marker = {"final": "o", "draft": "s", "in flux": "D"}
+    fig, ax = plt.subplots(figsize=(10.5, 5.4))
+    fig.patch.set_facecolor("#fce4ec")
+    ax.set_facecolor("white")
+    seen = set()
+    for r in rows:
+        y = year(r)
+        if y is None:
+            continue
+        m = int(r["milestone_date"][5:7])
+        x = y + (m - 6.5) / 24  # centred on the milestone year; later months sit to the right
+        j = juris.index(r["jurisdiction"])
+        lab = f"{r['milestone_kind']}, {r['status']}"
+        ax.scatter(x, j, s=70, c=colour[r["milestone_kind"]], marker=marker[r["status"]],
+                   edgecolors="#880e4f" if r["label"] != "unverified" else "#9e9e9e",
+                   linewidths=1.2, label=None if lab in seen else lab, zorder=3)
+        seen.add(lab)
+    for j, name in enumerate(juris):
+        if all(year(r) is None for r in rows if r["jurisdiction"] == name):
+            ax.text(2025.3, j, "no dated milestone", va="center", fontsize=8, color="#880e4f")
+    ax.set_yticks(range(len(juris)))
+    ax.set_yticklabels(juris, fontsize=8)
+    ax.set_ylim(len(juris) - 0.5, -0.5)
+    ax.set_xlim(2025, 2036)
+    ax.set_xticks(range(2025, 2037))
+    ax.grid(axis="x", color="#f8bbd0")
+    ax.set_xlabel("milestone year")
+    ax.set_title("Post quantum migration milestones by jurisdiction (published; grey edge = unverified)\n"
+                 "source: data/policy_timeline.csv; no random step", fontsize=9)
+    ax.legend(fontsize=7, loc="upper left", bbox_to_anchor=(1.01, 1.0), framealpha=0.9)
+    fig.tight_layout()
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    fig.savefig(path, dpi=130)
+    plt.close(fig)
+
+
+def render(rows):
+    yrs = completion_years(rows)
+    L = ["# Post quantum policy timeline", "",
+         "Author: Huda Mueen. Generated by `cd planner && python policy_timeline.py` from "
+         "`data/policy_timeline.csv`; do not edit by hand. Label of every row: **published** (paraphrase of a "
+         "retrieved page or a supplied PDF), except rows labelled **unverified**. Retrieval notes: "
+         "`data/raw/S12_policy_sources.md` and the earlier raw files each row cites. Status is the status of the "
+         "document as retrieved: final, draft, or in flux (a final document that says it will be revised or whose "
+         "supporting guidance is still being written).", "",
+         "![Milestones by jurisdiction](figures/planner/policy_timeline.png)", "",
+         "*Figure: dated milestones per jurisdiction; colour gives the kind, marker the status; label published, "
+         "no random step.*", "",
+         "| row | jurisdiction | document | doc date | status | milestone date | kind | milestone | "
+         "paraphrase | source | retrieved | location | evidence |",
+         "|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
+    for r in rows:
+        cells = [r[f] for f in ("row_id", "jurisdiction", "document", "document_date", "status",
+                                "milestone_date", "milestone_kind", "milestone", "paraphrase", "url_or_file",
+                                "retrieval_date", "location", "evidence_ref")]
+        if r["label"] == "unverified":
+            cells[7] = "**unverified**: " + cells[7]
+        L.append("| " + " | ".join(c.replace("|", "/") or "none" for c in cells) + " |")
+    L += ["", "## Policy horizons used by the planner study", "",
+          "`planner/profile_study.py` draws the policy horizon of its exposure model from the completion "
+          "milestones above, one entry per row, leaving out unverified rows (rows %s). Years: %s; range %d to %d. "
+          "These are policy end dates, not estimates of when a cryptographically relevant quantum computer exists; "
+          "using them as the horizon is an assumption of the study." % (
+              ", ".join(horizon_rows(rows)), ", ".join(str(y) for y in sorted(yrs)), min(yrs), max(yrs)), "",
+          "## Notes", "",
+          "1. NIST IR 8547 is still an initial public draft on 2026-10-20; its 2030 and 2035 dates may change.",
+          "2. The CNSA 2.0 dates bind United States national security systems only; the FAQ says so itself.",
+          "3. Germany and France give no migration end date on the pages read; France gives a purchasing date.",
+          "4. The Australian row rests on a fetch summary from 2026-10-11; the page could not be read in full, "
+          "and the one attempt on 2026-10-20 was refused.",
+          "5. The two UAE documents set duties (inventory, testing, a transition plan, acquisition policy, "
+          "awareness) without dates. No UAE date is used as a horizon.",
+          "6. Dates given only as a year are entered as 31 December of that year.", ""]
+    return "\n".join(L)
+
+
+def main():
+    rows = load()
+    figure(rows)
+    with open(DOC, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(render(rows))
+    print("wrote docs/POLICY_TIMELINE.md and docs/figures/planner/policy_timeline.png (%d rows)" % len(rows))
+
+
+if __name__ == "__main__":
+    sys.exit(main())
