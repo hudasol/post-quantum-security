@@ -207,6 +207,11 @@ def main():
         "who saw neither the staged values nor each other's sheets (blank sheets from `scripts/verify5_sheets.py`). "
         "Disagreements on values all got a third look; a seeded sample of wording disagreements got one too (`data/verify5/adjudication.csv`). "
         "The comparison rules are in the script header and were fixed before the comparison ran.", "",
+        f"Limits. Only {len(txt_judged)} of {len(txt_dis)} wording disagreements (operation, scheme, library, conditions and similar fields) got a third look, "
+        f"and staging was wrong in {len(txt_wrong)} of them. If that share holds for the rest, roughly "
+        f"{round(len(txt_wrong) / max(len(txt_judged), 1) * (len(txt_dis) - len(txt_judged)))} wording fields of the promoted rows are still wrong; "
+        "values are not affected, but groupings that use these fields (the meta analysis) may be. Two readers also wrote helper scripts "
+        "to the same scratch path by accident (`docs/RUN_LOG.md` entry 35); each sheet came from its own fetches, but shared tooling cannot be excluded.", "",
         "## Outcome per evidence row", "",
         "| status | rows | meaning |", "|---|---|---|",
         f"| confirmed | {cs['confirmed']} | every value read as the same number by both readers |",
