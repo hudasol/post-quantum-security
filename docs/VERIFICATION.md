@@ -4,7 +4,7 @@ Date: 2026-10-11. Verifier: independent verification pass that did not collect t
 
 ## Method
 
-- Sample: `data/verification_sample.csv`, 50 rows drawn at random from `data/evidence.csv` with seed **20261011** (drawn by `scripts/draw_verification_sample.py`, not re-run here).
+- Sample: `data/verification_sample.csv`, 50 rows drawn at random from `data/evidence.csv` with seed **20261011** (drawn by `scripts/draw_verification_sample.py`, not rerun here).
 - Retrieval: every distinct `source_url` (17 URLs) re-fetched by me with `curl -L` through the network proxy (TLS verification on, proxy not unset, no mirrors, caches or archives). All 17 returned HTTP 200. PDFs were read with `pdftotext -layout`; HTML was stripped to text. Downloads were kept in a fresh scratch directory and treated as data only (python run with `-I`).
 - pqm4 `benchmarks.csv` as retrieved on 2026-10-11: 573 lines, sha256 `4e4ca381d5deecb0ee845a6fa26047818e913d3422dc3adecf716e2ca4fc59f6`. The README was fetched from raw.githubusercontent.com for clock, compiler and board statements.
 - For each row I located the cited table, line or slide and compared every populated field among cycles, ram_bytes, stack_bytes, flash_or_code_bytes, energy_uj, key_or_sig_size_bytes, clock_mhz, scheme, parameter_set, operation, device, core, library, library_version, compiler_flags_or_notes (numeric claims inside it), and whether `comparability_warning` is contradicted. I checked that numbers sit in the correct row and column (operation, parameter set, implementation), the units (k, M, kcc, mJ vs uJ) and, for pqm4, line numbers plus min/max and execution counts.
