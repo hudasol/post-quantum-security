@@ -52,6 +52,7 @@ def round3():
         "spread3": f"{max(100 * float(r['spread']) for r in hs):.0f}",
         **min_stack(),
         "xc_factor": f"{float(xc['factor_below_low']):.1f}",
+        "xc_factor4": f"{float([r for r in rows('linksim/results/diagnosis_v4.csv') if r['step'] == '6'][0]['factor_below_low_after']):.1f}",
         "rho3": f"{rho:.3f}",
         "ratio3": f"{max(abs(100 * float(r['ratio_diff'])) for r in hs):.1f}",
     }
