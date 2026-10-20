@@ -1,0 +1,49 @@
+query_id,query,arxiv_id,published,title,retrieval_date
+AX1,"all:""Cortex-M55"" AND all:cryptography",2610.08301v1,2026-10-06,Zeppelin: Client-Side BFV Encryption and Decryption for Helium-Powered Microcontrollers,2026-10-20
+AX2,all:post-quantum AND all:microcontroller,2206.00978v1,2022-06-02,First demonstration of a post-quantum key-exchange with a nanosatellite,2026-10-20
+AX2,all:post-quantum AND all:microcontroller,2610.07820v1,2026-10-06,Efficient and Implementation-Hardened RBLWE on Commodity Cortex-M Microcontrollers,2026-10-20
+AX2,all:post-quantum AND all:microcontroller,2106.05577v2,2021-06-10,Quantum-Resistant Security for Software Updates on Low-power Networked Embedded Devices,2026-10-20
+AX2,all:post-quantum AND all:microcontroller,2311.18674v6,2023-11-30,LiteQSign: Lightweight and Quantum-Safe Signatures for Heterogeneous IoT Applications,2026-10-20
+AX2,all:post-quantum AND all:microcontroller,2606.15744v1,2026-06-14,Comparative Performance Analysis of NIST PQC Standards: From STM32 Software Limitations to FPGA-SoC Acceleration,2026-10-20
+AX2,all:post-quantum AND all:microcontroller,2503.10207v1,2025-03-13,Efficient Implementation of CRYSTALS-KYBER Key Encapsulation Mechanism on ESP32,2026-10-20
+AX2,all:post-quantum AND all:microcontroller,2606.31681v1,2026-06-30,Exploring Side-Channel Protections in Hardware Implementations of PQC ML-KEM Verification,2026-10-20
+AX2,all:post-quantum AND all:microcontroller,2610.12024v1,2026-10-08,HPQ-AKE: A Provably Secure Sign-Less Hybrid Authenticated Key Exchange Protocol for Bandwidth-Constrained IoT and Edge Networks,2026-10-20
+AX2,all:post-quantum AND all:microcontroller,2511.20533v1,2025-11-25,"Engel p-adic Isogeny-based Cryptography over Laurent Series: Foundations, Security, and an ESP32 Implementation",2026-10-20
+AX2,all:post-quantum AND all:microcontroller,2602.10762v1,2026-02-11,Architecting Trust: A Framework for Secure IoT Systems Through Trusted Execution and Semantic Middleware,2026-10-20
+AX2,all:post-quantum AND all:microcontroller,2607.08865v2,2026-07-09,Entropy Bootstrapping for Wireless Embedded Systems,2026-10-20
+AX2,all:post-quantum AND all:microcontroller,2607.03246v1,2026-07-03,Bridging the Semantic Gap in 6G: Tiny Language Models Under the Latency-Accuracy-Size Trilemma,2026-10-20
+AX3,"all:""SLH-DSA""",2604.06100v3,2026-04-07,Signature Placement in Post-Quantum TLS Certificate Hierarchies: An Experimental Study of ML-DSA and SLH-DSA in TLS 1.3 Authentication,2026-10-20
+AX3,"all:""SLH-DSA""",2609.35053v1,2026-09-28,Efficient TCitH-Based Alternatives to SLH-DSA: Cross-Layer ASIC Design of Mirath,2026-10-20
+AX3,"all:""SLH-DSA""",2509.13048v2,2025-09-16,SLasH-DSA: Breaking SLH-DSA Using an Extensible End-To-End Rowhammer Framework,2026-10-20
+AX3,"all:""SLH-DSA""",2507.21151v1,2025-07-24,NIST Post-Quantum Cryptography Standard Algorithms Based on Quantum Random Number Generators,2026-10-20
+AX3,"all:""SLH-DSA""",2505.04333v1,2025-05-07,Applied Post Quantum Cryptography: A Practical Approach for Generating Certificates in Industrial Environments,2026-10-20
+AX3,"all:""SLH-DSA""",2609.24689v2,2026-09-21,Domain Specific Post Quantum Signatures for Blockchains,2026-10-20
+AX3,"all:""SLH-DSA""",2510.10436v2,2025-10-12,Post-Quantum Cryptography and Quantum-Safe Security: A Comprehensive Survey,2026-10-20
+AX3,"all:""SLH-DSA""",2607.13939v1,2026-07-15,HORCRUX: A Complete PQC RISC-V eXtension Architecture,2026-10-20
+AX3,"all:""SLH-DSA""",2607.08226v1,2026-07-09,Threshold Authorization Without Threshold Signatures: Signature-Agnostic MPC Custody,2026-10-20
+AX3,"all:""SLH-DSA""",2510.09271v1,2025-10-10,Assessing the Impact of Post-Quantum Digital Signature Algorithms on Blockchains,2026-10-20
+AX3,"all:""SLH-DSA""",2608.23785v2,2026-08-24,A Scenario-Based Evaluation of CRQC+AI Vulnerability Spectrum for TLS 1.3 Cryptographic Dependencies,2026-10-20
+AX3,"all:""SLH-DSA""",2608.24447v1,2026-08-25,A Drop-in KEM Replacement for Client Signatures in Post-Quantum SSH,2026-10-20
+AX3,"all:""SLH-DSA""",2603.06969v1,2026-03-07,"Securing Cryptography in the Age of Quantum Computing and AI: Threats, Implementations, and Strategic Response",2026-10-20
+AX3,"all:""SLH-DSA""",2604.00560v1,2026-04-01,Quantum-Safe Code Auditing: LLM-Assisted Static Analysis and Quantum-Aware Risk Scoring for Post-Quantum Cryptography Migration,2026-10-20
+AX3,"all:""SLH-DSA""",2510.02379v1,2025-09-30,Hybrid Schemes of NIST Post-Quantum Cryptography Standard Algorithms and Quantum Key Distribution for Key Exchange and Digital Signature,2026-10-20
+AX3,"all:""SLH-DSA""",2605.02276v2,2026-05-04,Post-Quantum Cryptography Migration in Australian Real-Time Payment Infrastructure: A Monte Carlo Simulation Study of the New Payments Platform,2026-10-20
+AX4,all:HQC AND all:Cortex,2608.18145v1,2026-08-10,Optimizing Polynomial Multiplication and Fixed-Weight Sampling for HQC on ARM Cortex-M4,2026-10-20
+AX4,all:HQC AND all:Cortex,2607.19109v1,2026-07-21,Exploiting Load/Store Leakage of Sparse Vectors for Key Recovery in HQC,2026-10-20
+AX4,all:HQC AND all:Cortex,2609.35205v1,2026-09-28,OT-PCA: New Key-Recovery Plaintext-Checking Oracle Based Side-Channel Attacks on HQC with Offline Templates,2026-10-20
+AX5,all:ESP32 AND all:post-quantum,2609.27828v1,2026-08-19,"A Non-Invasive Cloud-Based Migration Strategy for Post-Quantum Cybersecurity in Smart HVAC Systems: Architecture, Implementation, and Empirical Evaluation",2026-10-20
+AX5,all:ESP32 AND all:post-quantum,2503.10207v1,2025-03-13,Efficient Implementation of CRYSTALS-KYBER Key Encapsulation Mechanism on ESP32,2026-10-20
+AX5,all:ESP32 AND all:post-quantum,2603.10274v1,2026-03-10,Post-Quantum Entropy as a Service for Embedded Systems,2026-10-20
+AX5,all:ESP32 AND all:post-quantum,2511.21768v1,2025-11-25,Categorical Framework for Quantum-Resistant Zero-Trust AI Security,2026-10-20
+AX5,all:ESP32 AND all:post-quantum,2601.13423v1,2026-01-19,"Quantum Encryption Resilience Score (QERS) for MQTT, HTTP, and HTTPS under Post-Quantum Cryptography in Computer, IoT, and IIoT Systems",2026-10-20
+AX5,all:ESP32 AND all:post-quantum,2106.05577v2,2021-06-10,Quantum-Resistant Security for Software Updates on Low-power Networked Embedded Devices,2026-10-20
+AX5,all:ESP32 AND all:post-quantum,2511.20533v1,2025-11-25,"Engel p-adic Isogeny-based Cryptography over Laurent Series: Foundations, Security, and an ESP32 Implementation",2026-10-20
+AX5,all:ESP32 AND all:post-quantum,2607.08865v2,2026-07-09,Entropy Bootstrapping for Wireless Embedded Systems,2026-10-20
+AX6,all:RISC-V AND all:Kyber,2309.00440v3,2023-09-01,Yet another Improvement of Plantard Arithmetic for Faster Kyber on Low-end 32-bit IoT Devices,2026-10-20
+AX6,all:RISC-V AND all:Kyber,2609.22343v1,2026-09-16,Design-Space Exploration of Post-Quantum Cryptography Acceleration on an Open-Source RISC-V GPGPU,2026-10-20
+AX6,all:RISC-V AND all:Kyber,2309.17414v1,2023-09-29,QR TPM in Programmable Low-Power Devices,2026-10-20
+AX6,all:RISC-V AND all:Kyber,2607.23218v1,2026-07-25,SPARC: Automated Root-Cause Analysis of Pre-Silicon Power Side-Channel Leakage in the Processor Design Flow,2026-10-20
+AX6,all:RISC-V AND all:Kyber,1910.07557v2,2019-10-16,Sapphire: A Configurable Crypto-Processor for Post-Quantum Lattice-based Protocols,2026-10-20
+AX7,all:XMSS AND all:verification,2604.16347v1,2026-03-16,Lean Atlas: An Integrated Proof Environment for Scalable Human-AI Collaborative Formalization,2026-10-20
+AX7,all:XMSS AND all:verification,2409.10813v1,2024-09-17,Fast and Post-Quantum Authentication for Real-time Next Generation Networks with Bloom Filter,2026-10-20
+AX9,"all:""Cortex-M33"" AND all:post-quantum",2610.07820v1,2026-10-06,Efficient and Implementation-Hardened RBLWE on Commodity Cortex-M Microcontrollers,2026-10-20
