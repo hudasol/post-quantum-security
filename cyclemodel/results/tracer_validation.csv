@@ -1,0 +1,9 @@
+label,check,passed,detail
+emulated,"hand derived counts, sum of squares, n=3",True,r0=29; counts match hand derivation: True
+emulated,"block total equals instruction hook total, ML-KEM-512 m4fspeed keygen, run 1",True,block=352936; instruction_hook=352932; relative difference=1.13e-05; tolerance 0.001
+emulated,"block total equals instruction hook total, ML-KEM-512 m4fspeed encaps, run 1",True,block=350135; instruction_hook=350017; relative difference=3.37e-04; tolerance 0.001
+emulated,"block total equals instruction hook total, ML-KEM-512 m4fspeed decaps, run 1",True,block=376345; instruction_hook=376226; relative difference=3.16e-04; tolerance 0.001
+emulated,"block total equals instruction hook total, ML-KEM-512 m4fspeed keygen, run 2",True,block=352910; instruction_hook=352906; relative difference=1.13e-05; tolerance 0.001
+emulated,"block total equals instruction hook total, ML-KEM-512 m4fspeed encaps, run 2",True,block=346328; instruction_hook=346184; relative difference=4.16e-04; tolerance 0.001
+emulated,"block total equals instruction hook total, ML-KEM-512 m4fspeed decaps, run 2",True,block=376319; instruction_hook=376174; relative difference=3.85e-04; tolerance 0.001
+emulated,every block versus hook difference lies in an IT block (ML-KEM-512 m4fspeed encaps),True,mismatching addresses=2; block minus hook=118; Unicorn skips the instruction hook for IT predicated instructions whose condition fails

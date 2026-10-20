@@ -1,0 +1,55 @@
+label,id,parameter_set,implementation,operation,half,family,impl_kind,keccak_share_emulated,n_runs_emulated,instructions_emulated,cycles_published,cycles_modelled_baseline,cycles_modelled_apriori,cycles_modelled_fitted,err_pct_baseline,err_pct_apriori,err_pct_fitted,cycles_modelled_reduced,err_pct_reduced
+modelled,S2-0028,ML-DSA-44,clean,keygen,test,hash heavy,clean C,0.669065,50,1.55739e+06,1.8744e+06,1.55739e+06,2.08923e+06,1.8443e+06,-16.9128,11.4608,-1.60609,1.84252e+06,-1.7011
+modelled,S2-0029,ML-DSA-44,clean,sign,test,NTT heavy,clean C,0.362084,50,5.20391e+06,7.92596e+06,5.20391e+06,7.40113e+06,6.97892e+06,-34.3435,-6.62163,-11.9486,6.82359e+06,-13.9083
+modelled,S2-0030,ML-DSA-44,clean,verify,test,hash heavy,clean C,0.601313,50,1.65992e+06,2.0631e+06,1.65992e+06,2.26337e+06,2.0273e+06,-19.5422,9.70754,-1.73513,2.01279e+06,-2.4386
+modelled,S2-0031,ML-DSA-44,m4f,keygen,train,hash heavy,assembly (m4f variants),0.817074,50,1.27528e+06,1.42602e+06,1.27528e+06,1.6363e+06,1.44037e+06,-10.5712,14.7457,1.00581,1.43537e+06,0.65556
+modelled,S2-0032,ML-DSA-44,m4f,sign,train,hash heavy,assembly (m4f variants),0.620526,50,3.03654e+06,3.94312e+06,3.03654e+06,3.91312e+06,3.80196e+06,-22.9914,-0.760957,-3.57998,3.64495e+06,-7.56171
+modelled,S2-0033,ML-DSA-44,m4f,verify,train,hash heavy,assembly (m4f variants),0.790913,50,1.26205e+06,1.42162e+06,1.26205e+06,1.62489e+06,1.46978e+06,-11.2244,14.2981,3.38759,1.44263e+06,1.47791
+modelled,S2-0034,ML-DSA-44,m4fstack,keygen,train,hash heavy,assembly (m4f variants),0.765141,50,1.60908e+06,1.79906e+06,1.60908e+06,2.04928e+06,1.83504e+06,-10.5602,13.9083,1.99983,1.83613e+06,2.06067
+modelled,S2-0035,ML-DSA-44,m4fstack,sign,train,hash heavy,assembly (m4f variants),0.623181,50,8.52431e+06,1.21343e+07,8.52431e+06,1.13282e+07,1.04342e+07,-29.7502,-6.64318,-14.0108,1.03218e+07,-14.9365
+modelled,S2-0036,ML-DSA-44,m4fstack,verify,train,NTT heavy,assembly (m4f variants),0.442837,50,2.50267e+06,3.24233e+06,2.50267e+06,3.30186e+06,3.27393e+06,-22.8128,1.83608,0.974426,3.0253e+06,-6.6936
+modelled,S2-0037,ML-DSA-65,clean,keygen,train,hash heavy,clean C,0.705365,50,2.69269e+06,3.20553e+06,2.69269e+06,3.60242e+06,3.16007e+06,-15.9988,12.3813,-1.41831,3.15915e+06,-1.44689
+modelled,S2-0038,ML-DSA-65,clean,sign,train,NTT heavy,clean C,0.360901,50,7.99912e+06,1.23591e+07,7.99912e+06,1.14112e+07,1.07081e+07,-35.2772,-7.6695,-13.358,1.05222e+07,-14.8628
+modelled,S2-0039,ML-DSA-65,clean,verify,train,hash heavy,clean C,0.637852,50,2.75241e+06,3.3773e+06,2.75241e+06,3.73759e+06,3.31194e+06,-18.5028,10.6677,-1.93554,3.30668e+06,-2.0911
+modelled,S2-0040,ML-DSA-65,m4f,keygen,test,hash heavy,assembly (m4f variants),0.841637,50,2.25671e+06,2.51601e+06,2.25671e+06,2.90225e+06,2.53715e+06,-10.3059,15.3515,0.840212,2.52932e+06,0.529095
+modelled,S2-0041,ML-DSA-65,m4f,sign,test,hash heavy,assembly (m4f variants),0.619002,50,4.66378e+06,6.19317e+06,4.66378e+06,6.02682e+06,5.81767e+06,-24.6948,-2.68599,-6.06322,5.60633e+06,-9.47562
+modelled,S2-0042,ML-DSA-65,m4f,verify,test,hash heavy,assembly (m4f variants),0.815522,50,2.15285e+06,2.41594e+06,2.15285e+06,2.77488e+06,2.47165e+06,-10.8898,14.8571,2.30561,2.44619e+06,1.25191
+modelled,S2-0043,ML-DSA-65,m4fstack,keygen,test,hash heavy,assembly (m4f variants),0.788527,50,3.05247e+06,3.41262e+06,3.05247e+06,3.8973e+06,3.50599e+06,-10.5536,14.2025,2.73609,3.47317e+06,1.77416
+modelled,S2-0044,ML-DSA-65,m4fstack,sign,test,hash heavy,assembly (m4f variants),0.611071,50,1.58055e+07,2.44215e+07,1.58055e+07,2.11778e+07,1.93985e+07,-35.2806,-13.2821,-20.5682,1.92988e+07,-20.9761
+modelled,S2-0045,ML-DSA-65,m4fstack,verify,test,NTT heavy,assembly (m4f variants),0.442805,50,4.43193e+06,5.7324e+06,4.43193e+06,5.82331e+06,5.70878e+06,-22.6863,1.58594,-0.411988,5.33902e+06,-6.86236
+modelled,S2-0046,ML-DSA-87,clean,keygen,train,hash heavy,clean C,0.724445,50,4.52459e+06,5.34186e+06,4.52459e+06,6.02978e+06,5.24482e+06,-15.2994,12.8778,-1.81671,5.27243e+06,-1.29978
+modelled,S2-0047,ML-DSA-87,clean,sign,train,NTT heavy,clean C,0.376232,50,1.33077e+07,1.55795e+07,1.33077e+07,1.89982e+07,1.77929e+07,-14.5822,21.9432,14.2068,1.74832e+07,12.2189
+modelled,S2-0048,ML-DSA-87,clean,verify,train,hash heavy,clean C,0.676774,50,4.63922e+06,5.6102e+06,4.63922e+06,6.25865e+06,5.49216e+06,-17.3074,11.5584,-2.10408,5.50573e+06,-1.86214
+modelled,S2-0049,ML-DSA-87,m4f,keygen,test,hash heavy,assembly (m4f variants),0.852556,50,3.8447e+06,4.27586e+06,3.8447e+06,4.93894e+06,4.28222e+06,-10.0837,15.5075,0.148738,4.29253e+06,0.38989
+modelled,S2-0050,ML-DSA-87,m4f,sign,test,hash heavy,assembly (m4f variants),0.634529,50,7.89054e+06,7.94738e+06,7.89054e+06,1.02082e+07,9.76193e+06,-0.715165,28.4471,22.8321,9.44577e+06,18.8539
+modelled,S2-0051,ML-DSA-87,m4f,verify,test,hash heavy,assembly (m4f variants),0.837278,50,3.75001e+06,4.1931e+06,3.75001e+06,4.8314e+06,4.25204e+06,-10.5672,15.2225,1.4056,4.23031e+06,0.887273
+modelled,S2-0052,ML-DSA-87,m4fstack,keygen,train,hash heavy,assembly (m4f variants),0.777288,50,5.22146e+06,5.82054e+06,5.22146e+06,6.64442e+06,5.91771e+06,-10.2925,14.1548,1.66943,5.94496e+06,2.13763
+modelled,S2-0053,ML-DSA-87,m4fstack,sign,train,hash heavy,assembly (m4f variants),0.643727,50,3.03279e+07,3.33579e+07,3.03279e+07,4.05538e+07,3.66742e+07,-9.0832,21.5718,9.94144,3.67597e+07,10.1978
+modelled,S2-0054,ML-DSA-87,m4fstack,verify,train,NTT heavy,assembly (m4f variants),0.459149,50,7.67968e+06,9.91151e+06,7.67968e+06,1.00796e+07,9.8209e+06,-22.5176,1.69567,-0.914225,9.24166e+06,-6.75834
+modelled,S2-0003,ML-KEM-1024,clean,decaps,train,NTT heavy,clean C,0.444699,10,1.59462e+06,2.02033e+06,1.59462e+06,2.19007e+06,2.01639e+06,-21.0711,8.402,-0.194912,2.06086e+06,2.00625
+modelled,S2-0002,ML-KEM-1024,clean,encaps,train,hash heavy,clean C,0.51461,10,1.37763e+06,1.70807e+06,1.37763e+06,1.87778e+06,1.71018e+06,-19.346,9.9355,0.12345,1.74707e+06,2.28295
+modelled,S2-0001,ML-KEM-1024,clean,keygen,train,hash heavy,clean C,0.563747,10,1.23925e+06,1.53634e+06,1.23925e+06,1.68031e+06,1.5067e+06,-19.338,9.37108,-1.9296,1.54281e+06,0.420697
+modelled,S2-0006,ML-KEM-1024,m4fspeed,decaps,test,hash heavy,assembly (m4f variants),0.740828,10,957209,1.09401e+06,957209,1.22132e+06,1.07519e+06,-12.5044,11.637,-1.72035,1.09303e+06,-0.0891266
+modelled,S2-0005,ML-KEM-1024,m4fspeed,encaps,test,hash heavy,assembly (m4f variants),0.780256,10,908601,1.03156e+06,908601,1.16141e+06,1.01509e+06,-11.9202,12.587,-1.59703,1.02736e+06,-0.407404
+modelled,S2-0004,ML-KEM-1024,m4fspeed,keygen,test,hash heavy,assembly (m4f variants),0.7759,10,900401,1.01898e+06,900401,1.14892e+06,1.01921e+06,-11.6367,12.7522,0.0229951,1.02772e+06,0.858069
+modelled,S2-0009,ML-KEM-1024,m4fstack,decaps,test,hash heavy,assembly (m4f variants),0.731563,10,969331,1.10098e+06,969331,1.2301e+06,1.09932e+06,-11.9576,11.7277,-0.151171,1.11861e+06,1.60092
+modelled,S2-0008,ML-KEM-1024,m4fstack,encaps,test,hash heavy,assembly (m4f variants),0.77139,10,919044,1.03795e+06,919044,1.1689e+06,1.03817e+06,-11.4561,12.6155,0.0211898,1.05e+06,1.16079
+modelled,S2-0007,ML-KEM-1024,m4fstack,keygen,test,hash heavy,assembly (m4f variants),0.769834,10,907496,1.0202e+06,907496,1.15365e+06,1.02894e+06,-11.0474,13.0805,0.856646,1.04385e+06,2.31769
+modelled,S2-0012,ML-KEM-512,clean,decaps,train,NTT heavy,clean C,0.376028,10,696138,888653,696138,955904,896103,-21.6637,7.56777,0.838395,910501,2.45855
+modelled,S2-0011,ML-KEM-512,clean,encaps,train,NTT heavy,clean C,0.463762,10,564412,700605,564412,767278,708585,-19.4393,9.51645,1.13901,720101,2.7828
+modelled,S2-0010,ML-KEM-512,clean,keygen,train,hash heavy,clean C,0.558453,10,484268,595793,484268,651587,582070,-18.7188,9.3647,-2.30329,596522,0.122359
+modelled,S2-0015,ML-KEM-512,m4fspeed,decaps,test,hash heavy,assembly (m4f variants),0.695824,10,376197,428167,376197,477155,423681,-12.1377,11.4414,-1.04777,435814,1.78594
+modelled,S2-0014,ML-KEM-512,m4fspeed,encaps,test,hash heavy,assembly (m4f variants),0.751954,10,348097,390881,348097,442885,388704,-10.9456,13.3043,-0.557039,397083,1.58673
+modelled,S2-0013,ML-KEM-512,m4fspeed,keygen,test,hash heavy,assembly (m4f variants),0.766581,10,352788,392423,352788,448033,395595,-10.1,14.171,0.808359,403763,2.8897
+modelled,S2-0018,ML-KEM-512,m4fstack,decaps,test,hash heavy,assembly (m4f variants),0.691624,10,378481,430202,378481,478663,431286,-12.0224,11.2648,0.251896,441356,2.59283
+modelled,S2-0017,ML-KEM-512,m4fstack,encaps,test,hash heavy,assembly (m4f variants),0.747868,10,349999,392864,349999,444144,395965,-10.9109,13.0528,0.789422,401828,2.28177
+modelled,S2-0016,ML-KEM-512,m4fstack,keygen,test,hash heavy,assembly (m4f variants),0.76552,10,353277,392224,353277,448127,396393,-9.92968,14.2529,1.06289,405741,3.44624
+modelled,S2-0021,ML-KEM-768,clean,decaps,test,NTT heavy,clean C,0.409273,10,1.08974e+06,1.38798e+06,1.08974e+06,1.49782e+06,1.39199e+06,-21.4876,7.91346,0.288614,1.41904e+06,2.23738
+modelled,S2-0020,ML-KEM-768,clean,encaps,test,NTT heavy,clean C,0.487343,10,915844,1.13822e+06,915844,1.24785e+06,1.14585e+06,-19.5375,9.63123,0.669738,1.1673e+06,2.55452
+modelled,S2-0019,ML-KEM-768,clean,keygen,test,hash heavy,clean C,0.547731,10,796031,988722,796031,1.07788e+06,970779,-19.4889,9.01786,-1.81479,991704,0.30161
+modelled,S2-0024,ML-KEM-768,m4fspeed,decaps,train,hash heavy,assembly (m4f variants),0.719268,10,620076,707827,620076,788869,699432,-12.3972,11.4495,-1.18603,713433,0.791937
+modelled,S2-0023,ML-KEM-768,m4fspeed,encaps,train,hash heavy,assembly (m4f variants),0.766115,10,582590,658754,582590,743012,652963,-11.5619,12.7905,-0.879073,662099,0.507721
+modelled,S2-0022,ML-KEM-768,m4fspeed,keygen,train,hash heavy,assembly (m4f variants),0.764476,10,570339,642096,570339,725901,648055,-11.1754,13.0518,0.927994,653919,1.84134
+modelled,S2-0027,ML-KEM-768,m4fstack,decaps,train,hash heavy,assembly (m4f variants),0.71093,10,627348,714194,627348,794285,715329,-12.16,11.2142,0.158968,728758,2.03917
+modelled,S2-0026,ML-KEM-768,m4fstack,encaps,train,hash heavy,assembly (m4f variants),0.758192,10,588678,664654,588678,747504,667973,-11.431,12.4651,0.499291,675315,1.60405
+modelled,S2-0025,ML-KEM-768,m4fstack,keygen,train,hash heavy,assembly (m4f variants),0.759731,10,573901,644195,573901,728293,653007,-10.9119,13.0548,1.36785,662268,2.80551

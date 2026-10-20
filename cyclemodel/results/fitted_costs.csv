@@ -1,0 +1,17 @@
+label,feature,classes,cost_fitted_cycles,cost_apriori_cycles_assumption,apriori_status
+modelled,single_issue,alu+it+other,0.236235,1,unverified (TRM fetch refused)
+modelled,mul_mac,mul+mac,1.87732,1,unverified (TRM fetch refused)
+modelled,div,div,0,7,unverified (TRM fetch refused)
+modelled,load,load,0.775738,2,unverified (TRM fetch refused)
+modelled,store,store,4.49437,1,unverified (TRM fetch refused)
+modelled,dual_extra,dual_extra,19.1944,1,unverified (TRM fetch refused)
+modelled,ldm_stm_insn,ldm_insn+stm_insn,0,1,unverified (TRM fetch refused)
+modelled,ldm_stm_regs,ldm_regs+stm_regs,0,1,unverified (TRM fetch refused)
+modelled,branch_taken,branch_uncond+branch_cond_taken,4.44954,3,unverified (TRM fetch refused)
+modelled,pc_write,pc_write,6.30913,2,unverified (TRM fetch refused)
+modelled,branch_not_taken,branch_cond_not_taken,4.32368,1,unverified (TRM fetch refused)
+modelled,fpu,fpu_move+fpu_ldst+fpu_arith,0.01461,1,unverified (TRM fetch refused)
+modelled,reduced: alu_like,single_issue+div+fpu+branch_not_taken,0.97759,,"reduced model, no a priori value"
+modelled,reduced: mul_mac,mul_mac,1.91642,,"reduced model, no a priori value"
+modelled,reduced: memory,load+store+dual_extra+ldm_stm_insn+ldm_stm_regs,1.1721,,"reduced model, no a priori value"
+modelled,reduced: taken_branch,branch_taken+pc_write,3.26894,,"reduced model, no a priori value"
