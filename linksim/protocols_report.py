@@ -202,7 +202,7 @@ def build_doc(res=None):
     a("")
     a("Links: LoRaWAN EU868 DR0 and DR5 with the time on air formula, 13 B LoRaWAN frame overhead and a 1 percent "
       "duty cycle per side; IEEE 802.15.4 with the fourth round frame model (PHY header, 6LoWPAN fragmentation, "
-      "MAC acknowledgement, inter frame spacing, CCA and mean backoff, turnaround); SiK at 57.6 kbps. No Wi-Fi or "
+      "MAC acknowledgement, inter frame spacing, CCA and mean backoff, turnaround); SiK at the 64 kbps air rate of `linksim/params.csv`. No Wi-Fi or "
       "cellular profile is simulated, because no parameters for them were retrieved.")
     a("")
     a("## 2. Time to first authenticated message")
