@@ -1,7 +1,7 @@
 """Measure maximum MAVLink 2 payload lengths from pymavlink generated classes (label: host measured).
 
 Run with an interpreter that has pymavlink installed (kept outside the repository), for example
-    /home/claude/work/venv_mav/bin/python mission/measure_payloads.py
+    <python with pymavlink installed outside the repository> mission/measure_payloads.py
 Writes mission/payload_lengths.csv. The study itself only reads the CSV, so pymavlink is not a dependency.
 """
 import csv

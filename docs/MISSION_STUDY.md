@@ -465,7 +465,7 @@ The difference arises because this model acknowledges each flight once, while `l
 ## 9. Reproduction
 
 ```
-/home/claude/work/venv_mav/bin/python mission/measure_payloads.py   # optional, needs pymavlink outside the repository
+<python with pymavlink> mission/measure_payloads.py   # optional, needs pymavlink outside the repository
 python3 -m mission.run_all
 python3 -m unittest discover -s mission/tests -t .
 ```

@@ -13,7 +13,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from cyclemodel.tracer import CLASSES, NON_INSN, Tracer  # noqa: E402
 
-WORK = os.environ.get('CM_WORK', '/home/claude/work')
+WORK = os.environ.get('CM_WORK', os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'work')))  # outside the repository
 PQM4_ELF = os.path.join(WORK, 'pqm4_cm', 'elf')
 HARNESS_ELF = os.path.join(WORK, 'harness_build', 'arm')
 EXT_ELF = os.path.join(WORK, 'ext_build')

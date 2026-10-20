@@ -12,7 +12,7 @@
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 REPO="$(dirname "$HERE")"
-WORK=${WORK:-/home/claude/work}
+WORK=${WORK:-$(cd "$(dirname "$0")/../.." && pwd)/work}  # outside the repository
 PQM4=$WORK/pqm4_cm
 PQM4_PIN=5e5cc76d0b072ee7077e58afcbc619a1a67a53b4
 mkdir -p "$WORK"
