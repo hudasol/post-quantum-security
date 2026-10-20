@@ -86,7 +86,7 @@ def main():
     m = re.search(r"Totals: (\d+) hit, (\d+) partial, (\d+) miss, (\d+) not scored, of (\d+)", sc)
     cfg = {r["key"]: r["value"] for r in rows("linksim/results/config.csv")}
     vals = {
-        "date": subprocess.run(["git", "log", "-1", "--format=%cs", "--", "docs/PROPOSAL_ATRC_body.md"], cwd=ROOT,
+        "date": subprocess.run(["git", "log", "-1", "--format=%cs", "--", "data/evidence.csv"], cwd=ROOT,
                                capture_output=True, text=True).stdout.strip() or "undated",
         "n_rows": f"{len(ev):,}", "n_s10": str(len(s10)),
         "emu_sign": f"{emu:,}", "min_sign": f"{mem[0]:,.0f}", "min_sign_id": mem[1],
