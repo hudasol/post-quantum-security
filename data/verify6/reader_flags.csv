@@ -1,0 +1,7 @@
+id,field,reason
+S13-040,cycles,reader1 notes duplicate indcpa row labels in the source table (possible ambiguity)
+S13-048,cycles,reader1 notes duplicate indcpa row labels in the source table (possible ambiguity)
+S13-226,cycles,both readers could read the source only through a summarising web fetch tool
+S13-227,cycles,both readers could read the source only through a summarising web fetch tool
+S13-228,cycles,both readers could read the source only through a summarising web fetch tool
+S13-229,cycles,both readers could read the source only through a summarising web fetch tool
