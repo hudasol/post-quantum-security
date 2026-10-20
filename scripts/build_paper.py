@@ -54,12 +54,13 @@ def results_text():
     L.append(
         f"Evidence. The table holds {claim('n_rows', ev, 'id', aggregate='count', label='published')} rows; "
         f"{claim('n_mcu_cycles', ev, 'cycles', 'device_class == \"mcu\" and cycles == cycles', 'count', label='published')} are microcontroller rows with a cycle count, "
-        f"on {claim('n_cores', ev, 'core', 'device_class == \"mcu\" and cycles == cycles', 'nunique', label='published')} core names. "
+        f"on {claim('n_cores', ev, 'core', 'device_class == \"mcu\" and cycles == cycles', 'nunique', label='published')} core labels as the sources print them (Cortex-M4 and Cortex-M4F are counted apart, and one label is 'not stated'). "
         f"Inside groups of the same parameter set, operation and core class that have rows from two or more sources, the largest published value is "
         f"{claim('meta_spread', 'data/meta/cycle_groups.csv', 'max_over_min', 'sources >= 2', 'median', '{:.2f}', label='published')} times the smallest at the median group "
         f"(up to {claim('meta_spread_max', 'data/meta/cycle_groups.csv', 'max_over_min', 'sources >= 2', 'max', '{:.2f}', label='published')}; `docs/META_ANALYSIS.md`). "
-        "A single published figure for an operation on a core class therefore carries an uncertainty of that order before any board is measured: library, "
-        "optimisation, toolchain, cache and statistic matter as much as the algorithm.\n")
+        "Part of this spread is deliberate: a group can hold speed and stack optimised variants of one scheme and both means and medians, so it measures how far a "
+        "published figure can sit from the deployed code when the variant and conditions are not known, not the measurement error of one implementation. "
+        "Library, optimisation, toolchain, cache and statistic all move it.\n")
     if exists("cyclemodel/results/error_summary.csv"):
         L.append("{{cycle_model_text}}\n")
     if exists("rtlsim/results/ibex_cycles.csv"):
@@ -98,13 +99,17 @@ def results_text():
     vt = "bootchain/results/verify_time.csv"
     q = 'target == "Crazyflie 2.1 (STM32F405)" and image_bytes == 1000000 and scheme == "{s}" and hash == "{h}"'
     L.append("### 4.4 RQ4: signed boot and update\n")
+    _vt = pd.read_csv(ROOT / vt)
+    _h = _vt[(_vt.target == "Crazyflie 2.1 (STM32F405)") & (_vt.image_bytes == 1000000) & (_vt.hash == "hardware HASH")]
+    _hs = sorted(set(_h[_h.hash_ms_estimated >= _h.sig_ms_estimated * 0.95].scheme))
+    hash_still = ", ".join(_hs[:-1]) + " and " + _hs[-1] if len(_hs) > 1 else "".join(_hs)
     L.append(
         "For a 1 MB image on a 168 MHz Cortex-M4 (the STM32F405 class of a small drone flight controller) with software SHA-256, verification takes about "
         f"{claim('b_mldsa_sw', vt, 'total_ms_estimated', q.format(s='ML-DSA-44', h='software SHA-256'), fmt='{:.0f}', label='estimated')} ms with ML-DSA-44 and "
         f"{claim('b_lms_sw', vt, 'total_ms_estimated', q.format(s='LMS', h='software SHA-256'), fmt='{:.0f}', label='estimated')} ms with LMS, of which hashing the image is "
         f"{claim('b_hash_sw', vt, 'hash_ms_estimated', q.format(s='LMS', h='software SHA-256'), fmt='{:.0f}', label='estimated')} ms. "
-        f"With a hash peripheral, which the STM32F405 itself lacks but parts of the same family such as the STM32F415 have, the totals fall to {claim('b_mldsa_hw', vt, 'total_ms_estimated', q.format(s='ML-DSA-44', h='hardware HASH'), fmt='{:.0f}', label='estimated')} ms and "
-        f"{claim('b_lms_hw', vt, 'total_ms_estimated', q.format(s='LMS', h='hardware HASH'), fmt='{:.0f}', label='estimated')} ms; the signature then becomes the larger part for most schemes, though for ML-DSA-44 the hash still costs more. "
+        f"With a hash peripheral, which the STM32F405 itself lacks (the rows are a what if for a part of that class with one), the totals fall to {claim('b_mldsa_hw', vt, 'total_ms_estimated', q.format(s='ML-DSA-44', h='hardware HASH'), fmt='{:.0f}', label='estimated')} ms and "
+        f"{claim('b_lms_hw', vt, 'total_ms_estimated', q.format(s='LMS', h='hardware HASH'), fmt='{:.0f}', label='estimated')} ms; the signature then becomes the larger part for the slower verifiers, while for {hash_still} hashing still costs about as much as the signature or more. "
         "The choice of signature scheme changes boot time far less than image size and hash hardware do (`docs/BOOT_UPDATE_STUDY.md`). "
         "Against published bootloader timings the uncalibrated model is far off and the calibrated check rests on three rows, so these are estimates of order, not predictions. "
         "A fixed first stage root of trust that verifies only a classical signature cannot be changed by any of this; such devices need hardware replacement for signing migration.\n")
@@ -186,7 +191,7 @@ def parts_text(fill):
         "For firmware, hashing the image costs more than any signature check unless the device has hash hardware. "
         "The largest open uncertainties are the free memory a flight stack leaves and the real timing of mesh links.")
     fill["discussion"] = (
-        "Three results change what an engineer should do. First, the algorithm is not the main source of uncertainty in a published cycle count: implementation and measurement conditions move the same operation on the same core class by a factor that the meta analysis quantifies, so a migration decision should rest on a measurement of the deployed code, which the board kit makes cheap. "
+        "Three results change what an engineer should do. First, a published cycle count is not a property of the algorithm alone: the implementation variant and the measurement conditions move the same operation on the same core class by a factor that the meta analysis quantifies, so a migration decision should rest on a measurement of the deployed code, which the board kit makes cheap. "
         "Second, on the links drones and robots use, the cost of post quantum authentication is a one time handshake, not a per message burden, provided the design uses a session: per message signatures are the only option that fails. "
         "Third, the fleet answer depends more on how much memory the flight stack leaves free than on which implementation of ML-DSA is chosen; operators can settle this from their own build output, which no public page states.\n\n"
         "Where the models overlap they are not independent: the mission model reads the link simulator's parameters, so their agreement on a single handshake is a consistency check, not a validation, and the two still differ noticeably on the time to set up a hybrid session on the telemetry radio, a difference this round did not explain. The energy and mission studies both find CPU time, not energy, to be the binding budget. "
@@ -199,7 +204,8 @@ def parts_text(fill):
         "5. Energy rests on typical datasheet currents for five parts and one calibration source.\n"
         "6. The classical baselines (Ed25519, X25519) are single published rows chosen within a published range that spans about a factor of two; the energy and mission studies use the same rows and show the range beside each result.\n"
         "7. The studies do not yet share one set of inputs everywhere: the protocol and mission models describe the MAVLink style handshake differently, and the energy and mission models use different published LMS rows and per message costs; each choice is stated in its study.\n"
-        "8. Several sources could not be retrieved (listed in `docs/NEEDS_FROM_AUTHOR.md` and the source notes); 126 new rows that only one reader could confirm were left out of the table.")
+        "8. Several sources could not be retrieved (listed in `docs/NEEDS_FROM_AUTHOR.md` and the source notes); 126 new rows that only one reader could confirm were left out of the table.\n"
+        "9. The double reading settled every value disagreement but only a sample of wording disagreements, so some operation, scheme or library fields are likely still wrong (`docs/VERIFICATION5.md`, Limits); two readers shared a scratch path for helper scripts, a limit on their independence.")
 
 
 def main():
