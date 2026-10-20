@@ -1,0 +1,51 @@
+file,column,label,note
+linksim/results/validation.csv,group,key,scheme group
+linksim/results/validation.csv,ids,key,evidence row ids
+linksim/results/validation.csv,rd,published,bytes read in the handshake (evidence rows in ids)
+linksim/results/validation.csv,wr,published,bytes written in the handshake (evidence rows in ids)
+linksim/results/validation.csv,clear_ms,published,handshake time on the clear link
+linksim/results/validation.csv,uav_ms,published,handshake time on the emulated UAV link
+linksim/results/validation.csv,pred_plain,modelled,bytes over rate prediction
+linksim/results/validation.csv,err_plain,modelled,relative error of pred_plain against uav_ms
+linksim/results/validation.csv,pred_tcp,modelled,prediction with TCP framing
+linksim/results/validation.csv,err_tcp,modelled,relative error of pred_tcp
+linksim/results/validation.csv,meas_diff,estimated,uav_ms minus a clear link time (arithmetic on published values)
+linksim/results/validation.csv,pred_diff_plain,modelled,predicted difference
+linksim/results/validation.csv,diff_err_plain,modelled,relative error of the predicted difference
+linksim/results/validation.csv,pred_diff_tcp,modelled,predicted difference with TCP framing
+linksim/results/validation.csv,diff_err_tcp,modelled,relative error
+linksim/results/validation_heldout.csv,group,key,scheme group
+linksim/results/validation_heldout.csv,split,key,train or test
+linksim/results/validation_heldout.csv,uav_ms,published,handshake time on the emulated UAV link
+linksim/results/validation_heldout.csv,pred_uncal_ms,modelled,prediction before the fitted constant
+linksim/results/validation_heldout.csv,fitted_overhead_ms,modelled,constant fitted on the train rows
+linksim/results/validation_heldout.csv,pred_cal_ms,modelled,prediction with the fitted constant
+linksim/results/validation_heldout.csv,err_cal,modelled,relative error of pred_cal_ms
+linksim/results/validation_crosscheck.csv,bytes,key,transfer size used for the check
+linksim/results/validation_crosscheck.csv,proto,key,transfer protocol of the model
+linksim/results/validation_crosscheck.csv,model_s,modelled,modelled transfer time
+linksim/results/validation_crosscheck.csv,prose_low_s,published,low end of the published prose range
+linksim/results/validation_crosscheck.csv,prose_high_s,published,high end of the published prose range
+linksim/results/validation_crosscheck.csv,factor_below_low,modelled,prose_low_s over model_s
+linksim/results/validation_crosscheck.csv,source,key,where the published range is stated
+linksim/results/lowrate.csv,profile,key,link profile id
+linksim/results/lowrate.csv,label,key,link profile name (not an evidence label)
+linksim/results/lowrate.csv,variant,key,handshake variant
+linksim/results/lowrate.csv,frag_hdr_bytes,estimated,assumption swept (fragment header bytes)
+linksim/results/lowrate.csv,mac_overhead_bytes,estimated,assumption swept (MAC overhead bytes)
+linksim/results/lowrate.csv,fragments,estimated,fragment count from published sizes
+linksim/results/lowrate.csv,floor_wall_s,estimated,no loss lower bound on wall time
+planner/results/scenarios.csv,devices,key,fleet size
+planner/results/scenarios.csv,scenario,key,threshold scenario id
+planner/results/scenarios.csv,label,key,scenario description; states per row whether its thresholds are published or emulated
+planner/results/scenarios.csv,basis,key,evidence row ids behind the thresholds
+planner/results/scenarios.csv,sig_flash_kb,per row,published or emulated as the label column of the row states
+planner/results/scenarios.csv,sig_ram_kb,per row,published or emulated as the label column of the row states
+planner/results/scenarios.csv,kem_flash_kb,per row,published or emulated as the label column of the row states
+planner/results/scenarios.csv,kem_ram_kb,per row,published or emulated as the label column of the row states
+planner/results/scenarios.csv,violations,estimated,planner output
+planner/results/scenarios.csv,FIRMWARE_UPDATE,estimated,planner output count
+planner/results/scenarios.csv,HYBRID,estimated,planner output count
+planner/results/scenarios.csv,HARDWARE_REPLACEMENT,estimated,planner output count
+planner/results/scenarios.csv,NO_ACTION_BEFORE_RETIREMENT,estimated,planner output count
+planner/results/scenarios.csv,UNKNOWN,estimated,planner output count
