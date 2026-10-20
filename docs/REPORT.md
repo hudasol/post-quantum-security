@@ -128,7 +128,7 @@ Only FPGA and ASIC results were found (RISQrypt on an Artix-7 co-design: Kyber76
 
 ## 4.8 Classical baselines
 
-Published classical numbers on matching devices exist (ECDSA/ECDH on the F411RE at 96 MHz; wolfCrypt RSA/ECC on the F439ZI; RP2040 mbedTLS). Round 4 added double read Cortex-M4 cycle rows for X25519 and Ed25519 (stream S12; for example S12A-330 to S12A-332 and S12A-317 to S12A-328), and pqm4 still has no classical baselines. Cross paper ratios are computed only in `docs/ENERGY_STUDY.md`, with the published range shown beside each, because setups differ.
+Published classical numbers on matching devices exist (ECDSA/ECDH on the F411RE at 96 MHz; wolfCrypt RSA/ECC on the F439ZI; RP2040 mbedTLS). Round 4 added double read Cortex-M4 cycle rows for X25519 and Ed25519 (stream S12; for example S12A-330 to S12A-332 and S12A-317 to S12A-328), and pqm4 still has no classical baselines. Cross paper ratios are computed in `docs/ENERGY_STUDY.md`, with the published range shown beside each, and the same rows are combined in `docs/MISSION_STUDY.md` and `docs/REFERENCE_ARCHITECTURE.md`; setups differ between papers, so these ratios carry that caveat.
 
 # 5. Drone and robot constraints
 
