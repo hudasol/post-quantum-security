@@ -83,7 +83,7 @@ jobs:
       - name: Paper and claims register regenerate from the result files
         run: |
           python3 scripts/build_paper.py
-          git diff --exit-code docs/PAPER.md data/claims_register.csv
+          git diff --exit-code docs/PAPER.md docs/PROPOSAL_ROBOTICS*.md data/claims_register.csv
       - name: Proposal regenerates from the result files
         run: |
           python3 scripts/build_proposal.py
