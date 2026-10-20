@@ -1,0 +1,6 @@
+operation,cycles,label,source
+ecdh_proxy,11629000.0,published,"S2-0199+S2-0201; X25519 has no cycle row; ECDH secp256r1 keygen plus shared secret (micro-ecc, Cortex-M4 at 96 MHz) used as a proxy"
+mlkem768_encaps,658754.0,published,"S2-0023; ML-KEM-768 encaps, pqm4 m4fspeed"
+mldsa44_verify,1421623.0,published,"S2-0033; ML-DSA-44 verify, pqm4 m4f"
+lms_verify,2576515.0,published,"S2-0316; LMS w=16 h=5 SHA-256 verify, Cortex-M4 (slides)"
+ed25519_verify,2560000.0,derived from published,"S10D-031: 40 ms x 64 MHz (Monocypher, nRF52840)"
