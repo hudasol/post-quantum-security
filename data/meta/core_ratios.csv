@@ -1,6 +1,8 @@
 scheme_family,parameter_set,operation,core_class,median_cycles,cortex_m4_median_cycles,ratio_to_cortex_m4,rows,cortex_m4_rows
 FN-DSA,Falcon-1024,keygen,Cortex-M7,268120000.0,284031714.0,0.9439790938275294,2,1
+FN-DSA,Falcon-1024,verify,Cortex-M7,1133000.0,1039169.0,1.0902942639743873,2,1
 FN-DSA,Falcon-512,keygen,Cortex-M7,103217500.0,71943764.0,1.4346969669254448,2,1
+FN-DSA,Falcon-512,verify,Cortex-M7,562000.0,510751.0,1.1003404790201097,2,1
 ML-DSA,Dilithium-2,keygen,Cortex-M7,1437000.0,1813500.0,0.7923904052936311,1,4
 ML-DSA,Dilithium-2,sign,Cortex-M7,3658000.0,6126500.0,0.597078266546968,1,4
 ML-DSA,Dilithium-2,verify,Cortex-M7,1429000.0,1901000.0,0.751709626512362,1,4
