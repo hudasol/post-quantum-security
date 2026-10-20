@@ -2,7 +2,7 @@ id,configuration,boot_ms_published,verify_ms_modelled,error_pct_modelled,increme
 S2-0347,"SHA2 only, SIGN=NONE",55.662,23.835,-57.2,0.0,,hash only,modelled,not predicted,55.662,0.0,20261020
 S2-0348,"RSA-2048, SIGN=RSA2048",69.844,,,14.182,,no published verify cycles for this configuration,modelled,not predicted,,,20261020
 S2-0349,"ECDSA P-256, SIGN=ECC256",75.611,44.582,-41.0,19.949,20.747,published; proxy: Cortex-M4 row used for Cortex-M33 S2-0213,modelled,calibration,153.004,102.4,20261020
-S2-0350,"Ed25519 fast, SIGN=ED25519 NO_ASM=0",1589.512,31.835,-98.0,1533.85,8.0,derived from published; proxy: Cortex-M4 row used for Cortex-M33 S10D-031 (time x clock),modelled,calibration,93.197,-94.1,20261020
+S2-0350,"Ed25519 fast, SIGN=ED25519 NO_ASM=0",1589.512,26.091,-98.4,1533.85,2.256,published; proxy: Cortex-M4 row used for Cortex-M33 S12A-331,modelled,calibration,66.247,-95.8,20261020
 S2-0351,ML_DSA-44 (ML_DSA_LEVEL=2),82.791,28.277,-65.8,27.129,4.443,published; proxy: Cortex-M4 row used for Cortex-M33 S2-0033,modelled,calibration,76.508,-7.6,20261020
 S2-0352,ML_DSA-65 (ML_DSA_LEVEL=3),99.279,31.385,-68.4,43.617,7.55,published; proxy: Cortex-M4 row used for Cortex-M33 S2-0042,modelled,validation,91.086,-8.3,20261020
 S2-0353,ML_DSA-87 (ML_DSA_LEVEL=5),127.807,36.938,-71.1,72.145,13.103,published; proxy: Cortex-M4 row used for Cortex-M33 S2-0051,modelled,validation,117.139,-8.3,20261020
