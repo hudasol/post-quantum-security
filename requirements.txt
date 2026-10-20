@@ -1,0 +1,9 @@
+# Free Python packages used by the scripts, tests and models (versions as used for round 4).
+# pymavlink is needed only to remeasure MAVLink payload lengths (mission/measure_payloads.py).
+numpy==2.5.3
+pandas==3.0.5
+scipy==1.18.1
+matplotlib==3.11.2
+SALib==1.6.0
+unicorn==2.1.4
+capstone==5.0.9

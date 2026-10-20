@@ -36,7 +36,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install matplotlib pandas SALib unicorn capstone
+      - run: pip install -r requirements.txt
       - run: python3 -m unittest discover -s tests -t .
       - run: python3 -m unittest discover -s linksim/tests -t .
       - run: cd planner && python3 -m unittest
@@ -81,6 +81,10 @@ jobs:
         run: |
           python3 scripts/meta_analysis.py
           git diff --exit-code docs/META_ANALYSIS.md data/meta/
+      - name: Data dictionary regenerates from the result files
+        run: |
+          python3 scripts/build_data_dictionary.py > /dev/null
+          git diff --exit-code docs/DATA_DICTIONARY.md
       - name: Paper and claims register regenerate from the result files
         run: |
           python3 scripts/build_paper.py
