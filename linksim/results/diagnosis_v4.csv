@@ -1,0 +1,15 @@
+label,step,cause,applied,flags,source,frames,time_s_modelled_before,time_s_modelled_after,err_low_pct_before,err_low_pct_after,err_high_pct_after,factor_below_low_after,seed
+modelled,0,baseline (third round model),baseline,none,linksim/validate.py crosscheck_802154,618,4.52459,4.52459,-84.918,-84.918,-92.459,6.63043,20261020
+modelled,1,PHY header (SHR and PHR),yes,phy,data/raw/S12_link_sources.md:38,618,4.52459,4.65074,-84.918,-84.4975,-92.2488,6.45059,20261020
+modelled,2,6LoWPAN fragment headers and 8 octet alignment,yes,phy+frag,data/raw/S12_link_sources.md:8-11 (datagram size ASSUMPTION 1280 B),703,4.65074,5.16253,-84.4975,-82.7916,-91.3958,5.81111,20261020
+modelled,3,MAC acknowledgement frame and turnaround before it,yes,phy+frag+mac_ack,"data/raw/S12_link_sources.md:22,25,35",703,5.16253,5.5689,-82.7916,-81.437,-90.7185,5.38706,20261020
+modelled,4,inter frame spacing (LIFS or SIFS),yes,phy+frag+mac_ack+ifs,data/raw/S12_link_sources.md:24,703,5.5689,6.04698,-81.437,-79.8434,-89.9217,4.96116,20261020
+modelled,5,CCA and mean initial backoff,yes,phy+frag+mac_ack+ifs+csma,"data/raw/S12_link_sources.md:26,29,32",703,6.04698,6.97923,-79.8434,-76.7359,-88.3679,4.29847,20261020
+modelled,6,RX to TX turnaround after CCA,yes,phy+frag+mac_ack+ifs+csma+turnaround,data/raw/S12_link_sources.md:25,703,6.97923,7.12266,-76.7359,-76.2578,-88.1289,4.21191,20261020
+modelled,7,per fragment processing,no,phy+frag+mac_ack+ifs+csma+turnaround,no retrieved source gives a per fragment processing time; not applied,703,7.12266,7.12266,-76.2578,-76.2578,-88.1289,4.21191,20261020
+modelled,8,effective rate,no,phy+frag+mac_ack+ifs+csma+turnaround,"250 kbps with 16 microsecond symbols is consistent (data/raw/S12_link_sources.md:28,42); no change",703,7.12266,7.12266,-76.2578,-76.2578,-88.1289,4.21191,20261020
+modelled,9,multi hop forwarding,no,phy+frag+mac_ack+ifs+csma+turnaround,"ePrint 2021/781 pages 15 to 16 give no hop count; not applied, shown only as a sweep",703,7.12266,7.12266,-76.2578,-76.2578,-88.1289,4.21191,20261020
+assumption,9 sweep,"multi hop, 1 hops",sweep only,phy+frag+mac_ack+ifs+csma+turnaround,"ASSUMPTION store and forward on one channel, no spatial reuse",,7.12266,7.12266,-76.2578,-76.2578,-88.1289,4.21191,20261020
+assumption,9 sweep,"multi hop, 2 hops",sweep only,phy+frag+mac_ack+ifs+csma+turnaround,"ASSUMPTION store and forward on one channel, no spatial reuse",,7.12266,14.2453,-76.2578,-52.5156,-76.2578,2.10596,20261020
+assumption,9 sweep,"multi hop, 3 hops",sweep only,phy+frag+mac_ack+ifs+csma+turnaround,"ASSUMPTION store and forward on one channel, no spatial reuse",,7.12266,21.368,-76.2578,-28.7734,-64.3867,1.40397,20261020
+assumption,9 sweep,"multi hop, 4 hops",sweep only,phy+frag+mac_ack+ifs+csma+turnaround,"ASSUMPTION store and forward on one channel, no spatial reuse",,7.12266,28.4906,-76.2578,-5.03125,-52.5156,1.05298,20261020
