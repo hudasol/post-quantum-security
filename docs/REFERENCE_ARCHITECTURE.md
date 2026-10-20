@@ -115,5 +115,7 @@ Feasible at the 0.5 s deadline (base assumptions): drone: A on IEEE 802.15.4, A 
 
 - Estimated throughout; no radio, flight controller or cryptographic library was run. The link model is only checked against another model.
 - Assumed traffic rates, outage process, timeouts and deadlines drive the verdicts; they are swept, but real values for a given vehicle may lie outside the swept ranges.
+- The 95 percent intervals in this document cover Monte Carlo noise around fixed assumptions only, not uncertainty in the inputs; input uncertainty is explored only through the sweeps and the Morris screening.
+- Feasibility on IEEE 802.15.4 rests on a link model that the link study finds about four times faster than a published 802.15.4 transfer time (`docs/LINKSIM_STUDY.md` section 4.4); real 802.15.4 networks with several hops may not meet the deadlines shown here.
 - No formal security analysis of the handshake or of the fallback logic. Specialists in protocol security would need to review any real design.
 - Draft and standards status: ML-KEM (FIPS 203) and ML-DSA (FIPS 204) are final; MAVLink has no post quantum extension and the sketch in `docs/MAVLINK_PQ_SKETCH.md` is not a proposal to any project.
