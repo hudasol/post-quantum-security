@@ -80,6 +80,10 @@ jobs:
         run: |
           python3 scripts/meta_analysis.py
           git diff --exit-code docs/META_ANALYSIS.md data/meta/
+      - name: Paper and claims register regenerate from the result files
+        run: |
+          python3 scripts/build_paper.py
+          git diff --exit-code docs/PAPER.md data/claims_register.csv
       - name: Proposal regenerates from the result files
         run: |
           python3 scripts/build_proposal.py
