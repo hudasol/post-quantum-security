@@ -1,0 +1,10 @@
+key,value
+label,modelled
+trials_per_cell,1000
+seeds,20261020 + i for trial i; zero loss cells deterministic
+losses,0 0.01 0.05 0.1 0.2
+deadlines_s,1 2 5 10 60 600 1800 3600
+sobol_N,128
+sobol_seed,20261020
+transport,selective repeat (sim.selective_repeat) for every flight
+run_seconds,326.9

@@ -1,0 +1,5 @@
+label,scenario,link,loss,now_faster,now_slower,order_at_zero_loss,intervals_overlap
+modelled,ttfam,ieee802154,0.1,raw_mldsa44/per_message,dtls13/classical,dtls13/classical before raw_mldsa44/per_message,False
+modelled,ttfam,ieee802154,0.2,raw_mldsa44/per_message,dtls13/classical,dtls13/classical before raw_mldsa44/per_message,False
+modelled,ttfam,sik,0.1,raw_mldsa44/per_message,dtls13/classical,dtls13/classical before raw_mldsa44/per_message,True
+modelled,ttfam,sik,0.2,raw_mldsa44/per_message,dtls13/classical,dtls13/classical before raw_mldsa44/per_message,False
