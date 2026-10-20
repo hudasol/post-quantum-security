@@ -1,0 +1,16 @@
+CFG,seed,20261020
+CFG,runs,5
+CFG,timer_overhead_cycles,4
+RES,ML-DSA-44,keygen,0,5380557,ok
+RES,ML-DSA-44,sign,0,12553829,ok
+RES,ML-DSA-44,verify,0,5405374,ok
+RES,ML-DSA-44,verify_rejects_modified,0,0,ok
+RES,ML-DSA-44,sign,1,14622426,ok
+RES,ML-DSA-44,verify,1,5405419,ok
+RES,ML-DSA-44,sign,2,7570302,ok
+RES,ML-DSA-44,verify,2,5405364,ok
+RES,ML-DSA-44,sign,3,7570316,ok
+RES,ML-DSA-44,verify,3,5405368,ok
+RES,ML-DSA-44,sign,4,36340985,ok
+RES,ML-DSA-44,verify,4,5405422,ok
+DONE,ML-DSA-44,0

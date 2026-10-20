@@ -1,0 +1,19 @@
+ibex_commit=1b29dae8866e6c0f0a3cd9dead53a77b4f45e357
+ibex_describe=v2.1.0-242-g1b29dae8
+ibex_licence=Apache License Version 2.0
+ibex_config_name=small
+ibex_fusesoc_opts=--BaseIsa=ibex_pkg::BaseIsaRV32I --RV32E=0 --RV32M=ibex_pkg::RV32MFast --RV32B=ibex_pkg::RV32BNone --RV32ZC=ibex_pkg::RV32Zca --RegFile=ibex_pkg::RegFileFF --BranchTargetALU=0 --WritebackStage=0 --ICache=0 --ICacheECC=0 --ICacheScramble=0 --BranchPredictor=0 --DbgTriggerEn=0 --SecureIbex=0 --PMPEnable=0 --PMPGranularity=0 --PMPNumRegions=4 --MHPMCounterNum=0 --MHPMCounterWidth=40
+ibex_simple_system_ram=Depth(1024*1024/4) words of 32 bits
+ibex_instr_cycle_delay=0 (INSTR_CYCLE_DELAY default in ibex_simple_system.core)
+mlkem_commit=d1b2fe782888bdb761a50336012923180be7f502 v2.0.0
+mlkem_licence=Apache-2.0 OR ISC OR MIT (library sources, per LICENSE)
+mldsa_commit=834a90d5e846ffa1e1611bd24e160bb2e9b86d35 v2.0.0
+mldsa_licence=Apache-2.0 OR ISC OR MIT (library sources, per LICENSE)
+verilator=Verilator 5.020 2024-01-01 rev (Debian 5.020-1)
+fusesoc=2.4.3
+compiler=riscv64-unknown-elf-gcc (13.2.0-11ubuntu1+12) 13.2.0
+cflags=-march=rv32imc_zicsr -mabi=ilp32 -O3 -fomit-frame-pointer -static -mcmodel=medany -ffreestanding -fno-builtin-printf -std=gnu99
+libc=picolibc rv32im/ilp32 (1.8.6-2)
+link_ram=0x100000 length 0xC0000; stack 0x1C0000 length 0x40000
+seed=20261020
+bench_runs=5
