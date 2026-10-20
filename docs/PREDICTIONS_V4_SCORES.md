@@ -6,7 +6,7 @@ Hash check: stored b49c1f93369456fb..., file now b49c1f93369456fb... (match).
 
 Verdicts: hit when the prediction holds; miss when the refutation clause is met; between when neither holds (this third verdict was not defined when the predictions were registered; it was defined on 2026-10-20 after a reviewer noted the gap); not scored when the registered metric could not be computed as registered, with the reason.
 
-Totals: 15 hit, 0 between, 5 miss, 4 not scored, of 24.
+Totals: 16 hit, 0 between, 4 miss, 4 not scored, of 24.
 
 | ID | verdict | evidence |
 |---|---|---|
@@ -23,7 +23,7 @@ Totals: 15 hit, 0 between, 5 miss, 4 not scored, of 24.
 | V11 | hit | Largest error of the time on air formula over 4 published examples: 0.42 percent (the third round model, kept in the table for comparison, is not the model this prediction names). Weak: only one example states every parameter; for the others the unstated settings were chosen because they reproduce the published value. |
 | V12 | hit | After every cited cost the model is 4.2 times below the 30 s low end. |
 | V13 | hit | Duty cycle waits equal the closed form (2 cases; this compares the code with the formula it implements, so it checks arithmetic only, on the LoRaWAN profile of the link simulator); the fragment count test against an independent RFC 4944 count passes when run by this script. |
-| V14 | miss | Scored on the simulator the studies use (stop and wait with data and acknowledgement loss against 1/(1-p)^2): closed form inside the interval at 4 of 5 loss rates, and the simulator sits above it at every rate. A purpose written sampler agrees at 5 of 5, but it cannot disagree by construction. Selective repeat, used by the protocol and mission studies, has no closed form check. |
+| V14 | hit | Registered metric (transmissions per fragment with independent data loss against 1/(1-p)): closed form inside the 95 percent interval at 5 of 5 loss rates. This sampler shares the loss model but not the event simulation; the event simulation the studies use, with data and acknowledgement loss against 1/(1-p)^2 and its own seed block per rate, is inside at 5 of 5. Selective repeat, used by the protocol and mission studies, has no closed form check. A first scoring on a shared seed block gave one exclusion that did not replicate. |
 | V15 | miss | Per message ML-DSA-44 on the SiK radio: utilisation 0.43 for the drone stream, which meets the refutation clause (at or below 100 percent), and 1.88 for the 5 Hz robot stream. |
 | V16 | hit | Hashing share of a 1 MB verification: 96.6 to 98.2 percent. |
 | V17 | hit | Profile fleet, stack optimised thresholds (the registered scenario): 0.186 of devices need replacement. The result depends on the threshold scenario: with every threshold drawn from its published range the median is 0.201, just above the 0.20 line. |
