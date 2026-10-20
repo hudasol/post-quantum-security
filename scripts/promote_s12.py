@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Promote round 4 staged rows to data/raw/S12_verified.csv after double reading.
 
-A staged row (data/raw/S12*_staged.csv) is promoted only if every field disagreement found
-by the two readers was adjudicated. Adjudicated corrections (verdict reader_right or
-both_wrong, with correct_value) replace the staged value and the change is appended to the
-comparability warning. Rows with any field adjudicated not_in_source, or with an open
-disagreement, or missing from either reader's sheet, are left out and listed in
+A staged row (data/raw/S12*_staged.csv) is promoted only if its status from
+scripts/summarize_verification5.py is confirmed (both readers read every value) or corrected
+(a third look settled every value disagreement). Adjudicated corrections (verdict reader_right
+or both_wrong, with correct_value) replace the staged value and the change is appended to the
+comparability warning. All other rows stay in staging and are listed with their reason in
 data/verify5/not_promoted.csv. No other value is changed.
 """
 import csv
@@ -30,22 +30,11 @@ def main():
             header = header or rd.fieldnames
             for r in rd:
                 stage[r["id"]] = r
-    r1, r2 = sv.read(V / "reader1_rows.csv"), sv.read(V / "reader2_rows.csv")
-    res = sv.compare(stage, r1, r2, sv.ROW_FIELDS)
-    adj = {}
-    if (V / "adjudication.csv").exists():
-        with open(V / "adjudication.csv", newline="", encoding="utf-8") as fh:
-            adj = {(r["id"], r["field"]): r for r in csv.DictReader(fh)}
-    blocked = {}
-    for rid, f, _, _, _, st in res:
-        if st == "missing_sheet":
-            blocked[rid] = "missing from a reader sheet"
-        elif st == "disagree":
-            a = adj.get((rid, f))
-            if a is None:
-                blocked[rid] = f"open disagreement on {f}"
-            elif a["verdict"] == "not_in_source":
-                blocked[rid] = f"{f} not found in the source"
+    rows_s = stage
+    res = sv.compare(rows_s, sv.read(V / "reader1_rows.csv"), sv.read(V / "reader2_rows.csv"), sv.ROW_FIELDS)
+    adj = sv.adjudications()
+    status = sv.row_status(rows_s, res, adj, sv.ROW_FIELDS)
+    blocked = {rid: f"{st}: {why}" for rid, (st, why) in status.items() if st not in ("confirmed", "corrected")}
     out = []
     for rid, r in stage.items():
         if rid in blocked:
