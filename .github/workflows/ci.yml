@@ -23,6 +23,8 @@ jobs:
         run: python3 scripts/check_style.py
       - name: Retracted claims do not reappear
         run: python3 scripts/check_claims.py
+      - name: Every registered claim matches its data file
+        run: pip install pandas && python3 scripts/check_numbers.py
       - name: Bibliography is current and every cited key exists
         run: python3 scripts/check_citations.py
   tests:
