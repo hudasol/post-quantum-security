@@ -10,7 +10,7 @@ Unmanned aircraft and ground robots accept commands and firmware over narrow rad
 
 ## 2. What the evidence already shows (this repository)
 
-1. A provenance controlled table of 1,328 published rows, every new row read by two independent readers (`docs/VERIFICATION5.md`).
+1. A provenance controlled table of 1,562 published rows, every new row read by two independent readers (`docs/VERIFICATION5.md`).
 2. A trace driven cycle model that predicts published Cortex-M4 cycle counts on held out rows of the same code base with a median error of 1.0 percent (modelled; interpolation within one code base, not transfer; signing misses by up to 23 percent), with predictions for a board session registered in advance (`docs/PREDICTIONS_V4_BOARD.md`).
 3. A mission simulation in which a hybrid session keeps a drone's command availability on a telemetry radio at a mean of 0.992 (estimated), as without authentication, while a post quantum signature on every command lowers it to 0.794 and adds about 380 ms per command (`docs/MISSION_STUDY.md`).
 4. A boot model in which verifying a 1 MB image with LMS takes about 470 ms with a software hash and 30 ms with hash hardware on a 168 MHz Cortex-M4 (estimated; `docs/BOOT_UPDATE_STUDY.md`).

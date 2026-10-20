@@ -1747,8 +1747,8 @@ Labels used across the repository: published, host measured, emulated, estimated
 |---|---|---|
 | claim_id | text | abs_rows |
 | document | text | docs/PAPER.md |
-| text_in_document | number | 1,328 |
-| value | number | 1328.0 |
+| text_in_document | number | 1,562 |
+| value | number | 1562.0 |
 | source_file | text | data/evidence.csv |
 | column | text | id |
 | query | text | stream == "S10" |

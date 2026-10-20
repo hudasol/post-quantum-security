@@ -18,7 +18,7 @@ Drones and robots authenticate commands and firmware on microcontroller flight c
 
 ## What already exists
 
-- 1,328 published rows with provenance, every new row read by two independent readers.
+- 1,562 published rows with provenance, every new row read by two independent readers.
 - A cycle model with a median held out error of 1.0 percent within one code base (modelled; signing misses by up to 23 percent, and transfer to other code is untested), and board predictions registered in advance.
 - A mission simulation: with a hybrid session, command availability on a telemetry radio stays at 0.992; a signature on every command lowers it to 0.794 and adds about 380 ms per command (estimated).
 - Firmware verification of a 1 MB image with LMS: about 470 ms with a software hash, 30 ms with hash hardware (estimated).
