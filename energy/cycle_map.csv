@@ -1,0 +1,31 @@
+op,core_class,method,ref,cycle_label,note
+mldsa44_verify,Cortex-M4,evidence_cycles,S2-0033,published,pqm4 m4f
+mldsa44_sign,Cortex-M4,evidence_cycles,S2-0032,published,pqm4 m4f
+mldsa65_verify,Cortex-M4,evidence_cycles,S2-0042,published,pqm4 m4f
+mldsa87_verify,Cortex-M4,evidence_cycles,S2-0051,published,pqm4 m4f
+mlkem768_keygen,Cortex-M4,evidence_cycles,S2-0022,published,pqm4 m4fspeed
+mlkem768_encaps,Cortex-M4,evidence_cycles,S2-0023,published,pqm4 m4fspeed
+mlkem768_decaps,Cortex-M4,evidence_cycles,S2-0024,published,pqm4 m4fspeed
+lms_verify,Cortex-M4,evidence_cycles,S8-026,published,LMS SHA-256 w=16 h=10 single tree (Campos et al.)
+xmss_verify,Cortex-M4,evidence_cycles,S8-032,published,XMSS ROBUST SHA-256 w=16 h=10 (RFC 8391 construction)
+xmss_simple_verify,Cortex-M4,evidence_cycles,S8-038,published,XMSS SIMPLE variant (not the RFC 8391 construction)
+slhdsa128s_verify,Cortex-M4,evidence_cycles,S2-0060,published,SPHINCS+ sha2 128s simple clean (pre standard predecessor of SLH-DSA)
+slhdsa128f_verify,Cortex-M4,evidence_cycles,S2-0057,published,SPHINCS+ sha2 128f simple clean (pre standard predecessor of SLH-DSA)
+ecdsa_p256_verify,Cortex-M4,evidence_cycles,S2-0213,published,micro-ecc at 96 MHz
+ed25519_verify,Cortex-M4,evidence_time,S10D-031,derived from published,Monocypher on nRF52840 at 64 MHz: reported ms times clock
+ed25519_sign,Cortex-M4,evidence_time,S10D-030,derived from published,Monocypher on nRF52840 at 64 MHz: reported ms times clock
+x25519_shared,Cortex-M4,benchmark_time,x25519_shared_time,derived from published,median over the three CycloneCRYPTO boards: ms times clock
+x25519_keygen,Cortex-M4,benchmark_time,x25519_shared_time,derived from published,public key generation taken equal to shared secret time (both are one scalar multiplication on the pages; within 0.1 ms)
+hmac_sha256_msg,Cortex-M4,hmac_estimate,sha256_sw_throughput,estimated,no published HMAC cycles row; estimated from published SHA-256 software throughput
+mldsa44_verify,Cortex-M7,evidence_cycles,S7-009,published,SLOTHY Cortex-M7
+mldsa44_sign,Cortex-M7,evidence_cycles,S7-008,published,SLOTHY Cortex-M7
+mlkem768_keygen,Cortex-M7,evidence_cycles,S7-013,published,SLOTHY Cortex-M7
+mlkem768_encaps,Cortex-M7,evidence_cycles,S7-014,published,SLOTHY Cortex-M7
+mlkem768_decaps,Cortex-M7,evidence_cycles,S7-015,published,SLOTHY Cortex-M7
+mldsa65_verify,Cortex-M7,evidence_cycles,S7-003,published,SLOTHY Cortex-M7
+mldsa87_verify,Cortex-M7,evidence_cycles,S7-012,published,SLOTHY Cortex-M7
+mldsa44_sign,Cortex-M33,evidence_cycles,S10C-017,published,stm32pqc-lowram average at 160 MHz (STM32 Cortex-M33)
+ed25519_verify,RISC-V,evidence_time,S10D-073,derived from published,Monocypher on GD32VF103 at 72 MHz: reported ms times clock
+ecdsa_p256_verify,RISC-V,evidence_time,S10D-076,derived from published,Tinycrypt on GD32VF103 at 72 MHz
+lms_verify,RISC-V,evidence_time,S10D-083,derived from published,HSS 2 levels h=5 w=4 on GD32VF103 at 72 MHz (different parameters from the Cortex-M4 LMS row)
+mldsa44_verify,RISC-V,evidence_cycles,S2-0363,published,CHERIoT Ibex RISC-V (a different RISC-V core from the ESP32-C3)

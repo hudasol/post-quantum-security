@@ -1,0 +1,3 @@
+platform,kind,mcu,core_class,clock_mhz,battery_mah,battery_v,battery_wh,run_time_h,label,source_url,location_in_source
+Crazyflie 2.1,small multirotor kit,STM32F405,Cortex-M4,168,250,,,0.11666666666666667,published,https://www.bitcraze.io/documentation/hardware/crazyflie_2_1/crazyflie_2_1-datasheet.pdf,Rev 3 sections 3 5 10 (flight time 7 minutes; battery voltage not stated)
+TurtleBot3 Burger,small ground robot,Cortex-M7 board (part not named),Cortex-M7,216,1800,11.1,19.98,2.5,published,https://emanual.robotis.com/docs/en/platform/turtlebot3/features/,Hardware Specifications table (operating time 2 h 30 min)

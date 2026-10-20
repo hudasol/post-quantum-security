@@ -1,0 +1,145 @@
+part,supply_mode,ua_per_mhz_published,volts,volts_label,op,cycles,cycle_source_label,cycle_source,energy_uj_estimated,baseline_op,multiple_of_baseline_estimated,label
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),mldsa44_verify,1421623,published,S2-0033,516.049,ed25519_verify,0.555,estimated
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),mldsa44_sign,3943121,published,S2-0032,1431.353,ed25519_sign,3.624,estimated
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),mldsa65_verify,2415944,published,S2-0042,876.988,ed25519_verify,0.944,estimated
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),mldsa87_verify,4193104,published,S2-0051,1522.097,ed25519_verify,1.638,estimated
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),mlkem768_keygen,642096,published,S2-0022,233.081,x25519_keygen,0.401,estimated
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),mlkem768_encaps,658754,published,S2-0023,239.128,x25519_shared,0.411,estimated
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),mlkem768_decaps,707827,published,S2-0024,256.941,x25519_shared,0.442,estimated
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),lms_verify,2658884,published,S8-026,965.175,ed25519_verify,1.039,estimated
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),xmss_verify,13071813,published,S8-032,4745.068,ed25519_verify,5.106,estimated
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),xmss_simple_verify,3676358,published,S8-038,1334.518,ed25519_verify,1.436,estimated
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),slhdsa128s_verify,7471794,published,S2-0060,2712.261,ed25519_verify,2.919,estimated
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),slhdsa128f_verify,21923628,published,S2-0057,7958.277,ed25519_verify,8.564,estimated
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),ed25519_verify,2560000,derived from published,S10D-031 (time x clock),929.28,,,estimated
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),ed25519_sign,1088000,derived from published,S10D-030 (time x clock),394.944,,,estimated
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),ecdsa_p256_verify,6639000,published,S2-0213,2409.957,,,estimated
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),x25519_shared,1602000,derived from published,energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards),581.526,,,estimated
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),x25519_keygen,1602000,derived from published,energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards),581.526,,,estimated
+STM32L4R5,LDO,110.0,3.3,assumption (VDD nominal),hmac_sha256_msg,24407,estimated,SHA-256 software throughput median (energy/retrieved_benchmarks.csv),8.86,ed25519_verify,0.01,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,mldsa44_verify,1421623,published,S2-0033,201.728,ed25519_verify,0.555,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,mldsa44_sign,3943121,published,S2-0032,559.529,ed25519_sign,3.624,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,mldsa65_verify,2415944,published,S2-0042,342.822,ed25519_verify,0.944,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,mldsa87_verify,4193104,published,S2-0051,595.001,ed25519_verify,1.638,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,mlkem768_keygen,642096,published,S2-0022,91.113,x25519_keygen,0.401,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,mlkem768_encaps,658754,published,S2-0023,93.477,x25519_shared,0.411,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,mlkem768_decaps,707827,published,S2-0024,100.441,x25519_shared,0.442,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,lms_verify,2658884,published,S8-026,377.296,ed25519_verify,1.039,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,xmss_verify,13071813,published,S8-032,1854.89,ed25519_verify,5.106,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,xmss_simple_verify,3676358,published,S8-038,521.675,ed25519_verify,1.436,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,slhdsa128s_verify,7471794,published,S2-0060,1060.248,ed25519_verify,2.919,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,slhdsa128f_verify,21923628,published,S2-0057,3110.963,ed25519_verify,8.564,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,ed25519_verify,2560000,derived from published,S10D-031 (time x clock),363.264,,,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,ed25519_sign,1088000,derived from published,S10D-030 (time x clock),154.387,,,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,ecdsa_p256_verify,6639000,published,S2-0213,942.074,,,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,x25519_shared,1602000,derived from published,energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards),227.324,,,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,x25519_keygen,1602000,derived from published,energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards),227.324,,,estimated
+STM32L4R5,SMPS or stated,43.0,3.3,published,hmac_sha256_msg,24407,estimated,SHA-256 software throughput median (energy/retrieved_benchmarks.csv),3.463,ed25519_verify,0.01,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),mldsa44_verify,1421623,published,S2-0033,469.136,ed25519_verify,0.555,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),mldsa44_sign,3943121,published,S2-0032,1301.23,ed25519_sign,3.624,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),mldsa65_verify,2415944,published,S2-0042,797.262,ed25519_verify,0.944,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),mldsa87_verify,4193104,published,S2-0051,1383.724,ed25519_verify,1.638,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),mlkem768_keygen,642096,published,S2-0022,211.892,x25519_keygen,0.401,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),mlkem768_encaps,658754,published,S2-0023,217.389,x25519_shared,0.411,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),mlkem768_decaps,707827,published,S2-0024,233.583,x25519_shared,0.442,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),lms_verify,2658884,published,S8-026,877.432,ed25519_verify,1.039,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),xmss_verify,13071813,published,S8-032,4313.698,ed25519_verify,5.106,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),xmss_simple_verify,3676358,published,S8-038,1213.198,ed25519_verify,1.436,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),slhdsa128s_verify,7471794,published,S2-0060,2465.692,ed25519_verify,2.919,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),slhdsa128f_verify,21923628,published,S2-0057,7234.797,ed25519_verify,8.564,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),ed25519_verify,2560000,derived from published,S10D-031 (time x clock),844.8,,,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),ed25519_sign,1088000,derived from published,S10D-030 (time x clock),359.04,,,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),ecdsa_p256_verify,6639000,published,S2-0213,2190.87,,,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),x25519_shared,1602000,derived from published,energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards),528.66,,,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),x25519_keygen,1602000,derived from published,energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards),528.66,,,estimated
+STM32L476,LDO,100.0,3.3,assumption (VDD nominal),hmac_sha256_msg,24407,estimated,SHA-256 software throughput median (energy/retrieved_benchmarks.csv),8.054,ed25519_verify,0.01,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,mldsa44_verify,1421623,published,S2-0033,182.963,ed25519_verify,0.555,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,mldsa44_sign,3943121,published,S2-0032,507.48,ed25519_sign,3.624,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,mldsa65_verify,2415944,published,S2-0042,310.932,ed25519_verify,0.944,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,mldsa87_verify,4193104,published,S2-0051,539.652,ed25519_verify,1.638,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,mlkem768_keygen,642096,published,S2-0022,82.638,x25519_keygen,0.401,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,mlkem768_encaps,658754,published,S2-0023,84.782,x25519_shared,0.411,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,mlkem768_decaps,707827,published,S2-0024,91.097,x25519_shared,0.442,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,lms_verify,2658884,published,S8-026,342.198,ed25519_verify,1.039,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,xmss_verify,13071813,published,S8-032,1682.342,ed25519_verify,5.106,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,xmss_simple_verify,3676358,published,S8-038,473.147,ed25519_verify,1.436,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,slhdsa128s_verify,7471794,published,S2-0060,961.62,ed25519_verify,2.919,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,slhdsa128f_verify,21923628,published,S2-0057,2821.571,ed25519_verify,8.564,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,ed25519_verify,2560000,derived from published,S10D-031 (time x clock),329.472,,,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,ed25519_sign,1088000,derived from published,S10D-030 (time x clock),140.026,,,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,ecdsa_p256_verify,6639000,published,S2-0213,854.439,,,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,x25519_shared,1602000,derived from published,energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards),206.177,,,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,x25519_keygen,1602000,derived from published,energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards),206.177,,,estimated
+STM32L476,SMPS or stated,39.0,3.3,published,hmac_sha256_msg,24407,estimated,SHA-256 software throughput median (energy/retrieved_benchmarks.csv),3.141,ed25519_verify,0.01,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),mldsa44_verify,1421623,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0033,497.284,ed25519_verify,0.555,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),mldsa44_sign,14610000,published,S10C-017,5110.578,ed25519_sign,13.428,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),mldsa65_verify,2415944,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0042,845.097,ed25519_verify,0.944,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),mldsa87_verify,4193104,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0051,1466.748,ed25519_verify,1.638,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),mlkem768_keygen,642096,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0022,224.605,x25519_keygen,0.401,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),mlkem768_encaps,658754,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0023,230.432,x25519_shared,0.411,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),mlkem768_decaps,707827,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0024,247.598,x25519_shared,0.442,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),lms_verify,2658884,published; proxy: Cortex-M4 row used for Cortex-M33,S8-026,930.078,ed25519_verify,1.039,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),xmss_verify,13071813,published; proxy: Cortex-M4 row used for Cortex-M33,S8-032,4572.52,ed25519_verify,5.106,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),xmss_simple_verify,3676358,published; proxy: Cortex-M4 row used for Cortex-M33,S8-038,1285.99,ed25519_verify,1.436,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),slhdsa128s_verify,7471794,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0060,2613.634,ed25519_verify,2.919,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),slhdsa128f_verify,21923628,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0057,7668.885,ed25519_verify,8.564,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),ed25519_verify,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,S10D-031 (time x clock),895.488,,,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),ed25519_sign,1088000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,S10D-030 (time x clock),380.582,,,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),ecdsa_p256_verify,6639000,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0213,2322.322,,,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),x25519_shared,1602000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards),560.38,,,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),x25519_keygen,1602000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards),560.38,,,estimated
+STM32L552,LDO,106.0,3.3,assumption (VDD nominal),hmac_sha256_msg,24407,estimated; proxy: Cortex-M4 row used for Cortex-M33,SHA-256 software throughput median (energy/retrieved_benchmarks.csv),8.537,ed25519_verify,0.01,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,mldsa44_verify,1421623,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0033,264.422,ed25519_verify,0.555,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,mldsa44_sign,14610000,published,S10C-017,2717.46,ed25519_sign,13.428,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,mldsa65_verify,2415944,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0042,449.366,ed25519_verify,0.944,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,mldsa87_verify,4193104,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0051,779.917,ed25519_verify,1.638,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,mlkem768_keygen,642096,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0022,119.43,x25519_keygen,0.401,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,mlkem768_encaps,658754,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0023,122.528,x25519_shared,0.411,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,mlkem768_decaps,707827,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0024,131.656,x25519_shared,0.442,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,lms_verify,2658884,published; proxy: Cortex-M4 row used for Cortex-M33,S8-026,494.552,ed25519_verify,1.039,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,xmss_verify,13071813,published; proxy: Cortex-M4 row used for Cortex-M33,S8-032,2431.357,ed25519_verify,5.106,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,xmss_simple_verify,3676358,published; proxy: Cortex-M4 row used for Cortex-M33,S8-038,683.803,ed25519_verify,1.436,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,slhdsa128s_verify,7471794,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0060,1389.754,ed25519_verify,2.919,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,slhdsa128f_verify,21923628,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0057,4077.795,ed25519_verify,8.564,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,ed25519_verify,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,S10D-031 (time x clock),476.16,,,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,ed25519_sign,1088000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,S10D-030 (time x clock),202.368,,,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,ecdsa_p256_verify,6639000,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0213,1234.854,,,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,x25519_shared,1602000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards),297.972,,,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,x25519_keygen,1602000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards),297.972,,,estimated
+STM32L552,SMPS or stated,62.0,3.0,published,hmac_sha256_msg,24407,estimated; proxy: Cortex-M4 row used for Cortex-M33,SHA-256 software throughput median (energy/retrieved_benchmarks.csv),4.54,ed25519_verify,0.01,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,mldsa44_verify,1421623,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0033,86.79,ed25519_verify,0.555,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,mldsa44_sign,14610000,published,S10C-017,891.94,ed25519_sign,13.428,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,mldsa65_verify,2415944,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0042,147.493,ed25519_verify,0.944,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,mldsa87_verify,4193104,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0051,255.989,ed25519_verify,1.638,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,mlkem768_keygen,642096,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0022,39.2,x25519_keygen,0.401,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,mlkem768_encaps,658754,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0023,40.217,x25519_shared,0.411,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,mlkem768_decaps,707827,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0024,43.213,x25519_shared,0.442,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,lms_verify,2658884,published; proxy: Cortex-M4 row used for Cortex-M33,S8-026,162.325,ed25519_verify,1.039,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,xmss_verify,13071813,published; proxy: Cortex-M4 row used for Cortex-M33,S8-032,798.034,ed25519_verify,5.106,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,xmss_simple_verify,3676358,published; proxy: Cortex-M4 row used for Cortex-M33,S8-038,224.442,ed25519_verify,1.436,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,slhdsa128s_verify,7471794,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0060,456.153,ed25519_verify,2.919,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,slhdsa128f_verify,21923628,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0057,1338.437,ed25519_verify,8.564,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,ed25519_verify,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,S10D-031 (time x clock),156.288,,,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,ed25519_sign,1088000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,S10D-030 (time x clock),66.422,,,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,ecdsa_p256_verify,6639000,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0213,405.311,,,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,x25519_shared,1602000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards),97.802,,,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,x25519_keygen,1602000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards),97.802,,,estimated
+STM32U5A5,SMPS or stated,18.5,3.3,published,hmac_sha256_msg,24407,estimated; proxy: Cortex-M4 row used for Cortex-M33,SHA-256 software throughput median (energy/retrieved_benchmarks.csv),1.49,ed25519_verify,0.01,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),mldsa44_verify,3674071,published,S2-0363,1742.887,ed25519_verify,1.245,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),mldsa44_sign,3943121,published; proxy: Cortex-M4 row used for RISC-V,S2-0032,1870.518,ed25519_sign,3.624,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),mldsa65_verify,2415944,published; proxy: Cortex-M4 row used for RISC-V,S2-0042,1146.063,ed25519_verify,0.818,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),mldsa87_verify,4193104,published; proxy: Cortex-M4 row used for RISC-V,S2-0051,1989.104,ed25519_verify,1.42,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),mlkem768_keygen,642096,published; proxy: Cortex-M4 row used for RISC-V,S2-0022,304.594,x25519_keygen,0.401,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),mlkem768_encaps,658754,published; proxy: Cortex-M4 row used for RISC-V,S2-0023,312.496,x25519_shared,0.411,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),mlkem768_decaps,707827,published; proxy: Cortex-M4 row used for RISC-V,S2-0024,335.775,x25519_shared,0.442,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),lms_verify,8784000,derived from published,S10D-083 (time x clock),4166.91,ed25519_verify,2.976,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),xmss_verify,13071813,published; proxy: Cortex-M4 row used for RISC-V,S8-032,6200.941,ed25519_verify,4.428,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),xmss_simple_verify,3676358,published; proxy: Cortex-M4 row used for RISC-V,S8-038,1743.972,ed25519_verify,1.245,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),slhdsa128s_verify,7471794,published; proxy: Cortex-M4 row used for RISC-V,S2-0060,3544.432,ed25519_verify,2.531,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),slhdsa128f_verify,21923628,published; proxy: Cortex-M4 row used for RISC-V,S2-0057,10400.021,ed25519_verify,7.427,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),ed25519_verify,2952000,derived from published,S10D-073 (time x clock),1400.355,,,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),ed25519_sign,1088000,derived from published; proxy: Cortex-M4 row used for RISC-V,S10D-030 (time x clock),516.12,,,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),ecdsa_p256_verify,22176000,derived from published,S10D-076 (time x clock),10519.74,,,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),x25519_shared,1602000,derived from published; proxy: Cortex-M4 row used for RISC-V,energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards),759.949,,,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),x25519_keygen,1602000,derived from published; proxy: Cortex-M4 row used for RISC-V,energy/retrieved_benchmarks.csv x25519_shared_time (median of 3 boards),759.949,,,estimated
+ESP32-C3,mA at stated MHz,143.75,3.3,assumption (supply not stated in table),hmac_sha256_msg,24407,estimated; proxy: Cortex-M4 row used for RISC-V,SHA-256 software throughput median (energy/retrieved_benchmarks.csv),11.578,ed25519_verify,0.008,estimated
