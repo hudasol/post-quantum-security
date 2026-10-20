@@ -29,28 +29,28 @@ Checks of this recommendation against the result files (computed by `mission/run
 
 | vehicle | link | arch | mean availability at 0.5 s [95% CI] | added latency ms [95% CI] | utilisation | compute share | recovery s after teardown | feasible |
 |---|---|---|---|---|---|---|---|---|
-| drone | SiK 64 kbit/s | A | 0.9919 [0.9913, 0.9926] | 1.87 [1.87, 1.87] | 0.107 | 0.0012 | 0.27 | yes |
-| drone | SiK 64 kbit/s | B | 0.9915 [0.9908, 0.9922] | 1.87 [1.87, 1.87] | 0.110 | 0.0012 | 0.97 | yes |
+| drone | SiK 64 kbit/s | A | 0.9919 [0.9913, 0.9926] | 1.87 [1.87, 1.87] | 0.107 | 0.0009 | 0.21 | yes |
+| drone | SiK 64 kbit/s | B | 0.9915 [0.9908, 0.9922] | 1.87 [1.87, 1.87] | 0.110 | 0.0010 | 0.92 | yes |
 | drone | SiK 64 kbit/s | C | 0.7943 [0.7932, 0.7953] | 379.57 [379.57, 379.57] | 0.429 | 0.0078 | n/a | no |
 | drone | SiK 64 kbit/s | D | 0.9912 [0.9905, 0.9920] | 1.87 [1.87, 1.87] | 0.107 | 0.0009 | n/a | yes |
-| drone | IEEE 802.15.4 | A | 0.9919 [0.9913, 0.9926] | 0.06 [0.06, 0.06] | 0.059 | 0.0012 | 0.26 | yes |
-| drone | IEEE 802.15.4 | B | 0.9917 [0.9911, 0.9924] | 0.06 [0.06, 0.06] | 0.060 | 0.0012 | 0.64 | yes |
+| drone | IEEE 802.15.4 | A | 0.9919 [0.9913, 0.9926] | 0.06 [0.06, 0.06] | 0.059 | 0.0009 | 0.20 | yes |
+| drone | IEEE 802.15.4 | B | 0.9917 [0.9911, 0.9924] | 0.06 [0.06, 0.06] | 0.060 | 0.0010 | 0.58 | yes |
 | drone | IEEE 802.15.4 | C | 0.9337 [0.9329, 0.9345] | 287.28 [287.28, 287.28] | 0.215 | 0.0078 | n/a | no |
 | drone | IEEE 802.15.4 | D | 0.9916 [0.9909, 0.9923] | 0.06 [0.06, 0.06] | 0.059 | 0.0009 | n/a | yes |
-| drone | LoRaWAN DR5 | A | 6.67e-05 [4.93e-05, 8.55e-05] | 19.07 [19.07, 19.07] | 15.808 | 0.0012 | 3.47 | no |
-| drone | LoRaWAN DR5 | B | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 16.494 | 0.0010 | 734.42 | no |
+| drone | LoRaWAN DR5 | A | 6.67e-05 [4.93e-05, 8.55e-05] | 19.07 [19.07, 19.07] | 15.808 | 0.0009 | 3.41 | no |
+| drone | LoRaWAN DR5 | B | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 16.494 | 0.0009 | 734.36 | no |
 | drone | LoRaWAN DR5 | C | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 378.833 | 0.0078 | n/a | no |
 | drone | LoRaWAN DR5 | D | 7.39e-05 [5.51e-05, 9.57e-05] | 19.07 [19.07, 19.07] | 15.681 | 0.0009 | n/a | no |
-| robot | SiK 64 kbit/s | A | 0.9915 [0.9910, 0.9921] | 1.87 [1.87, 1.87] | 0.128 | 0.0013 | 0.27 | yes |
-| robot | SiK 64 kbit/s | B | 0.9917 [0.9911, 0.9922] | 1.87 [1.87, 1.87] | 0.131 | 0.0012 | 1.02 | yes |
+| robot | SiK 64 kbit/s | A | 0.9916 [0.9910, 0.9921] | 1.87 [1.87, 1.87] | 0.128 | 0.0010 | 0.21 | yes |
+| robot | SiK 64 kbit/s | B | 0.9917 [0.9911, 0.9923] | 1.87 [1.87, 1.87] | 0.131 | 0.0010 | 0.96 | yes |
 | robot | SiK 64 kbit/s | C | 0.0002 [0.0002, 0.0002] | 379.57 [379.57, 379.57] | 1.875 | 0.0397 | n/a | no |
 | robot | SiK 64 kbit/s | D | 0.9920 [0.9915, 0.9926] | 1.87 [1.87, 1.87] | 0.128 | 0.0009 | n/a | yes |
-| robot | IEEE 802.15.4 | A | 0.9915 [0.9909, 0.9921] | 0.06 [0.06, 0.06] | 0.062 | 0.0013 | 0.26 | yes |
-| robot | IEEE 802.15.4 | B | 0.9914 [0.9908, 0.9920] | 0.06 [0.06, 0.06] | 0.064 | 0.0012 | 0.64 | yes |
+| robot | IEEE 802.15.4 | A | 0.9915 [0.9909, 0.9921] | 0.06 [0.06, 0.06] | 0.062 | 0.0010 | 0.20 | yes |
+| robot | IEEE 802.15.4 | B | 0.9914 [0.9908, 0.9920] | 0.06 [0.06, 0.06] | 0.064 | 0.0010 | 0.58 | yes |
 | robot | IEEE 802.15.4 | C | 0.0010 [0.0010, 0.0011] | 340.85 [334.21, 355.50] | 0.859 | 0.0397 | n/a | no |
 | robot | IEEE 802.15.4 | D | 0.9921 [0.9916, 0.9927] | 0.06 [0.06, 0.06] | 0.062 | 0.0009 | n/a | yes |
-| robot | LoRaWAN DR5 | A | 1.11e-05 [8.22e-06, 1.42e-05] | 19.07 [19.07, 19.07] | 59.656 | 0.0013 | 3.47 | no |
-| robot | LoRaWAN DR5 | B | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 60.175 | 0.0010 | 735.50 | no |
+| robot | LoRaWAN DR5 | A | 1.11e-05 [8.22e-06, 1.42e-05] | 19.07 [19.07, 19.07] | 59.656 | 0.0010 | 3.41 | no |
+| robot | LoRaWAN DR5 | B | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 60.175 | 0.0009 | 735.44 | no |
 | robot | LoRaWAN DR5 | C | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 1917.689 | 0.0397 | n/a | no |
 | robot | LoRaWAN DR5 | D | 1.16e-05 [8.67e-06, 1.47e-05] | 19.07 [19.07, 19.07] | 59.539 | 0.0009 | n/a | no |
 
@@ -60,19 +60,19 @@ Feasible at the 0.5 s deadline (base assumptions): drone: A on IEEE 802.15.4, A 
 
 ## 3. Quantified trade offs (estimated)
 
-- **B against A on SiK (drone):** availability 0.9915 [0.9908, 0.9922] against 0.9919 [0.9913, 0.9926]; the per message cost is identical (same 13 B field), so the difference is only the session start: first session after 0.97 s against 0.27 s, and recovery after a teardown 0.97 s against 0.27 s. Handshake air bytes 4772 against 144.
+- **B against A on SiK (drone):** availability 0.9915 [0.9908, 0.9922] against 0.9919 [0.9913, 0.9926]; the per message cost is identical (same 13 B field), so the difference is only the session start: first session after 0.92 s against 0.21 s, and recovery after a teardown 0.92 s against 0.21 s. Handshake air bytes 4772 against 144.
 
 - **C on SiK:** added latency 379.6 [379.6, 379.6] ms per command and availability 0.7943 [0.7932, 0.7953] for the 1 Hz drone stream; for the 5 Hz robot stream utilisation reaches 1.875 and availability 0.0002 [0.0002, 0.0002].
 
 - **LoRaWAN:** under the 1 percent duty cycle the base command streams are not carried by any architecture: the highest mean availability on either LoRaWAN link is 7.39e-05, and the same stream without authentication reaches at most 9.86e-05, so the link, not the authentication, rules it out. In the low rate profile (one command per minute, 5 s deadline) the B handshake on DR5 needs a median 739.7 s against a 60 s preflight; feasible there: A on IEEE 802.15.4, A on SiK 64 kbit/s, B on IEEE 802.15.4, B on SiK 64 kbit/s, C on SiK 64 kbit/s, D on IEEE 802.15.4, D on SiK 64 kbit/s. On DR0 one signed setpoint needs 2 link frames, and each frame is followed by the duty cycle silence.
 
-- **Compute:** the largest median compute share of A, B and D in any base configuration is 0.0013 of the 168 MHz cycle budget; C costs 8.46 ms of verification per command (derived from published cycles), which matters only at high command rates.
+- **Compute:** the largest median compute share of A, B and D in any base configuration is 0.0010 of the 168 MHz cycle budget; C costs 8.46 ms of verification per command (derived from published cycles), which matters only at high command rates.
 
 
 | arch | operation | cycles | ms_at_168MHz | ms_at_480MHz | label |
 |---|---|---|---|---|---|
-| A | handshake or rekey | 1.42e+07 | 84.458 | 29.560 | derived from published |
-| B | handshake or rekey | 1.37e+07 | 81.603 | 28.561 | derived from published |
+| A | handshake or rekey | 3.19e+06 | 18.979 | 6.643 | derived from published |
+| B | handshake or rekey | 3.91e+06 | 23.262 | 8.142 | derived from published |
 | C | per command check | 1.42e+06 | 8.462 | 2.962 | derived from published |
 | D | boot verify | 2.58e+06 | 15.336 | 5.368 | derived from published |
 
@@ -84,7 +84,7 @@ Feasible at the 0.5 s deadline (base assumptions): drone: A on IEEE 802.15.4, A 
 - Frame loss on IEEE 802.15.4: B stays at or above the 0.99 threshold up to the highest swept frame loss (0.2), because retransmissions fit inside the 0.5 s deadline; frame loss does not change the recommendation in the swept range (a null result). C, by contrast, drops to 7.25e-06 at that loss.
 
 
-- Link loss events: at 20 outages per hour (mean 5 s) A, B and D all fall below the threshold on SiK (A 0.9711, B 0.9737, D 0.9725). The three differ by at most 0.0026, so at this rate the link, not the choice of authentication, sets availability and the recommendation does not change; the remedy is a more reliable link, not a different scheme.
+- Link loss events: at 20 outages per hour (mean 5 s) A, B and D all fall below the threshold on SiK (A 0.9712, B 0.9734, D 0.9725). The three differ by at most 0.0022, so at this rate the link, not the choice of authentication, sets availability and the recommendation does not change; the remedy is a more reliable link, not a different scheme.
 
 - Rekey interval (60 s to once per arming): the spread of mean availability across the swept intervals is 0.0002 for A and 0.0010 for B on SiK, comparable to the run to run noise; in this model the rekey interval does not change the recommendation (a null result), because the old key stays valid for the 30 s grace period while a rekey is in progress.
 
@@ -92,13 +92,13 @@ Feasible at the 0.5 s deadline (base assumptions): drone: A on IEEE 802.15.4, A 
 
 - If the link cannot complete the B handshake inside preflight (LoRaWAN class links in this study), use provisioned keys (D) and accept the key management burden: keys must be loaded over a wire before each mission and a captured vehicle exposes them until they expire.
 
-- If the safety case requires renewed authentication within a bound shorter than the B recovery time after a teardown (median 0.97 s at no frame loss and 1.47 s at a frame loss of 0.2 on SiK), keep the session alive through outages (longer session timeout) or fall back to D keys.
+- If the safety case requires renewed authentication within a bound shorter than the B recovery time after a teardown (median 0.92 s at no frame loss and 1.41 s at a frame loss of 0.2 on SiK), keep the session alive through outages (longer session timeout) or fall back to D keys.
 
 - If command streams are rare (one per minute in the low rate profile) and each command is high value, C is feasible on: SiK 64 kbit/s at a 5 s deadline, because its per command delay no longer competes with a stream.
 
 - If the flight controller is a Cortex-M7 at 480 MHz (sensitivity case; M4 cycles are not directly comparable to M7), the largest median compute share on SiK becomes 0.0027; compute is not the limiting resource in any configuration studied.
 
-- If the X25519 proxy is replaced by measured X25519 cycles, A and B handshake compute falls (unverified) without changing feasibility.
+- Across the published range of X25519 and Ed25519 rows, the A handshake compute spans 10.0 to 21.1 ms at 168 MHz (derived from published); compute is not the limiting resource at either end, so the choice of row does not change any verdict.
 
 ## 5. Components and interfaces (design level)
 

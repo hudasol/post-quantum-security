@@ -31,23 +31,23 @@ Message payload lengths are host measured from pymavlink 2.4.50 (`mission/payloa
 
 Reference board: STM32F405 class flight controller at 168 MHz (Cortex-M4F, the same core family as the pqm4 rows; `data/raw/S5_benchmark_plan_facts.md` line 77). A 480 MHz Cortex-M7 board (Pixhawk 6C, line 75) is a sensitivity case only, because M4 cycle counts do not transfer directly to an M7. Published rows use zero flash wait states; a wait state factor is swept.
 
-| operation | cycles | label | source |
-|---|---|---|---|
-| ecdh_proxy | 1.16e+07 | published | S2-0199+S2-0201; X25519 has no cycle row; ECDH secp256r1 keygen plus shared secret (micro-ecc, Cortex-M4 at 96 MHz) used as a proxy |
-| mlkem768_encaps | 6.59e+05 | published | S2-0023; ML-KEM-768 encaps, pqm4 m4fspeed |
-| mldsa44_verify | 1.42e+06 | published | S2-0033; ML-DSA-44 verify, pqm4 m4f |
-| lms_verify | 2.58e+06 | published | S2-0316; LMS w=16 h=5 SHA-256 verify, Cortex-M4 (slides) |
-| ed25519_verify | 2.56e+06 | derived from published | S10D-031: 40 ms x 64 MHz (Monocypher, nRF52840) |
+| operation | cycles used | published range min | published range max | label | source |
+|---|---|---|---|---|---|
+| x25519_two_mults | 1.83e+06 | 9.53e+05 | 2.07e+06 | derived from published | S12A-325+S12A-325; X25519, two scalar multiplications (key generation plus shared secret), Fujii and Aranha, STM32F401 at 84 MHz |
+| ed25519_verify | 1.36e+06 | 7.22e+05 | 1.46e+06 | published | S12A-328; Ed25519 verify, Fujii and Aranha, STM32F401 at 84 MHz |
+| mlkem768_encaps | 6.59e+05 | 6.59e+05 | 6.59e+05 | published | S2-0023; ML-KEM-768 encaps, pqm4 m4fspeed |
+| mldsa44_verify | 1.42e+06 | 1.42e+06 | 1.42e+06 | published | S2-0033; ML-DSA-44 verify, pqm4 m4f |
+| lms_verify | 2.58e+06 | 2.58e+06 | 2.58e+06 | published | S2-0316; LMS w=16 h=5 SHA-256 verify, Cortex-M4 (slides) |
 
 
 | arch | operation | cycles | ms_at_168MHz | ms_at_480MHz | label |
 |---|---|---|---|---|---|
-| A | handshake or rekey | 1.42e+07 | 84.458 | 29.560 | derived from published |
-| B | handshake or rekey | 1.37e+07 | 81.603 | 28.561 | derived from published |
+| A | handshake or rekey | 3.19e+06 | 18.979 | 6.643 | derived from published |
+| B | handshake or rekey | 3.91e+06 | 23.262 | 8.142 | derived from published |
 | C | per command check | 1.42e+06 | 8.462 | 2.962 | derived from published |
 | D | boot verify | 2.58e+06 | 15.336 | 5.368 | derived from published |
 
-X25519 has no cycle row in `data/evidence.csv`, so ECDH secp256r1 (micro-ecc) is used as a proxy. This proxy is probably slower than an optimised X25519 (unverified), which makes A and B look more expensive in compute than they would be; it does not change any feasibility verdict below because the largest median compute share in any base configuration is 0.0397 of the cycle budget.
+Classical rows: X25519 uses S12A-325 (Fujii and Aranha, STM32F401 at 84 MHz), chosen because it is an STM32F4 part with board and clock stated and the highest stated clock among the Cortex-M4 rows; it is counted twice (key generation and shared secret), which is conservative because a fixed base key generation can be faster. Ed25519 verify uses S12A-328 from the same table and board. The published range over all double read rows is shown beside each value (X25519 S12A-317, S12A-321, S12A-325, S12A-332, S12A-333; Ed25519 verify S12A-320, S12A-324, S12A-328, S12A-331). An earlier version of this study used an ECDH secp256r1 proxy for X25519 and a value derived from a time for Ed25519; both are replaced. The largest median compute share in any base configuration is 0.0397 of the cycle budget.
 
 ### 3.3 Assumptions
 
@@ -74,20 +74,20 @@ Control availability is the share of commands issued in flight that reach the ve
 
 | Link | arch | availability | unauthenticated | added ms | utilisation | compute share | recover s | first session s |
 |---|---|---|---|---|---|---|---|---|
-| SiK 64 kbit/s | A | 0.9919 [0.9913, 0.9926] | 0.9920 | 1.87 [1.87, 1.87] | 0.107 [0.107, 0.107] | 0.0012 [0.0012, 0.0012] | 0.27 [0.27, 0.27] | 0.3 [0.3, 0.3] |
-| SiK 64 kbit/s | B | 0.9915 [0.9908, 0.9922] | 0.9918 | 1.87 [1.87, 1.87] | 0.110 [0.110, 0.110] | 0.0012 [0.0012, 0.0012] | 0.97 [0.97, 0.97] | 1.0 [1.0, 1.0] |
+| SiK 64 kbit/s | A | 0.9919 [0.9913, 0.9926] | 0.9920 | 1.87 [1.87, 1.87] | 0.107 [0.107, 0.107] | 0.0009 [0.0009, 0.0009] | 0.21 [0.21, 0.21] | 0.2 [0.2, 0.2] |
+| SiK 64 kbit/s | B | 0.9915 [0.9908, 0.9922] | 0.9918 | 1.87 [1.87, 1.87] | 0.110 [0.110, 0.110] | 0.0010 [0.0010, 0.0010] | 0.92 [0.92, 0.92] | 0.9 [0.9, 0.9] |
 | SiK 64 kbit/s | C | 0.7943 [0.7932, 0.7953] | 0.9920 | 379.57 [379.57, 379.57] | 0.429 [0.429, 0.429] | 0.0078 [0.0078, 0.0078] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
 | SiK 64 kbit/s | D | 0.9912 [0.9905, 0.9920] | 0.9912 | 1.87 [1.87, 1.87] | 0.107 [0.107, 0.107] | 0.0009 [0.0009, 0.0009] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
-| IEEE 802.15.4 | A | 0.9919 [0.9913, 0.9926] | 0.9920 | 0.06 [0.06, 0.06] | 0.059 [0.059, 0.059] | 0.0012 [0.0012, 0.0012] | 0.26 [0.26, 0.26] | 0.3 [0.3, 0.3] |
-| IEEE 802.15.4 | B | 0.9917 [0.9911, 0.9924] | 0.9919 | 0.06 [0.06, 0.06] | 0.060 [0.060, 0.060] | 0.0012 [0.0012, 0.0012] | 0.64 [0.63, 0.64] | 0.6 [0.6, 0.6] |
+| IEEE 802.15.4 | A | 0.9919 [0.9913, 0.9926] | 0.9920 | 0.06 [0.06, 0.06] | 0.059 [0.059, 0.059] | 0.0009 [0.0009, 0.0009] | 0.20 [0.20, 0.20] | 0.2 [0.2, 0.2] |
+| IEEE 802.15.4 | B | 0.9917 [0.9911, 0.9924] | 0.9919 | 0.06 [0.06, 0.06] | 0.060 [0.060, 0.060] | 0.0010 [0.0010, 0.0010] | 0.58 [0.57, 0.58] | 0.6 [0.6, 0.6] |
 | IEEE 802.15.4 | C | 0.9337 [0.9329, 0.9345] | 0.9919 | 287.28 [287.28, 287.28] | 0.215 [0.215, 0.215] | 0.0078 [0.0078, 0.0078] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
 | IEEE 802.15.4 | D | 0.9916 [0.9909, 0.9923] | 0.9916 | 0.06 [0.06, 0.06] | 0.059 [0.059, 0.059] | 0.0009 [0.0009, 0.0009] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
-| LoRaWAN DR5 | A | 6.67e-05 [4.93e-05, 8.55e-05] | 6.96e-05 | 19.07 [19.07, 19.07] | 15.808 [15.793, 15.808] | 0.0012 [0.0012, 0.0012] | 3.47 [3.47, 3.47] | 3.5 [3.5, 3.5] |
-| LoRaWAN DR5 | B | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 16.494 [16.494, 16.500] | 0.0010 [0.0010, 0.0010] | 734.42 [734.42, 734.42] | 739.4 [738.8, 740.0] |
+| LoRaWAN DR5 | A | 6.67e-05 [4.93e-05, 8.55e-05] | 6.96e-05 | 19.07 [19.07, 19.07] | 15.808 [15.793, 15.808] | 0.0009 [0.0009, 0.0009] | 3.41 [3.41, 3.41] | 3.4 [3.4, 3.4] |
+| LoRaWAN DR5 | B | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 16.494 [16.494, 16.500] | 0.0009 [0.0009, 0.0009] | 734.36 [734.36, 734.36] | 739.3 [738.8, 740.0] |
 | LoRaWAN DR5 | C | 0.0000 [0.0000, 0.0000] | 9.86e-05 | n/a [n/a, n/a] | 378.833 [378.803, 378.876] | 0.0078 [0.0078, 0.0078] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
 | LoRaWAN DR5 | D | 7.39e-05 [5.51e-05, 9.57e-05] | 7.68e-05 | 19.07 [19.07, 19.07] | 15.681 [15.681, 15.681] | 0.0009 [0.0009, 0.0009] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
-| LoRaWAN DR0 | A | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 343.891 [343.821, 343.923] | 0.0010 [0.0010, 0.0010] | 657.80 [657.80, 657.80] | 660.9 [660.8, 661.5] |
-| LoRaWAN DR0 | B | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 361.003 [360.932, 361.077] | 0.0010 [0.0010, 0.0010] | n/a [n/a, n/a] | 16681.0 [16673.0, 16688.3] |
+| LoRaWAN DR0 | A | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 343.891 [343.821, 343.923] | 0.0009 [0.0009, 0.0009] | 657.74 [657.74, 657.74] | 660.9 [660.8, 661.4] |
+| LoRaWAN DR0 | B | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 361.003 [360.932, 361.077] | 0.0009 [0.0009, 0.0009] | n/a [n/a, n/a] | 16680.9 [16672.9, 16688.3] |
 | LoRaWAN DR0 | C | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 8289.007 [8288.591, 8289.385] | 0.0078 [0.0078, 0.0078] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
 | LoRaWAN DR0 | D | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 343.091 [343.002, 343.194] | 0.0009 [0.0009, 0.0009] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
 
@@ -97,20 +97,20 @@ _estimated (modelled from published sizes and cycle counts plus labelled assumpt
 
 | Link | arch | availability | unauthenticated | added ms | utilisation | compute share | recover s | first session s |
 |---|---|---|---|---|---|---|---|---|
-| SiK 64 kbit/s | A | 0.9915 [0.9910, 0.9921] | 0.9916 | 1.87 [1.87, 1.87] | 0.128 [0.128, 0.128] | 0.0013 [0.0013, 0.0013] | 0.27 [0.27, 0.27] | 0.3 [0.3, 0.3] |
-| SiK 64 kbit/s | B | 0.9917 [0.9911, 0.9922] | 0.9919 | 1.87 [1.87, 1.87] | 0.131 [0.131, 0.131] | 0.0012 [0.0012, 0.0012] | 1.02 [0.97, 1.05] | 1.0 [1.0, 1.0] |
+| SiK 64 kbit/s | A | 0.9916 [0.9910, 0.9921] | 0.9916 | 1.87 [1.87, 1.87] | 0.128 [0.128, 0.128] | 0.0010 [0.0010, 0.0010] | 0.21 [0.21, 0.21] | 0.2 [0.2, 0.2] |
+| SiK 64 kbit/s | B | 0.9917 [0.9911, 0.9923] | 0.9919 | 1.87 [1.87, 1.87] | 0.131 [0.131, 0.131] | 0.0010 [0.0010, 0.0010] | 0.96 [0.92, 0.99] | 0.9 [0.9, 0.9] |
 | SiK 64 kbit/s | C | 0.0002 [0.0002, 0.0002] | 0.9916 | 379.57 [379.57, 379.57] | 1.875 [1.875, 1.875] | 0.0397 [0.0397, 0.0397] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
 | SiK 64 kbit/s | D | 0.9920 [0.9915, 0.9926] | 0.9920 | 1.87 [1.87, 1.87] | 0.128 [0.128, 0.128] | 0.0009 [0.0009, 0.0009] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
-| IEEE 802.15.4 | A | 0.9915 [0.9909, 0.9921] | 0.9915 | 0.06 [0.06, 0.06] | 0.062 [0.062, 0.062] | 0.0013 [0.0013, 0.0013] | 0.26 [0.26, 0.26] | 0.3 [0.3, 0.3] |
-| IEEE 802.15.4 | B | 0.9914 [0.9908, 0.9920] | 0.9915 | 0.06 [0.06, 0.06] | 0.064 [0.064, 0.064] | 0.0012 [0.0012, 0.0012] | 0.64 [0.63, 0.66] | 0.6 [0.6, 0.6] |
+| IEEE 802.15.4 | A | 0.9915 [0.9909, 0.9921] | 0.9915 | 0.06 [0.06, 0.06] | 0.062 [0.062, 0.062] | 0.0010 [0.0010, 0.0010] | 0.20 [0.20, 0.20] | 0.2 [0.2, 0.2] |
+| IEEE 802.15.4 | B | 0.9914 [0.9908, 0.9920] | 0.9915 | 0.06 [0.06, 0.06] | 0.064 [0.064, 0.064] | 0.0010 [0.0010, 0.0010] | 0.58 [0.57, 0.60] | 0.6 [0.6, 0.6] |
 | IEEE 802.15.4 | C | 0.0010 [0.0010, 0.0011] | 0.9913 | 340.85 [334.21, 355.50] | 0.859 [0.859, 0.859] | 0.0397 [0.0397, 0.0397] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
 | IEEE 802.15.4 | D | 0.9921 [0.9916, 0.9927] | 0.9921 | 0.06 [0.06, 0.06] | 0.062 [0.062, 0.062] | 0.0009 [0.0009, 0.0009] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
-| LoRaWAN DR5 | A | 1.11e-05 [8.22e-06, 1.42e-05] | 1.11e-05 | 19.07 [19.07, 19.07] | 59.656 [59.644, 59.668] | 0.0013 [0.0013, 0.0013] | 3.47 [3.47, 3.47] | 3.5 [3.5, 3.5] |
-| LoRaWAN DR5 | B | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 60.175 [60.163, 60.184] | 0.0010 [0.0010, 0.0010] | 735.50 [734.42, 736.46] | 739.1 [738.6, 739.9] |
+| LoRaWAN DR5 | A | 1.11e-05 [8.22e-06, 1.42e-05] | 1.11e-05 | 19.07 [19.07, 19.07] | 59.656 [59.644, 59.668] | 0.0010 [0.0010, 0.0010] | 3.41 [3.41, 3.41] | 3.4 [3.4, 3.4] |
+| LoRaWAN DR5 | B | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 60.175 [60.163, 60.184] | 0.0009 [0.0009, 0.0009] | 735.44 [734.36, 736.41] | 739.0 [738.6, 739.8] |
 | LoRaWAN DR5 | C | 0.0000 [0.0000, 0.0000] | 1.51e-05 | n/a [n/a, n/a] | 1917.689 [1917.608, 1917.763] | 0.0397 [0.0397, 0.0397] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
 | LoRaWAN DR5 | D | 1.16e-05 [8.67e-06, 1.47e-05] | 1.27e-05 | 19.07 [19.07, 19.07] | 59.539 [59.527, 59.551] | 0.0009 [0.0009, 0.0009] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
-| LoRaWAN DR0 | A | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 1303.485 [1303.360, 1303.610] | 0.0010 [0.0010, 0.0010] | 657.80 [657.80, 657.80] | 660.9 [660.8, 661.4] |
-| LoRaWAN DR0 | B | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 1316.602 [1316.478, 1316.783] | 0.0010 [0.0010, 0.0010] | n/a [n/a, n/a] | 16691.8 [16682.3, 16816.0] |
+| LoRaWAN DR0 | A | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 1303.475 [1303.350, 1303.590] | 0.0009 [0.0009, 0.0009] | 657.74 [657.74, 657.96] | 660.9 [660.8, 661.2] |
+| LoRaWAN DR0 | B | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 1316.602 [1316.478, 1316.783] | 0.0009 [0.0009, 0.0009] | n/a [n/a, n/a] | 16691.8 [16682.3, 16815.9] |
 | LoRaWAN DR0 | C | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 41958.522 [41957.535, 41959.561] | 0.0397 [0.0397, 0.0397] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
 | LoRaWAN DR0 | D | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 1302.690 [1302.565, 1302.850] | 0.0009 [0.0009, 0.0009] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
 
@@ -152,21 +152,21 @@ Median time to recover authentication after a teardown (s):
 
 | link | frame_loss | A | B |
 |---|---|---|---|
-| IEEE 802.15.4 | 0.000 | 0.263 | 0.573 |
-| IEEE 802.15.4 | 0.010 | 0.263 | 0.631 |
-| IEEE 802.15.4 | 0.050 | 0.263 | 0.741 |
-| IEEE 802.15.4 | 0.100 | 0.321 | 0.842 |
-| IEEE 802.15.4 | 0.200 | 0.371 | 1.145 |
-| LoRaWAN DR5 | 0.000 | 3.471 | n/a |
-| LoRaWAN DR5 | 0.010 | 3.471 | n/a |
-| LoRaWAN DR5 | 0.050 | 3.471 | n/a |
-| LoRaWAN DR5 | 0.100 | 4.259 | n/a |
-| LoRaWAN DR5 | 0.200 | 5.517 | n/a |
-| SiK 64 kbit/s | 0.000 | 0.271 | 0.974 |
-| SiK 64 kbit/s | 0.010 | 0.271 | 0.974 |
-| SiK 64 kbit/s | 0.050 | 0.271 | 1.063 |
-| SiK 64 kbit/s | 0.100 | 0.331 | 1.168 |
-| SiK 64 kbit/s | 0.200 | 0.376 | 1.468 |
+| IEEE 802.15.4 | 0.000 | 0.197 | 0.515 |
+| IEEE 802.15.4 | 0.010 | 0.197 | 0.573 |
+| IEEE 802.15.4 | 0.050 | 0.197 | 0.683 |
+| IEEE 802.15.4 | 0.100 | 0.256 | 0.784 |
+| IEEE 802.15.4 | 0.200 | 0.306 | 1.087 |
+| LoRaWAN DR5 | 0.000 | 3.405 | n/a |
+| LoRaWAN DR5 | 0.010 | 3.405 | n/a |
+| LoRaWAN DR5 | 0.050 | 3.405 | n/a |
+| LoRaWAN DR5 | 0.100 | 4.193 | n/a |
+| LoRaWAN DR5 | 0.200 | 5.452 | n/a |
+| SiK 64 kbit/s | 0.000 | 0.206 | 0.916 |
+| SiK 64 kbit/s | 0.010 | 0.206 | 0.916 |
+| SiK 64 kbit/s | 0.050 | 0.206 | 1.005 |
+| SiK 64 kbit/s | 0.100 | 0.266 | 1.109 |
+| SiK 64 kbit/s | 0.200 | 0.310 | 1.409 |
 
 _estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
@@ -176,10 +176,10 @@ Base value 300.0.
 
 | link | rekey_interval_s | A | B |
 |---|---|---|---|
-| IEEE 802.15.4 | 60.000 | 0.992 | 0.992 |
+| IEEE 802.15.4 | 60.000 | 0.992 | 0.991 |
 | IEEE 802.15.4 | 900.000 | 0.992 | 0.991 |
 | IEEE 802.15.4 | inf | 0.992 | 0.991 |
-| LoRaWAN DR5 | 60.000 | 8.12e-05 | 0.000 |
+| LoRaWAN DR5 | 60.000 | 8.26e-05 | 0.000 |
 | LoRaWAN DR5 | 900.000 | 7.39e-05 | 0.000 |
 | LoRaWAN DR5 | inf | 6.38e-05 | 0.000 |
 | SiK 64 kbit/s | 60.000 | 0.991 | 0.992 |
@@ -190,15 +190,15 @@ Median time to recover authentication after a teardown (s):
 
 | link | rekey_interval_s | A | B |
 |---|---|---|---|
-| IEEE 802.15.4 | 60.000 | 0.263 | 0.635 |
-| IEEE 802.15.4 | 900.000 | 0.263 | 0.635 |
-| IEEE 802.15.4 | inf | 0.263 | 0.635 |
-| LoRaWAN DR5 | 60.000 | 3.471 | n/a |
-| LoRaWAN DR5 | 900.000 | 3.471 | 734.418 |
-| LoRaWAN DR5 | inf | 3.471 | 735.766 |
-| SiK 64 kbit/s | 60.000 | 0.271 | 0.974 |
-| SiK 64 kbit/s | 900.000 | 0.271 | 0.974 |
-| SiK 64 kbit/s | inf | 0.271 | 0.974 |
+| IEEE 802.15.4 | 60.000 | 0.197 | 0.577 |
+| IEEE 802.15.4 | 900.000 | 0.197 | 0.577 |
+| IEEE 802.15.4 | inf | 0.197 | 0.577 |
+| LoRaWAN DR5 | 60.000 | 3.405 | n/a |
+| LoRaWAN DR5 | 900.000 | 3.405 | 734.359 |
+| LoRaWAN DR5 | inf | 3.405 | 735.707 |
+| SiK 64 kbit/s | 60.000 | 0.206 | 0.916 |
+| SiK 64 kbit/s | 900.000 | 0.206 | 0.916 |
+| SiK 64 kbit/s | inf | 0.206 | 0.916 |
 
 _estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
@@ -215,11 +215,11 @@ Base value 6.0.
 | LoRaWAN DR5 | 0.000 | 8.70e-05 | 0.000 | 0.000 | 7.25e-05 |
 | LoRaWAN DR5 | 2.000 | 8.26e-05 | 0.000 | 0.000 | 6.23e-05 |
 | LoRaWAN DR5 | 20.000 | 5.94e-05 | 0.000 | 0.000 | 6.23e-05 |
-| LoRaWAN DR5 | 60.000 | 5.22e-05 | 0.000 | 0.000 | 8.55e-05 |
+| LoRaWAN DR5 | 60.000 | 5.94e-05 | 0.000 | 0.000 | 8.55e-05 |
 | SiK 64 kbit/s | 0.000 | 1.000 | 1.000 | 0.801 | 1.000 |
 | SiK 64 kbit/s | 2.000 | 0.997 | 0.997 | 0.798 | 0.997 |
-| SiK 64 kbit/s | 20.000 | 0.971 | 0.974 | 0.778 | 0.972 |
-| SiK 64 kbit/s | 60.000 | 0.920 | 0.917 | 0.730 | 0.921 |
+| SiK 64 kbit/s | 20.000 | 0.971 | 0.973 | 0.778 | 0.972 |
+| SiK 64 kbit/s | 60.000 | 0.920 | 0.918 | 0.730 | 0.921 |
 
 _estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
@@ -230,22 +230,22 @@ Base value 5.0.
 | link | outage_mean_s | A | B | C | D |
 |---|---|---|---|---|---|
 | IEEE 802.15.4 | 2.000 | 0.997 | 0.997 | 0.938 | 0.997 |
-| IEEE 802.15.4 | 30.000 | 0.955 | 0.948 | 0.896 | 0.950 |
+| IEEE 802.15.4 | 30.000 | 0.955 | 0.949 | 0.896 | 0.950 |
 | LoRaWAN DR5 | 2.000 | 7.39e-05 | 0.000 | 0.000 | 8.12e-05 |
 | LoRaWAN DR5 | 30.000 | 6.52e-05 | 0.000 | 0.000 | 5.94e-05 |
 | SiK 64 kbit/s | 2.000 | 0.997 | 0.997 | 0.797 | 0.996 |
-| SiK 64 kbit/s | 30.000 | 0.950 | 0.950 | 0.760 | 0.953 |
+| SiK 64 kbit/s | 30.000 | 0.950 | 0.949 | 0.760 | 0.953 |
 
 Median time to recover authentication after a teardown (s):
 
 | link | outage_mean_s | A | B |
 |---|---|---|---|
-| IEEE 802.15.4 | 2.000 | 0.263 | 0.689 |
-| IEEE 802.15.4 | 30.000 | 0.263 | 0.635 |
-| LoRaWAN DR5 | 2.000 | 3.471 | n/a |
-| LoRaWAN DR5 | 30.000 | 3.471 | 753.023 |
-| SiK 64 kbit/s | 2.000 | 0.271 | 1.063 |
-| SiK 64 kbit/s | 30.000 | 0.271 | 1.004 |
+| IEEE 802.15.4 | 2.000 | 0.197 | 0.631 |
+| IEEE 802.15.4 | 30.000 | 0.197 | 0.585 |
+| LoRaWAN DR5 | 2.000 | 3.405 | n/a |
+| LoRaWAN DR5 | 30.000 | 3.405 | 752.965 |
+| SiK 64 kbit/s | 2.000 | 0.206 | 1.005 |
+| SiK 64 kbit/s | 30.000 | 0.206 | 0.951 |
 
 _estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
@@ -263,9 +263,9 @@ Median compute share:
 
 | link | clock_hz | A | B | C | D |
 |---|---|---|---|---|---|
-| IEEE 802.15.4 | 4.80e+08 | 4.19e-04 | 4.15e-04 | 0.003 | 3.08e-04 |
-| LoRaWAN DR5 | 4.80e+08 | 4.19e-04 | 3.38e-04 | 0.003 | 3.08e-04 |
-| SiK 64 kbit/s | 4.80e+08 | 4.19e-04 | 4.15e-04 | 0.003 | 3.08e-04 |
+| IEEE 802.15.4 | 4.80e+08 | 3.27e-04 | 3.33e-04 | 0.003 | 3.08e-04 |
+| LoRaWAN DR5 | 4.80e+08 | 3.27e-04 | 3.11e-04 | 0.003 | 3.08e-04 |
+| SiK 64 kbit/s | 4.80e+08 | 3.27e-04 | 3.33e-04 | 0.003 | 3.08e-04 |
 
 _estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
@@ -283,9 +283,9 @@ Median compute share:
 
 | link | wait_state_factor | A | B | C | D |
 |---|---|---|---|---|---|
-| IEEE 802.15.4 | 1.500 | 0.002 | 0.002 | 0.012 | 0.001 |
-| LoRaWAN DR5 | 1.500 | 0.002 | 0.001 | 0.012 | 0.001 |
-| SiK 64 kbit/s | 1.500 | 0.002 | 0.002 | 0.012 | 0.001 |
+| IEEE 802.15.4 | 1.500 | 0.001 | 0.001 | 0.012 | 0.001 |
+| LoRaWAN DR5 | 1.500 | 0.001 | 0.001 | 0.012 | 0.001 |
+| SiK 64 kbit/s | 1.500 | 0.001 | 0.001 | 0.012 | 0.001 |
 
 _estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
@@ -306,12 +306,12 @@ Median compute share:
 
 | link | mac_cycles | A | B | C | D |
 |---|---|---|---|---|---|
-| IEEE 802.15.4 | 2000.000 | 5.09e-04 | 4.98e-04 | 0.008 | 1.92e-04 |
-| IEEE 802.15.4 | 50000.000 | 0.005 | 0.005 | 0.008 | 0.004 |
-| LoRaWAN DR5 | 2000.000 | 5.09e-04 | 2.80e-04 | 0.008 | 1.92e-04 |
-| LoRaWAN DR5 | 50000.000 | 0.005 | 0.004 | 0.008 | 0.004 |
-| SiK 64 kbit/s | 2000.000 | 5.09e-04 | 4.98e-04 | 0.008 | 1.92e-04 |
-| SiK 64 kbit/s | 50000.000 | 0.005 | 0.005 | 0.008 | 0.004 |
+| IEEE 802.15.4 | 2000.000 | 2.48e-04 | 2.65e-04 | 0.008 | 1.92e-04 |
+| IEEE 802.15.4 | 50000.000 | 0.004 | 0.004 | 0.008 | 0.004 |
+| LoRaWAN DR5 | 2000.000 | 2.48e-04 | 2.03e-04 | 0.008 | 1.92e-04 |
+| LoRaWAN DR5 | 50000.000 | 0.004 | 0.004 | 0.008 | 0.004 |
+| SiK 64 kbit/s | 2000.000 | 2.48e-04 | 2.65e-04 | 0.008 | 1.92e-04 |
+| SiK 64 kbit/s | 50000.000 | 0.004 | 0.004 | 0.008 | 0.004 |
 
 _estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
@@ -325,20 +325,20 @@ Elementary effects (SALib Morris, 10 trajectories, 4 levels, 200 runs per point,
 
 | arch | input | mu_star | sigma | mu_star_conf |
 |---|---|---|---|---|
-| A | outage_rate_per_h | 0.102 | 0.084 | 0.054 |
-| A | outage_mean_s | 0.102 | 0.080 | 0.045 |
-| A | frame_loss | 0.063 | 0.094 | 0.051 |
+| A | outage_rate_per_h | 0.103 | 0.085 | 0.054 |
+| A | outage_mean_s | 0.101 | 0.080 | 0.045 |
+| A | frame_loss | 0.064 | 0.095 | 0.051 |
 | A | deadline_s | 0.047 | 0.086 | 0.049 |
-| A | rekey_interval_s | 0.010 | 0.018 | 0.009 |
-| A | wait_state_factor | 0.006 | 0.011 | 0.006 |
-| A | mac_cycles | 0.002 | 0.004 | 0.002 |
+| A | rekey_interval_s | 0.007 | 0.013 | 0.006 |
+| A | mac_cycles | 0.003 | 0.007 | 0.003 |
+| A | wait_state_factor | 0.003 | 0.005 | 0.002 |
 | B | outage_mean_s | 0.105 | 0.083 | 0.047 |
-| B | outage_rate_per_h | 0.103 | 0.084 | 0.053 |
+| B | outage_rate_per_h | 0.104 | 0.086 | 0.055 |
 | B | frame_loss | 0.063 | 0.094 | 0.051 |
-| B | deadline_s | 0.047 | 0.078 | 0.045 |
-| B | wait_state_factor | 0.008 | 0.016 | 0.007 |
-| B | rekey_interval_s | 0.006 | 0.011 | 0.006 |
-| B | mac_cycles | 0.002 | 0.003 | 0.001 |
+| B | deadline_s | 0.047 | 0.079 | 0.046 |
+| B | wait_state_factor | 0.008 | 0.017 | 0.007 |
+| B | rekey_interval_s | 0.007 | 0.013 | 0.006 |
+| B | mac_cycles | 0.002 | 0.003 | 0.002 |
 | C | deadline_s | 0.706 | 0.604 | 0.345 |
 | C | outage_rate_per_h | 0.078 | 0.093 | 0.058 |
 | C | frame_loss | 0.047 | 0.108 | 0.061 |
@@ -359,7 +359,7 @@ A rekey that is interrupted by an outage keeps the old key for the grace period;
 | A | 300.000 | 3.099 | 0.161 | 0.992 |
 | A | 900.000 | 1.179 | 0.160 | 0.991 |
 | A | inf | 1.171 | 0.157 | 0.991 |
-| B | 60.000 | 13.042 | 0.147 | 0.992 |
+| B | 60.000 | 13.047 | 0.150 | 0.992 |
 | B | 300.000 | 3.093 | 0.161 | 0.992 |
 | B | 900.000 | 1.157 | 0.149 | 0.991 |
 | B | inf | 1.185 | 0.167 | 0.991 |
@@ -420,20 +420,20 @@ Low rate profile (one command per 60 s, telemetry off), drone, to show what LoRa
 
 | Link | arch | availability 5 s | availability 10 s | utilisation | first session s |
 |---|---|---|---|---|---|
-| SiK 64 kbit/s | A | 0.992 | 0.992 | 3.06e-04 [3.06e-04, 3.06e-04] | 0.3 [0.3, 0.3] |
-| SiK 64 kbit/s | B | 0.991 | 0.991 | 0.003 [0.003, 0.003] | 1.0 [1.0, 1.0] |
+| SiK 64 kbit/s | A | 0.992 | 0.992 | 3.06e-04 [3.06e-04, 3.06e-04] | 0.2 [0.2, 0.2] |
+| SiK 64 kbit/s | B | 0.991 | 0.991 | 0.003 [0.003, 0.003] | 0.9 [0.9, 0.9] |
 | SiK 64 kbit/s | C | 0.992 | 0.992 | 0.006 [0.006, 0.006] | 0.0 [0.0, 0.0] |
 | SiK 64 kbit/s | D | 0.992 | 0.992 | 1.59e-04 [1.59e-04, 1.59e-04] | 0.0 [0.0, 0.0] |
-| IEEE 802.15.4 | A | 0.993 | 0.993 | 1.73e-04 [1.73e-04, 1.73e-04] | 0.3 [0.3, 0.3] |
+| IEEE 802.15.4 | A | 0.993 | 0.993 | 1.73e-04 [1.73e-04, 1.73e-04] | 0.2 [0.2, 0.2] |
 | IEEE 802.15.4 | B | 0.992 | 0.992 | 0.001 [0.001, 0.001] | 0.6 [0.6, 0.6] |
 | IEEE 802.15.4 | C | 0.989 | 0.989 | 0.003 [0.003, 0.003] | 0.0 [0.0, 0.0] |
 | IEEE 802.15.4 | D | 0.992 | 0.992 | 5.96e-05 [5.96e-05, 5.96e-05] | 0.0 [0.0, 0.0] |
-| LoRaWAN DR5 | A | 0.971 | 0.971 | 0.280 [0.280, 0.280] | 3.5 [3.5, 3.5] |
-| LoRaWAN DR5 | B | 0.000 | 0.000 | 0.976 [0.976, 0.976] | 739.7 [739.1, 740.5] |
+| LoRaWAN DR5 | A | 0.971 | 0.971 | 0.280 [0.280, 0.280] | 3.4 [3.4, 3.4] |
+| LoRaWAN DR5 | B | 0.000 | 0.000 | 0.976 [0.976, 0.976] | 739.7 [739.0, 740.4] |
 | LoRaWAN DR5 | C | 0.000 | 0.000 | 5.982 [5.982, 5.990] | 0.0 [0.0, 0.0] |
 | LoRaWAN DR5 | D | 0.973 | 0.973 | 0.167 [0.167, 0.167] | 0.0 [0.0, 0.0] |
-| LoRaWAN DR0 | A | 0.000 | 0.000 | 4.480 [4.480, 4.480] | 660.9 [660.7, 661.3] |
-| LoRaWAN DR0 | B | 0.000 | 0.000 | 21.623 [21.521, 21.623] | 16682.2 [16673.8, 16691.1] |
+| LoRaWAN DR0 | A | 0.000 | 0.000 | 4.480 [4.480, 4.480] | 660.9 [660.6, 661.2] |
+| LoRaWAN DR0 | B | 0.000 | 0.000 | 21.623 [21.521, 21.623] | 16682.1 [16673.8, 16691.0] |
 | LoRaWAN DR0 | C | 0.000 | 0.000 | 131.123 [131.102, 131.164] | 0.0 [0.0, 0.0] |
 | LoRaWAN DR0 | D | 0.000 | 0.000 | 3.661 [3.661, 3.661] | 0.0 [0.0, 0.0] |
 
@@ -457,7 +457,7 @@ The difference arises because this model acknowledges each flight once, while `l
 - Loss is independent per frame; real loss is bursty. Outages are Poisson with exponential durations; both rates are assumptions.
 - LoRaWAN PHY and MAC overhead is ignored (understates air time) and class A receive windows are not modelled; the 1 percent duty cycle is applied per transmitter.
 - The robot uses MAVLink framing; ROS 2 DDS Security per message overhead could not be verified (`data/raw/S12_traffic_sources.md`).
-- X25519 cycles are a P-256 proxy; Ed25519 verify cycles are derived from a time at 64 MHz; the per message tag cost (10000 cycles) has no published row and is swept.
+- X25519 and Ed25519 cycles come from Cortex-M4 boards at 84 MHz or less and are applied at 168 MHz with the wait state factor; the per message tag cost (10000 cycles) has no published row and is swept.
 - Ground station compute is ignored. One vehicle, one ground station, no contention from other users of the band.
 - Security properties are design intent; nothing was analysed formally.
 - The software in the loop step was skipped: no Docker daemon is available and building a PX4 or ArduPilot simulator from source did not fit the 30 minute time box on this two core host, so message counts come from the traffic table, not from a simulator.

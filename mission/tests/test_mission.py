@@ -30,8 +30,12 @@ class TestModel(unittest.TestCase):
     def test_cycle_table(self):
         c = model.cycle_table()
         self.assertEqual(c['mldsa44_verify'][0], 1421623)
-        self.assertAlmostEqual(c['ed25519_verify'][0], 40e-3 * 64e6)
-        self.assertEqual(c['ecdh_proxy'][0], 5814000 + 5815000)
+        self.assertEqual(c['ed25519_verify'][0], 1360800)
+        self.assertEqual(c['x25519_two_mults'][0], 2 * 913800)
+        self.assertEqual(c['x25519_two_mults'][3], 2 * 476275)
+        self.assertEqual(c['x25519_two_mults'][4], 2 * 1036600)
+        self.assertEqual(c['ed25519_verify'][3], 722000)
+        self.assertEqual(c['ed25519_verify'][4], 1463600)
         with self.assertRaises(KeyError):
             model.evidence_cycles(['NO-SUCH-ROW'])
 
