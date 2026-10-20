@@ -1,0 +1,30 @@
+stage,count,how_counted,label
+queries and sources searched,45,rows of S13_search_log.csv,derived from published
+identified,364,sum of records_returned over queries; a record found by several queries counts once per query,derived from published
+screened on title and snippet,364,sum of records_screened over queries,derived from published
+eligible (abstract or full text assessed),35,distinct records in S13_screening.csv,derived from published
+not retrieved,3,records whose full text could not be retrieved,derived from published
+full text assessed,26,stage_reached = full text,derived from published
+excluded after abstract or full text,19,"decision = excluded, any stage",derived from published
+included sources,16,decision = included,derived from published
+staged rows,265,rows of S13_staged.csv,derived from published
+rows confirmed by two readers and promoted,234,rows of S13_verified.csv,derived from published
+excluded: application processor core (Cortex-A and U74),1,S13_screening.csv exclusion_reason,derived from published
+excluded: application processor core (Cortex-A72 and x86),1,S13_screening.csv exclusion_reason,derived from published
+excluded: application processor core (Cortex-A72),1,S13_screening.csv exclusion_reason,derived from published
+excluded: application processor core (RV64),1,S13_screening.csv exclusion_reason,derived from published
+excluded: application processor core (XuanTie C908),1,S13_screening.csv exclusion_reason,derived from published
+"excluded: coprocessor ASIC and FPGA design, not a microcontroller core",1,S13_screening.csv exclusion_reason,derived from published
+excluded: duplicate of a source already in data/evidence.csv,1,S13_screening.csv exclusion_reason,derived from published
+excluded: full text not retrieved in the time available; abstract gives only a relative figure,1,S13_screening.csv exclusion_reason,derived from published
+excluded: full text not retrieved in the time available; abstract names no platform,1,S13_screening.csv exclusion_reason,derived from published
+excluded: no per operation cost (firmware footprint and protocol latency),1,S13_screening.csv exclusion_reason,derived from published
+excluded: not retrieved (HTTP 404),1,S13_screening.csv exclusion_reason,derived from published
+excluded: not retrieved (HTTP/2 stream error),1,S13_screening.csv exclusion_reason,derived from published
+excluded: not retrieved (connection reset),1,S13_screening.csv exclusion_reason,derived from published
+excluded: outside the round 5 gap list (Cortex-M4 additional signature candidates),1,S13_screening.csv exclusion_reason,derived from published
+excluded: outside the round 5 gap list (Cortex-M4 at 168 MHz),1,S13_screening.csv exclusion_reason,derived from published
+excluded: outside the round 5 gap list (Cortex-M4 round 3 Kyber),1,S13_screening.csv exclusion_reason,derived from published
+excluded: standalone hardware accelerator without a processor core,1,S13_screening.csv exclusion_reason,derived from published
+excluded: times without a stated clock and no cycle counts,1,S13_screening.csv exclusion_reason,derived from published
+excluded: values only in a figure,1,S13_screening.csv exclusion_reason,derived from published

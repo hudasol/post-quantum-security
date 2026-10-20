@@ -1,0 +1,21 @@
+key,value
+question,"What published measurements exist of the cycle count and memory cost of post quantum and classical baseline signature and key establishment schemes on microcontroller class cores, for the gaps left after round 4: final standard SLH-DSA and FN-DSA, HQC, Cortex-M33, M55 and M85, RISC-V microcontroller cores, ESP32 class devices, stateful hash based signature verification, the overhead of implementations hardened against physical attacks, and the 168 MHz Ed25519 rows of Owens et al."
+written,"2026-10-20, before the first round 5 query was screened"
+date_window,publications of any year up to the search date; searches run on 2026-10-20 (UTC)
+database_1,IACR ePrint and IACR TCHES (open access article pages and PDFs)
+database_2,"arXiv (public API, scripts/fetch_s13_arxiv.py, and arXiv PDFs)"
+database_3,IEEE Xplore abstract pages
+database_4,ACM Digital Library abstract pages
+database_5,"web search engine in the style of Google Scholar (WebSearch tool), including vendor and project pages"
+database_6,"pqm4 benchmarks.csv at its current commit, fetched by git from github.com/mupq/pqm4"
+snowballing,"one backward round (reference lists of the 20 sources in data/bibliography.bib that the most evidence rows cite, where the full text was available) and one forward round (search engine queries naming those sources; Semantic Scholar pages if fetchable)"
+inclusion_1,"a cycle count, stack, RAM, code size or signature size value stated as a number in a table or an explicit sentence"
+inclusion_2,"measured on a microcontroller class core (Arm Cortex-M, ESP32 Xtensa or RISC-V microcontroller or soft core, Ibex, VexRiscv, RI5CY) or on such a core with accelerators, or an FPGA model of such a core"
+inclusion_3,"the scheme is a NIST selected or standardised post quantum scheme or its round predecessor, a classical baseline, or (for the hardened overhead question only) any lattice scheme with a published hardened and unhardened pair"
+inclusion_4,"the value is read from a retrieved full text, table or data file, never from an abstract or a summary alone"
+exclusion_1,"application processors (Cortex-A, x86, RV64 application cores such as C908) unless the row answers the hardened overhead question, where the core is stated in the comparability warning"
+exclusion_2,"values only in figures, times without a stated clock, or protocol level latencies without per operation cost"
+exclusion_3,duplicates of rows already in data/evidence.csv
+exclusion_4,sources that could not be retrieved; refusals are recorded and not worked around
+exclusion_5,descriptions of attacks or of countermeasure techniques (only cost figures of hardened implementations are taken)
+verification,every staged row is read by two independent readers on blank sheets (scripts/verify6_sheets.py); every value and every wording disagreement gets a third look
