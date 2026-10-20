@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Style lint for published text: no em dashes, no emojis, no banned affiliation (matched by word hash).
+"""Style lint for published text: no em dashes, no emojis, no banned affiliation (matched by word hash), no local machine paths.
 Applies to .md, .py, .csv, .txt, .yml, .sh files that are not licence texts. Exit 1 on any hit."""
 import hashlib, os, re, subprocess, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,6 +24,7 @@ def check(root):
         if not os.path.isfile(p): continue
         for n, line in enumerate(open(p, encoding='utf-8', errors='replace'), 1):
             if '—' in line: hits.append(f'{rel}:{n}: em dash')
+            if re.search(r'/home/[a-z]', line): hits.append(f'{rel}:{n}: local machine path')
             if any(hashlib.sha256(w.encode()).hexdigest() in BANNED_SHA256 for w in WORD.findall(line.lower())):
                 hits.append(f'{rel}:{n}: banned affiliation')
             for ch in EMOJI.findall(line):

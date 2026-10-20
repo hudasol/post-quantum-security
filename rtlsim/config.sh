@@ -3,7 +3,7 @@
 # Third party code is cloned OUTSIDE the repository into WORK_DIR and is never
 # copied into the repository.
 
-WORK_DIR="${WORK_DIR:-/home/claude/work}"
+WORK_DIR="${WORK_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)/work}"  # outside the repository
 
 IBEX_URL="https://github.com/lowRISC/ibex.git"
 # Ibex master at the time of the run (no release tag newer than v2.1.0 exists;

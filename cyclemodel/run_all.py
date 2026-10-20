@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.dirname(HERE))
 from cyclemodel import analyse, figures, make_doc, trace_all, validate_tracer  # noqa: E402
 from cyclemodel import model as M  # noqa: E402
 
-WORK = os.environ.get('CM_WORK', '/home/claude/work')
+WORK = os.environ.get('CM_WORK', os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'work')))  # outside the repository
 
 
 def tool_version(cmd):
