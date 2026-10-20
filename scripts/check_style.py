@@ -9,6 +9,8 @@ BANNED_SHA256 = {'4011393f356a69582a25dfd73603b974b88e7df6fec0b75793c6155c365e69
 WORD = re.compile(r'[a-z]+')
 EXT = {'.md', '.py', '.csv', '.txt', '.yml', '.yaml', '.sh', '.tex', '.dot'}
 SKIP = {'scripts/check_style.py'}
+# Hyphenated compounds that reviews found in prose; written as separate words in this repository.
+COMPOUNDS = re.compile(r'\b(HSM-backed|PQ-capable|hardware-fault-safe|re-opened|re-run|Host-measured|time-management)\b')
 EMOJI = re.compile('[\U0001F300-\U0001FAFF☀-➿⭐⬆✅❌]')
 def files(root):
     try:
@@ -25,6 +27,8 @@ def check(root):
         for n, line in enumerate(open(p, encoding='utf-8', errors='replace'), 1):
             if '—' in line: hits.append(f'{rel}:{n}: em dash')
             if re.search(r'/home/[a-z]', line): hits.append(f'{rel}:{n}: local machine path')
+            if rel.endswith('.md') and not rel.startswith('data/raw/'):
+                for m in COMPOUNDS.findall(line): hits.append(f'{rel}:{n}: hyphenated compound {m!r}')
             if any(hashlib.sha256(w.encode()).hexdigest() in BANNED_SHA256 for w in WORD.findall(line.lower())):
                 hits.append(f'{rel}:{n}: banned affiliation')
             for ch in EMOJI.findall(line):
