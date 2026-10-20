@@ -94,15 +94,20 @@ Predictions were written before the phase 2 runs and are scored in `docs/PREDICT
 
 ## Checks that run on every push
 
-`scripts/check_repo_policy.py` fails if a paper, a PDF outside a two file allowlist, an archive, a saved web page or a vendored library is committed. `scripts/scan_secrets.py` is a secrets scan. `scripts/check_style.py` is a text lint. `scripts/check_citations.py`, `scripts/check_numbers.py` and `scripts/check_labels.py` check the bibliography, every registered claim and the label columns. Generated files (evidence table, report markdown, verification summary) are regenerated in CI and must match the committed copies.
+`scripts/check_repo_policy.py` fails if a paper, a PDF outside a three file allowlist, an archive, a saved web page or a vendored library is committed. `scripts/scan_secrets.py` is a secrets scan. `scripts/check_style.py` is a text lint. `scripts/check_citations.py`, `scripts/check_numbers.py` and `scripts/check_labels.py` check the bibliography, every registered claim and the label columns. Generated files (evidence table, report markdown, verification summary) are regenerated in CI and must match the committed copies.
 
 ## Rebuild
 
 ```
+pip install -r requirements.txt         # free packages, versions as used in round 4
 python3 scripts/merge_evidence.py      # evidence table from raw notes, corrections and the pqm4 rule
 python3 scripts/build_report.py         # report markdown; numbers come from the table
+python3 scripts/build_paper.py          # paper, proposals and claims register
 ./scripts/build_pdfs.sh                 # needs pandoc and xelatex
+python3 -m unittest discover -s tests -t .
 python3 -m unittest discover -s linksim/tests -t .
+for d in energy bootchain mission cyclemodel rtlsim; do python3 -m unittest discover -s $d -t .; done
+python3 -m unittest discover -s bench/board_kit/tests
 cd planner && python3 -m unittest
 ```
 
