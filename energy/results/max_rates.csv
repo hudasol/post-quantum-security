@@ -1,25 +1,25 @@
 target,core_class,clock_mhz,design,cycles,cycle_source_label,msgs_per_s_at_10pct_estimated,msgs_per_s_at_20pct_estimated,msgs_per_s_at_50pct_estimated,label
-Crazyflie 2.1,Cortex-M4,168.0,Ed25519,2560000,derived from published,6.6,13.1,32.8,estimated
+Crazyflie 2.1,Cortex-M4,168.0,Ed25519,722000,published,23.3,46.5,116.3,estimated
 Crazyflie 2.1,Cortex-M4,168.0,ML-DSA-44,1421623,published,11.8,23.6,59.1,estimated
 Crazyflie 2.1,Cortex-M4,168.0,LMS,2658884,published,6.3,12.6,31.6,estimated
 Crazyflie 2.1,Cortex-M4,168.0,HMAC-SHA256 session,24407,estimated,688.3,1376.7,3441.7,estimated
-TurtleBot3 Burger,Cortex-M7,216.0,Ed25519,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M7,8.4,16.9,42.2,estimated
+TurtleBot3 Burger,Cortex-M7,216.0,Ed25519,722000,published; proxy: Cortex-M4 row used for Cortex-M7,29.9,59.8,149.6,estimated
 TurtleBot3 Burger,Cortex-M7,216.0,ML-DSA-44,813339,published,26.6,53.1,132.8,estimated
 TurtleBot3 Burger,Cortex-M7,216.0,LMS,2658884,published; proxy: Cortex-M4 row used for Cortex-M7,8.1,16.2,40.6,estimated
 TurtleBot3 Burger,Cortex-M7,216.0,HMAC-SHA256 session,24407,estimated; proxy: Cortex-M4 row used for Cortex-M7,885.0,1770.0,4425.0,estimated
-STM32L4R5,Cortex-M4,120.0,Ed25519,2560000,derived from published,4.7,9.4,23.4,estimated
+STM32L4R5,Cortex-M4,120.0,Ed25519,722000,published,16.6,33.2,83.1,estimated
 STM32L4R5,Cortex-M4,120.0,ML-DSA-44,1421623,published,8.4,16.9,42.2,estimated
 STM32L4R5,Cortex-M4,120.0,LMS,2658884,published,4.5,9.0,22.6,estimated
 STM32L4R5,Cortex-M4,120.0,HMAC-SHA256 session,24407,estimated,491.7,983.3,2458.3,estimated
-STM32L476,Cortex-M4,80.0,Ed25519,2560000,derived from published,3.1,6.2,15.6,estimated
+STM32L476,Cortex-M4,80.0,Ed25519,722000,published,11.1,22.2,55.4,estimated
 STM32L476,Cortex-M4,80.0,ML-DSA-44,1421623,published,5.6,11.3,28.1,estimated
 STM32L476,Cortex-M4,80.0,LMS,2658884,published,3.0,6.0,15.0,estimated
 STM32L476,Cortex-M4,80.0,HMAC-SHA256 session,24407,estimated,327.8,655.6,1638.9,estimated
-STM32L552,Cortex-M33,110.0,Ed25519,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,4.3,8.6,21.5,estimated
+STM32L552,Cortex-M33,110.0,Ed25519,722000,published; proxy: Cortex-M4 row used for Cortex-M33,15.2,30.5,76.2,estimated
 STM32L552,Cortex-M33,110.0,ML-DSA-44,1421623,published; proxy: Cortex-M4 row used for Cortex-M33,7.7,15.5,38.7,estimated
 STM32L552,Cortex-M33,110.0,LMS,2658884,published; proxy: Cortex-M4 row used for Cortex-M33,4.1,8.3,20.7,estimated
 STM32L552,Cortex-M33,110.0,HMAC-SHA256 session,24407,estimated; proxy: Cortex-M4 row used for Cortex-M33,450.7,901.4,2253.5,estimated
-STM32U5A5,Cortex-M33,160.0,Ed25519,2560000,derived from published; proxy: Cortex-M4 row used for Cortex-M33,6.2,12.5,31.2,estimated
+STM32U5A5,Cortex-M33,160.0,Ed25519,722000,published; proxy: Cortex-M4 row used for Cortex-M33,22.2,44.3,110.8,estimated
 STM32U5A5,Cortex-M33,160.0,ML-DSA-44,1421623,published; proxy: Cortex-M4 row used for Cortex-M33,11.3,22.5,56.3,estimated
 STM32U5A5,Cortex-M33,160.0,LMS,2658884,published; proxy: Cortex-M4 row used for Cortex-M33,6.0,12.0,30.1,estimated
 STM32U5A5,Cortex-M33,160.0,HMAC-SHA256 session,24407,estimated; proxy: Cortex-M4 row used for Cortex-M33,655.6,1311.1,3277.8,estimated

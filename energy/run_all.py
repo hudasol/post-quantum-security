@@ -81,9 +81,7 @@ def build():
     cpb_hw = model.sha256_cpb(bench, "hw")
     res["cpb_sw"] = (statistics.median(cpb_sw), min(cpb_sw), max(cpb_sw), model.bootstrap_median_ci(cpb_sw))
     res["cpb_hw"] = (statistics.median(cpb_hw), min(cpb_hw), max(cpb_hw), model.bootstrap_median_ci(cpb_hw))
-    ed = [model.cycles_from_time(v, c) for v, c, _ in model.bench_values(bench, "ed25519_verify_time")]
-    ed.append(cyc["Cortex-M4"]["ed25519_verify"])
-    res["ed_cross"] = (min(ed), max(ed), len(ed))
+    res["baselines"] = classical_baselines(ev, bench, cmap, cyc["Cortex-M4"])
     write_csv("sha256_cpb.csv", [{"board": b, "kind": k, "cycles_per_byte": round(model.throughput_to_cpb(v, c), 2),
                                   "label": "derived from published"}
                                  for k in ("sw", "hw") for v, c, b in model.bench_values(bench, f"sha256_{k}_throughput")])
@@ -162,6 +160,28 @@ def build():
     figures(res, e_rows, rate_rows, sob)
     write_doc(res, assume, plats)
     return res
+
+
+def classical_baselines(ev, bench, cmap, cm4):
+    """Chosen Cortex-M4 classical baseline rows, the published alternatives and the resulting multiple range."""
+    pq = {"ed25519_verify": "mldsa44_verify", "ed25519_sign": "mldsa44_sign", "x25519_shared": "mlkem768_decaps"}
+    out = []
+    for op, pq_op in pq.items():
+        r = next(x for x in cmap if x["op"] == op and x["core_class"] == "Cortex-M4")
+        ids = [r["ref"]] + [i for i in r.get("alternatives", "").split("|") if i]
+        vals = [float(ev[i]["cycles"]) for i in ids]
+        out.append({"op": op, "chosen_id": r["ref"], "cycles_published": round(vals[0]),
+                    "alternative_ids": " ".join(ids[1:]), "range_low_published": round(min(vals)),
+                    "range_high_published": round(max(vals)), "pq_op": pq_op,
+                    "multiple_chosen_estimated": round(cm4[pq_op] / vals[0], 3),
+                    "multiple_low_estimated": round(cm4[pq_op] / max(vals), 3),
+                    "multiple_high_estimated": round(cm4[pq_op] / min(vals), 3),
+                    "reason": r["note"], "label": "published"})
+    old = [model.cycles_from_time(v, c) for v, c, _ in model.bench_values(bench, "ed25519_verify_time")]
+    e = ev["S10D-031"]
+    old.append(model.cycles_from_time(model.parse_time_ms(e["compiler_flags_or_notes"]), float(e["clock_mhz"])))
+    write_csv("classical_baselines.csv", out)
+    return {"rows": out, "derived_ed_verify": (min(old), max(old), len(old))}
 
 
 VAL_IDS = ["S2-%04d" % i for i in range(190, 214)]
@@ -303,10 +323,24 @@ def write_doc(res, assume, plats):
              f"range {lo:.1f} to {hi:.1f}, bootstrap 95 percent interval of the median {ci[0]:.1f} to {ci[1]:.1f} (n = 3, so the "
              "interval is coarse). HMAC-SHA256 has no published cycles row in the evidence table; the HMAC figures are "
              "`estimated` from this SHA-256 throughput for a 64 byte message and are not published values.")
-    a, b, n = res["ed_cross"]
-    L.append(f"Ed25519 verify on Cortex-M4, derived from four published times (three CycloneCRYPTO boards and row S10D-031): "
-             f"{a:,.0f} to {b:,.0f} cycles. The study uses S10D-031. The C25519 library on the same board took far longer "
-             "(row S10D-028), so the classical baseline depends strongly on the library chosen.\n")
+    L.append("")
+    L.append("### Classical baselines on Cortex-M4\n")
+    L.append("Ed25519 and X25519 cycles are published rows (ids S12A). Where several exist, the table gives the chosen row, "
+             "the published range over all candidate rows, and the post quantum multiple over that range. Full table: "
+             "`energy/results/classical_baselines.csv`.\n")
+    L.append("| Operation | Chosen row | Cycles | Published range | Compared with | Multiple (chosen) | Multiple range | Why this row |")
+    L.append("|---|---|---|---|---|---|---|---|")
+    for b_ in res["baselines"]["rows"]:
+        L.append(f"| {b_['op']} | {b_['chosen_id']} | {b_['cycles_published']:,} | {b_['range_low_published']:,} to "
+                 f"{b_['range_high_published']:,} ({b_['chosen_id']} {b_['alternative_ids']}) | {b_['pq_op']} | "
+                 f"{b_['multiple_chosen_estimated']} | {b_['multiple_low_estimated']} to {b_['multiple_high_estimated']} | "
+                 f"{b_['reason']} |")
+    a, b, n = res["baselines"]["derived_ed_verify"]
+    L.append(f"\nEarlier passes used Ed25519 verify derived from published times (three CycloneCRYPTO boards and row S10D-031): "
+             f"{a:,.0f} to {b:,.0f} cycles. Those time based values include unknown flash wait states and library choices and "
+             "are no longer used. The Fujii and Aranha rows were run at 48 to 84 MHz, where wait states may apply, which is one "
+             "reason the 24 MHz Owens et al. row was preferred. The C25519 library on the nRF52840 took far longer (row "
+             "S10D-028), so the classical baseline still depends strongly on the library chosen.\n")
     v = res["val"]
     L.append("### Check against published energy\n")
     L.append(f"Rows S2-0190 to S2-0213 (NUCLEO-F411RE, 96 MHz) carry published cycles and published energy ({v['n']} rows). "
@@ -371,7 +405,9 @@ def write_doc(res, assume, plats):
     m = {op: erow("STM32L4R5", "SMPS or stated", op)["multiple_of_baseline_estimated"]
          for op in ("mldsa44_verify", "mldsa87_verify", "lms_verify", "slhdsa128s_verify", "xmss_verify", "mldsa44_sign")}
     L.append(f"- On Cortex-M4, ML-DSA-44 verification takes {m['mldsa44_verify']} times the cycles of the Ed25519 verify row "
-             f"used here, so post quantum verification is not the slower operation in this comparison. Other multiples: "
+             f"used here ({'slower' if m['mldsa44_verify'] > 1 else 'faster'} than the classical baseline; range over the "
+             f"published Ed25519 rows {res['baselines']['rows'][0]['multiple_low_estimated']} to "
+             f"{res['baselines']['rows'][0]['multiple_high_estimated']}). Other multiples: "
              f"ML-DSA-87 {m['mldsa87_verify']}, LMS {m['lms_verify']}, SLH-DSA-128s (pre standard SPHINCS+ row) "
              f"{m['slhdsa128s_verify']}, XMSS {m['xmss_verify']}; ML-DSA-44 signing {m['mldsa44_sign']} times Ed25519 "
              "signing. The classical figure depends strongly on the library chosen (section 2).")

@@ -76,8 +76,16 @@ class TestLookups(unittest.TestCase):
         self.assertIn("proxy", r["cycle_label"])
 
     def test_derived_time(self):
-        r = model.cycles_for("ed25519_verify", "Cortex-M4", EV, BENCH, CMAP)
-        self.assertAlmostEqual(r["cycles"], 40 * 64 * 1000)  # S10D-031: 40 ms at 64 MHz
+        r = model.cycles_for("ed25519_verify", "RISC-V", EV, BENCH, CMAP)
+        self.assertAlmostEqual(r["cycles"], 41 * 72 * 1000)  # S10D-073: 41 ms at 72 MHz
+
+    def test_classical_baseline_rows(self):
+        self.assertEqual(model.cycles_for("ed25519_verify", "Cortex-M4", EV, BENCH, CMAP)["cycles"], 722000.0)  # S12A-331
+        self.assertEqual(model.cycles_for("ed25519_sign", "Cortex-M4", EV, BENCH, CMAP)["cycles"], 239000.0)  # S12A-330
+        self.assertEqual(model.cycles_for("x25519_shared", "Cortex-M4", EV, BENCH, CMAP)["cycles"], 548873.0)  # S12A-332
+        for r in CMAP:
+            for i in [x for x in r.get("alternatives", "").split("|") if x]:
+                self.assertIn(i, EV, i)
 
     def test_every_cycle_map_ref_exists(self):
         for r in CMAP:
