@@ -94,7 +94,9 @@ def main():
     S["V16"] = (verdict(float(shares.min()) > 70, float(shares.min()) >= 50), f"Hashing share of a 1 MB verification: {shares.min():.1f} to {shares.max():.1f} percent.")
     pm = R("planner/results/profile_main.csv")
     share = float(pm[pm.scenario == "stack_asm"].hr_share.iloc[0])
-    S["V17"] = (verdict(share < 0.20, share < 0.26), f"Profile fleet, stack optimised thresholds: {share:.3f} of devices need replacement.")
+    pms = R("planner/results/profile_mc_summary.csv")
+    unc = float(pms[(pms.fleet == "profile") & (pms.thresholds == "uncertain")]["median"].iloc[0])
+    S["V17"] = (verdict(share < 0.20, share < 0.26), f"Profile fleet, stack optimised thresholds (the registered scenario): {share:.3f} of devices need replacement. The result depends on the threshold scenario: with every threshold drawn from its published range the median is {unc:.3f}, just above the 0.20 line.")
     ms = R("planner/results/mosca_sobol.csv")
     topm = ms.loc[ms.S1.idxmax()]
     S["V18"] = (verdict(topm.input == "data_lifetime_years"), f"Largest first order index: {topm.input} ({topm.S1:.2f}).")

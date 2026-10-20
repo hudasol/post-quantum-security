@@ -26,7 +26,7 @@ Totals: 15 hit, 0 between, 4 miss, 5 not scored, of 24.
 | V14 | miss | Scored on the simulator the studies use (stop and wait with data and acknowledgement loss against 1/(1-p)^2): closed form inside the interval at 4 of 5 loss rates, and the simulator sits above it at every rate. A purpose written sampler agrees at 5 of 5, but it cannot disagree by construction. Selective repeat, used by the protocol and mission studies, has no closed form check. |
 | V15 | miss | Per message ML-DSA-44 on the SiK radio: utilisation 0.43 for the drone stream, which meets the refutation clause (at or below 100 percent), and 1.88 for the 5 Hz robot stream. |
 | V16 | hit | Hashing share of a 1 MB verification: 96.6 to 98.2 percent. |
-| V17 | hit | Profile fleet, stack optimised thresholds: 0.186 of devices need replacement. |
+| V17 | hit | Profile fleet, stack optimised thresholds (the registered scenario): 0.186 of devices need replacement. The result depends on the threshold scenario: with every threshold drawn from its published range the median is 0.201, just above the 0.20 line. |
 | V18 | hit | Largest first order index: data_lifetime_years (0.40). |
 | V19 | hit | 36 images built; 100.0 percent of 55938 log lines parsed. |
 | V20 | hit | Hybrid session on the SiK radio adds 1.87 ms per command. |
