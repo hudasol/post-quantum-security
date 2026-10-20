@@ -1,0 +1,17 @@
+label,key,value
+assumption,seed,20261020
+assumption,bootstrap_resamples,10000
+assumption,toolchain_used,arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009
+derived from published,toolchain_published_pqm4,"arm-none-eabi-gcc 11.3.1 20220712 (Arm GNU Toolchain 11.3.Rel1), per pqm4 README (data/raw/S6_pqm4_config.md)"
+assumption,pqm4_commit,5e5cc76d0b072ee7077e58afcbc619a1a67a53b4
+assumption,pqm4_build,"PLATFORM=mps2-an386, MUPQ_ITERATIONS=10 for ML-KEM and 50 for ML-DSA, pqm4 default flags (-O3 -g3, -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16)"
+assumption,mlkem_native_commit,d1b2fe782888bdb761a50336012923180be7f502
+assumption,mldsa_native_commit,834a90d5e846ffa1e1611bd24e160bb2e9b86d35
+assumption,harness_build,"bench/mcu Makefile target arm, ARM_OPT=-O2, ITERS=10, board/qemu link.ld and startup.c"
+assumption,dilithium_lowram_commit,36139b4e9a9b895dc2b1f3e3599fedab25172a9d
+assumption,unicorn_version,2.1.4
+assumption,capstone_version,5.0.7
+assumption,memory_map,"mps2-an386 layout: 0x00000000 4 MB code, 0x20000000 8 MB data, 0x40000000 and 0xE0000000 1 MB each as RAM reading zero"
+assumption,randomness,pqm4 mps2 build: fixed seed surf generator in common/randombytes.c (deterministic); harness: fixed xorshift32 state; external: fixed seed bytes
+assumption,licences,"pqm4: repository code Apache-2.0 or CC0-1.0 per README, PQClean clean implementations public domain (CC0) per their LICENSE files, m4f variants carry no separate LICENSE file; mlkem-native and mldsa-native Apache-2.0 or ISC or MIT per LICENSE; dilithium-lowram CC0 or Apache-2.0 per LICENSE"
+assumption,refused_fetch,"https://developer.arm.com/documentation/100166/0001/Programmers-Model/Instruction-set-summary/Cortex-M4-instructions (2026-10-20, permission not granted in time; not retried)"
