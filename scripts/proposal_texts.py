@@ -62,7 +62,7 @@ Aim: test the models of this repository against measurements, and turn them into
 
 | ID | Hypothesis | Refuted if |
 |---|---|---|
-| H1 | Board measured cycles fall inside the registered intervals for at least four fifths of the operations in `docs/PREDICTIONS_V4_BOARD.md`, without a shared sign of error | more than a fifth fall outside, or more than four fifths of the errors share one sign |
+| H1 | Board measured cycles fall inside the registered intervals for at least four fifths of the 18 harness operations in `docs/PREDICTIONS_V4_BOARD.md`, without a shared sign of error (stricter than the registered rule of one third; `docs/PREDICTIONS_V4_BOARD_NOTES.md`) | more than a fifth fall outside, or more than four fifths of the errors share one sign |
 | H2 | On a real telemetry radio pair, a hybrid session handshake completes within 2 s at the radio's default settings | the median handshake exceeds 2 s |
 | H3 | With a session design, the added latency per command stays within the control deadline of the flight stack's command stream | any documented command stream misses its deadline more often than without authentication |
 | H4 | Free flash and RAM after the flight stack, read from real build output, leave room for an LMS verifier and an ML-KEM session on current flight controllers | a current board class has less free memory than the published footprint of either |
