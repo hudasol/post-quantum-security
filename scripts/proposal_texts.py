@@ -150,7 +150,8 @@ def all_docs(claim):
         out = []
         for f in facts:
             if f["organisation"] == org and f["fact_id"] in ids:
-                out.append(f"- {f['paraphrase']} ({f['fact_id']})")
+                note = " The application window has closed." if f["fact_id"] == "EDGE-06" else ""
+                out.append(f"- {f['paraphrase']}{note} ({f['fact_id']})")
         return "\n".join(out)
 
     docs = [robotics(claim)]

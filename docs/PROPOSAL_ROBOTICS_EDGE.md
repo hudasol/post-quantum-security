@@ -13,7 +13,7 @@ Drones and robots authenticate commands and firmware on microcontroller flight c
 - The EDGE entities page groups its companies into clusters; ADASI and ANAVIA work on autonomous and unmanned air, land and sea systems, KATIM and ORYXLABS sit in a secure intelligence systems cluster for secure communication and network protection, and FADA works on satellite cyber security. (EDGE-01)
 - The KATIM page describes secure phones, applications and network encryptors, states that post quantum capabilities are being integrated into its products, mentions a secure microcontroller in its rugged phone, and refers to research and development centres in the UAE and Finland. (EDGE-02)
 - An EDGE news item dated March 2023 reports a memorandum between its entity GRADEONE and UAVOS to set up a joint research and development centre for autonomous solutions, listing security technology for autonomous platforms among the planned areas. (EDGE-05)
-- An EDGE news item dated September 2026 describes an EDGE engineering challenge inside the ATRC and Ministry of Education Advanced Technology Pioneers programme, open to bachelor and master students and recent graduates in teams of three to four through ChallengeON, with applications closing 11 October 2026. (EDGE-06)
+- An EDGE news item dated September 2026 describes an EDGE engineering challenge inside the ATRC and Ministry of Education Advanced Technology Pioneers programme, open to bachelor and master students and recent graduates in teams of three to four through ChallengeON, with applications closing 11 October 2026. The application window has closed. (EDGE-06)
 
 ## What already exists
 

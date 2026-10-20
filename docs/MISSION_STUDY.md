@@ -93,7 +93,7 @@ Control availability is the share of commands issued in flight that reach the ve
 | LoRaWAN DR0 | C | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 8289.007 [8288.591, 8289.385] | 0.0078 [0.0078, 0.0078] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
 | LoRaWAN DR0 | D | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 343.091 [343.002, 343.194] | 0.0009 [0.0009, 0.0009] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
 
-_estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
+_estimated (computed from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
 ### 4.2 Robot
 
@@ -116,7 +116,7 @@ _estimated (modelled from published sizes and cycle counts plus labelled assumpt
 | LoRaWAN DR0 | C | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 41958.522 [41957.535, 41959.561] | 0.0397 [0.0397, 0.0397] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
 | LoRaWAN DR0 | D | 0.0000 [0.0000, 0.0000] | 0.0000 | n/a [n/a, n/a] | 1302.690 [1302.565, 1302.850] | 0.0009 [0.0009, 0.0009] | n/a [n/a, n/a] | 0.0 [0.0, 0.0] |
 
-_estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
+_estimated (computed from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
 "unauthenticated" is the mean availability of the same command stream with no authentication bytes or compute, which isolates the share lost to the link itself. n/a means no run produced a value (for example no teardown, or no delivered command).
 
@@ -170,7 +170,7 @@ Median time to recover authentication after a teardown (s):
 | SiK 64 kbit/s | 0.100 | 0.257 | 1.105 |
 | SiK 64 kbit/s | 0.200 | 0.302 | 1.405 |
 
-_estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
+_estimated (computed from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
 ### rekey_interval_s
 
@@ -202,7 +202,7 @@ Median time to recover authentication after a teardown (s):
 | SiK 64 kbit/s | 900.000 | 0.197 | 0.912 |
 | SiK 64 kbit/s | inf | 0.197 | 0.912 |
 
-_estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
+_estimated (computed from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
 ### outage_rate_per_h
 
@@ -223,7 +223,7 @@ Base value 6.0.
 | SiK 64 kbit/s | 20.000 | 0.971 | 0.973 | 0.778 | 0.972 |
 | SiK 64 kbit/s | 60.000 | 0.920 | 0.918 | 0.730 | 0.921 |
 
-_estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
+_estimated (computed from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
 ### outage_mean_s
 
@@ -249,7 +249,7 @@ Median time to recover authentication after a teardown (s):
 | SiK 64 kbit/s | 2.000 | 0.197 | 1.000 |
 | SiK 64 kbit/s | 30.000 | 0.197 | 0.947 |
 
-_estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
+_estimated (computed from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
 ### clock_hz
 
@@ -269,7 +269,7 @@ Median compute share:
 | LoRaWAN DR5 | 4.80e+08 | 3.16e-04 | 3.09e-04 | 0.003 | 3.08e-04 |
 | SiK 64 kbit/s | 4.80e+08 | 3.16e-04 | 3.27e-04 | 0.003 | 3.08e-04 |
 
-_estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
+_estimated (computed from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
 ### wait_state_factor
 
@@ -289,7 +289,7 @@ Median compute share:
 | LoRaWAN DR5 | 1.500 | 9.10e-04 | 8.92e-04 | 0.012 | 8.79e-04 |
 | SiK 64 kbit/s | 1.500 | 9.10e-04 | 9.59e-04 | 0.012 | 8.79e-04 |
 
-_estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
+_estimated (computed from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
 ### mac_cycles
 
@@ -315,7 +315,7 @@ Median compute share:
 | SiK 64 kbit/s | 2000.000 | 2.15e-04 | 2.47e-04 | 0.008 | 1.92e-04 |
 | SiK 64 kbit/s | 50000.000 | 0.004 | 0.004 | 0.008 | 0.004 |
 
-_estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
+_estimated (computed from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
 ![Loss sweep](figures/mission/mission_loss_sweep.png)
 
@@ -349,7 +349,7 @@ Elementary effects (SALib Morris, 10 trajectories, 4 levels, 200 runs per point,
 | C | wait_state_factor | 0.005 | 0.007 | 0.003 |
 | C | mac_cycles | 0.002 | 0.004 | 0.002 |
 
-_estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
+_estimated (computed from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
 ## 6. Rekey and link loss interplay
 
@@ -366,7 +366,7 @@ A rekey that is interrupted by an outage keeps the old key for the grace period;
 | B | 900.000 | 1.157 | 0.149 | 0.991 |
 | B | inf | 1.185 | 0.167 | 0.991 |
 
-_estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
+_estimated (computed from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
 Null result: across rekey intervals from 60 s to once per arming, mean availability changes by at most 0.0010 (A 0.0007, B 0.0010), while the number of handshakes per mission changes by an order of magnitude. With a 30 s grace period, rekeying and link loss do not interact strongly in this model; teardowns from outages longer than the 10 s session timeout dominate.
 
@@ -439,7 +439,7 @@ Low rate profile (one command per 60 s, telemetry off), drone, to show what LoRa
 | LoRaWAN DR0 | C | 0.000 | 0.000 | 131.123 [131.102, 131.164] | 0.0 [0.0, 0.0] |
 | LoRaWAN DR0 | D | 0.000 | 0.000 | 3.661 [3.661, 3.661] | 0.0 [0.0, 0.0] |
 
-_estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
+_estimated (computed from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
 ![Envelope](figures/mission/mission_envelope.png)
 

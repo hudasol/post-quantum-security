@@ -54,7 +54,7 @@ Checks of this recommendation against the result files (computed by `mission/run
 | robot | LoRaWAN DR5 | C | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 1917.689 | 0.0397 | n/a | no |
 | robot | LoRaWAN DR5 | D | 1.16e-05 [8.67e-06, 1.47e-05] | 19.07 [19.07, 19.07] | 59.539 | 0.0009 | n/a | no |
 
-_estimated (modelled from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
+_estimated (computed from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
 Feasible at the 0.5 s deadline (base assumptions): drone: A on IEEE 802.15.4, A on SiK 64 kbit/s, B on IEEE 802.15.4, B on SiK 64 kbit/s, D on IEEE 802.15.4, D on SiK 64 kbit/s; robot: A on IEEE 802.15.4, A on SiK 64 kbit/s, B on IEEE 802.15.4, B on SiK 64 kbit/s, D on IEEE 802.15.4, D on SiK 64 kbit/s. Low rate profile (one command per minute, 5 s deadline, drone): A on IEEE 802.15.4, A on SiK 64 kbit/s, B on IEEE 802.15.4, B on SiK 64 kbit/s, C on SiK 64 kbit/s, D on IEEE 802.15.4, D on SiK 64 kbit/s.
 
