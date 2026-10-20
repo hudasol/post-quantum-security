@@ -71,7 +71,7 @@ The protocol simulation (1000 seeded trials per cell, `docs/PROTOCOL_SIM.md`) gi
 
 ### 4.4 RQ4: signed boot and update
 
-For a 1 MB image on a 168 MHz Cortex-M4 with software SHA-256, verification takes about 462 ms with ML-DSA-44 and 470 ms with LMS, of which hashing the image is 454 ms. With a hardware hash block, the totals fall to 23 ms and 30 ms; the signature then becomes the larger part for most schemes, though for ML-DSA-44 the hash still costs more. The choice of signature scheme changes boot time far less than image size and hash hardware do (`docs/BOOT_UPDATE_STUDY.md`). Against published bootloader timings the uncalibrated model is far off and the calibrated check rests on three rows, so these are estimates of order, not predictions. A fixed first stage root of trust that verifies only a classical signature cannot be changed by any of this; such devices need hardware replacement for signing migration.
+For a 1 MB image on a 168 MHz Cortex-M4 (the STM32F405 class of a small drone flight controller) with software SHA-256, verification takes about 462 ms with ML-DSA-44 and 470 ms with LMS, of which hashing the image is 454 ms. With a hash peripheral, which the STM32F405 itself lacks but parts of the same family such as the STM32F415 have, the totals fall to 23 ms and 30 ms; the signature then becomes the larger part for most schemes, though for ML-DSA-44 the hash still costs more. The choice of signature scheme changes boot time far less than image size and hash hardware do (`docs/BOOT_UPDATE_STUDY.md`). Against published bootloader timings the uncalibrated model is far off and the calibrated check rests on three rows, so these are estimates of order, not predictions. A fixed first stage root of trust that verifies only a classical signature cannot be changed by any of this; such devices need hardware replacement for signing migration.
 
 ### 4.5 RQ5: fleet migration
 
@@ -106,11 +106,12 @@ Reliability. Every result regenerates from committed scripts with stored seeds; 
 4. Fleets are drawn from real board classes but their counts and free memory shares are synthetic or assumed.
 5. Energy rests on typical datasheet currents for five parts and one calibration source.
 6. The classical baselines differ between studies within the published range (for example the Ed25519 row chosen by the energy and mission models), which is stated beside each result.
-7. Several sources could not be retrieved (listed in `docs/NEEDS_FROM_AUTHOR.md` and the source notes); 126 new rows that only one reader could confirm were left out of the table.
+7. The studies do not yet share one set of inputs everywhere: the protocol and mission models describe the MAVLink style handshake differently, and the energy and mission models use different published LMS rows and per message costs; each choice is stated in its study.
+8. Several sources could not be retrieved (listed in `docs/NEEDS_FROM_AUTHOR.md` and the source notes); 126 new rows that only one reader could confirm were left out of the table.
 
 ## 8. Reproducibility
 
-Run `python3 scripts/merge_evidence.py`, then the `run_all.py` script of each model folder (`cyclemodel/`, `energy/`, `bootchain/`, `mission/`, `rtlsim/`), the link study scripts in `linksim/`, the planner study in `planner/`, and `python3 scripts/build_paper.py`. Third party libraries are fetched at pinned commits and never committed. Data dictionary: `docs/DATA_DICTIONARY.md`.
+Run `python3 scripts/merge_evidence.py`, then the `run_all.py` script of each model folder (`cyclemodel/`, `energy/`, `bootchain/`, `mission/`), `rtlsim/fetch.sh`, `rtlsim/build_sim.sh`, `rtlsim/build_sw.sh` and `rtlsim/run.sh`, the link study scripts in `linksim/`, the planner study in `planner/`, and `python3 scripts/build_paper.py`. Third party libraries are fetched at pinned commits and never committed. Data dictionary: `docs/DATA_DICTIONARY.md`.
 
 ## References
 

@@ -73,7 +73,7 @@ Reliability. Every result regenerates from committed scripts with stored seeds; 
 
 ## 8. Reproducibility
 
-Run `python3 scripts/merge_evidence.py`, then the `run_all.py` script of each model folder (`cyclemodel/`, `energy/`, `bootchain/`, `mission/`, `rtlsim/`), the link study scripts in `linksim/`, the planner study in `planner/`, and `python3 scripts/build_paper.py`. Third party libraries are fetched at pinned commits and never committed. Data dictionary: `docs/DATA_DICTIONARY.md`.
+Run `python3 scripts/merge_evidence.py`, then the `run_all.py` script of each model folder (`cyclemodel/`, `energy/`, `bootchain/`, `mission/`), `rtlsim/fetch.sh`, `rtlsim/build_sim.sh`, `rtlsim/build_sw.sh` and `rtlsim/run.sh`, the link study scripts in `linksim/`, the planner study in `planner/`, and `python3 scripts/build_paper.py`. Third party libraries are fetched at pinned commits and never committed. Data dictionary: `docs/DATA_DICTIONARY.md`.
 
 ## References
 
