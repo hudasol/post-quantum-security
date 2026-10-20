@@ -124,8 +124,9 @@ def main():
     rub = (ROOT / "docs/COMPLETENESS_RUBRIC.md").read_text()
     mm = re.findall(r"\*\*([\d.]+) of 10\*\*", rub)
     if len(mm) >= 2:
-        d = float(mm[-1]) - float(mm[0])
-        S["V24"] = (verdict(d >= 1.0, d >= 0.5), f"Rubric from {mm[0]} to {mm[-1]} (change {d:+.1f}).")
+        # Round 4 is scored on its own two scores (start and end of round 4); later rounds add more.
+        d = float(mm[1]) - float(mm[0])
+        S["V24"] = (verdict(d >= 1.0, d >= 0.5), f"Rubric from {mm[0]} to {mm[1]} (change {d:+.1f}).")
     pred = (ROOT / "docs/PREDICTIONS_V4.md").read_bytes()
     stored = (ROOT / "docs/PREDICTIONS_V4.sha256").read_text().split()[0]
     now = hashlib.sha256(pred).hexdigest()

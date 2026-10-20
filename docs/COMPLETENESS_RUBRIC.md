@@ -46,3 +46,23 @@ Scored after three review passes (`docs/REVIEW_FINDINGS3.csv`). Each score rests
 Weighted score at the end: 0.20 x 8 + 0.20 x 4 + 0.20 x 2 + 0.15 x 9 + 0.10 x 8 + 0.15 x 5 = **5.7 of 10**.
 
 The rise of 1.0 comes mostly from reproducibility, review depth and coverage, which are the parts this round could change without a board. Hardware evidence, the largest weight still near zero, needs the board session in `docs/NEEDS_FROM_AUTHOR.md` item 1.
+
+
+## Score at the start of round 5 (2026-10-21, commit 256d7c5)
+
+Copied from the end of round 4; the reasons are those of the section above.
+
+| Criterion | Score |
+|---|---|
+| Evidence coverage | 8 |
+| Model validation | 4 |
+| Hardware evidence | 2 |
+| Reproducibility | 9 |
+| Review depth | 8 |
+| External validity | 5 |
+
+Weighted score at the start of round 5: **5.7 of 10**.
+
+## Score at the end of round 5
+
+Filled in at the end of the round in a separate section, with the commit it refers to.
