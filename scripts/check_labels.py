@@ -18,12 +18,18 @@ LABELS = {"published", "host measured", "emulated", "estimated", "planned", "mod
 SUFFIXES = {"published", "host_measured", "emulated", "estimated", "planned", "modelled", "rtl_simulated",
             "derived", "assumption", "synthetic", "board_measured"}
 ROUND4_DIRS = ["cyclemodel/results", "rtlsim/results", "energy/results", "bootchain/results", "mission/results",
-               "bench/board_kit/results"]
+               "bench/board_kit/dry_run"]
+# round 4 files inside folders that also hold earlier files (whose label column has other meanings)
+ROUND4_FILES = ["linksim/results/validation_v4.csv", "linksim/results/diagnosis_v4.csv", "linksim/results/closed_form_v4.csv",
+                "linksim/results/protocols_*.csv", "planner/results/profile_*.csv", "planner/results/mosca_*.csv",
+                "bench/board_kit/image_sizes.csv", "data/reference_profiles.csv"]
 LABELISH = re.compile(r"_(published|measured|emulated|estimated|planned|modelled|modeled|simulated|derived|synthetic)$")
 
 
 def check_file(path):
     problems = []
+    if Path(path).name.endswith("config.csv"):
+        return []  # run configuration records, not results
     with open(ROOT / path, newline="", encoding="utf-8") as fh:
         rd = csv.DictReader(fh)
         cols = rd.fieldnames or []
@@ -45,6 +51,9 @@ def main():
     problems = []
     for d in ROUND4_DIRS:
         for p in sorted((ROOT / d).rglob("*.csv")) if (ROOT / d).exists() else []:
+            problems += check_file(p.relative_to(ROOT))
+    for pat in ROUND4_FILES:
+        for p in sorted(ROOT.glob(pat)):
             problems += check_file(p.relative_to(ROOT))
     with open(ROOT / "data" / "evidence.csv", newline="", encoding="utf-8") as fh:
         bad = {r["evidence_type"] for r in csv.DictReader(fh)} - {"published", "derived-from-published"}
