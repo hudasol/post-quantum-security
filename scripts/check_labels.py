@@ -14,11 +14,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 LABELS = {"published", "host measured", "emulated", "estimated", "planned", "modelled", "rtl simulated",
-          "derived from published", "assumption", "synthetic", "board measured", "cited"}
+          "derived from published", "assumption", "synthetic", "board measured", "cited",
+          "simulated (network)", "sitl measured"}
 SUFFIXES = {"published", "host_measured", "emulated", "estimated", "planned", "modelled", "rtl_simulated",
-            "derived", "assumption", "synthetic", "board_measured"}
+            "derived", "assumption", "synthetic", "board_measured",
+            "simulated_network", "sitl_measured"}
 ROUND4_DIRS = ["cyclemodel/results", "rtlsim/results", "energy/results", "bootchain/results", "mission/results",
-               "bench/board_kit/dry_run"]
+               "bench/board_kit/dry_run", "formal/results"]
 # round 4 files inside folders that also hold earlier files (whose label column has other meanings)
 ROUND4_FILES = ["linksim/results/validation_v4.csv", "linksim/results/diagnosis_v4.csv", "linksim/results/closed_form_v4.csv",
                 "linksim/results/protocols_*.csv", "planner/results/profile_*.csv", "planner/results/mosca_*.csv",
