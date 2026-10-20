@@ -59,6 +59,38 @@ def main():
         w.writerow(["id", "reason"])
         w.writerows(sorted(blocked.items()))
     print(f"promoted {len(out)} of {len(stage)}; not promoted {len(blocked)}")
+    promote_facts(adj)
+
+
+def promote_facts(adj):
+    """Link and timing facts: same rule; corrections on any field (value or wording) are applied."""
+    facts, header = {}, None
+    for p in sorted(RAW.glob("S12*_link_facts.csv")):
+        with open(p, newline="", encoding="utf-8") as fh:
+            rd = csv.DictReader(fh)
+            header = header or rd.fieldnames
+            for r in rd:
+                facts[r["id"]] = r
+    res = sv.compare(facts, sv.read(V / "reader1_facts.csv"), sv.read(V / "reader2_facts.csv"), sv.FACT_FIELDS)
+    status = sv.row_status(facts, res, adj, sv.FACT_FIELDS)
+    out = []
+    for rid, r in facts.items():
+        if status[rid][0] not in ("confirmed", "corrected"):
+            continue
+        r = dict(r)
+        notes = []
+        for (aid, f), a in adj.items():
+            if aid == rid and a["verdict"] in ("reader_right", "both_wrong") and f in r:
+                notes.append(f"{f} corrected from {r[f]!r} to {a['correct_value']!r} after double reading on 2026-10-20")
+                r[f] = a["correct_value"]
+        if notes:
+            r["note"] = (r.get("note", "") + " " + "; ".join(notes) + ".").strip()
+        out.append(r)
+    with open(RAW / "S12_facts_verified.csv", "w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=header)
+        w.writeheader()
+        w.writerows(out)
+    print(f"facts promoted {len(out)} of {len(facts)}")
 
 
 if __name__ == "__main__":
