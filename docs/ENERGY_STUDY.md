@@ -12,7 +12,7 @@ Parts with a cited run current: ESP32-C3, STM32L476, STM32L4R5, STM32L552, STM32
 
 ## 2. Energy per operation (estimated)
 
-Energy = cycles x (current / frequency) x voltage. Multiple = cycles of the operation over cycles of the classical baseline on the same core (Ed25519 verify for verification, Ed25519 sign for signing, X25519 for key encapsulation). Full table: `energy/results/energy_per_op.csv`.
+Energy = cycles x (current / frequency) x voltage. Multiple = cycles of the operation over cycles of the classical baseline on the same core (Ed25519 verify for verification, Ed25519 sign for signing, X25519 for key encapsulation). The multiple is left blank where one of the two rows is a proxy from another core and the other is native, because that ratio would mix cores. Full table: `energy/results/energy_per_op.csv`.
 
 | Part, supply | Operation | Cycles | Cycle source label | Energy (uJ, estimated) | Multiple of baseline |
 |---|---|---|---|---|---|
@@ -39,13 +39,13 @@ Energy = cycles x (current / frequency) x voltage. Multiple = cycles of the oper
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | ed25519_verify | 2,952,000 | derived from published (S10D-073 (time x clock)) | 1,400 |  |
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | ecdsa_p256_verify | 22,176,000 | derived from published (S10D-076 (time x clock)) | 10,520 |  |
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | mldsa44_verify | 3,674,071 | published (S2-0363) | 1,743 | 1.25 |
-| ESP32-C3, 143.75 uA/MHz at 3.3 V | mldsa87_verify | 4,193,104 | published; proxy: Cortex-M4 row used for RISC-V (S2-0051) | 1,989 | 1.42 |
+| ESP32-C3, 143.75 uA/MHz at 3.3 V | mldsa87_verify | 4,193,104 | published; proxy: Cortex-M4 row used for RISC-V (S2-0051) | 1,989 |  |
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | lms_verify | 8,784,000 | derived from published (S10D-083 (time x clock)) | 4,167 | 2.98 |
-| ESP32-C3, 143.75 uA/MHz at 3.3 V | xmss_verify | 13,071,813 | published; proxy: Cortex-M4 row used for RISC-V (S8-032) | 6,201 | 4.43 |
-| ESP32-C3, 143.75 uA/MHz at 3.3 V | slhdsa128s_verify | 7,471,794 | published; proxy: Cortex-M4 row used for RISC-V (S2-0060) | 3,544 | 2.53 |
+| ESP32-C3, 143.75 uA/MHz at 3.3 V | xmss_verify | 13,071,813 | published; proxy: Cortex-M4 row used for RISC-V (S8-032) | 6,201 |  |
+| ESP32-C3, 143.75 uA/MHz at 3.3 V | slhdsa128s_verify | 7,471,794 | published; proxy: Cortex-M4 row used for RISC-V (S2-0060) | 3,544 |  |
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | mlkem768_decaps | 707,827 | published; proxy: Cortex-M4 row used for RISC-V (S2-0024) | 336 | 1.29 |
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | x25519_shared | 548,873 | published; proxy: Cortex-M4 row used for RISC-V (S12A-332) | 260 |  |
-| ESP32-C3, 143.75 uA/MHz at 3.3 V | hmac_sha256_msg | 24,407 | estimated; proxy: Cortex-M4 row used for RISC-V (SHA-256 software throughput median (energy/retrieved_benchmarks.csv)) | 11.6 | 0.008 |
+| ESP32-C3, 143.75 uA/MHz at 3.3 V | hmac_sha256_msg | 24,407 | estimated; proxy: Cortex-M4 row used for RISC-V (SHA-256 software throughput median (energy/retrieved_benchmarks.csv)) | 11.6 |  |
 
 SHA-256 software cycles per byte (derived from published throughput, three Cortex-M4 boards): median 76.3, range 75.1 to 109.6, bootstrap 95 percent interval of the median 75.1 to 109.6 (n = 3, so the interval is coarse). HMAC-SHA256 has no published cycles row in the evidence table; the HMAC figures are `estimated` from this SHA-256 throughput for a 64 byte message and are not published values.
 
