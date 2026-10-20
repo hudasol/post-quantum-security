@@ -296,7 +296,7 @@ Updated status after round 4:
 | model part | status |
 |---|---|
 | rate | unchanged: consistent with Table 5 of ePrint 2026/2343 (absolute times 29 to 43 percent too fast before calibration) |
-| LoRa air time | formula reproduces four published examples (three exactly under parameter sets the sources leave partly unstated, one within 0.4 percent of a rounded value) |
+| LoRa air time | formula reproduces four published examples; only one states every parameter, and the other three reproduce under settings chosen after the fact (one within 0.4 percent of a rounded value) |
 | fragmentation (6LoWPAN) | counts checked against RFC 4944 rules by an independent counting function; timing still unvalidated |
 | 802.15.4 MAC timing | constants cited; end to end still a factor of 4.2 faster than the only published figure |
 | duty cycle | the code equals the closed form 99 x air time at 1 percent (an arithmetic check of the formula it implements); not validated against a measurement |
