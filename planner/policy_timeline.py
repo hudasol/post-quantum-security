@@ -136,7 +136,7 @@ def render(rows):
         L.append("| " + " | ".join(c.replace("|", "/") or "none" for c in cells) + " |")
     L += ["", "## Policy horizons used by the planner study", "",
           "`planner/profile_study.py` draws the policy horizon of its exposure model from the completion "
-          "milestones above, one entry per row, leaving out unverified rows (rows %s). Years: %s; range %d to %d. "
+          "milestones above, one entry per row, using rows %s (unverified rows are left out). Years: %s; range %d to %d. "
           "These are policy end dates, not estimates of when a cryptographically relevant quantum computer exists; "
           "using them as the horizon is an assumption of the study." % (
               ", ".join(horizon_rows(rows)), ", ".join(str(y) for y in sorted(yrs)), min(yrs), max(yrs)), "",
