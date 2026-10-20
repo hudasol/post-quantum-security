@@ -1,0 +1,76 @@
+label,scenario,protocol,variant,sender,message,bytes
+derived from published,ttfam,dtls13,classical,A,ClientHello,152
+derived from published,ttfam,dtls13,classical,B,ServerHello to Finished,512
+derived from published,ttfam,dtls13,classical,A,client Certificate to Finished,480
+derived from published,ttfam,dtls13,classical,A,authenticated command,71
+derived from published,rekey,dtls13,classical,A,rekey share,61
+derived from published,rekey,dtls13,classical,B,rekey share and confirmation,77
+derived from published,ttfam,dtls13,hybrid,A,ClientHello,1336
+derived from published,ttfam,dtls13,hybrid,B,ServerHello to Finished,7592
+derived from published,ttfam,dtls13,hybrid,A,client Certificate to Finished,6472
+derived from published,ttfam,dtls13,hybrid,A,authenticated command,71
+derived from published,rekey,dtls13,hybrid,A,rekey share,1245
+derived from published,rekey,dtls13,hybrid,B,rekey share and confirmation,1165
+derived from published,ttfam,dtls13,pq_only,A,ClientHello,1304
+derived from published,ttfam,dtls13,pq_only,B,ServerHello to Finished,7560
+derived from published,ttfam,dtls13,pq_only,A,client Certificate to Finished,6472
+derived from published,ttfam,dtls13,pq_only,A,authenticated command,71
+derived from published,rekey,dtls13,pq_only,A,rekey share,1213
+derived from published,rekey,dtls13,pq_only,B,rekey share and confirmation,1133
+derived from published,ttfam,edhoc_oscore,classical,A,EDHOC message_1,45
+derived from published,ttfam,edhoc_oscore,classical,B,EDHOC message_2,110
+derived from published,ttfam,edhoc_oscore,classical,A,EDHOC message_3,85
+derived from published,ttfam,edhoc_oscore,classical,A,authenticated command,58
+derived from published,rekey,edhoc_oscore,classical,A,rekey share,48
+derived from published,rekey,edhoc_oscore,classical,B,rekey share and confirmation,64
+derived from published,ttfam,edhoc_oscore,hybrid,A,EDHOC message_1,1229
+derived from published,ttfam,edhoc_oscore,hybrid,B,EDHOC message_2,3554
+derived from published,ttfam,edhoc_oscore,hybrid,A,EDHOC message_3,2441
+derived from published,ttfam,edhoc_oscore,hybrid,A,authenticated command,58
+derived from published,rekey,edhoc_oscore,hybrid,A,rekey share,1232
+derived from published,rekey,edhoc_oscore,hybrid,B,rekey share and confirmation,1152
+derived from published,ttfam,edhoc_oscore,pq_only,A,EDHOC message_1,1197
+derived from published,ttfam,edhoc_oscore,pq_only,B,EDHOC message_2,3522
+derived from published,ttfam,edhoc_oscore,pq_only,A,EDHOC message_3,2441
+derived from published,ttfam,edhoc_oscore,pq_only,A,authenticated command,58
+derived from published,rekey,edhoc_oscore,pq_only,A,rekey share,1200
+derived from published,rekey,edhoc_oscore,pq_only,B,rekey share and confirmation,1120
+derived from published,ttfam,mavlink2_pq,classical,A,F1 key share,32
+derived from published,ttfam,mavlink2_pq,classical,B,"F2 share, signature, public key",128
+derived from published,ttfam,mavlink2_pq,classical,A,F3 key confirmation,16
+derived from published,ttfam,mavlink2_pq,classical,A,authenticated command,55
+derived from published,rekey,mavlink2_pq,classical,A,rekey share,45
+derived from published,rekey,mavlink2_pq,classical,B,rekey share and confirmation,61
+derived from published,ttfam,mavlink2_pq,hybrid,A,F1 key share,1216
+derived from published,ttfam,mavlink2_pq,hybrid,B,"F2 share, signature, public key",4852
+derived from published,ttfam,mavlink2_pq,hybrid,A,F3 key confirmation,16
+derived from published,ttfam,mavlink2_pq,hybrid,A,authenticated command,55
+derived from published,rekey,mavlink2_pq,hybrid,A,rekey share,1229
+derived from published,rekey,mavlink2_pq,hybrid,B,rekey share and confirmation,1149
+derived from published,ttfam,mavlink2_pq,pq_only,A,F1 key share,1184
+derived from published,ttfam,mavlink2_pq,pq_only,B,"F2 share, signature, public key",4820
+derived from published,ttfam,mavlink2_pq,pq_only,A,F3 key confirmation,16
+derived from published,ttfam,mavlink2_pq,pq_only,A,authenticated command,55
+derived from published,rekey,mavlink2_pq,pq_only,A,rekey share,1197
+derived from published,rekey,mavlink2_pq,pq_only,B,rekey share and confirmation,1117
+derived from published,ttfam,dds_security,classical,A,HandshakeRequest,728
+derived from published,ttfam,dds_security,classical,B,HandshakeReply,792
+derived from published,ttfam,dds_security,classical,A,HandshakeFinal,464
+derived from published,ttfam,dds_security,classical,A,authenticated command,86
+derived from published,rekey,dds_security,classical,A,rekey share,76
+derived from published,rekey,dds_security,classical,B,rekey share and confirmation,92
+derived from published,ttfam,dds_security,hybrid,A,HandshakeRequest,5548
+derived from published,ttfam,dds_security,hybrid,B,HandshakeReply,7872
+derived from published,ttfam,dds_security,hybrid,A,HandshakeFinal,2820
+derived from published,ttfam,dds_security,hybrid,A,authenticated command,86
+derived from published,rekey,dds_security,hybrid,A,rekey share,1260
+derived from published,rekey,dds_security,hybrid,B,rekey share and confirmation,1180
+derived from published,ttfam,dds_security,pq_only,A,HandshakeRequest,5516
+derived from published,ttfam,dds_security,pq_only,B,HandshakeReply,7840
+derived from published,ttfam,dds_security,pq_only,A,HandshakeFinal,2820
+derived from published,ttfam,dds_security,pq_only,A,authenticated command,86
+derived from published,rekey,dds_security,pq_only,A,rekey share,1228
+derived from published,rekey,dds_security,pq_only,B,rekey share and confirmation,1148
+derived from published,ttfam,raw_mldsa44,per_message,A,authenticated command,2462
+derived from published,firmware,any,classical,A,firmware image and signature,50064
+derived from published,firmware,any,pq_only,A,firmware image and signature,52420

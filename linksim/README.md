@@ -17,6 +17,12 @@ All outputs are **estimated from published sizes, not measured**.
 | `sensitivity.py` | Plus and minus 50 percent on assumptions, loss sweep 0, 1, 5, 10 percent |
 | `make_tables.py` | Writes `docs/link_tables.md` and refreshes marked blocks in `docs/LINK_REFERENCE_DESIGN.md` |
 | `make_plots.py` | Writes `docs/figures/linksim_handshake.png` |
+| `lora.py` | LoRa time on air formula and a LoRaWAN link whose air time follows it (fourth round) |
+| `mac802154.py` | IEEE 802.15.4 frame timing with 6LoWPAN fragmentation; each cited cost behind a flag (fourth round) |
+| `checks.py` | Closed form checks: duty cycle wait, stop and wait transmissions per fragment |
+| `validate_v4.py` | Fourth round validation table, 802.15.4 diagnosis one cause at a time, closed form checks |
+| `protocols.py` | Seeded simulation of DTLS 1.3, EDHOC with OSCORE, MAVLink 2 style and DDS Security style profiles |
+| `protocols_report.py` | Writes `docs/PROTOCOL_SIM.md` and its figures from the protocol results |
 | `tests/` | Unit tests with hand computed cases |
 
 ## Usage
@@ -29,6 +35,9 @@ python -m linksim.cli --scenario handshake-prov --link lorawan
 python -m linksim.cli --scenario firmware --fw-bytes 1000000 --link sik --loss 0.1
 python -m linksim.cli --scenario firmware-pq --fw-bytes 1000000
 python -m linksim.cli --scenario tag
+python -m linksim.validate_v4
+python -m linksim.protocols --trials 1000
+python -m linksim.protocols_report
 python -m unittest discover -s linksim/tests -t .
 ```
 
