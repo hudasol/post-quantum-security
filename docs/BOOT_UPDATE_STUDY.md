@@ -8,6 +8,8 @@ Verification time = SHA-256 over the image (cycles per byte x bytes / clock) + o
 
 SHA-256 cycles per byte: software median 76.3 (range 75.1 to 109.6, three Cortex-M4 boards); hardware HASH median 2.38 (range 1.91 to 5.15). No vendor reference manual was retrieved; the hardware figure comes from benchmark pages.
 
+Caveat on the hardware HASH rows: the STM32F405 of the Crazyflie 2.1 has no hash peripheral; parts of the same family with a cryptographic block have one. The hardware HASH rows for that target are a what if for such a part at the same clock, not a property of the Crazyflie.
+
 Image size: no retrieved source states a PX4 or ArduPilot binary size. The cited limits are 1 MB (early FMUv2 flash) and 2 MB (FMUv3), and the Crazyflie MCU has 1 MB of flash. Image sizes of 0.1 to 2 MB are therefore assumptions bounded by cited limits (`unverified`).
 
 ## 1. Verification time (estimated)
