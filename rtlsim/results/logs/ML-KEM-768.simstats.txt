@@ -1,0 +1,2 @@
+Executed cycles:  38970422
+Simulation speed: 457222 cycles/s (457.222 kHz)
