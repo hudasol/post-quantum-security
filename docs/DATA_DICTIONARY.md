@@ -1102,38 +1102,38 @@ Labels used across the repository: published, host measured, emulated, estimated
 | utilisation_down_median | number | 96.78800731261427 |
 | utilisation_down_lo | number | 96.78800731261427 |
 | utilisation_down_hi | number | 96.78800731261427 |
-| compute_share_median | number | 0.0009342476190476191 |
-| compute_share_lo | number | 0.0009342476190476191 |
-| compute_share_hi | number | 0.0009342476190476191 |
-| ttra_s_median | number | 0.2056452380952578 |
-| ttra_s_lo | number | 0.2056452380952578 |
-| ttra_s_hi | number | 0.2056452380952578 |
-| first_session_s_median | number | 0.2056452380952381 |
-| first_session_s_lo | number | 0.2056452380952381 |
-| first_session_s_hi | number | 0.2056452380952381 |
-| avail_mean | number | 0.9919376811594203 |
-| avail_mean_lo | number | 0.991268115942029 |
-| avail_mean_hi | number | 0.992598695652174 |
+| compute_share_median | number | 0.000901660619047619 |
+| compute_share_lo | number | 0.000901660619047619 |
+| compute_share_hi | number | 0.000901660619047619 |
+| ttra_s_median | number | 0.19749848809522064 |
+| ttra_s_lo | number | 0.19749848809522064 |
+| ttra_s_hi | number | 0.19749848809522064 |
+| first_session_s_median | number | 0.1974984880952381 |
+| first_session_s_lo | number | 0.1974984880952381 |
+| first_session_s_hi | number | 0.1974984880952381 |
+| avail_mean | number | 0.9919405797101449 |
+| avail_mean_lo | number | 0.9912710144927537 |
+| avail_mean_hi | number | 0.9926015942028986 |
 | avail_med_0.1 | number | 0.9739130434782609 |
-| avail_mean_0.1 | number | 0.9718 |
+| avail_mean_0.1 | number | 0.9718028985507247 |
 | avail_base_mean_0.1 | number | 0.9718565217391304 |
 | avail_med_0.25 | number | 0.9971014492753624 |
-| avail_mean_0.25 | number | 0.9919318840579711 |
+| avail_mean_0.25 | number | 0.9919347826086957 |
 | avail_base_mean_0.25 | number | 0.9919884057971015 |
 | avail_med_0.5 | number | 0.9971014492753624 |
-| avail_mean_0.5 | number | 0.9919376811594203 |
+| avail_mean_0.5 | number | 0.9919405797101449 |
 | avail_base_mean_0.5 | number | 0.9919942028985509 |
 | avail_med_1 | number | 0.9971014492753624 |
-| avail_mean_1 | number | 0.9919376811594203 |
+| avail_mean_1 | number | 0.9919405797101449 |
 | avail_base_mean_1 | number | 0.9919942028985509 |
 | avail_med_2 | number | 0.9971014492753624 |
-| avail_mean_2 | number | 0.9919376811594203 |
+| avail_mean_2 | number | 0.9919405797101449 |
 | avail_base_mean_2 | number | 0.9919942028985509 |
 | avail_med_5 | number | 0.9971014492753624 |
-| avail_mean_5 | number | 0.9919376811594203 |
+| avail_mean_5 | number | 0.9919405797101449 |
 | avail_base_mean_5 | number | 0.9919942028985509 |
 | avail_med_10 | number | 0.9971014492753624 |
-| avail_mean_10 | number | 0.9919376811594203 |
+| avail_mean_10 | number | 0.9919405797101449 |
 | avail_base_mean_10 | number | 0.9919942028985509 |
 | teardowns_per_run_mean | number | 0.174 |
 | handshakes_per_run_mean | number | 3.099 |
@@ -1141,30 +1141,33 @@ Labels used across the repository: published, host measured, emulated, estimated
 
 ### `mission/results/compute_latency.csv`
 
-6 columns.
+7 columns.
 
 | column | type | example |
 |---|---|---|
 | arch | text | A |
 | operation | text | handshake or rekey |
-| cycles | number | 3188400.0 |
-| ms_at_168MHz | number | 18.978571428571428 |
-| ms_at_480MHz | number | 6.6425 |
+| cycles | number | 1819746.0 |
+| cycles_with_wait_state_factor | number | 1819746.0 |
+| ms_at_168MHz | number | 10.831821428571429 |
+| ms_at_480MHz | number | 3.7911375 |
 | label | text | derived from published |
 
 ### `mission/results/cycle_sources.csv`
 
-7 columns.
+9 columns.
 
 | column | type | example |
 |---|---|---|
 | operation | text | x25519_two_mults |
-| cycles | number | 1827600.0 |
+| cycles | number | 1097746.0 |
 | label | text | derived from published |
-| source | text | S12A-325+S12A-325; X25519, two scalar multiplications (key g... |
+| source | text | S12A-332+S12A-332; X25519, two scalar multiplications (key g... |
 | range_min_cycles | number | 952550.0 |
 | range_max_cycles | number | 2073200.0 |
 | range_ids | text | S12A-317 S12A-321 S12A-325 S12A-332 S12A-333 |
+| zero_wait_state_row | text | False |
+| wait_state_factor_applied | text | False |
 
 ### `mission/results/envelope.csv`
 
@@ -1177,7 +1180,7 @@ Labels used across the repository: published, host measured, emulated, estimated
 | arch | text | A |
 | tag | text | base |
 | deadline_s | number | 0.1 |
-| avail_mean | number | 0.9718 |
+| avail_mean | number | 0.9718028985507247 |
 | utilisation_median | number | 0.10692 |
 | feasible | text | False |
 | reason | text | deadline missed or link loss |
@@ -1229,15 +1232,15 @@ Labels used across the repository: published, host measured, emulated, estimated
 | utilisation_down_median | number | 0.04212065813528336 |
 | utilisation_down_lo | number | 0.04212065813528336 |
 | utilisation_down_hi | number | 0.04212065813528336 |
-| compute_share_median | number | 7.678730158730158e-05 |
-| compute_share_lo | number | 7.678730158730158e-05 |
-| compute_share_hi | number | 7.678730158730158e-05 |
-| ttra_s_median | number | 0.2056452380952578 |
-| ttra_s_lo | number | 0.2056452380952578 |
-| ttra_s_hi | number | 0.2056452380952578 |
-| first_session_s_median | number | 0.2056452380952381 |
-| first_session_s_lo | number | 0.2056452380952381 |
-| first_session_s_hi | number | 0.2056452380952381 |
+| compute_share_median | number | 4.420030158730159e-05 |
+| compute_share_lo | number | 4.420030158730159e-05 |
+| compute_share_hi | number | 4.420030158730159e-05 |
+| ttra_s_median | number | 0.19749848809522064 |
+| ttra_s_lo | number | 0.19749848809522064 |
+| ttra_s_hi | number | 0.19749848809522064 |
+| first_session_s_median | number | 0.1974984880952381 |
+| first_session_s_lo | number | 0.1974984880952381 |
+| first_session_s_hi | number | 0.1974984880952381 |
 | avail_mean | number | 0.992 |
 | avail_mean_lo | number | 0.9902727272727273 |
 | avail_mean_hi | number | 0.9935454545454545 |
@@ -1274,9 +1277,9 @@ Labels used across the repository: published, host measured, emulated, estimated
 |---|---|---|
 | arch | text | A |
 | input | text | frame_loss |
-| mu_star | number | 0.06398913043478255 |
-| sigma | number | 0.09511188455661543 |
-| mu_star_conf | number | 0.05071641815723609 |
+| mu_star | number | 0.06424999999999995 |
+| sigma | number | 0.0949402617590532 |
+| mu_star_conf | number | 0.05052040477267469 |
 | runs_per_point | number | 200 |
 | trajectories | number | 10 |
 | seed | number | 20261020 |
@@ -1313,15 +1316,15 @@ Labels used across the repository: published, host measured, emulated, estimated
 | utilisation_down_median | number | 96.78800731261427 |
 | utilisation_down_lo | number | 96.78800731261427 |
 | utilisation_down_hi | number | 96.78800731261427 |
-| compute_share_median | number | 0.0009342476190476191 |
-| compute_share_lo | number | 0.0009342476190476191 |
-| compute_share_hi | number | 0.0009342476190476191 |
-| ttra_s_median | number | 0.2056452380952578 |
-| ttra_s_lo | number | 0.2056452380952578 |
-| ttra_s_hi | number | 0.2056452380952578 |
-| first_session_s_median | number | 0.2056452380952381 |
-| first_session_s_lo | number | 0.2056452380952381 |
-| first_session_s_hi | number | 0.2056452380952381 |
+| compute_share_median | number | 0.000901660619047619 |
+| compute_share_lo | number | 0.000901660619047619 |
+| compute_share_hi | number | 0.000901660619047619 |
+| ttra_s_median | number | 0.19749848809522064 |
+| ttra_s_lo | number | 0.19749848809522064 |
+| ttra_s_hi | number | 0.19749848809522064 |
+| first_session_s_median | number | 0.1974984880952381 |
+| first_session_s_lo | number | 0.1974984880952381 |
+| first_session_s_hi | number | 0.1974984880952381 |
 | avail_mean | number | 0.9921434782608697 |
 | avail_mean_lo | number | 0.9914912681159421 |
 | avail_mean_hi | number | 0.9927537681159421 |
