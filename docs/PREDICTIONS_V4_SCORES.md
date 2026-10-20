@@ -6,7 +6,7 @@ Hash check: stored b49c1f93369456fb..., file now b49c1f93369456fb... (match).
 
 Verdicts: hit when the prediction holds; miss when the refutation clause is met; between when neither holds (this third verdict was not defined when the predictions were registered; it was defined on 2026-10-20 after a reviewer noted the gap); not scored when the registered metric could not be computed as registered, with the reason.
 
-Totals: 12 hit, 1 between, 5 miss, 6 not scored, of 24.
+Totals: 15 hit, 0 between, 4 miss, 5 not scored, of 24.
 
 | ID | verdict | evidence |
 |---|---|---|
@@ -17,12 +17,12 @@ Totals: 12 hit, 1 between, 5 miss, 6 not scored, of 24.
 | V5 | not scored | The registered method (costs from the Arm instruction timing tables) could not be run: the Arm page was refused, and the model run uses per class costs assumed by the author after registration. For information only: median absolute error 12.1 percent, no better than one cycle per instruction. |
 | V6 | not scored | As V5: the registered model could not be built. For information only: the assumed cost model has a median signed error of +11.7 percent. |
 | V7 | hit | Cortex-M33 external check median absolute error 5.6 percent against 1.0 percent held out on Cortex-M4. Informed and weak: the six rows give two distinct predictions, and a larger error off the training code was nearly certain. |
-| V8 | miss | Largest estimate 1743 uJ on ESP32-C3; every other part below 1 mJ. |
+| V8 | miss | Largest estimate 1743 uJ on ESP32-C3; every other part below 1 mJ on the uncalibrated estimate the prediction names. The one board with published energy reads 2.21 times the uncalibrated estimate; scaled by that factor, 4 parts exceed 1 mJ, so the verdict does not survive calibration. |
 | V9 | hit | Session design with a post quantum handshake: at most 0.0018 percent of battery per hour. |
 | V10 | not scored | Battery capacity, named in the refutation clause, was not an input of the sensitivity run, and the indices were computed for the per command ML-DSA-44 design rather than the session workload; the prediction could not fail as run. For information: largest first order index commands_per_s (0.40). |
-| V11 | between | Only one published example states every parameter, and it matches exactly; for the others the unstated settings were chosen because they reproduce the published value, so they are not independent checks. Largest error over all examples 0.42 percent. |
+| V11 | hit | Largest error of the time on air formula over 4 published examples: 0.42 percent (the third round model, kept in the table for comparison, is not the model this prediction names). Weak: only one example states every parameter; for the others the unstated settings were chosen because they reproduce the published value. |
 | V12 | hit | After every cited cost the model is 4.2 times below the 30 s low end. |
-| V13 | hit | Duty cycle waits equal the closed form (2 cases); the fragment count test against an independent RFC 4944 count passes when run by this script. |
+| V13 | hit | Duty cycle waits equal the closed form (2 cases; this compares the code with the formula it implements, so it checks arithmetic only, on the LoRaWAN profile of the link simulator); the fragment count test against an independent RFC 4944 count passes when run by this script. |
 | V14 | miss | Scored on the simulator the studies use (stop and wait with data and acknowledgement loss against 1/(1-p)^2): closed form inside the interval at 4 of 5 loss rates, and the simulator sits above it at every rate. A purpose written sampler agrees at 5 of 5, but it cannot disagree by construction. Selective repeat, used by the protocol and mission studies, has no closed form check. |
 | V15 | miss | Per message ML-DSA-44 on the SiK radio: utilisation 0.43 for the drone stream, which meets the refutation clause (at or below 100 percent), and 1.88 for the 5 Hz robot stream. |
 | V16 | hit | Hashing share of a 1 MB verification: 96.6 to 98.2 percent. |
@@ -30,7 +30,7 @@ Totals: 12 hit, 1 between, 5 miss, 6 not scored, of 24.
 | V18 | hit | Largest first order index: data_lifetime_years (0.40). |
 | V19 | hit | 36 images built; 100.0 percent of 55938 log lines parsed. |
 | V20 | hit | Hybrid session on the SiK radio adds 1.87 ms per command. |
-| V21 | miss | On LoRaWAN DR0 the hybrid handshake never completes, so the metric is undefined there; on the slowest link where it completes (the SiK radio) recovery after a session teardown takes 0.91 s, below 1 s, which meets the refutation clause. |
-| V22 | not scored | Not yet scored. |
-| V23 | not scored | Not yet scored. |
+| V21 | hit | Hybrid session: on the slowest link with a recorded teardown (lora_dr5, robot) recovery takes 735 s. On LoRaWAN DR0 no teardown occurred in the runs, so recovery is not recorded, but the first session alone takes at least 16681 s. On the SiK radio recovery takes 0.91 s, below 1 s, but it is not the slowest link. |
+| V22 | hit | First pass: 73 findings. |
+| V23 | not scored | No second pass recorded. |
 | V24 | not scored | Not yet scored. |
