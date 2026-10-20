@@ -39,13 +39,3 @@ S10A-048,W1,false,"warning cites Table 2 for the measurement settings, which the
 S10D-001,W1,false,warning cites Tables 5 to 7 for the tick definition; the lint reads only the first number of a range
 S10D-002,W1,false,warning cites Tables 5 to 7 for the tick definition; the lint reads only the first number of a range
 S10D-003,W1,false,warning cites Tables 5 to 7 for the tick definition; the lint reads only the first number of a range
-S12A-196,W1,false,"the warning cites Table 5 of a different paper (ePrint 2025/366) as an independent cross check; the value is from Table 1 of its own source, as the location says"
-S12A-198,W1,false,"the warning cites Table 5 of a different paper (ePrint 2025/366) as an independent cross check; the value is from Table 1 of its own source, as the location says"
-S12A-200,W1,false,"the warning cites Table 5 of a different paper (ePrint 2025/366) as an independent cross check; the value is from Table 1 of its own source, as the location says"
-S12A-202,W1,false,"the warning cites Table 5 of a different paper (ePrint 2025/366) as an independent cross check; the value is from Table 1 of its own source, as the location says"
-S12A-204,W1,false,"the warning cites Table 5 of a different paper (ePrint 2025/366) as an independent cross check; the value is from Table 1 of its own source, as the location says"
-S12A-206,W1,false,"the warning cites Table 5 of a different paper (ePrint 2025/366) as an independent cross check; the value is from Table 1 of its own source, as the location says"
-S12A-208,W1,false,"the warning cites Table 5 of a different paper (ePrint 2025/366) as an independent cross check; the value is from Table 1 of its own source, as the location says"
-S12A-210,W1,false,"the warning cites Table 5 of a different paper (ePrint 2025/366) as an independent cross check; the value is from Table 1 of its own source, as the location says"
-S12A-212,W1,false,"the warning cites Table 5 of a different paper (ePrint 2025/366) as an independent cross check; the value is from Table 1 of its own source, as the location says"
-S12A-438,U1,false,a Poly1305 MAC over 128 bytes on a Cortex-M4 genuinely takes a few hundred cycles; the warning says it is a runtime for the stated input length
