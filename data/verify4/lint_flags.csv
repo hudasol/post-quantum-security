@@ -28,3 +28,6 @@ S12A-208,S12,W1,"warning names Table ['5'], location names Table ['1']"
 S12A-210,S12,W1,"warning names Table ['5'], location names Table ['1']"
 S12A-212,S12,W1,"warning names Table ['5'], location names Table ['1']"
 S12A-438,S12,U1,cycles below 1000
+S13-082,S13,U1,cycles below 1000
+S13-084,S13,U1,cycles below 1000
+S13-086,S13,U1,cycles below 1000

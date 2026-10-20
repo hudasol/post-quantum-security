@@ -39,3 +39,6 @@ S10A-048,W1,false,"warning cites Table 2 for the measurement settings, which the
 S10D-001,W1,false,warning cites Tables 5 to 7 for the tick definition; the lint reads only the first number of a range
 S10D-002,W1,false,warning cites Tables 5 to 7 for the tick definition; the lint reads only the first number of a range
 S10D-003,W1,false,warning cites Tables 5 to 7 for the tick definition; the lint reads only the first number of a range
+S13-082,U1,false,"a 16 bit Kyber NTT kernel on a Helium core genuinely takes under 1000 cycles (Table 3 of the source, double read)"
+S13-084,U1,false,"a 16 bit Kyber NTT kernel on a Helium core genuinely takes under 1000 cycles (Table 3 of the source, double read)"
+S13-086,U1,false,"a 16 bit Kyber NTT kernel on a Helium core genuinely takes under 1000 cycles (Table 3 of the source, double read)"

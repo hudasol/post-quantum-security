@@ -70,6 +70,8 @@ def scheme_family(s):
         return "XMSS"
     if "falcon" in t or "fn-dsa" in t:
         return "FN-DSA"
+    if t.startswith("hqc"):
+        return "HQC"
     return "other"
 
 
@@ -107,6 +109,8 @@ def main():
             + read_rows(RAW / "S10_verified.csv", "S10"))
     if (RAW / "S12_verified.csv").exists():  # round 4 rows, promoted only after two independent readers
         rows += read_rows(RAW / "S12_verified.csv", "S12")
+    if (RAW / "S13_verified.csv").exists():  # round 5 rows (scripts/promote_s13.py), two independent readers
+        rows += read_rows(RAW / "S13_verified.csv", "S13")
     problems = []
     repaired = []
     seen = set()
@@ -153,8 +157,8 @@ def main():
             rule = {k["key"]: k["value"] for k in csv.DictReader(fh)}
         n_pq = 0
         for r in rows:
-            if "mupq/pqm4" not in r["source_url"]:
-                continue
+            if "mupq/pqm4/master/" not in r["source_url"]:
+                continue  # the rule describes the master snapshot of round 2; pinned commit rows carry their own warning
             if rule["warning_old_clause"] not in r["comparability_warning"]:
                 sys.exit(f"{r['id']}: pqm4 warning clause not found; rule file out of date")
             r["device"] = rule["device_new"]
