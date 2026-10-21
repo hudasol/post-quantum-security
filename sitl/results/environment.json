@@ -1,0 +1,8 @@
+{
+ "flight_stack": "ArduPilot Copter 4.7.2 SITL, built in multicopter model (--model +), speedup 1",
+ "flight_stack_commit": "fb773567896014da007bca58358704d4a0d8516f (tag Copter-4.7.2)",
+ "pymavlink": "2.4.50",
+ "python": "3.13.16",
+ "host": "Intel(R) Xeon(R) Processor @ 2.10GHz, 2 logical cores, Linux 6.18.44-fc-v139",
+ "px4_note": "PX4 v1.17.0 (the pinned PX4 checkout of this round) has no MAVLink 2 signing in its MAVLink module (no SETUP_SIGNING handling in src/modules/mavlink), while its later documentation (v1.18) has a page on message signing; to keep one baseline for all four configurations, all four run on ArduPilot, whose documentation describes signing."
+}
