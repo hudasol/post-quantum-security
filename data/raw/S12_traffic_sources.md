@@ -1,6 +1,6 @@
 # S12 traffic sources for the mission study
 
-Author: Huda Mueen. Retrieval date for every item: 2026-10-20. Retrieved with the WebFetch and WebSearch tools unless stated. Values are paraphrased; short phrases only are quoted.
+Author: Huda Mueen. Retrieval date for every item: 2026-10-20. Retrieved with the web fetch and web searchs unless stated. Values are paraphrased; short phrases only are quoted.
 
 ## 1. Retrieved and used
 
@@ -30,11 +30,11 @@ The common message definitions page on mavlink.io could not be retrieved (see Se
 
 | URL | result |
 |---|---|
-| https://mavlink.io/en/messages/common.html | permission request not answered in time; not retried |
-| https://ardupilot.org/copter/docs/parameters.html | permission request not answered in time; not retried |
-| https://fast-dds.docs.eprosima.com/en/latest/fastdds/security/crypto_plugin/crypto_plugin.html | permission request not answered in time (redirect target of the eProsima readthedocs URL); not retried |
+| https://mavlink.io/en/messages/common.html | access to the site not granted in time in time; not retried |
+| https://ardupilot.org/copter/docs/parameters.html | access to the site not granted in time in time; not retried |
+| https://fast-dds.docs.eprosima.com/en/latest/fastdds/security/crypto_plugin/crypto_plugin.html | access to the site not granted in time in time (redirect target of the eProsima readthedocs URL); not retried |
 
-## 5. Search queries run (WebSearch)
+## 5. Search queries run (web search)
 
 - "MAVLink common message definitions HEARTBEAT ATTITUDE GLOBAL_POSITION_INT COMMAND_LONG field types"
 - "ArduPilot SR0_POSITION SR0_EXTRA1 telemetry stream rate parameters Hz default"

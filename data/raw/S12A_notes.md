@@ -4,7 +4,7 @@ Author: Huda Mueen. Retrieval date for every row: 2026-10-20. Staged table: `dat
 
 ## Method
 
-Rows were taken only from tables read in full text: the author supplied PDFs (text extracted with pdftotext, page by page, and parsed with regular expressions that stop on any unmatched row), or WebFetch output where the tool was asked to reproduce table rows verbatim. Where the tool returned cells in its own layout, a second fetch was used to confirm cells, units and page numbers, and the row warning says so. Fetch output that the tool itself called approximate or ambiguous was not extracted (logged in the search log). Unit conversions (kilocycles, 10^3 cycles, 'k' suffixes) are multiplications by 1000 and are stated in each `comparability_warning`; millisecond and MB/s values are not converted to cycles and are kept in `compiler_flags_or_notes`. Before writing, each row was checked against `data/evidence.csv` for the same source and cell and for the same exact cycle count of the same operation in any source; 9 rows were skipped as duplicates (listed under the LMS vs XMSS source).
+Rows were taken only from tables read in full text: the author supplied PDFs (text extracted with pdftotext, page by page, and parsed with regular expressions that stop on any unmatched row), or web fetch output where the tool was asked to reproduce table rows verbatim. Where the tool returned cells in its own layout, a second fetch was used to confirm cells, units and page numbers, and the row warning says so. Fetch output that the tool itself called approximate or ambiguous was not extracted (logged in the search log). Unit conversions (kilocycles, 10^3 cycles, 'k' suffixes) are multiplications by 1000 and are stated in each `comparability_warning`; millisecond and MB/s values are not converted to cycles and are kept in `compiler_flags_or_notes`. Before writing, each row was checked against `data/evidence.csv` for the same source and cell and for the same exact cycle count of the same operation in any source; 9 rows were skipped as duplicates (listed under the LMS vs XMSS source).
 
 ## Rows per source
 
@@ -80,7 +80,7 @@ Rows: 105 (S12A-091 to S12A-195)
 URL: https://eprint.iacr.org/2022/405.pdf  
 Rows: 50 (S12A-196 to S12A-245)
 
-- Read: WebFetch of the PDF with a request for verbatim rows. Tables 1 and 2 (Dilithium and Falcon cycles in kilocycles) and Tables 3 and 4 (stack).
+- Read: web fetch of the PDF with a request for verbatim rows. Tables 1 and 2 (Dilithium and Falcon cycles in kilocycles) and Tables 3 and 4 (stack).
 - Extracted: Rows: average cycles (x1000) and stack for Dilithium-2, 3, 5 and Falcon-512 and 1024 (FPU and emulated builds, dynamic and tree signing).
 - Licence or access: Open access ePrint; licence not checked.
 - Ambiguities and checks: Citation chase from 2025-366 reference [24]. The Dilithium averages match the [24] rows printed in 2025-366 Table 5, which is an independent check of the fetch. Page numbers were not returned by the tool. Falcon stack values are identical for both degrees in most cells, copied as published. Clock 216 MHz, so not comparable with 24 MHz rows.
@@ -90,7 +90,7 @@ Rows: 50 (S12A-196 to S12A-245)
 URL: https://csrc.nist.gov/csrc/media/Events/2024/fifth-pqc-standardization-conference/documents/papers/accelerating-slh-dsa.pdf  
 Rows: 48 (S12A-269 to S12A-316)
 
-- Read: WebFetch of the PDF, twice. Table 5 (page 12) and Table 6 (page 15).
+- Read: web fetch of the PDF, twice. Table 5 (page 12) and Table 6 (page 15).
 - Extracted: Rows: end to end cycles of all 12 SLH-DSA parameter sets with the SLotH hash unit (SHAKE and SHA2), and key generation and signing with the masked Keccak unit.
 - Licence or access: No licence stated in the fetched text; the source code is said to be freely available.
 - Ambiguities and checks: The tool declined a verbatim table copy and returned the cells in its own layout with exact values; a second fetch confirmed two cells. The control core is RV32IMC on an FPGA or ASIC prototype, so these rows show accelerator potential, not a product MCU. The paper predates the final FIPS 205 text, so the scheme is labelled pre standard.
@@ -110,7 +110,7 @@ Rows: 45 (S12A-367 to S12A-411)
 URL: https://github.com/mpg/p256-m  
 Rows: 20 (S12A-334 to S12A-353)
 
-- Read: WebFetch of the repository page (README). Performance, code size and stack tables.
+- Read: web fetch of the repository page (README). Performance, code size and stack tables.
 - Extracted: Rows: P-256 key generation, ECDH, ECDSA sign and verify for p256-m and TinyCrypt on Cortex-M0 (STM32F091, 48 MHz) and Cortex-M4 (STM32F411, 100 MHz), with stack; code size rows per core and library.
 - Licence or access: Licence: an apache-2.0.txt and a LICENSE file are listed; the page text does not name the licence, so it is recorded as unconfirmed. Commit not pinned.
 - Ambiguities and checks: Only milliseconds are published. Following the convention of data/raw/S2_benchmarks.md section 3, cycles are left empty and the time is kept in compiler_flags_or_notes. The tool gave the tables in its own layout; the printed sums of the four operations match the rows.
@@ -120,7 +120,7 @@ Rows: 20 (S12A-334 to S12A-353)
 URL: https://icscm.ub.rub.de/index.php/TCHES/article/download/8739/8339/5469  
 Rows: 17 (S12A-420 to S12A-436)
 
-- Read: WebFetch of the TCHES PDF, twice. Table 2 (page 414, Cortex-M3 and M4) and Table 3 (page 416, SiFive E31 on HiFive1 Rev B).
+- Read: web fetch of the TCHES PDF, twice. Table 2 (page 414, Cortex-M3 and M4) and Table 3 (page 416, SiFive E31 on HiFive1 Rev B).
 - Extracted: Rows: AES-128 encryption cycles per block, code size and stack for semi fixsliced, fully fixsliced and barrel shiftrows variants.
 - Licence or access: TCHES open access; licence not checked.
 - Ambiguities and checks: The paper marks unrolled and non unrolled variants by font, which the text extraction lost; variants are named by code size instead. Clock and compiler not stated in the fetched text.
@@ -130,7 +130,7 @@ Rows: 17 (S12A-420 to S12A-436)
 URL: https://arxiv.org/pdf/2309.00440  
 Rows: 15 (S12A-254 to S12A-268)
 
-- Read: WebFetch of the PDF, twice. Table II.
+- Read: web fetch of the PDF, twice. Table II.
 - Extracted: Rows: SiFive Freedom E310 (RV32IMAC) Kyber512, 768, 1024 cycles and stack for the stack and speed variants.
 - Licence or access: arXiv preprint; licence line not present in the fetched text.
 - Ambiguities and checks: The 'k' suffix is not defined in the caption and is read as thousands. The E310 clock is not stated. Cortex-M3 and simulator rows not taken.
@@ -140,7 +140,7 @@ Rows: 15 (S12A-254 to S12A-268)
 URL: https://front.oryx-embedded.com/benchmark/nuvoton/crypto-m5531.html  
 Rows: 13 (S12A-354 to S12A-366)
 
-- Read: WebFetch of the vendor page, twice (the tool declined a full copy and gave the requested cells).
+- Read: web fetch of the vendor page, twice (the tool declined a full copy and gave the requested cells).
 - Extracted: Rows: Cortex-M55 (220 MHz) software AES-128 CTR, ChaCha20-Poly1305, SHA-256, SHA3-256, X25519, Ed25519, ECDSA P-256, and three hardware accelerated rows.
 - Licence or access: Vendor page; terms not checked.
 - Ambiguities and checks: Units are MB/s or ms, so cycles are empty and the value is in compiler_flags_or_notes. Ed25519 signing is printed slower than verification, which is unusual; copied as published. No ML-KEM or ML-DSA rows.
@@ -150,7 +150,7 @@ Rows: 13 (S12A-354 to S12A-366)
 URL: https://sol.sbc.org.br/index.php/sbseg_estendido/article/download/4142/4071  
 Rows: 12 (S12A-317 to S12A-328)
 
-- Read: WebFetch of the PDF, twice. Table 3.
+- Read: web fetch of the PDF, twice. Table 3.
 - Extracted: Rows: X25519 and Ed25519 key generation, sign and verify in 10^3 cycles on Teensy 3.1 (48 and 72 MHz) and STM32F401C (84 MHz).
 - Licence or access: Licence not stated in the fetched text.
 - Ambiguities and checks: The caption unit '103 cycles' is the extraction of 10^3 cycles. Cited rows not taken.
@@ -160,7 +160,7 @@ Rows: 12 (S12A-317 to S12A-328)
 URL: https://eprint.iacr.org/2025/123.pdf  
 Rows: 8 (S12A-246 to S12A-253)
 
-- Read: WebFetch of the PDF, twice. Table 1 on the first page.
+- Read: web fetch of the PDF, twice. Table 1 on the first page.
 - Extracted: Rows: Falcon-512 and 1024 key generation, signing, original and BUFF verification, with RAM split into work area and stack.
 - Licence or access: Open access ePrint; licence not checked.
 - Ambiguities and checks: Not FIPS 206 FN-DSA; the BUFF variant is described as a possible element of the coming standard.
@@ -170,7 +170,7 @@ Rows: 8 (S12A-246 to S12A-253)
 URL: https://www.ce.cit.tum.de/fileadmin/w00cgn/eisec/pdf/pq_signatures_riscv.pdf  
 Rows: 8 (S12A-412 to S12A-419)
 
-- Read: WebFetch of the slides. Slide 10 cycle count table.
+- Read: web fetch of the slides. Slide 10 cycle count table.
 - Extracted: Rows: Dilithium2 key generation, signing and verification and Falcon-512 verification, base software and accelerated, on a CV32E40P PULPino SoC.
 - Licence or access: Slides; licence not stated.
 - Ambiguities and checks: Slides rather than the paper; the paper itself was not read. How cycles were obtained is not stated.
@@ -180,7 +180,7 @@ Rows: 8 (S12A-412 to S12A-419)
 URL: https://past.date-conference.com/proceedings-archive/2017/pdf/0591.pdf  
 Rows: 4 (S12A-437 to S12A-440)
 
-- Read: WebFetch of the PDF. Table I.
+- Read: web fetch of the PDF. Table I.
 - Extracted: Rows: this work rows for ChaCha20, Poly1305, Poly1305 with ChaCha20 and the AEAD on Cortex-M4.
 - Licence or access: Conference proceedings archive; licence not checked.
 - Ambiguities and checks: Two rows have merged speed and size cells in the extracted text; size left empty there. Clock not stated.
@@ -190,7 +190,7 @@ Rows: 4 (S12A-437 to S12A-440)
 URL: https://par.nsf.gov/servlets/purl/10507285  
 Rows: 3 (S12A-329 to S12A-331)
 
-- Read: WebFetch of the manuscript. Table II.
+- Read: web fetch of the manuscript. Table II.
 - Extracted: Rows: the 24 MHz row only (key generation, sign, verify in kilo cycles).
 - Licence or access: NSF public access repository; licence not checked.
 - Ambiguities and checks: The tool reported the row labels of the 168 MHz and scalar blinding rows as inferred, so those rows were not taken. Venue not stated.
@@ -200,7 +200,7 @@ Rows: 3 (S12A-329 to S12A-331)
 URL: https://developer.espressif.com/blog/2026/10/esp32-post-quantum-cryptography/  
 Rows: 3 (S12A-441 to S12A-443)
 
-- Read: WebFetch of the blog page. The single secure boot verification table.
+- Read: web fetch of the blog page. The single secure boot verification table.
 - Extracted: Rows: ML-DSA-65 software verification, hardware SHA-256 and hardware RSA-PSS-3072 verification cycles on an ESP32-C5 at 80 MHz.
 - Licence or access: Vendor blog; terms not checked.
 - Ambiguities and checks: The core of the ESP32-C5 is not stated in the article and was left as not stated. Bootloader measurement, not a library best case.
@@ -210,7 +210,7 @@ Rows: 3 (S12A-441 to S12A-443)
 URL: https://github.com/Emill/X25519-Cortex-M4  
 Rows: 2 (S12A-332 to S12A-333)
 
-- Read: WebFetch of the repository page; README sentences quoted by the tool.
+- Read: web fetch of the repository page; README sentences quoted by the tool.
 - Extracted: Rows: X25519 scalar multiplication on Cortex-M4 (integer) and Cortex-M4F (FPU version).
 - Licence or access: 2 clause BSD with an exception for Nordic Semiconductor and Dialog Semiconductor devices (as quoted). Commit not pinned.
 - Ambiguities and checks: Board, clock and compiler not stated.
@@ -226,8 +226,8 @@ Rows: 2 (S12A-332 to S12A-333)
 
 ## Refused or blocked retrievals
 
-- https://eprint.iacr.org/2016/714.pdf (AES on Cortex-M3 and M4): permission request not answered; not retried.
-- https://eprint.iacr.org/2023/773.pdf (Keccak on ARMv7-M, reference [4] of 2025-366): permission request not answered; not retried.
+- https://eprint.iacr.org/2016/714.pdf (AES on Cortex-M3 and M4): access to the site not granted in time; not retried.
+- https://eprint.iacr.org/2023/773.pdf (Keccak on ARMv7-M, reference [4] of 2025-366): access to the site not granted in time; not retried.
 
 ## Observation for the existing dataset
 

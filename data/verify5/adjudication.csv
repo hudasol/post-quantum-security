@@ -60,7 +60,7 @@ S12A-405,core,staged_right,,Table 11 XMSSMT SIMPLE SHAKE256 verify 16371600. Pag
 S12A-408,core,staged_right,,Table 11 HSS SHAKE256 w=16 verify 12421365. Page header 'LMS vs XMSS: Comparison on ARM Cortex-M4'; Sec 5: STM32F4DISCOVERY '32-bit ARM Cortex-M4 with FPU core' (= Cortex-M4F).
 S12A-409,core,staged_right,,Table 11 HSS SHAKE256 w=256 key gen 3882761056. Page header 'LMS vs XMSS: Comparison on ARM Cortex-M4'; Sec 5: STM32F4DISCOVERY '32-bit ARM Cortex-M4 with FPU core' (= Cortex-M4F).
 S12A-418,device,staged_right,,"Slide 9: 'RISC-V based PULPino microcontroller', CV32e40p; area table Xilinx UltraScale+ and GF 22nm; GF 22nm ASIC layout (slide 3). Slide 10 Falcon-512 base Verify 830,597."
-S12A-432,parameter_set,staged_right,,"Table 3 (E31 RISC-V) AES-128 encryption rows; 'Semi-fixsliced' is the implementation variant, the parameter set is AES-128. Read via WebFetch summary, not verbatim."
+S12A-432,parameter_set,staged_right,,"Table 3 (E31 RISC-V) AES-128 encryption rows; 'Semi-fixsliced' is the implementation variant, the parameter set is AES-128. Read via web fetch summary, not verbatim."
 S12B-001,scheme,staged_right,,"Dil2-Kyb1 = Dilithium2 auth + Kyber512 KEM (Table 1); client 96.318 ms. Paper does not name a NIST round explicitly (says NIST had selected 4 algorithms), so 'round 3' is inferred, not stated."
 S12B-002,operation,staged_right,,"Table 2 PQ TLS 1.3 Handshake Measurements, server 91.062 ms; peers 'mutually authenticated'; devices connected 'through the Ethernet interface'."
 S12B-014,operation,staged_right,,"Table 2 Dil3-Kyb5 server 152.537 ms; TLS 1.3, mutual authentication, Ethernet."

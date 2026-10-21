@@ -688,7 +688,7 @@ Labels used across the repository: published, host measured, emulated, estimated
 | field | text | conditions |
 | value_as_in_source | text | "three duty cycling link-layer protocols: preamble-sampling,... |
 | location_found | text | Abstract |
-| note | text | fragment quoted via WebFetch; tail of the list (TSCH) paraph... |
+| note | text | fragment quoted via web fetch; tail of the list (TSCH) parap... |
 
 ### `data/verify5/third_look_3b.csv`
 
@@ -1633,7 +1633,7 @@ Labels used across the repository: published, host measured, emulated, estimated
 
 ### `planner/results/flightstack_mc_summary.csv`
 
-21 columns.
+24 columns.
 
 | column | type | example |
 |---|---|---|
@@ -1654,6 +1654,9 @@ Labels used across the repository: published, host measured, emulated, estimated
 | larger_stack_change | number | 0.1080 |
 | larger_stack_change_ci_low | number | 0.1060 |
 | larger_stack_change_ci_high | number | 0.1100 |
+| crash_log_used_median | number | 0.6610 |
+| crash_log_used_ci_low | number | 0.6590 |
+| crash_log_used_ci_high | number | 0.6630 |
 | measured_boards | number | 7 |
 | seed | number | 20261020 |
 | diff_seed | number | 20261021 |
