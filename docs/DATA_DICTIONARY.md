@@ -491,7 +491,7 @@ Labels used across the repository: published, host measured, emulated, estimated
 | compiler | text | gcc 11 |
 | source | text | https://raw.githubusercontent.com/mupq/pqm4/master/benchmark... |
 | cycles | number | 1536343.0 |
-| weight | number | 1.0 |
+| weight | number | 0.8333333333333334 |
 
 ### `data/meta/hierarchical_variance.csv`
 

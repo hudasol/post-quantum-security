@@ -14,6 +14,15 @@ META = os.path.join(ROOT, "data", "meta")
 V5 = os.path.join(ROOT, "data", "verify5")
 
 
+def unread_sources():
+    """Number of sources in data/source_quality.csv whose full text was not retrieved."""
+    import csv as _csv
+    p = os.path.join(ROOT, "data", "source_quality.csv")
+    if not os.path.exists(p):
+        return 0
+    return sum(1 for r in _csv.DictReader(open(p, encoding="utf-8")) if r["scoring"].startswith("full text not retrieved"))
+
+
 def rd(*p):
     path = os.path.join(*p)
     return pd.read_csv(path) if os.path.exists(path) else None
@@ -130,7 +139,10 @@ def meta_section(L):
           "(the library field as the row states it), statistic (mean, median, min, other), compiler where stated and source "
           "are crossed random effects (REML, `stats/meta_hierarchical.py`). "
           f"Fits: {cfgval(cfg, 'weightings')}; weighted fit: {cfgval(cfg, 'weighting')}. "
-          f"Intervals: parametric bootstrap, {cfgval(cfg, 'n_boot')} refits per fit, seed {cfgval(cfg, 'seed')}.", ""]
+          f"Intervals: parametric bootstrap, {cfgval(cfg, 'n_boot')} refits per fit, seed {cfgval(cfg, 'seed')}. "
+          f"Source quality (`data/source_quality.csv`) is checked against the full text of each source; "
+          f"{unread_sources()} sources whose full text could not be retrieved in round 5 get 0 on the checked items, "
+          "so the weighted fit down weights them for a reason of access, not of quality; the unweighted fit is the main result.", ""]
     for title, sel in (("Unweighted, all rows", (v.weighting == "unweighted") & (v.fit == "main (variant as stated)")),
                        ("Weighted by source quality, all rows", (v.weighting == "weighted") & (v.fit == "main (variant as stated)")),
                        (f"Unweighted, the {cfgval(cfg, 'worst_observed_rows')} rows that report a worst observed value removed",
