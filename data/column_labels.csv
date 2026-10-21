@@ -92,3 +92,38 @@ netsim/results/lora_flights_compare.csv,err_protocol_sim_vs_ns3_pct,modelled,"pr
 netsim/results/lora_flights_compare.csv,blast_9b_s_modelled,modelled,linksim blast with the module's 9 B frame overhead in place of 13 B
 netsim/results/lora_flights_compare.csv,err_blast_9b_vs_ns3_pct,modelled,"blast with 9 B over ns-3 minus 1, percent"
 netsim/results/gap_sweep.csv,stuck_runs_simulated_network,simulated (network),runs in which a line node stayed in BUSY_RX for more than 1 s up to the end
+data/flightstack_memory.csv,stack,key,flight stack
+data/flightstack_memory.csv,release,published,pinned release tag (flightstack/pins.csv)
+data/flightstack_memory.csv,commit,published,commit of the pinned checkout
+data/flightstack_memory.csv,target,key,build target
+data/flightstack_memory.csv,board,key,board class name of data/reference_profiles.csv
+data/flightstack_memory.csv,build_status,host measured,built or failed
+data/flightstack_memory.csv,flash_used_bytes,host measured,loaded sections at flash load addresses (objdump of the ELF)
+data/flightstack_memory.csv,flash_reserved_bytes,host measured,flash the linker reserves without loading, other than the crash log area
+data/flightstack_memory.csv,flash_crash_log_bytes,host measured,ArduPilot crash log area placed in unused flash; counted as free
+data/flightstack_memory.csv,flash_capacity_bytes,published,application flash region of the pinned board definition (source in flash_capacity_source)
+data/flightstack_memory.csv,flash_capacity_source,key,path in the pinned checkout and commit
+data/flightstack_memory.csv,flash_free_bytes,host measured,published capacity minus measured use and reserved flash
+data/flightstack_memory.csv,flash_free_share,host measured,flash_free_bytes over flash_capacity_bytes
+data/flightstack_memory.csv,ram_data_bss_bytes,host measured,allocated sections at RAM run addresses except reserved stack or heap sections
+data/flightstack_memory.csv,ram_reserved_stack_bytes,host measured,sections the linker reserves for stacks (a heap section marks the allocator pool and is not counted)
+data/flightstack_memory.csv,ram_static_used_bytes,host measured,data plus bss plus reserved sections; run time heap not visible
+data/flightstack_memory.csv,ram_capacity_bytes,published,RAM regions of the pinned board definition (source in ram_capacity_source)
+data/flightstack_memory.csv,ram_capacity_source,key,path in the pinned checkout and commit
+data/flightstack_memory.csv,ram_free_static_bytes,host measured,published capacity minus static use; upper bound on free RAM
+data/flightstack_memory.csv,ram_free_share,host measured,ram_free_static_bytes over ram_capacity_bytes
+data/flightstack_memory.csv,itcm_used_bytes,host measured,sections placed in instruction RAM
+data/flightstack_memory.csv,toolchain,host measured,compiler version string
+data/flightstack_memory.csv,failure_reason,host measured,for failed builds
+data/flightstack_memory.csv,label,key,row label
+data/flightstack_memory_regions.csv,stack,key,
+data/flightstack_memory_regions.csv,target,key,
+data/flightstack_memory_regions.csv,region,key,MEMORY region of the linker script or allocator region
+data/flightstack_memory_regions.csv,kind,key,flash or ram
+data/flightstack_memory_regions.csv,origin,published,region start address in the pinned board definition
+data/flightstack_memory_regions.csv,length_bytes,published,region length in the pinned board definition
+data/flightstack_memory_regions.csv,used_bytes,host measured,static use from the ELF
+data/flightstack_memory_regions.csv,free_bytes,host measured,length minus used
+data/flightstack_memory_regions.csv,counted_in_capacity,key,whether the region enters ram_capacity_bytes
+data/flightstack_memory_regions.csv,sections,host measured,sections placed in the region
+data/flightstack_memory_regions.csv,label,key,row label

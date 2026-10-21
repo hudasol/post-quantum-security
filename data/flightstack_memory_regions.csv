@@ -1,0 +1,78 @@
+stack,target,region,kind,origin,length_bytes,used_bytes,free_bytes,counted_in_capacity,sections,label
+ardupilot,MatekF405-Wing,flash,flash,0x08010000,983040,880648,102392,yes,"startup constructors .text .ARM.exidx .textalign (reserved) .data .crash_log (crash log in unused flash, counted as free)",host measured
+ardupilot,MatekF405-Wing,ram0,ram,0x20000000,131072,85452,45620,yes,".mstack .pstack .data .bss .heap (allocator pool, not counted)",host measured
+ardupilot,MatekF405-Wing,allocator region 0x10000000 (flags 0x02),ram,0x10000000,65536,0,65536,yes,,host measured
+px4,px4_fmu-v6x_default,ITCM_RAM,ram,0x00000000,65536,0,65536,no,,host measured
+px4,px4_fmu-v6x_default,FLASH,flash,0x08020000,1966080,1960072,6008,yes,.text .init_section .ARM.exidx .data,host measured
+px4,px4_fmu-v6x_default,DTCM1_RAM,ram,0x20000000,65536,0,65536,yes,,host measured
+px4,px4_fmu-v6x_default,DTCM2_RAM,ram,0x20010000,65536,0,65536,yes,,host measured
+px4,px4_fmu-v6x_default,AXI_SRAM,ram,0x24000000,524288,100924,423364,yes,.data .bss,host measured
+px4,px4_fmu-v6x_default,SRAM1,ram,0x30000000,131072,0,131072,yes,,host measured
+px4,px4_fmu-v6x_default,SRAM2,ram,0x30020000,131072,0,131072,yes,,host measured
+px4,px4_fmu-v6x_default,SRAM3,ram,0x30040000,32768,0,32768,yes,,host measured
+px4,px4_fmu-v6x_default,SRAM4,ram,0x38000000,65536,2048,63488,yes,.sram4_reserve,host measured
+px4,px4_fmu-v6x_default,BKPRAM,ram,0x38800000,4096,0,4096,no,,host measured
+ardupilot,MatekH743,flash,flash,0x08020000,1703936,1548572,155364,yes,"startup constructors .text .ARM.exidx .data .crash_log (crash log in unused flash, counted as free)",host measured
+ardupilot,MatekH743,ram0,ram,0x30000000,262144,142732,119412,yes,".mstack .pstack .data .bss .heap (allocator pool, not counted)",host measured
+ardupilot,MatekH743,allocator region 0x20000000 (flags 0x02),ram,0x20000000,131072,0,131072,yes,,host measured
+ardupilot,MatekH743,allocator region 0x24000000 (flags 0x04),ram,0x24000000,524288,0,524288,yes,,host measured
+ardupilot,MatekH743,allocator region 0x00000400 (flags 0x02),ram,0x00000400,64512,0,64512,yes,,host measured
+ardupilot,MatekH743,allocator region 0x30040000 (flags 0x08),ram,0x30040000,32768,0,32768,yes,,host measured
+ardupilot,MatekH743,allocator region 0x38000000 (flags 0x01),ram,0x38000000,65536,0,65536,yes,,host measured
+px4,px4_fmu-v5_default,FLASH_ITCM,flash,0x00208000,2064384,0,2064384,yes,,host measured
+px4,px4_fmu-v5_default,FLASH_AXIM,flash,0x08008000,2064384,2023992,40392,yes,.text .init_section .ARM.exidx .data,host measured
+px4,px4_fmu-v5_default,ITCM_RAM,ram,0x00000000,16384,0,16384,no,,host measured
+px4,px4_fmu-v5_default,DTCM_RAM,ram,0x20000000,131072,0,131072,yes,,host measured
+px4,px4_fmu-v5_default,SRAM1,ram,0x20020000,376832,46680,330152,yes,.data .bss,host measured
+px4,px4_fmu-v5_default,SRAM2,ram,0x2007c000,16384,0,16384,yes,,host measured
+ardupilot,CubeOrange,flash,flash,0x08020000,1966080,1642908,323172,yes,"startup constructors .text .ARM.exidx .textalign (reserved) .data .crash_log (crash log in unused flash, counted as free)",host measured
+ardupilot,CubeOrange,ram0,ram,0x30000000,262144,141084,121060,yes,".mstack .pstack .data .bss .heap (allocator pool, not counted)",host measured
+ardupilot,CubeOrange,allocator region 0x20000000 (flags 0x02),ram,0x20000000,131072,0,131072,yes,,host measured
+ardupilot,CubeOrange,allocator region 0x24000000 (flags 0x04),ram,0x24000000,524288,0,524288,yes,,host measured
+ardupilot,CubeOrange,allocator region 0x00000400 (flags 0x02),ram,0x00000400,64512,0,64512,yes,,host measured
+ardupilot,CubeOrange,allocator region 0x30040000 (flags 0x08),ram,0x30040000,32768,0,32768,yes,,host measured
+ardupilot,CubeOrange,allocator region 0x38000000 (flags 0x01),ram,0x38000000,65536,0,65536,yes,,host measured
+ardupilot,Pixhawk6C,flash,flash,0x08020000,1966080,1588924,377156,yes,"startup constructors .text .ARM.exidx .data .crash_log (crash log in unused flash, counted as free)",host measured
+ardupilot,Pixhawk6C,ram0,ram,0x24000000,524288,142924,381364,yes,".mstack .pstack .data .bss .heap (allocator pool, not counted)",host measured
+ardupilot,Pixhawk6C,allocator region 0x30000000 (flags 0x08),ram,0x30000000,262144,0,262144,yes,,host measured
+ardupilot,Pixhawk6C,allocator region 0x20000000 (flags 0x02),ram,0x20000000,131072,0,131072,yes,,host measured
+ardupilot,Pixhawk6C,allocator region 0x00000400 (flags 0x02),ram,0x00000400,64512,0,64512,yes,,host measured
+ardupilot,Pixhawk6C,allocator region 0x30040000 (flags 0x08),ram,0x30040000,32768,0,32768,yes,,host measured
+ardupilot,Pixhawk6C,allocator region 0x38000000 (flags 0x01),ram,0x38000000,65536,0,65536,yes,,host measured
+ardupilot,Durandal,flash,flash,0x08020000,1966080,1594756,371324,yes,"startup constructors .text .ARM.exidx .data .crash_log (crash log in unused flash, counted as free)",host measured
+ardupilot,Durandal,ram0,ram,0x30000000,262144,144132,118012,yes,".mstack .pstack .data .bss .heap (allocator pool, not counted)",host measured
+ardupilot,Durandal,allocator region 0x20000000 (flags 0x02),ram,0x20000000,131072,0,131072,yes,,host measured
+ardupilot,Durandal,allocator region 0x24000000 (flags 0x04),ram,0x24000000,524288,0,524288,yes,,host measured
+ardupilot,Durandal,allocator region 0x00000400 (flags 0x02),ram,0x00000400,64512,0,64512,yes,,host measured
+ardupilot,Durandal,allocator region 0x30040000 (flags 0x08),ram,0x30040000,32768,0,32768,yes,,host measured
+ardupilot,Durandal,allocator region 0x38000000 (flags 0x01),ram,0x38000000,65536,0,65536,yes,,host measured
+px4,px4_fmu-v6c_default,ITCM_RAM,ram,0x00000000,65536,0,65536,no,,host measured
+px4,px4_fmu-v6c_default,FLASH,flash,0x08020000,1966080,1926296,39784,yes,.text .init_section .ARM.exidx .data,host measured
+px4,px4_fmu-v6c_default,DTCM1_RAM,ram,0x20000000,65536,0,65536,yes,,host measured
+px4,px4_fmu-v6c_default,DTCM2_RAM,ram,0x20010000,65536,0,65536,yes,,host measured
+px4,px4_fmu-v6c_default,AXI_SRAM,ram,0x24000000,524288,61948,462340,yes,.data .bss,host measured
+px4,px4_fmu-v6c_default,SRAM1,ram,0x30000000,131072,0,131072,yes,,host measured
+px4,px4_fmu-v6c_default,SRAM2,ram,0x30020000,131072,0,131072,yes,,host measured
+px4,px4_fmu-v6c_default,SRAM3,ram,0x30040000,32768,0,32768,yes,,host measured
+px4,px4_fmu-v6c_default,SRAM4,ram,0x38000000,65536,0,65536,yes,,host measured
+px4,px4_fmu-v6c_default,BKPRAM,ram,0x38800000,4096,0,4096,no,,host measured
+px4,cubepilot_cubeorange_default,ITCM_RAM,ram,0x00000000,65536,0,65536,no,,host measured
+px4,cubepilot_cubeorange_default,FLASH,flash,0x08020000,1966080,1920132,45948,yes,.text .init_section .ARM.exidx .data,host measured
+px4,cubepilot_cubeorange_default,DTCM1_RAM,ram,0x20000000,65536,0,65536,yes,,host measured
+px4,cubepilot_cubeorange_default,DTCM2_RAM,ram,0x20010000,65536,0,65536,yes,,host measured
+px4,cubepilot_cubeorange_default,AXI_SRAM,ram,0x24000000,524288,44020,480268,yes,.data .bss,host measured
+px4,cubepilot_cubeorange_default,SRAM1,ram,0x30000000,131072,0,131072,yes,,host measured
+px4,cubepilot_cubeorange_default,SRAM2,ram,0x30020000,131072,0,131072,yes,,host measured
+px4,cubepilot_cubeorange_default,SRAM3,ram,0x30040000,32768,0,32768,yes,,host measured
+px4,cubepilot_cubeorange_default,SRAM4,ram,0x38000000,65536,0,65536,yes,,host measured
+px4,cubepilot_cubeorange_default,BKPRAM,ram,0x38800000,4096,0,4096,no,,host measured
+px4,holybro_durandal-v1_default,ITCM_RAM,ram,0x00000000,65536,0,65536,no,,host measured
+px4,holybro_durandal-v1_default,FLASH,flash,0x08020000,1966080,1939012,27068,yes,.text .init_section .ARM.exidx .data,host measured
+px4,holybro_durandal-v1_default,DTCM1_RAM,ram,0x20000000,65536,0,65536,yes,,host measured
+px4,holybro_durandal-v1_default,DTCM2_RAM,ram,0x20010000,65536,0,65536,yes,,host measured
+px4,holybro_durandal-v1_default,AXI_SRAM,ram,0x24000000,524288,45564,478724,yes,.data .bss,host measured
+px4,holybro_durandal-v1_default,SRAM1,ram,0x30000000,131072,0,131072,yes,,host measured
+px4,holybro_durandal-v1_default,SRAM2,ram,0x30020000,131072,0,131072,yes,,host measured
+px4,holybro_durandal-v1_default,SRAM3,ram,0x30040000,32768,0,32768,yes,,host measured
+px4,holybro_durandal-v1_default,SRAM4,ram,0x38000000,65536,2048,63488,yes,.sram4_reserve,host measured
+px4,holybro_durandal-v1_default,BKPRAM,ram,0x38800000,4096,0,4096,no,,host measured
