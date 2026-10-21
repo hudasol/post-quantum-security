@@ -28,7 +28,7 @@ Read from `formal/results/proverif_results.csv` (label: modelled; abstract perfe
 | Ground station authenticates the vehicle (A2) | counterexample (non injective form counterexample) | F1: the vehicle signs the transcript; both sides confirm the key | proved |
 | Ground station session key stays secret (S2) | counterexample | F1 | proved |
 | Ground station rekeyed key stays secret (S4) | counterexample | F1 | proved |
-| Vehicle accepts each command once, only if sent (C1) | proved | none needed | proved |
+| Vehicle accepts each command once, only if sent (C1), with the strict next sequence rule | proved | none needed if the strict rule is adopted; with the published MAVLink rule see the last row | proved |
 | Vehicle session key secret with one component broken (S1) | not run on the stated design | none needed (hybrid key derivation) | proved with the classical part broken; proved with the KEM part broken |
 | Provisioned key fallback: no replay after a power cycle (C1) | counterexample (non injective form proved) | F2: fresh nonces from both sides at every session start | proved |
 | Provisioned key fallback: earlier sessions secret after key theft (FS) | counterexample | none possible without a key exchange; keys kept short lived | same as stated |
