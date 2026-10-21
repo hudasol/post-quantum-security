@@ -17,9 +17,9 @@ Headline: 0 of 509 staged value fields disagreed with a reader, but 31 of 509 (6
 
 Only value fields can block a row. A wording field the third reader found ambiguous in the source does not block promotion; it is noted in the comparability warning by `scripts/promote_s13.py`.
 
-Demoted after review: 42 rows break a written inclusion or exclusion rule of `data/raw/S13_protocol.csv` and are kept out of `data/raw/S13_verified.csv` with their rule and reason in `data/raw/S13_demoted.csv`; 32 of them were confirmed by both readers and the other 10 were single reader rows already.
+Demoted after review: 57 rows break a written inclusion or exclusion rule of `data/raw/S13_protocol.csv` and are kept out of `data/raw/S13_verified.csv` with their rule and reason in `data/raw/S13_demoted.csv`; 47 of them were confirmed by both readers and the other 10 were single reader rows already.
 
-Rows double read and promoted to `data/raw/S13_verified.csv`: 202.
+Rows double read and promoted to `data/raw/S13_verified.csv`: 187.
 
 ## Error rates
 

@@ -30,10 +30,10 @@ Hash check: the predictions file matches its registered SHA-256.
 | P22 | miss | Stated design: earlier session keys after long term key compromise S1 proved, S2 counterexample, S3 proved, S4 counterexample; the counterexamples follow from the missing vehicle authentication (F1). With F1: S1 proved, S2 proved, S3 proved, S4 proved. |
 | P23 | miss | Leave one implementation family out, pooled median absolute error 1.8 percent (scheme left out: 9.8 percent). |
 | P24 | miss | Cluster bootstrap 95 percent interval of the median absolute error: 0.79 to 1.72 percent; the round 4 row bootstrap upper bound is 1.72 percent, compared unrounded. |
-| P25 | miss | Main unweighted fit: largest share compiler (50.1 percent), but compiler and statistic have overlapping intervals; the sensitivity fit without the worst observed rows makes statistic the largest (36.9 percent), which meets the refutation clause. |
+| P25 | miss | Main unweighted fit: largest share compiler (49.9 percent), but compiler and statistic have overlapping intervals; the sensitivity fit without the worst observed rows makes statistic the largest (36.6 percent), which meets the refutation clause. |
 | P26 | miss | Two readings of the registered metric: staged text contradicts the source 1 of 365 (0.3 percent); differs verbatim 153 of 365 (41.9 percent). Both meet the refutation clause. |
 | P27 | hit | Largest total Sobol index for hybrid availability: outage_rate_per_h (0.55). |
-| P28 | hit | 202 new rows after double reading. |
+| P28 | hit | 187 new rows after double reading. |
 | P29 | miss | Rows with final FIPS 205 SLH-DSA cycle counts on a microcontroller: 0 (the rows found are of the FIPS 205 initial public draft on an accelerated FPGA prototype, which the registered question, final standard, excludes). |
 | P30 | miss | Staged rows with a wrong value before adjudication: 0 of the 234 rows whose values two readers could judge; 31 more rows had a value that fewer than two readers confirmed. Under the less favourable reading those count as possibly wrong: 0.117. |
 | P31 | hit | Owens et al. Ed25519 verify at 168 MHz over 24 MHz: 760000 / 722000 = 1.053 (informed). |

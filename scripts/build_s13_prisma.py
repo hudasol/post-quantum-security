@@ -50,9 +50,10 @@ def main():
         w = csv.writer(fh)
         w.writerow(["stage", "count", "how_counted", "label"])
         for s, c, h in out:
-            w.writerow([s, c, h, "derived from published"])
+            # counts of this repository's own search records, made on a PC; not values from a source
+            w.writerow([s, c, f"count of this repository's records: {h}", "host measured"])
         for why, c in sorted(reasons.items(), key=lambda x: (-x[1], x[0])):
-            w.writerow([f"excluded: {why}", c, "S13_screening.csv exclusion_reason", "derived from published"])
+            w.writerow([f"excluded: {why}", c, "count of this repository's records: S13_screening.csv exclusion_reason", "host measured"])
     for s, c, _ in out:
         print(f"{s}: {c}")
 

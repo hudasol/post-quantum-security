@@ -380,15 +380,6 @@ published,S12A-331,Ed25519 | verify | Cortex-M4,"Owens et al. Ed25519 (this work
 published,S13-022,Ed25519 | keygen | Cortex-M4,"Owens et al. Ed25519 (this work, without scalar blinding)",other or not stated,other,gcc 10,https://par.nsf.gov/servlets/purl/10507285,214000.0,0.3333333333333333
 published,S13-023,Ed25519 | sign | Cortex-M4,"Owens et al. Ed25519 (this work, without scalar blinding)",other or not stated,other,gcc 10,https://par.nsf.gov/servlets/purl/10507285,254000.0,0.3333333333333333
 published,S13-024,Ed25519 | verify | Cortex-M4,"Owens et al. Ed25519 (this work, without scalar blinding)",other or not stated,other,gcc 10,https://par.nsf.gov/servlets/purl/10507285,760000.0,0.3333333333333333
-published,S13-087,Kyber512-90s | keygen | other,"Bos et al. reference Kyber ported to ESP32 (single core, no accelerator)",portable C or reference,other,gcc 8,https://arxiv.org/pdf/2503.10207,2439083.0,0.6666666666666666
-published,S13-088,Kyber512-90s | encaps | other,"Bos et al. reference Kyber ported to ESP32 (single core, no accelerator)",portable C or reference,other,gcc 8,https://arxiv.org/pdf/2503.10207,2736256.0,0.6666666666666666
-published,S13-089,Kyber512-90s | decaps | other,"Bos et al. reference Kyber ported to ESP32 (single core, no accelerator)",portable C or reference,other,gcc 8,https://arxiv.org/pdf/2503.10207,2970640.0,0.6666666666666666
-published,S13-090,Kyber512-90s | keygen | other,Segatz and Hafiz dual core Kyber,other or not stated,other,gcc 8,https://arxiv.org/pdf/2503.10207,2007689.0,0.6666666666666666
-published,S13-091,Kyber512-90s | encaps | other,Segatz and Hafiz dual core Kyber,other or not stated,other,gcc 8,https://arxiv.org/pdf/2503.10207,2243652.0,0.6666666666666666
-published,S13-092,Kyber512-90s | decaps | other,Segatz and Hafiz dual core Kyber,other or not stated,other,gcc 8,https://arxiv.org/pdf/2503.10207,2471286.0,0.6666666666666666
-published,S13-093,Kyber512-90s | keygen | other,Segatz and Hafiz dual core Kyber with SHA accelerator,other or not stated,other,gcc 8,https://arxiv.org/pdf/2503.10207,1414389.0,0.6666666666666666
-published,S13-094,Kyber512-90s | encaps | other,Segatz and Hafiz dual core Kyber with SHA accelerator,other or not stated,other,gcc 8,https://arxiv.org/pdf/2503.10207,1490784.0,0.6666666666666666
-published,S13-095,Kyber512-90s | decaps | other,Segatz and Hafiz dual core Kyber with SHA accelerator,other or not stated,other,gcc 8,https://arxiv.org/pdf/2503.10207,1756638.0,0.6666666666666666
 published,S13-112,HQC-1 | keygen | Cortex-M4,"Jang et al. HQC (Ours, without caching)",other or not stated,other,gcc 10,https://arxiv.org/pdf/2608.18145,2113726.0,0.5
 published,S13-113,HQC-1 | encaps | Cortex-M4,"Jang et al. HQC (Ours, without caching)",other or not stated,other,gcc 10,https://arxiv.org/pdf/2608.18145,3753019.0,0.5
 published,S13-114,HQC-1 | decaps | Cortex-M4,"Jang et al. HQC (Ours, without caching)",other or not stated,other,gcc 10,https://arxiv.org/pdf/2608.18145,6815280.0,0.5

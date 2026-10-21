@@ -469,12 +469,12 @@ Labels used across the repository: published, host measured, emulated, estimated
 | label | text | modelled |
 | weighting | text | unweighted |
 | measure | text | residual sd of the hierarchical model (log cycles) |
-| value | number | 0.379152 |
-| factor | number | 1.46105 |
-| ci_lo | number | 0.350233 |
-| ci_hi | number | 0.41157 |
-| n_rows | number | 408 |
-| n_groups | number | 118 |
+| value | number | 0.38225 |
+| factor | number | 1.46558 |
+| ci_lo | number | 0.347361 |
+| ci_hi | number | 0.408368 |
+| n_rows | number | 399 |
+| n_groups | number | 115 |
 
 ### `data/meta/hierarchical_rows.csv`
 
@@ -503,15 +503,15 @@ Labels used across the repository: published, host measured, emulated, estimated
 | weighting | text | unweighted |
 | fit | text | main (variant as stated) |
 | component | text | variant |
-| levels | number | 48 |
-| variance_log | number | 0.0732428 |
-| sd_log | number | 0.270634 |
-| factor_1sd | number | 1.3108 |
-| share_within_cell | number | 0.0355756 |
-| share_ci_lo | number | 0.0103689 |
-| share_ci_hi | number | 0.137088 |
-| sd_ci_lo | number | 0.191443 |
-| sd_ci_hi | number | 0.346767 |
+| levels | number | 45 |
+| variance_log | number | 0.074774 |
+| sd_log | number | 0.273448 |
+| factor_1sd | number | 1.31449 |
+| share_within_cell | number | 0.0362987 |
+| share_ci_lo | number | 0.0096891 |
+| share_ci_hi | number | 0.14946 |
+| sd_ci_lo | number | 0.168289 |
+| sd_ci_hi | number | 0.357719 |
 | weighting_note | text | unweighted |
 | seed | number | 20261021 |
 | n_boot | number | 100 |
@@ -2123,15 +2123,15 @@ Labels used across the repository: published, host measured, emulated, estimated
 |---|---|---|
 | claim_id | text | abs_rows |
 | document | text | docs/PAPER.md |
-| text_in_document | number | 1,530 |
-| value | number | 1530.0 |
+| text_in_document | number | 1,515 |
+| value | number | 1515.0 |
 | source_file | text | data/evidence.csv |
 | column | text | id |
 | query | text | stream == "S10" |
 | aggregate | text | count |
 | tolerance_rel | number | 0.005 |
 | label | text | published |
-| note | text | displayed as {:.1f} x 100 |
+| note | text | displayed as {:.0f} x 100 |
 
 ### `data/context_entities.csv`
 
