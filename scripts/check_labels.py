@@ -25,7 +25,8 @@ ROUND4_DIRS = ["cyclemodel/results", "rtlsim/results", "energy/results", "bootch
 ROUND4_FILES = ["linksim/results/validation_v4.csv", "linksim/results/diagnosis_v4.csv", "linksim/results/closed_form_v4.csv",
                 "linksim/results/protocols_*.csv", "planner/results/profile_*.csv", "planner/results/mosca_*.csv",
                 "bench/board_kit/image_sizes.csv", "data/reference_profiles.csv",
-                "data/meta/hierarchical_*.csv"]
+                "data/meta/hierarchical_*.csv",
+                "planner/results/flightstack_*.csv", "data/flightstack_memory*.csv", "flightstack/*.csv"]
 LABELISH = re.compile(r"_(published|measured|emulated|estimated|planned|modelled|modeled|simulated|derived|synthetic)$")
 
 
