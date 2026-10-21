@@ -10,7 +10,7 @@ PATTERNS = {
  'slack token': re.compile(r'\bxox[abprs]-[A-Za-z0-9-]{10,}'),
  'aws access key id': re.compile(r'\b(?:AKIA|ASIA)[A-Z0-9]{16}\b'),
  'google api key': re.compile(r'\bAIza[0-9A-Za-z_\-]{35}\b'),
- 'anthropic or openai style key': re.compile(r'\bsk-(?:ant-)?[A-Za-z0-9_\-]{30,}'),
+ 'api provider style key (sk- prefix)': re.compile(r'\bsk-(?:ant-)?[A-Za-z0-9_\-]{30,}'),
  'bearer token': re.compile(r'[Bb]earer\s+[A-Za-z0-9_\-\.=]{30,}'),
  'generic secret assignment': re.compile(r'(?i)\b(?:api[_-]?key|secret|passwd|password|token)\b\s*[:=]\s*["\'][A-Za-z0-9_\-/+=]{20,}["\']'),
 }

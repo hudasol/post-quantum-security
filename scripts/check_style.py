@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
-"""Style lint for published text: no em dashes, no emojis, no banned affiliation (matched by word hash), no local machine paths.
+"""Style lint for published text: no em dashes, no emojis, no banned affiliation and no tool or vendor names (matched by word hash), no local machine paths.
 Applies to .md, .py, .csv, .txt, .yml, .sh files that are not licence texts. Exit 1 on any hit."""
 import hashlib, os, re, subprocess, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ALLOWED_EMOJI = set()
 # SHA-256 of each banned word (lower case), so the lint does not itself name the banned affiliation.
 BANNED_SHA256 = {'4011393f356a69582a25dfd73603b974b88e7df6fec0b75793c6155c365e691c'}
+# SHA-256 of tool and product names that must not appear in repository text (names of the tools used to fetch and
+# search, and of the vendor), matched by word hash for the same reason. docs/PREDICTIONS_V3.md was hashed before
+# round 3 and cannot change, so it is exempt.
+TOOL_SHA256 = {'32ed3a37e22652f5262701eec81dc4f24ffa10cc030845cfa04ed67ca7c82f18', 'c4ef3e6214a4b8dd3c18ee795af15676419af881472ed20ec7adc94ba67c0751', 'c857d09db23e6822e3600bc06ad8d58f92ed62bc8efd81c753f77048662cb97d', 'c70eca6b0f88f44d81a41311647e50fda1ac454ec04ffd442b0eb4743a993131', '94a168d2da574b00ec6c787377278465271cf2b97e68af076fc3eee87eba8664', 'd298391b07433318a02bd922ed5b90112a4302606c4928b54e3fb1c18130d92e'}
+TOOL_EXEMPT = {'docs/PREDICTIONS_V3.md'}
 WORD = re.compile(r'[a-z]+')
 EXT = {'.md', '.py', '.csv', '.txt', '.yml', '.yaml', '.sh', '.tex', '.dot'}
 SKIP = {'scripts/check_style.py'}
@@ -31,6 +36,8 @@ def check(root):
                 for m in COMPOUNDS.findall(line): hits.append(f'{rel}:{n}: hyphenated compound {m!r}')
             if any(hashlib.sha256(w.encode()).hexdigest() in BANNED_SHA256 for w in WORD.findall(line.lower())):
                 hits.append(f'{rel}:{n}: banned affiliation')
+            if rel not in TOOL_EXEMPT and any(hashlib.sha256(w.encode()).hexdigest() in TOOL_SHA256 for w in WORD.findall(line.lower())):
+                hits.append(f'{rel}:{n}: tool or vendor name')
             for ch in EMOJI.findall(line):
                 if ch not in ALLOWED_EMOJI: hits.append(f'{rel}:{n}: emoji {ch!r}')
     return hits
