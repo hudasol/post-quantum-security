@@ -41,8 +41,8 @@ Hash check: the predictions file matches its registered SHA-256.
 | P33 | hit | ML-KEM-768 decaps: CV32E40P 2070034 cycles, Ibex 3033704. |
 | P34 | hit | M33 images built: yes; emulator log lines parsed: 100.0 percent overall; per cache pass: on 100.0, off 100.0. |
 | P35 | miss | The scheme families are unchanged (LMS for firmware, a hybrid session for commands, no per command signatures), but the designs changed in this round: the vehicle now signs the handshake (F1) and firmware needs a signed version and a monotonic counter (F3). Under the stricter reading, a change of either design meets the refutation clause (`docs/REFERENCE_ARCHITECTURE.md`; RUN_LOG entry 93). |
-| P36 | not scored | Not yet scored. |
-| P37 | not scored | Not yet scored. |
+| P36 | hit | First pass: 74 findings. |
+| P37 | not scored | No second pass recorded. |
 | P38 | not scored | Not yet scored. |
 
-Totals: 19 hit, 1 between, 13 miss, 5 not scored, of 38.
+Totals: 20 hit, 1 between, 13 miss, 4 not scored, of 38.
