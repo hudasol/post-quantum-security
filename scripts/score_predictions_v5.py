@@ -51,7 +51,9 @@ def score():
     else:
         S["P5"] = ("not scored", "No measured row for the STM32F405 class.")
     reason = "Public flight logs could not be used: the PX4 log sites disallow automated access and state no reuse licence (`flightstack/flightlog_access.csv`)."
-    S["P6"] = ("miss", "Flights with derived statistics: 0, below the refutation threshold of 20. " + reason)
+    ft = ROOT / "data/flightlog_traffic.csv"
+    n_fl = len(pd.read_csv(ft)) if ft.exists() else 0
+    S["P6"] = (verdict(n_fl >= 50, n_fl >= 20), f"Flights with derived statistics: {n_fl}. " + reason)
     S["P7"] = ("not scored", reason)
     S["P8"] = ("not scored", reason + " The mission study was not rerun with real traffic.")
     # WP2 software in the loop
@@ -96,8 +98,9 @@ def score():
     S["P20"] = (verdict(len(fails) >= 1), f"Counterexamples in the first models as written: {len(fails)} ({', '.join(sorted(set(fails.model + ' ' + fails.property_id)))}).")
     fw = fr[fr.property_id == "D1"].set_index("model").result
     with_counter = [fw.get("firmware_fixed_counter"), fw.get("firmware_counter_unsigned_version")]
-    S["P21"] = (verdict(fw.get("firmware_fixed_counter") == "proved" and fw.get("firmware_stated_no_counter") == "counterexample"),
-                f"Registered pair: with a monotonic version counter (design F3, which also signs the version) {fw.get('firmware_fixed_counter')}; without a counter {fw.get('firmware_stated_no_counter')}. A variant written after registration, a counter with an unsigned version, gives {fw.get('firmware_counter_unsigned_version')}: the counter alone is not enough.")
+    with_counter = [fw.get("firmware_fixed_counter"), fw.get("firmware_counter_unsigned_version")]
+    S["P21"] = ("miss" if "counterexample" in with_counter else verdict(fw.get("firmware_stated_no_counter") == "counterexample"),
+                f"Without a counter: {fw.get('firmware_stated_no_counter')}. With a monotonic counter and a signed version (F3): {fw.get('firmware_fixed_counter')}; with a counter but an unsigned version (a variant written after registration): {fw.get('firmware_counter_unsigned_version')}. The registered pair alone would be a hit; under the less favourable reading a counterexample with a counter meets the refutation clause.")
 
     fs_stated = fr[fr.model == "session_b_stated_fs_longterm"].set_index("property_id").result
     fs_fixed = fr[fr.model == "session_b_fixed_fs_longterm"].set_index("property_id").result
@@ -119,7 +122,7 @@ def score():
     alt_top = alt.loc[alt.share_within_cell.idxmax()] if len(alt) else None
     tops = {top.component} | ({alt_top.component} if alt_top is not None else set())
     S["P25"] = ("miss" if tops & {"source", "statistic"} else ("hit" if tops == {"variant"} else "between"),
-                f"Main unweighted fit: largest share {top.component} ({100 * top.share_within_cell:.1f} percent), but compiler and statistic have overlapping intervals; " + (f"the fit without the worst observed rows ({alt_top.fit}) makes {alt_top.component} the largest ({100 * alt_top.share_within_cell:.1f} percent), which meets the refutation clause." if alt_top is not None else "no sensitivity fit."))
+                f"Main unweighted fit: largest share {top.component} ({100 * top.share_within_cell:.1f} percent), but compiler and statistic have overlapping intervals; " + (f"the sensitivity fit without the worst observed rows makes {alt_top.component} the largest ({100 * alt_top.share_within_cell:.1f} percent), which meets the refutation clause." if alt_top is not None else "no sensitivity fit."))
 
     tl = R("data/verify5/third_look_summary.csv")
     sub = tl[tl.measure.str.startswith("staging wrong in substance")].iloc[0]
@@ -144,7 +147,8 @@ def score():
     judged = [r for r in rs if r["status"] in ("confirmed", "corrected", "blocked")]
     unconf = len(rs) - len(judged)
     rate = wrong / len(judged) if judged else float("nan")
-    S["P30"] = (verdict(rate <= 0.05, rate <= 0.10), f"Staged rows with a wrong value before adjudication: {wrong} of the {len(judged)} rows whose values two readers could judge; {unconf} more rows had a value that fewer than two readers confirmed, so whether they hold a wrong value is unknown. Counting all of those as wrong would give {(wrong + unconf) / len(rs):.3f}.")
+    worst = (wrong + unconf) / len(rs)
+    S["P30"] = (verdict(worst <= 0.05, worst <= 0.10), f"Staged rows with a wrong value before adjudication: {wrong} of the {len(judged)} rows whose values two readers could judge; {unconf} more rows had a value that fewer than two readers confirmed. Under the less favourable reading those count as possibly wrong: {worst:.3f}.")
     c24 = float(ev[ev.id == "S13-024"].cycles.iloc[0])
     c331 = float(ev[ev.id == "S12A-331"].cycles.iloc[0])
     ratio = c24 / c331
@@ -165,8 +169,10 @@ def score():
     allp = all(float(p.get("recognised_percent", 0)) == 100.0 for p in passes.values()) if passes else parsed == 100.0
     per_pass = ", ".join(str(k) + " " + str(v.get("recognised_percent")) for k, v in passes.items())
     S["P34"] = (verdict(m33 and allp), f"M33 images built: {'yes' if m33 else 'no'}; emulator log lines parsed: {parsed} percent overall; per cache pass: {per_pass}.")
-    S["P35"] = ("miss", "The scheme families are unchanged (LMS for firmware, a hybrid session for commands, no per command signatures), but the designs changed in this round: the vehicle now signs the handshake (F1) and firmware needs a signed version and a monotonic counter (F3). Under the stricter reading, a change of either design meets the refutation clause (`docs/REFERENCE_ARCHITECTURE.md`; RUN_LOG entry 93).")
-
+    ra = (ROOT / "docs/REFERENCE_ARCHITECTURE.md").read_text()
+    families = ("LMS" in ra) and ("hybrid" in ra.lower())
+    changed = [f for f in ("F1", "F3") if f in ra]
+    S["P35"] = ("miss" if changed else verdict(families), f"Scheme families kept: {'yes' if families else 'no'} (LMS for firmware, a hybrid session for commands). Design changes adopted in `docs/REFERENCE_ARCHITECTURE.md`: {', '.join(changed) or 'none'}. Under the less favourable reading any adopted design change meets the refutation clause.")
     # WP11 and WP12
     rf = ROOT / "docs/REVIEW_FINDINGS5.csv"
     if rf.exists():
@@ -211,8 +217,11 @@ def score_sitl(ss):
     if av is None or aref is None:
         S["P13"] = ("not scored", "Availability or its mission study value not available.")
     else:
-        dd = abs(av - aref)
-        S["P13"] = (verdict(dd < 0.05, dd <= 0.10), f"Hybrid session availability: SITL {av:.3f} against the mission study {aref:.3f} (difference {dd:.3f}).")
+        mb = pd.read_csv(ROOT / "mission/results/base.csv")
+        reg = float(mb[(mb.vehicle == "drone") & (mb.arch == "B") & (mb.link == "sik")].avail_mean.iloc[0])
+        dd, d2 = abs(av - aref), abs(av - reg)
+        worst = max(dd, d2)
+        S["P13"] = (verdict(worst < 0.05, worst <= 0.10), f"Hybrid session availability, SITL {av:.3f} with one outage per mission. Against the mission study near the same outage rate ({aref:.3f}) the difference is {dd:.3f}; against the base figure the registration names ({reg:.3f}, with the base outage rate) it is {d2:.3f}. The less favourable reading is used; the outage conditions differ, so this comparison is weak either way.")
     return S
 
 
