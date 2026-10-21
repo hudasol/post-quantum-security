@@ -18,6 +18,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 DOC = "docs/PAPER.md"
 CLAIMS = []
+BY_KEY = {}  # marker number -> claim row
 WORDS_PER_PAGE = 900  # two column IEEE style page including figures (estimate used for the page budget)
 
 
@@ -39,8 +40,35 @@ def claim(cid, source, column, query="", aggregate="value", fmt="{:,.0f}", scale
     text = fmt.format(v * scale)
     CLAIMS.append({"claim_id": cid, "document": doc, "text_in_document": text, "value": v, "source_file": source,
                    "column": column, "query": query, "aggregate": aggregate, "tolerance_rel": "0.005",
-                   "label": label, "note": f"displayed as {fmt} x {scale}" if scale != 1.0 else ""})
-    return text
+                   "label": label, "note": f"displayed as {fmt} x {scale}" if scale != 1.0 else "", "context": ""})
+    BY_KEY[len(BY_KEY)] = CLAIMS[-1]
+    # invisible markers locate the number in the finished document, so that short integers get a context (anchor())
+    return f"\u2063{len(BY_KEY) - 1}\u2064{text}"
+
+
+MARK = re.compile("\u2063(\\d+)\u2064")
+
+
+def anchor(text):
+    """Remove the claim markers from a finished document. For every short integer claim (one or two digits, no
+    decimal point) record as context the number with the words that follow it, so that scripts/check_numbers.py
+    checks the number where it stands rather than anywhere in the document."""
+    out, pos = [], 0
+    marks = []
+    for m in MARK.finditer(text):
+        out.append(text[pos:m.start()])
+        marks.append((int(m.group(1)), sum(len(x) for x in out)))
+        pos = m.end()
+    out.append(text[pos:])
+    clean = "".join(out)
+    for i, at in marks:
+        c = BY_KEY[i]
+        c["_used"] = True
+        t = c["text_in_document"]
+        if re.fullmatch(r"\d{1,2}", t) and clean[at:at + len(t)] == t:
+            words = re.match(r"\S*(?:\s+\S+){0,2}", clean[at:at + 80]).group(0)
+            c["context"] = words.rstrip(".,;:)|") if len(words) > len(t) else ""
+    return clean
 
 
 def exists(p):
@@ -487,16 +515,18 @@ def main():
     left = re.findall(r"\{\{(\w+)\}\}", text)
     if left:
         sys.exit(f"unfilled placeholders: {sorted(set(left))}")
+    text = anchor(text)
     (ROOT / DOC).write_text(text, encoding="utf-8")
     sys.path.insert(0, str(ROOT / "scripts"))
     import proposal_texts
     for pdoc, ptext in proposal_texts.all_docs(claim):
+        ptext = anchor(ptext)
         (ROOT / pdoc).write_text(ptext, encoding="utf-8")
         # a number prepared for a document but not used in it is not a claim of that document
-        CLAIMS[:] = [c for c in CLAIMS if c["document"] != pdoc or c["text_in_document"] in ptext]
-    fields = ["claim_id", "document", "text_in_document", "value", "source_file", "column", "query", "aggregate", "tolerance_rel", "label", "note"]
+        CLAIMS[:] = [c for c in CLAIMS if c["document"] != pdoc or c.get("_used")]
+    fields = ["claim_id", "document", "text_in_document", "value", "source_file", "column", "query", "aggregate", "tolerance_rel", "label", "note", "context"]
     with open(ROOT / "data" / "claims_register.csv", "w", newline="", encoding="utf-8") as fh:
-        w = csv.DictWriter(fh, fieldnames=fields)
+        w = csv.DictWriter(fh, fieldnames=fields, extrasaction="ignore")
         w.writeheader()
         w.writerows(CLAIMS)
     print(f"wrote {DOC} ({len(text.split())} words in all, {n_main} in the main part, about {pages:.1f} pages) and {len(CLAIMS)} claims")
