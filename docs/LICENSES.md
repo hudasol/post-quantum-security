@@ -13,6 +13,8 @@ Author: Huda Mueen. Generated facts in `data/third_party_licences.csv` by `scrip
 | slhdsa-c | SLH-DSA cross check | `174c02e42257` | LICENSE | Apache-2.0; MIT; ISC |
 | liboqs | host measurements | `5a1a854b0dc9` | LICENSE.txt | MIT |
 | ProVerif | WP4 formal verification of the session and update design (tool only, built outside the repository by `formal/install.sh`) | version 2.05, tarball SHA-256 in `formal/proverif.sha256` | LICENSE in the tarball | GPL-2.0 |
+| ns-3 | WP3 network simulation (fetched and built outside the repository by `netsim/fetch_build.sh`; `netsim/scenarios/*.cc` compile against it) | tag ns-3.48 | LICENSE | GPL-2.0-only (most files) |
+| signetlabdei lorawan module | WP3 LoRaWAN simulation (fetched by the same script) | v0.3.7, commit a13219eebab6 | LICENSE and source headers | GPL-2.0 (headers state GPL-2.0-only) |
 
 Notes:
 
