@@ -1,0 +1,11 @@
+label,item,source
+published,mldsa44_verify_cycles,data/evidence.csv S2-0033 (pqm4 m4f); varied only through impl_factor
+published,mlkem768_encaps_cycles,data/evidence.csv S2-0023 (pqm4 m4fspeed); varied only through impl_factor
+assumption,image_bytes,1 MB as the output definition (bootchain/inputs.csv fmuv2_flash_limit_bytes)
+cited,sik link rate and usable fraction,"linksim/params.csv sik_air_rate_bps, sik_usable_fraction"
+cited,"message, key and signature sizes",linksim/params.csv
+host measured,MAVLink payload lengths,mission/payload_lengths.csv
+assumption,traffic rates,"mission/traffic.csv (two heartbeat rates published, the other rates assumptions)"
+assumption,"mission phase durations, session timeout, grace",mission/assumptions.csv (no stated range)
+assumption,max_retries,linksim/params.csv
+assumption,hash cost not scaled by the wait state factor,the SHA-256 rows do not state their wait state setting (mission/model.py convention)

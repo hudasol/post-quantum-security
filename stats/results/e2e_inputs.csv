@@ -1,0 +1,17 @@
+label,input,low,high,unit,distribution,range_source
+assumption,impl_factor,1,2.3,ratio,uniform,energy/workload_assumptions.csv low and high (multiplier on published post quantum cycles)
+assumption,x25519_two_mults_cycles,952550,2.0732e+06,cycles,uniform,mission/model.py cycle_table range over the published X25519 rows (two scalar multiplications)
+assumption,wait_state_factor,1,1.5,ratio,uniform,mission/study.py morris() bounds
+assumption,clock_mhz,168,250,MHz,uniform,bootchain/run_all.py Monte Carlo bounds
+assumption,mac_cycles,2000,50000,cycles,uniform,mission/study.py morris() bounds
+assumption,frame_loss,0,0.2,ratio,uniform,mission/study.py morris() bounds
+assumption,outage_rate_per_h,0,30,1/h,uniform,mission/study.py morris() bounds
+assumption,outage_mean_s,1,30,s,uniform,mission/study.py morris() bounds
+assumption,rekey_interval_s,60,1800,s,uniform,mission/study.py morris() bounds
+assumption,deadline_s,0.1,2,s,uniform,mission/study.py morris() bounds
+assumption,turnaround_s,0.01,0.1,s,uniform,linksim/protocols.py SOBOL_INPUTS
+assumption,rto_factor,1.5,4,ratio,uniform,linksim/protocols.py SOBOL_INPUTS
+assumption,sha256_cpb,75.088,109.589,cycles per byte,uniform,bootchain/run_all.py cpb_sw_rng (energy/retrieved_benchmarks.csv software SHA-256 rows)
+assumption,ua_per_mhz,18.5,110,uA/MHz,uniform,energy/workload_assumptions.csv low and high
+assumption,proxy_factor,1,3,ratio,uniform,energy/workload_assumptions.csv low and high
+assumption,vdd_v,1.8,3.6,V,uniform,energy/workload_assumptions.csv low and high

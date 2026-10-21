@@ -1,0 +1,5 @@
+label,output,unit,n,n_nan,p2_5,median,p97_5,mean,seed,runs_per_evaluation
+modelled,hybrid_availability_sik_drone,ratio,1000,0,0.799853,0.945507,0.998554,0.931324,20261021,20
+modelled,added_latency_per_command_signature_ms,ms,1000,0,379.912,551.865,36303.2,2641.49,20261021,20
+modelled,firmware_verify_1mb_ms,ms,1000,0,339.722,456.144,608.795,462.507,20261021,20
+modelled,firmware_verify_1mb_energy_mj,mJ,1000,0,7.4143,29.7992,81.5744,33.9633,20261021,20
