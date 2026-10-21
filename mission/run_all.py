@@ -166,6 +166,30 @@ def feasible_set(env, tag, vehicle, deadline):
     return {(r.link, r.arch) for r in e.itertuples()}
 
 
+def netsim_gap():
+    """ns-3 against linksim for the 802.15.4 transfer (netsim/results/gap_sweep.csv)."""
+    path = os.path.join(ROOT, 'netsim', 'results', 'gap_sweep.csv')
+    if not os.path.exists(path):
+        return {}
+    g = pd.read_csv(path).set_index('cell')
+    out = {}
+    for cell in ('base_frame', 'hops_3'):
+        if cell in g.index:
+            out[cell] = (float(g.loc[cell, 'time_mean_s_simulated_network']), float(g.loc[cell, 'time_s_modelled']))
+    return out
+
+
+def draw_spread(base, veh):
+    """Largest spread, over links, of the unauthenticated availability of the same command stream
+    across architectures (each architecture has its own random draws), and its link."""
+    best = (0.0, None)
+    for link, g in base[base.vehicle == veh].groupby('link'):
+        v = g['avail_base_mean_0.5']
+        if v.max() - v.min() > best[0]:
+            best = (float(v.max() - v.min()), link)
+    return best
+
+
 def study_doc(d, paths):
     base, sw, low, env, comp, src, cross, mo, cfg = (d[k] for k in
                                                      ['base', 'sweeps', 'low', 'env', 'comp', 'src', 'cross', 'mo', 'cfg'])
@@ -221,15 +245,22 @@ def study_doc(d, paths):
         b['Link'] = b.link.map(model.LINK_NAMES)
         b['availability'] = b.apply(lambda r: cim(r), axis=1)
         b['unauthenticated'] = b['avail_base_mean_0.5'].map(lambda x: fmt(x, 4))
+        b['cost'] = (b['avail_mean_0.5'] - b['avail_base_mean_0.5']).map(lambda x: fmt(x, 5))
         b['added ms'] = b.apply(lambda r: ci(r, 'added_latency_ms', 2), axis=1)
         b['utilisation'] = b.apply(lambda r: ci(r, 'utilisation'), axis=1)
         b['compute share'] = b.apply(lambda r: ci(r, 'compute_share', 4), axis=1)
         b['recover s'] = b.apply(lambda r: ci(r, 'ttra_s', 2), axis=1)
         b['first session s'] = b.apply(lambda r: ci(r, 'first_session_s', 1), axis=1)
-        w(md_table(b, ['Link', 'arch', 'availability', 'unauthenticated', 'added ms', 'utilisation', 'compute share',
-                       'recover s', 'first session s']))
+        w(md_table(b, ['Link', 'arch', 'availability', 'unauthenticated', 'cost', 'added ms', 'utilisation',
+                       'compute share', 'recover s', 'first session s'],
+                   ['Link', 'arch', 'availability', 'unauthenticated', 'availability minus unauthenticated (paired)',
+                    'added ms', 'utilisation', 'compute share', 'recover s', 'first session s']))
         w('\n' + LABEL + '\n')
     w('"unauthenticated" is the mean availability of the same command stream with no authentication bytes or compute, which isolates the share lost to the link itself. n/a means no run produced a value (for example no teardown, or no delivered command).\n')
+    sp = {veh: draw_spread(base, veh) for veh in ['drone', 'robot']}
+    w('**Draws are not shared between architectures.** Each configuration has its own random generator derived from the seed (`mission/sim.py` rng_for, keyed by the configuration), so architectures on the same link and vehicle see different outages and frame losses. The unauthenticated availability of the same command stream therefore differs between architectures on one link by up to '
+      + '; '.join(f"{fmt(v, 4)} ({veh}, {model.LINK_NAMES[l]})" for veh, (v, l) in sp.items() if l)
+      + ', which is as large as the differences in availability between A, B and D. Differences between architectures in the availability column are within draw noise. The paired column (availability minus the unauthenticated availability of the same runs) removes the draws of the link; it has no interval here, because only run means are stored. A rerun with common random numbers across architectures, which would give a paired interval, was not done: it needs the full mission study rerun.\n')
     w(f"![Availability against deadline](figures/mission/{os.path.basename(paths['deadline'])})\n")
     w('_Figure 1. Drone, mean availability against deadline. Estimated, seed 20261020, base assumptions, 1000 runs per point._\n')
     # sweeps
@@ -306,6 +337,9 @@ def study_doc(d, paths):
     w('There is no measured mission, radio trace or flight controller timing to calibrate against, so no calibration and validation split was possible; this is a null result for validation and is stated as such. The only check is a model to model comparison of the no loss handshake time of the mission transfer model against the earlier `linksim` table (`docs/LINK_REFERENCE_DESIGN.md` section 7.2, provisioned key variant), using the first three flights of B (the handshake before design change F1, with the same bytes as that table), and of the full handshake with design change F1 against the protocol simulation on SiK (`linksim/results/protocols_grid.csv`). Both are estimates built from the same cited link parameters, so agreement shows consistency, not accuracy.\n')
     w(md_table(cross, ['link', 'structure', 'mission_model_s', 'reference_s', 'relative_difference', 'reference', 'label']))
     w('\nThe difference arises because this model acknowledges each flight once, while `linksim` acknowledges every 16 fragments. Further limits:\n')
+    ng = netsim_gap()
+    if 'hops_3' in ng and 'base_frame' in ng:
+        w(f"- The link parameters are those of linksim (`linksim/params.csv`). A later check in ns-3 (`docs/NETSIM_STUDY.md`, label simulated (network)) found the single hop IEEE 802.15.4 transfer of 50 kB faster in ns-3 than in linksim ({fmt(ng['base_frame'][0], 2)} s against {fmt(ng['base_frame'][1], 2)} s), but multi hop store and forward optimistic in linksim ({fmt(ng['hops_3'][0], 2)} s in ns-3 against {fmt(ng['hops_3'][1], 2)} s in linksim at 3 hops); this study models one hop.")
     w('- Loss is independent per frame; real loss is bursty. Outages are Poisson with exponential durations; both rates are assumptions.\n- The 13 B LoRaWAN frame overhead is counted but the PHY preamble and header are not (nominal bit rate model, understates air time), and class A receive windows are not modelled; the 1 percent duty cycle is applied per transmitter.\n- The robot uses MAVLink framing; ROS 2 DDS Security per message overhead could not be verified (`data/raw/S12_traffic_sources.md`).\n- X25519 and Ed25519 cycles come from Cortex-M4 rows (S12A-332 with clock not stated, S12A-331 at 24 MHz) and are applied at 168 MHz; the wait state factor is applied only to the zero wait state rows; the per message tag cost has no published row; it is derived from published SHA-256 throughput as one HMAC-SHA256 over a 64 B message (`data/shared_inputs.csv` mac_cycles_per_message) and swept.\n- Ground station compute is ignored. One vehicle, one ground station, no contention from other users of the band.\n- Security properties of the session and update design were checked only in an abstract model (`docs/FORMAL_VERIFICATION.md`); it does not cover timing, side channels, implementation or denial of service.\n- The software in the loop step was skipped: no Docker daemon is available and building a PX4 or ArduPilot simulator from source did not fit the 30 minute time box on this two core host, so message counts come from the traffic table, not from a simulator.\n')
     w('## 9. Reproduction\n')
     w('```\n<python with pymavlink> mission/measure_payloads.py   # optional, needs pymavlink outside the repository\npython3 -m mission.run_all\npython3 -m unittest discover -s mission/tests -t .\n```\n')
@@ -336,12 +370,12 @@ def arch_doc(d, paths):
     w = L.append
     w('# Reference Architecture: Post Quantum Command Authentication for a Drone and a Ground Robot\n')
     w('Author: Huda Mueen\n')
-    w('Status: **design level, estimated**. Every figure below is read from `mission/results/` (seed 20261020, 1000 runs per configuration) and is an estimate from published sizes and cycle counts, cited link parameters and labelled assumptions. The link model has only weak validation (a model to model check, `docs/MISSION_STUDY.md` section 8). Nothing cryptographic is implemented. Generated by `python3 -m mission.run_all`.\n')
+    w('Status: **design level, estimated**. Every figure below is read from `mission/results/` (seed 20261020, 1000 runs per configuration) and is an estimate from published sizes and cycle counts, cited link parameters and labelled assumptions. The link model has a model to model check (`docs/MISSION_STUDY.md` section 8) and a check in ns-3 (`docs/NETSIM_STUDY.md`), which found settings that are each sufficient to explain its gap to a published IEEE 802.15.4 transfer and found its multi hop store and forward optimistic (Section 6). Nothing cryptographic is implemented. Generated by `python3 -m mission.run_all`.\n')
     w('## 1. Recommendation\n')
     w('A layered design:\n')
     w('1. **Boot:** firmware signed with LMS and verified by the bootloader (the firmware half of architecture D). Verification costs ' +
       fmt(_row(comp, arch='D', operation='boot verify').ms_at_168MHz, 1) + ' ms at 168 MHz (derived from published cycles) and uses no radio time. The LMS signature covers the image and its version. The bootloader keeps a monotonic version counter in protected storage, boots only an image whose signed version is at least the counter, and then raises the counter (design change F3).\n')
-    w('2. **Session start on links of SiK class or faster:** hybrid key establishment X25519 plus ML-KEM-768 with an ML-DSA-44 transcript signature from the ground station, verified against a pinned key (architecture B), then the existing 13 B MAVLink 2 signing field on every message. The vehicle also signs the transcript with its own ML-DSA-44 key, pinned at the ground station; both signatures cover both identities and the full transcript, and each side sends a key confirmation tag before it accepts the session (design change F1, `docs/FORMAL_VERIFICATION.md`). The session key is derived from the X25519 secret, the ML-KEM-768 secret and a hash of the transcript; a rekey uses a fresh ML-KEM key pair and fresh X25519 shares, protected by the current key.\n')
+    w('2. **Session start on links of SiK class or faster:** hybrid key establishment X25519 plus ML-KEM-768 with an ML-DSA-44 transcript signature from the ground station, verified against a pinned key (architecture B), then the existing 13 B MAVLink 2 signing field on every message. The vehicle also signs the transcript with its own ML-DSA-44 key, pinned at the ground station; both signatures cover both identities and the full transcript, and each side sends a key confirmation tag before it accepts the session (design change F1, `docs/FORMAL_VERIFICATION.md`). The session key is derived from the X25519 secret, the ML-KEM-768 secret and a hash of the transcript; a rekey uses a fresh ML-KEM key pair and fresh X25519 shares, protected by the current key. **Replay rule:** the proofs of C1 and C2 in `docs/FORMAL_VERIFICATION.md` use a strict acceptance rule (the vehicle accepts only the next sequence number on a stream); for the published MAVLink 2 rule (timestamp greater than the last one, gaps allowed) injective agreement could not be proved (row `session_timestamp_rule`, only the non injective form holds). This architecture therefore recommends the strict rule for commands in a session. Where lost frames make the strict rule impractical and the published rule is kept, the residual risk is stated: that each command is accepted at most once is not proved for that rule; this is a limit of the abstraction, not a known attack.\n')
     w('3. **Provisioned session keys as the fallback** (the session half of D) for links where the B handshake cannot finish in preflight (LoRaWAN class links, where only low rate command traffic is possible at all), and as the recovery path when establishing a new session would take longer than the vehicle safety case allows. Provisioned keys are never used directly as signing keys. At every session start both sides exchange fresh nonces and derive the session signing key from the provisioned key and both nonces, so that sequence numbers and timestamps are bound to the session (design change F2). This fallback has no forward secrecy: whoever later obtains the provisioned key can recompute the keys of earlier sessions from the recorded nonces, so provisioned keys should be short lived.\n')
     w('4. **No per command ML-DSA-44 signatures on streamed commands** (architecture C). They remain an option for rare, high value commands such as a mission upload, where seconds of delay are acceptable.\n')
     checks = [
@@ -380,7 +414,8 @@ def arch_doc(d, paths):
     cR = _row(base, vehicle='robot', link='sik', arch='C')
     bD5 = _row(low, link='lora_dr5', arch='B')
     w('## 3. Quantified trade offs (estimated)\n')
-    w(f"- **B against A on SiK (drone):** availability {cim(bS)} against {cim(aS)}; the per message cost is identical (same 13 B field), so the difference is only the session start: first session after {fmt(bS.first_session_s_median, 2)} s against {fmt(aS.first_session_s_median, 2)} s, and recovery after a teardown {fmt(bS.ttra_s_median, 2)} s against {fmt(aS.ttra_s_median, 2)} s. Handshake air bytes {int(model.handshake_bytes('B'))} against {int(model.handshake_bytes('A'))}.\n")
+    spv, spl = draw_spread(base[base.link == 'sik'], 'drone')
+    w(f"- **B against A on SiK (drone):** availability {cim(bS)} against {cim(aS)}. The architectures were simulated with separate random draws: the unauthenticated availability of the same stream differs between architectures on this link by up to {fmt(spv, 4)}, so this difference is within draw noise and is not attributed to either design (`docs/MISSION_STUDY.md` section 4). Against the unauthenticated stream of its own runs, A changes availability by {fmt(aS['avail_mean_0.5'] - aS['avail_base_mean_0.5'], 5)} and B by {fmt(bS['avail_mean_0.5'] - bS['avail_base_mean_0.5'], 5)} (paired, no interval). The per message cost is identical (same 13 B field), so any systematic difference can come only from the session start: first session after {fmt(bS.first_session_s_median, 2)} s against {fmt(aS.first_session_s_median, 2)} s, and recovery after a teardown {fmt(bS.ttra_s_median, 2)} s against {fmt(aS.ttra_s_median, 2)} s. Handshake air bytes {int(model.handshake_bytes('B'))} against {int(model.handshake_bytes('A'))}.\n")
     w(f"- **C on SiK:** added latency {ci(cS, 'added_latency_ms', 1)} ms per command and availability {cim(cS)} for the 1 Hz drone stream; for the 5 Hz robot stream utilisation reaches {fmt(cR.utilisation_median)} and availability {cim(cR)}.\n")
     lora_base = base[base.link.str.startswith('lora')]
     p = model.load_link_params()
@@ -417,7 +452,8 @@ def arch_doc(d, paths):
     w(f"- LoRaWAN DR5, low rate profile: D reaches a mean availability of {fmt(dD['avail_mean_5'], 4)} and A {fmt(dA['avail_mean_5'], 4)} at a 5 s deadline, against {fmt(dD['avail_base_mean_5'], 4)} for the same stream without authentication, so authentication costs almost nothing there, but the link itself stays below the {thr} threshold (a lost frame waits out the duty cycle silence before it can be sent again). B reaches {fmt(_row(lw, link='lora_dr5', arch='B')['avail_mean_5'], 4)} because its handshake does not finish within the mission.\n")
     w('- If the link cannot complete the B handshake inside preflight (LoRaWAN class links in this study), use provisioned keys (D) and accept the key management burden: keys must be loaded over a wire before each mission and a captured vehicle exposes them until they expire.\n')
     fl = sw[(sw.tag == 'sweep:frame_loss') & (sw.link == 'sik') & (sw.arch == 'B')].sort_values('over_frame_loss')
-    w(f"- If the safety case requires renewed authentication within a bound shorter than the B recovery time after a teardown (median {fmt(fl.ttra_s_median.iloc[0], 2)} s at no frame loss and {fmt(fl.ttra_s_median.iloc[-1], 2)} s at a frame loss of {fl.over_frame_loss.iloc[-1]:g} on SiK), keep the session alive through outages (longer session timeout) or fall back to D keys.\n")
+    bR = _row(base, vehicle='drone', link='sik', arch='B')
+    w(f"- If the safety case requires renewed authentication within a bound shorter than the B recovery time after a teardown on SiK (drone), keep the session alive through outages (longer session timeout) or fall back to D keys. That recovery time is a median of {fmt(bR.ttra_s_median, 2)} s at the base frame loss of {a['frame_loss']:g} (the Section 2 table); in the frame loss sweep (one factor at a time, with its own random draws) it is {fmt(fl.ttra_s_median.iloc[0], 2)} s at a frame loss of {fl.over_frame_loss.iloc[0]:g} and {fmt(fl.ttra_s_median.iloc[-1], 2)} s at {fl.over_frame_loss.iloc[-1]:g}.\n")
     c_low = sorted(model.LINK_NAMES[l] for l, a_ in f['low'] if a_ == 'C')
     w(f"- If command streams are rare (one per minute in the low rate profile) and each command is high value, C is feasible on: {', '.join(c_low) or 'no link'} at a 5 s deadline, because its per command delay no longer competes with a stream.\n")
     ck = sw[(sw.tag == 'sweep:clock_hz') & (sw.link == 'sik')]
@@ -428,9 +464,14 @@ def arch_doc(d, paths):
     hi_a = cs.loc['x25519_two_mults', 'range_max_cycles'] + cs.loc['ed25519_verify', 'range_max_cycles']
     w(f"- Across the published range of X25519 and Ed25519 rows, the A handshake compute spans {fmt(lo_a / a['clock_hz'] * 1e3, 1)} to {fmt(hi_a / a['clock_hz'] * 1e3, 1)} ms at 168 MHz (derived from published); compute is not the limiting resource at either end, so the choice of row does not change any verdict.\n")
     w('## 5. Components and interfaces (design level)\n')
-    w('| component | role | where it runs |\n|---|---|---|\n| LMS verifier in the bootloader | verifies the firmware image and its signed version before start | flight controller or robot MCU |\n| Monotonic version counter | rejects older signed images (design change F3) | protected storage of the flight controller or robot MCU |\n| Pinned ML-DSA-44 ground key | authenticates the ground station during session start | vehicle, provisioned over a wire |\n| Vehicle ML-DSA-44 key pair (public key pinned at the ground station) | authenticates the vehicle during session start (design change F1) | vehicle; public key provisioned at the ground station |\n| Hybrid key establishment (X25519 plus ML-KEM-768) | derives a 32 B signing key per session | ground station and vehicle (or a companion computer gateway) |\n| MAVLink 2 signing (13 B field, 6 B tag) | per message authentication | unchanged on both sides |\n| Provisioned key store | fallback keys from which session keys are derived with fresh nonces (design change F2) | vehicle |\n| Link supervisor | session timeout, rekey timing, fallback decision | vehicle |\n')
+    w('| component | role | where it runs |\n|---|---|---|\n| LMS verifier in the bootloader | verifies the firmware image and its signed version before start | flight controller or robot MCU |\n| Monotonic version counter | rejects older signed images (design change F3) | protected storage of the flight controller or robot MCU |\n| Pinned ML-DSA-44 ground key | authenticates the ground station during session start | vehicle, provisioned over a wire |\n| Vehicle ML-DSA-44 key pair (public key pinned at the ground station) | authenticates the vehicle during session start (design change F1) | vehicle; public key provisioned at the ground station |\n| Hybrid key establishment (X25519 plus ML-KEM-768) | derives a 32 B signing key per session | ground station and vehicle (or a companion computer gateway) |\n| MAVLink 2 signing (13 B field, 6 B tag) | per message authentication | both sides; frame format unchanged, vehicle acceptance set to the strict next sequence rule of the proofs (Section 1, item 2) |\n| Provisioned key store | fallback keys from which session keys are derived with fresh nonces (design change F2) | vehicle |\n| Link supervisor | session timeout, rekey timing, fallback decision | vehicle |\n')
     w('## 6. Limits\n')
-    w('- Estimated throughout; no radio, flight controller or cryptographic library was run. The link model is only checked against another model.\n- Assumed traffic rates, outage process, timeouts and deadlines drive the verdicts; they are swept, but real values for a given vehicle may lie outside the swept ranges.\n- The 95 percent intervals in this document cover Monte Carlo noise around fixed assumptions only, not uncertainty in the inputs; input uncertainty is explored only through the sweeps and the Morris screening.\n- Feasibility on IEEE 802.15.4 rests on a link model that the link study finds about four times faster than a published 802.15.4 transfer time (`docs/LINKSIM_STUDY.md` section 4.4); real 802.15.4 networks with several hops may not meet the deadlines shown here.\n- The formal check covers an abstract model only (docs/FORMAL_VERIFICATION.md); it does not cover timing, side channels, implementation or denial of service. Specialists in protocol security would need to review any real design.\n- Draft and standards status: ML-KEM (FIPS 203) and ML-DSA (FIPS 204) are final; MAVLink has no post quantum extension and the sketch in `docs/MAVLINK_PQ_SKETCH.md` is not a proposal to any project.\n')
+    w('- Estimated throughout; no radio, flight controller or cryptographic library was run. The link model is checked against another model and against ns-3 (a simulator, not a radio).\n- Assumed traffic rates, outage process, timeouts and deadlines drive the verdicts; they are swept, but real values for a given vehicle may lie outside the swept ranges.\n- The 95 percent intervals in this document cover Monte Carlo noise around fixed assumptions only, not uncertainty in the inputs; input uncertainty is explored only through the sweeps and the Morris screening.')
+    ng = netsim_gap()
+    w("- Feasibility on IEEE 802.15.4 rests on the linksim parameters at one hop. The link study found linksim faster than a published 802.15.4 transfer time (`docs/LINKSIM_STUDY.md` section 4.4); the ns-3 check (`docs/NETSIM_STUDY.md`) found that more hops, more background load (on the mean only, with an interval that crosses 30 s) or larger backoff exponents (macMinBE and macMaxBE raised to 8 together) each bring the ns-3 time into the published range, and that linksim's multi hop store and forward is optimistic"
+      + (f" ({fmt(ng['hops_3'][0], 2)} s in ns-3 against {fmt(ng['hops_3'][1], 2)} s in linksim at 3 hops)" if 'hops_3' in ng else '')
+      + ". Real 802.15.4 networks with several hops or with load may not meet the deadlines shown here.")
+    w('- The formal check covers an abstract model only (docs/FORMAL_VERIFICATION.md); it does not cover timing, side channels, implementation or denial of service. Specialists in protocol security would need to review any real design.\n- Draft and standards status: ML-KEM (FIPS 203) and ML-DSA (FIPS 204) are final; MAVLink has no post quantum extension and the sketch in `docs/MAVLINK_PQ_SKETCH.md` is not a proposal to any project.\n')
     return '\n'.join(L)
 
 
