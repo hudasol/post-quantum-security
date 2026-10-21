@@ -7,3 +7,4 @@ matplotlib==3.11.2
 SALib==1.6.0
 unicorn==2.1.4
 capstone==5.0.9
+statsmodels==0.15.0
