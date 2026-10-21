@@ -142,7 +142,7 @@ Labels used across the repository: published, host measured, emulated, estimated
 | cycles_per_byte_derived | number | 76.27 |
 | sig_cycles | number | 722000 |
 | cycle_source_label | text | published |
-| cycle_source | text | S12A-331 |
+| cycle_source | text | S12A-331 (data/shared_inputs.csv ed25519_verify_cycles_m4) |
 | hash_ms_estimated | number | 45.4 |
 | sig_ms_estimated | number | 4.298 |
 | total_ms_estimated | number | 49.697 |
@@ -851,7 +851,7 @@ Labels used across the repository: published, host measured, emulated, estimated
 | cycles | number | 1421623 |
 | label | text | published |
 | cycle_source_label | text | published |
-| source | text | S2-0033 |
+| source | text | S2-0033 (data/shared_inputs.csv mldsa44_verify_cycles_m4) |
 
 ### `energy/results/energy_per_op.csv`
 
@@ -867,7 +867,7 @@ Labels used across the repository: published, host measured, emulated, estimated
 | op | text | mldsa44_verify |
 | cycles | number | 1421623 |
 | cycle_source_label | text | published |
-| cycle_source | text | S2-0033 |
+| cycle_source | text | S2-0033 (data/shared_inputs.csv mldsa44_verify_cycles_m4) |
 | energy_uj_estimated | number | 516.049 |
 | baseline_op | text | ed25519_verify |
 | multiple_of_baseline_estimated | number | 1.969 |
@@ -898,12 +898,12 @@ Labels used across the repository: published, host measured, emulated, estimated
 |---|---|---|
 | platform | text | Crazyflie 2.1 |
 | design | text | ML-DSA-44 per command |
-| battery_pct_p2_5 | number | 0.03064 |
-| battery_pct_median | number | 0.16847 |
-| battery_pct_p97_5 | number | 0.60197 |
-| cpu_pct_p2_5 | number | 5.0101 |
-| cpu_pct_median | number | 22.2305 |
-| cpu_pct_p97_5 | number | 57.8509 |
+| battery_pct_p2_5 | number | 0.03076 |
+| battery_pct_median | number | 0.16861 |
+| battery_pct_p97_5 | number | 0.60219 |
+| cpu_pct_p2_5 | number | 5.0238 |
+| cpu_pct_median | number | 22.246 |
+| cpu_pct_p97_5 | number | 57.8691 |
 | cpu_over_100pct_fraction | number | 0.0 |
 | n | number | 20000 |
 | seed | number | 20261020 |
@@ -917,8 +917,8 @@ Labels used across the repository: published, host measured, emulated, estimated
 |---|---|---|
 | platform | text | Crazyflie 2.1 |
 | design | text | ML-DSA-44 per command |
-| battery_pct_per_h_modelled | number | 0.08901 |
-| cpu_pct_modelled | number | 8.4864 |
+| battery_pct_per_h_modelled | number | 0.08906 |
+| cpu_pct_modelled | number | 8.4907 |
 | label | text | modelled |
 
 ### `energy/results/sha256_cpb.csv`
@@ -941,10 +941,10 @@ Labels used across the repository: published, host measured, emulated, estimated
 | platform | text | Crazyflie 2.1 |
 | output | text | battery share, ML-DSA-44 per command |
 | input | text | handshakes_per_h |
-| S1 | number | 0.00013102000572154658 |
-| S1_conf | number | 9.39477488768741e-05 |
-| ST | number | 1.2896387128863435e-06 |
-| ST_conf | number | 2.0617190621912986e-07 |
+| S1 | number | 0.0001389404982423836 |
+| S1_conf | number | 9.961292379228084e-05 |
+| ST | number | 1.4496009760123324e-06 |
+| ST_conf | number | 2.317555237145157e-07 |
 | n_base | number | 1024 |
 | seed | number | 20261020 |
 | label | text | modelled |
@@ -1158,12 +1158,12 @@ Labels used across the repository: published, host measured, emulated, estimated
 |---|---|---|
 | label | text | modelled |
 | scenario | text | ttfam |
-| link | text | ieee802154 |
-| loss | number | 0.1 |
-| now_faster | text | raw_mldsa44/per_message |
-| now_slower | text | dtls13/classical |
-| order_at_zero_loss | text | dtls13/classical before raw_mldsa44/per_message |
-| intervals_overlap | text | False |
+| link | text | lora_dr0 |
+| loss | number | 0.2 |
+| now_faster | text | edhoc_oscore/pq_only |
+| now_slower | text | mavlink2_pq/hybrid |
+| order_at_zero_loss | text | mavlink2_pq/hybrid before edhoc_oscore/pq_only |
+| intervals_overlap | text | True |
 
 ### `linksim/results/protocols_sobol.csv`
 
@@ -1310,57 +1310,57 @@ Labels used across the repository: published, host measured, emulated, estimated
 | config_key | text | base/{} |
 | deadline_s | number | 0.5 |
 | label | text | estimated |
-| avail_median | number | 0.9971014492753624 |
+| avail_median | number | 0.9956521739130435 |
 | avail_lo | number | 0.9956521739130435 |
 | avail_hi | number | 0.9971014492753624 |
-| added_latency_ms_median | number | 1.8650793650793664 |
-| added_latency_ms_lo | number | 1.8650793650793664 |
-| added_latency_ms_hi | number | 1.8650793650793664 |
-| latency_ms_median | number | 10.892857142857144 |
-| latency_ms_lo | number | 10.892857142857144 |
-| latency_ms_hi | number | 10.892857142857144 |
-| utilisation_median | number | 0.10692 |
-| utilisation_lo | number | 0.10691277777777779 |
-| utilisation_hi | number | 0.10692722222222223 |
-| utilisation_down_median | number | 96.78800731261427 |
-| utilisation_down_lo | number | 96.78800731261427 |
-| utilisation_down_hi | number | 96.78800731261427 |
-| compute_share_median | number | 0.000901660619047619 |
-| compute_share_lo | number | 0.000901660619047619 |
-| compute_share_hi | number | 0.000901660619047619 |
-| ttra_s_median | number | 0.19749848809522064 |
-| ttra_s_lo | number | 0.19749848809522064 |
-| ttra_s_hi | number | 0.19749848809522064 |
-| first_session_s_median | number | 0.1974984880952381 |
-| first_session_s_lo | number | 0.1974984880952381 |
-| first_session_s_hi | number | 0.1974984880952381 |
-| avail_mean | number | 0.9919405797101449 |
-| avail_mean_lo | number | 0.9912710144927537 |
-| avail_mean_hi | number | 0.9926015942028986 |
+| added_latency_ms_median | number | 1.9508340059187537 |
+| added_latency_ms_lo | number | 1.9508340059187537 |
+| added_latency_ms_hi | number | 1.9508340059187537 |
+| latency_ms_median | number | 10.97861178369653 |
+| latency_ms_lo | number | 10.97861178369653 |
+| latency_ms_hi | number | 10.97861178369653 |
+| utilisation_median | number | 0.10699277777777778 |
+| utilisation_lo | number | 0.10697944444444445 |
+| utilisation_hi | number | 0.10699388888888889 |
+| utilisation_down_median | number | 120.65462522851918 |
+| utilisation_down_lo | number | 120.65462522851918 |
+| utilisation_down_hi | number | 120.65462522851918 |
+| compute_share_median | number | 0.0021439330161420506 |
+| compute_share_lo | number | 0.0021439330161420506 |
+| compute_share_hi | number | 0.0021439330161420506 |
+| ttra_s_median | number | 0.26558777380952847 |
+| ttra_s_lo | number | 0.26558777380952847 |
+| ttra_s_hi | number | 0.26558777380952847 |
+| first_session_s_median | number | 0.2655877738095238 |
+| first_session_s_lo | number | 0.2655877738095238 |
+| first_session_s_hi | number | 0.2655877738095238 |
+| avail_mean | number | 0.9916434782608696 |
+| avail_mean_lo | number | 0.9909579347826087 |
+| avail_mean_hi | number | 0.992340579710145 |
 | avail_med_0.1 | number | 0.9739130434782609 |
-| avail_mean_0.1 | number | 0.9718028985507247 |
-| avail_base_mean_0.1 | number | 0.9718565217391304 |
-| avail_med_0.25 | number | 0.9971014492753624 |
-| avail_mean_0.25 | number | 0.9919347826086957 |
-| avail_base_mean_0.25 | number | 0.9919884057971015 |
-| avail_med_0.5 | number | 0.9971014492753624 |
-| avail_mean_0.5 | number | 0.9919405797101449 |
-| avail_base_mean_0.5 | number | 0.9919942028985509 |
-| avail_med_1 | number | 0.9971014492753624 |
-| avail_mean_1 | number | 0.9919405797101449 |
-| avail_base_mean_1 | number | 0.9919942028985509 |
-| avail_med_2 | number | 0.9971014492753624 |
-| avail_mean_2 | number | 0.9919405797101449 |
-| avail_base_mean_2 | number | 0.9919942028985509 |
-| avail_med_5 | number | 0.9971014492753624 |
-| avail_mean_5 | number | 0.9919405797101449 |
-| avail_base_mean_5 | number | 0.9919942028985509 |
-| avail_med_10 | number | 0.9971014492753624 |
-| avail_mean_10 | number | 0.9919405797101449 |
-| avail_base_mean_10 | number | 0.9919942028985509 |
-| teardowns_per_run_mean | number | 0.174 |
-| handshakes_per_run_mean | number | 3.099 |
-| share_runs_with_teardown | number | 0.161 |
+| avail_mean_0.1 | number | 0.9717797101449276 |
+| avail_base_mean_0.1 | number | 0.9718507246376812 |
+| avail_med_0.25 | number | 0.9956521739130435 |
+| avail_mean_0.25 | number | 0.9916333333333335 |
+| avail_base_mean_0.25 | number | 0.9917072463768115 |
+| avail_med_0.5 | number | 0.9956521739130435 |
+| avail_mean_0.5 | number | 0.9916434782608696 |
+| avail_base_mean_0.5 | number | 0.9917173913043478 |
+| avail_med_1 | number | 0.9956521739130435 |
+| avail_mean_1 | number | 0.9916434782608696 |
+| avail_base_mean_1 | number | 0.9917173913043478 |
+| avail_med_2 | number | 0.9956521739130435 |
+| avail_mean_2 | number | 0.9916434782608696 |
+| avail_base_mean_2 | number | 0.9917173913043478 |
+| avail_med_5 | number | 0.9956521739130435 |
+| avail_mean_5 | number | 0.9916434782608696 |
+| avail_base_mean_5 | number | 0.9917173913043478 |
+| avail_med_10 | number | 0.9956521739130435 |
+| avail_mean_10 | number | 0.9916434782608696 |
+| avail_base_mean_10 | number | 0.9917173913043478 |
+| teardowns_per_run_mean | number | 0.16 |
+| handshakes_per_run_mean | number | 3.088 |
+| share_runs_with_teardown | number | 0.153 |
 
 ### `mission/results/compute_latency.csv`
 
@@ -1370,10 +1370,10 @@ Labels used across the repository: published, host measured, emulated, estimated
 |---|---|---|
 | arch | text | A |
 | operation | text | handshake or rekey |
-| cycles | number | 1819746.0 |
-| cycles_with_wait_state_factor | number | 1819746.0 |
-| ms_at_168MHz | number | 10.831821428571429 |
-| ms_at_480MHz | number | 3.7911375 |
+| cycles | number | 2058746.0 |
+| cycles_with_wait_state_factor | number | 2058746.0 |
+| ms_at_168MHz | number | 12.254440476190476 |
+| ms_at_480MHz | number | 4.289054166666667 |
 | label | text | derived from published |
 
 ### `mission/results/cycle_sources.csv`
@@ -1403,21 +1403,23 @@ Labels used across the repository: published, host measured, emulated, estimated
 | arch | text | A |
 | tag | text | base |
 | deadline_s | number | 0.1 |
-| avail_mean | number | 0.9718028985507247 |
-| utilisation_median | number | 0.10692 |
+| avail_mean | number | 0.9717797101449276 |
+| utilisation_median | number | 0.10699277777777778 |
 | feasible | text | False |
 | reason | text | deadline missed or link loss |
 | label | text | estimated |
 
 ### `mission/results/link_crosscheck.csv`
 
-7 columns.
+9 columns.
 
 | column | type | example |
 |---|---|---|
 | link | text | sik |
+| structure | text | round4 three flights |
 | mission_model_s | number | 0.8927777777777778 |
-| linksim_selective_repeat_s | number | 0.8986 |
+| reference_s | number | 0.8986 |
+| reference | text | docs/LINK_REFERENCE_DESIGN.md section 7.2 (linksim selective... |
 | relative_difference | number | -0.006479214580705735 |
 | air_s | number | 0.7427777777777778 |
 | label | text | estimated |
@@ -1443,54 +1445,54 @@ Labels used across the repository: published, host measured, emulated, estimated
 | avail_median | number | 1.0 |
 | avail_lo | number | 1.0 |
 | avail_hi | number | 1.0 |
-| added_latency_ms_median | number | 1.8650793650793664 |
-| added_latency_ms_lo | number | 1.8650793650793664 |
-| added_latency_ms_hi | number | 1.8650793650793664 |
-| latency_ms_median | number | 10.892857142857144 |
-| latency_ms_lo | number | 10.892857142857144 |
-| latency_ms_hi | number | 10.892857142857144 |
-| utilisation_median | number | 0.00030555555555555555 |
-| utilisation_lo | number | 0.00030555555555555555 |
-| utilisation_hi | number | 0.00030555555555555555 |
-| utilisation_down_median | number | 0.04212065813528336 |
-| utilisation_down_lo | number | 0.04212065813528336 |
-| utilisation_down_hi | number | 0.04212065813528336 |
-| compute_share_median | number | 4.420030158730159e-05 |
-| compute_share_lo | number | 4.420030158730159e-05 |
-| compute_share_hi | number | 4.420030158730159e-05 |
-| ttra_s_median | number | 0.19749848809522064 |
-| ttra_s_lo | number | 0.19749848809522064 |
-| ttra_s_hi | number | 0.19749848809522064 |
-| first_session_s_median | number | 0.1974984880952381 |
-| first_session_s_lo | number | 0.1974984880952381 |
-| first_session_s_hi | number | 0.1974984880952381 |
-| avail_mean | number | 0.992 |
-| avail_mean_lo | number | 0.9902727272727273 |
-| avail_mean_hi | number | 0.9935454545454545 |
+| added_latency_ms_median | number | 1.9508340059187537 |
+| added_latency_ms_lo | number | 1.9508340059187537 |
+| added_latency_ms_hi | number | 1.9508340059187537 |
+| latency_ms_median | number | 10.97861178369653 |
+| latency_ms_lo | number | 10.97861178369653 |
+| latency_ms_hi | number | 10.97861178369653 |
+| utilisation_median | number | 0.00037222222222222225 |
+| utilisation_lo | number | 0.00037222222222222225 |
+| utilisation_hi | number | 0.00037222222222222225 |
+| utilisation_down_median | number | 0.14274223034734917 |
+| utilisation_down_lo | number | 0.14274223034734917 |
+| utilisation_down_hi | number | 0.14274223034734917 |
+| compute_share_median | number | 5.114851251008878e-05 |
+| compute_share_lo | number | 5.114851251008878e-05 |
+| compute_share_hi | number | 5.114851251008878e-05 |
+| ttra_s_median | number | 0.26558777380952847 |
+| ttra_s_lo | number | 0.2655877738095267 |
+| ttra_s_hi | number | 0.26558777380952847 |
+| first_session_s_median | number | 0.2655877738095238 |
+| first_session_s_lo | number | 0.2655877738095238 |
+| first_session_s_hi | number | 0.2655877738095238 |
+| avail_mean | number | 0.9908181818181818 |
+| avail_mean_lo | number | 0.988909090909091 |
+| avail_mean_hi | number | 0.9924545454545455 |
 | avail_med_0.1 | number | 1.0 |
-| avail_mean_0.1 | number | 0.9704545454545453 |
-| avail_base_mean_0.1 | number | 0.9704545454545453 |
+| avail_mean_0.1 | number | 0.9717272727272727 |
+| avail_base_mean_0.1 | number | 0.9719090909090908 |
 | avail_med_0.25 | number | 1.0 |
-| avail_mean_0.25 | number | 0.992 |
-| avail_base_mean_0.25 | number | 0.992 |
+| avail_mean_0.25 | number | 0.9908181818181818 |
+| avail_base_mean_0.25 | number | 0.991 |
 | avail_med_0.5 | number | 1.0 |
-| avail_mean_0.5 | number | 0.992 |
-| avail_base_mean_0.5 | number | 0.992 |
+| avail_mean_0.5 | number | 0.9908181818181818 |
+| avail_base_mean_0.5 | number | 0.991 |
 | avail_med_1 | number | 1.0 |
-| avail_mean_1 | number | 0.992 |
-| avail_base_mean_1 | number | 0.992 |
+| avail_mean_1 | number | 0.9908181818181818 |
+| avail_base_mean_1 | number | 0.991 |
 | avail_med_2 | number | 1.0 |
-| avail_mean_2 | number | 0.992 |
-| avail_base_mean_2 | number | 0.992 |
+| avail_mean_2 | number | 0.9908181818181818 |
+| avail_base_mean_2 | number | 0.991 |
 | avail_med_5 | number | 1.0 |
-| avail_mean_5 | number | 0.992 |
-| avail_base_mean_5 | number | 0.992 |
+| avail_mean_5 | number | 0.9908181818181818 |
+| avail_base_mean_5 | number | 0.991 |
 | avail_med_10 | number | 1.0 |
-| avail_mean_10 | number | 0.992 |
-| avail_base_mean_10 | number | 0.992 |
-| teardowns_per_run_mean | number | 0.188 |
-| handshakes_per_run_mean | number | 3.11 |
-| share_runs_with_teardown | number | 0.167 |
+| avail_mean_10 | number | 0.9908181818181818 |
+| avail_base_mean_10 | number | 0.991 |
+| teardowns_per_run_mean | number | 0.148 |
+| handshakes_per_run_mean | number | 3.074 |
+| share_runs_with_teardown | number | 0.138 |
 
 ### `mission/results/morris.csv`
 
@@ -1500,9 +1502,9 @@ Labels used across the repository: published, host measured, emulated, estimated
 |---|---|---|
 | arch | text | A |
 | input | text | frame_loss |
-| mu_star | number | 0.06424999999999995 |
-| sigma | number | 0.0949402617590532 |
-| mu_star_conf | number | 0.05052040477267469 |
+| mu_star | number | 0.0656402173913043 |
+| sigma | number | 0.09632608805359036 |
+| mu_star_conf | number | 0.05049526512966033 |
 | runs_per_point | number | 200 |
 | trajectories | number | 10 |
 | seed | number | 20261020 |
@@ -1525,62 +1527,152 @@ Labels used across the repository: published, host measured, emulated, estimated
 | label | text | estimated |
 | over_frame_loss | number | 0.0 |
 | avail_median | number | 0.9956521739130435 |
-| avail_lo | number | 0.9956521739130435 |
-| avail_hi | number | 0.9971014492753624 |
-| added_latency_ms_median | number | 1.8650793650793664 |
-| added_latency_ms_lo | number | 1.8650793650793664 |
-| added_latency_ms_hi | number | 1.8650793650793664 |
-| latency_ms_median | number | 10.892857142857144 |
-| latency_ms_lo | number | 10.892857142857144 |
-| latency_ms_hi | number | 10.892857142857144 |
-| utilisation_median | number | 0.10671055555555556 |
-| utilisation_lo | number | 0.10671055555555556 |
-| utilisation_hi | number | 0.10671055555555556 |
-| utilisation_down_median | number | 96.78800731261427 |
-| utilisation_down_lo | number | 96.78800731261427 |
-| utilisation_down_hi | number | 96.78800731261427 |
-| compute_share_median | number | 0.000901660619047619 |
-| compute_share_lo | number | 0.000901660619047619 |
-| compute_share_hi | number | 0.000901660619047619 |
-| ttra_s_median | number | 0.19749848809522064 |
-| ttra_s_lo | number | 0.19749848809522064 |
-| ttra_s_hi | number | 0.19749848809522064 |
-| first_session_s_median | number | 0.1974984880952381 |
-| first_session_s_lo | number | 0.1974984880952381 |
-| first_session_s_hi | number | 0.1974984880952381 |
-| avail_mean | number | 0.9921434782608697 |
-| avail_mean_lo | number | 0.9914912681159421 |
-| avail_mean_hi | number | 0.9927537681159421 |
+| avail_lo | number | 0.9942028985507246 |
+| avail_hi | number | 0.9956521739130435 |
+| added_latency_ms_median | number | 1.9508340059187537 |
+| added_latency_ms_lo | number | 1.9508340059187537 |
+| added_latency_ms_hi | number | 1.9508340059187537 |
+| latency_ms_median | number | 10.97861178369653 |
+| latency_ms_lo | number | 10.97861178369653 |
+| latency_ms_hi | number | 10.97861178369653 |
+| utilisation_median | number | 0.10677722222222222 |
+| utilisation_lo | number | 0.10677722222222222 |
+| utilisation_hi | number | 0.10677722222222222 |
+| utilisation_down_median | number | 120.65462522851918 |
+| utilisation_down_lo | number | 120.65462522851918 |
+| utilisation_down_hi | number | 120.65462522851918 |
+| compute_share_median | number | 0.0021439330161420506 |
+| compute_share_lo | number | 0.0021439330161420506 |
+| compute_share_hi | number | 0.0021439330161420506 |
+| ttra_s_median | number | 0.26558777380952847 |
+| ttra_s_lo | number | 0.26558777380952847 |
+| ttra_s_hi | number | 0.26558777380952847 |
+| first_session_s_median | number | 0.2655877738095238 |
+| first_session_s_lo | number | 0.2655877738095238 |
+| first_session_s_hi | number | 0.2655877738095238 |
+| avail_mean | number | 0.9915710144927536 |
+| avail_mean_lo | number | 0.9908535144927537 |
+| avail_mean_hi | number | 0.9922348550724638 |
 | avail_med_0.1 | number | 0.9956521739130435 |
-| avail_mean_0.1 | number | 0.9921434782608697 |
-| avail_base_mean_0.1 | number | 0.9921826086956522 |
+| avail_mean_0.1 | number | 0.9915710144927536 |
+| avail_base_mean_0.1 | number | 0.9916260869565218 |
 | avail_med_0.25 | number | 0.9956521739130435 |
-| avail_mean_0.25 | number | 0.9921434782608697 |
-| avail_base_mean_0.25 | number | 0.9921826086956522 |
+| avail_mean_0.25 | number | 0.9915710144927536 |
+| avail_base_mean_0.25 | number | 0.9916260869565218 |
 | avail_med_0.5 | number | 0.9956521739130435 |
-| avail_mean_0.5 | number | 0.9921434782608697 |
-| avail_base_mean_0.5 | number | 0.9921826086956522 |
+| avail_mean_0.5 | number | 0.9915710144927536 |
+| avail_base_mean_0.5 | number | 0.9916260869565218 |
 | avail_med_1 | number | 0.9956521739130435 |
-| avail_mean_1 | number | 0.9921434782608697 |
-| avail_base_mean_1 | number | 0.9921826086956522 |
+| avail_mean_1 | number | 0.9915710144927536 |
+| avail_base_mean_1 | number | 0.9916260869565218 |
 | avail_med_2 | number | 0.9956521739130435 |
-| avail_mean_2 | number | 0.9921434782608697 |
-| avail_base_mean_2 | number | 0.9921826086956522 |
+| avail_mean_2 | number | 0.9915710144927536 |
+| avail_base_mean_2 | number | 0.9916260869565218 |
 | avail_med_5 | number | 0.9956521739130435 |
-| avail_mean_5 | number | 0.9921434782608697 |
-| avail_base_mean_5 | number | 0.9921826086956522 |
+| avail_mean_5 | number | 0.9915710144927536 |
+| avail_base_mean_5 | number | 0.9916260869565218 |
 | avail_med_10 | number | 0.9956521739130435 |
-| avail_mean_10 | number | 0.9921434782608697 |
-| avail_base_mean_10 | number | 0.9921826086956522 |
-| teardowns_per_run_mean | number | 0.144 |
-| handshakes_per_run_mean | number | 3.086 |
-| share_runs_with_teardown | number | 0.135 |
+| avail_mean_10 | number | 0.9915710144927536 |
+| avail_base_mean_10 | number | 0.9916260869565218 |
+| teardowns_per_run_mean | number | 0.153 |
+| handshakes_per_run_mean | number | 3.085 |
+| share_runs_with_teardown | number | 0.143 |
 | over_rekey_interval_s | number | 60.0 |
 | over_outage_rate_per_h | number | 0.0 |
 | over_outage_mean_s | number | 2.0 |
 | over_clock_hz | number | 480000000.0 |
 | over_wait_state_factor | number | 1.5 |
 | over_mac_cycles | number | 2000.0 |
+
+### `planner/results/flightstack_free_used.csv`
+
+9 columns.
+
+| column | type | example |
+|---|---|---|
+| board | text | Holybro Pixhawk 6X (FMUv6X) |
+| stacks | text | px4 |
+| free_flash_bytes | number | 6008 |
+| free_ram_static_bytes | number | 912836 |
+| free_flash_kb | text | 751/125 |
+| free_ram_kb | text | 228209/250 |
+| free_flash_bytes_larger_stack | number | 6008 |
+| free_ram_static_bytes_larger_stack | number | 912836 |
+| label | text | host measured |
+
+### `planner/results/flightstack_mc_draws.csv`
+
+7 columns.
+
+| column | type | example |
+|---|---|---|
+| draw | number | 0 |
+| seed | number | 20262020 |
+| thresholds | text | stack_asm |
+| hr_share_assumed_free | number | 0.1860 |
+| hr_share_measured_free | number | 0.3990 |
+| hr_share_larger_stack_free | number | 0.2870 |
+| label | text | estimated |
+
+### `planner/results/flightstack_mc_summary.csv`
+
+21 columns.
+
+| column | type | example |
+|---|---|---|
+| thresholds | text | stack_asm |
+| draws | number | 200 |
+| assumed_median | number | 0.1860 |
+| assumed_ci_low | number | 0.1860 |
+| assumed_ci_high | number | 0.1860 |
+| measured_median | number | 0.3980 |
+| measured_ci_low | number | 0.3960 |
+| measured_ci_high | number | 0.4000 |
+| change_median | number | 0.2120 |
+| change_ci_low | number | 0.2105 |
+| change_ci_high | number | 0.2140 |
+| larger_stack_median | number | 0.2940 |
+| larger_stack_ci_low | number | 0.2920 |
+| larger_stack_ci_high | number | 0.2960 |
+| larger_stack_change | number | 0.1080 |
+| larger_stack_change_ci_low | number | 0.1060 |
+| larger_stack_change_ci_high | number | 0.1100 |
+| measured_boards | number | 7 |
+| seed | number | 20261020 |
+| diff_seed | number | 20261021 |
+| label | text | estimated |
+
+### `planner/results/flightstack_per_board.csv`
+
+12 columns.
+
+| column | type | example |
+|---|---|---|
+| scenario | text | stack_asm |
+| free_memory | text | assumed |
+| board | text | Holybro Pixhawk 6X (FMUv6X) |
+| measured | text | yes |
+| devices | number | 114 |
+| FIRMWARE_UPDATE | number | 53 |
+| HYBRID | number | 30 |
+| HARDWARE_REPLACEMENT | number | 15 |
+| NO_ACTION_BEFORE_RETIREMENT | number | 11 |
+| UNKNOWN | number | 5 |
+| seed | number | 20261020 |
+| label | text | estimated |
+
+### `planner/results/flightstack_thresholds.csv`
+
+6 columns.
+
+| column | type | example |
+|---|---|---|
+| scenario | text | stack_asm |
+| sig_flash_kb | number | 30 |
+| sig_ram_kb | number | 7 |
+| kem_flash_kb | number | 14 |
+| kem_ram_kb | number | 9 |
+| label | text | derived from published |
 
 ### `planner/results/hardware_classes.csv`
 
@@ -1864,6 +1956,50 @@ Labels used across the repository: published, host measured, emulated, estimated
 | changed_high | number | 1 |
 | share_high | number | 0.1000 |
 | swing | number | 0.1000 |
+
+### `rtlsim/results/core_spread.csv`
+
+10 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | RTL simulated |
+| parameter_set | text | ML-DSA-44 |
+| operation | text | keygen |
+| n_cores | number | 2 |
+| cores | text | cv32e40p+ibex |
+| cycles_median_ibex | number | 5380557 |
+| cycles_median_cv32e40p | number | 3789491 |
+| max_over_min | number | 1.42 |
+| slowest_core | text | ibex |
+| fastest_core | text | cv32e40p |
+
+### `rtlsim/results/cv32e40p_cycles.csv`
+
+20 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | RTL simulated |
+| core | text | OpenHW Group CV32E40P (RTL, Verilator) |
+| core_configuration | text | CV32E40P example testbench (example_tb/core), tb_top default... |
+| memory_model | text | example testbench RAM (mm_ram with dp_ram), 4 MB (RAM_ADDR_W... |
+| compiler | text | riscv64-unknown-elf-gcc (13.2.0-11ubuntu1+12) 13.2.0 |
+| compiler_flags | text | -march=rv32imc_zicsr -mabi=ilp32 -O3 -fomit-frame-pointer -s... |
+| library | text | mlkem-native |
+| library_commit | text | d1b2fe782888bdb761a50336012923180be7f502 v2.0.0 |
+| backend | text | portable C |
+| parameter_set | text | ML-KEM-512 |
+| operation | text | keygen |
+| statistic | text | min |
+| cycles | number | 962160 |
+| n_runs | number | 5 |
+| median_ci95_low | number | 962160.0 |
+| median_ci95_high | number | 962856.0 |
+| correctness_check | text | keygen returned success: 5/5 pass |
+| log_complete | text | True |
+| seed | number | 20261020 |
+| timer_overhead_subtracted_cycles | number | 13 |
 
 ### `rtlsim/results/ibex_cycles.csv`
 
