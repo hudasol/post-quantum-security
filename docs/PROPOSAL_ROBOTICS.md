@@ -35,13 +35,17 @@ Read from `formal/results/proverif_results.csv` (label: modelled; abstract perfe
 | Firmware: no downgrade to an older signed image (D1) | counterexample | F3: signed version and a monotonic counter in protected storage | proved |
 | Published MAVLink timestamp rule with gaps (C1) | cannot be proved (non injective form proved) | modelling limit, not a design finding; other models use the next sequence number | same as stated |
 
-### 2.2 Software in the loop comparison (to be filled by the lead)
+### 2.2 Software in the loop comparison
 
-Placeholder. This section will hold the comparison of the session layer in software in the loop (label: SITL measured) with the mission study (label: estimated): configurations, missions per configuration, seeds, added latency per command, handshake time and the error against the mission study. No number is stated here until the result files exist.
+ArduPilot Copter 4.7.2 flew scripted missions in software in the loop behind an emulated SiK class link with one outage per mission (`docs/SITL_STUDY.md`; label SITL measured, compared with the mission study, label estimated). Configurations 3 and 4 carry the bytes and published compute delays of their designs; they do not execute cryptography.
 
-| Configuration | Missions | Added latency per command | Handshake time | Error against the mission study |
+| Configuration | Missions completed | Added round trip latency per command, ms | Commands acknowledged within 0.5 s, with outages | Mission study at the same outage rate |
 |---|---|---|---|---|
-| to be filled | to be filled | to be filled | to be filled | to be filled |
+| MAVLink 2 signing as shipped | 20 | 3.7 | 0.926 | 0.921 |
+| Hybrid session with F1 | 20 | 3.9 | 0.914 | 0.916 |
+| ML-DSA-44 signature per command | 20 | 495.6 | 0.419 | 0.730 |
+
+The hybrid session behaves as the mission study predicts; a signature per command is worse than predicted once the acknowledgement round trip is counted, and the flight stack discarded 16 signed commands that arrived after a newer frame, which supports the strict sequence rule of the formal proofs.
 
 ## 3. Aim, hypotheses and measurable success criteria
 

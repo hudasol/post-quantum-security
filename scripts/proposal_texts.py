@@ -43,6 +43,19 @@ def table(header, body):
     return "\n".join(out)
 
 
+def sitl_numbers(c):
+    ss, sc, cm = "sitl/results/summary.csv", "sitl/results/comparison.csv", "sitl/results/commands.csv"
+    q = 'profile == "sik" and config == "{k}" and metric == "{m}"'
+    out = {}
+    for key, k in (("sig", "signing"), ("hyb", "hybrid"), ("pq", "pqsig")):
+        out[f"sitl_{key}_n"] = c(f"sitl_{key}_n", ss, "value", q.format(k=k, m="missions_completed"), fmt="{:.0f}", label="SITL measured")
+        out[f"sitl_{key}_lat"] = c(f"sitl_{key}_lat", ss, "value", q.format(k=k, m="added_latency_rt_ms"), fmt="{:.1f}", label="SITL measured")
+        out[f"sitl_{key}_av"] = c(f"sitl_{key}_av", ss, "value", q.format(k=k, m="availability_rt_all"), fmt="{:.3f}", label="SITL measured")
+        out[f"sitl_{key}_av_st"] = c(f"sitl_{key}_av_st", sc, "study_estimated", q.format(k=k, m="availability_rt_all"), fmt="{:.3f}", label="estimated")
+    out["sitl_drop"] = c("sitl_drop", cm, "dropped", 'config == "signing" and dropped == "not_acknowledged_by_vehicle"', "count", "{:.0f}", label="SITL measured")
+    return out
+
+
 def numbers(claim, doc):
     es = "cyclemodel/results/error_summary.csv"
     dg = "linksim/results/diagnosis_v4.csv"
@@ -68,6 +81,7 @@ def numbers(claim, doc):
         "m_c_lat": c("m_c_lat", MB, "added_latency_ms_median", qm.format(v="drone", a="C", l="sik"), fmt="{:.0f}", label="estimated"),
         "m_b_lat": c("m_b_lat", MB, "added_latency_ms_median", qm.format(v="drone", a="B", l="sik"), fmt="{:.1f}", label="estimated"),
         "m_b_hs": c("m_b_hs", MB, "first_session_s_median", qm.format(v="drone", a="B", l="sik"), fmt="{:.2f}", label="estimated"),
+        **(sitl_numbers(c) if doc.endswith("PROPOSAL_ROBOTICS.md") else {}),
         "deadline": c("deadline", MB, "deadline_s", qm.format(v="drone", a="B", l="sik"), fmt="{:.1f}", label="estimated"),
         "d_factor": c("d_factor", dg, "factor_below_low_after", 'step == "6"', fmt="{:.1f}", label="modelled"),
         "boot_sw": c("boot_sw", vt, "total_ms_estimated", qb.format(h="software SHA-256"), fmt="{:.0f}", label="estimated"),
@@ -220,13 +234,17 @@ Read from `{FORMAL}` (label: modelled; abstract perfect primitives under a Dolev
 
 {formal_table()}
 
-### 2.2 Software in the loop comparison (to be filled by the lead)
+### 2.2 Software in the loop comparison
 
-Placeholder. This section will hold the comparison of the session layer in software in the loop (label: SITL measured) with the mission study (label: estimated): configurations, missions per configuration, seeds, added latency per command, handshake time and the error against the mission study. No number is stated here until the result files exist.
+ArduPilot Copter 4.7.2 flew scripted missions in software in the loop behind an emulated SiK class link with one outage per mission (`docs/SITL_STUDY.md`; label SITL measured, compared with the mission study, label estimated). Configurations 3 and 4 carry the bytes and published compute delays of their designs; they do not execute cryptography.
 
-| Configuration | Missions | Added latency per command | Handshake time | Error against the mission study |
+| Configuration | Missions completed | Added round trip latency per command, ms | Commands acknowledged within 0.5 s, with outages | Mission study at the same outage rate |
 |---|---|---|---|---|
-| to be filled | to be filled | to be filled | to be filled | to be filled |
+| MAVLink 2 signing as shipped | {n['sitl_sig_n']} | {n['sitl_sig_lat']} | {n['sitl_sig_av']} | {n['sitl_sig_av_st']} |
+| Hybrid session with F1 | {n['sitl_hyb_n']} | {n['sitl_hyb_lat']} | {n['sitl_hyb_av']} | {n['sitl_hyb_av_st']} |
+| ML-DSA-44 signature per command | {n['sitl_pq_n']} | {n['sitl_pq_lat']} | {n['sitl_pq_av']} | {n['sitl_pq_av_st']} |
+
+The hybrid session behaves as the mission study predicts; a signature per command is worse than predicted once the acknowledgement round trip is counted, and the flight stack discarded {n['sitl_drop']} signed commands that arrived after a newer frame, which supports the strict sequence rule of the formal proofs.
 
 ## 3. Aim, hypotheses and measurable success criteria
 
