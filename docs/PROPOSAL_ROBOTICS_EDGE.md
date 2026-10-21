@@ -14,7 +14,7 @@ Public facts that may make this work relevant are recorded, with their sources, 
 
 ## What already exists
 
-- 1,562 published rows with provenance, every new row read by two independent readers.
+- 1,530 published rows with provenance, every new row read by two independent readers.
 - Flight stack memory from 10 real builds (host measured): default PX4 builds leave 6.0 to 45.9 kB of flash free, and the fleet's median hardware replacement share rises from 0.201 to 0.300 once measured memory replaces the assumption (estimated).
 - ns-3 explains the 802.15.4 gap by sufficient causes: one hop takes 5.72 s in ns-3 against a published 30 to 60 s, and 3 hops, 16 loaded neighbours or a cited backoff setting each bring it into range (simulated (network)).
 - Formal verification of the session and update design: 39 of 57 queries proved, and design findings F1 to F3 (vehicle authentication, replay after a power cycle, firmware downgrade) fixed and proved (modelled).

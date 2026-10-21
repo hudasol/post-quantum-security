@@ -33,7 +33,7 @@ Hash check: the predictions file matches its registered SHA-256.
 | P25 | miss | Main unweighted fit: largest share compiler (50.1 percent), but compiler and statistic have overlapping intervals; the fit without the worst observed rows (worst observed rows excluded: main (variant as stated)) makes statistic the largest (36.9 percent), which meets the refutation clause. |
 | P26 | miss | Two readings of the registered metric: wrong in substance 7 of 425 (1.6 percent); differs verbatim 153 of 365 (41.9 percent). Both meet the refutation clause. |
 | P27 | hit | Largest total Sobol index for hybrid availability: outage_rate_per_h (0.55). |
-| P28 | hit | 234 new rows after double reading. |
+| P28 | hit | 202 new rows after double reading. |
 | P29 | miss | Rows with final FIPS 205 SLH-DSA cycle counts on a microcontroller: 0 (the rows found are of the FIPS 205 initial public draft on an accelerated FPGA prototype, which the registered question, final standard, excludes). |
 | P30 | hit | Staged rows with a wrong value before adjudication: 0 of the 234 rows whose values two readers could judge; 31 more rows had a value that fewer than two readers confirmed, so whether they hold a wrong value is unknown. Counting all of those as wrong would give 0.117. |
 | P31 | hit | Owens et al. Ed25519 verify at 168 MHz over 24 MHz: 760000 / 722000 = 1.053 (informed). |
