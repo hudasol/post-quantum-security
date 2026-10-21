@@ -29,4 +29,6 @@ Wording disagreements by field (before the third look; most are differences of p
 
 Fields a reader left blank because the source states them away from the cited location (for example a clock given in the body text) are counted as not at location, not as errors: 3190 field readings.
 
+Round 5 third look. Every remaining wording disagreement got a blind third reading (`stats/third_look_classify.py`, `docs/STATISTICS_V5.md` section 4). Staged wording differs verbatim from the source in 153 of 365 settled lines, but it contradicts the source in substance in 7 of 425 settled wording disagreements overall (1.6 percent, Wilson 95 percent interval 0.8 to 3.4 percent). This replaces the extrapolation in the limits paragraph above.
+
 Only confirmed and corrected rows enter `data/raw/S12_verified.csv` (`scripts/promote_s12.py`); single reader and blocked rows stay in staging with their reason in `data/verify5/row_status.csv`.
