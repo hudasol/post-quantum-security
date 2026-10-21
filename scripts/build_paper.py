@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build docs/PAPER.md and the round 4 proposals from the result files, and write the claims register.
+"""Build docs/PAPER.md (six page main part plus a supplementary section) and the proposals from the result files, and write the claims register.
 
 Every number placed in the paper comes from a call to `claim()`, which reads it from a result file
 with a pandas query and an aggregate, formats it, and records one row in data/claims_register.csv
@@ -18,6 +18,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 DOC = "docs/PAPER.md"
 CLAIMS = []
+WORDS_PER_PAGE = 900  # two column IEEE style page including figures (estimate used for the page budget)
 
 
 def claim(cid, source, column, query="", aggregate="value", fmt="{:,.0f}", scale=1.0, label="", doc=DOC):
@@ -50,7 +51,7 @@ def results_text():
     ev = "data/evidence.csv"
     L = []
     # RQ1 compute
-    L.append("### 4.1 RQ1: compute cost, and how well it can be predicted\n")
+    L.append("#### S1.1 RQ1: compute cost, and how well it can be predicted\n")
     L.append(
         f"Evidence. The table holds {claim('n_rows', ev, 'id', aggregate='count', label='published')} rows; "
         f"{claim('n_mcu_cycles', ev, 'cycles', 'device_class == \"mcu\" and cycles == cycles', 'count', label='published')} are microcontroller rows with a cycle count, "
@@ -67,7 +68,7 @@ def results_text():
         L.append("{{rtl_text}}\n")
     # RQ2 energy
     er = "energy/results/max_rates.csv"
-    L.append("### 4.2 RQ2: energy and CPU headroom\n")
+    L.append("#### S1.2 RQ2: energy and CPU headroom\n")
     L.append(
         "Energy per operation was estimated from published cycles and cited run currents of five parts and checked against published energy rows: "
         f"uncalibrated, the estimate is low by a median of {claim('en_uncal', 'energy/results/validation_split.csv', 'abs_pct_error_uncalibrated', 'set == \"validation\"', 'median', '{:.1f}', label='modelled')} percent on the held out rows; "
@@ -81,7 +82,7 @@ def results_text():
         "Energy per hour is small for every design; CPU time, not battery, is the binding budget, and the command rate is the input that matters most (Sobol indices in `energy/results/sobol.csv`).\n")
     # RQ3 links
     dg = "linksim/results/diagnosis_v4.csv"
-    L.append("### 4.3 RQ3: links and protocols\n")
+    L.append("#### S1.3 RQ3: links and protocols\n")
     L.append(
         "The link model was repaired one cited cause at a time and checked against published figures and closed forms (`docs/LINKSIM_STUDY.md` section 4.4). "
         "The LoRa time on air formula reproduces the published examples, but this is a weak check: only one of the four examples states every parameter, and for the other three the unstated settings were chosen after the fact because they reproduce the published value. Fragment counts agree with an independent count and the duty cycle wait equals its formula, an arithmetic check; stop and wait retransmissions in the event simulation agree with their closed form within Monte Carlo intervals, but selective repeat, which the protocol and mission studies use, is not checked. "
@@ -99,7 +100,7 @@ def results_text():
     # RQ4 boot
     vt = "bootchain/results/verify_time.csv"
     q = 'target == "Crazyflie 2.1 (STM32F405)" and image_bytes == 1000000 and scheme == "{s}" and hash == "{h}"'
-    L.append("### 4.4 RQ4: signed boot and update\n")
+    L.append("#### S1.4 RQ4: signed boot and update\n")
     _vt = pd.read_csv(ROOT / vt)
     _h = _vt[(_vt.target == "Crazyflie 2.1 (STM32F405)") & (_vt.image_bytes == 1000000) & (_vt.hash == "hardware HASH")]
     _hs = sorted(set(_h[_h.hash_ms_estimated >= _h.sig_ms_estimated * 0.95].scheme))
@@ -116,7 +117,7 @@ def results_text():
         "A fixed first stage root of trust that verifies only a classical signature cannot be changed by any of this; such devices need hardware replacement for signing migration.\n")
     # RQ5 fleets
     pm = "planner/results/profile_mc_summary.csv"
-    L.append("### 4.5 RQ5: fleet migration\n")
+    L.append("#### S1.5 RQ5: fleet migration\n")
     L.append(
         f"The round 3 synthetic fleet is reproduced exactly ({claim('syn_lo', pm, 'median', 'fleet == \"synthetic\" and thresholds == \"stack_asm\"', fmt='{:.3f}', label='estimated')} to "
         f"{claim('syn_hi', pm, 'median', 'fleet == \"synthetic\" and thresholds == \"reference_c\"', fmt='{:.3f}', label='estimated')} of devices need hardware replacement). "
@@ -130,7 +131,7 @@ def results_text():
     # RQ6 mission
     mb = "mission/results/base.csv"
     qm = 'vehicle == "{v}" and arch == "{a}" and link == "{l}"'
-    L.append("### 4.6 RQ6: mission level design\n")
+    L.append("#### S1.6 RQ6: mission level design\n")
     L.append(
         "In the mission simulation (1000 runs per configuration, `docs/MISSION_STUDY.md`), a classical session, a hybrid session and hash signed firmware with session keys keep the drone's control link available "
         f"about as often as an unauthenticated stream on a telemetry radio (mean over runs {claim('m_b_sik', mb, 'avail_mean', qm.format(v='drone', a='B', l='sik'), fmt='{:.3f}', label='estimated')} for the hybrid session): link outages, not authentication, set availability. "
@@ -179,34 +180,253 @@ def rtl_text():
             "(different library, compiler, instruction set and statistic, so only the order of magnitude is compared) and give a microcontroller class reference that no vendor setting can change.")
 
 
+def q(**kw):
+    """Build a pandas query of equalities from keyword arguments (strings quoted, numbers bare)."""
+    return " and ".join(f'{k} == "{v}"' if isinstance(v, str) else f"{k} == {v}" for k, v in kw.items())
+
+
+def rq_text():
+    """Short answer per research question for the six page main paper: answer, uncertainty, label."""
+    L = []
+    # RQ1 -------------------------------------------------------------------------------------
+    cb, lo = "stats/results/cycle_cluster_bootstrap.csv", "stats/results/cycle_lofo_summary.csv"
+    hv, cs = "data/meta/hierarchical_variance.csv", "rtlsim/results/core_spread.csv"
+    held = q(model="fitted", subset="test, all")
+    pooled = 'left_out_by == "{g}" and group == "all groups pooled" and model == "{m}"'
+    main_fit = 'weighting == "unweighted" and fit == "main (variant as stated)" and component == "{c}"'
+    worst_fit = 'weighting == "unweighted" and fit == "worst observed rows excluded: main (variant as stated)" and component == "{c}"'
+    L.append("### 4.1 RQ1: compute cost and its prediction\n")
+    L.append(
+        "Answer. Within the pqm4 code base, cycles can be predicted without a board to within a few percent, but the fitted model does not transfer to a scheme it has not seen, and published figures for one operation spread mainly with the statistic and compiler they report. "
+        f"Fitted on half of the matched published rows and tested on the other half (split by binary), the cycle model's median absolute error is {claim('p_cm_med', cb, 'median_abs_pct', held, fmt='{:.1f}', label='modelled')} percent; "
+        f"a cluster bootstrap by binary gives {claim('p_cm_lo', cb, 'median_abs_cluster_ci_lo', held, fmt='{:.1f}', label='modelled')} to {claim('p_cm_hi', cb, 'median_abs_cluster_ci_hi', held, fmt='{:.1f}', label='modelled')} percent, almost the round 4 interval, "
+        f"but the board prediction intervals widen by a factor of {claim('p_cm_width', 'stats/results/cycle_board_predictions_cluster.csv', 'width_ratio_cluster_to_round4', '', 'median', '{:.2f}', label='modelled')} when computed by cluster. "
+        f"Leaving out a whole implementation family gives {claim('p_lofo_fam', lo, 'median_abs_pct', pooled.format(g='implementation family', m='fitted'), fmt='{:.1f}', label='modelled')} percent, and leaving out a whole scheme "
+        f"{claim('p_lofo_scheme', lo, 'median_abs_pct', pooled.format(g='scheme', m='fitted'), fmt='{:.1f}', label='modelled')} percent (cluster interval {claim('p_lofo_scheme_lo', lo, 'median_abs_cluster_ci_lo', pooled.format(g='scheme', m='fitted'), fmt='{:.1f}', label='modelled')} to "
+        f"{claim('p_lofo_scheme_hi', lo, 'median_abs_cluster_ci_hi', pooled.format(g='scheme', m='fitted'), fmt='{:.1f}', label='modelled')}, worst {claim('p_lofo_scheme_worst', lo, 'worst_abs_pct', pooled.format(g='scheme', m='fitted'), fmt='{:.1f}', label='modelled')}); "
+        f"a reduced four feature model transfers better ({claim('p_lofo_scheme_red', lo, 'median_abs_pct', pooled.format(g='scheme', m='reduced'), fmt='{:.1f}', label='modelled')} percent). Figure 1 shows all five designs. "
+        "Signing remains the hardest operation because its cost varies from message to message. Evidence: modelled, from emulated instruction traces and published cycle counts.\n")
+    L.append("![Median absolute error of the cycle model on rows the fit did not see, by validation design, with cluster bootstrap 95 percent intervals (modelled). "
+             "Source: `stats/results/cycle_cluster_bootstrap.csv` and `stats/results/cycle_lofo_summary.csv`.](figures/paper/fig1_cycle_model_errors.png){width=100%}\n")
+    L.append(
+        "A hierarchical model of the published cycle counts (crossed random effects for implementation variant, statistic, compiler and source) attributes "
+        f"{claim('p_hm_stat', hv, 'share_within_cell', main_fit.format(c='statistic'), fmt='{:.1f}', scale=100, label='modelled')} percent of the within cell variance to the statistic and "
+        f"{claim('p_hm_comp', hv, 'share_within_cell', main_fit.format(c='compiler'), fmt='{:.1f}', scale=100, label='modelled')} percent to the compiler, but both intervals are wide and the fit is driven by the few rows that report a worst observed signing value: without them, "
+        f"the residual standard deviation falls from {claim('p_hm_res', hv, 'sd_log', main_fit.format(c='residual'), fmt='{:.2f}', label='modelled')} to "
+        f"{claim('p_hm_res_x', hv, 'sd_log', worst_fit.format(c='residual'), fmt='{:.2f}', label='modelled')} in log cycles and the variant share rises from "
+        f"{claim('p_hm_var', hv, 'share_within_cell', main_fit.format(c='variant'), fmt='{:.1f}', scale=100, label='modelled')} to "
+        f"{claim('p_hm_var_x', hv, 'share_within_cell', worst_fit.format(c='variant'), fmt='{:.1f}', scale=100, label='modelled')} percent. Both fits are reported; neither is the single truth. "
+        "As a reference that no vendor setting can change, the portable C code of mlkem-native and mldsa-native ran on cycle accurate simulations of two open RV32IMC cores (RTL simulated): "
+        f"ML-KEM-768 decapsulation takes {claim('p_rtl_ibex', cs, 'cycles_median_ibex', q(parameter_set='ML-KEM-768', operation='decaps'), label='RTL simulated')} cycles on Ibex and "
+        f"{claim('p_rtl_cv', cs, 'cycles_median_cv32e40p', q(parameter_set='ML-KEM-768', operation='decaps'), label='RTL simulated')} on CV32E40P, which is the faster core in "
+        f"{claim('p_rtl_nfast', cs, 'fastest_core', 'fastest_core == \"cv32e40p\"', 'count', '{:.0f}', label='RTL simulated')} of {claim('p_rtl_n', cs, 'fastest_core', '', 'count', '{:.0f}', label='RTL simulated')} operations, by a factor of "
+        f"{claim('p_rtl_lo', cs, 'max_over_min', '', 'min', '{:.2f}', label='RTL simulated')} to {claim('p_rtl_hi', cs, 'max_over_min', '', 'max', '{:.2f}', label='RTL simulated')}. "
+        "These are simulations of core designs with memory without wait states, not measurements of silicon.\n")
+    # RQ2 -------------------------------------------------------------------------------------
+    er, e2 = "energy/results/max_rates.csv", "stats/results/e2e_mc_summary.csv"
+    sob = "stats/results/e2e_sobol.csv"
+    cf = 'target == "Crazyflie 2.1" and design == "{d}"'
+    L.append("### 4.2 RQ2: energy and CPU headroom\n")
+    L.append(
+        "Answer. CPU time, not battery energy, is the binding budget. "
+        f"At 20 percent CPU headroom a 168 MHz Cortex-M4 flight controller can verify about {claim('p_rate_mldsa', er, 'msgs_per_s_at_20pct_estimated', cf.format(d='ML-DSA-44'), fmt='{:.1f}', label='estimated')} ML-DSA-44 signatures per second against about "
+        f"{claim('p_rate_mac', er, 'msgs_per_s_at_20pct_estimated', cf.format(d='HMAC-SHA256 session'), fmt='{:,.0f}', label='estimated')} messages under a symmetric MAC session (estimated). "
+        f"Verifying a 1 MB firmware image costs a median of {claim('p_fw_mj', e2, 'median', 'output == \"firmware_verify_1mb_energy_mj\"', fmt='{:.1f}', label='modelled')} mJ "
+        f"(2.5 to 97.5 percentile {claim('p_fw_mj_lo', e2, 'p2_5', 'output == \"firmware_verify_1mb_energy_mj\"', fmt='{:.1f}', label='modelled')} to {claim('p_fw_mj_hi', e2, 'p97_5', 'output == \"firmware_verify_1mb_energy_mj\"', fmt='{:.1f}', label='modelled')}) in the end to end chain, "
+        f"and the datasheet current per MHz carries most of that range (total Sobol index {claim('p_sob_ua', sob, 'ST', 'output == \"firmware_verify_1mb_energy_mj\" and input == \"ua_per_mhz\"', fmt='{:.2f}', label='modelled')}). "
+        f"Calibrated on one board and one source, published energy is {claim('p_en_k', 'energy/results/validation_split.csv', 'ratio_published_over_estimated', 'set == \"calibration\"', 'median', '{:.2f}', label='modelled')} times the uncalibrated estimate, so absolute energies are likely low by a similar factor; rates depend only on cycles. Evidence: estimated and modelled.\n")
+    # RQ3 -------------------------------------------------------------------------------------
+    gs, sr = "netsim/results/gap_sweep.csv", "netsim/results/sr_closed_form.csv"
+    cell = 'cell == "{c}"'
+    pg = "linksim/results/protocols_grid.csv"
+    hs = 'scenario == "ttfam" and variant == "hybrid" and protocol == "mavlink2_pq" and loss == 0.0 and link == "{l}"'
+    L.append("### 4.3 RQ3: links and protocols\n")
+    L.append(
+        "Answer. On telemetry class radios a hybrid handshake costs seconds once per session; on IEEE 802.15.4 meshes, transfer times depend on settings that published figures do not state, and our link model is optimistic there. "
+        f"The protocol simulation (1000 seeded trials per cell) gives a median time to the first authenticated command of {claim('p_hs_sik', pg, 'wall_median', hs.format(l='sik'), fmt='{:.2f}', label='modelled')} s for the MAVLink style hybrid profile on a telemetry radio without loss, "
+        f"{claim('p_hs_154', pg, 'wall_median', hs.format(l='ieee802154'), fmt='{:.2f}', label='modelled')} s on one 802.15.4 hop and {claim('p_hs_dr5', pg, 'wall_median', hs.format(l='lora_dr5'), fmt='{:,.0f}', label='modelled')} s on LoRaWAN DR5, where the duty cycle dominates (modelled). "
+        f"For a 50 kB transfer over one 802.15.4 hop with ns-3 3.48 defaults, ns-3 gives {claim('p_ns_base', gs, 'time_mean_s_simulated_network', cell.format(c='base_frame'), fmt='{:.2f}', label='simulated (network)')} s (simulated (network)) and linksim "
+        f"{claim('p_ls_base', gs, 'time_s_modelled', cell.format(c='base_frame'), fmt='{:.2f}', label='modelled')} s (modelled), against a published "
+        f"{claim('p_pub_lo', gs, 'range_low_s_published', cell.format(c='base_frame'), fmt='{:.0f}', label='published')} to {claim('p_pub_hi', gs, 'range_high_s_published', cell.format(c='base_frame'), fmt='{:.0f}', label='published')} s. "
+        f"Three single causes each bring ns-3 into that range (Figure 2): a backoff exponent of 8, a cited and allowed setting ({claim('p_ns_be8', gs, 'time_mean_s_simulated_network', cell.format(c='minbe_8'), fmt='{:.1f}', label='simulated (network)')} s); "
+        f"3 hops ({claim('p_ns_h3', gs, 'time_mean_s_simulated_network', cell.format(c='hops_3'), fmt='{:.1f}', label='simulated (network)')} s); or 16 neighbours sending ({claim('p_ns_bg16', gs, 'time_mean_s_simulated_network', cell.format(c='bg_16'), fmt='{:.1f}', label='simulated (network)')} s). "
+        "The source states none of these settings, so they are sufficient causes in simulation, not the proven cause. "
+        f"ns-3 also shows that linksim's store and forward over hops is optimistic: at 3 hops linksim gives {claim('p_ls_h3', gs, 'time_s_modelled', cell.format(c='hops_3'), fmt='{:.1f}', label='modelled')} s, because frames of different hops contend, which linksim does not model. "
+        f"Of {claim('p_ns_runs', 'netsim/results/lrwpan_runs.csv', 'completed', '', 'count', '{:.0f}', label='simulated (network)')} ns-3 runs, {claim('p_ns_stuck', 'netsim/results/lrwpan_runs.csv', 'completed', 'completed == 0', 'count', '{:.0f}', label='simulated (network)')} did not complete and are excluded from the verdict. "
+        f"The selective repeat check against the closed form 1/(1-P), on its first registered run, placed {claim('p_sr_in', sr, 'inside', 'role == \"pre set check\" and inside == True', 'count', '{:.0f}', label='modelled')} of "
+        f"{claim('p_sr_n', sr, 'inside', 'role == \"pre set check\"', 'count', '{:.0f}', label='modelled')} loss rates inside their 95 percent interval; the miss at P = 0.3 did not recur in ten follow up seed blocks added afterwards and labelled as such.\n")
+    L.append("![Time to transfer 50 kB over IEEE 802.15.4 for one hop with defaults and for each single cause that reaches the published range: linksim (modelled) beside ns-3 (simulated (network), mean and 95 percent interval), with the published range shaded. "
+             "Source: `netsim/results/gap_sweep.csv`.](figures/paper/fig2_lrwpan_causes.png){width=100%}\n")
+    # RQ4 -------------------------------------------------------------------------------------
+    vt = "bootchain/results/verify_time.csv"
+    qb = 'target == "Crazyflie 2.1 (STM32F405)" and image_bytes == 1000000 and scheme == "{s}" and hash == "{h}"'
+    L.append("### 4.4 RQ4: signed boot and update\n")
+    L.append(
+        "Answer. For firmware, the signature scheme matters less than image size and hash hardware, and a version counter is required. "
+        f"For a 1 MB image on a 168 MHz Cortex-M4 with software SHA-256, verification takes about {claim('p_b_mldsa', vt, 'total_ms_estimated', qb.format(s='ML-DSA-44', h='software SHA-256'), fmt='{:.0f}', label='estimated')} ms with ML-DSA-44 and "
+        f"{claim('p_b_lms', vt, 'total_ms_estimated', qb.format(s='LMS', h='software SHA-256'), fmt='{:.0f}', label='estimated')} ms with LMS, of which hashing is {claim('p_b_hash', vt, 'hash_ms_estimated', qb.format(s='LMS', h='software SHA-256'), fmt='{:.0f}', label='estimated')} ms (estimated). "
+        f"Across the end to end ranges the median is {claim('p_fw_ms', e2, 'median', 'output == \"firmware_verify_1mb_ms\"', fmt='{:.0f}', label='modelled')} ms "
+        f"({claim('p_fw_ms_lo', e2, 'p2_5', 'output == \"firmware_verify_1mb_ms\"', fmt='{:.0f}', label='modelled')} to {claim('p_fw_ms_hi', e2, 'p97_5', 'output == \"firmware_verify_1mb_ms\"', fmt='{:.0f}', label='modelled')}), "
+        f"ranked by clock (total Sobol index {claim('p_sob_clk', sob, 'ST', 'output == \"firmware_verify_1mb_ms\" and input == \"clock_mhz\"', fmt='{:.2f}', label='modelled')}) and hash cost per byte "
+        f"({claim('p_sob_cpb', sob, 'ST', 'output == \"firmware_verify_1mb_ms\" and input == \"sha256_cpb\"', fmt='{:.2f}', label='modelled')}); the implementation factor of the signature does not register. "
+        "Against published bootloader timings the calibrated check rests on three rows, so these are estimates of order. Formal verification (Section 4.6) found that a signature without a signed version and a monotonic counter accepts a downgrade (F3). "
+        "A fixed first stage that verifies only a classical signature cannot be migrated; such devices need hardware replacement for signing migration.\n")
+    # RQ5 -------------------------------------------------------------------------------------
+    fm, fs = "data/flightstack_memory.csv", "planner/results/flightstack_mc_summary.csv"
+    L.append("### 4.5 RQ5: fleet migration\n")
+    L.append(
+        "Answer, a correction of round 4. With measured flight stack memory, a larger share of devices needs hardware replacement than round 4 reported. "
+        f"Default builds of PX4 v1.17.0 and ArduPilot Copter-4.7.2 succeeded for {claim('p_fs_builds', fm, 'build_status', 'build_status == \"built\"', 'count', '{:.0f}', label='host measured')} targets on "
+        f"{claim('p_fs_boards', fs, 'measured_boards', 'thresholds == \"uncertain\"', fmt='{:.0f}', label='estimated')} board classes (host measured from linker output); PX4 leaves as little as "
+        f"{claim('p_fs_minfree', fm, 'flash_free_bytes', 'stack == \"px4\"', 'min', '{:,.0f}', label='host measured')} B of flash free. "
+        f"With these values in place of the round 4 assumption, the median share needing hardware replacement rises from {claim('p_fl_a_stack', fs, 'assumed_median', 'thresholds == \"stack_asm\"', fmt='{:.3f}', label='estimated')} to "
+        f"{claim('p_fl_m_stack', fs, 'measured_median', 'thresholds == \"stack_asm\"', fmt='{:.3f}', label='estimated')} under stack optimised thresholds and from "
+        f"{claim('p_fl_a_unc', fs, 'assumed_median', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')} to {claim('p_fl_m_unc', fs, 'measured_median', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')} "
+        f"(interval {claim('p_fl_m_unc_lo', fs, 'measured_ci_low', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')} to {claim('p_fl_m_unc_hi', fs, 'measured_ci_high', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')}) "
+        f"under thresholds drawn from published rows (Figure 3). Round 4's statement that the share stays near one fifth no longer holds. Using the larger of the two stacks' free memory per board, the uncertain scenario gives "
+        f"{claim('p_fl_large', fs, 'larger_stack_median', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')}. Free RAM is an upper bound because heap use at run time is not visible in a build. Evidence: estimated, from host measured memory.\n")
+    L.append("![Share of fleet devices that need hardware replacement, median with interval over 200 draws, under the round 4 assumed free memory and with measured flight stack memory for seven boards (estimated). "
+             "Source: `planner/results/flightstack_mc_summary.csv`.](figures/paper/fig3_fleet_replacement.png){width=100%}\n")
+    # RQ6 -------------------------------------------------------------------------------------
+    pv, mb = "formal/results/proverif_results.csv", "mission/results/base.csv"
+    qm = 'vehicle == "{v}" and arch == "{a}" and link == "{l}"'
+    L.append("### 4.6 RQ6: a feasible architecture\n")
+    L.append(
+        "Answer. Hash based signatures (LMS) with a signed version and a monotonic counter for firmware; a hybrid key establishment in which both sides sign, followed by a symmetric MAC session, for commands on telemetry class links or faster; and no per command signatures on streamed commands. "
+        f"In the mission simulation (1000 runs per configuration) the hybrid session keeps the drone's command link available about as often as an unauthenticated stream on a telemetry radio (mean {claim('p_m_b', mb, 'avail_mean', qm.format(v='drone', a='B', l='sik'), fmt='{:.3f}', label='estimated')} against "
+        f"{claim('p_m_b_base', mb, 'avail_base_mean_0.5', qm.format(v='drone', a='B', l='sik'), fmt='{:.3f}', label='estimated')} without authentication, at a 0.5 s deadline), "
+        f"while a post quantum signature on every command adds about {claim('p_m_c_lat', mb, 'added_latency_ms_median', qm.format(v='drone', a='C', l='sik'), fmt='{:.0f}', label='estimated')} ms per command and lowers availability to "
+        f"{claim('p_m_c', mb, 'avail_mean', qm.format(v='drone', a='C', l='sik'), fmt='{:.3f}', label='estimated')}. Across the end to end ranges the hybrid availability has median "
+        f"{claim('p_e2e_av', e2, 'median', 'output == \"hybrid_availability_sik_drone\"', fmt='{:.3f}', label='modelled')} ({claim('p_e2e_av_lo', e2, 'p2_5', 'output == \"hybrid_availability_sik_drone\"', fmt='{:.3f}', label='modelled')} to "
+        f"{claim('p_e2e_av_hi', e2, 'p97_5', 'output == \"hybrid_availability_sik_drone\"', fmt='{:.3f}', label='modelled')}), and the outage rate and mean outage length rank first and second (total Sobol indices "
+        f"{claim('p_sob_or', sob, 'ST', 'output == \"hybrid_availability_sik_drone\" and input == \"outage_rate_per_h\"', fmt='{:.2f}', label='modelled')} and "
+        f"{claim('p_sob_om', sob, 'ST', 'output == \"hybrid_availability_sik_drone\" and input == \"outage_mean_s\"', fmt='{:.2f}', label='modelled')}): link outages, not cryptography, set availability.\n")
+    L.append(
+        f"ProVerif 2.05 checked {claim('p_pv_q', pv, 'property_id', '', 'count', '{:.0f}', label='modelled')} queries in {claim('p_pv_m', pv, 'model', '', 'nunique', '{:.0f}', label='modelled')} models of the stated designs, the changed designs and deliberate controls (Table 1). "
+        "Three findings changed the design and were adopted in the reference architecture: in the stated session only the ground station signs, so the vehicle is not authenticated to it (F1; fixed by a vehicle ML-DSA-44 signature over the transcript and key confirmation, which adds a fourth flight to the handshake); "
+        "the provisioned key fallback accepts a recorded command again after a power cycle (F2; fixed by deriving a session key from fresh nonces); and firmware without a signed version and counter accepts a downgrade (F3). "
+        "The fallback's lack of forward secrecy is inherent and documented. These are results under the Dolev Yao model with abstract primitives, not statements about an implementation. Evidence: modelled.\n")
+    L.append(formal_table() + "\n")
+    L.append(
+        "Board experiment. A board kit builds images for an STM32L4R5 (Cortex-M4) and an STM32L552 (Cortex-M33) board, now with an option that switches the caches off; "
+        f"{claim('p_bk_n', 'bench/board_kit/predictions_v5_board.csv', 'id', 'cache_pass == \"off\"', 'count', '{:.0f}', label='modelled')} cycle predictions for the caches off pass were registered before any session, all out of sample. "
+        "The option is checked only by disassembly of the images and, for the L552, an emulator that logs the register write but does not model a cache, and the Cortex-M33 rows apply Cortex-M4 costs, an unsourced transfer assumption.\n")
+    L.append("### 4.7 Software in the loop (placeholder)\n")
+    L.append("[Placeholder for the software in the loop results of the two pinned flight stacks with the security architectures (SITL measured). To be filled from `docs/SITL_STUDY.md` when that package is merged. No number is stated here.]\n")
+    return "\n".join(L)
+
+
+def formal_table():
+    pv = "formal/results/proverif_results.csv"
+    rows = [("proved", "property holds for unbounded sessions"),
+            ("counterexample", "attack trace found: stated designs (F1 to F3) and deliberate controls with broken components"),
+            ("cannot be proved", "MAVLink timestamp rule with gaps; its weaker non injective form holds")]
+    t = ["Table 1. ProVerif results by outcome (modelled). Source: `formal/results/proverif_results.csv`.\n", "| Outcome | Queries | Meaning |", "|---|---|---|"]
+    for r, meaning in rows:
+        t.append(f"| {r} | {claim('p_pv_' + r.replace(' ', '_'), pv, 'result', f'result == \"{r}\"', 'count', '{:.0f}', label='modelled')} | {meaning} |")
+    return "\n".join(t)
+
+
+def threats_text():
+    return (
+        "1. Nothing was measured on a microcontroller. Every cycle, energy and timing figure is published, emulated, RTL simulated, simulated (network), estimated or modelled.\n"
+        "2. The board kit's caches off option is untested on silicon: the emulator logs the register write but does not model a cache, and no free emulator models the STM32L4R5.\n"
+        "3. The Cortex-M33 board predictions apply Cortex-M4 instruction costs, a transfer assumption without a source.\n"
+        "4. The cycle model is fitted and tested within one code base; it does not transfer to an unseen scheme (Figure 1), and its external check on another library and core rests on few rows.\n"
+        "5. The hierarchical meta analysis is driven by the few rows that report a worst observed value; statistic and compiler are confounded with source and have wide intervals, so both fits are reported.\n"
+        "6. Flight logs could not be used: the PX4 log sites disallow automated access in their robots rules and no reuse licence was found, so mission traffic is synthetic.\n"
+        "7. Free RAM after a flight stack build is an upper bound, since heap use at run time is not visible; fleet counts are synthetic, and one board definition states more flash than the reference profile.\n"
+        "8. The ns-3 causes of the 802.15.4 gap are sufficient in simulation, not proven: the published figure states no hop count, load or backoff setting. Hop count, spacing and background traffic are assumptions, and ns-3 is a simulator, not a radio.\n"
+        "9. The committed ns-3 runs used the earlier three flight handshake; the round 3 link study and its design notes still describe three flights. The mission, protocol, energy and end to end studies use the four flight handshake of finding F1.\n"
+        "10. Energy rests on datasheet currents and one calibration source; the end to end chain ran 20 missions per evaluation, not 1000.\n"
+        "11. Formal results hold under the Dolev Yao model with abstract perfect primitives, one identity per side, without the rekey grace period or the LMS signer state; they say nothing about an implementation.\n"
+        "12. The match rules for the third look at wording disagreements were written after a first literal comparison was seen; ambiguous lines stay unsettled and are listed for the author.\n"
+        "13. IEEE Xplore and the ACM Digital Library could not be searched (their search pages could not be fetched), and Semantic Scholar refused; the systematic search under covers those indexes.\n"
+        "14. The selective repeat follow up blocks and the extra ns-3 runs were added after the first results; predictions are scored on the first, registered runs only.")
+
+
+def conclusion_text():
+    return (
+        "On the links small drones and ground robots use, the cost of post quantum authentication is a one time handshake if the design uses a session; per command signatures are the option that fails. "
+        "For firmware, hashing dominates unless the device has hash hardware, and a signed version with a counter is required. The fleet answer is set by how much memory the flight stack leaves free, and measuring it raised the replacement share well above the round 4 estimate. "
+        "A cycle model predicts within a code base but not across schemes, so migration decisions should rest on a measurement of the deployed code; the registered board session is the next step and can refute the model.")
+
+
+def method_reading():
+    ev, v6 = "data/evidence.csv", "data/verify6"
+    tl = "data/verify5/third_look_summary.csv"
+    sub = 'measure == "staging wrong in substance, all wording disagreements with a settled third look (round 4 sample of 60 and this round)"'
+    vf = 'status == "disagree" and field in ["cycles", "ram_bytes", "stack_bytes", "flash_or_code_bytes", "energy_uj", "key_or_sig_size_bytes", "value"]'
+    return (
+        f"In this round a systematic search staged {claim('p_s13_staged', 'data/raw/S13_staged.csv', 'id', '', 'count', '{:.0f}', label='published')} rows (stream S13); two readers who saw neither the staged values nor each other's sheet read every row, "
+        f"{claim('p_s13_valdis', v6 + '/summary.csv', 'field', vf, 'count', '{:.0f}', label='published')} value fields disagreed with staging, all "
+        f"{claim('p_s13_word', v6 + '/third_look_queue.csv', 'id', 'kind == \"wording\"', 'count', '{:.0f}', label='published')} wording disagreements got a third look, and "
+        f"{claim('p_s13_prom', ev, 'id', 'stream == \"S13\"', 'count', '{:.0f}', label='published')} rows were promoted (`docs/VERIFICATION6.md`). "
+        f"The {claim('p_tl_lines', tl, 'of', 'measure == \"lines staging_right\"', fmt='{:.0f}', label='published')} wording disagreements that round 4 had left without a third look were all read again by blind readers; "
+        f"over all settled wording disagreements staging was wrong in substance in {claim('p_tl_sub', tl, 'count', sub, fmt='{:.0f}', label='published')} of {claim('p_tl_sub_n', tl, 'of', sub, fmt='{:.0f}', label='published')} "
+        f"({claim('p_tl_sub_pct', tl, 'share', sub, fmt='{:.1f}', scale=100, label='published')} percent, Wilson interval {claim('p_tl_sub_lo', tl, 'wilson_lo', sub, fmt='{:.1f}', scale=100, label='published')} to "
+        f"{claim('p_tl_sub_hi', tl, 'wilson_hi', sub, fmt='{:.1f}', scale=100, label='published')}), and {claim('p_tl_amb', tl, 'count', 'measure == \"lines ambiguous\"', fmt='{:.0f}', label='published')} lines stay ambiguous (`docs/STATISTICS_V5.md`).")
+
+
 def parts_text(fill):
-    ev = "data/evidence.csv"
     fill["cycle_model_text"] = cycle_model_text() if exists("cyclemodel/results/error_summary.csv") else ""
     fill["rtl_text"] = rtl_text() if exists("rtlsim/results/ibex_cycles.csv") else ""
-    fill["rtl_sentence"] = ("cycle accurate simulation of an open source microcontroller class core" if exists("rtlsim/results/ibex_cycles.csv")
-                            else "no open core simulation")
-    es = "cyclemodel/results/error_summary.csv"
+    cb = "stats/results/cycle_cluster_bootstrap.csv"
+    lo = "stats/results/cycle_lofo_summary.csv"
+    fs = "planner/results/flightstack_mc_summary.csv"
+    gs = "netsim/results/gap_sweep.csv"
+    pv = "formal/results/proverif_results.csv"
+    fill["abstract_method"] = (
+        f"It combines {fill['n_rows']} published rows from {fill['n_sources']} sources, the newest each read against its source by two independent readers, with a trace driven cycle model, energy, link, boot, fleet and mission models, "
+        "and checks of those models by independent tools: memory of real flight stack builds, the ns-3 network simulator, the ProVerif protocol verifier and cycle accurate simulation of two open cores.")
     fill["abstract_results"] = (
-        f"Within one code base, a cycle model fitted on half of the published rows predicts the other half with a median error of {claim('ab_cm', es, 'median_abs_pct', 'model == \"fitted\" and subset == \"test, all\"', fmt='{:.1f}', label='modelled')} percent, though signing misses by up to {claim('ab_cm_worst', es, 'worst_abs_pct', 'model == \"fitted\" and subset == \"test, all\"', fmt='{:.0f}', label='modelled')} percent. "
-        "On telemetry class radios a hybrid key establishment followed by a symmetric session keeps command availability where it is without authentication, while a post quantum signature on every command does not. "
-        "For firmware, hashing the image costs more than any signature check unless the device has hash hardware. "
-        "The largest open uncertainties are the free memory a flight stack leaves and the real timing of mesh links.")
+        f"A cycle model fitted on half of the published rows predicts the other half of the same code base with a median error of {claim('ab_cm', cb, 'median_abs_pct', 'model == \"fitted\" and subset == \"test, all\"', fmt='{:.1f}', label='modelled')} percent, "
+        f"but {claim('ab_lofo', lo, 'median_abs_pct', 'left_out_by == \"scheme\" and group == \"all groups pooled\" and model == \"fitted\"', fmt='{:.1f}', label='modelled')} percent for a scheme left out of the fit. "
+        f"Measured flight stack memory raises the estimated share of fleet devices that need hardware replacement from {claim('ab_fl_a', fs, 'assumed_median', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')} to "
+        f"{claim('ab_fl_m', fs, 'measured_median', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')}, a correction of our earlier estimate. "
+        f"In ns-3, an IEEE 802.15.4 transfer that the link model puts at {claim('ab_ls', gs, 'time_s_modelled', 'cell == \"base_frame\"', fmt='{:.1f}', label='modelled')} s reaches the published 30 to 60 s with any one of three unstated settings, so the published gap has sufficient causes but no proven one. "
+        f"A protocol verifier proved {claim('ab_pv_p', pv, 'result', 'result == \"proved\"', 'count', '{:.0f}', label='modelled')} of {claim('ab_pv_n', pv, 'result', '', 'count', '{:.0f}', label='modelled')} queries, including deliberate controls, and found three design flaws whose fixes the reference architecture adopts. "
+        "On telemetry class radios a hybrid key establishment followed by a symmetric session keeps command availability where it is without authentication, while a post quantum signature on every command does not.")
+    fill["method_reading"] = method_reading()
+    fill["rq_results"] = rq_text()
+    fill["threats"] = threats_text()
+    fill["conclusion"] = conclusion_text()
     fill["discussion"] = (
-        "Three results change what an engineer should do. First, a published cycle count is not a property of the algorithm alone: the implementation variant and the measurement conditions move the same operation on the same core class by a factor that the meta analysis quantifies, so a migration decision should rest on a measurement of the deployed code, which the board kit makes cheap. "
+        "Three results change what an engineer should do. First, a published cycle count is not a property of the algorithm alone: the implementation variant and the measurement conditions move the same operation on the same core class, so a migration decision should rest on a measurement of the deployed code, which the board kit makes cheap. "
         "Second, on the links drones and robots use, the cost of post quantum authentication is a one time handshake, not a per message burden, provided the design uses a session: per message signatures are the only option that fails. "
-        "Third, the fleet answer depends more on how much memory the flight stack leaves free than on which implementation of ML-DSA is chosen; operators can settle this from their own build output, which no public page states.\n\n"
-        "Where the models overlap they are not independent: the mission model reads the link simulator's parameters, so their agreement on a single handshake is a consistency check, not a validation, and the two still differ noticeably on the time to set up a hybrid session on the telemetry radio, a difference this round did not explain. The energy and mission studies both find CPU time, not energy, to be the binding budget. "
-        "They disagree with the evidence in one place that matters, the 802.15.4 transfer time, and the study reports that gap rather than closing it by fitting.")
-    fill["limitations"] = (
-        "1. Nothing was measured on a microcontroller. The board experiment is prepared and its outcome registered, but not run, and the kit cannot yet switch caches off, which the registered predictions assume (`docs/PREDICTIONS_V4_BOARD_NOTES.md`).\n"
-        "2. The cycle model is validated within one code base; its transfer to other libraries rests on a single small external check.\n"
-        "3. The link model is too fast on IEEE 802.15.4 by a factor the study cannot yet explain; duty cycle and fragmentation are checked only arithmetically, and loss handling only against closed forms for stop and wait, with no measurement.\n"
-        "4. Fleets are drawn from real board classes but their counts and free memory shares are synthetic or assumed.\n"
-        "5. Energy rests on typical datasheet currents for five parts and one calibration source.\n"
-        "6. The classical baselines (Ed25519, X25519) are single published rows chosen within a published range that spans about a factor of two; the energy and mission studies use the same rows and show the range beside each result.\n"
-        "7. The studies do not yet share one set of inputs everywhere: the protocol and mission models describe the MAVLink style handshake differently, and the energy and mission models use different published LMS rows and per message costs; each choice is stated in its study.\n"
-        "8. Several sources could not be retrieved (listed in `docs/NEEDS_FROM_AUTHOR.md` and the source notes); 126 new rows that only one reader could confirm were left out of the table.\n"
-        "9. The double reading settled every value disagreement but only a sample of wording disagreements, so some operation, scheme or library fields are likely still wrong (`docs/VERIFICATION5.md`, Limits); two readers shared a scratch path for helper scripts, a limit on their independence.")
+        "Third, the fleet answer depends on how much memory the flight stack leaves free; measured builds show less free flash than round 4 assumed, and operators can settle this from their own build output.\n\n"
+        "Where the models overlap they are not independent: the mission model reads the link simulator's parameters through the shared inputs file, so their agreement on a single handshake is a consistency check, not a validation. "
+        "The energy and mission studies both find CPU time, not energy, to be the binding budget. ns-3 now gives sufficient causes for the 802.15.4 gap and shows that the link model's multi hop assumption is optimistic; the link model was not tuned to the published figure.")
+    fill["repro"] = repro_text()
+
+
+def repro_text():
+    rows = [
+        ("Figure 1 (cycle model errors)", "python3 stats/cycle_validation.py && python3 scripts/make_paper_figures.py", "stats/results/cycle_cluster_bootstrap.csv, stats/results/cycle_lofo_summary.csv"),
+        ("Figure 2 (802.15.4 transfer by cause)", "bash netsim/fetch_build.sh && python3 -m netsim.run_netsim && python3 -m netsim.make_study && python3 scripts/make_paper_figures.py", "netsim/results/gap_sweep.csv"),
+        ("Figure 3 (fleet replacement share)", "python3 planner/flightstack_study.py && python3 scripts/make_paper_figures.py", "planner/results/flightstack_mc_summary.csv"),
+        ("Table 1 (ProVerif results)", "sh formal/install.sh && python3 -m formal.build_models && python3 -m formal.run_all", "formal/results/proverif_results.csv"),
+        ("Flight stack memory (RQ5)", "bash flightstack/fetch.sh && bash flightstack/build_all.sh && python3 flightstack/extract_memory.py", "data/flightstack_memory.csv"),
+        ("Hierarchical meta analysis (RQ1)", "python3 stats/meta_hierarchical.py", "data/meta/hierarchical_variance.csv"),
+        ("End to end chain and Sobol ranking", "python3 stats/end_to_end.py", "stats/results/e2e_mc_summary.csv, stats/results/e2e_sobol.csv"),
+        ("Open core cycles (RQ1)", "bash rtlsim/run.sh && bash rtlsim/run_cv32e40p.sh && python3 rtlsim/report.py", "rtlsim/results/core_spread.csv"),
+        ("Board predictions, caches off", "python3 bench/board_kit/predictions_v5.py", "bench/board_kit/predictions_v5_board.csv"),
+        ("This paper and the claims register", "python3 scripts/build_paper.py && python3 scripts/check_numbers.py", "data/claims_register.csv"),
+        ("PDF", "./scripts/build_pdfs.sh", "docs/PAPER.pdf"),
+    ]
+    t = ["| Item | Command | Result file |", "|---|---|---|"]
+    for a, b, c in rows:
+        t.append(f"| {a} | `{b}` | `{c}` |")
+    return ("Each figure and table regenerates from committed scripts with stored seeds; third party code is fetched at pinned versions and never committed. "
+            "Heavy steps (flight stack builds, ns-3, open core simulation) need the pinned toolchains listed in each study document.\n\n" + "\n".join(t))
+
+
+def main_word_count(text):
+    """Words of the six page main part: from the abstract to the end of the conclusion (references excluded)."""
+    a = text.index("## Abstract")
+    b = text.index("## References")
+    body = re.sub(r"!\[[^\]]*\]\([^)]*\)\{[^}]*\}", " ", text[a:b])
+    return len(body.split())
 
 
 def main():
@@ -217,7 +437,6 @@ def main():
         "n_rows": claim("abs_rows", ev, "id", aggregate="count", label="published"),
         "n_sources": claim("abs_sources", ev, "source_url", aggregate="nunique", label="published"),
         "n_s10": claim("n_s10", ev, "id", 'stream == "S10"', "count", label="published"),
-        "n_s12": claim("abs_s12", ev, "id", 'stream == "S12"', "count", label="published"),
         "results": results_text(),
     }
     v5 = ROOT / "docs" / "VERIFICATION5.md"
@@ -226,17 +445,14 @@ def main():
                            if m else "see `docs/VERIFICATION5.md`")
     fill["v2_rate_sentence"] = "details in `docs/VERIFICATION.md`, `docs/VERIFICATION2.md` and `docs/VERIFICATION3.md`"
     fill["pred_sentence"] = "`docs/PREDICTIONS.md`, `docs/PREDICTIONS_V2.md`, `docs/PREDICTIONS_V3.md`, `docs/PREDICTIONS_V4.md`"
-    extra = (ROOT / "docs" / "PAPER_parts.md")
-    parts = {}
-    if extra.exists():
-        chunks = re.split(r"^<!-- part: (\w+) -->\s*$", extra.read_text(encoding="utf-8"), flags=re.M)
-        for i in range(1, len(chunks), 2):
-            parts[chunks[i]] = chunks[i + 1].strip()
-    fill.update(parts)
+    fill["word_note"] = "{{word_note}}"
     parts_text(fill)
     text = body
     for _ in range(3):
-        text = re.sub(r"\{\{(\w+)\}\}", lambda mm: fill.get(mm.group(1), mm.group(0)), text)
+        text = re.sub(r"\{\{(?!word_note)(\w+)\}\}", lambda mm: fill.get(mm.group(1), mm.group(0)), text)
+    n_main = main_word_count(text)
+    pages = n_main / WORDS_PER_PAGE
+    text = text.replace("{{word_note}}", f"Length of the main part (abstract to conclusion, table included, figure captions and references excluded): {n_main} words, about {pages:.1f} pages at {WORDS_PER_PAGE} words per two column page, before the references and the three figures, each about a third of a column high.")
     left = re.findall(r"\{\{(\w+)\}\}", text)
     if left:
         sys.exit(f"unfilled placeholders: {sorted(set(left))}")
@@ -252,7 +468,7 @@ def main():
         w = csv.DictWriter(fh, fieldnames=fields)
         w.writeheader()
         w.writerows(CLAIMS)
-    print(f"wrote {DOC} ({len(text.split())} words) and {len(CLAIMS)} claims")
+    print(f"wrote {DOC} ({len(text.split())} words in all, {n_main} in the main part, about {pages:.1f} pages) and {len(CLAIMS)} claims")
 
 
 if __name__ == "__main__":
