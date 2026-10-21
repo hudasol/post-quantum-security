@@ -17,9 +17,18 @@ FOOTER = "estimated from published sizes, not measured"
 LINK_ORDER = ["sik", "lorawan", "ieee802154", "ble", "generic1m", "generic10k"]
 
 
-def load_param_rows(path=PARAMS_CSV):
+def load_param_rows(path=PARAMS_CSV, shared_path=None):
+    """Rows of linksim/params.csv plus the shared parameters of data/shared_inputs.csv that linksim uses.
+
+    A name defined in both files is an error (one parameter, one value, one source)."""
+    from shared import inputs as shared_inputs
     with open(path, newline="") as fh:
-        return list(csv.DictReader(fh))
+        own = list(csv.DictReader(fh))
+    sh = shared_inputs.link_param_rows(shared_path) if shared_path else shared_inputs.link_param_rows()
+    dup = {r["name"] for r in own} & {r["name"] for r in sh}
+    if dup:
+        raise ValueError("defined in both linksim/params.csv and data/shared_inputs.csv: %s" % sorted(dup))
+    return own + sh
 
 
 def load_params(path=PARAMS_CSV, overrides=None):

@@ -6,14 +6,14 @@ The link models carry the validation status of Section 4.4 of `docs/LINKSIM_STUD
 
 ## Summary (5 percent loss)
 
-- LoRaWAN EU868 DR0: fastest hybrid profile mavlink2_pq (9.9 h), slowest dds_security (26.2 h), a ratio of 2.7. Hybrid over classical time ratio by profile: dtls13 12.8, edhoc_oscore 24.1, mavlink2_pq 25.6, dds_security 8.0. One raw ML-DSA-44 signed command alone takes 3.9 h.
-- LoRaWAN EU868 DR5: fastest hybrid profile mavlink2_pq (17.7 min), slowest dds_security (46.8 min), a ratio of 2.6. Hybrid over classical time ratio by profile: dtls13 14.6, edhoc_oscore 30.5, mavlink2_pq 26.0, dds_security 8.4. One raw ML-DSA-44 signed command alone takes 7.0 min.
-- IEEE 802.15.4 (v4 frame model): fastest hybrid profile mavlink2_pq (1.24 s), slowest dds_security (2.85 s), a ratio of 2.3. Hybrid over classical time ratio by profile: dtls13 6.1, edhoc_oscore 4.6, mavlink2_pq 4.1, dds_security 5.1. One raw ML-DSA-44 signed command alone takes 456 ms.
-- SiK 64 kbps: fastest hybrid profile mavlink2_pq (1.36 s), slowest dds_security (3.15 s), a ratio of 2.3. Hybrid over classical time ratio by profile: dtls13 6.2, edhoc_oscore 4.7, mavlink2_pq 4.3, dds_security 5.0. One raw ML-DSA-44 signed command alone takes 494 ms.
+- LoRaWAN EU868 DR0: fastest hybrid profile mavlink2_pq (11.6 h), slowest dds_security (26.2 h), a ratio of 2.3. Hybrid over classical time ratio by profile: dtls13 12.8, edhoc_oscore 24.1, mavlink2_pq 26.2, dds_security 8.0. One raw ML-DSA-44 signed command alone takes 3.9 h.
+- LoRaWAN EU868 DR5: fastest hybrid profile mavlink2_pq (20.4 min), slowest dds_security (46.8 min), a ratio of 2.3. Hybrid over classical time ratio by profile: dtls13 14.6, edhoc_oscore 30.5, mavlink2_pq 27.7, dds_security 8.4. One raw ML-DSA-44 signed command alone takes 7.0 min.
+- IEEE 802.15.4 (v4 frame model): fastest hybrid profile edhoc_oscore (1.42 s), slowest dds_security (2.85 s), a ratio of 2.0. Hybrid over classical time ratio by profile: dtls13 6.1, edhoc_oscore 4.6, mavlink2_pq 4.0, dds_security 5.1. One raw ML-DSA-44 signed command alone takes 456 ms.
+- SiK 64 kbps: fastest hybrid profile edhoc_oscore (1.52 s), slowest dds_security (3.15 s), a ratio of 2.1. Hybrid over classical time ratio by profile: dtls13 6.2, edhoc_oscore 4.7, mavlink2_pq 4.1, dds_security 5.0. One raw ML-DSA-44 signed command alone takes 494 ms.
 
 ## 1. Profiles and message sizes
 
-Variants: classical (X25519 and Ed25519), hybrid (X25519 plus ML-KEM-768 shares, `data/evidence.csv` S3-018 and S3-019, with ML-DSA-44 signatures), post quantum only (ML-KEM-768 and ML-DSA-44, S2-0399, S2-0401, S2-0406, S2-0407), and raw ML-DSA-44 signature per message (no session) as the infeasible bound. Profiles are simplified: DTLS 1.3 with mutual certificate authentication and no cookie exchange; EDHOC signature method with credentials by reference (message sizes from draft-ietf-lake-edhoc-17 Figure 1, `data/raw/S12_link_sources.md` line 79, with the 32 B share and 64 B signature replaced by the variant's); a MAVLink 2 style signed stream whose session key comes from a three flight post quantum handshake; and a DDS Security style three message authentication handshake carrying certificates both ways. Certificate overhead, DTLS, OSCORE, CoAP and DDS framing are ASSUMPTIONS (`linksim/params.csv`) swept in Section 6. Every flight uses the selective repeat transport of `linksim/sim.py`.
+Variants: classical (X25519 and Ed25519), hybrid (X25519 plus ML-KEM-768 shares, `data/evidence.csv` S3-018 and S3-019, with ML-DSA-44 signatures), post quantum only (ML-KEM-768 and ML-DSA-44, S2-0399, S2-0401, S2-0406, S2-0407), and raw ML-DSA-44 signature per message (no session) as the infeasible bound. Profiles are simplified: DTLS 1.3 with mutual certificate authentication and no cookie exchange; EDHOC signature method with credentials by reference (message sizes from draft-ietf-lake-edhoc-17 Figure 1, `data/raw/S12_link_sources.md` line 79, with the 32 B share and 64 B signature replaced by the variant's); a MAVLink 2 style signed stream whose session key comes from a four flight post quantum handshake with pinned keys, the same handshake as the mission study and the formal models with design change F1 of `docs/FORMAL_VERIFICATION.md` (ground and vehicle each sign the transcript and send a key confirmation tag; earlier rounds used three flights with one signature and the public key on the air); and a DDS Security style three message authentication handshake carrying certificates both ways. Certificate overhead, DTLS, OSCORE, CoAP and DDS framing are ASSUMPTIONS (`linksim/params.csv`) swept in Section 6. Sizes and link parameters shared with other studies come from `data/shared_inputs.csv`. Every flight uses the selective repeat transport of `linksim/sim.py`.
 
 | protocol | variant | handshake flights and first command, bytes (A ground, B vehicle) | rekey flights, bytes |
 |---|---|---|---|
@@ -23,9 +23,9 @@ Variants: classical (X25519 and Ed25519), hybrid (X25519 plus ML-KEM-768 shares,
 | edhoc_oscore | classical | A EDHOC message_1 45; B EDHOC message_2 110; A EDHOC message_3 85; A authenticated command 58 | A 48; B 64 |
 | edhoc_oscore | hybrid | A EDHOC message_1 1229; B EDHOC message_2 3554; A EDHOC message_3 2441; A authenticated command 58 | A 1232; B 1152 |
 | edhoc_oscore | pq_only | A EDHOC message_1 1197; B EDHOC message_2 3522; A EDHOC message_3 2441; A authenticated command 58 | A 1200; B 1120 |
-| mavlink2_pq | classical | A F1 key share 32; B F2 share, signature, public key 128; A F3 key confirmation 16; A authenticated command 55 | A 45; B 61 |
-| mavlink2_pq | hybrid | A F1 key share 1216; B F2 share, signature, public key 4852; A F3 key confirmation 16; A authenticated command 55 | A 1229; B 1149 |
-| mavlink2_pq | pq_only | A F1 key share 1184; B F2 share, signature, public key 4820; A F3 key confirmation 16; A authenticated command 55 | A 1197; B 1117 |
+| mavlink2_pq | classical | A F1 key share 32; B F2 key share 32; A F3 ground signature and confirmation 80; B F4 vehicle signature and confirmation 80; A authenticated command 55 | A 45; B 61 |
+| mavlink2_pq | hybrid | A F1 key share 1216; B F2 key share 1120; A F3 ground signature and confirmation 2436; B F4 vehicle signature and confirmation 2436; A authenticated command 55 | A 1229; B 1149 |
+| mavlink2_pq | pq_only | A F1 key share 1184; B F2 key share 1088; A F3 ground signature and confirmation 2436; B F4 vehicle signature and confirmation 2436; A authenticated command 55 | A 1197; B 1117 |
 | dds_security | classical | A HandshakeRequest 728; B HandshakeReply 792; A HandshakeFinal 464; A authenticated command 86 | A 76; B 92 |
 | dds_security | hybrid | A HandshakeRequest 5548; B HandshakeReply 7872; A HandshakeFinal 2820; A authenticated command 86 | A 1260; B 1180 |
 | dds_security | pq_only | A HandshakeRequest 5516; B HandshakeReply 7840; A HandshakeFinal 2820; A authenticated command 86 | A 1228; B 1148 |
@@ -45,9 +45,9 @@ Handshake followed by one authenticated command (42 B MAVLink 2 command plus the
 | LoRaWAN EU868 DR0 | edhoc_oscore / classical | 20.2 min | 29.1 min (29.0 min to 29.3 min) | 34.2 min | 100.0% | 0.0% | 0.0% | 0.4 | 0.01 |
 | LoRaWAN EU868 DR0 | edhoc_oscore / hybrid | 11.5 h | 11.7 h (11.7 h to 11.7 h) | 12.1 h | 100.0% | 0.0% | 0.0% | 6.27 | 0.01 |
 | LoRaWAN EU868 DR0 | edhoc_oscore / pq_only | 11.4 h | 11.6 h (11.6 h to 11.6 h) | 12.0 h | 100.0% | 0.0% | 0.0% | 6.21 | 0.01 |
-| LoRaWAN EU868 DR0 | mavlink2_pq / classical | 16.4 min | 23.1 min (22.9 min to 23.3 min) | 28.1 min | 100.0% | 0.0% | 0.0% | 0.343 | 0.02 |
-| LoRaWAN EU868 DR0 | mavlink2_pq / hybrid | 9.8 h | 9.9 h (9.9 h to 9.9 h) | 10.2 h | 100.0% | 0.0% | 0.0% | 7.98 | 0.01 |
-| LoRaWAN EU868 DR0 | mavlink2_pq / pq_only | 9.7 h | 9.8 h (9.8 h to 9.8 h) | 10.1 h | 100.0% | 0.0% | 0.0% | 7.92 | 0.01 |
+| LoRaWAN EU868 DR0 | mavlink2_pq / classical | 19.2 min | 26.5 min (26.3 min to 26.7 min) | 31.4 min | 100.0% | 0.0% | 0.0% | 0.416 | 0.02 |
+| LoRaWAN EU868 DR0 | mavlink2_pq / hybrid | 11.4 h | 11.6 h (11.5 h to 11.6 h) | 11.9 h | 100.0% | 0.0% | 0.0% | 6.26 | 0.01 |
+| LoRaWAN EU868 DR0 | mavlink2_pq / pq_only | 11.4 h | 11.5 h (11.5 h to 11.5 h) | 11.9 h | 100.0% | 0.0% | 0.0% | 6.23 | 0.01 |
 | LoRaWAN EU868 DR0 | dds_security / classical | 3.2 h | 3.3 h (3.3 h to 3.3 h) | 3.5 h | 100.0% | 0.0% | 0.0% | 2.18 | 0.01 |
 | LoRaWAN EU868 DR0 | dds_security / hybrid | 26.0 h | 26.2 h (26.2 h to 26.2 h) | 26.8 h | 100.0% | 0.0% | 0.0% | 14.1 | 0.01 |
 | LoRaWAN EU868 DR0 | dds_security / pq_only | 26.0 h | 26.1 h (26.1 h to 26.1 h) | 26.7 h | 100.0% | 0.0% | 0.0% | 14 | 0.01 |
@@ -58,9 +58,9 @@ Handshake followed by one authenticated command (42 B MAVLink 2 command plus the
 | LoRaWAN EU868 DR5 | edhoc_oscore / classical | 31.70 s | 41.39 s (40.72 s to 42.07 s) | 63.76 s | 100.0% | 0.0% | 100.0% | 0.0143 | 0.02 |
 | LoRaWAN EU868 DR5 | edhoc_oscore / hybrid | 20.4 min | 21.0 min (21.0 min to 21.1 min) | 22.4 min | 100.0% | 0.0% | 0.0% | 0.19 | 0.01 |
 | LoRaWAN EU868 DR5 | edhoc_oscore / pq_only | 19.7 min | 20.4 min (20.3 min to 20.4 min) | 21.8 min | 100.0% | 0.0% | 0.0% | 0.187 | 0.01 |
-| LoRaWAN EU868 DR5 | mavlink2_pq / classical | 34.59 s | 40.84 s (40.18 s to 41.49 s) | 58.79 s | 100.0% | 0.0% | 100.0% | 0.0119 | 0.02 |
-| LoRaWAN EU868 DR5 | mavlink2_pq / hybrid | 17.6 min | 17.7 min (17.6 min to 17.7 min) | 19.2 min | 100.0% | 0.0% | 0.0% | 0.242 | 0.01 |
-| LoRaWAN EU868 DR5 | mavlink2_pq / pq_only | 17.5 min | 17.6 min (17.5 min to 17.6 min) | 19.1 min | 100.0% | 0.0% | 0.0% | 0.24 | 0.01 |
+| LoRaWAN EU868 DR5 | mavlink2_pq / classical | 35.68 s | 44.24 s (43.60 s to 44.87 s) | 65.84 s | 100.0% | 0.0% | 100.0% | 0.0149 | 0.02 |
+| LoRaWAN EU868 DR5 | mavlink2_pq / hybrid | 19.8 min | 20.4 min (20.3 min to 20.4 min) | 21.8 min | 100.0% | 0.0% | 0.0% | 0.19 | 0.01 |
+| LoRaWAN EU868 DR5 | mavlink2_pq / pq_only | 19.3 min | 19.9 min (19.8 min to 19.9 min) | 21.4 min | 100.0% | 0.0% | 0.0% | 0.188 | 0.01 |
 | LoRaWAN EU868 DR5 | dds_security / classical | 5.4 min | 5.6 min (5.5 min to 5.6 min) | 6.3 min | 100.0% | 0.0% | 100.0% | 0.0675 | 0.01 |
 | LoRaWAN EU868 DR5 | dds_security / hybrid | 46.3 min | 46.8 min (46.7 min to 46.9 min) | 49.0 min | 100.0% | 0.0% | 0.0% | 0.419 | 0.01 |
 | LoRaWAN EU868 DR5 | dds_security / pq_only | 46.2 min | 46.8 min (46.7 min to 46.8 min) | 48.8 min | 100.0% | 0.0% | 0.0% | 0.418 | 0.01 |
@@ -71,9 +71,9 @@ Handshake followed by one authenticated command (42 B MAVLink 2 command plus the
 | IEEE 802.15.4 (v4 frame model) | edhoc_oscore / classical | 239 ms | 310 ms (305 ms to 315 ms) | 483 ms | 100.0% | 100.0% | 100.0% | n/a | 0.19 |
 | IEEE 802.15.4 (v4 frame model) | edhoc_oscore / hybrid | 1.35 s | 1.42 s (1.41 s to 1.43 s) | 1.68 s | 100.0% | 100.0% | 100.0% | n/a | 0.56 |
 | IEEE 802.15.4 (v4 frame model) | edhoc_oscore / pq_only | 1.34 s | 1.41 s (1.40 s to 1.42 s) | 1.67 s | 100.0% | 100.0% | 100.0% | n/a | 0.55 |
-| IEEE 802.15.4 (v4 frame model) | mavlink2_pq / classical | 228 ms | 301 ms (296 ms to 305 ms) | 476 ms | 100.0% | 100.0% | 100.0% | n/a | 0.18 |
-| IEEE 802.15.4 (v4 frame model) | mavlink2_pq / hybrid | 1.17 s | 1.24 s (1.23 s to 1.25 s) | 1.50 s | 100.0% | 100.0% | 100.0% | n/a | 0.54 |
-| IEEE 802.15.4 (v4 frame model) | mavlink2_pq / pq_only | 1.16 s | 1.23 s (1.22 s to 1.24 s) | 1.46 s | 100.0% | 100.0% | 100.0% | n/a | 0.54 |
+| IEEE 802.15.4 (v4 frame model) | mavlink2_pq / classical | 293 ms | 365 ms (359 ms to 370 ms) | 534 ms | 100.0% | 100.0% | 100.0% | n/a | 0.16 |
+| IEEE 802.15.4 (v4 frame model) | mavlink2_pq / hybrid | 1.38 s | 1.45 s (1.45 s to 1.46 s) | 1.69 s | 100.0% | 100.0% | 100.0% | n/a | 0.54 |
+| IEEE 802.15.4 (v4 frame model) | mavlink2_pq / pq_only | 1.38 s | 1.45 s (1.44 s to 1.46 s) | 1.69 s | 100.0% | 100.0% | 100.0% | n/a | 0.54 |
 | IEEE 802.15.4 (v4 frame model) | dds_security / classical | 475 ms | 557 ms (550 ms to 564 ms) | 775 ms | 100.0% | 100.0% | 100.0% | n/a | 0.44 |
 | IEEE 802.15.4 (v4 frame model) | dds_security / hybrid | 2.77 s | 2.85 s (2.84 s to 2.86 s) | 3.16 s | 100.0% | 100.0% | 100.0% | n/a | 0.61 |
 | IEEE 802.15.4 (v4 frame model) | dds_security / pq_only | 2.76 s | 2.85 s (2.83 s to 2.86 s) | 3.16 s | 100.0% | 100.0% | 100.0% | n/a | 0.61 |
@@ -84,9 +84,9 @@ Handshake followed by one authenticated command (42 B MAVLink 2 command plus the
 | SiK 64 kbps | edhoc_oscore / classical | 247 ms | 325 ms (320 ms to 330 ms) | 515 ms | 100.0% | 100.0% | 100.0% | n/a | 0.25 |
 | SiK 64 kbps | edhoc_oscore / hybrid | 1.45 s | 1.52 s (1.52 s to 1.53 s) | 1.78 s | 100.0% | 100.0% | 100.0% | n/a | 0.80 |
 | SiK 64 kbps | edhoc_oscore / pq_only | 1.44 s | 1.51 s (1.51 s to 1.52 s) | 1.78 s | 100.0% | 100.0% | 100.0% | n/a | 0.79 |
-| SiK 64 kbps | mavlink2_pq / classical | 237 ms | 315 ms (310 ms to 320 ms) | 498 ms | 100.0% | 100.0% | 100.0% | n/a | 0.22 |
-| SiK 64 kbps | mavlink2_pq / hybrid | 1.28 s | 1.36 s (1.35 s to 1.37 s) | 1.58 s | 100.0% | 100.0% | 100.0% | n/a | 0.76 |
-| SiK 64 kbps | mavlink2_pq / pq_only | 1.27 s | 1.34 s (1.34 s to 1.35 s) | 1.59 s | 100.0% | 100.0% | 100.0% | n/a | 0.76 |
+| SiK 64 kbps | mavlink2_pq / classical | 313 ms | 391 ms (385 ms to 396 ms) | 568 ms | 100.0% | 100.0% | 100.0% | n/a | 0.22 |
+| SiK 64 kbps | mavlink2_pq / hybrid | 1.52 s | 1.59 s (1.59 s to 1.60 s) | 1.86 s | 100.0% | 100.0% | 100.0% | n/a | 0.76 |
+| SiK 64 kbps | mavlink2_pq / pq_only | 1.50 s | 1.58 s (1.57 s to 1.59 s) | 1.84 s | 100.0% | 100.0% | 100.0% | n/a | 0.76 |
 | SiK 64 kbps | dds_security / classical | 548 ms | 632 ms (626 ms to 639 ms) | 844 ms | 100.0% | 100.0% | 100.0% | n/a | 0.59 |
 | SiK 64 kbps | dds_security / hybrid | 3.07 s | 3.15 s (3.14 s to 3.16 s) | 3.44 s | 100.0% | 100.0% | 100.0% | n/a | 0.85 |
 | SiK 64 kbps | dds_security / pq_only | 3.06 s | 3.14 s (3.13 s to 3.15 s) | 3.43 s | 100.0% | 100.0% | 100.0% | n/a | 0.85 |
@@ -98,22 +98,22 @@ Loss sweep, mean time to first authenticated message (hybrid variants and the ra
 |---|---|---|---|---|---|---|
 | LoRaWAN EU868 DR0 | dtls13 / hybrid | 23.5 h | 23.8 h | 24.8 h | 26.3 h | 30.0 h |
 | LoRaWAN EU868 DR0 | edhoc_oscore / hybrid | 11.1 h | 11.2 h | 11.7 h | 12.4 h | 14.2 h |
-| LoRaWAN EU868 DR0 | mavlink2_pq / hybrid | 9.4 h | 9.5 h | 9.9 h | 10.5 h | 12.0 h |
+| LoRaWAN EU868 DR0 | mavlink2_pq / hybrid | 10.9 h | 11.1 h | 11.6 h | 12.3 h | 14.1 h |
 | LoRaWAN EU868 DR0 | dds_security / hybrid | 24.8 h | 25.1 h | 26.2 h | 27.8 h | 31.7 h |
 | LoRaWAN EU868 DR0 | raw_mldsa44 / per_message | 3.7 h | 3.8 h | 3.9 h | 4.2 h | 4.8 h |
 | LoRaWAN EU868 DR5 | dtls13 / hybrid | 42.8 min | 43.2 min | 45.0 min | 47.6 min | 54.2 min |
 | LoRaWAN EU868 DR5 | edhoc_oscore / hybrid | 19.9 min | 20.1 min | 21.0 min | 22.3 min | 25.7 min |
-| LoRaWAN EU868 DR5 | mavlink2_pq / hybrid | 16.7 min | 16.9 min | 17.7 min | 18.9 min | 22.0 min |
+| LoRaWAN EU868 DR5 | mavlink2_pq / hybrid | 19.4 min | 19.6 min | 20.4 min | 21.8 min | 25.4 min |
 | LoRaWAN EU868 DR5 | dds_security / hybrid | 44.3 min | 44.8 min | 46.8 min | 49.8 min | 57.2 min |
 | LoRaWAN EU868 DR5 | raw_mldsa44 / per_message | 6.8 min | 6.8 min | 7.0 min | 7.3 min | 8.4 min |
 | IEEE 802.15.4 (v4 frame model) | dtls13 / hybrid | 2.34 s | 2.40 s | 2.70 s | 3.15 s | 4.34 s |
 | IEEE 802.15.4 (v4 frame model) | edhoc_oscore / hybrid | 1.24 s | 1.27 s | 1.42 s | 1.67 s | 2.36 s |
-| IEEE 802.15.4 (v4 frame model) | mavlink2_pq / hybrid | 1.08 s | 1.10 s | 1.24 s | 1.45 s | 2.03 s |
+| IEEE 802.15.4 (v4 frame model) | mavlink2_pq / hybrid | 1.24 s | 1.28 s | 1.45 s | 1.73 s | 2.47 s |
 | IEEE 802.15.4 (v4 frame model) | dds_security / hybrid | 2.42 s | 2.50 s | 2.85 s | 3.31 s | 4.58 s |
 | IEEE 802.15.4 (v4 frame model) | raw_mldsa44 / per_message | 398 ms | 408 ms | 456 ms | 538 ms | 757 ms |
 | SiK 64 kbps | dtls13 / hybrid | 2.70 s | 2.76 s | 3.00 s | 3.32 s | 4.18 s |
 | SiK 64 kbps | edhoc_oscore / hybrid | 1.34 s | 1.37 s | 1.52 s | 1.75 s | 2.29 s |
-| SiK 64 kbps | mavlink2_pq / hybrid | 1.22 s | 1.25 s | 1.36 s | 1.54 s | 2.01 s |
+| SiK 64 kbps | mavlink2_pq / hybrid | 1.39 s | 1.43 s | 1.59 s | 1.84 s | 2.46 s |
 | SiK 64 kbps | dds_security / hybrid | 2.88 s | 2.93 s | 3.15 s | 3.49 s | 4.37 s |
 | SiK 64 kbps | raw_mldsa44 / per_message | 433 ms | 446 ms | 494 ms | 564 ms | 736 ms |
 
@@ -288,10 +288,21 @@ Ranking flips across the loss sweep (order of mean time to first authenticated m
 
 | link | loss | now faster | now slower | intervals overlap |
 |---|---|---|---|---|
+| LoRaWAN EU868 DR0 | 20% | edhoc_oscore/pq_only | mavlink2_pq/hybrid | True |
+| IEEE 802.15.4 (v4 frame model) | 1% | edhoc_oscore/hybrid | mavlink2_pq/pq_only | True |
+| IEEE 802.15.4 (v4 frame model) | 1% | edhoc_oscore/hybrid | mavlink2_pq/hybrid | True |
+| IEEE 802.15.4 (v4 frame model) | 5% | edhoc_oscore/hybrid | mavlink2_pq/pq_only | False |
+| IEEE 802.15.4 (v4 frame model) | 5% | edhoc_oscore/hybrid | mavlink2_pq/hybrid | False |
 | IEEE 802.15.4 (v4 frame model) | 10% | raw_mldsa44/per_message | dtls13/classical | False |
+| IEEE 802.15.4 (v4 frame model) | 10% | edhoc_oscore/hybrid | mavlink2_pq/pq_only | False |
+| IEEE 802.15.4 (v4 frame model) | 10% | edhoc_oscore/hybrid | mavlink2_pq/hybrid | False |
 | IEEE 802.15.4 (v4 frame model) | 20% | raw_mldsa44/per_message | dtls13/classical | False |
+| IEEE 802.15.4 (v4 frame model) | 20% | edhoc_oscore/hybrid | mavlink2_pq/pq_only | False |
+| IEEE 802.15.4 (v4 frame model) | 20% | edhoc_oscore/hybrid | mavlink2_pq/hybrid | False |
 | SiK 64 kbps | 10% | raw_mldsa44/per_message | dtls13/classical | True |
 | SiK 64 kbps | 20% | raw_mldsa44/per_message | dtls13/classical | False |
+
+LoRaWAN frame overhead (stated sensitivity). The ns-3 LoRaWAN module counts 9 B of frame overhead where this simulation counts 13 B (`docs/NETSIM_STUDY.md`; `data/shared_inputs.csv` keeps 13 B as the default). With 9 B the time to first authenticated message at zero loss changes by 1.4 to 7.1 percent over all configurations on DR0 and DR5 (`linksim/results/protocols_lorawan_overhead.csv`); for the hybrid MAVLink style profile it falls from 10.9 h to 10.3 h on DR0 and from 19.4 min to 19.1 min on DR5. The order of the configurations by this time at zero loss is unchanged on both links.
 
 ## 7. Limits
 

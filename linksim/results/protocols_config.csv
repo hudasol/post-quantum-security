@@ -7,4 +7,4 @@ deadlines_s,1 2 5 10 60 600 1800 3600
 sobol_N,128
 sobol_seed,20261020
 transport,selective repeat (sim.selective_repeat) for every flight
-run_seconds,326.9
+run_seconds,64.9

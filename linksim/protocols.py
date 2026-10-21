@@ -95,8 +95,12 @@ def handshake_flights(protocol, variant, p):
              ("B", "EDHOC message_2", p["edhoc_sig_kid_m2_bytes"] - x - s64 + ks + sig + coap),
              ("A", "EDHOC message_3", p["edhoc_sig_kid_m3_bytes"] - s64 + sig + coap)]
     elif protocol == "mavlink2_pq":
-        f = [("A", "F1 key share", kc), ("B", "F2 share, signature, public key", ks + sig + pk),
-             ("A", "F3 key confirmation", p["confirm_bytes"])]
+        # Same structure as the mission study and the formal models with design change F1
+        # (docs/FORMAL_VERIFICATION.md): both sides sign the transcript with pinned keys (no public key
+        # on the air) and each sends a key confirmation tag.
+        f = [("A", "F1 key share", kc), ("B", "F2 key share", ks),
+             ("A", "F3 ground signature and confirmation", sig + p["confirm_bytes"]),
+             ("B", "F4 vehicle signature and confirmation", sig + p["confirm_bytes"])]
     elif protocol == "dds_security":
         fr = p["proto_dds_handshake_framing_bytes"]
         c = cert_bytes(p, variant)
@@ -372,6 +376,29 @@ def sobol(p, n=SOBOL_N, pool=None):
     return rows, flips
 
 
+LORA_OVERHEAD_ALT = 9  # bytes counted by the ns-3 LoRaWAN module (docs/NETSIM_STUDY.md); default stays 13 B
+
+
+def lorawan_overhead_rows(p):
+    """Stated sensitivity: time to first authenticated message on the LoRaWAN links at zero loss with the
+    13 B frame overhead of data/shared_inputs.csv against the 9 B of the ns-3 module (deterministic runs)."""
+    rows = []
+    for lk in ("lora_dr0", "lora_dr5"):
+        for protocol, variant in configs():
+            res = {}
+            for ovh in (p["lorawan_frame_overhead_bytes"], float(LORA_OVERHEAD_ALT)):
+                q = dict(p)
+                q["lorawan_frame_overhead_bytes"] = ovh
+                r = run_once(build_link(lk, q), scenario_flights("ttfam", protocol, variant, q), 0.0, SEED, q)
+                res[ovh] = r["wall_s"] if r["completed"] else float("nan")
+            a, b = res[p["lorawan_frame_overhead_bytes"]], res[float(LORA_OVERHEAD_ALT)]
+            rows.append({"label": LABEL, "link": lk, "protocol": protocol, "variant": variant,
+                         "overhead_default_bytes": p["lorawan_frame_overhead_bytes"],
+                         "overhead_alt_bytes": float(LORA_OVERHEAD_ALT), "wall_default_s": a, "wall_alt_s": b,
+                         "relative_change": (b - a) / a if a == a and a > 0 else float("nan"), "seed": SEED})
+    return rows
+
+
 def write_csv(name, rows, fields=None):
     os.makedirs(RES, exist_ok=True)
     if fields is None:
@@ -436,6 +463,7 @@ def main(argv=None):
         write_csv("protocols_grid.csv", grid)
         write_csv("protocols_flights.csv", flights_table(p))
         write_csv("protocols_added_latency.csv", added_latency_rows(p, a.trials))
+        write_csv("protocols_lorawan_overhead.csv", lorawan_overhead_rows(p))
         write_csv("protocols_rank_flips.csv", ranking_flips(grid),
                   ["label", "scenario", "link", "loss", "now_faster", "now_slower", "order_at_zero_loss",
                    "intervals_overlap"])

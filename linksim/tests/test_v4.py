@@ -211,7 +211,8 @@ class TestProtocols(unittest.TestCase):
                 self.assertEqual(hs, [])
                 self.assertEqual(protocols.rekey_flights(pr, v, P), [])
                 continue
-            self.assertEqual([s for s, _, _ in hs], ["A", "B", "A"])
+            expect = ["A", "B", "A", "B"] if pr == "mavlink2_pq" else ["A", "B", "A"]
+            self.assertEqual([s for s, _, _ in hs], expect)
             self.assertTrue(all(b > 0 for _, _, b in hs))
             self.assertEqual(len(protocols.rekey_flights(pr, v, P)), 2)
         with self.assertRaises(ValueError):
@@ -221,10 +222,15 @@ class TestProtocols(unittest.TestCase):
         with self.assertRaises(ValueError):
             protocols.scenario_flights("nope", "dtls13", "classical", P)
 
-    def test_mavlink_hybrid_matches_model(self):
+    def test_mavlink_hybrid_matches_mission(self):
+        # design change F1: the protocol simulation and the mission study describe the same handshake
+        from mission import model as mm
         f = protocols.handshake_flights("mavlink2_pq", "hybrid", P)
-        g = model.handshake_flights(P, "hybrid")
-        self.assertEqual([b for _, _, b in f], [b for _, _, b in g])
+        g = mm.arch_profile("B")["flights"]
+        self.assertEqual([b for _, _, b in f], [int(b) for _, b in g])
+        self.assertEqual([s for s, _, _ in f], ["A" if d == "up" else "B" for d, _ in g])
+        c = protocols.handshake_flights("mavlink2_pq", "classical", P)
+        self.assertEqual([b for _, _, b in c], [int(b) for _, b in mm.arch_profile("A")["flights"]])
 
     def test_command_and_firmware(self):
         self.assertEqual(protocols.command_base_bytes(P), 42)
