@@ -1,0 +1,9 @@
+protocol,dr,fragments_simulated_network,fragments_modelled,handshake_s_simulated_network,blast_s_modelled,protocol_sim_s_modelled,blast_9b_s_modelled,err_blast_9b_vs_ns3_pct,err_blast_vs_ns3_pct,err_protocol_sim_vs_ns3_pct
+dtls13,0,303,303,78895.2,83810.9,84079,78895.2,0,6.23067,6.57049
+dtls13,5,72,72,2510.29,2545.63,2558.98,2510.29,0,1.40781,1.93962
+edhoc_oscore,0,143,143,36820.6,39114.9,39383,36820.6,0,6.23102,6.95915
+edhoc_oscore,5,34,34,1128.33,1144.21,1157.56,1128.33,0,1.40739,2.59055
+mavlink2_pq,0,121,121,31034.9,32968.6,33236.7,31034.9,0,6.23073,7.09459
+mavlink2_pq,5,29,29,946.392,959.719,997.808,946.392,0,1.40819,5.43284
+dds_security,0,320,320,83364.8,88559,88827.1,83364.8,0,6.23069,6.55229
+dds_security,5,74,74,2583.62,2620,2633.34,2583.62,0,1.4081,1.92443
