@@ -64,7 +64,8 @@ LOCAL = [
     ("ns-3", "WP3 network simulation (fetched and built outside the repository by netsim/fetch_build.sh)", TP / "ns-3-dev", "LICENSE", ""),
     ("signetlabdei lorawan module", "WP3 LoRaWAN simulation (fetched by netsim/fetch_build.sh)", TP / "ns-3-dev/src/lorawan", "LICENSE", ""),
     ("PX4-Autopilot", "WP1 firmware builds for memory use; WP2 software in the loop (fetched by flightstack/fetch.sh)", TP / "PX4-Autopilot", "LICENSE", ""),
-    ("ArduPilot", "WP1 firmware builds for memory use; WP2 software in the loop (fetched by flightstack/fetch.sh); only section headers, the linker MEMORY block and board definition values are kept as data", TP / "ardupilot", "COPYING.txt", ""),
+    ("ArduPilot", "WP1 firmware builds for memory use (fetched by flightstack/fetch.sh); only section headers, the linker MEMORY block and board definition values are kept as data", TP / "ardupilot", "COPYING.txt", "fb773567896014da007bca58358704d4a0d8516f (tag Copter-4.7.2; git describe prints APMrover2-beta in a shallow clone)"),
+    ("ArduPilot (software in the loop copy)", "WP2 software in the loop (fetched and built by sitl/fetch.sh); nothing kept but run logs of the study", TP / "wp2_ardupilot", "COPYING.txt", "fb773567896014da007bca58358704d4a0d8516f (tag Copter-4.7.2, the same commit as the WP1 copy)"),
     ("CrashDebug", "ArduPilot H7 build dependency, build time only", TP / "ardupilot/modules/CrashDebug", "LICENSE", ""),
     ("ARM CMSIS core", "WP7 board images and cache register citations (fetched at build time)", TP / "wp7_work/board_kit_libs/cmsis_core", "LICENSE.md", ""),
     ("ST cmsis_device_l5", "WP7 NUCLEO-L552ZE-Q images (fetched at build time)", TP / "wp7_work/board_kit_libs/cmsis_device_l5", "LICENSE.md", ""),
@@ -79,7 +80,11 @@ DEBIAN = [
 ]
 # Python packages: requirements.txt is read; these are added with the interpreter that ran them.
 EXTRA_PY = [("fusesoc", WORK / "ibexvenv/bin/python", "WP7 Ibex build configuration"),
-            ("pymavlink", TP / "venv_wp2/bin/python", "MAVLink payload lengths (mission/measure_payloads.py)")]
+            ("pymavlink", TP / "venv_wp2/bin/python", "MAVLink payload lengths (mission/measure_payloads.py); WP2 ground station script and relay"),
+            ("empy", TP / "venv_wp2/bin/python", "WP2 ArduPilot software in the loop build, build time only (sitl/fetch.sh)"),
+            ("pexpect", TP / "venv_wp2/bin/python", "WP2 ArduPilot software in the loop build tools (sitl/fetch.sh)"),
+            ("future", TP / "venv_wp2/bin/python", "WP2 ArduPilot software in the loop build tools (sitl/fetch.sh)"),
+            ("lxml", TP / "venv_wp2/bin/python", "WP2 ArduPilot software in the loop build tools (sitl/fetch.sh)")]
 PATTERNS = [("Apache-2.0", r"Apache License,?\s+Version 2\.0"), ("GPL-3.0", r"GNU GENERAL PUBLIC LICENSE\s+Version 3"),
             ("GPL-2.0", r"GNU GENERAL PUBLIC LICENSE\s+Version 2"), ("LGPL-3.0", r"GNU LESSER GENERAL PUBLIC LICENSE\s+Version 3"),
             ("MIT", r"Permission is hereby granted, free of charge"),
@@ -201,6 +206,15 @@ for n in sys.argv[1:]:
     if len(lic) > 40 or 'opyright' in lic or 'agreement' in lic.lower():
         lic = str()
     lic = (m.get('License-Expression') or '').strip() or lic
+    if lic.startswith('%'):
+        # unfilled template in the package metadata; read the module's own __license__ line instead
+        lic = str()
+        for f in (metadata.files(n) or []):
+            if str(f).endswith('.py') and '/' not in str(f):
+                for line in open(f.locate(), encoding='utf-8', errors='replace'):
+                    if line.startswith('__license__'):
+                        lic = line.split('=', 1)[1].strip().strip(chr(39) + chr(34)) + ' (module __license__; the metadata licence field is an unfilled template)'
+                        break
     out[n] = {'version': m.get('Version'), 'licence': lic, 'classifiers': cls}
 print(json.dumps(out))
 """
