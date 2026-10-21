@@ -17,7 +17,7 @@ sik,hybrid,B,added_latency_ow_ms,added latency per command ms,1.9425,1.922,1.961
 sik,hybrid,B,added_latency_rt_ms,added latency per command ms,3.8645,3.52795,4.168,1.95083,1.91367,study lower,SITL measured
 sik,hybrid,B,handshake_median_s,"first session s (mission study, four flight handshake with F1)",1.28068,1.22076,2.01701,1.45114,-0.170456,no interval,emulated
 sik,hybrid,B,session_recovery_median_s,recovery after teardown s,1.45337,1.22158,1.94349,1.45114,0.00222696,no interval,emulated
-sik,hybrid,B with F1,handshake_median_s,"first session s, flight by flight estimate of the F1 flights without loss",1.28068,1.22076,2.01701,1.42433,-0.14365,no interval,emulated
+sik,hybrid,B with F1,handshake_median_s,"first session s, mission handshake model applied to the four flights and compute of this configuration",1.28068,1.22076,2.01701,1.42433,-0.14365,no interval,emulated
 sik,pqsig,C,availability_ow_link_up,"availability at 0.5 s, no outage",0.830626,0.802849,0.858287,0.801103,0.0295236,study lower,emulated
 sik,pqsig,C,availability_rt_link_up,"availability at 0.5 s, no outage",0.465197,0.428567,0.502442,0.801103,-0.335906,study higher,SITL measured
 sik,pqsig,C,availability_ow_all,"availability at 0.5 s, outage rate 60 per h",0.747917,0.70502,0.79375,0.730083,0.0178341,consistent,emulated

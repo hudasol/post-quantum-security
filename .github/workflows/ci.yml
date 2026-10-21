@@ -92,6 +92,12 @@ jobs:
           python3 -m netsim.make_study > /dev/null
           # figure layout depends on the fonts installed, so only data and text are compared
           git diff --exit-code -- 'netsim/results/*.csv' docs/NETSIM_STUDY.md
+      - name: Software in the loop study regenerates from its committed raw logs
+        run: |
+          python3 -m sitl.analyse > /dev/null
+          python3 -m sitl.make_doc > /dev/null
+          # figure layout depends on the fonts installed, so only data and text are compared
+          git diff --exit-code -- 'sitl/results/*.csv' docs/SITL_STUDY.md
       - name: Mission study and reference architecture regenerate from the committed mission results
         run: |
           python3 -m mission.run_all --reuse > /dev/null
