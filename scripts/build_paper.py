@@ -57,8 +57,8 @@ def results_text():
         f"{claim('n_mcu_cycles', ev, 'cycles', 'device_class == \"mcu\" and cycles == cycles', 'count', label='published')} are microcontroller rows with a cycle count, "
         f"on {claim('n_cores', ev, 'core', 'device_class == \"mcu\" and cycles == cycles', 'nunique', label='published')} core labels as the sources print them (Cortex-M4 and Cortex-M4F are counted apart, and one label is 'not stated'). "
         f"Inside groups of the same parameter set, operation and core class that have rows from two or more sources, the largest published value is "
-        f"{claim('meta_spread', 'data/meta/cycle_groups.csv', 'max_over_min', 'sources >= 2', 'median', '{:.2f}', label='published')} times the smallest at the median group "
-        f"(up to {claim('meta_spread_max', 'data/meta/cycle_groups.csv', 'max_over_min', 'sources >= 2', 'max', '{:.2f}', label='published')}; `docs/META_ANALYSIS.md`). "
+        f"{claim('meta_spread', 'data/meta/cycle_groups.csv', 'max_over_min', 'sources >= 2', 'median', '{:.2f}', label='estimated')} times the smallest at the median group "
+        f"(up to {claim('meta_spread_max', 'data/meta/cycle_groups.csv', 'max_over_min', 'sources >= 2', 'max', '{:.2f}', label='estimated')}; ratios computed from published rows; `docs/META_ANALYSIS.md`). "
         "Part of this spread is deliberate: a group can hold speed and stack optimised variants of one scheme and both means and medians, so it measures how far a "
         "published figure can sit from the deployed code when the variant and conditions are not known, not the measurement error of one implementation. "
         "Library, optimisation, toolchain, cache and statistic all move it.\n")
@@ -404,7 +404,7 @@ def parts_text(fill):
     gs = "netsim/results/gap_sweep.csv"
     pv = "formal/results/proverif_results.csv"
     fill["abstract_method"] = (
-        f"It combines {fill['n_rows']} published rows from {fill['n_sources']} sources, the newest each read against its source by two independent readers, with a trace driven cycle model, energy, link, boot, fleet and mission models, "
+        f"It combines {fill['n_rows']} published rows from {fill['n_sources']} source URLs, the newest each read against its source in two separate reading passes, with a trace driven cycle model, energy, link, boot, fleet and mission models, "
         "and checks of those models by independent tools: memory of real flight stack builds, the ns-3 network simulator, the ProVerif protocol verifier and cycle accurate simulation of two open cores, plus software in the loop runs of a flight stack.")
     fill["abstract_results"] = (
         f"A cycle model fitted on half of the published rows predicts the other half of the same code base with a median error of {claim('ab_cm', cb, 'median_abs_pct', 'model == \"fitted\" and subset == \"test, all\"', fmt='{:.1f}', label='modelled')} percent, "
