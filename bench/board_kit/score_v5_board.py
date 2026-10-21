@@ -140,12 +140,17 @@ def board_summaries(rows):
                      board_verdict="not scored (check of conditions only)")
             out.append(s)
             continue
-        r1 = miss > MISS_LIMIT
-        r2 = max(pos, neg) > SIGN_LIMIT
+        # With fewer rows scored than registered, the less favourable reading applies: a rule refutes when
+        # its count exceeds the registered limit or when its share of the scored rows exceeds the registered
+        # share (more than a third of the rows miss; more than four fifths of the errors share one sign).
+        partial = len(scored) < len(counted)
+        r1 = miss > MISS_LIMIT or (partial and 3 * miss > len(scored))
+        r2 = max(pos, neg) > SIGN_LIMIT or (partial and 5 * max(pos, neg) > 4 * len(scored))
+        share = " or more than the registered share of the scored rows" if partial else ""
         s.update(misses=miss, errors_positive=pos, errors_negative=neg,
-                 rule1=f"{'refuted' if r1 else 'not refuted'}: {miss} misses (limit more than {MISS_LIMIT})",
-                 rule2=(f"{'refuted' if r2 else 'not refuted'}: {max(pos, neg)} errors of one sign "
-                        f"(limit more than {SIGN_LIMIT})"),
+                 rule1=f"{'refuted' if r1 else 'not refuted'}: {miss} misses of {len(scored)} scored (limit more than {MISS_LIMIT}{share})",
+                 rule2=(f"{'refuted' if r2 else 'not refuted'}: {max(pos, neg)} errors of one sign of {len(scored)} scored "
+                        f"(limit more than {SIGN_LIMIT}{share})"),
                  rule3=f"applied: {len(scored)} of {len(counted)} rows scored")
         refuted = r1 or r2
         if plat == K.M33_PLATFORM:
