@@ -11,6 +11,10 @@ or corrected (a third look settled a value). Third look results are applied as f
     comparability warning, so the disagreement is settled in the record;
   * wording fields judged not_in_source or ambiguous_source: noted in the warning.
 All other rows stay in staging and are listed with their reason in data/verify6/not_promoted.csv.
+
+Rows listed in data/raw/S13_demoted.csv (id, date, rule, reason, finding) are not promoted even when
+they were double read: a later review found that they break a written inclusion or exclusion rule
+of data/raw/S13_protocol.csv. Their reason is written to data/verify6/not_promoted.csv as well.
 """
 import csv
 import sys
@@ -24,6 +28,15 @@ RAW = ROOT / "data" / "raw"
 V = ROOT / "data" / "verify6"
 OUT = RAW / "S13_verified.csv"
 DATE = "2026-10-21"
+DEMOTED = RAW / "S13_demoted.csv"
+
+
+def demoted():
+    """id -> 'demoted after review on <date> (<rule>): <reason>' from data/raw/S13_demoted.csv."""
+    if not DEMOTED.exists():
+        return {}
+    with open(DEMOTED, newline="", encoding="utf-8") as fh:
+        return {r["id"]: f"demoted after review on {r['date']} ({r['rule']}): {r['reason']}" for r in csv.DictReader(fh)}
 
 
 def main():
@@ -31,6 +44,10 @@ def main():
     with open(RAW / "S13_staged.csv", newline="", encoding="utf-8") as fh:
         header = csv.DictReader(fh).fieldnames
     blocked = {i: f"{s}: {why}" for i, (s, why) in status.items() if s not in ("confirmed", "corrected")}
+    for i, why in demoted().items():
+        if i not in stage:
+            sys.exit(f"demoted id {i} is not a staged row")
+        blocked[i] = f"{blocked[i]}; {why}" if i in blocked else why
     out = []
     for rid, r in stage.items():
         if rid in blocked:
