@@ -7,6 +7,8 @@ date: "Evidence retrieved 2026-10-11 to 2026-10-20 (Asia/Dubai)"
 
 > **How to read the labels.** **Published** = a number or fact copied from a source that was actually retrieved during this review (source and retrieval date in `data/evidence.csv` and Appendix A). **Host measured** = run on a PC (the first round on an x86 server, the second round on a laptop virtual machine); never comparable to a microcontroller. **Emulated** = run in QEMU on a Cortex-M4 or Cortex-M33 model, cross checked in Renode on an STM32F4 model: correctness, stack and image size only, never cycles (`docs/EMULATOR_RESULTS.md`). **Estimated** (derived) = my arithmetic, formula shown. *Inference* is not a label for numbers: it marks a sentence that is my reasoning, not stated by a source. **Planned** = to be measured on your hardware. No number in this report was measured on a microcontroller, and no estimate is presented as a measurement. Standards and guidance marked *in flux* may have changed after 2026-10-11.
 
+> **Update after round 5 (2026-10-21).** This report is the evidence review. Its evidence table counts are current, but its fleet result assumed the free memory a flight stack leaves; measured flight stack memory raised the replacement share (`docs/FLIGHTSTACK_STUDY.md`). Results from the ns-3 simulator, the ProVerif verifier and software in the loop runs are not in this report; the current study is `docs/PAPER.md`.
+
 # 1. Summary
 
 **The question.** What does it cost to move the computers inside small drones and robots (Cortex-M4/M33-class microcontrollers and similar) to post quantum cryptography (PQC), and how can fleets already in the field migrate?
