@@ -1,0 +1,7 @@
+label,item,quantity,source,purchase_count,used_in
+planned,NUCLEO-L4R5ZI development board with USB cable,1,borrowed from a university or partner lab,0,T1 T2
+planned,NUCLEO-L552ZE-Q development board with USB cable,1,borrowed from a university or partner lab,0,T1
+planned,Digital multimeter with a mA range and two leads with jumper sockets,1,borrowed from a university or partner lab,0,T2
+planned,SiK class telemetry radio pair,1,borrowed from a university or partner lab,0,T5
+planned,Flight controller of a board class in data/reference_profiles.csv,1,borrowed (optional; a partner profile can replace it),0,T7
+planned,Laptop with free tools (OpenOCD or st-flash; Python; ns-3; ProVerif),1,owned by the author,0,T1 to T11

@@ -1,0 +1,8 @@
+label,id,month,milestone,evidence_file,decision_gate
+planned,M1,1,Board logs of both cache passes parsed with no unrecognised line,bench/board_kit/ONE_AFTERNOON.md,go if every counted row shows the caches off conditions; otherwise report a check of conditions only and book a second session
+planned,M2,2,Board predictions scored by script,docs/PREDICTIONS_V5_BOARD.md,if H1 is refuted on the Cortex-M4 board then refit the cycle model on board data before any further cycle claim
+planned,M3,3,Software in the loop comparison filled,docs/PROPOSAL_ROBOTICS.md section 3.2,if the added latency misses the control deadline (H3) then stop and redesign the session layer before hardware in the loop
+planned,M4,5,Radio handshake measured,docs/NETSIM_STUDY.md,if H2 is refuted then model the radio MAC from the measurements before the fleet rerun
+planned,M5,7,Fleet rerun with a run time memory profile,docs/FLIGHTSTACK_STUDY.md,if H4 is refuted then the design note recommends hardware replacement for that board class
+planned,M6,8,Design note updated with the second formal pass,docs/FORMAL_VERIFICATION.md,a new counterexample blocks the release until a design change is proved
+planned,M7,12,Dataset release and paper submitted,docs/PROPOSAL_ROBOTICS.md,supervisor review

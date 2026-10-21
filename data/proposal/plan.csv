@@ -1,0 +1,12 @@
+label,id,phase,task,start_month,end_month,deliverable,depends_on
+planned,T1,1 board session,Borrowed NUCLEO-L4R5ZI and NUCLEO-L552ZE-Q: run the caches off and caches on passes of bench/board_kit/ONE_AFTERNOON.md,1,1,D1,
+planned,T2,1 board session,Score docs/PREDICTIONS_V4_BOARD.md and docs/PREDICTIONS_V5_BOARD.md by script; energy block with a borrowed multimeter,1,2,D1,T1
+planned,T3,2 software in the loop,Session layer in front of the command stream of a pinned flight stack in software in the loop; fill the comparison with the mission study,2,3,D3,
+planned,T4,2 software in the loop,Run time heap and stack use of the flight stack with the session layer (software in the loop first),3,4,D4,T3
+planned,T5,3 hardware in the loop,Borrowed SiK class radio pair: handshake rekey and update transfer timing,3,5,D2,T1
+planned,T6,3 hardware in the loop,ns-3 rerun with the four flight handshake and comparison with the radio measurement,4,5,D2,T5
+planned,T7,4 fleet and inventory,Partner flight controller profile or a board run with the flight stack; rerun the fleet study and the inventory template,5,7,D4,T4
+planned,T8,4 fleet and inventory,Acquisition checklist: free memory and clock thresholds per device class,6,7,D5,T7
+planned,T9,5 formal and design,Formal model of the rekey grace period and timestamp window; update the session design note,4,8,D3,T3
+planned,T10,6 release,Reference design note and dataset release with provenance,8,10,D6,T6
+planned,T11,6 release,Paper and teaching note,9,12,D6,T10
