@@ -468,7 +468,7 @@ The difference arises because this model acknowledges each flight once, while `l
 - X25519 and Ed25519 cycles come from Cortex-M4 rows (S12A-332 with clock not stated, S12A-331 at 24 MHz) and are applied at 168 MHz; the wait state factor is applied only to the zero wait state rows; the per message tag cost has no published row; it is derived from published SHA-256 throughput as one HMAC-SHA256 over a 64 B message (`data/shared_inputs.csv` mac_cycles_per_message) and swept.
 - Ground station compute is ignored. One vehicle, one ground station, no contention from other users of the band.
 - Security properties of the session and update design were checked only in an abstract model (`docs/FORMAL_VERIFICATION.md`); it does not cover timing, side channels, implementation or denial of service.
-- The software in the loop step was skipped: no Docker daemon is available and building a PX4 or ArduPilot simulator from source did not fit the 30 minute time box on this two core host, so message counts come from the traffic table, not from a simulator.
+- Message counts come from the traffic table, not from a simulator. A later software in the loop study with ArduPilot (`docs/SITL_STUDY.md`) compares the latency and availability of this study with a flight stack behind an emulated link.
 
 ## 9. Reproduction
 
