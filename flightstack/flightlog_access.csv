@@ -1,0 +1,7 @@
+url,retrieved_utc,finding,decision,label
+https://review.px4.io/,2026-10-20T23:13Z,fetch refused by the site (robots rules disallow automated access),not used,published
+https://review.px4.io/robots.txt,2026-10-20T23:14Z,User-agent * Allow / and Disallow /* (every path below the root page is disallowed),not used,published
+https://logs.px4.io/robots.txt,2026-10-20T23:14Z,User-agent * Allow / and Disallow /* (same rules as review.px4.io),not used,published
+https://logs.px4.io/,2026-10-20T23:13Z,upload page; states that public log files can be browsed; no terms of use and no licence for uploaded logs,not used,published
+https://logs.px4.io/browse,2026-10-20T23:15Z,browse page names a script for automated download of public log files; no terms of use and no licence for the logs,not used: the robots rules disallow this path and no licence for reuse of the logs is stated,published
+https://github.com/PX4/flight_review,2026-10-20T23:16Z,repository README covers upload and server setup; no statement on reuse of public logs; code licence BSD 3 clause,not used,published
