@@ -14,7 +14,7 @@ What does migrating to post quantum cryptography (ML-KEM / FIPS 203, ML-DSA / FI
 | S1 Standards | What is the status and timeline of NIST and national/regional migration guidance (US, UK, EU, others)? Is there any UAE or Gulf guidance? | `data/raw/S1_standards.md` |
 | S2 Benchmarks | What do published results report for ML-KEM, ML-DSA, SLH-DSA, LMS, XMSS on Cortex-M4/M33 and similar devices? | `data/raw/S2_benchmarks.md`, `data/raw/S2_evidence.csv` |
 | S3 Drone/robot | What are the protocol level facts for MAVLink signing, ROS 2 / SROS2 / DDS-Security, secure boot, OTA signing, constrained telemetry radios, hybrid modes, crypto agility, hardware acceleration, side channel and fault considerations (conceptual only)? | `data/raw/S3_robotics.md`, `data/raw/S3_evidence.csv` |
-| S4 Migration | What can a deployed fleet do by firmware update vs hardware change? How does firmware signing migration differ from session key migration? Which data needs long term confidentiality (harvest-now-decrypt-later) vs authenticity only? | `data/raw/S4_migration.md` |
+| S4 Migration | What can a deployed fleet do by firmware update vs hardware change? How does firmware signing migration differ from session key migration? Which data needs long term confidentiality (harvest now, decrypt later) vs authenticity only? | `data/raw/S4_migration.md` |
 
 ## 3. Search strategy
 
