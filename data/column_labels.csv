@@ -49,3 +49,46 @@ planner/results/scenarios.csv,HYBRID,estimated,planner output count
 planner/results/scenarios.csv,HARDWARE_REPLACEMENT,estimated,planner output count
 planner/results/scenarios.csv,NO_ACTION_BEFORE_RETIREMENT,estimated,planner output count
 planner/results/scenarios.csv,UNKNOWN,estimated,planner output count
+netsim/results/gap_sweep.csv,cell,key,ns-3 cell id (netsim/cells.py)
+netsim/results/gap_sweep.csv,group,key,scenario group
+netsim/results/gap_sweep.csv,cause,key,swept cause
+netsim/results/gap_sweep.csv,value,key,value of the cause
+netsim/results/gap_sweep.csv,time_mean_s_simulated_network,simulated (network),ns-3 mean transfer time over the cell's runs
+netsim/results/gap_sweep.csv,time_ci_lo_s_simulated_network,simulated (network),lower end of the 95 percent t interval of the ns-3 mean
+netsim/results/gap_sweep.csv,time_ci_hi_s_simulated_network,simulated (network),upper end of the 95 percent t interval of the ns-3 mean
+netsim/results/gap_sweep.csv,completed_simulated_network,simulated (network),ns-3 runs that completed out of runs
+netsim/results/gap_sweep.csv,time_s_modelled,modelled,linksim diagnosis (steps 1 to 6) at the same setting
+netsim/results/gap_sweep.csv,range_low_s_published,published,low end of the ePrint 2021/781 prose range
+netsim/results/gap_sweep.csv,range_high_s_published,published,high end of the ePrint 2021/781 prose range
+netsim/results/gap_sweep.csv,err_ns3_vs_low_pct,simulated (network),"ns-3 mean over the published low end minus 1, percent"
+netsim/results/gap_sweep.csv,err_model_vs_ns3_pct,modelled,"linksim over the ns-3 mean minus 1, percent"
+netsim/results/gap_sweep.csv,in_published_range,simulated (network),whether the ns-3 mean lies in the published range
+netsim/results/gap_sweep.csv,agrees_with,simulated (network),verdict of the ns-3 mean against the model (within 20 percent) and the published range
+netsim/results/gap_sweep.csv,model_note,key,what linksim models at this setting
+netsim/results/validation.csv,figure,key,figure compared
+netsim/results/validation.csv,unit,key,unit
+netsim/results/validation.csv,value_published,published,published value (empty when none)
+netsim/results/validation.csv,value_simulated_network,simulated (network),ns-3 value
+netsim/results/validation.csv,value_modelled,modelled,linksim value
+netsim/results/validation.csv,err_simulated_network_vs_published_pct,simulated (network),"ns-3 over published minus 1, percent"
+netsim/results/validation.csv,err_modelled_vs_published_pct,modelled,"linksim over published minus 1, percent"
+netsim/results/validation.csv,err_modelled_vs_simulated_network_pct,modelled,"linksim over ns-3 minus 1, percent"
+netsim/results/validation.csv,note,key,role of the row
+netsim/results/lora_toa_compare.csv,dr,key,EU868 data rate index
+netsim/results/lora_toa_compare.csv,phy_payload_bytes,key,LoRa PHY payload bytes
+netsim/results/lora_toa_compare.csv,toa_ms_simulated_network,simulated (network),time on air from the lorawan module
+netsim/results/lora_toa_compare.csv,toa_ms_modelled,modelled,time on air from linksim/lora.py
+netsim/results/lora_toa_compare.csv,diff_ms,modelled,linksim minus ns-3
+netsim/results/lora_toa_compare.csv,err_model_vs_ns3_pct,modelled,"linksim over ns-3 minus 1, percent"
+netsim/results/lora_flights_compare.csv,protocol,key,protocol profile
+netsim/results/lora_flights_compare.csv,dr,key,EU868 data rate index
+netsim/results/lora_flights_compare.csv,fragments_simulated_network,simulated (network),fragments sent in ns-3
+netsim/results/lora_flights_compare.csv,fragments_modelled,modelled,fragments in linksim
+netsim/results/lora_flights_compare.csv,handshake_s_simulated_network,simulated (network),ns-3 time from the first frame start to the last frame end
+netsim/results/lora_flights_compare.csv,blast_s_modelled,modelled,"linksim fragments back to back under the duty cycle, no acknowledgements"
+netsim/results/lora_flights_compare.csv,protocol_sim_s_modelled,modelled,"linksim protocol simulation with selective repeat, handshake_mean_s at zero loss"
+netsim/results/lora_flights_compare.csv,err_blast_vs_ns3_pct,modelled,"blast over ns-3 minus 1, percent"
+netsim/results/lora_flights_compare.csv,err_protocol_sim_vs_ns3_pct,modelled,"protocol simulation over ns-3 minus 1, percent"
+netsim/results/lora_flights_compare.csv,blast_9b_s_modelled,modelled,linksim blast with the module's 9 B frame overhead in place of 13 B
+netsim/results/lora_flights_compare.csv,err_blast_9b_vs_ns3_pct,modelled,"blast with 9 B over ns-3 minus 1, percent"
+netsim/results/gap_sweep.csv,stuck_runs_simulated_network,simulated (network),runs in which a line node stayed in BUSY_RX for more than 1 s up to the end

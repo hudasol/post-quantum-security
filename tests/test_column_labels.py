@@ -4,7 +4,8 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-VOCAB = {"key", "per row", "published", "host measured", "emulated", "estimated", "modelled", "RTL simulated", "planned"}
+VOCAB = {"key", "per row", "published", "host measured", "emulated", "estimated", "modelled", "RTL simulated", "planned",
+         "simulated (network)"}
 
 
 class TestColumnLabels(unittest.TestCase):
