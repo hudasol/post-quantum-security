@@ -20,14 +20,14 @@ TITLES = {
 }
 # Pages that were requested during the retrieval pass but not returned. They are listed, not used.
 NOT_RETRIEVED = [
-    ("https://www.tii.ae/cryptography", "request not approved; the same page was later retrieved at https://tii.ae/cryptography"),
-    ("https://www.tii.ae/about-us", "request not approved"),
-    ("https://www.atrc.gov.ae/", "request not approved"),
-    ("https://www.atrc.gov.ae/about-atrc", "request not approved (redirect target of https://atrc.ae/about-atrc)"),
-    ("https://edgegroup.ae/share/print/news/765", "request not approved (redirect target of an older domain)"),
-    ("https://edgegroup.ae/share/pdf/news/998", "request not approved (redirect target of an older domain)"),
-    ("https://edgegroup.ae/share/print/news/820", "request not approved (redirect target of an older domain)"),
-    ("https://edgegroup.ae/share/pdf/news/756", "request not approved (redirect target of an older domain)"),
+    ("https://www.tii.ae/cryptography", "not retrieved; the same page was later retrieved at https://tii.ae/cryptography"),
+    ("https://www.tii.ae/about-us", "not retrieved"),
+    ("https://www.atrc.gov.ae/", "not retrieved"),
+    ("https://www.atrc.gov.ae/about-atrc", "not retrieved (redirect target of https://atrc.ae/about-atrc)"),
+    ("https://edgegroup.ae/share/print/news/765", "not retrieved (redirect target of an older domain)"),
+    ("https://edgegroup.ae/share/pdf/news/998", "not retrieved (redirect target of an older domain)"),
+    ("https://edgegroup.ae/share/print/news/820", "not retrieved (redirect target of an older domain)"),
+    ("https://edgegroup.ae/share/pdf/news/756", "not retrieved (redirect target of an older domain)"),
 ]
 
 

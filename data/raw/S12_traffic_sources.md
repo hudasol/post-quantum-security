@@ -30,9 +30,9 @@ The common message definitions page on mavlink.io could not be retrieved (see Se
 
 | URL | result |
 |---|---|
-| https://mavlink.io/en/messages/common.html | access to the site not granted in time in time; not retried |
-| https://ardupilot.org/copter/docs/parameters.html | access to the site not granted in time in time; not retried |
-| https://fast-dds.docs.eprosima.com/en/latest/fastdds/security/crypto_plugin/crypto_plugin.html | access to the site not granted in time in time (redirect target of the eProsima readthedocs URL); not retried |
+| https://mavlink.io/en/messages/common.html | fetch not completed; not retried |
+| https://ardupilot.org/copter/docs/parameters.html | fetch not completed; not retried |
+| https://fast-dds.docs.eprosima.com/en/latest/fastdds/security/crypto_plugin/crypto_plugin.html | fetch not completed (redirect target of the eProsima readthedocs URL); not retried |
 
 ## 5. Search queries run (web search)
 
