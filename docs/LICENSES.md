@@ -15,6 +15,9 @@ Author: Huda Mueen. Generated facts in `data/third_party_licences.csv` by `scrip
 | ProVerif | WP4 formal verification of the session and update design (tool only, built outside the repository by `formal/install.sh`) | version 2.05, tarball SHA-256 in `formal/proverif.sha256` | LICENSE in the tarball | GPL-2.0 |
 | ns-3 | WP3 network simulation (fetched and built outside the repository by `netsim/fetch_build.sh`; `netsim/scenarios/*.cc` compile against it) | tag ns-3.48 | LICENSE | GPL-2.0-only (most files) |
 | signetlabdei lorawan module | WP3 LoRaWAN simulation (fetched by the same script) | v0.3.7, commit a13219eebab6 | LICENSE and source headers | GPL-2.0 (headers state GPL-2.0-only) |
+| PX4-Autopilot | WP1 firmware builds for memory use; WP2 software in the loop (fetched by `flightstack/fetch.sh`, built outside the repository) | v1.17.0, commit d6f12ad1c4f7 | LICENSE | BSD-3-Clause |
+| ArduPilot | WP1 firmware builds for memory use (fetched by `flightstack/fetch.sh`); only section headers, the linker MEMORY block and some board definition values are kept, as data, in `data/flightstack/raw/` | Copter-4.7.2, commit fb773567896014 | COPYING.txt | GPL-3.0 |
+| CrashDebug | ArduPilot H7 build dependency, build time only | as pinned by ArduPilot Copter-4.7.2 | LICENSE | GPL-2.0 |
 
 Notes:
 
