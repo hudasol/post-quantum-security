@@ -24,9 +24,9 @@ Every included value was then read by two independent readers (`docs/VERIFICATIO
 | records returned | 675 |
 | records screened | 674 |
 | read in full | 88 |
-| included (sources with at least one extracted value) | 462 |
+| included (as logged per search: evidence rows or facts taken, not sources) | 462 |
 
-Counts are summed over searches; a source found by several searches is counted once per search.
+Counts are summed over searches; a source found by several searches is counted once per search. The round 4 logs recorded in the included column the number of rows or facts taken from the search, so it can exceed the number read in full.
 
 ## Round 4 searches
 
@@ -147,12 +147,12 @@ Counts are summed over searches; a source found by several searches is counted o
 
 ## Round 5 protocol (stream S13)
 
-Read from `data/raw/S13_protocol.csv`, written before the first round 5 result was screened.
+Read from `data/raw/S13_protocol.csv`. The row 'written' states that the protocol was written before the first round 5 query was screened. The git history does not evidence this timing: the protocol was first committed in the same commit (68c0ae2) as the search log and the screening file, and no hash of it is recorded in the repository. Rows named deviation were added on the date they state, after screening and after review, and are disclosed as deviations from the protocol as first written.
 
 | item | rule |
 |---|---|
 | question | What published measurements exist of the cycle count and memory cost of post quantum and classical baseline signature and key establishment schemes on microcontroller class cores, for the gaps left after round 4: final standard SLH-DSA and FN-DSA, HQC, Cortex-M33, M55 and M85, RISC-V microcontroller cores, ESP32 class devices, stateful hash based signature verification, the overhead of implementations hardened against physical attacks, and the 168 MHz Ed25519 rows of Owens et al. |
-| written | 2026-10-20, before the first round 5 query was screened |
+| written | 2026-10-20, before the first round 5 query was screened, as stated when the file was written. The git history does not evidence this timing: the file was first committed in the same commit as the search log, the screening file and the flow counts, and no hash of it is recorded in the repository (disclosed on 2026-10-21 after review) |
 | date window | publications of any year up to the search date; searches run on 2026-10-20 (UTC) |
 | database 1 | IACR ePrint and IACR TCHES (open access article pages and PDFs) |
 | database 2 | arXiv (public API, scripts/fetch_s13_arxiv.py, and arXiv PDFs) |
@@ -171,6 +171,9 @@ Read from `data/raw/S13_protocol.csv`, written before the first round 5 result w
 | exclusion 4 | sources that could not be retrieved; refusals are recorded and not worked around |
 | exclusion 5 | descriptions of attacks or of countermeasure techniques (only cost figures of hardened implementations are taken) |
 | verification | every staged row is read by two independent readers on blank sheets (scripts/verify6_sheets.py); every value and every wording disagreement gets a third look |
+| deviation 1 | 2026-10-21, written after screening and after the review, disclosed: inclusion 5 (gap rule). A source is included only if at least one of its rows answers a named gap of the question: final standard SLH-DSA or FN-DSA (or the provisional FN-DSA parameters while FIPS 206 is not final), HQC, a Cortex-M33, M55 or M85 core, a RISC-V microcontroller core, an ESP32 class device, stateful hash based signature verification, a hardened and unhardened pair, or the 168 MHz Ed25519 rows of Owens et al. Screening already applied this rule ('outside the round 5 gap list') without it being written down; it is now applied to every source, which demoted the Falcon round 2 rows of Pornin 2019 |
+| deviation 2 | 2026-10-21, after review: rows that break a written rule after double reading are demoted, not deleted: they stay in data/raw/S13_staged.csv and are listed with rule and reason in data/raw/S13_demoted.csv; scripts/promote_s13.py keeps them out of data/raw/S13_verified.csv |
+| deviation 3 | 2026-10-21, after review: values read only through a summarising web fetch tool count as a summary under inclusion 4; such rows are demoted until the full text is read directly |
 
 ## Round 5 flow
 
@@ -184,10 +187,10 @@ Counts from `data/raw/S13_prisma.csv`.
 | eligible (abstract or full text assessed) | 35 | distinct records in S13_screening.csv |
 | not retrieved | 3 | records whose full text could not be retrieved |
 | full text assessed | 26 | stage_reached = full text |
-| excluded after abstract or full text | 19 | decision = excluded, any stage |
-| included sources | 16 | decision = included |
+| excluded after abstract or full text | 23 | decision = excluded, any stage |
+| included sources | 12 | decision = included |
 | staged rows | 265 | rows of S13_staged.csv |
-| rows confirmed by two readers and promoted | 234 | rows of S13_verified.csv |
+| rows confirmed by two readers and promoted | 202 | rows of S13_verified.csv |
 
 Exclusions after an abstract or full text was assessed, by reason:
 
@@ -199,7 +202,10 @@ Exclusions after an abstract or full text was assessed, by reason:
 | application processor core (RV64) | 1 |
 | application processor core (XuanTie C908) | 1 |
 | coprocessor ASIC and FPGA design, not a microcontroller core | 1 |
-| duplicate of a source already in data/evidence.csv | 1 |
+| excluded after review on 2026-10-21 (exclusion 1): SiFive U54 is an RV64 application core, as the excluded U74 and C908 sources; 10 staged rows demoted (data/raw/S13_demoted.csv) | 1 |
+| excluded after review on 2026-10-21 (inclusion 3): Saber is a round 3 finalist that was not selected and the rows are not a hardened and unhardened pair; 18 staged rows demoted (data/raw/S13_demoted.csv) | 1 |
+| excluded after review on 2026-10-21 (inclusion 4 and exclusion 4): values read only through a summarising web fetch tool after curl was refused; 4 staged rows demoted (data/raw/S13_demoted.csv); can return when the PDF is read directly | 1 |
+| excluded after review on 2026-10-21 (inclusion 5, gap rule written down as protocol deviation_1): Falcon round 2 on Cortex-M4 fills no named gap; 10 staged rows demoted (data/raw/S13_demoted.csv) | 1 |
 | full text not retrieved in the time available; abstract gives only a relative figure | 1 |
 | full text not retrieved in the time available; abstract names no platform | 1 |
 | no per operation cost (firmware footprint and protocol latency) | 1 |
@@ -211,6 +217,7 @@ Exclusions after an abstract or full text was assessed, by reason:
 | outside the round 5 gap list (Cortex-M4 round 3 Kyber) | 1 |
 | standalone hardware accelerator without a processor core | 1 |
 | times without a stated clock and no cycle counts | 1 |
+| values already taken from the authors' conference slides of the same work (pq_signatures_riscv.pdf, rows S12A-412 to S12A-419); the paper itself was not assessed, so whether it repeats the slide values is not checked (reason corrected on 2026-10-21) | 1 |
 | values only in a figure | 1 |
 
 Flow diagram (text form):
@@ -225,13 +232,13 @@ Flow diagram (text form):
 [ eligible: 35 ]
         |
         v
-[ included sources: 16 ]
+[ included sources: 12 ]
         |
         v
 [ staged rows: 265 ]
         |
         v
-[ double read and promoted: 234 ]
+[ double read and promoted: 202 ]
 ```
 
 ## Round 5 records assessed beyond the title
@@ -241,18 +248,18 @@ Flow diagram (text form):
 | pqm4 benchmarks.csv at commit e1146b1 | D03 | full text | included |  | 21 |
 | Owens et al., Efficient and Side-Channel Resistant Ed25519 on ARM Cortex-M4 | D06 | full text | included |  | 7 |
 | Bos et al., Masking Kyber (TCHES 2021) | W09 | full text | included |  | 23 |
-| Becker et al., Polynomial multiplication on embedded vector architectures (TCHES 2022) | W06 | full text | included |  | 18 |
+| Becker et al., Polynomial multiplication on embedded vector architectures (TCHES 2022) | W06 | full text | excluded | excluded after review on 2026-10-21 (inclusion 3): Saber is a round 3 finalist that was not selected and the rows are not a hardened and unhardened pair; 18 staged rows demoted (data/raw/S13_demoted.csv) | 18 |
 | Abdulrahman et al., Fast and Clean (TCHES 2024) | W11 | full text | included |  | 17 |
 | Segatz and Hafiz, Kyber on ESP32 (arXiv 2503.10207) | W04 | full text | included |  | 15 |
-| Pornin, New Efficient Constant-Time Implementations of Falcon (2019) | W15 | full text | included |  | 10 |
+| Pornin, New Efficient Constant-Time Implementations of Falcon (2019) | W15 | full text | excluded | excluded after review on 2026-10-21 (inclusion 5, gap rule written down as protocol deviation_1): Falcon round 2 on Cortex-M4 fills no named gap; 10 staged rows demoted (data/raw/S13_demoted.csv) | 10 |
 | Jang et al., HQC on Cortex-M4 (arXiv 2608.18145) | W16 | full text | included |  | 15 |
 | Additive FFTs for HQC on ARM Cortex-M4, Revisited | W17 | full text | included |  | 9 |
-| Wang et al., HW/SW co-design Kyber and Dilithium on RISC-V SoC FPGA (TCHES 2024) | W21 | full text | included |  | 10 |
+| Wang et al., HW/SW co-design Kyber and Dilithium on RISC-V SoC FPGA (TCHES 2024) | W21 | full text | excluded | excluded after review on 2026-10-21 (exclusion 1): SiFive U54 is an RV64 application core, as the excluded U74 and C908 sources; 10 staged rows demoted (data/raw/S13_demoted.csv) | 10 |
 | wolfBoot on NXP Kinetis KL26 with LMS (wolfSSL blog) | W13 | full text | included |  | 2 |
 | Saarinen, Accelerating SLH-DSA (SLotH) | W01 | full text | included |  | 48 |
 | Alkim et al., ISA Extensions for Finite Field Arithmetic (TCHES 2020) | W22 | full text | included |  | 18 |
 | Fritzmann et al., Masked Accelerators and ISA Extensions (TCHES 2022) | W23 | full text | included |  | 12 |
-| Pornin, A RAM-Efficient Implementation of Falcon (ePrint 2026/1915) | W15 | full text | included |  | 4 |
+| Pornin, A RAM-Efficient Implementation of Falcon (ePrint 2026/1915) | W15 | full text | excluded | excluded after review on 2026-10-21 (inclusion 4 and exclusion 4): values read only through a summarising web fetch tool after curl was refused; 4 staged rows demoted (data/raw/S13_demoted.csv); can return when the PDF is read directly | 4 |
 | Javaid et al., Implementation-Hardened RBLWE on Cortex-M (arXiv 2610.07820) | AX2 | full text | included |  | 36 |
 | Zhang et al., Keccak, Kyber and Dilithium on RV{32,64}IM{B}{V} (TCHES 2025) | W03 | full text | excluded | application processor core (XuanTie C908) | 0 |
 | Huang et al., Improved Plantard Arithmetic (TCHES 2022) | W07 | full text | excluded | outside the round 5 gap list (Cortex-M4 round 3 Kyber) | 0 |
@@ -269,10 +276,21 @@ Flow diagram (text form):
 | Halmans et al., Fixed-Point Falcon (ePrint 2026/2431) | W15 | abstract | excluded | full text not retrieved in the time available; abstract gives only a relative figure | 0 |
 | Carril et al., PQCUARK (ePrint 2025/2178) | W20 | abstract | excluded | application processor core (RV64) | 0 |
 | Kannwischer et al., pqm4 additional signatures (ePrint 2024/112) | W18 | abstract | excluded | outside the round 5 gap list (Cortex-M4 additional signature candidates) | 0 |
-| Karl et al., Post-Quantum Signatures on RISC-V with Hardware Acceleration (ePrint 2022/538) | W26 | abstract | excluded | duplicate of a source already in data/evidence.csv | 0 |
+| Karl et al., Post-Quantum Signatures on RISC-V with Hardware Acceleration (ePrint 2022/538) | W26 | abstract | excluded | values already taken from the authors' conference slides of the same work (pq_signatures_riscv.pdf, rows S12A-412 to S12A-419); the paper itself was not assessed, so whether it repeats the slide values is not checked (reason corrected on 2026-10-21) | 0 |
 | SBRC 2026 paper (sol.sbc.org.br sbrc 42308) | W14 | not retrieved | excluded | not retrieved (connection reset) | 0 |
 | ST X-CUBE-PQC data brief | W26 | not retrieved | excluded | not retrieved (HTTP/2 stream error) | 0 |
 | DATE 2026 paper 1261 | W28 | not retrieved | excluded | not retrieved (HTTP 404) | 0 |
+
+## Round 5 rows demoted after review
+
+Rows that were double read but break a written rule are kept in staging and out of the evidence table (`data/raw/S13_demoted.csv`, applied by `scripts/promote_s13.py`).
+
+| source | rows | rule | reason | date |
+|---|---|---|---|---|
+| Polynomial multiplication on embedded vector architectures. Hanno Becker, Jose Maria Bermu | 18 (S13-052 to S13-069) | inclusion 3 | Saber is a round 3 finalist that NIST did not select, and these Cortex-M55 rows compare two unhardened multiplication strategies, not a hardened and unhardened pair; inclusion 3 does not admit them | 2026-10-21 |
+| New Efficient, Constant-Time Implementations of Falcon. Thomas Pornin (NCC Group), 2019-08 | 10 (S13-102 to S13-111) | inclusion 5 (gap rule, written down on 2026-10-21, see protocol deviation_1) | Falcon round 2 on Cortex-M4 at 168 MHz fills no named gap of the round 5 question (not final standard FN-DSA, Cortex-M4 is not a gap core, no hardened pair); the same rule excluded arXiv 2606.15744, TCHES 9833 and ePrint 2024/112 at screening | 2026-10-21 |
+| A RAM-Efficient Implementation of Falcon. Thomas Pornin (NCC Group), IACR ePrint 2026/1915 | 4 (S13-226 to S13-229) | inclusion 4 and exclusion 4 | both readers and the third reader read Table 1 only through a summarising web fetch tool after curl to eprint.iacr.org was refused; inclusion 4 forbids values from a summary alone and exclusion 4 forbids working around a refusal; the rows can return when the PDF is read directly | 2026-10-21 |
+| Optimized Hardware-Software Co-Design for Kyber and Dilithium on RISC-V SoC FPGA. Tengfei  | 10 (S13-136 to S13-145) | exclusion 1 | the SiFive U54 is an RV64 application core; the same rule excluded the U74 and C908 sources at screening (these rows were already not promoted because no reader confirmed the code size) | 2026-10-21 |
 
 ## Round 5 queries
 
@@ -283,22 +301,22 @@ Flow diagram (text form):
 | W03 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | post-quantum Kyber Dilithium RISC-V microcontroller cycles RV32IMC implementation | 9 | 9 | 1 | 0 | 9 | TCHES 2025 RISC-V paper read in full: XuanTie C908 application class core; ePrint 2023/1505 abstract names no platform, full text not retrieved; mirrors |
 | W04 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | ESP32 post-quantum Kyber Dilithium benchmark clock cycles | 9 | 9 | 1 | 1 | 8 | ETASR and arXiv 2106.05577 already in data/evidence.csv; surveys; arXiv 2503.12952 and preprints.org not assessed |
 | W05 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | Cortex-M33 post-quantum ML-KEM benchmark cycles TrustZone | 9 | 9 | 0 | 0 | 9 | accelerator and cloud papers; CHERIoT and wolfSSL already in data/evidence.csv; host benchmarks; abstract only pages |
-| W06 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | tches.iacr.org "Polynomial multiplication on embedded vector architectures" Cortex-M55 | 9 | 9 | 1 | 1 | 8 | mirrors of the same article; other ePrint and SBSeg items not assessed |
+| W06 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | tches.iacr.org "Polynomial multiplication on embedded vector architectures" Cortex-M55 | 9 | 9 | 1 | 0 | 9 | mirrors of the same article; other ePrint and SBSeg items not assessed; after review on 2026-10-21: TCHES 9305 (Saber) excluded under inclusion 3 |
 | W07 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | tches.iacr.org Improved Plantard Arithmetic for Lattice-based Cryptography | 10 | 10 | 1 | 0 | 10 | read in full: Cortex-M4 round 3 Kyber only, outside the round 5 gap list; mirrors |
 | W08 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | "Yet another Improvement of Plantard Arithmetic" Kyber RISC-V Cortex-M3 eprint | 9 | 9 | 0 | 0 | 9 | arXiv 2309.00440 already in data/evidence.csv; mirrors |
 | W09 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | masked Kyber Cortex-M4 cycles first-order higher-order TCHES | 10 | 10 | 1 | 1 | 9 | ePrint 2022/058 and 2021/483 each already give one row; their full texts not retrieved this round; slides |
 | W10 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | XMSS LMS signature verification RISC-V microcontroller cycles hardware software co-design | 9 | 9 | 0 | 0 | 9 | ePrint 2018/1225 already in data/evidence.csv (NSF PAR copy); mirrors; ePrint 2019/1403 not assessed |
 | W11 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | Kyber Dilithium Cortex-M55 Cortex-M85 Helium NTT cycles SLOTHY "Fast and Clean" | 9 | 9 | 1 | 1 | 8 | mirrors, slides and repository pages |
-| W12 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | SLH-DSA SPHINCS+ microcontroller arXiv benchmark cycles 2025 FIPS 205 embedded | 9 | 9 | 2 | 1 | 8 | SPHINCSLET: standalone hardware accelerator without a processor core; ePrint 2025/2273 not assessed; draft without measurements |
+| W12 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | SLH-DSA SPHINCS+ microcontroller arXiv benchmark cycles 2025 FIPS 205 embedded | 9 | 9 | 2 | 0 | 9 | SPHINCSLET: standalone hardware accelerator without a processor core; ePrint 2025/2273 not assessed; draft without measurements; included corrected from 1 to 0 on 2026-10-21: the only record read in full and assessed (SPHINCSLET) was excluded in data/raw/S13_screening.csv |
 | W13 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | LMS signature verification microcontroller secure boot cycles Cortex-M0 hash-based | 9 | 9 | 1 | 1 | 8 | patents without measurements; thesis and other vendor posts not assessed |
 | W14 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | arXiv post-quantum ESP32 ESP32-C3 ML-KEM ML-DSA execution time microcontroller benchmark | 9 | 9 | 2 | 0 | 9 | arXiv 2603.10274: firmware footprint and DTLS latency only; SBSeg 2025 multicore ML-KEM: times in ms without a stated clock; SBRC paper refused (connection reset) |
-| W15 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | Falcon FN-DSA Cortex-M4 cycles constant-time implementation sign verify microcontroller | 10 | 10 | 3 | 2 | 8 | ePrint 2025/123 already in data/evidence.csv; ePrint 2026/2431 abstract gives only a relative figure, full text not retrieved; crate documentation |
+| W15 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | Falcon FN-DSA Cortex-M4 cycles constant-time implementation sign verify microcontroller | 10 | 10 | 3 | 0 | 10 | ePrint 2025/123 already in data/evidence.csv; ePrint 2026/2431 abstract gives only a relative figure, full text not retrieved; crate documentation; after review on 2026-10-21: Pornin 2019 (inclusion 5, gap rule) and ePrint 2026/1915 (inclusion 4, read only through a summarising tool) excluded |
 | W16 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | HQC Cortex-M4 optimized implementation cycles keygen encapsulation decapsulation | 9 | 9 | 1 | 1 | 8 | ePrint 2026/1450, 2026/739, 2022/1183, arXiv 2512.12904 and conference pages not assessed in the time available |
 | W17 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | "Additive FFTs for HQC on ARM Cortex-M4, revisited" | 9 | 9 | 1 | 1 | 8 | duplicates of W16 results; ePrint items not assessed |
 | W18 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | Dilithium Kyber Cortex-M33 STM32L5 OR STM32U5 OR nRF5340 cycles post-quantum benchmark paper | 9 | 9 | 1 | 0 | 9 | arXiv 2609.23902: Raspberry Pi (Cortex-A72); ePrint 2024/112 Cortex-M4 additional signatures, outside the gap list; others not assessed |
 | W19 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | Kyber Dilithium RISC-V PicoRV32 OR VexRiscv OR "SiFive E31" OR "GD32VF103" cycles implementation | 9 | 9 | 0 | 0 | 9 | core repositories without PQC measurements; artifact readme led to W22 |
 | W20 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | RP2350 Cortex-M33 Hazard3 RISC-V ML-KEM ML-DSA benchmark cycles | 9 | 9 | 0 | 0 | 9 | ePrint 2025/2178 (abstract): RV64 core; GPGPU design; encyclopaedia and news pages |
-| W21 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | "Optimized Hardware-Software Co-Design for Kyber and Dilithium on RISC-V SoC FPGA" TCHES | 9 | 9 | 1 | 1 | 8 | mirrors; PQ.V.ALU.E abstract names no platform |
+| W21 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | "Optimized Hardware-Software Co-Design for Kyber and Dilithium on RISC-V SoC FPGA" TCHES | 9 | 9 | 1 | 0 | 9 | mirrors; PQ.V.ALU.E abstract names no platform; after review on 2026-10-21: TCHES 11671 excluded under exclusion 1 (SiFive U54, RV64 application core) |
 | W22 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | tches.iacr.org "ISA Extensions for Finite Field Arithmetic" Kyber NewHope RISC-V | 10 | 10 | 1 | 1 | 9 | mirrors of the same article |
 | W23 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search | tches.iacr.org "Masked Accelerators and Instruction Set Extensions for Post-Quantum Cryptography" | 9 | 9 | 1 | 1 | 8 | mirrors and slides |
 | W24 | 2026-10-20 | WebSearch (search engine, Google Scholar style) | web search (forward snowballing) | papers citing "pqm4: Testing and Benchmarking NIST PQC on ARM Cortex-M4" Cortex-M33 OR RISC-V ML-DSA 2025 2026 | 10 | 10 | 1 | 0 | 10 | arXiv 2603.06149: Raspberry Pi and x86 only; arXiv 2603.19340 already in data/evidence.csv; ePrint 2024/112 outside the gap list |
@@ -322,7 +340,7 @@ Flow diagram (text form):
 | D04 | 2026-10-20 | curl | Semantic Scholar API | forward citations of the top cited sources | 0 | 0 | 0 | 0 | 0 | refused: HTTP 429 rate limit without an API key; forward snowballing done with W24 and W25 instead |
 | D05 | 2026-10-20 | curl | IACR ePrint | PDF download | 0 | 0 | 0 | 0 | 0 | refused for curl (browser challenge page); ePrint pages read with WebFetch instead |
 | D06 | 2026-10-20 | evidence table | data/evidence.csv | source of rows S12A-320 to S12A-331 (Owens et al., NSF PAR) | 1 | 1 | 1 | 1 | 0 | 24 MHz rows already in data/evidence.csv; the 168 MHz and scalar blinding rows taken |
-| B01 | 2026-10-20 | pdftotext and keyword filter | backward snowballing | reference lists of 13 of the 20 most cited sources available in full text (7 author supplied PDFs, TCHES 11419 and 8725, arXiv 2603.19340, 1912.00916, 2502.06033, 2604.15868, sopmac LMS vs XMSS); filter terms M33 M55 M85 Helium RISC-V ESP32 XMSS LMS HQC Falcon mask SLH SPHINCS M0 M3 | 55 | 55 | 5 | 5 | 50 | most matches already in data/evidence.csv or about attacks or masking techniques without cost tables; IEEE TC and ACM TECS items not retrievable; the remaining 7 top sources are data files, standards or vendor pages without reference lists |
+| B01 | 2026-10-20 | pdftotext and keyword filter | backward snowballing | reference lists of 13 of the 20 most cited sources available in full text (7 author supplied PDFs, TCHES 11419 and 8725, arXiv 2603.19340, 1912.00916, 2502.06033, 2604.15868, sopmac LMS vs XMSS); filter terms M33 M55 M85 Helium RISC-V ESP32 XMSS LMS HQC Falcon mask SLH SPHINCS M0 M3 | 55 | 55 | 5 | 0 | 50 | most matches already in data/evidence.csv or about attacks or masking techniques without cost tables; IEEE TC and ACM TECS items not retrievable; the remaining 7 top sources are data files, standards or vendor pages without reference lists; the 5 records read in full repeat sources that a search query had already found and that are counted as included under that query (which five was not recorded); included corrected from 5 to 0 on 2026-10-21 so that it matches data/raw/S13_screening.csv |
 
-A record found by several queries is counted once per query in the query table and once in the records table. The included column of the backward snowballing row repeats sources also found by searches.
+A record found by several queries is counted once per query in the query table and once in the records table. The included count of each query equals the number of included records whose found by entry names it; the backward snowballing row counts none because the sources it read in full had already been found by searches.
 

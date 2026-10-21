@@ -1,6 +1,6 @@
 key,value
 question,"What published measurements exist of the cycle count and memory cost of post quantum and classical baseline signature and key establishment schemes on microcontroller class cores, for the gaps left after round 4: final standard SLH-DSA and FN-DSA, HQC, Cortex-M33, M55 and M85, RISC-V microcontroller cores, ESP32 class devices, stateful hash based signature verification, the overhead of implementations hardened against physical attacks, and the 168 MHz Ed25519 rows of Owens et al."
-written,"2026-10-20, before the first round 5 query was screened"
+written,"2026-10-20, before the first round 5 query was screened, as stated when the file was written. The git history does not evidence this timing: the file was first committed in the same commit as the search log, the screening file and the flow counts, and no hash of it is recorded in the repository (disclosed on 2026-10-21 after review)"
 date_window,publications of any year up to the search date; searches run on 2026-10-20 (UTC)
 database_1,IACR ePrint and IACR TCHES (open access article pages and PDFs)
 database_2,"arXiv (public API, scripts/fetch_s13_arxiv.py, and arXiv PDFs)"
@@ -19,3 +19,6 @@ exclusion_3,duplicates of rows already in data/evidence.csv
 exclusion_4,sources that could not be retrieved; refusals are recorded and not worked around
 exclusion_5,descriptions of attacks or of countermeasure techniques (only cost figures of hardened implementations are taken)
 verification,every staged row is read by two independent readers on blank sheets (scripts/verify6_sheets.py); every value and every wording disagreement gets a third look
+deviation_1,"2026-10-21, written after screening and after the review, disclosed: inclusion 5 (gap rule). A source is included only if at least one of its rows answers a named gap of the question: final standard SLH-DSA or FN-DSA (or the provisional FN-DSA parameters while FIPS 206 is not final), HQC, a Cortex-M33, M55 or M85 core, a RISC-V microcontroller core, an ESP32 class device, stateful hash based signature verification, a hardened and unhardened pair, or the 168 MHz Ed25519 rows of Owens et al. Screening already applied this rule ('outside the round 5 gap list') without it being written down; it is now applied to every source, which demoted the Falcon round 2 rows of Pornin 2019"
+deviation_2,"2026-10-21, after review: rows that break a written rule after double reading are demoted, not deleted: they stay in data/raw/S13_staged.csv and are listed with rule and reason in data/raw/S13_demoted.csv; scripts/promote_s13.py keeps them out of data/raw/S13_verified.csv"
+deviation_3,"2026-10-21, after review: values read only through a summarising web fetch tool count as a summary under inclusion 4; such rows are demoted until the full text is read directly"

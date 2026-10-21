@@ -2,18 +2,18 @@ record,url,found_by,stage_reached,decision,exclusion_reason,rows_staged
 pqm4 benchmarks.csv at commit e1146b1,https://raw.githubusercontent.com/mupq/pqm4/e1146b1bc180c66689682f6ce63bd8f126a51ace/benchmarks.csv,D03,full text,included,,21
 "Owens et al., Efficient and Side-Channel Resistant Ed25519 on ARM Cortex-M4",https://par.nsf.gov/servlets/purl/10507285,D06,full text,included,,7
 "Bos et al., Masking Kyber (TCHES 2021)",https://tches.iacr.org/index.php/TCHES/article/download/9064/8651,W09,full text,included,,23
-"Becker et al., Polynomial multiplication on embedded vector architectures (TCHES 2022)",https://tches.iacr.org/index.php/TCHES/article/download/9305/8871,W06,full text,included,,18
+"Becker et al., Polynomial multiplication on embedded vector architectures (TCHES 2022)",https://tches.iacr.org/index.php/TCHES/article/download/9305/8871,W06,full text,excluded,excluded after review on 2026-10-21 (inclusion 3): Saber is a round 3 finalist that was not selected and the rows are not a hardened and unhardened pair; 18 staged rows demoted (data/raw/S13_demoted.csv),18
 "Abdulrahman et al., Fast and Clean (TCHES 2024)",https://tches.iacr.org/index.php/TCHES/article/download/11241/10787,W11,full text,included,,17
 "Segatz and Hafiz, Kyber on ESP32 (arXiv 2503.10207)",https://arxiv.org/pdf/2503.10207,W04,full text,included,,15
-"Pornin, New Efficient Constant-Time Implementations of Falcon (2019)",https://falcon-sign.info/falcon-impl-20190802.pdf,W15,full text,included,,10
+"Pornin, New Efficient Constant-Time Implementations of Falcon (2019)",https://falcon-sign.info/falcon-impl-20190802.pdf,W15,full text,excluded,"excluded after review on 2026-10-21 (inclusion 5, gap rule written down as protocol deviation_1): Falcon round 2 on Cortex-M4 fills no named gap; 10 staged rows demoted (data/raw/S13_demoted.csv)",10
 "Jang et al., HQC on Cortex-M4 (arXiv 2608.18145)",https://arxiv.org/pdf/2608.18145,W16,full text,included,,15
 "Additive FFTs for HQC on ARM Cortex-M4, Revisited",https://troll.iis.sinica.edu.tw/by-publ/recent/addfftHQCm4.pdf,W17,full text,included,,9
-"Wang et al., HW/SW co-design Kyber and Dilithium on RISC-V SoC FPGA (TCHES 2024)",https://tches.iacr.org/index.php/TCHES/article/download/11671/11191/12441,W21,full text,included,,10
+"Wang et al., HW/SW co-design Kyber and Dilithium on RISC-V SoC FPGA (TCHES 2024)",https://tches.iacr.org/index.php/TCHES/article/download/11671/11191/12441,W21,full text,excluded,"excluded after review on 2026-10-21 (exclusion 1): SiFive U54 is an RV64 application core, as the excluded U74 and C908 sources; 10 staged rows demoted (data/raw/S13_demoted.csv)",10
 wolfBoot on NXP Kinetis KL26 with LMS (wolfSSL blog),https://www.wolfssl.com/wolfboot-now-supports-the-nxp-kinetis-kl26-with-post-quantum-lms-signatures/,W13,full text,included,,2
 "Saarinen, Accelerating SLH-DSA (SLotH)",https://csrc.nist.gov/csrc/media/Events/2024/fifth-pqc-standardization-conference/documents/papers/accelerating-slh-dsa.pdf,W01,full text,included,,48
 "Alkim et al., ISA Extensions for Finite Field Arithmetic (TCHES 2020)",https://tches.iacr.org/index.php/TCHES/article/download/8589/8156,W22,full text,included,,18
 "Fritzmann et al., Masked Accelerators and ISA Extensions (TCHES 2022)",https://tches.iacr.org/index.php/TCHES/article/download/9303/8869,W23,full text,included,,12
-"Pornin, A RAM-Efficient Implementation of Falcon (ePrint 2026/1915)",https://eprint.iacr.org/2026/1915.pdf,W15,full text,included,,4
+"Pornin, A RAM-Efficient Implementation of Falcon (ePrint 2026/1915)",https://eprint.iacr.org/2026/1915.pdf,W15,full text,excluded,excluded after review on 2026-10-21 (inclusion 4 and exclusion 4): values read only through a summarising web fetch tool after curl was refused; 4 staged rows demoted (data/raw/S13_demoted.csv); can return when the PDF is read directly,4
 "Javaid et al., Implementation-Hardened RBLWE on Cortex-M (arXiv 2610.07820)",https://arxiv.org/pdf/2610.07820,AX2,full text,included,,36
 "Zhang et al., Keccak, Kyber and Dilithium on RV{32,64}IM{B}{V} (TCHES 2025)",https://tches.iacr.org/index.php/TCHES/article/download/11941/11801,W03,full text,excluded,application processor core (XuanTie C908),0
 "Huang et al., Improved Plantard Arithmetic (TCHES 2022)",https://tches.iacr.org/index.php/TCHES/article/download/9833/9337,W07,full text,excluded,outside the round 5 gap list (Cortex-M4 round 3 Kyber),0
@@ -30,7 +30,7 @@ First demonstration of a post-quantum key exchange with a nanosatellite (arXiv 2
 "Halmans et al., Fixed-Point Falcon (ePrint 2026/2431)",https://eprint.iacr.org/2026/2431,W15,abstract,excluded,full text not retrieved in the time available; abstract gives only a relative figure,0
 "Carril et al., PQCUARK (ePrint 2025/2178)",https://eprint.iacr.org/2025/2178,W20,abstract,excluded,application processor core (RV64),0
 "Kannwischer et al., pqm4 additional signatures (ePrint 2024/112)",https://eprint.iacr.org/2024/112,W18,abstract,excluded,outside the round 5 gap list (Cortex-M4 additional signature candidates),0
-"Karl et al., Post-Quantum Signatures on RISC-V with Hardware Acceleration (ePrint 2022/538)",https://eprint.iacr.org/2022/538,W26,abstract,excluded,duplicate of a source already in data/evidence.csv,0
+"Karl et al., Post-Quantum Signatures on RISC-V with Hardware Acceleration (ePrint 2022/538)",https://eprint.iacr.org/2022/538,W26,abstract,excluded,"values already taken from the authors' conference slides of the same work (pq_signatures_riscv.pdf, rows S12A-412 to S12A-419); the paper itself was not assessed, so whether it repeats the slide values is not checked (reason corrected on 2026-10-21)",0
 SBRC 2026 paper (sol.sbc.org.br sbrc 42308),https://sol.sbc.org.br/index.php/sbrc/article/download/42308/42075/,W14,not retrieved,excluded,not retrieved (connection reset),0
 ST X-CUBE-PQC data brief,https://www.st.com.cn/resource/en/data_brief/x-cube-pqc.pdf,W26,not retrieved,excluded,not retrieved (HTTP/2 stream error),0
 DATE 2026 paper 1261,https://past.date-conference.com/proceedings-archive/2026/DATA/1261.pdf,W28,not retrieved,excluded,not retrieved (HTTP 404),0
