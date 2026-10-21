@@ -8,7 +8,7 @@ full text assessed,26,count of this repository's records: stage_reached = full t
 excluded after abstract or full text,24,"count of this repository's records: decision = excluded, any stage",host measured
 included sources,11,count of this repository's records: decision = included,host measured
 staged rows,265,count of this repository's records: rows of S13_staged.csv,host measured
-rows confirmed by two readers and promoted,187,count of this repository's records: rows of S13_verified.csv,host measured
+rows confirmed by two readers and promoted,186,count of this repository's records: rows of S13_verified.csv,host measured
 excluded: application processor core (Cortex-A and U74),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
 excluded: application processor core (Cortex-A72 and x86),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
 excluded: application processor core (Cortex-A72),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
