@@ -85,12 +85,12 @@ def results_text():
     L.append("#### S1.3 RQ3: links and protocols\n")
     L.append(
         "The link model was repaired one cited cause at a time and checked against published figures and closed forms (`docs/LINKSIM_STUDY.md` section 4.4). "
-        "The LoRa time on air formula reproduces the published examples, but this is a weak check: only one of the four examples states every parameter, and for the other three the unstated settings were chosen after the fact because they reproduce the published value. Fragment counts agree with an independent count and the duty cycle wait equals its formula, an arithmetic check; stop and wait retransmissions in the event simulation agree with their closed form within Monte Carlo intervals, but selective repeat, which the protocol and mission studies use, is not checked. "
+        "The LoRa time on air formula reproduces the published examples, but this is a weak check: only one of the four examples states every parameter, and for the other three the unstated settings were chosen after the fact because they reproduce the published value. Fragment counts agree with an independent count and the duty cycle wait equals its formula, an arithmetic check; stop and wait retransmissions in the event simulation agree with their closed form within Monte Carlo intervals; selective repeat, which the protocol and mission studies use, was checked against its closed form in round 5, with the outcome in section 4.3. "
         "For IEEE 802.15.4, adding every cited cost (PHY header, 6LoWPAN fragment headers and alignment, acknowledgements, inter frame spacing, clear channel assessment and backoff, turnaround) "
         f"takes a 50 kB transfer from {claim('d_base', dg, 'time_s_modelled_after', 'step == \"0\"', fmt='{:.1f}', label='modelled')} s to "
         f"{claim('d_final', dg, 'time_s_modelled_after', 'step == \"6\"', fmt='{:.1f}', label='modelled')} s, which is still "
         f"{claim('d_factor', dg, 'factor_below_low_after', 'step == \"6\"', fmt='{:.1f}', label='modelled')} times faster than the published 30 to 60 s. "
-        "Most of that gap is unexplained by single hop costs; four hops would bring the model to 28.5 s, near the low end, but the source gives no hop count, so the model is reported as optimistic on 802.15.4 networks. "
+        "Most of that gap is unexplained by single hop costs in the link model; the round 5 ns-3 runs (section 4.3) find settings that close it, none of which the source states, so the model is reported as optimistic on 802.15.4 networks. "
         "The rate part was checked against one published table of handshakes over an emulated link, with one constant fitted on two of its rows; that is a weak test on one testbed.\n")
     pg = "linksim/results/protocols_grid.csv"
     if exists(pg):
@@ -125,7 +125,7 @@ def results_text():
         f"{claim('prof_med', pm, 'median', 'fleet == \"profile\" and thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')} "
         f"(2.5 to 97.5 percentile {claim('prof_lo', pm, 'p2_5', 'fleet == \"profile\" and thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')} to "
         f"{claim('prof_hi', pm, 'p97_5', 'fleet == \"profile\" and thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')}). "
-        "The share is close to 0.20 and its intervals cross that value, so whether fewer than a fifth of devices need replacement depends on the threshold scenario. No retrieved page states how much flash or RAM a flight stack leaves free, so the free share is an assumption, and it moves the result more than the choice of implementation does (`docs/PLANNER_STUDY.md` section 5). "
+        "These round 4 figures assumed the free memory a flight stack leaves. Round 5 measured it for seven board classes from real flight stack builds, and the replacement share rose (section 4.5 and `docs/FLIGHTSTACK_STUDY.md`); the round 4 statement that the share is close to 0.20 no longer holds. "
         f"Under the Mosca inequality with stated ranges, data lifetime has the largest total Sobol index ({claim('mosca_st', 'planner/results/mosca_sobol.csv', 'ST', 'input == \"data_lifetime_years\"', fmt='{:.2f}', label='modelled')}), largely because its range is the widest. "
         "Policy dates come from primary texts (`docs/POLICY_TIMELINE.md`); the supplied UAE policy texts give no post quantum date.\n")
     # RQ6 mission
@@ -134,8 +134,8 @@ def results_text():
     L.append("#### S1.6 RQ6: mission level design\n")
     L.append(
         "In the mission simulation (1000 runs per configuration, `docs/MISSION_STUDY.md`), a classical session, a hybrid session and hash signed firmware with session keys keep the drone's control link available "
-        f"about as often as an unauthenticated stream on a telemetry radio (mean over runs {claim('m_b_sik', mb, 'avail_mean', qm.format(v='drone', a='B', l='sik'), fmt='{:.3f}', label='estimated')} for the hybrid session): link outages, not authentication, set availability. "
-        f"A post quantum signature on every command adds about {claim('m_c_lat', mb, 'added_latency_ms_median', qm.format(v='drone', a='C', l='sik'), fmt='{:.0f}', label='estimated')} ms per command on that radio, "
+        f"about as often as an unauthenticated stream on a telemetry radio (mean over runs {claim('m_b_sik', mb, 'avail_mean', qm.format(v='drone', a='B', l='sik'), fmt='{:.3f}', label='estimated')} for the hybrid session; estimated): within the assumed outage ranges, link outages rather than authentication set availability. "
+        f"A post quantum signature on every command adds about {claim('m_c_lat', mb, 'added_latency_ms_median', qm.format(v='drone', a='C', l='sik'), fmt='{:.0f}', label='estimated')} ms per command on that radio (estimated), "
         f"lowers availability to {claim('m_c_sik', mb, 'avail_mean', qm.format(v='drone', a='C', l='sik'), fmt='{:.3f}', label='estimated')}, and overloads the link for a ground robot streaming commands at 5 Hz "
         f"(utilisation {claim('m_c_rob', mb, 'utilisation_median', qm.format(v='robot', a='C', l='sik'), fmt='{:.2f}', label='estimated')}). "
         "LoRaWAN carries none of the command streams within its duty cycle. The resulting reference architecture (`docs/REFERENCE_ARCHITECTURE.md`): hash based signatures (LMS) for firmware, "
@@ -152,7 +152,7 @@ def cycle_model_text():
         "Fitted on half of the matched published rows and tested on the other half, split by binary so that no test row shares a binary with a training row, its median absolute error is "
         f"{claim('cm_med', es, 'median_abs_pct', q.format(m='fitted', s='test, all'), fmt='{:.1f}', label='modelled')} percent "
         f"(95 percent interval {claim('cm_lo', es, 'median_abs_ci_lo', q.format(m='fitted', s='test, all'), fmt='{:.1f}', label='modelled')} to "
-        f"{claim('cm_hi', es, 'median_abs_ci_hi', q.format(m='fitted', s='test, all'), fmt='{:.1f}', label='modelled')}, too narrow because rows cluster by binary) on "
+        f"{claim('cm_hi', es, 'median_abs_ci_hi', q.format(m='fitted', s='test, all'), fmt='{:.1f}', label='modelled')}, a row bootstrap; the cluster bootstrap of round 5 gives almost the same interval, section 4.1) on "
         f"{claim('cm_n', es, 'n', q.format(m='fitted', s='test, all'), fmt='{:.0f}', label='modelled')} held out rows, and "
         f"{claim('cm_nosign', es, 'median_abs_pct', q.format(m='fitted', s='test, excluding sign'), fmt='{:.1f}', label='modelled')} percent without signing; "
         f"signing misses by up to {claim('cm_worst', es, 'worst_abs_pct', q.format(m='fitted', s='test, all'), fmt='{:.1f}', label='modelled')} percent because its cost varies from message to message. "
@@ -248,10 +248,10 @@ def rq_text():
         f"For a 50 kB transfer over one 802.15.4 hop with ns-3 3.48 defaults, ns-3 gives {claim('p_ns_base', gs, 'time_mean_s_simulated_network', cell.format(c='base_frame'), fmt='{:.2f}', label='simulated (network)')} s (simulated (network)) and linksim "
         f"{claim('p_ls_base', gs, 'time_s_modelled', cell.format(c='base_frame'), fmt='{:.2f}', label='modelled')} s (modelled), against a published "
         f"{claim('p_pub_lo', gs, 'range_low_s_published', cell.format(c='base_frame'), fmt='{:.0f}', label='published')} to {claim('p_pub_hi', gs, 'range_high_s_published', cell.format(c='base_frame'), fmt='{:.0f}', label='published')} s. "
-        f"Three single causes each bring ns-3 into that range (Figure 2): a backoff exponent of 8, a cited and allowed setting ({claim('p_ns_be8', gs, 'time_mean_s_simulated_network', cell.format(c='minbe_8'), fmt='{:.1f}', label='simulated (network)')} s); "
-        f"3 hops ({claim('p_ns_h3', gs, 'time_mean_s_simulated_network', cell.format(c='hops_3'), fmt='{:.1f}', label='simulated (network)')} s); or 16 neighbours sending ({claim('p_ns_bg16', gs, 'time_mean_s_simulated_network', cell.format(c='bg_16'), fmt='{:.1f}', label='simulated (network)')} s). "
+        f"Three changes each bring the ns-3 mean into that range (Figure 2): a minimum and maximum backoff exponent of 8, allowed by the cited standard ({claim('p_ns_be8', gs, 'time_mean_s_simulated_network', cell.format(c='minbe_8'), fmt='{:.1f}', label='simulated (network)')} s); "
+        f"3 hops ({claim('p_ns_h3', gs, 'time_mean_s_simulated_network', cell.format(c='hops_3'), fmt='{:.1f}', label='simulated (network)')} s); or 16 neighbours sending, where only the mean reaches the range and its interval extends below it ({claim('p_ns_bg16', gs, 'time_mean_s_simulated_network', cell.format(c='bg_16'), fmt='{:.1f}', label='simulated (network)')} s). "
         "The source states none of these settings, so they are sufficient causes in simulation, not the proven cause. "
-        f"ns-3 also shows that linksim's store and forward over hops is optimistic: at 3 hops linksim gives {claim('p_ls_h3', gs, 'time_s_modelled', cell.format(c='hops_3'), fmt='{:.1f}', label='modelled')} s, because frames of different hops contend, which linksim does not model. "
+        f"ns-3 also shows that linksim's store and forward over hops is optimistic: at 3 hops linksim gives {claim('p_ls_h3', gs, 'time_s_modelled', cell.format(c='hops_3'), fmt='{:.1f}', label='modelled')} s against {claim('p_ns_h3b', gs, 'time_mean_s_simulated_network', cell.format(c='hops_3'), fmt='{:.1f}', label='simulated (network)')} s in ns-3, because frames of different hops contend, which linksim does not model. "
         f"Of {claim('p_ns_runs', 'netsim/results/lrwpan_runs.csv', 'completed', '', 'count', '{:.0f}', label='simulated (network)')} ns-3 runs, {claim('p_ns_stuck', 'netsim/results/lrwpan_runs.csv', 'completed', 'completed == 0', 'count', '{:.0f}', label='simulated (network)')} did not complete and are excluded from the verdict. "
         f"The selective repeat check against the closed form 1/(1-P), on its first registered run, placed {claim('p_sr_in', sr, 'inside', 'role == \"pre set check\" and inside == True', 'count', '{:.0f}', label='modelled')} of "
         f"{claim('p_sr_n', sr, 'inside', 'role == \"pre set check\"', 'count', '{:.0f}', label='modelled')} loss rates inside their 95 percent interval; the miss at P = 0.3 did not recur in ten follow up seed blocks added afterwards and labelled as such.\n")
@@ -282,7 +282,7 @@ def rq_text():
         f"With these values in place of the round 4 assumption, the median share needing hardware replacement rises from {claim('p_fl_a_stack', fs, 'assumed_median', 'thresholds == \"stack_asm\"', fmt='{:.3f}', label='estimated')} to "
         f"{claim('p_fl_m_stack', fs, 'measured_median', 'thresholds == \"stack_asm\"', fmt='{:.3f}', label='estimated')} under stack optimised thresholds and from "
         f"{claim('p_fl_a_unc', fs, 'assumed_median', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')} to {claim('p_fl_m_unc', fs, 'measured_median', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')} "
-        f"(interval {claim('p_fl_m_unc_lo', fs, 'measured_ci_low', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')} to {claim('p_fl_m_unc_hi', fs, 'measured_ci_high', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')}) "
+        f"(bootstrap interval of the median {claim('p_fl_m_unc_lo', fs, 'measured_ci_low', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')} to {claim('p_fl_m_unc_hi', fs, 'measured_ci_high', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')}; it describes the median, not the spread of the share across draws) "
         f"under thresholds drawn from published rows (Figure 3). Round 4's statement that the share stays near one fifth no longer holds. Using the larger of the two stacks' free memory per board, the uncertain scenario gives "
         f"{claim('p_fl_large', fs, 'larger_stack_median', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')}. Free RAM is an upper bound because heap use at run time is not visible in a build. Evidence: estimated, from host measured memory.\n")
     L.append("![Share of fleet devices that need hardware replacement, median with interval over 200 draws, under the round 4 assumed free memory and with measured flight stack memory for seven boards (estimated). "
@@ -296,11 +296,11 @@ def rq_text():
         f"In the mission simulation (1000 runs per configuration) the hybrid session keeps the drone's command link available about as often as an unauthenticated stream on a telemetry radio (mean {claim('p_m_b', mb, 'avail_mean', qm.format(v='drone', a='B', l='sik'), fmt='{:.3f}', label='estimated')} against "
         f"{claim('p_m_b_base', mb, 'avail_base_mean_0.5', qm.format(v='drone', a='B', l='sik'), fmt='{:.3f}', label='estimated')} without authentication, at a 0.5 s deadline), "
         f"while a post quantum signature on every command adds about {claim('p_m_c_lat', mb, 'added_latency_ms_median', qm.format(v='drone', a='C', l='sik'), fmt='{:.0f}', label='estimated')} ms per command and lowers availability to "
-        f"{claim('p_m_c', mb, 'avail_mean', qm.format(v='drone', a='C', l='sik'), fmt='{:.3f}', label='estimated')}. Across the end to end ranges the hybrid availability has median "
+        f"{claim('p_m_c', mb, 'avail_mean', qm.format(v='drone', a='C', l='sik'), fmt='{:.3f}', label='estimated')} (estimated). Across the end to end ranges the hybrid availability has median "
         f"{claim('p_e2e_av', e2, 'median', 'output == \"hybrid_availability_sik_drone\"', fmt='{:.3f}', label='modelled')} ({claim('p_e2e_av_lo', e2, 'p2_5', 'output == \"hybrid_availability_sik_drone\"', fmt='{:.3f}', label='modelled')} to "
         f"{claim('p_e2e_av_hi', e2, 'p97_5', 'output == \"hybrid_availability_sik_drone\"', fmt='{:.3f}', label='modelled')}), and the outage rate and mean outage length rank first and second (total Sobol indices "
         f"{claim('p_sob_or', sob, 'ST', 'output == \"hybrid_availability_sik_drone\" and input == \"outage_rate_per_h\"', fmt='{:.2f}', label='modelled')} and "
-        f"{claim('p_sob_om', sob, 'ST', 'output == \"hybrid_availability_sik_drone\" and input == \"outage_mean_s\"', fmt='{:.2f}', label='modelled')}): link outages, not cryptography, set availability.\n")
+        f"{claim('p_sob_om', sob, 'ST', 'output == \"hybrid_availability_sik_drone\" and input == \"outage_mean_s\"', fmt='{:.2f}', label='modelled')}). Within the assumed outage ranges and with message sizes held fixed, outages rather than cryptography dominate the variation of availability; the ranking reflects those assumed ranges. Evidence: estimated (mission) and modelled (end to end chain).\n")
     L.append(
         f"ProVerif 2.05 checked {claim('p_pv_q', pv, 'property_id', '', 'count', '{:.0f}', label='modelled')} queries in {claim('p_pv_m', pv, 'model', '', 'nunique', '{:.0f}', label='modelled')} models of the stated designs, the changed designs and deliberate controls (Table 1). "
         "Three findings changed the design and were adopted in the reference architecture: in the stated session only the ground station signs, so the vehicle is not authenticated to it (F1; fixed by a vehicle ML-DSA-44 signature over the transcript and key confirmation, which adds a fourth flight to the handshake); "
@@ -309,7 +309,7 @@ def rq_text():
     L.append(formal_table() + "\n")
     L.append(
         "Board experiment. A board kit builds images for an STM32L4R5 (Cortex-M4) and an STM32L552 (Cortex-M33) board, now with an option that switches the caches off; "
-        f"{claim('p_bk_n', 'bench/board_kit/predictions_v5_board.csv', 'id', 'cache_pass == \"off\"', 'count', '{:.0f}', label='modelled')} cycle predictions for the caches off pass were registered before any session, all out of sample. "
+        f"{claim('p_bk_n', 'bench/board_kit/predictions_v5_board.csv', 'id', 'cache_pass == \"off\"', 'count', '{:.0f}', label='modelled')} cycle predictions for the caches off pass were registered before any session, all out of sample (planned). "
         "The option is checked only by disassembly of the images and, for the L552, an emulator that logs the register write but does not model a cache, and the Cortex-M33 rows apply Cortex-M4 costs, an unsourced transfer assumption.\n")
     L.append("### 4.7 Software in the loop (placeholder)\n")
     L.append("[Placeholder for the software in the loop results of the two pinned flight stacks with the security architectures (SITL measured). To be filled from `docs/SITL_STUDY.md` when that package is merged. No number is stated here.]\n")
@@ -318,7 +318,7 @@ def rq_text():
 
 def formal_table():
     pv = "formal/results/proverif_results.csv"
-    rows = [("proved", "property holds for unbounded sessions"),
+    rows = [("proved", "property holds for every run the model allows: unbounded sessions for the command channel; the firmware model is bounded to three releases and three boots per device"),
             ("counterexample", "attack trace found: stated designs (F1 to F3) and deliberate controls with broken components"),
             ("cannot be proved", "MAVLink timestamp rule with gaps; its weaker non injective form holds")]
     t = ["Table 1. ProVerif results by outcome (modelled). Source: `formal/results/proverif_results.csv`.\n", "| Outcome | Queries | Meaning |", "|---|---|---|"]
@@ -347,7 +347,7 @@ def threats_text():
 
 def conclusion_text():
     return (
-        "On the links small drones and ground robots use, the cost of post quantum authentication is a one time handshake if the design uses a session; per command signatures are the option that fails. "
+        "On the links small drones and ground robots use, the cost of post quantum authentication is a one time handshake if the design uses a session; on telemetry radios and 802.15.4, per command signatures are the option that fails, and on LoRaWAN no command stream fits the duty cycle. "
         "For firmware, hashing dominates unless the device has hash hardware, and a signed version with a counter is required. The fleet answer is set by how much memory the flight stack leaves free, and measuring it raised the replacement share well above the round 4 estimate. "
         "A cycle model predicts within a code base but not across schemes, so migration decisions should rest on a measurement of the deployed code; the registered board session is the next step and can refute the model.")
 
@@ -382,10 +382,11 @@ def parts_text(fill):
     fill["abstract_results"] = (
         f"A cycle model fitted on half of the published rows predicts the other half of the same code base with a median error of {claim('ab_cm', cb, 'median_abs_pct', 'model == \"fitted\" and subset == \"test, all\"', fmt='{:.1f}', label='modelled')} percent, "
         f"but {claim('ab_lofo', lo, 'median_abs_pct', 'left_out_by == \"scheme\" and group == \"all groups pooled\" and model == \"fitted\"', fmt='{:.1f}', label='modelled')} percent for a scheme left out of the fit. "
-        f"Measured flight stack memory raises the estimated share of fleet devices that need hardware replacement from {claim('ab_fl_a', fs, 'assumed_median', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')} to "
-        f"{claim('ab_fl_m', fs, 'measured_median', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')}, a correction of our earlier estimate. "
-        f"In ns-3, an IEEE 802.15.4 transfer that the link model puts at {claim('ab_ls', gs, 'time_s_modelled', 'cell == \"base_frame\"', fmt='{:.1f}', label='modelled')} s reaches the published 30 to 60 s with any one of three unstated settings, so the published gap has sufficient causes but no proven one. "
-        f"A protocol verifier proved {claim('ab_pv_p', pv, 'result', 'result == \"proved\"', 'count', '{:.0f}', label='modelled')} of {claim('ab_pv_n', pv, 'result', '', 'count', '{:.0f}', label='modelled')} queries, including deliberate controls, and found three design flaws whose fixes the reference architecture adopts. "
+        f"Measured flight stack memory raises the estimated median share of fleet devices that need hardware replacement from {claim('ab_fl_as', fs, 'assumed_median', 'thresholds == \"stack_asm\"', fmt='{:.3f}', label='estimated')} to "
+        f"{claim('ab_fl_ms', fs, 'measured_median', 'thresholds == \"stack_asm\"', fmt='{:.3f}', label='estimated')} under stack optimised thresholds and from {claim('ab_fl_a', fs, 'assumed_median', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')} to "
+        f"{claim('ab_fl_m', fs, 'measured_median', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')} under thresholds drawn from published rows, a correction of our earlier estimate. "
+        f"In ns-3, an IEEE 802.15.4 transfer that the link model puts at {claim('ab_ls', gs, 'time_s_modelled', 'cell == \"base_frame\"', fmt='{:.1f}', label='modelled')} s reaches the published 30 to 60 s, on average, with any one of three configurations the source does not state, so the published gap has sufficient causes but no proven one. "
+        f"A protocol verifier checked {claim('ab_pv_n', pv, 'result', '', 'count', '{:.0f}', label='modelled')} queries, including deliberate controls built to fail, proved {claim('ab_pv_p', pv, 'result', 'result == \"proved\"', 'count', '{:.0f}', label='modelled')}, and found three design flaws whose fixes the reference architecture adopts. "
         "On telemetry class radios a hybrid key establishment followed by a symmetric session keeps command availability where it is without authentication, while a post quantum signature on every command does not.")
     fill["method_reading"] = method_reading()
     fill["rq_results"] = rq_text()
@@ -393,7 +394,7 @@ def parts_text(fill):
     fill["conclusion"] = conclusion_text()
     fill["discussion"] = (
         "Three results change what an engineer should do. First, a published cycle count is not a property of the algorithm alone: the implementation variant and the measurement conditions move the same operation on the same core class, so a migration decision should rest on a measurement of the deployed code, which the board kit makes cheap. "
-        "Second, on the links drones and robots use, the cost of post quantum authentication is a one time handshake, not a per message burden, provided the design uses a session: per message signatures are the only option that fails. "
+        "Second, on the links drones and robots use, the cost of post quantum authentication is a one time handshake, not a per message burden, provided the design uses a session: on telemetry radios and 802.15.4, per message signatures are the option that fails, and on LoRaWAN no command stream fits the duty cycle. "
         "Third, the fleet answer depends on how much memory the flight stack leaves free; measured builds show less free flash than round 4 assumed, and operators can settle this from their own build output.\n\n"
         "Where the models overlap they are not independent: the mission model reads the link simulator's parameters through the shared inputs file, so their agreement on a single handshake is a consistency check, not a validation. "
         "The energy and mission studies both find CPU time, not energy, to be the binding budget. ns-3 now gives sufficient causes for the 802.15.4 gap and shows that the link model's multi hop assumption is optimistic; the link model was not tuned to the published figure.")
