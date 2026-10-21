@@ -9,4 +9,4 @@ proxy_factor,1,1.5,3,ratio,assumption,multiplier for the proxy current because t
 vdd_v,1.8,3.3,3.6,V,assumption,MCU supply voltage; cited VDD ranges run from 1.71 to 3.6 V
 impl_factor,1,1,2.3,ratio,assumption,multiplier on published cycles for slower implementations; upper value near the ratio of m4fstack to m4f ML-DSA-44 verify (S2-0036 over S2-0033)
 crazyflie_cell_v,3.5,3.7,4.2,V,assumption,one cell LiPo voltage; not stated in the Crazyflie datasheet (unverified)
-command_msg_bytes,32,64,255,B,assumption,command payload length covered by the MAC; 255 B is the cited MAVLink maximum payload in linksim/params.csv
+command_msg_bytes,32,shared:mac_message_bytes,255,B,assumption,command payload length covered by the MAC; 255 B is the cited MAVLink maximum payload in linksim/params.csv

@@ -75,7 +75,7 @@ def build():
             cyc_rows.append({"core_class": core, "op": op, "cycles": round(r["cycles"]),
                              "label": r["cycle_label"].split(";")[0], "cycle_source_label": r["cycle_label"],
                              "source": r["source"]})
-        cyc[core]["sha256_cpb_sw"] = statistics.median(model.sha256_cpb(bench, "sw"))
+        cyc[core]["sha256_cpb_sw"] = model.shared_inputs.value("sha256_cpb_sw_m4")
     write_csv("cycles_by_core.csv", cyc_rows)
     cpb_sw = model.sha256_cpb(bench, "sw")
     cpb_hw = model.sha256_cpb(bench, "hw")
@@ -172,9 +172,9 @@ def classical_baselines(ev, bench, cmap, cm4):
     out = []
     for op, pq_op in pq.items():
         r = next(x for x in cmap if x["op"] == op and x["core_class"] == "Cortex-M4")
-        ids = [r["ref"]] + [i for i in r.get("alternatives", "").split("|") if i]
+        ids = [model.cmap_evidence_id(r)] + [i for i in r.get("alternatives", "").split("|") if i]
         vals = [float(ev[i]["cycles"]) for i in ids]
-        out.append({"op": op, "chosen_id": r["ref"], "cycles_published": round(vals[0]),
+        out.append({"op": op, "chosen_id": ids[0], "cycles_published": round(vals[0]),
                     "alternative_ids": " ".join(ids[1:]), "range_low_published": round(min(vals)),
                     "range_high_published": round(max(vals)), "pq_op": pq_op,
                     "multiple_chosen_estimated": round(cm4[pq_op] / vals[0], 3),
@@ -373,6 +373,13 @@ def write_doc(res, assume, plats):
     L.append("\nThe symmetric MAC design row uses no published HMAC cycles (none exist in the evidence table); it is an estimate "
              "from published SHA-256 throughput. LMS and Ed25519 on the Cortex-M7 use the Cortex-M4 rows as a proxy.\n")
     L.append("## 4. Mission workloads (modelled)\n")
+    L.append("The vehicle side of a session handshake follows the mission study and the formal models with design change F1 "
+             "(`docs/FORMAL_VERIFICATION.md`): two X25519 scalar multiplications, one ML-KEM-768 encapsulation, one ML-DSA-44 "
+             "verification of the ground signature and one ML-DSA-44 signature by the vehicle (classical: two X25519 scalar "
+             "multiplications, one Ed25519 verification and one Ed25519 signature); a rekey repeats the key exchange without "
+             "signatures. Earlier versions counted ML-KEM-768 key generation plus decapsulation and no X25519 in the post quantum "
+             "handshake. Cycle counts, the reference clock and the message length of the per message tag are shared with the other "
+             "studies and read from `data/shared_inputs.csv` (one value and one source per parameter).\n")
     L.append("Platforms (cited): Crazyflie 2.1, 250 mAh battery, 7 minute flight; TurtleBot3 Burger, 11.1 V 1800 mAh (19.98 Wh), "
              "2 h 30 min operating time. Battery share per hour = security energy per hour / (battery energy / run time "
              "x 1 h). Workload assumptions (all `assumption`, triangular low, nominal, high):\n")

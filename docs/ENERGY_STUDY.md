@@ -16,26 +16,26 @@ Energy = cycles x (current / frequency) x voltage. Multiple = cycles of the oper
 
 | Part, supply | Operation | Cycles | Cycle source label | Energy (uJ, estimated) | Multiple of baseline |
 |---|---|---|---|---|---|
-| STM32L4R5, 43.0 uA/MHz at 3.3 V | ed25519_verify | 722,000 | published (S12A-331) | 102 |  |
+| STM32L4R5, 43.0 uA/MHz at 3.3 V | ed25519_verify | 722,000 | published (S12A-331 (data/shared_inputs.csv ed25519_verify_cycles_m4)) | 102 |  |
 | STM32L4R5, 43.0 uA/MHz at 3.3 V | ecdsa_p256_verify | 6,639,000 | published (S2-0213) | 942 |  |
-| STM32L4R5, 43.0 uA/MHz at 3.3 V | mldsa44_verify | 1,421,623 | published (S2-0033) | 202 | 1.97 |
+| STM32L4R5, 43.0 uA/MHz at 3.3 V | mldsa44_verify | 1,421,623 | published (S2-0033 (data/shared_inputs.csv mldsa44_verify_cycles_m4)) | 202 | 1.97 |
 | STM32L4R5, 43.0 uA/MHz at 3.3 V | mldsa87_verify | 4,193,104 | published (S2-0051) | 595 | 5.81 |
-| STM32L4R5, 43.0 uA/MHz at 3.3 V | lms_verify | 2,658,884 | published (S8-026) | 377 | 3.68 |
+| STM32L4R5, 43.0 uA/MHz at 3.3 V | lms_verify | 2,658,884 | published (S8-026 (data/shared_inputs.csv lms_verify_cycles_m4)) | 377 | 3.68 |
 | STM32L4R5, 43.0 uA/MHz at 3.3 V | xmss_verify | 13,071,813 | published (S8-032) | 1,855 | 18.1 |
 | STM32L4R5, 43.0 uA/MHz at 3.3 V | slhdsa128s_verify | 7,471,794 | published (S2-0060) | 1,060 | 10.3 |
 | STM32L4R5, 43.0 uA/MHz at 3.3 V | mlkem768_decaps | 707,827 | published (S2-0024) | 100 | 1.29 |
-| STM32L4R5, 43.0 uA/MHz at 3.3 V | x25519_shared | 548,873 | published (S12A-332) | 77.9 |  |
-| STM32L4R5, 43.0 uA/MHz at 3.3 V | hmac_sha256_msg | 24,407 | estimated (SHA-256 software throughput median (energy/retrieved_benchmarks.csv)) | 3.46 | 0.034 |
-| STM32U5A5, 18.5 uA/MHz at 3.3 V | ed25519_verify | 722,000 | published; proxy: Cortex-M4 row used for Cortex-M33 (S12A-331) | 44.1 |  |
+| STM32L4R5, 43.0 uA/MHz at 3.3 V | x25519_shared | 548,873 | published (S12A-332 (data/shared_inputs.csv x25519_scalarmult_cycles_m4)) | 77.9 |  |
+| STM32L4R5, 43.0 uA/MHz at 3.3 V | hmac_sha256_msg | 24,407 | estimated (SHA-256 software throughput median (data/shared_inputs.csv sha256_cpb_sw_m4)) | 3.46 | 0.034 |
+| STM32U5A5, 18.5 uA/MHz at 3.3 V | ed25519_verify | 722,000 | published; proxy: Cortex-M4 row used for Cortex-M33 (S12A-331 (data/shared_inputs.csv ed25519_verify_cycles_m4)) | 44.1 |  |
 | STM32U5A5, 18.5 uA/MHz at 3.3 V | ecdsa_p256_verify | 6,639,000 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0213) | 405 |  |
-| STM32U5A5, 18.5 uA/MHz at 3.3 V | mldsa44_verify | 1,421,623 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0033) | 86.8 | 1.97 |
+| STM32U5A5, 18.5 uA/MHz at 3.3 V | mldsa44_verify | 1,421,623 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0033 (data/shared_inputs.csv mldsa44_verify_cycles_m4)) | 86.8 | 1.97 |
 | STM32U5A5, 18.5 uA/MHz at 3.3 V | mldsa87_verify | 4,193,104 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0051) | 256 | 5.81 |
-| STM32U5A5, 18.5 uA/MHz at 3.3 V | lms_verify | 2,658,884 | published; proxy: Cortex-M4 row used for Cortex-M33 (S8-026) | 162 | 3.68 |
+| STM32U5A5, 18.5 uA/MHz at 3.3 V | lms_verify | 2,658,884 | published; proxy: Cortex-M4 row used for Cortex-M33 (S8-026 (data/shared_inputs.csv lms_verify_cycles_m4)) | 162 | 3.68 |
 | STM32U5A5, 18.5 uA/MHz at 3.3 V | xmss_verify | 13,071,813 | published; proxy: Cortex-M4 row used for Cortex-M33 (S8-032) | 798 | 18.1 |
 | STM32U5A5, 18.5 uA/MHz at 3.3 V | slhdsa128s_verify | 7,471,794 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0060) | 456 | 10.3 |
 | STM32U5A5, 18.5 uA/MHz at 3.3 V | mlkem768_decaps | 707,827 | published; proxy: Cortex-M4 row used for Cortex-M33 (S2-0024) | 43.2 | 1.29 |
-| STM32U5A5, 18.5 uA/MHz at 3.3 V | x25519_shared | 548,873 | published; proxy: Cortex-M4 row used for Cortex-M33 (S12A-332) | 33.5 |  |
-| STM32U5A5, 18.5 uA/MHz at 3.3 V | hmac_sha256_msg | 24,407 | estimated; proxy: Cortex-M4 row used for Cortex-M33 (SHA-256 software throughput median (energy/retrieved_benchmarks.csv)) | 1.49 | 0.034 |
+| STM32U5A5, 18.5 uA/MHz at 3.3 V | x25519_shared | 548,873 | published; proxy: Cortex-M4 row used for Cortex-M33 (S12A-332 (data/shared_inputs.csv x25519_scalarmult_cycles_m4)) | 33.5 |  |
+| STM32U5A5, 18.5 uA/MHz at 3.3 V | hmac_sha256_msg | 24,407 | estimated; proxy: Cortex-M4 row used for Cortex-M33 (SHA-256 software throughput median (data/shared_inputs.csv sha256_cpb_sw_m4)) | 1.49 | 0.034 |
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | ed25519_verify | 2,952,000 | derived from published (S10D-073 (time x clock)) | 1,400 |  |
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | ecdsa_p256_verify | 22,176,000 | derived from published (S10D-076 (time x clock)) | 10,520 |  |
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | mldsa44_verify | 3,674,071 | published (S2-0363) | 1,743 | 1.25 |
@@ -44,8 +44,8 @@ Energy = cycles x (current / frequency) x voltage. Multiple = cycles of the oper
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | xmss_verify | 13,071,813 | published; proxy: Cortex-M4 row used for RISC-V (S8-032) | 6,201 |  |
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | slhdsa128s_verify | 7,471,794 | published; proxy: Cortex-M4 row used for RISC-V (S2-0060) | 3,544 |  |
 | ESP32-C3, 143.75 uA/MHz at 3.3 V | mlkem768_decaps | 707,827 | published; proxy: Cortex-M4 row used for RISC-V (S2-0024) | 336 | 1.29 |
-| ESP32-C3, 143.75 uA/MHz at 3.3 V | x25519_shared | 548,873 | published; proxy: Cortex-M4 row used for RISC-V (S12A-332) | 260 |  |
-| ESP32-C3, 143.75 uA/MHz at 3.3 V | hmac_sha256_msg | 24,407 | estimated; proxy: Cortex-M4 row used for RISC-V (SHA-256 software throughput median (energy/retrieved_benchmarks.csv)) | 11.6 |  |
+| ESP32-C3, 143.75 uA/MHz at 3.3 V | x25519_shared | 548,873 | published; proxy: Cortex-M4 row used for RISC-V (S12A-332 (data/shared_inputs.csv x25519_scalarmult_cycles_m4)) | 260 |  |
+| ESP32-C3, 143.75 uA/MHz at 3.3 V | hmac_sha256_msg | 24,407 | estimated; proxy: Cortex-M4 row used for RISC-V (SHA-256 software throughput median (data/shared_inputs.csv sha256_cpb_sw_m4)) | 11.6 |  |
 
 SHA-256 software cycles per byte (derived from published throughput, three Cortex-M4 boards): median 76.3, range 75.1 to 109.6, bootstrap 95 percent interval of the median 75.1 to 109.6 (n = 3, so the interval is coarse). HMAC-SHA256 has no published cycles row in the evidence table; the HMAC figures are `estimated` from this SHA-256 throughput for a 64 byte message and are not published values.
 
@@ -88,6 +88,8 @@ The symmetric MAC design row uses no published HMAC cycles (none exist in the ev
 
 ## 4. Mission workloads (modelled)
 
+The vehicle side of a session handshake follows the mission study and the formal models with design change F1 (`docs/FORMAL_VERIFICATION.md`): two X25519 scalar multiplications, one ML-KEM-768 encapsulation, one ML-DSA-44 verification of the ground signature and one ML-DSA-44 signature by the vehicle (classical: two X25519 scalar multiplications, one Ed25519 verification and one Ed25519 signature); a rekey repeats the key exchange without signatures. Earlier versions counted ML-KEM-768 key generation plus decapsulation and no X25519 in the post quantum handshake. Cycle counts, the reference clock and the message length of the per message tag are shared with the other studies and read from `data/shared_inputs.csv` (one value and one source per parameter).
+
 Platforms (cited): Crazyflie 2.1, 250 mAh battery, 7 minute flight; TurtleBot3 Burger, 11.1 V 1800 mAh (19.98 Wh), 2 h 30 min operating time. Battery share per hour = security energy per hour / (battery energy / run time x 1 h). Workload assumptions (all `assumption`, triangular low, nominal, high):
 
 | Input | Low | Nominal | High | Unit |
@@ -108,13 +110,13 @@ The platform MCU run currents were not retrieved, so the current per MHz is a pr
 
 | Platform | Design | Battery percent per hour, nominal | Monte Carlo median (2.5 to 97.5 percentile) | CPU percent nominal | CPU percent median (2.5 to 97.5) | Fraction of draws over 100 percent CPU |
 |---|---|---|---|---|---|---|
-| Crazyflie 2.1 | ML-DSA-44 per command | 0.089 | 0.168 (0.0306 to 0.602) | 8.49 | 22.2 (5.01 to 57.9) | 0.0 |
-| Crazyflie 2.1 | HMAC-SHA256 per command after PQ handshake | 0.00178 | 0.00393 (0.00094 to 0.0132) | 0.17 | 0.508 (0.169 to 1.26) | 0.0 |
-| Crazyflie 2.1 | LMS verify per command | 0.166 | 0.314 (0.057 to 1.12) | 15.9 | 41.5 (9.29 to 108) | 0.0409 |
+| Crazyflie 2.1 | ML-DSA-44 per command | 0.0891 | 0.169 (0.0308 to 0.602) | 8.49 | 22.2 (5.02 to 57.9) | 0.0 |
+| Crazyflie 2.1 | HMAC-SHA256 per command after PQ handshake | 0.00182 | 0.00406 (0.001 to 0.0135) | 0.174 | 0.525 (0.18 to 1.27) | 0.0 |
+| Crazyflie 2.1 | LMS verify per command | 0.166 | 0.314 (0.0571 to 1.13) | 15.9 | 41.5 (9.3 to 108) | 0.0409 |
 | Crazyflie 2.1 | Ed25519 and X25519 baseline | 0.0453 | 0.0857 (0.0156 to 0.306) | 4.32 | 11.3 (2.56 to 29.4) | 0.0 |
-| TurtleBot3 Burger | ML-DSA-44 per command | 0.0505 | 0.0983 (0.018 to 0.35) | 3.78 | 9.9 (2.24 to 25.8) | 0.0 |
-| TurtleBot3 Burger | HMAC-SHA256 per command after PQ handshake | 0.00169 | 0.00372 (0.00084 to 0.0128) | 0.126 | 0.369 (0.111 to 0.94) | 0.0 |
-| TurtleBot3 Burger | LMS verify per command | 0.165 | 0.32 (0.058 to 1.14) | 12.3 | 32.3 (7.2 to 84) | 0.0067 |
+| TurtleBot3 Burger | ML-DSA-44 per command | 0.0506 | 0.0985 (0.0181 to 0.35) | 3.78 | 9.92 (2.26 to 25.8) | 0.0 |
+| TurtleBot3 Burger | HMAC-SHA256 per command after PQ handshake | 0.00176 | 0.00395 (0.00093 to 0.0133) | 0.132 | 0.39 (0.128 to 0.969) | 0.0 |
+| TurtleBot3 Burger | LMS verify per command | 0.165 | 0.321 (0.0581 to 1.14) | 12.3 | 32.3 (7.22 to 84) | 0.0067 |
 | TurtleBot3 Burger | Ed25519 and X25519 baseline | 0.0449 | 0.0873 (0.016 to 0.311) | 3.36 | 8.79 (1.99 to 22.9) | 0.0 |
 
 Monte Carlo: 20000 draws, seed 20261020. These intervals reflect the assumed input ranges only, not measurement error.
@@ -130,7 +132,7 @@ Full indices with bootstrap confidence: `energy/results/sobol.csv`. Figure: `doc
 
 ## 6. Findings, including null results
 
-- Energy is not the binding constraint in this model: at the nominal workload the ML-DSA-44 design uses 0.089 percent of the Crazyflie battery energy per hour against 0.0453 percent for the Ed25519 baseline (modelled). CPU time is the tighter budget, and it is driven by the command rate.
+- Energy is not the binding constraint in this model: at the nominal workload the ML-DSA-44 design uses 0.0891 percent of the Crazyflie battery energy per hour against 0.0453 percent for the Ed25519 baseline (modelled). CPU time is the tighter budget, and it is driven by the command rate.
 - On Cortex-M4, ML-DSA-44 verification takes 1.969 times the cycles of the Ed25519 verify row used here (slower than the classical baseline; range over the published Ed25519 rows 0.971 to 1.969). Other multiples: ML-DSA-87 5.808, LMS 3.683, SLH-DSA-128s (pre standard SPHINCS+ row) 10.349, XMSS 18.105; ML-DSA-44 signing 16.498 times Ed25519 signing. The classical figure depends strongly on the library chosen (section 2).
 - No published HMAC cycle counts exist in the evidence table; the symmetric session design is estimated only.
 - The energy method was checked against 24 published energy rows on one Cortex-M4 board; the uncalibrated estimate is low by a factor near 2.2. No energy check exists for the Cortex-M33, Cortex-M7 or RISC-V parts, and the mission shares have no validation data.

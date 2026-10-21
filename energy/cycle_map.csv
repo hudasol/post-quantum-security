@@ -1,21 +1,21 @@
 op,core_class,method,ref,cycle_label,note,alternatives
-mldsa44_verify,Cortex-M4,evidence_cycles,S2-0033,published,pqm4 m4f,
-mldsa44_sign,Cortex-M4,evidence_cycles,S2-0032,published,pqm4 m4f,
+mldsa44_verify,Cortex-M4,shared,mldsa44_verify_cycles_m4,published,pqm4 m4f,
+mldsa44_sign,Cortex-M4,shared,mldsa44_sign_cycles_m4,published,pqm4 m4f,
 mldsa65_verify,Cortex-M4,evidence_cycles,S2-0042,published,pqm4 m4f,
 mldsa87_verify,Cortex-M4,evidence_cycles,S2-0051,published,pqm4 m4f,
 mlkem768_keygen,Cortex-M4,evidence_cycles,S2-0022,published,pqm4 m4fspeed,
-mlkem768_encaps,Cortex-M4,evidence_cycles,S2-0023,published,pqm4 m4fspeed,
+mlkem768_encaps,Cortex-M4,shared,mlkem768_encaps_cycles_m4,published,pqm4 m4fspeed,
 mlkem768_decaps,Cortex-M4,evidence_cycles,S2-0024,published,pqm4 m4fspeed,
-lms_verify,Cortex-M4,evidence_cycles,S8-026,published,LMS SHA-256 w=16 h=10 single tree (Campos et al.),
+lms_verify,Cortex-M4,shared,lms_verify_cycles_m4,published,LMS SHA-256 w=16 h=10 single tree (Campos et al.),
 xmss_verify,Cortex-M4,evidence_cycles,S8-032,published,XMSS ROBUST SHA-256 w=16 h=10 (RFC 8391 construction),
 xmss_simple_verify,Cortex-M4,evidence_cycles,S8-038,published,XMSS SIMPLE variant (not the RFC 8391 construction),
 slhdsa128s_verify,Cortex-M4,evidence_cycles,S2-0060,published,SPHINCS+ sha2 128s simple clean (pre standard predecessor of SLH-DSA),
 slhdsa128f_verify,Cortex-M4,evidence_cycles,S2-0057,published,SPHINCS+ sha2 128f simple clean (pre standard predecessor of SLH-DSA),
 ecdsa_p256_verify,Cortex-M4,evidence_cycles,S2-0213,published,micro-ecc at 96 MHz,
-ed25519_verify,Cortex-M4,evidence_cycles,S12A-331,published,Owens et al. Ed25519 on STM32F407VG at 24 MHz (arm-none-eabi-gcc -O3; kilocycles converted); chosen because board family and 24 MHz clock match the pqm4 rows,S12A-320|S12A-324|S12A-328
-ed25519_sign,Cortex-M4,evidence_cycles,S12A-330,published,Owens et al. Ed25519 on STM32F407VG at 24 MHz; same choice as verify,S12A-319|S12A-323|S12A-327
-x25519_shared,Cortex-M4,evidence_cycles,S12A-332,published,Emill X25519-Cortex-M4 integer version (hand optimised assembly like the pqm4 m4f rows; clock and compiler not stated),S12A-333|S12A-317|S12A-321|S12A-325
-x25519_keygen,Cortex-M4,evidence_cycles,S12A-332,published,public key generation is one scalar multiplication; same row as the shared secret,S12A-333|S12A-317|S12A-321|S12A-325
+ed25519_verify,Cortex-M4,shared,ed25519_verify_cycles_m4,published,Owens et al. Ed25519 on STM32F407VG at 24 MHz (arm-none-eabi-gcc -O3; kilocycles converted); chosen because board family and 24 MHz clock match the pqm4 rows,S12A-320|S12A-324|S12A-328
+ed25519_sign,Cortex-M4,shared,ed25519_sign_cycles_m4,published,Owens et al. Ed25519 on STM32F407VG at 24 MHz; same choice as verify,S12A-319|S12A-323|S12A-327
+x25519_shared,Cortex-M4,shared,x25519_scalarmult_cycles_m4,published,Emill X25519-Cortex-M4 integer version (hand optimised assembly like the pqm4 m4f rows; clock and compiler not stated),S12A-333|S12A-317|S12A-321|S12A-325
+x25519_keygen,Cortex-M4,shared,x25519_scalarmult_cycles_m4,published,public key generation is one scalar multiplication; same row as the shared secret,S12A-333|S12A-317|S12A-321|S12A-325
 hmac_sha256_msg,Cortex-M4,hmac_estimate,sha256_sw_throughput,estimated,no published HMAC cycles row; estimated from published SHA-256 software throughput,
 mldsa44_verify,Cortex-M7,evidence_cycles,S7-009,published,SLOTHY Cortex-M7,
 mldsa44_sign,Cortex-M7,evidence_cycles,S7-008,published,SLOTHY Cortex-M7,
