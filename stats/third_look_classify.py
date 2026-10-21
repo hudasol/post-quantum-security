@@ -34,6 +34,15 @@ Staging errors (contradictions) on rows that are in data/evidence.csv are writte
 old value is the current cell of data/evidence.csv). The new value is the canonical operation for operation
 fields and the third reading verbatim otherwise.
 
+Leniency of the automatic test: a scheme is compared only at family level, a parameter set is a contradiction only
+when no number is shared, and a pair the test cannot map (for example an operation with no canonical name) counts
+as "no contradiction found". The summary reports how many differing lines of judged fields could not be mapped,
+and it reports the round 4 sample (judged under the round 4 rule: any difference from the source counts) and this
+round separately before the pooled figure.
+
+Labels: the summary counts and shares are script comparisons of readings against staged text, labelled estimated;
+the third reading itself (column third of the classified file) is source wording.
+
 Writes data/verify5/third_look_classified.csv, data/verify5/third_look_summary.csv and
 data/verify5/third_look_corrections.csv; with --apply, appends the corrections to data/corrections.csv.
 """
@@ -143,6 +152,21 @@ def contradiction(field, staged, third):
 JUDGED = {"operation", "core", "scheme", "parameter_set"}
 
 
+def mappable(field, staged, third):
+    """True when the automatic contradiction test can map both texts (canonical operation or core, a known scheme
+    family, numbers in both parameter sets). An unmappable pair is reported as 'no contradiction found' by
+    contradiction(); the summary counts such lines separately so the leniency is visible."""
+    if field == "operation":
+        return bool(canon_op(staged) and canon_op(third))
+    if field == "core":
+        return bool(canon_core(staged) and canon_core(third))
+    if field == "scheme":
+        return _family(staged) != "other" and _family(third) != "other"
+    if field == "parameter_set":
+        return bool(numbers(staged) and numbers(third))
+    return False
+
+
 def wilson(k, n, z=1.96):
     if n == 0:
         return (float("nan"), float("nan"))
@@ -249,10 +273,10 @@ def main(apply=False):
     k = int(settled["verdict"].isin(["reader_right", "both_wrong", "not_in_source"]).sum())
     n = len(settled)
     lo, hi = wilson(k, n)
-    rows = [dict(label="published", measure=f"lines {v}", count=int((c["verdict"] == v).sum()), of=len(c),
+    rows = [dict(label="estimated", measure=f"lines {v}", count=int((c["verdict"] == v).sum()), of=len(c),
                  share=float((c["verdict"] == v).mean()), wilson_lo=float("nan"), wilson_hi=float("nan"))
             for v in ["staging_right", "reader_right", "both_wrong", "not_in_source", "ambiguous", "not_retrieved"]]
-    rows.append(dict(label="published", measure="staged text differs verbatim from the source among settled lines", count=k, of=n,
+    rows.append(dict(label="estimated", measure="staged text differs verbatim from the source among settled lines", count=k, of=n,
                      share=k / n if n else float("nan"), wilson_lo=lo, wilson_hi=hi))
     # combined with the round 4 sample of 60 (adjudication.csv)
     adj = pd.read_csv(V / "adjudication.csv", dtype=str)
@@ -266,29 +290,36 @@ def main(apply=False):
     jud = settled[settled["field"].isin(JUDGED)]
     kc = int(jud["substance"].str.startswith("contradiction").sum())
     l4, h4 = wilson(kc, len(jud))
-    rows.append(dict(label="published", measure="staged text contradicts the source, settled lines of judged fields "
+    rows.append(dict(label="estimated", measure="staged text contradicts the source, settled lines of judged fields "
                      "(operation, core, scheme, parameter_set)", count=kc, of=len(jud),
                      share=kc / len(jud) if len(jud) else float("nan"), wilson_lo=l4, wilson_hi=h4))
     ka = int(con.sum())
     l5, h5 = wilson(ka, n)
-    rows.append(dict(label="published", measure="staged text contradicts the source, all settled lines "
+    rows.append(dict(label="estimated", measure="staged text contradicts the source, all settled lines "
                      "(automatic test and manual decisions)", count=ka, of=n, share=ka / n if n else float("nan"),
                      wilson_lo=l5, wilson_hi=h5))
     lo2, hi2 = wilson(ka + k0, n + n0)
-    rows.append(dict(label="published", measure="staging wrong in substance, all wording disagreements with a settled "
+    rows.append(dict(label="estimated", measure="staging wrong in substance, all wording disagreements with a settled "
                      "third look (round 4 sample of 60 and this round)", count=ka + k0, of=n + n0,
                      share=(ka + k0) / (n + n0) if n + n0 else float("nan"), wilson_lo=lo2, wilson_hi=hi2))
-    rows.append(dict(label="published", measure="settled lines with wording that differs and no substance decision",
+    rows.append(dict(label="estimated", measure="round 4 sample of 60: staging wrong after a third look (round 4 rule, any difference from the source)",
+                     count=k0, of=n0, share=k0 / n0 if n0 else float("nan"), wilson_lo=wilson(k0, n0)[0], wilson_hi=wilson(k0, n0)[1]))
+    dif_j = jud[jud["verdict"].isin(["reader_right", "both_wrong"])]
+    unm = int(sum(not mappable(r["field"], r["staged"], r["third"]) for _, r in dif_j.iterrows()))
+    rows.append(dict(label="estimated", measure="differing lines of judged fields that the automatic test could not map (counted as no contradiction found)",
+                     count=unm, of=len(dif_j), share=unm / len(dif_j) if len(dif_j) else float("nan"),
+                     wilson_lo=float("nan"), wilson_hi=float("nan")))
+    rows.append(dict(label="estimated", measure="settled lines with wording that differs and no substance decision",
                      count=int((settled["substance"] == "wording only, field not judged").sum()), of=n,
                      share=float((settled["substance"] == "wording only, field not judged").mean()),
                      wilson_lo=float("nan"), wilson_hi=float("nan")))
     for f, g in settled.groupby("field"):
         kk = int(g["verdict"].isin(["reader_right", "both_wrong", "not_in_source"]).sum())
         l3, h3 = wilson(kk, len(g))
-        rows.append(dict(label="published", measure=f"staged text differs verbatim among settled lines, field {f}", count=kk,
+        rows.append(dict(label="estimated", measure=f"staged text differs verbatim among settled lines, field {f}", count=kk,
                          of=len(g), share=kk / len(g), wilson_lo=l3, wilson_hi=h3))
     for rule, g in c[c["verdict"] == "staging_right"].groupby("rule"):
-        rows.append(dict(label="published", measure=f"staging right by rule {rule}", count=len(g), of=len(c),
+        rows.append(dict(label="estimated", measure=f"staging right by rule {rule}", count=len(g), of=len(c),
                          share=len(g) / len(c), wilson_lo=float("nan"), wilson_hi=float("nan")))
     pd.DataFrame(rows).to_csv(V / "third_look_summary.csv", index=False, float_format="%.6g")
     corr = corrections(c)
