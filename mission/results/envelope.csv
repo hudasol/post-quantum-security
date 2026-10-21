@@ -1,18 +1,18 @@
 vehicle,link,arch,tag,deadline_s,avail_mean,utilisation_median,feasible,reason,label
-drone,sik,A,base,0.1,0.9718028985507247,0.10692,False,deadline missed or link loss,estimated
-drone,sik,A,base,0.25,0.9919347826086957,0.10692,True,feasible,estimated
-drone,sik,A,base,0.5,0.9919405797101449,0.10692,True,feasible,estimated
-drone,sik,A,base,1.0,0.9919405797101449,0.10692,True,feasible,estimated
-drone,sik,A,base,2.0,0.9919405797101449,0.10692,True,feasible,estimated
-drone,sik,A,base,5.0,0.9919405797101449,0.10692,True,feasible,estimated
-drone,sik,A,base,10.0,0.9919405797101449,0.10692,True,feasible,estimated
-drone,sik,B,base,0.1,0.9715840579710144,0.10980333333333334,False,deadline missed or link loss,estimated
-drone,sik,B,base,0.25,0.9915202898550726,0.10980333333333334,True,feasible,estimated
-drone,sik,B,base,0.5,0.9915333333333333,0.10980333333333334,True,feasible,estimated
-drone,sik,B,base,1.0,0.9915333333333333,0.10980333333333334,True,feasible,estimated
-drone,sik,B,base,2.0,0.9915333333333333,0.10980333333333334,True,feasible,estimated
-drone,sik,B,base,5.0,0.9915333333333333,0.10980333333333334,True,feasible,estimated
-drone,sik,B,base,10.0,0.9915333333333333,0.10980333333333334,True,feasible,estimated
+drone,sik,A,base,0.1,0.9717797101449276,0.10699277777777778,False,deadline missed or link loss,estimated
+drone,sik,A,base,0.25,0.9916333333333335,0.10699277777777778,True,feasible,estimated
+drone,sik,A,base,0.5,0.9916434782608696,0.10699277777777778,True,feasible,estimated
+drone,sik,A,base,1.0,0.9916434782608696,0.10699277777777778,True,feasible,estimated
+drone,sik,A,base,2.0,0.9916434782608696,0.10699277777777778,True,feasible,estimated
+drone,sik,A,base,5.0,0.9916434782608696,0.10699277777777778,True,feasible,estimated
+drone,sik,A,base,10.0,0.9916434782608696,0.10699277777777778,True,feasible,estimated
+drone,sik,B,base,0.1,0.9715028985507245,0.11135092592592592,False,deadline missed or link loss,estimated
+drone,sik,B,base,0.25,0.9914333333333334,0.11135092592592592,True,feasible,estimated
+drone,sik,B,base,0.5,0.9914391304347826,0.11135092592592592,True,feasible,estimated
+drone,sik,B,base,1.0,0.9914391304347826,0.11135092592592592,True,feasible,estimated
+drone,sik,B,base,2.0,0.9914391304347826,0.11135092592592592,True,feasible,estimated
+drone,sik,B,base,5.0,0.9914391304347826,0.11135092592592592,True,feasible,estimated
+drone,sik,B,base,10.0,0.9914391304347826,0.11135092592592592,True,feasible,estimated
 drone,sik,C,base,0.1,0.0,0.4290467592592592,False,deadline missed or link loss,estimated
 drone,sik,C,base,0.25,0.0,0.4290467592592592,False,deadline missed or link loss,estimated
 drone,sik,C,base,0.5,0.7942652173913043,0.4290467592592592,False,deadline missed or link loss,estimated
@@ -27,20 +27,20 @@ drone,sik,D,base,1.0,0.9912376811594203,0.10676611111111112,True,feasible,estima
 drone,sik,D,base,2.0,0.9912376811594203,0.10676611111111112,True,feasible,estimated
 drone,sik,D,base,5.0,0.9912376811594203,0.10676611111111112,True,feasible,estimated
 drone,sik,D,base,10.0,0.9912376811594203,0.10676611111111112,True,feasible,estimated
-drone,ieee802154,A,base,0.1,0.9721333333333332,0.05879795199999998,False,deadline missed or link loss,estimated
-drone,ieee802154,A,base,0.25,0.9919188405797101,0.05879795199999998,True,feasible,estimated
-drone,ieee802154,A,base,0.5,0.9919304347826087,0.05879795199999998,True,feasible,estimated
-drone,ieee802154,A,base,1.0,0.9919304347826087,0.05879795199999998,True,feasible,estimated
-drone,ieee802154,A,base,2.0,0.9919304347826087,0.05879795199999998,True,feasible,estimated
-drone,ieee802154,A,base,5.0,0.9919304347826087,0.05879795199999998,True,feasible,estimated
-drone,ieee802154,A,base,10.0,0.9919304347826087,0.05879795199999998,True,feasible,estimated
-drone,ieee802154,B,base,0.1,0.9717927536231883,0.06009301333333332,False,deadline missed or link loss,estimated
-drone,ieee802154,B,base,0.25,0.9917318840579711,0.06009301333333332,True,feasible,estimated
-drone,ieee802154,B,base,0.5,0.9917434782608696,0.06009301333333332,True,feasible,estimated
-drone,ieee802154,B,base,1.0,0.9917434782608696,0.06009301333333332,True,feasible,estimated
-drone,ieee802154,B,base,2.0,0.9917434782608696,0.06009301333333332,True,feasible,estimated
-drone,ieee802154,B,base,5.0,0.9917434782608696,0.06009301333333332,True,feasible,estimated
-drone,ieee802154,B,base,10.0,0.9917434782608696,0.06009301333333332,True,feasible,estimated
+drone,ieee802154,A,base,0.1,0.9709217391304348,0.058846719999999984,False,deadline missed or link loss,estimated
+drone,ieee802154,A,base,0.25,0.9908623188405797,0.058846719999999984,True,feasible,estimated
+drone,ieee802154,A,base,0.5,0.9908739130434783,0.058846719999999984,True,feasible,estimated
+drone,ieee802154,A,base,1.0,0.9908739130434783,0.058846719999999984,True,feasible,estimated
+drone,ieee802154,A,base,2.0,0.9908739130434783,0.058846719999999984,True,feasible,estimated
+drone,ieee802154,A,base,5.0,0.9908739130434783,0.058846719999999984,True,feasible,estimated
+drone,ieee802154,A,base,10.0,0.9908739130434783,0.058846719999999984,True,feasible,estimated
+drone,ieee802154,B,base,0.1,0.9723057971014493,0.06080285866666664,False,deadline missed or link loss,estimated
+drone,ieee802154,B,base,0.25,0.9922362318840581,0.06080285866666664,True,feasible,estimated
+drone,ieee802154,B,base,0.5,0.9922463768115942,0.06080285866666664,True,feasible,estimated
+drone,ieee802154,B,base,1.0,0.9922463768115942,0.06080285866666664,True,feasible,estimated
+drone,ieee802154,B,base,2.0,0.9922463768115942,0.06080285866666664,True,feasible,estimated
+drone,ieee802154,B,base,5.0,0.9922463768115942,0.06080285866666664,True,feasible,estimated
+drone,ieee802154,B,base,10.0,0.9922463768115942,0.06080285866666664,True,feasible,estimated
 drone,ieee802154,C,base,0.1,0.0,0.21512648533333334,False,deadline missed or link loss,estimated
 drone,ieee802154,C,base,0.25,0.42231884057971014,0.21512648533333334,False,deadline missed or link loss,estimated
 drone,ieee802154,C,base,0.5,0.9337347826086957,0.21512648533333334,False,deadline missed or link loss,estimated
@@ -55,76 +55,76 @@ drone,ieee802154,D,base,1.0,0.9916333333333335,0.05867874133333332,True,feasible
 drone,ieee802154,D,base,2.0,0.9916333333333335,0.05867874133333332,True,feasible,estimated
 drone,ieee802154,D,base,5.0,0.9916333333333335,0.05867874133333332,True,feasible,estimated
 drone,ieee802154,D,base,10.0,0.9916333333333335,0.05867874133333332,True,feasible,estimated
-drone,lora_dr5,A,base,0.1,0.0,15.808117001828153,False,link overloaded,estimated
-drone,lora_dr5,A,base,0.25,2.608695652173913e-05,15.808117001828153,False,link overloaded,estimated
-drone,lora_dr5,A,base,0.5,6.666666666666667e-05,15.808117001828153,False,link overloaded,estimated
-drone,lora_dr5,A,base,1.0,0.00015652173913043477,15.808117001828153,False,link overloaded,estimated
-drone,lora_dr5,A,base,2.0,0.00036666666666666667,15.808117001828153,False,link overloaded,estimated
-drone,lora_dr5,A,base,5.0,0.0008840579710144929,15.808117001828153,False,link overloaded,estimated
-drone,lora_dr5,A,base,10.0,0.0013898550724637687,15.808117001828153,False,link overloaded,estimated
-drone,lora_dr5,B,base,0.1,0.0,16.493747714808045,False,link overloaded,estimated
-drone,lora_dr5,B,base,0.25,0.0,16.493747714808045,False,link overloaded,estimated
-drone,lora_dr5,B,base,0.5,0.0,16.493747714808045,False,link overloaded,estimated
-drone,lora_dr5,B,base,1.0,0.0,16.493747714808045,False,link overloaded,estimated
-drone,lora_dr5,B,base,2.0,0.0,16.493747714808045,False,link overloaded,estimated
-drone,lora_dr5,B,base,5.0,0.0,16.493747714808045,False,link overloaded,estimated
-drone,lora_dr5,B,base,10.0,0.0,16.493747714808045,False,link overloaded,estimated
-drone,lora_dr5,C,base,0.1,0.0,378.83261425959785,False,link overloaded,estimated
-drone,lora_dr5,C,base,0.25,0.0,378.83261425959785,False,link overloaded,estimated
-drone,lora_dr5,C,base,0.5,0.0,378.83261425959785,False,link overloaded,estimated
-drone,lora_dr5,C,base,1.0,0.0,378.83261425959785,False,link overloaded,estimated
-drone,lora_dr5,C,base,2.0,0.0,378.83261425959785,False,link overloaded,estimated
-drone,lora_dr5,C,base,5.0,0.0,378.83261425959785,False,link overloaded,estimated
-drone,lora_dr5,C,base,10.0,0.0,378.83261425959785,False,link overloaded,estimated
-drone,lora_dr5,D,base,0.1,0.0,15.680585009140769,False,link overloaded,estimated
-drone,lora_dr5,D,base,0.25,2.4637681159420292e-05,15.680585009140769,False,link overloaded,estimated
-drone,lora_dr5,D,base,0.5,7.391304347826086e-05,15.680585009140769,False,link overloaded,estimated
-drone,lora_dr5,D,base,1.0,0.00014057971014492753,15.680585009140769,False,link overloaded,estimated
-drone,lora_dr5,D,base,2.0,0.0003536231884057971,15.680585009140769,False,link overloaded,estimated
-drone,lora_dr5,D,base,5.0,0.0009260869565217392,15.680585009140769,False,link overloaded,estimated
-drone,lora_dr5,D,base,10.0,0.001405797101449276,15.680585009140769,False,link overloaded,estimated
-drone,lora_dr0,A,base,0.1,0.0,343.89119999999997,False,link overloaded,estimated
-drone,lora_dr0,A,base,0.25,0.0,343.89119999999997,False,link overloaded,estimated
-drone,lora_dr0,A,base,0.5,0.0,343.89119999999997,False,link overloaded,estimated
-drone,lora_dr0,A,base,1.0,0.0,343.89119999999997,False,link overloaded,estimated
-drone,lora_dr0,A,base,2.0,0.0,343.89119999999997,False,link overloaded,estimated
-drone,lora_dr0,A,base,5.0,0.0,343.89119999999997,False,link overloaded,estimated
-drone,lora_dr0,A,base,10.0,0.0,343.89119999999997,False,link overloaded,estimated
-drone,lora_dr0,B,base,0.1,0.0,361.00266666666664,False,link overloaded,estimated
-drone,lora_dr0,B,base,0.25,0.0,361.00266666666664,False,link overloaded,estimated
-drone,lora_dr0,B,base,0.5,0.0,361.00266666666664,False,link overloaded,estimated
-drone,lora_dr0,B,base,1.0,0.0,361.00266666666664,False,link overloaded,estimated
-drone,lora_dr0,B,base,2.0,0.0,361.00266666666664,False,link overloaded,estimated
-drone,lora_dr0,B,base,5.0,0.0,361.00266666666664,False,link overloaded,estimated
-drone,lora_dr0,B,base,10.0,0.0,361.00266666666664,False,link overloaded,estimated
-drone,lora_dr0,C,base,0.1,0.0,8289.006933333334,False,link overloaded,estimated
-drone,lora_dr0,C,base,0.25,0.0,8289.006933333334,False,link overloaded,estimated
-drone,lora_dr0,C,base,0.5,0.0,8289.006933333334,False,link overloaded,estimated
-drone,lora_dr0,C,base,1.0,0.0,8289.006933333334,False,link overloaded,estimated
-drone,lora_dr0,C,base,2.0,0.0,8289.006933333334,False,link overloaded,estimated
-drone,lora_dr0,C,base,5.0,0.0,8289.006933333334,False,link overloaded,estimated
-drone,lora_dr0,C,base,10.0,0.0,8289.006933333334,False,link overloaded,estimated
-drone,lora_dr0,D,base,0.1,0.0,343.09119999999996,False,link overloaded,estimated
-drone,lora_dr0,D,base,0.25,0.0,343.09119999999996,False,link overloaded,estimated
-drone,lora_dr0,D,base,0.5,0.0,343.09119999999996,False,link overloaded,estimated
-drone,lora_dr0,D,base,1.0,0.0,343.09119999999996,False,link overloaded,estimated
-drone,lora_dr0,D,base,2.0,0.0,343.09119999999996,False,link overloaded,estimated
-drone,lora_dr0,D,base,5.0,0.0,343.09119999999996,False,link overloaded,estimated
-drone,lora_dr0,D,base,10.0,0.0,343.09119999999996,False,link overloaded,estimated
-robot,sik,A,base,0.1,0.9717697777777778,0.127875,False,deadline missed or link loss,estimated
-robot,sik,A,base,0.25,0.9915515555555556,0.127875,True,feasible,estimated
-robot,sik,A,base,0.5,0.9915597777777777,0.127875,True,feasible,estimated
-robot,sik,A,base,1.0,0.9915597777777777,0.127875,True,feasible,estimated
-robot,sik,A,base,2.0,0.9915597777777777,0.127875,True,feasible,estimated
-robot,sik,A,base,5.0,0.9915597777777777,0.127875,True,feasible,estimated
-robot,sik,A,base,10.0,0.9915597777777777,0.127875,True,feasible,estimated
-robot,sik,B,base,0.1,0.9719399999999999,0.13088483796296296,False,deadline missed or link loss,estimated
-robot,sik,B,base,0.25,0.9916739999999999,0.13088483796296296,True,feasible,estimated
-robot,sik,B,base,0.5,0.9916824444444444,0.13088483796296296,True,feasible,estimated
-robot,sik,B,base,1.0,0.9916824444444444,0.13088483796296296,True,feasible,estimated
-robot,sik,B,base,2.0,0.9916824444444444,0.13088483796296296,True,feasible,estimated
-robot,sik,B,base,5.0,0.9916824444444444,0.13088483796296296,True,feasible,estimated
-robot,sik,B,base,10.0,0.9916824444444444,0.13088483796296296,True,feasible,estimated
+drone,lora_dr5,A,base,0.1,0.0,19.509274832419255,False,link overloaded,estimated
+drone,lora_dr5,A,base,0.25,1.739130434782609e-05,19.509274832419255,False,link overloaded,estimated
+drone,lora_dr5,A,base,0.5,5.797101449275363e-05,19.509274832419255,False,link overloaded,estimated
+drone,lora_dr5,A,base,1.0,0.00011884057971014491,19.509274832419255,False,link overloaded,estimated
+drone,lora_dr5,A,base,2.0,0.00024927536231884054,19.509274832419255,False,link overloaded,estimated
+drone,lora_dr5,A,base,5.0,0.0007405797101449276,19.509274832419255,False,link overloaded,estimated
+drone,lora_dr5,A,base,10.0,0.001401449275362319,19.509274832419255,False,link overloaded,estimated
+drone,lora_dr5,B,base,0.1,0.0,20.268421694088964,False,link overloaded,estimated
+drone,lora_dr5,B,base,0.25,0.0,20.268421694088964,False,link overloaded,estimated
+drone,lora_dr5,B,base,0.5,0.0,20.268421694088964,False,link overloaded,estimated
+drone,lora_dr5,B,base,1.0,0.0,20.268421694088964,False,link overloaded,estimated
+drone,lora_dr5,B,base,2.0,0.0,20.268421694088964,False,link overloaded,estimated
+drone,lora_dr5,B,base,5.0,0.0,20.268421694088964,False,link overloaded,estimated
+drone,lora_dr5,B,base,10.0,0.0,20.268421694088964,False,link overloaded,estimated
+drone,lora_dr5,C,base,0.1,0.0,418.21708714198655,False,link overloaded,estimated
+drone,lora_dr5,C,base,0.25,0.0,418.21708714198655,False,link overloaded,estimated
+drone,lora_dr5,C,base,0.5,0.0,418.21708714198655,False,link overloaded,estimated
+drone,lora_dr5,C,base,1.0,0.0,418.21708714198655,False,link overloaded,estimated
+drone,lora_dr5,C,base,2.0,0.0,418.21708714198655,False,link overloaded,estimated
+drone,lora_dr5,C,base,5.0,0.0,418.21708714198655,False,link overloaded,estimated
+drone,lora_dr5,C,base,10.0,0.0,418.21708714198655,False,link overloaded,estimated
+drone,lora_dr5,D,base,0.1,0.0,19.366532602071906,False,link overloaded,estimated
+drone,lora_dr5,D,base,0.25,1.5942028985507246e-05,19.366532602071906,False,link overloaded,estimated
+drone,lora_dr5,D,base,0.5,5.942028985507246e-05,19.366532602071906,False,link overloaded,estimated
+drone,lora_dr5,D,base,1.0,0.00011159420289855072,19.366532602071906,False,link overloaded,estimated
+drone,lora_dr5,D,base,2.0,0.0002652173913043478,19.366532602071906,False,link overloaded,estimated
+drone,lora_dr5,D,base,5.0,0.0007231884057971014,19.366532602071906,False,link overloaded,estimated
+drone,lora_dr5,D,base,10.0,0.001401449275362319,19.366532602071906,False,link overloaded,estimated
+drone,lora_dr0,A,base,0.1,0.0,464.064,False,link overloaded,estimated
+drone,lora_dr0,A,base,0.25,0.0,464.064,False,link overloaded,estimated
+drone,lora_dr0,A,base,0.5,0.0,464.064,False,link overloaded,estimated
+drone,lora_dr0,A,base,1.0,0.0,464.064,False,link overloaded,estimated
+drone,lora_dr0,A,base,2.0,0.0,464.064,False,link overloaded,estimated
+drone,lora_dr0,A,base,5.0,0.0,464.064,False,link overloaded,estimated
+drone,lora_dr0,A,base,10.0,0.0,464.064,False,link overloaded,estimated
+drone,lora_dr0,B,base,0.1,0.0,486.16533333333336,False,link overloaded,estimated
+drone,lora_dr0,B,base,0.25,0.0,486.16533333333336,False,link overloaded,estimated
+drone,lora_dr0,B,base,0.5,0.0,486.16533333333336,False,link overloaded,estimated
+drone,lora_dr0,B,base,1.0,0.0,486.16533333333336,False,link overloaded,estimated
+drone,lora_dr0,B,base,2.0,0.0,486.16533333333336,False,link overloaded,estimated
+drone,lora_dr0,B,base,5.0,0.0,486.16533333333336,False,link overloaded,estimated
+drone,lora_dr0,B,base,10.0,0.0,486.16533333333336,False,link overloaded,estimated
+drone,lora_dr0,C,base,0.1,0.0,10790.777599999998,False,link overloaded,estimated
+drone,lora_dr0,C,base,0.25,0.0,10790.777599999998,False,link overloaded,estimated
+drone,lora_dr0,C,base,0.5,0.0,10790.777599999998,False,link overloaded,estimated
+drone,lora_dr0,C,base,1.0,0.0,10790.777599999998,False,link overloaded,estimated
+drone,lora_dr0,C,base,2.0,0.0,10790.777599999998,False,link overloaded,estimated
+drone,lora_dr0,C,base,5.0,0.0,10790.777599999998,False,link overloaded,estimated
+drone,lora_dr0,C,base,10.0,0.0,10790.777599999998,False,link overloaded,estimated
+drone,lora_dr0,D,base,0.1,0.0,462.8224,False,link overloaded,estimated
+drone,lora_dr0,D,base,0.25,0.0,462.8224,False,link overloaded,estimated
+drone,lora_dr0,D,base,0.5,0.0,462.8224,False,link overloaded,estimated
+drone,lora_dr0,D,base,1.0,0.0,462.8224,False,link overloaded,estimated
+drone,lora_dr0,D,base,2.0,0.0,462.8224,False,link overloaded,estimated
+drone,lora_dr0,D,base,5.0,0.0,462.8224,False,link overloaded,estimated
+drone,lora_dr0,D,base,10.0,0.0,462.8224,False,link overloaded,estimated
+robot,sik,A,base,0.1,0.9720724444444445,0.12794444444444444,False,deadline missed or link loss,estimated
+robot,sik,A,base,0.25,0.9918382222222223,0.12794444444444444,True,feasible,estimated
+robot,sik,A,base,0.5,0.9918468888888888,0.12794444444444444,True,feasible,estimated
+robot,sik,A,base,1.0,0.9918468888888888,0.12794444444444444,True,feasible,estimated
+robot,sik,A,base,2.0,0.9918468888888888,0.12794444444444444,True,feasible,estimated
+robot,sik,A,base,5.0,0.9918468888888888,0.12794444444444444,True,feasible,estimated
+robot,sik,A,base,10.0,0.9918468888888888,0.12794444444444444,True,feasible,estimated
+robot,sik,B,base,0.1,0.971426888888889,0.13249421296296296,False,deadline missed or link loss,estimated
+robot,sik,B,base,0.25,0.9912091111111111,0.13249421296296296,True,feasible,estimated
+robot,sik,B,base,0.5,0.99122,0.13249421296296296,True,feasible,estimated
+robot,sik,B,base,1.0,0.99122,0.13249421296296296,True,feasible,estimated
+robot,sik,B,base,2.0,0.99122,0.13249421296296296,True,feasible,estimated
+robot,sik,B,base,5.0,0.99122,0.13249421296296296,True,feasible,estimated
+robot,sik,B,base,10.0,0.99122,0.13249421296296296,True,feasible,estimated
 robot,sik,C,base,0.1,0.0,1.875150028935185,False,link overloaded,estimated
 robot,sik,C,base,0.25,0.0,1.875150028935185,False,link overloaded,estimated
 robot,sik,C,base,0.5,0.0001751111111111111,1.875150028935185,False,link overloaded,estimated
@@ -132,27 +132,27 @@ robot,sik,C,base,1.0,0.000707111111111111,1.875150028935185,False,link overloade
 robot,sik,C,base,2.0,0.0017524444444444445,1.875150028935185,False,link overloaded,estimated
 robot,sik,C,base,5.0,0.004837555555555555,1.875150028935185,False,link overloaded,estimated
 robot,sik,C,base,10.0,0.010028444444444444,1.875150028935185,False,link overloaded,estimated
-robot,sik,D,base,0.1,0.9721984444444445,0.1277222222222222,False,deadline missed or link loss,estimated
-robot,sik,D,base,0.25,0.9920375555555556,0.1277222222222222,True,feasible,estimated
-robot,sik,D,base,0.5,0.9920446666666667,0.1277222222222222,True,feasible,estimated
-robot,sik,D,base,1.0,0.9920446666666667,0.1277222222222222,True,feasible,estimated
-robot,sik,D,base,2.0,0.9920446666666667,0.1277222222222222,True,feasible,estimated
-robot,sik,D,base,5.0,0.9920446666666667,0.1277222222222222,True,feasible,estimated
-robot,sik,D,base,10.0,0.9920446666666667,0.1277222222222222,True,feasible,estimated
-robot,ieee802154,A,base,0.1,0.9716506666666667,0.06223423333333332,False,deadline missed or link loss,estimated
-robot,ieee802154,A,base,0.25,0.9914908888888889,0.06223423333333332,True,feasible,estimated
-robot,ieee802154,A,base,0.5,0.9914993333333334,0.06223423333333332,True,feasible,estimated
-robot,ieee802154,A,base,1.0,0.9914993333333334,0.06223423333333332,True,feasible,estimated
-robot,ieee802154,A,base,2.0,0.9914993333333334,0.06223423333333332,True,feasible,estimated
-robot,ieee802154,A,base,5.0,0.9914993333333334,0.06223423333333332,True,feasible,estimated
-robot,ieee802154,A,base,10.0,0.9914993333333334,0.06223423333333332,True,feasible,estimated
-robot,ieee802154,B,base,0.1,0.9715331111111111,0.06358466666666665,False,deadline missed or link loss,estimated
-robot,ieee802154,B,base,0.25,0.9913895555555556,0.06358466666666665,True,feasible,estimated
-robot,ieee802154,B,base,0.5,0.9913962222222222,0.06358466666666665,True,feasible,estimated
-robot,ieee802154,B,base,1.0,0.9913962222222222,0.06358466666666665,True,feasible,estimated
-robot,ieee802154,B,base,2.0,0.9913962222222222,0.06358466666666665,True,feasible,estimated
-robot,ieee802154,B,base,5.0,0.9913962222222222,0.06358466666666665,True,feasible,estimated
-robot,ieee802154,B,base,10.0,0.9913962222222222,0.06358466666666665,True,feasible,estimated
+robot,sik,D,base,0.1,0.9721982222222223,0.1277222222222222,False,deadline missed or link loss,estimated
+robot,sik,D,base,0.25,0.9920373333333333,0.1277222222222222,True,feasible,estimated
+robot,sik,D,base,0.5,0.9920444444444445,0.1277222222222222,True,feasible,estimated
+robot,sik,D,base,1.0,0.9920444444444445,0.1277222222222222,True,feasible,estimated
+robot,sik,D,base,2.0,0.9920444444444445,0.1277222222222222,True,feasible,estimated
+robot,sik,D,base,5.0,0.9920444444444445,0.1277222222222222,True,feasible,estimated
+robot,sik,D,base,10.0,0.9920444444444445,0.1277222222222222,True,feasible,estimated
+robot,ieee802154,A,base,0.1,0.971293111111111,0.06228503333333332,False,deadline missed or link loss,estimated
+robot,ieee802154,A,base,0.25,0.9911208888888889,0.06228503333333332,True,feasible,estimated
+robot,ieee802154,A,base,0.5,0.9911282222222221,0.06228503333333332,True,feasible,estimated
+robot,ieee802154,A,base,1.0,0.9911282222222221,0.06228503333333332,True,feasible,estimated
+robot,ieee802154,A,base,2.0,0.9911282222222221,0.06228503333333332,True,feasible,estimated
+robot,ieee802154,A,base,5.0,0.9911282222222221,0.06228503333333332,True,feasible,estimated
+robot,ieee802154,A,base,10.0,0.9911282222222221,0.06228503333333332,True,feasible,estimated
+robot,ieee802154,B,base,0.1,0.9717662222222222,0.06432126666666665,False,deadline missed or link loss,estimated
+robot,ieee802154,B,base,0.25,0.9916291111111111,0.06432126666666665,True,feasible,estimated
+robot,ieee802154,B,base,0.5,0.9916368888888889,0.06432126666666665,True,feasible,estimated
+robot,ieee802154,B,base,1.0,0.9916371111111112,0.06432126666666665,True,feasible,estimated
+robot,ieee802154,B,base,2.0,0.9916371111111112,0.06432126666666665,True,feasible,estimated
+robot,ieee802154,B,base,5.0,0.9916371111111112,0.06432126666666665,True,feasible,estimated
+robot,ieee802154,B,base,10.0,0.9916371111111112,0.06432126666666665,True,feasible,estimated
 robot,ieee802154,C,base,0.1,0.0,0.8590703333333333,False,deadline missed or link loss,estimated
 robot,ieee802154,C,base,0.25,0.00020977777777777778,0.8590703333333333,False,deadline missed or link loss,estimated
 robot,ieee802154,C,base,0.5,0.0010473333333333335,0.8590703333333333,False,deadline missed or link loss,estimated
@@ -167,76 +167,76 @@ robot,ieee802154,D,base,1.0,0.9921500000000001,0.06211569999999999,True,feasible
 robot,ieee802154,D,base,2.0,0.9921500000000001,0.06211569999999999,True,feasible,estimated
 robot,ieee802154,D,base,5.0,0.9921500000000001,0.06211569999999999,True,feasible,estimated
 robot,ieee802154,D,base,10.0,0.9921500000000001,0.06211569999999999,True,feasible,estimated
-robot,lora_dr5,A,base,0.1,0.0,59.65630712979891,False,link overloaded,estimated
-robot,lora_dr5,A,base,0.25,4.222222222222223e-06,59.65630712979891,False,link overloaded,estimated
-robot,lora_dr5,A,base,0.5,1.1111111111111112e-05,59.65630712979891,False,link overloaded,estimated
-robot,lora_dr5,A,base,1.0,2.333333333333334e-05,59.65630712979891,False,link overloaded,estimated
-robot,lora_dr5,A,base,2.0,5.0888888888888884e-05,59.65630712979891,False,link overloaded,estimated
-robot,lora_dr5,A,base,5.0,0.00013555555555555556,59.65630712979891,False,link overloaded,estimated
-robot,lora_dr5,A,base,10.0,0.00021466666666666666,59.65630712979891,False,link overloaded,estimated
-robot,lora_dr5,B,base,0.1,0.0,60.17458866544791,False,link overloaded,estimated
-robot,lora_dr5,B,base,0.25,0.0,60.17458866544791,False,link overloaded,estimated
-robot,lora_dr5,B,base,0.5,0.0,60.17458866544791,False,link overloaded,estimated
-robot,lora_dr5,B,base,1.0,0.0,60.17458866544791,False,link overloaded,estimated
-robot,lora_dr5,B,base,2.0,0.0,60.17458866544791,False,link overloaded,estimated
-robot,lora_dr5,B,base,5.0,0.0,60.17458866544791,False,link overloaded,estimated
-robot,lora_dr5,B,base,10.0,0.0,60.17458866544791,False,link overloaded,estimated
-robot,lora_dr5,C,base,0.1,0.0,1917.688680682511,False,link overloaded,estimated
-robot,lora_dr5,C,base,0.25,0.0,1917.688680682511,False,link overloaded,estimated
-robot,lora_dr5,C,base,0.5,0.0,1917.688680682511,False,link overloaded,estimated
-robot,lora_dr5,C,base,1.0,0.0,1917.688680682511,False,link overloaded,estimated
-robot,lora_dr5,C,base,2.0,0.0,1917.688680682511,False,link overloaded,estimated
-robot,lora_dr5,C,base,5.0,0.0,1917.688680682511,False,link overloaded,estimated
-robot,lora_dr5,C,base,10.0,0.0,1917.688680682511,False,link overloaded,estimated
-robot,lora_dr5,D,base,0.1,0.0,59.53930530164534,False,link overloaded,estimated
-robot,lora_dr5,D,base,0.25,4.666666666666668e-06,59.53930530164534,False,link overloaded,estimated
-robot,lora_dr5,D,base,0.5,1.1555555555555556e-05,59.53930530164534,False,link overloaded,estimated
-robot,lora_dr5,D,base,1.0,2.6444444444444446e-05,59.53930530164534,False,link overloaded,estimated
-robot,lora_dr5,D,base,2.0,5.8444444444444455e-05,59.53930530164534,False,link overloaded,estimated
-robot,lora_dr5,D,base,5.0,0.00014155555555555555,59.53930530164534,False,link overloaded,estimated
-robot,lora_dr5,D,base,10.0,0.00021577777777777776,59.53930530164534,False,link overloaded,estimated
-robot,lora_dr0,A,base,0.1,0.0,1303.455,False,link overloaded,estimated
-robot,lora_dr0,A,base,0.25,0.0,1303.455,False,link overloaded,estimated
-robot,lora_dr0,A,base,0.5,0.0,1303.455,False,link overloaded,estimated
-robot,lora_dr0,A,base,1.0,0.0,1303.455,False,link overloaded,estimated
-robot,lora_dr0,A,base,2.0,0.0,1303.455,False,link overloaded,estimated
-robot,lora_dr0,A,base,5.0,0.0,1303.455,False,link overloaded,estimated
-robot,lora_dr0,A,base,10.0,0.0,1303.455,False,link overloaded,estimated
-robot,lora_dr0,B,base,0.1,0.0,1316.6016666666665,False,link overloaded,estimated
-robot,lora_dr0,B,base,0.25,0.0,1316.6016666666665,False,link overloaded,estimated
-robot,lora_dr0,B,base,0.5,0.0,1316.6016666666665,False,link overloaded,estimated
-robot,lora_dr0,B,base,1.0,0.0,1316.6016666666665,False,link overloaded,estimated
-robot,lora_dr0,B,base,2.0,0.0,1316.6016666666665,False,link overloaded,estimated
-robot,lora_dr0,B,base,5.0,0.0,1316.6016666666665,False,link overloaded,estimated
-robot,lora_dr0,B,base,10.0,0.0,1316.6016666666665,False,link overloaded,estimated
-robot,lora_dr0,C,base,0.1,0.0,41958.52166666667,False,link overloaded,estimated
-robot,lora_dr0,C,base,0.25,0.0,41958.52166666667,False,link overloaded,estimated
-robot,lora_dr0,C,base,0.5,0.0,41958.52166666667,False,link overloaded,estimated
-robot,lora_dr0,C,base,1.0,0.0,41958.52166666667,False,link overloaded,estimated
-robot,lora_dr0,C,base,2.0,0.0,41958.52166666667,False,link overloaded,estimated
-robot,lora_dr0,C,base,5.0,0.0,41958.52166666667,False,link overloaded,estimated
-robot,lora_dr0,C,base,10.0,0.0,41958.52166666667,False,link overloaded,estimated
-robot,lora_dr0,D,base,0.1,0.0,1302.6899999999998,False,link overloaded,estimated
-robot,lora_dr0,D,base,0.25,0.0,1302.6899999999998,False,link overloaded,estimated
-robot,lora_dr0,D,base,0.5,0.0,1302.6899999999998,False,link overloaded,estimated
-robot,lora_dr0,D,base,1.0,0.0,1302.6899999999998,False,link overloaded,estimated
-robot,lora_dr0,D,base,2.0,0.0,1302.6899999999998,False,link overloaded,estimated
-robot,lora_dr0,D,base,5.0,0.0,1302.6899999999998,False,link overloaded,estimated
-robot,lora_dr0,D,base,10.0,0.0,1302.6899999999998,False,link overloaded,estimated
-drone,sik,A,lowrate,0.1,0.9704545454545453,0.00030555555555555555,False,deadline missed or link loss,estimated
-drone,sik,A,lowrate,0.25,0.992,0.00030555555555555555,True,feasible,estimated
-drone,sik,A,lowrate,0.5,0.992,0.00030555555555555555,True,feasible,estimated
-drone,sik,A,lowrate,1.0,0.992,0.00030555555555555555,True,feasible,estimated
-drone,sik,A,lowrate,2.0,0.992,0.00030555555555555555,True,feasible,estimated
-drone,sik,A,lowrate,5.0,0.992,0.00030555555555555555,True,feasible,estimated
-drone,sik,A,lowrate,10.0,0.992,0.00030555555555555555,True,feasible,estimated
-drone,sik,B,lowrate,0.1,0.9713636363636362,0.003192962962962963,False,deadline missed or link loss,estimated
-drone,sik,B,lowrate,0.25,0.991181818181818,0.003192962962962963,True,feasible,estimated
-drone,sik,B,lowrate,0.5,0.991181818181818,0.003192962962962963,True,feasible,estimated
-drone,sik,B,lowrate,1.0,0.991181818181818,0.003192962962962963,True,feasible,estimated
-drone,sik,B,lowrate,2.0,0.991181818181818,0.003192962962962963,True,feasible,estimated
-drone,sik,B,lowrate,5.0,0.991181818181818,0.003192962962962963,True,feasible,estimated
-drone,sik,B,lowrate,10.0,0.991181818181818,0.003192962962962963,True,feasible,estimated
+robot,lora_dr5,A,base,0.1,0.0,70.68372943327239,False,link overloaded,estimated
+robot,lora_dr5,A,base,0.25,2.666666666666667e-06,70.68372943327239,False,link overloaded,estimated
+robot,lora_dr5,A,base,0.5,6.222222222222222e-06,70.68372943327239,False,link overloaded,estimated
+robot,lora_dr5,A,base,1.0,1.8e-05,70.68372943327239,False,link overloaded,estimated
+robot,lora_dr5,A,base,2.0,4.6222222222222224e-05,70.68372943327239,False,link overloaded,estimated
+robot,lora_dr5,A,base,5.0,0.00010911111111111112,70.68372943327239,False,link overloaded,estimated
+robot,lora_dr5,A,base,10.0,0.00021444444444444443,70.68372943327239,False,link overloaded,estimated
+robot,lora_dr5,B,base,0.1,0.0,71.23964046313223,False,link overloaded,estimated
+robot,lora_dr5,B,base,0.25,0.0,71.23964046313223,False,link overloaded,estimated
+robot,lora_dr5,B,base,0.5,0.0,71.23964046313223,False,link overloaded,estimated
+robot,lora_dr5,B,base,1.0,0.0,71.23964046313223,False,link overloaded,estimated
+robot,lora_dr5,B,base,2.0,0.0,71.23964046313223,False,link overloaded,estimated
+robot,lora_dr5,B,base,5.0,0.0,71.23964046313223,False,link overloaded,estimated
+robot,lora_dr5,B,base,10.0,0.0,71.23964046313223,False,link overloaded,estimated
+robot,lora_dr5,C,base,0.1,0.0,2110.5534734917737,False,link overloaded,estimated
+robot,lora_dr5,C,base,0.25,0.0,2110.5534734917737,False,link overloaded,estimated
+robot,lora_dr5,C,base,0.5,0.0,2110.5534734917737,False,link overloaded,estimated
+robot,lora_dr5,C,base,1.0,0.0,2110.5534734917737,False,link overloaded,estimated
+robot,lora_dr5,C,base,2.0,0.0,2110.5534734917737,False,link overloaded,estimated
+robot,lora_dr5,C,base,5.0,0.0,2110.5534734917737,False,link overloaded,estimated
+robot,lora_dr5,C,base,10.0,0.0,2110.5534734917737,False,link overloaded,estimated
+robot,lora_dr5,D,base,0.1,0.0,70.53503960999392,False,link overloaded,estimated
+robot,lora_dr5,D,base,0.25,3.555555555555556e-06,70.53503960999392,False,link overloaded,estimated
+robot,lora_dr5,D,base,0.5,9.555555555555556e-06,70.53503960999392,False,link overloaded,estimated
+robot,lora_dr5,D,base,1.0,2.2222222222222223e-05,70.53503960999392,False,link overloaded,estimated
+robot,lora_dr5,D,base,2.0,4.4888888888888894e-05,70.53503960999392,False,link overloaded,estimated
+robot,lora_dr5,D,base,5.0,0.00011422222222222222,70.53503960999392,False,link overloaded,estimated
+robot,lora_dr5,D,base,10.0,0.00021488888888888887,70.53503960999392,False,link overloaded,estimated
+robot,lora_dr0,A,base,0.1,0.0,1743.023333333333,False,link overloaded,estimated
+robot,lora_dr0,A,base,0.25,0.0,1743.023333333333,False,link overloaded,estimated
+robot,lora_dr0,A,base,0.5,0.0,1743.023333333333,False,link overloaded,estimated
+robot,lora_dr0,A,base,1.0,0.0,1743.023333333333,False,link overloaded,estimated
+robot,lora_dr0,A,base,2.0,0.0,1743.023333333333,False,link overloaded,estimated
+robot,lora_dr0,A,base,5.0,0.0,1743.023333333333,False,link overloaded,estimated
+robot,lora_dr0,A,base,10.0,0.0,1743.023333333333,False,link overloaded,estimated
+robot,lora_dr0,B,base,0.1,0.0,1760.253333333333,False,link overloaded,estimated
+robot,lora_dr0,B,base,0.25,0.0,1760.253333333333,False,link overloaded,estimated
+robot,lora_dr0,B,base,0.5,0.0,1760.253333333333,False,link overloaded,estimated
+robot,lora_dr0,B,base,1.0,0.0,1760.253333333333,False,link overloaded,estimated
+robot,lora_dr0,B,base,2.0,0.0,1760.253333333333,False,link overloaded,estimated
+robot,lora_dr0,B,base,5.0,0.0,1760.253333333333,False,link overloaded,estimated
+robot,lora_dr0,B,base,10.0,0.0,1760.253333333333,False,link overloaded,estimated
+robot,lora_dr0,C,base,0.1,0.0,54535.45666666668,False,link overloaded,estimated
+robot,lora_dr0,C,base,0.25,0.0,54535.45666666668,False,link overloaded,estimated
+robot,lora_dr0,C,base,0.5,0.0,54535.45666666668,False,link overloaded,estimated
+robot,lora_dr0,C,base,1.0,0.0,54535.45666666668,False,link overloaded,estimated
+robot,lora_dr0,C,base,2.0,0.0,54535.45666666668,False,link overloaded,estimated
+robot,lora_dr0,C,base,5.0,0.0,54535.45666666668,False,link overloaded,estimated
+robot,lora_dr0,C,base,10.0,0.0,54535.45666666668,False,link overloaded,estimated
+robot,lora_dr0,D,base,0.1,0.0,1742.2266666666665,False,link overloaded,estimated
+robot,lora_dr0,D,base,0.25,0.0,1742.2266666666665,False,link overloaded,estimated
+robot,lora_dr0,D,base,0.5,0.0,1742.2266666666665,False,link overloaded,estimated
+robot,lora_dr0,D,base,1.0,0.0,1742.2266666666665,False,link overloaded,estimated
+robot,lora_dr0,D,base,2.0,0.0,1742.2266666666665,False,link overloaded,estimated
+robot,lora_dr0,D,base,5.0,0.0,1742.2266666666665,False,link overloaded,estimated
+robot,lora_dr0,D,base,10.0,0.0,1742.2266666666665,False,link overloaded,estimated
+drone,sik,A,lowrate,0.1,0.9717272727272727,0.00037222222222222225,False,deadline missed or link loss,estimated
+drone,sik,A,lowrate,0.25,0.9908181818181818,0.00037222222222222225,True,feasible,estimated
+drone,sik,A,lowrate,0.5,0.9908181818181818,0.00037222222222222225,True,feasible,estimated
+drone,sik,A,lowrate,1.0,0.9908181818181818,0.00037222222222222225,True,feasible,estimated
+drone,sik,A,lowrate,2.0,0.9908181818181818,0.00037222222222222225,True,feasible,estimated
+drone,sik,A,lowrate,5.0,0.9908181818181818,0.00037222222222222225,True,feasible,estimated
+drone,sik,A,lowrate,10.0,0.9908181818181818,0.00037222222222222225,True,feasible,estimated
+drone,sik,B,lowrate,0.1,0.9738181818181818,0.004742222222222222,False,deadline missed or link loss,estimated
+drone,sik,B,lowrate,0.25,0.9918181818181817,0.004742222222222222,True,feasible,estimated
+drone,sik,B,lowrate,0.5,0.9918181818181817,0.004742222222222222,True,feasible,estimated
+drone,sik,B,lowrate,1.0,0.9918181818181817,0.004742222222222222,True,feasible,estimated
+drone,sik,B,lowrate,2.0,0.9918181818181817,0.004742222222222222,True,feasible,estimated
+drone,sik,B,lowrate,5.0,0.9918181818181817,0.004742222222222222,True,feasible,estimated
+drone,sik,B,lowrate,10.0,0.9918181818181817,0.004742222222222222,True,feasible,estimated
 drone,sik,C,lowrate,0.1,0.0,0.005672777777777778,False,deadline missed or link loss,estimated
 drone,sik,C,lowrate,0.25,0.0,0.005672777777777778,False,deadline missed or link loss,estimated
 drone,sik,C,lowrate,0.5,0.7938181818181818,0.005672777777777778,False,deadline missed or link loss,estimated
@@ -251,20 +251,20 @@ drone,sik,D,lowrate,1.0,0.9918181818181817,0.0001588888888888889,True,feasible,e
 drone,sik,D,lowrate,2.0,0.9918181818181817,0.0001588888888888889,True,feasible,estimated
 drone,sik,D,lowrate,5.0,0.9918181818181817,0.0001588888888888889,True,feasible,estimated
 drone,sik,D,lowrate,10.0,0.9918181818181817,0.0001588888888888889,True,feasible,estimated
-drone,ieee802154,A,lowrate,0.1,0.9719090909090908,0.00017339733333333334,False,deadline missed or link loss,estimated
-drone,ieee802154,A,lowrate,0.25,0.9925454545454545,0.00017339733333333334,True,feasible,estimated
-drone,ieee802154,A,lowrate,0.5,0.9925454545454545,0.00017339733333333334,True,feasible,estimated
-drone,ieee802154,A,lowrate,1.0,0.9925454545454545,0.00017339733333333334,True,feasible,estimated
-drone,ieee802154,A,lowrate,2.0,0.9925454545454545,0.00017339733333333334,True,feasible,estimated
-drone,ieee802154,A,lowrate,5.0,0.9925454545454545,0.00017339733333333334,True,feasible,estimated
-drone,ieee802154,A,lowrate,10.0,0.9925454545454545,0.00017339733333333334,True,feasible,estimated
-drone,ieee802154,B,lowrate,0.1,0.971181818181818,0.0014738773333333335,False,deadline missed or link loss,estimated
-drone,ieee802154,B,lowrate,0.25,0.9916363636363636,0.0014738773333333335,True,feasible,estimated
-drone,ieee802154,B,lowrate,0.5,0.9916363636363636,0.0014738773333333335,True,feasible,estimated
-drone,ieee802154,B,lowrate,1.0,0.9916363636363636,0.0014738773333333335,True,feasible,estimated
-drone,ieee802154,B,lowrate,2.0,0.9916363636363636,0.0014738773333333335,True,feasible,estimated
-drone,ieee802154,B,lowrate,5.0,0.9916363636363636,0.0014738773333333335,True,feasible,estimated
-drone,ieee802154,B,lowrate,10.0,0.9916363636363636,0.0014738773333333335,True,feasible,estimated
+drone,ieee802154,A,lowrate,0.1,0.9707272727272727,0.00022758399999999997,False,deadline missed or link loss,estimated
+drone,ieee802154,A,lowrate,0.25,0.9912727272727273,0.00022758399999999997,True,feasible,estimated
+drone,ieee802154,A,lowrate,0.5,0.9913636363636363,0.00022758399999999997,True,feasible,estimated
+drone,ieee802154,A,lowrate,1.0,0.9913636363636363,0.00022758399999999997,True,feasible,estimated
+drone,ieee802154,A,lowrate,2.0,0.9913636363636363,0.00022758399999999997,True,feasible,estimated
+drone,ieee802154,A,lowrate,5.0,0.9913636363636363,0.00022758399999999997,True,feasible,estimated
+drone,ieee802154,A,lowrate,10.0,0.9913636363636363,0.00022758399999999997,True,feasible,estimated
+drone,ieee802154,B,lowrate,0.1,0.9714545454545453,0.0021837226666666667,False,deadline missed or link loss,estimated
+drone,ieee802154,B,lowrate,0.25,0.990909090909091,0.0021837226666666667,True,feasible,estimated
+drone,ieee802154,B,lowrate,0.5,0.990909090909091,0.0021837226666666667,True,feasible,estimated
+drone,ieee802154,B,lowrate,1.0,0.990909090909091,0.0021837226666666667,True,feasible,estimated
+drone,ieee802154,B,lowrate,2.0,0.990909090909091,0.0021837226666666667,True,feasible,estimated
+drone,ieee802154,B,lowrate,5.0,0.990909090909091,0.0021837226666666667,True,feasible,estimated
+drone,ieee802154,B,lowrate,10.0,0.990909090909091,0.0021837226666666667,True,feasible,estimated
 drone,ieee802154,C,lowrate,0.1,0.0,0.002552192,False,deadline missed or link loss,estimated
 drone,ieee802154,C,lowrate,0.25,0.42018181818181816,0.002552192,False,deadline missed or link loss,estimated
 drone,ieee802154,C,lowrate,0.5,0.9329999999999999,0.002552192,False,deadline missed or link loss,estimated
@@ -279,59 +279,59 @@ drone,ieee802154,D,lowrate,1.0,0.9915454545454545,5.960533333333332e-05,True,fea
 drone,ieee802154,D,lowrate,2.0,0.9915454545454545,5.960533333333332e-05,True,feasible,estimated
 drone,ieee802154,D,lowrate,5.0,0.9915454545454545,5.960533333333332e-05,True,feasible,estimated
 drone,ieee802154,D,lowrate,10.0,0.9915454545454545,5.960533333333332e-05,True,feasible,estimated
-drone,lora_dr5,A,lowrate,0.1,0.0,0.2796343692870201,False,deadline missed or link loss,estimated
-drone,lora_dr5,A,lowrate,0.25,0.9704545454545455,0.2796343692870201,False,deadline missed or link loss,estimated
-drone,lora_dr5,A,lowrate,0.5,0.9704545454545455,0.2796343692870201,False,deadline missed or link loss,estimated
-drone,lora_dr5,A,lowrate,1.0,0.9704545454545455,0.2796343692870201,False,deadline missed or link loss,estimated
-drone,lora_dr5,A,lowrate,2.0,0.971,0.2796343692870201,False,deadline missed or link loss,estimated
-drone,lora_dr5,A,lowrate,5.0,0.9711818181818181,0.2796343692870201,False,deadline missed or link loss,estimated
-drone,lora_dr5,A,lowrate,10.0,0.9711818181818181,0.2796343692870201,False,deadline missed or link loss,estimated
-drone,lora_dr5,B,lowrate,0.1,0.0,0.9763802559414991,False,session not established in preflight,estimated
-drone,lora_dr5,B,lowrate,0.25,0.0,0.9763802559414991,False,session not established in preflight,estimated
-drone,lora_dr5,B,lowrate,0.5,0.0,0.9763802559414991,False,session not established in preflight,estimated
-drone,lora_dr5,B,lowrate,1.0,0.0,0.9763802559414991,False,session not established in preflight,estimated
-drone,lora_dr5,B,lowrate,2.0,0.0,0.9763802559414991,False,session not established in preflight,estimated
-drone,lora_dr5,B,lowrate,5.0,0.0,0.9763802559414991,False,session not established in preflight,estimated
-drone,lora_dr5,B,lowrate,10.0,0.0,0.9763802559414991,False,session not established in preflight,estimated
-drone,lora_dr5,C,lowrate,0.1,0.0,5.981523461304084,False,link overloaded,estimated
-drone,lora_dr5,C,lowrate,0.25,0.0,5.981523461304084,False,link overloaded,estimated
-drone,lora_dr5,C,lowrate,0.5,0.0,5.981523461304084,False,link overloaded,estimated
-drone,lora_dr5,C,lowrate,1.0,0.0,5.981523461304084,False,link overloaded,estimated
-drone,lora_dr5,C,lowrate,2.0,0.0,5.981523461304084,False,link overloaded,estimated
-drone,lora_dr5,C,lowrate,5.0,0.0,5.981523461304084,False,link overloaded,estimated
-drone,lora_dr5,C,lowrate,10.0,0.0,5.981523461304084,False,link overloaded,estimated
-drone,lora_dr5,D,lowrate,0.1,0.0,0.16731261425959779,False,deadline missed or link loss,estimated
-drone,lora_dr5,D,lowrate,0.25,0.9731818181818181,0.16731261425959779,False,deadline missed or link loss,estimated
-drone,lora_dr5,D,lowrate,0.5,0.9731818181818181,0.16731261425959779,False,deadline missed or link loss,estimated
-drone,lora_dr5,D,lowrate,1.0,0.9731818181818181,0.16731261425959779,False,deadline missed or link loss,estimated
-drone,lora_dr5,D,lowrate,2.0,0.9732727272727273,0.16731261425959779,False,deadline missed or link loss,estimated
-drone,lora_dr5,D,lowrate,5.0,0.9732727272727273,0.16731261425959779,False,deadline missed or link loss,estimated
-drone,lora_dr5,D,lowrate,10.0,0.9732727272727273,0.16731261425959779,False,deadline missed or link loss,estimated
-drone,lora_dr0,A,lowrate,0.1,0.0,4.4799999999999995,False,link overloaded,estimated
-drone,lora_dr0,A,lowrate,0.25,0.0,4.4799999999999995,False,link overloaded,estimated
-drone,lora_dr0,A,lowrate,0.5,0.0,4.4799999999999995,False,link overloaded,estimated
-drone,lora_dr0,A,lowrate,1.0,0.0,4.4799999999999995,False,link overloaded,estimated
-drone,lora_dr0,A,lowrate,2.0,0.0,4.4799999999999995,False,link overloaded,estimated
-drone,lora_dr0,A,lowrate,5.0,0.0,4.4799999999999995,False,link overloaded,estimated
-drone,lora_dr0,A,lowrate,10.0,0.0,4.4799999999999995,False,link overloaded,estimated
-drone,lora_dr0,B,lowrate,0.1,0.0,21.623466666666666,False,link overloaded,estimated
-drone,lora_dr0,B,lowrate,0.25,0.0,21.623466666666666,False,link overloaded,estimated
-drone,lora_dr0,B,lowrate,0.5,0.0,21.623466666666666,False,link overloaded,estimated
-drone,lora_dr0,B,lowrate,1.0,0.0,21.623466666666666,False,link overloaded,estimated
-drone,lora_dr0,B,lowrate,2.0,0.0,21.623466666666666,False,link overloaded,estimated
-drone,lora_dr0,B,lowrate,5.0,0.0,21.623466666666666,False,link overloaded,estimated
-drone,lora_dr0,B,lowrate,10.0,0.0,21.623466666666666,False,link overloaded,estimated
-drone,lora_dr0,C,lowrate,0.1,0.0,131.1232,False,link overloaded,estimated
-drone,lora_dr0,C,lowrate,0.25,0.0,131.1232,False,link overloaded,estimated
-drone,lora_dr0,C,lowrate,0.5,0.0,131.1232,False,link overloaded,estimated
-drone,lora_dr0,C,lowrate,1.0,0.0,131.1232,False,link overloaded,estimated
-drone,lora_dr0,C,lowrate,2.0,0.0,131.1232,False,link overloaded,estimated
-drone,lora_dr0,C,lowrate,5.0,0.0,131.1232,False,link overloaded,estimated
-drone,lora_dr0,C,lowrate,10.0,0.0,131.1232,False,link overloaded,estimated
-drone,lora_dr0,D,lowrate,0.1,0.0,3.6607999999999996,False,link overloaded,estimated
-drone,lora_dr0,D,lowrate,0.25,0.0,3.6607999999999996,False,link overloaded,estimated
-drone,lora_dr0,D,lowrate,0.5,0.0,3.6607999999999996,False,link overloaded,estimated
-drone,lora_dr0,D,lowrate,1.0,0.0,3.6607999999999996,False,link overloaded,estimated
-drone,lora_dr0,D,lowrate,2.0,0.0,3.6607999999999996,False,link overloaded,estimated
-drone,lora_dr0,D,lowrate,5.0,0.0,3.6607999999999996,False,link overloaded,estimated
-drone,lora_dr0,D,lowrate,10.0,0.0,3.6607999999999996,False,link overloaded,estimated
+drone,lora_dr5,A,lowrate,0.1,0.0,0.3379402803168799,False,deadline missed or link loss,estimated
+drone,lora_dr5,A,lowrate,0.25,0.968090909090909,0.3379402803168799,False,deadline missed or link loss,estimated
+drone,lora_dr5,A,lowrate,0.5,0.968090909090909,0.3379402803168799,False,deadline missed or link loss,estimated
+drone,lora_dr5,A,lowrate,1.0,0.9682727272727273,0.3379402803168799,False,deadline missed or link loss,estimated
+drone,lora_dr5,A,lowrate,2.0,0.9686363636363635,0.3379402803168799,False,deadline missed or link loss,estimated
+drone,lora_dr5,A,lowrate,5.0,0.9695454545454545,0.3379402803168799,False,deadline missed or link loss,estimated
+drone,lora_dr5,A,lowrate,10.0,0.9695454545454545,0.3379402803168799,False,deadline missed or link loss,estimated
+drone,lora_dr5,B,lowrate,0.1,0.0,1.0955271176112127,False,link overloaded,estimated
+drone,lora_dr5,B,lowrate,0.25,0.0,1.0955271176112127,False,link overloaded,estimated
+drone,lora_dr5,B,lowrate,0.5,0.0,1.0955271176112127,False,link overloaded,estimated
+drone,lora_dr5,B,lowrate,1.0,0.0,1.0955271176112127,False,link overloaded,estimated
+drone,lora_dr5,B,lowrate,2.0,0.0,1.0955271176112127,False,link overloaded,estimated
+drone,lora_dr5,B,lowrate,5.0,0.0,1.0955271176112127,False,link overloaded,estimated
+drone,lora_dr5,B,lowrate,10.0,0.0,1.0955271176112127,False,link overloaded,estimated
+drone,lora_dr5,C,lowrate,0.1,0.0,6.580767824497258,False,link overloaded,estimated
+drone,lora_dr5,C,lowrate,0.25,0.0,6.580767824497258,False,link overloaded,estimated
+drone,lora_dr5,C,lowrate,0.5,0.0,6.580767824497258,False,link overloaded,estimated
+drone,lora_dr5,C,lowrate,1.0,0.0,6.580767824497258,False,link overloaded,estimated
+drone,lora_dr5,C,lowrate,2.0,0.0,6.580767824497258,False,link overloaded,estimated
+drone,lora_dr5,C,lowrate,5.0,0.0,6.580767824497258,False,link overloaded,estimated
+drone,lora_dr5,C,lowrate,10.0,0.0,6.580767824497258,False,link overloaded,estimated
+drone,lora_dr5,D,lowrate,0.1,0.0,0.19519804996953075,False,deadline missed or link loss,estimated
+drone,lora_dr5,D,lowrate,0.25,0.9731818181818181,0.19519804996953075,False,deadline missed or link loss,estimated
+drone,lora_dr5,D,lowrate,0.5,0.9731818181818181,0.19519804996953075,False,deadline missed or link loss,estimated
+drone,lora_dr5,D,lowrate,1.0,0.9731818181818181,0.19519804996953075,False,deadline missed or link loss,estimated
+drone,lora_dr5,D,lowrate,2.0,0.9731818181818181,0.19519804996953075,False,deadline missed or link loss,estimated
+drone,lora_dr5,D,lowrate,5.0,0.9731818181818181,0.19519804996953075,False,deadline missed or link loss,estimated
+drone,lora_dr5,D,lowrate,10.0,0.9731818181818181,0.19519804996953075,False,deadline missed or link loss,estimated
+drone,lora_dr0,A,lowrate,0.1,0.0,6.088533333333333,False,link overloaded,estimated
+drone,lora_dr0,A,lowrate,0.25,0.0,6.088533333333333,False,link overloaded,estimated
+drone,lora_dr0,A,lowrate,0.5,0.0,6.088533333333333,False,link overloaded,estimated
+drone,lora_dr0,A,lowrate,1.0,0.0,6.088533333333333,False,link overloaded,estimated
+drone,lora_dr0,A,lowrate,2.0,0.0,6.088533333333333,False,link overloaded,estimated
+drone,lora_dr0,A,lowrate,5.0,0.0,6.088533333333333,False,link overloaded,estimated
+drone,lora_dr0,A,lowrate,10.0,0.0,6.088533333333333,False,link overloaded,estimated
+drone,lora_dr0,B,lowrate,0.1,0.0,28.279466666666668,False,link overloaded,estimated
+drone,lora_dr0,B,lowrate,0.25,0.0,28.279466666666668,False,link overloaded,estimated
+drone,lora_dr0,B,lowrate,0.5,0.0,28.279466666666668,False,link overloaded,estimated
+drone,lora_dr0,B,lowrate,1.0,0.0,28.279466666666668,False,link overloaded,estimated
+drone,lora_dr0,B,lowrate,2.0,0.0,28.279466666666668,False,link overloaded,estimated
+drone,lora_dr0,B,lowrate,5.0,0.0,28.279466666666668,False,link overloaded,estimated
+drone,lora_dr0,B,lowrate,10.0,0.0,28.279466666666668,False,link overloaded,estimated
+drone,lora_dr0,C,lowrate,0.1,0.0,170.34666666666666,False,link overloaded,estimated
+drone,lora_dr0,C,lowrate,0.25,0.0,170.34666666666666,False,link overloaded,estimated
+drone,lora_dr0,C,lowrate,0.5,0.0,170.34666666666666,False,link overloaded,estimated
+drone,lora_dr0,C,lowrate,1.0,0.0,170.34666666666666,False,link overloaded,estimated
+drone,lora_dr0,C,lowrate,2.0,0.0,170.34666666666666,False,link overloaded,estimated
+drone,lora_dr0,C,lowrate,5.0,0.0,170.34666666666666,False,link overloaded,estimated
+drone,lora_dr0,C,lowrate,10.0,0.0,170.34666666666666,False,link overloaded,estimated
+drone,lora_dr0,D,lowrate,0.1,0.0,4.881066666666667,False,link overloaded,estimated
+drone,lora_dr0,D,lowrate,0.25,0.0,4.881066666666667,False,link overloaded,estimated
+drone,lora_dr0,D,lowrate,0.5,0.0,4.881066666666667,False,link overloaded,estimated
+drone,lora_dr0,D,lowrate,1.0,0.0,4.881066666666667,False,link overloaded,estimated
+drone,lora_dr0,D,lowrate,2.0,0.0,4.881066666666667,False,link overloaded,estimated
+drone,lora_dr0,D,lowrate,5.0,0.0,4.881066666666667,False,link overloaded,estimated
+drone,lora_dr0,D,lowrate,10.0,0.0,4.881066666666667,False,link overloaded,estimated

@@ -70,14 +70,14 @@
   "rekey_interval_s": 300.0,
   "grace_s": 30.0,
   "deadline_s": 0.5,
-  "clock_hz": 168000000.0,
   "clock_alt_hz": 480000000.0,
   "wait_state_factor": 1.0,
-  "mac_cycles": 10000.0,
   "ground_compute_s": 0.0,
-  "ftp_header_bytes": 12.0,
-  "chunk_data_bytes": 239.0,
   "feasible_availability": 0.99,
-  "c_timestamp_bytes": 0.0
+  "c_timestamp_bytes": 0.0,
+  "clock_hz": 168000000.0,
+  "mac_cycles": 24406.77966101695,
+  "ftp_header_bytes": 12.0,
+  "chunk_data_bytes": 239.0
  }
 }
