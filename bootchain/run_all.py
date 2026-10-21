@@ -24,7 +24,8 @@ FIG = os.path.join(bm.HERE, "..", "docs", "figures", "bootchain")
 DOC = os.path.join(bm.ROOT, "docs", "BOOT_UPDATE_STUDY.md")
 PINK = ["#d63384", "#f48fb1", "#ad1457", "#f8bbd0", "#880e4f", "#fce4ec"]
 IMAGES = [100000, 250000, 500000, 1000000, 2000000]
-TARGETS = [("Crazyflie 2.1 (STM32F405)", "Cortex-M4", 168.0), ("STM32H563", "Cortex-M33", 250.0),
+TARGETS = [("Crazyflie 2.1 (STM32F405)", "Cortex-M4", em.shared_inputs.value("clock_m4_ref_mhz")),
+           ("STM32H563", "Cortex-M33", 250.0),
            ("TurtleBot3 Burger board", "Cortex-M7", 216.0)]
 MC_N = 20000
 
@@ -48,10 +49,10 @@ def build():
     cmap = em.load_local("cycle_map.csv")
     inp = bm.load_inputs()
     schemes = bm.load_schemes()
-    params = em.read_csv(os.path.join(bm.ROOT, "linksim", "params.csv"))
+    params = bm.link_param_rows()
     cpb_sw_all = em.sha256_cpb(bench, "sw")
     cpb_hw_all = em.sha256_cpb(bench, "hw")
-    cpb_sw, cpb_hw = statistics.median(cpb_sw_all), statistics.median(cpb_hw_all)
+    cpb_sw, cpb_hw = em.shared_inputs.value("sha256_cpb_sw_m4"), statistics.median(cpb_hw_all)
     R = {"cpb_sw": cpb_sw, "cpb_hw": cpb_hw, "cpb_sw_rng": (min(cpb_sw_all), max(cpb_sw_all)),
          "cpb_hw_rng": (min(cpb_hw_all), max(cpb_hw_all))}
     sig = {s["scheme"]: s for s in schemes}
@@ -290,7 +291,9 @@ def write_doc(R, inp):
              "(cycles / clock). Signature cycles are `published` rows of `data/evidence.csv` or `derived from published` "
              "times; cycles per byte are `derived from published` throughput. Times are `estimated`. Comparisons with "
              "published boot measurements are `modelled` with the error stated beside them. Where a core has no row the "
-             "Cortex-M4 row is used and marked `proxy`. Sources: `data/raw/S12_boot_sources.md`.\n")
+             "Cortex-M4 row is used and marked `proxy`. Sources: `data/raw/S12_boot_sources.md`. Parameters shared with other "
+             "studies (Cortex-M4 cycle counts, the 168 MHz reference clock, SHA-256 software cycles per byte, the LMS image header "
+             "and the link rates) are read from `data/shared_inputs.csv` (one value and one source per parameter).\n")
     lo, hi = R["cpb_sw_rng"]
     L.append(f"SHA-256 cycles per byte: software median {R['cpb_sw']:.1f} (range {lo:.1f} to {hi:.1f}, three Cortex-M4 "
              f"boards); hardware HASH median {R['cpb_hw']:.2f} (range {R['cpb_hw_rng'][0]:.2f} to {R['cpb_hw_rng'][1]:.2f}). "

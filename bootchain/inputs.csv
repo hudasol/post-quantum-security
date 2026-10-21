@@ -4,7 +4,6 @@ fmuv3_flash_bytes,2000000,B,published,https://docs.px4.io/v1.13/zh/config/firmwa
 crazyflie_flash_bytes,1000000,B,published,https://www.bitcraze.io/documentation/hardware/crazyflie_2_1/crazyflie_2_1-datasheet.pdf,Rev 3 section 3 (1 Mb flash as printed; read as 1 MB)
 wolfboot_app_image_bytes,100000,B,published,data/evidence.csv S2-0347 notes,about 100 KB image as stated; 1 KB = 1000 B is an assumption
 wolfboot_clock_mhz,320,MHz,published,data/evidence.csv S2-0347 clock_mhz,as recorded; the STM32H563 product page states 250 MHz maximum (see data/raw/S12_boot_sources.md)
-pq_image_header_bytes,5288,B,published,linksim/params.csv pq_image_header_bytes (data/raw/S3_robotics.md:121),wolfBoot LMS example header
 mldsa44_image_header_bytes,4840,B,published,data/raw/S4_migration.md:85,wolfBoot ML-DSA-44 example header
 suit_metadata_bytes,419,B,published,data/evidence.csv S10D-004,2021/781 Table 2
 suit_u2_base_transfer_bytes,47000,B,published,2021/781 supplied PDF,Table 8 page 15 (47 kB; 1 kB = 1000 B is an assumption)
