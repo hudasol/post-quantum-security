@@ -10,7 +10,7 @@ For each row:
 2. Compare every populated field among: `cycles, ram_bytes, stack_bytes, flash_or_code_bytes, energy_uj, key_or_sig_size_bytes, clock_mhz, core, scheme, parameter_set, operation`. Empty cells mean "not reported"; flag a field only if the cell is populated and wrong, or empty while the source clearly reports it under the same row (call that `missing:<field>`).
 3. Status: `OK` (all compared fields match), `ERROR` (at least one wrong or missing field; list them in `wrong_fields` and the source's values in `correct_values`), `UNVERIFIABLE` (source cannot be retrieved, or the cell cannot be located; say why). Never mark OK without having seen the number in the retrieved source this retrieval run.
 4. `location_ok`: yes or no. A wrong location with correct numbers is a location error, counted separately from field errors.
-5. Do not edit `data/evidence.csv`. Corrections are applied later by the lead.
+5. Do not edit `data/evidence.csv`. Corrections are applied later by the author through data/corrections.csv.
 
 Rules:
 - Retrieval: for hosts that return HTTP 403 to the shell (github.com HTML, eprint.iacr.org, nsa.gov, media.defense.gov, cisa.gov) use only the web fetch and web search tools. Do not use curl, mirrors, caches, archives or other tools to get around a block. Mark such rows `UNVERIFIABLE`. `raw.githubusercontent.com` and `git clone` work from the shell.

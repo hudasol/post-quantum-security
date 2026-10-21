@@ -2,7 +2,7 @@
 
 Method: web fetch and web search only, by design. No curl, wget, mirrors, caches or archives. Each item tried once or twice, including the abstract-page form where one exists. Retrieval date recorded as 2026-10-11 as instructed (the system clock reported 2026-10-12 partway through the session).
 
-Important: most failures were NOT site blocks. web fetch returned a provenance error ("permission request for this URL was not answered in time"), meaning no one approved the fetch prompt. Those items are recorded as BLOCKED because nothing was retrieved, but they may succeed if the user approves the prompts or includes the URL in a message. The only site-side refusal seen was `ROBOTS_DISALLOWED` for the 2026/312 PDF.
+Important: most failures were not site blocks. The fetch returned a provenance error ("permission request for this URL was not answered in time"), so the request was not approved in time. Those items are recorded as BLOCKED because nothing was retrieved, but they may succeed if the author allows the fetch or supplies the page. The only site side refusal seen was `ROBOTS_DISALLOWED` for the 2026/312 PDF.
 
 All content below comes from the web fetch tool's summary of the page, not a verbatim read. Numbers should be re-checked against the PDF before they go into the report.
 
