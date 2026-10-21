@@ -1,0 +1,11 @@
+stack,target,label
+ardupilot,MatekF405-Wing,planned
+px4,px4_fmu-v6x_default,planned
+px4,px4_fmu-v5_default,planned
+ardupilot,MatekH743,planned
+ardupilot,CubeOrange,planned
+ardupilot,Pixhawk6C,planned
+ardupilot,Durandal,planned
+px4,px4_fmu-v6c_default,planned
+px4,cubepilot_cubeorange_default,planned
+px4,holybro_durandal-v1_default,planned

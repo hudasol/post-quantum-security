@@ -1,0 +1,5 @@
+component,version,commit,source,label
+PX4-Autopilot,v1.17.0,d6f12ad1c4f70ad3230afd7d86e971421e02fef4,https://github.com/PX4/PX4-Autopilot,published
+ArduPilot,Copter-4.7.2,fb773567896014da007bca58358704d4a0d8516f,https://github.com/ArduPilot/ardupilot,published
+arm-none-eabi-gcc,13.2.1,,gcc-arm-none-eabi 15:13.2.rel1-2,host measured
+python,3.13.16,,virtual environment in the third party folder,host measured
