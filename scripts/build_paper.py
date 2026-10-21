@@ -394,7 +394,8 @@ def threats_text():
         "12. The match rules for the third look at wording disagreements were written after a first literal comparison was seen; ambiguous lines stay unsettled and are listed for the author.\n"
         "13. IEEE Xplore and the ACM Digital Library could not be searched (their search pages could not be fetched), and Semantic Scholar refused; the systematic search under covers those indexes.\n"
         "14. The selective repeat follow up blocks and the extra ns-3 runs were added after the first results; predictions are scored on the first, registered runs only.\n"
-        "15. Software in the loop used one flight stack (ArduPilot), one link profile (SiK class) and one outage per mission; the hybrid session and the per command signature were emulated by their bytes and published compute delays, not executed, and a first set of runs with a timing defect was replaced by a rerun with the same seeds.")
+        "15. Software in the loop used one flight stack (ArduPilot), one link profile (SiK class) and one outage per mission; the hybrid session and the per command signature were emulated by their bytes and published compute delays, not executed, and a first set of runs with a timing defect was replaced by a rerun with the same seeds.\n"
+        f"16. {claim('p_s12_fetch', 'data/evidence.csv', 'id', 'stream == \"S12\" and comparability_warning.fillna(\"\").str.contains(\"Read with web fetch\")', 'count', '{:.0f}', label='published')} round 4 rows were read through a web fetch that returns a summary of the page rather than the page itself; round 5 excludes such values (inclusion 4), but the round 4 rows were not held to that rule. They include the Cortex-M4 X25519 and Ed25519 baseline rows that the mission and energy studies use, so those classical figures are less certain than their labels suggest until the full texts are read.")
 
 
 def conclusion_text():

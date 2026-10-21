@@ -2,7 +2,7 @@
 
 Author: Huda Mueen. Draft of 2026-10-21. Generated from `docs/PAPER_body.md` by `scripts/build_paper.py`; every number below is read from a file in this repository, and `scripts/check_numbers.py` fails the build when a stated number drifts from its file. Licence: all rights reserved (`LICENSE`).
 
-Target venue: a six page workshop paper with one additional page (PPT-PQC 2027, `data/raw/S13_venue.md`). Sections 1 to 6 and the references form the submission; the section marked Supplementary is for the repository version only. Length of the main part (abstract to conclusion, table included, figure captions and references excluded): 4263 words, about 4.7 pages at 900 words per two column page, before the references and the three figures, each about a third of a column high.
+Target venue: a six page workshop paper with one additional page (PPT-PQC 2027, `data/raw/S13_venue.md`). Sections 1 to 6 and the references form the submission; the section marked Supplementary is for the repository version only. Length of the main part (abstract to conclusion, table included, figure captions and references excluded): 4337 words, about 4.8 pages at 900 words per two column page, before the references and the three figures, each about a third of a column high.
 
 ## Abstract
 
@@ -102,6 +102,7 @@ ArduPilot Copter 4.7.2 ran in software in the loop with its built in vehicle mod
 13. IEEE Xplore and the ACM Digital Library could not be searched (their search pages could not be fetched), and Semantic Scholar refused; the systematic search under covers those indexes.
 14. The selective repeat follow up blocks and the extra ns-3 runs were added after the first results; predictions are scored on the first, registered runs only.
 15. Software in the loop used one flight stack (ArduPilot), one link profile (SiK class) and one outage per mission; the hybrid session and the per command signature were emulated by their bytes and published compute delays, not executed, and a first set of runs with a timing defect was replaced by a rerun with the same seeds.
+16. 125 round 4 rows were read through a web fetch that returns a summary of the page rather than the page itself; round 5 excludes such values (inclusion 4), but the round 4 rows were not held to that rule. They include the Cortex-M4 X25519 and Ed25519 baseline rows that the mission and energy studies use, so those classical figures are less certain than their labels suggest until the full texts are read.
 
 ## 6. Conclusion
 
