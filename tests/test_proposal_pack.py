@@ -29,7 +29,7 @@ class TestProposalData(unittest.TestCase):
     def test_every_file_has_a_label(self):
         for p in PROP.glob("*.csv"):
             for r in rows(p):
-                self.assertIn(r["label"], {"planned", "estimated", "published"}, p.name)
+                self.assertIn(r["label"], {"planned", "estimated", "published", "SITL measured"}, p.name)
 
     def test_plan_months(self):
         plan = rows(PROP / "plan.csv")
