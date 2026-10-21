@@ -90,7 +90,7 @@ Not possible: no published cycle row for the mlkem-native or mldsa-native harnes
 
 ## 2. Meta analysis: hierarchical model (modelled from published rows)
 
-Response: natural log of cycles. Cells (parameter set, operation, core class) with two or more rows: 115 cells, 399 of 652 rows of `data/evidence.csv` that `scripts/meta_analysis.py` uses. Cell means are fixed effects; implementation variant (the library field as the row states it), statistic (mean, median, min, other), compiler where stated and source are crossed random effects (REML, `stats/meta_hierarchical.py`). Fits: unweighted, weighted; weighted fit: weighted by data/source_quality.csv, weight (score + 1) / 6; 39 sources listed, 0 rows from unlisted sources at weight 1. Intervals: parametric bootstrap, 100 refits per fit, seed 20261021.
+Response: natural log of cycles. Cells (parameter set, operation, core class) with two or more rows: 115 cells, 399 of 652 rows of `data/evidence.csv` that `scripts/meta_analysis.py` uses. Cell means are fixed effects; implementation variant (the library field as the row states it), statistic (mean, median, min, other), compiler where stated and source are crossed random effects (REML, `stats/meta_hierarchical.py`). Fits: unweighted, weighted; weighted fit: weighted by data/source_quality.csv, weight (score + 1) / 6; 39 sources listed, 0 rows from unlisted sources at weight 1. Intervals: parametric bootstrap, 100 refits per fit, seed 20261021. Source quality (`data/source_quality.csv`) is checked against the full text of each source; 10 sources whose full text could not be retrieved in round 5 get 0 on the checked items, so the weighted fit down weights them for a reason of access, not of quality; the unweighted fit is the main result.
 
 **Unweighted, all rows**
 
@@ -106,11 +106,11 @@ Response: natural log of cycles. Cells (parameter set, operation, core class) wi
 
 | component | levels | sd of log cycles | factor at one sd | share of within cell variance, percent | 95 percent interval of the share |
 |---|---|---|---|---|---|
-| variant | 45 | 0.28 | 1.33 | 4.0 | 1.2 to 17.6 |
-| statistic | 4 | 0.90 | 2.46 | 40.2 | 0.0 to 77.9 |
-| compiler | 5 | 1.01 | 2.74 | 50.7 | 0.0 to 83.5 |
-| source | 16 | 0.00 | 1.00 | 0.0 | 0.0 to 59.2 |
-| residual | 399 | 0.32 | 1.38 | 5.2 | 2.2 to 20.0 |
+| variant | 45 | 0.23 | 1.26 | 2.5 | 0.6 to 10.6 |
+| statistic | 4 | 0.90 | 2.46 | 39.7 | 0.3 to 79.1 |
+| compiler | 5 | 1.03 | 2.80 | 52.1 | 0.0 to 84.0 |
+| source | 16 | 0.00 | 1.00 | 0.0 | 0.0 to 46.3 |
+| residual | 399 | 0.34 | 1.40 | 5.6 | 2.3 to 21.1 |
 
 **Unweighted, the 12 rows that report a worst observed value removed**
 
@@ -138,8 +138,8 @@ Spread of repeated measurements of one implementation:
 |---|---|---|---|---|
 | residual sd of the hierarchical model (log cycles) | unweighted | 0.38 | 1.47 | 0.35 to 0.41 |
 | total within cell sd of the hierarchical model (log cycles) | unweighted | 1.44 | 4.20 | 0.75 to 2.14 |
-| residual sd of the hierarchical model (log cycles) | weighted | 0.32 | 1.38 | 0.29 to 0.35 |
-| total within cell sd of the hierarchical model (log cycles) | weighted | 1.42 | 4.13 | 0.71 to 2.13 |
+| residual sd of the hierarchical model (log cycles) | weighted | 0.34 | 1.40 | 0.31 to 0.36 |
+| total within cell sd of the hierarchical model (log cycles) | weighted | 1.43 | 4.17 | 0.74 to 2.15 |
 | worst observed rows excluded: residual sd of the hierarchical model (log cycles) | unweighted | 0.21 | 1.23 | n/a to n/a |
 | worst observed rows excluded: total within cell sd of the hierarchical model (log cycles) | unweighted | 0.53 | 1.70 | n/a to n/a |
 | pooled within sd of log cycles, same cell and same stated variant | unweighted | 1.39 | 4.00 | n/a to n/a |

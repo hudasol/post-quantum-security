@@ -8,8 +8,10 @@ source (notes, comparability warning, location, device, clock, library, URL) sta
 matched phrase is written as the reason. A missing point therefore means "not recorded in the
 evidence table", which may understate a source whose text was not transcribed in full.
 
-Hand check (data/source_quality_checked.csv): for the round 5 sources the keyword matches were found
-to give points from incidental mentions (for example pqm4 named only as a citation). For every source
+Hand check (data/source_quality_checked.csv): the keyword matches were found to give points from
+incidental mentions (for example pqm4 named only as a citation), first for the round 5 sources (review
+pass 1) and then for the earlier sources (review pass 2), so every source is now checked. A source whose
+full text could not be retrieved gets 0 on the checked items (less favourable reading). For every source
 listed there, the items listed are taken from the check against the retrieved full text (point and
 reason with a quotation or the place searched) instead of the keyword match; platform_stated stays
 from the double read device and clock fields. Rows with item 'note' are written to the note column.
@@ -26,11 +28,14 @@ ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / "data" / "evidence.csv"
 OUT = ROOT / "data" / "source_quality.csv"
 CHECKED = ROOT / "data" / "source_quality_checked.csv"
+UNREAD = set()  # sources whose full text could not be retrieved (filled by checked())
 
 
 def checked():
     """source_url -> {item: (point, reason)}, and source_url -> note, from the hand check file."""
     pts, notes = {}, {}
+    global UNREAD
+    UNREAD = set()
     if CHECKED.exists():
         with open(CHECKED, newline="", encoding="utf-8") as fh:
             for r in csv.DictReader(fh):
@@ -38,6 +43,8 @@ def checked():
                     notes[r["source_url"]] = r["reason"]
                 else:
                     pts.setdefault(r["source_url"], {})[r["item"]] = (int(r["point"]), f"checked in the source ({r['checked_on']}): {r['reason']}")
+                    if r["checked_against"].startswith("not retrieved"):
+                        UNREAD.add(r["source_url"])
     return pts, notes
 
 RULES = OrderedDict([
@@ -99,7 +106,8 @@ def main():
             s = score(rows)
             hand = pts.get(url, {})
             s.update(hand)
-            how = ("checked against the retrieved source for " + ", ".join(sorted(hand)) + "; other items by keyword match on the recorded rows") if hand \
+            how = ("full text not retrieved in round 5: 0 given for " + ", ".join(sorted(hand)) + " (less favourable reading); other items by keyword match on the recorded rows") if url in UNREAD \
+                else ("checked against the retrieved source for " + ", ".join(sorted(hand)) + "; other items by keyword match on the recorded rows") if hand \
                 else "keyword match on the recorded rows"
             w.writerow([url, rows[0]["source_title"][:200], len(rows), sum(v[0] for v in s.values())]
                        + [x for i in items for x in s[i]] + [how, notes.get(url, ""), "derived from published"])

@@ -1,8 +1,8 @@
 label,weighting,measure,value,factor,ci_lo,ci_hi,n_rows,n_groups
 modelled,unweighted,residual sd of the hierarchical model (log cycles),0.38225,1.46558,0.347361,0.408368,399,115
 modelled,unweighted,total within cell sd of the hierarchical model (log cycles),1.43526,4.20073,0.745245,2.14373,399,115
-modelled,weighted,residual sd of the hierarchical model (log cycles),0.323252,1.38161,0.293245,0.345097,399,115
-modelled,weighted,total within cell sd of the hierarchical model (log cycles),1.41797,4.12873,0.712692,2.12516,399,115
+modelled,weighted,residual sd of the hierarchical model (log cycles),0.339119,1.40371,0.309011,0.363719,399,115
+modelled,weighted,total within cell sd of the hierarchical model (log cycles),1.42842,4.17208,0.740948,2.14968,399,115
 modelled,unweighted,worst observed rows excluded: residual sd of the hierarchical model (log cycles),0.205969,1.22871,,,387,115
 modelled,unweighted,worst observed rows excluded: total within cell sd of the hierarchical model (log cycles),0.531104,1.70081,,,387,115
 published,unweighted,"pooled within sd of log cycles, same cell and same stated variant",1.38665,4.00141,,,47,17
