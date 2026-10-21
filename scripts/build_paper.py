@@ -362,10 +362,10 @@ def method_reading():
         f"{claim('p_s13_valdis', v6 + '/summary.csv', 'field', vf, 'count', '{:.0f}', label='published')} value fields disagreed with staging, all "
         f"{claim('p_s13_word', v6 + '/third_look_queue.csv', 'id', 'kind == \"wording\"', 'count', '{:.0f}', label='published')} wording disagreements got a third look, and "
         f"{claim('p_s13_prom', ev, 'id', 'stream == \"S13\"', 'count', '{:.0f}', label='published')} rows were promoted (`docs/VERIFICATION6.md`). "
-        f"The {claim('p_tl_lines', tl, 'of', 'measure == \"lines staging_right\"', fmt='{:.0f}', label='published')} wording disagreements that round 4 had left without a third look were all read again by blind readers; "
-        f"over all settled wording disagreements staging was wrong in substance in {claim('p_tl_sub', tl, 'count', sub, fmt='{:.0f}', label='published')} of {claim('p_tl_sub_n', tl, 'of', sub, fmt='{:.0f}', label='published')} "
-        f"({claim('p_tl_sub_pct', tl, 'share', sub, fmt='{:.1f}', scale=100, label='published')} percent, Wilson interval {claim('p_tl_sub_lo', tl, 'wilson_lo', sub, fmt='{:.1f}', scale=100, label='published')} to "
-        f"{claim('p_tl_sub_hi', tl, 'wilson_hi', sub, fmt='{:.1f}', scale=100, label='published')}), and {claim('p_tl_amb', tl, 'count', 'measure == \"lines ambiguous\"', fmt='{:.0f}', label='published')} lines stay ambiguous (`docs/STATISTICS_V5.md`).")
+        f"The {claim('p_tl_lines', tl, 'of', 'measure == \"lines staging_right\"', fmt='{:.0f}', label='estimated')} wording disagreements that round 4 had left without a third look were all read again by blind readers; "
+        f"over all settled wording disagreements staging was wrong in substance in {claim('p_tl_sub', tl, 'count', sub, fmt='{:.0f}', label='estimated')} of {claim('p_tl_sub_n', tl, 'of', sub, fmt='{:.0f}', label='estimated')} "
+        f"({claim('p_tl_sub_pct', tl, 'share', sub, fmt='{:.1f}', scale=100, label='estimated')} percent, Wilson interval {claim('p_tl_sub_lo', tl, 'wilson_lo', sub, fmt='{:.1f}', scale=100, label='estimated')} to "
+        f"{claim('p_tl_sub_hi', tl, 'wilson_hi', sub, fmt='{:.1f}', scale=100, label='estimated')}), and {claim('p_tl_amb', tl, 'count', 'measure == \"lines ambiguous\"', fmt='{:.0f}', label='estimated')} lines stay ambiguous (`docs/STATISTICS_V5.md`).")
 
 
 def parts_text(fill):
