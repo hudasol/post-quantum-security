@@ -10,11 +10,7 @@ Drones and robots authenticate commands and firmware on microcontroller flight c
 
 ## Why this may be relevant (public facts only)
 
-- The TII Cryptography Research Center page lists classical and post quantum cryptography research, lightweight cryptography, cryptographic implementation on custom hardware, and quantum key distribution and random number generation among its activities. (TII-02)
-- The TII Secure Systems Research Center page states a focus on end to end security and resilience for cyber physical and autonomous systems, ranging from secure phones to autonomous drones, with research cards on secure mesh networking and a zero trust approach to autonomous systems. (TII-04)
-- A TII news item dated April 2021 lists Secure Systems Research Center projects with universities covering drone communication security, secure mesh communication under power limits, physical layer security for UAV to ground links, and secure onboard computation for resource constrained nano drones. (TII-05)
-- An ATRC news item dated May 2026 reports an agreement between the UAE Cyber Security Council and ATRC entities for a national post quantum migration plan, using TII national cryptographic libraries (classical and post quantum) and quantum key distribution, and stated to be aligned with NIST post quantum standards; embedded and IoT devices are not mentioned. (TII-06)
-- The TII Partnerships and Programmes page lists a visiting scholars programme, a graduate programme for postgraduate students, year long internships open to undergraduate and graduate students, planned dual degree programmes, and research partnerships with universities; it gives no open call or deadline. (TII-07)
+Public facts that may make this work relevant are recorded, with their sources, only in `docs/CONTEXT_ENTITIES.md`: TII-02, TII-04, TII-05, TII-06, TII-07. None of them implies any relationship with or endorsement by the organisation.
 
 ## What already exists
 

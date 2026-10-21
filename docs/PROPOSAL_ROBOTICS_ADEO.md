@@ -10,10 +10,7 @@ Drones and robots authenticate commands and firmware on microcontroller flight c
 
 ## Why this may be relevant (public facts only)
 
-- The Abu Dhabi Media Office topic page for ADEO states that the office monitors how government entities carry out strategic plans and assesses their performance. (ADEO-01)
-- An Abu Dhabi Media Office item dated February 2025 reports an ATRC board meeting held at the Abu Dhabi Executive Office that reviewed research priorities including quantum technology and noted the launch of QuantumGate, a venture for data protection in a post quantum setting. (ADEO-02)
-- An Abu Dhabi Media Office item dated November 2020 reports that the Abu Dhabi Executive Committee approved a government cyber security strategy with four pillars (maturity, resilience, capabilities, partnerships), implemented by the Abu Dhabi Digital Authority; ADEO is not named in the item. (ADEO-03)
-- An Abu Dhabi Media Office item dated January 2025 reports the Abu Dhabi Government Digital Strategy 2025 to 2027, led by the Department of Government Enablement, with goals including full sovereign cloud use for government and digital frameworks for high cyber security standards; ADEO is not named in the item. (ADEO-04)
+Public facts that may make this work relevant are recorded, with their sources, only in `docs/CONTEXT_ENTITIES.md`: ADEO-01, ADEO-02, ADEO-03, ADEO-04. None of them implies any relationship with or endorsement by the organisation.
 
 ADEO publishes little on technology under its own name; the items above that do not name ADEO are Abu Dhabi government statements, as `docs/CONTEXT_ENTITIES.md` notes.
 
