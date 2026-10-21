@@ -20,8 +20,10 @@ changed. The rules applied are those registered in that file:
   rule 4: a refutation on NUCLEO-L552ZE-Q means the Cortex-M4 model does not transfer to that
       Cortex-M33 board; it is reported separately and does not refute the model on the Cortex-M4
       board.
-The thresholds are the registered counts (6 and 14 of 18); when fewer rows can be scored the counts
-are still compared with them, and the board summary says how many rows were scored.
+The thresholds are the registered counts (6 and 14 of 18). When fewer rows can be scored, a rule also
+refutes when its share of the scored rows exceeds the registered share (more than a third miss, or more
+than four fifths of the errors share one sign), the less favourable reading; the board summary says how
+many rows were scored.
 With no board measured rows (for example the emulated dry run) every row is 'not scored'.
 
 Output CSV (--out): one row per prediction row, then one summary row per board. Value columns
