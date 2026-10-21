@@ -1150,6 +1150,23 @@ Labels used across the repository: published, host measured, emulated, estimated
 | utilisation_mean | number | 0.0112569 |
 | duty_budget_hours | number | 1.14597 |
 
+### `linksim/results/protocols_lorawan_overhead.csv`
+
+10 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | modelled |
+| link | text | lora_dr0 |
+| protocol | text | dtls13 |
+| variant | text | classical |
+| overhead_default_bytes | number | 13 |
+| overhead_alt_bytes | number | 9 |
+| wall_default_s | number | 6600.54 |
+| wall_alt_s | number | 6190.45 |
+| relative_change | number | -0.06213 |
+| seed | number | 20261020 |
+
 ### `linksim/results/protocols_rank_flips.csv`
 
 8 columns.
@@ -2114,7 +2131,7 @@ Labels used across the repository: published, host measured, emulated, estimated
 | aggregate | text | count |
 | tolerance_rel | number | 0.005 |
 | label | text | published |
-| note | empty |  |
+| note | text | displayed as {:.1f} x 0.001 |
 
 ### `data/context_entities.csv`
 
