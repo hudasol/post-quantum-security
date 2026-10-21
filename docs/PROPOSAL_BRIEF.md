@@ -13,7 +13,7 @@ This is a student research proposal and a seed for discussion. It is not a deplo
 - The session and update design was checked formally: 39 of 57 queries proved, design flaws F1 to F3 found and fixed (modelled).
 - The cycle model is accurate within one code base (1.0 percent) but not across schemes (9.8 percent); nothing is yet measured on a microcontroller.
 
-**What is proposed.** 12 months, part time: one afternoon on two borrowed boards scored against 36 registered predictions, software in the loop, a borrowed radio pair, a run time memory profile, and a design note with dataset release. Readiness of the command channel: TRL 2 now, TRL 4 planned at the end (lab only; scale in the full proposal).
+**What is proposed.** 12 months, part time: one afternoon on two borrowed boards scored against 36 registered predictions, a software in the loop rerun with the replay rule enforced, a borrowed radio pair, a run time memory profile, and a design note with dataset release. Readiness of the command channel: TRL 2 now, TRL 4 planned at the end (lab only; scale in the full proposal).
 
 **Fit.** Deliverables map to sections 6.1.1, 6.1.2, 6.1.3, 6.1.4, 6.1.5, 6.1.6 of the UAE National Encryption Policy (quoted terms and page in the full proposal, section 7) and to public facts TII-02, TII-03, EDGE-02, TII-04, TII-05, EDGE-04, TII-06, EDGE-05, ADEO-03, ADEO-04, EDGE-01, EDGE-03, TII-07, ADEO-02, TII-08 in `docs/CONTEXT_ENTITIES.md`. The project does not fulfil any entity's duty and implies no endorsement.
 
