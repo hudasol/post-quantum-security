@@ -137,7 +137,7 @@ def formal_table():
         ("Ground station authenticates the vehicle (A2)", "session_b_stated", "A2", "F1: the vehicle signs the transcript; both sides confirm the key", "session_b_fixed", "A2"),
         ("Ground station session key stays secret (S2)", "session_b_stated", "S2", "F1", "session_b_fixed", "S2"),
         ("Ground station rekeyed key stays secret (S4)", "session_b_stated", "S4", "F1", "session_b_fixed", "S4"),
-        ("Vehicle accepts each command once, only if sent (C1)", "session_b_stated", "C1", "none needed", "session_b_fixed", "C1"),
+        ("Vehicle accepts each command once, only if sent (C1), with the strict next sequence rule", "session_b_stated", "C1", "none needed if the strict rule is adopted; with the published MAVLink rule see the last row", "session_b_fixed", "C1"),
         ("Vehicle session key secret with one component broken (S1)", "session_b_fixed_classical_broken", "S1", "none needed (hybrid key derivation)", "session_b_fixed_kem_broken", "S1"),
         ("Provisioned key fallback: no replay after a power cycle (C1)", "fallback_d_stated", "C1", "F2: fresh nonces from both sides at every session start", "fallback_d_fixed", "C1"),
         ("Provisioned key fallback: earlier sessions secret after key theft (FS)", "fallback_d_fixed_fs_provisioned", "FS", "none possible without a key exchange; keys kept short lived", "fallback_d_fixed_fs_provisioned", "FS"),
