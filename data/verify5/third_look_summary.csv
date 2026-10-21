@@ -1,0 +1,25 @@
+label,measure,count,of,share,wilson_lo,wilson_hi
+published,lines staging_right,212,393,0.53944,,
+published,lines reader_right,119,393,0.302799,,
+published,lines both_wrong,34,393,0.086514,,
+published,lines not_in_source,0,393,0,,
+published,lines ambiguous,28,393,0.0712468,,
+published,lines not_retrieved,0,393,0,,
+published,staged text differs verbatim from the source among settled lines,153,365,0.419178,0.369656,0.470384
+published,"staged text contradicts the source, settled lines of judged fields (operation, core, scheme, parameter_set)",0,264,0,0,0.0143428
+published,"staged text contradicts the source, all settled lines (automatic test and manual decisions)",1,365,0.00273973,0.00048378,0.0153539
+published,"staging wrong in substance, all wording disagreements with a settled third look (round 4 sample of 60 and this round)",7,425,0.0164706,0.00800065,0.0336035
+published,settled lines with wording that differs and no substance decision,0,365,0,,
+published,"staged text differs verbatim among settled lines, field conditions",42,43,0.976744,0.879407,0.995883
+published,"staged text differs verbatim among settled lines, field core",0,37,0,0,0.094061
+published,"staged text differs verbatim among settled lines, field library",38,49,0.77551,0.641209,0.869752
+published,"staged text differs verbatim among settled lines, field operation",16,126,0.126984,0.0796958,0.196345
+published,"staged text differs verbatim among settled lines, field parameter_set",19,40,0.475,0.329352,0.625029
+published,"staged text differs verbatim among settled lines, field quantity",3,4,0.75,0.300636,0.954414
+published,"staged text differs verbatim among settled lines, field scheme",30,61,0.491803,0.370602,0.613976
+published,"staged text differs verbatim among settled lines, field unit",5,5,1,0.565509,1
+published,staging right by rule R1,67,393,0.170483,,
+published,staging right by rule R2,63,393,0.160305,,
+published,staging right by rule R3,37,393,0.0941476,,
+published,staging right by rule R4,40,393,0.101781,,
+published,staging right by rule R5,5,393,0.0127226,,

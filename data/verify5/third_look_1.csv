@@ -1,0 +1,132 @@
+id,field,value_as_in_source,location_found,note
+S12A-305,library,protected SLotH (TI Keccak),"Page 15, Table 6 caption","library named only in caption, not in the cell"
+S12A-306,library,protected SLotH (TI Keccak),"Page 15, Table 6 caption","library named only in caption, not in the cell"
+S12A-307,library,protected SLotH (TI Keccak),"Page 15, Table 6 caption","library named only in caption, not in the cell"
+S12A-308,library,protected SLotH (TI Keccak),"Page 15, Table 6 caption","library named only in caption, not in the cell"
+S12A-309,library,protected SLotH (TI Keccak),"Page 15, Table 6 caption","library named only in caption, not in the cell"
+S12A-310,library,protected SLotH (TI Keccak),"Page 15, Table 6 caption","library named only in caption, not in the cell"
+S12A-311,library,protected SLotH (TI Keccak),"Page 15, Table 6 caption","library named only in caption, not in the cell"
+S12A-312,library,protected SLotH (TI Keccak),"Page 15, Table 6 caption","library named only in caption, not in the cell"
+S12A-313,library,protected SLotH (TI Keccak),"Page 15, Table 6 caption","library named only in caption, not in the cell"
+S12A-314,library,protected SLotH (TI Keccak),"Page 15, Table 6 caption","library named only in caption, not in the cell"
+S12A-315,library,protected SLotH (TI Keccak),"Page 15, Table 6 caption","library named only in caption, not in the cell"
+S12A-441,library,an Espressif fork of liboqs,"article body text (component description), not in the table","table cell reads 'ML-DSA-65 verify in software', Acceleration Method 'Software (CPU)'; no library in table"
+S12A-442,operation,SHA-256 over image + classical sector,"Secure Boot verification table, column 'Verification Step'",
+S12A-443,scheme,RSA-PSS-3072,"Secure Boot verification table, column 'Verification Step', cell 'RSA-PSS-3072 verify in hardware'",
+S12A-367,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-368,parameter_set,SHA-256 | w 256 | h 5 | d 1,"PDF page 18, Appendix A.1, Table 9, row 'LMS', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-369,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-369,parameter_set,SHA-256 | w 256 | h 5 | d 1,"PDF page 18, Appendix A.1, Table 9, row 'LMS', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-370,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-370,operation,key gen,"PDF page 18, Appendix A.1, Table 9, column header",
+S12A-370,parameter_set,SHAKE256 | w 256 | h 5 | d 1,"PDF page 18, Appendix A.1, Table 9, row 'LMS', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-371,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-371,parameter_set,SHAKE256 | w 256 | h 5 | d 1,"PDF page 18, Appendix A.1, Table 9, row 'LMS', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-372,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-372,parameter_set,SHAKE256 | w 256 | h 5 | d 1,"PDF page 18, Appendix A.1, Table 9, row 'LMS', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-373,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-373,operation,key gen,"PDF page 19, Appendix A.1, Table 10, column header",
+S12A-373,parameter_set,SHA-256 | w 256 | h 10 | d 1,"PDF page 19, Appendix A.1, Table 10, row 'LMS', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-374,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-374,parameter_set,SHA-256 | w 256 | h 10 | d 1,"PDF page 19, Appendix A.1, Table 10, row 'LMS', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-375,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-375,parameter_set,SHA-256 | w 256 | h 10 | d 1,"PDF page 19, Appendix A.1, Table 10, row 'LMS', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-376,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-376,operation,key gen,"PDF page 19, Appendix A.1, Table 10, column header",
+S12A-376,parameter_set,SHAKE256 | w 16 | h 10 | d 1,"PDF page 19, Appendix A.1, Table 10, row 'XMSS ROBUST', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-377,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-377,parameter_set,SHAKE256 | w 16 | h 10 | d 1,"PDF page 19, Appendix A.1, Table 10, row 'XMSS ROBUST', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-378,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-378,parameter_set,SHAKE256 | w 16 | h 10 | d 1,"PDF page 19, Appendix A.1, Table 10, row 'XMSS ROBUST', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-379,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-379,operation,key gen,"PDF page 19, Appendix A.1, Table 10, column header",
+S12A-379,parameter_set,SHAKE256 | w 16 | h 10 | d 1,"PDF page 19, Appendix A.1, Table 10, row 'XMSS SIMPLE', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-380,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-380,parameter_set,SHAKE256 | w 16 | h 10 | d 1,"PDF page 19, Appendix A.1, Table 10, row 'XMSS SIMPLE', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-381,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-381,parameter_set,SHAKE256 | w 16 | h 10 | d 1,"PDF page 19, Appendix A.1, Table 10, row 'XMSS SIMPLE', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-382,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-382,operation,key gen,"PDF page 19, Appendix A.1, Table 10, column header",
+S12A-382,parameter_set,SHAKE256 | w 16 | h 10 | d 1,"PDF page 19, Appendix A.1, Table 10, row 'LMS', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-383,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-383,parameter_set,SHAKE256 | w 16 | h 10 | d 1,"PDF page 19, Appendix A.1, Table 10, row 'LMS', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-384,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-384,parameter_set,SHAKE256 | w 16 | h 10 | d 1,"PDF page 19, Appendix A.1, Table 10, row 'LMS', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-385,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-385,operation,key gen,"PDF page 19, Appendix A.1, Table 10, column header",
+S12A-385,parameter_set,SHAKE256 | w 256 | h 10 | d 1,"PDF page 19, Appendix A.1, Table 10, row 'LMS', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-386,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-387,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-387,parameter_set,SHAKE256 | w 256 | h 10 | d 1,"PDF page 19, Appendix A.1, Table 10, row 'LMS', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-388,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-388,operation,key gen,"PDF page 19, Appendix A.1, Table 11, column header",
+S12A-388,scheme,XMSSMT,"PDF page 19, Appendix A.1, Table 11, design column cell 'XMSSMT ROBUST'",scheme part of design cell; 'MT' set as superscript in caption 'XMSSMT and HSS'
+S12A-389,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-389,scheme,XMSSMT,"PDF page 19, Appendix A.1, Table 11, design column cell 'XMSSMT ROBUST'",scheme part of design cell; 'MT' set as superscript in caption 'XMSSMT and HSS'
+S12A-390,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-390,scheme,XMSSMT,"PDF page 19, Appendix A.1, Table 11, design column cell 'XMSSMT ROBUST'",scheme part of design cell; 'MT' set as superscript in caption 'XMSSMT and HSS'
+S12A-391,operation,key gen,"PDF page 19, Appendix A.1, Table 11, column header",
+S12A-391,scheme,XMSSMT,"PDF page 19, Appendix A.1, Table 11, design column cell 'XMSSMT SIMPLE'",scheme part of design cell; 'MT' set as superscript in caption 'XMSSMT and HSS'
+S12A-392,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-392,scheme,XMSSMT,"PDF page 19, Appendix A.1, Table 11, design column cell 'XMSSMT SIMPLE'",scheme part of design cell; 'MT' set as superscript in caption 'XMSSMT and HSS'
+S12A-393,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-393,scheme,XMSSMT,"PDF page 19, Appendix A.1, Table 11, design column cell 'XMSSMT SIMPLE'",scheme part of design cell; 'MT' set as superscript in caption 'XMSSMT and HSS'
+S12A-394,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-394,operation,key gen,"PDF page 19, Appendix A.1, Table 11, column header",
+S12A-395,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-395,scheme,XMSSMT,"PDF page 19, Appendix A.1, Table 11, design column cell 'XMSSMT SIMPLE+PRE'",scheme part of design cell; 'MT' set as superscript in caption 'XMSSMT and HSS'
+S12A-396,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-396,scheme,XMSSMT,"PDF page 19, Appendix A.1, Table 11, design column cell 'XMSSMT SIMPLE+PRE'",scheme part of design cell; 'MT' set as superscript in caption 'XMSSMT and HSS'
+S12A-397,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-397,operation,key gen,"PDF page 19, Appendix A.1, Table 11, column header",
+S12A-400,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-400,operation,key gen,"PDF page 19, Appendix A.1, Table 11, column header",
+S12A-400,scheme,XMSSMT,"PDF page 19, Appendix A.1, Table 11, design column cell 'XMSSMT ROBUST'",scheme part of design cell; 'MT' set as superscript in caption 'XMSSMT and HSS'
+S12A-401,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-401,parameter_set,SHAKE256 | w 16 | h 10 | d 2,"PDF page 19, Appendix A.1, Table 11, row 'XMSSMT ROBUST', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-401,scheme,XMSSMT,"PDF page 19, Appendix A.1, Table 11, design column cell 'XMSSMT ROBUST'",scheme part of design cell; 'MT' set as superscript in caption 'XMSSMT and HSS'
+S12A-402,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-402,parameter_set,SHAKE256 | w 16 | h 10 | d 2,"PDF page 19, Appendix A.1, Table 11, row 'XMSSMT ROBUST', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-402,scheme,XMSSMT,"PDF page 19, Appendix A.1, Table 11, design column cell 'XMSSMT ROBUST'",scheme part of design cell; 'MT' set as superscript in caption 'XMSSMT and HSS'
+S12A-403,operation,key gen,"PDF page 19, Appendix A.1, Table 11, column header",
+S12A-403,parameter_set,SHAKE256 | w 16 | h 10 | d 2,"PDF page 19, Appendix A.1, Table 11, row 'XMSSMT SIMPLE', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-403,scheme,XMSSMT,"PDF page 19, Appendix A.1, Table 11, design column cell 'XMSSMT SIMPLE'",scheme part of design cell; 'MT' set as superscript in caption 'XMSSMT and HSS'
+S12A-404,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-404,parameter_set,SHAKE256 | w 16 | h 10 | d 2,"PDF page 19, Appendix A.1, Table 11, row 'XMSSMT SIMPLE', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-404,scheme,XMSSMT,"PDF page 19, Appendix A.1, Table 11, design column cell 'XMSSMT SIMPLE'",scheme part of design cell; 'MT' set as superscript in caption 'XMSSMT and HSS'
+S12A-405,parameter_set,SHAKE256 | w 16 | h 10 | d 2,"PDF page 19, Appendix A.1, Table 11, row 'XMSSMT SIMPLE', columns hash type, w, h, d","no single parameter set name printed; value is the row cells for hash type, w, h, d"
+S12A-405,scheme,XMSSMT,"PDF page 19, Appendix A.1, Table 11, design column cell 'XMSSMT SIMPLE'",scheme part of design cell; 'MT' set as superscript in caption 'XMSSMT and HSS'
+S12A-406,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-406,operation,key gen,"PDF page 19, Appendix A.1, Table 11, column header",
+S12A-407,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-409,operation,key gen,"PDF page 19, Appendix A.1, Table 11, column header",
+S12A-410,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12A-411,core,32-bit ARM Cortex-M4 with FPU core,"PDF page 12, Section 5 Evaluation (board STM32F4DISCOVERY)",core not printed in the table; Appendix A.1 and running title give 'ARM Cortex-M4'
+S12B-028,operation,TLS 1.2 handshakes,"Appendix A, Table A1 caption",column header reads 'HandshakeTime[ms]'
+S12B-029,scheme,KYBER512,"Appendix A, Table A1, column 'KEM'",
+S12B-030,operation,TLS 1.2 handshakes,"Appendix A, Table A1 caption",column header reads 'HandshakeTime[ms]'
+S12B-030,scheme,KYBER768,"Appendix A, Table A1, column 'KEM'",
+S12B-031,operation,TLS 1.2 handshakes,"Appendix A, Table A1 caption",column header reads 'HandshakeTime[ms]'
+S12B-031,scheme,KYBER1024,"Appendix A, Table A1, column 'KEM'",
+S12B-032,operation,TLS 1.2 handshakes,"Appendix A, Table A1 caption",column header reads 'HandshakeTime[ms]'
+S12B-032,scheme,NTRUHPS2048509,"Appendix A, Table A1, column 'KEM'",
+S12B-033,operation,TLS 1.2 handshakes,"Appendix A, Table A1 caption",column header reads 'HandshakeTime[ms]'
+S12B-033,scheme,HQC_128,"Appendix A, Table A1, column 'KEM'",
+S12B-034,operation,TLS 1.2 handshakes,"Appendix A, Table A1 caption",column header reads 'HandshakeTime[ms]'
+S12B-034,scheme,BIKE_L1,"Appendix A, Table A1, column 'KEM'",
+S12B-035,operation,TLS 1.2 handshakes,"Appendix A, Table A1 caption",column header reads 'HandshakeTime[ms]'
+S12B-035,scheme,FRODOKEM640AES,"Appendix A, Table A1, column 'KEM'",
+S12BL-053,conditions,"EAD 는 사용하지 않는 것으로 가정하였으며 C_I, C_R, ID_CRED_I, IC_CRED_R 은 모두 1 byte 로 지정하였다.","Table 1, row '1 (I→R)', column 'EDHOC (RFC 9528)', notes under Table 1; Section 2 text adds 'Initiator 와 Responder가 모두 static DH를 사용하는 설정'",ambiguous: table note plus static DH setting stated in Section 2 text; header 'Message Payload Size (bytes)'
+S12BL-054,conditions,"EAD 는 사용하지 않는 것으로 가정하였으며 C_I, C_R, ID_CRED_I, IC_CRED_R 은 모두 1 byte 로 지정하였다.","Table 1, row '2 (R→I)', column 'EDHOC (RFC 9528)', notes under Table 1; Section 2 text adds 'Initiator 와 Responder가 모두 static DH를 사용하는 설정'",ambiguous: table note plus static DH setting stated in Section 2 text; header 'Message Payload Size (bytes)'
+S12BL-055,conditions,"EAD 는 사용하지 않는 것으로 가정하였으며 C_I, C_R, ID_CRED_I, IC_CRED_R 은 모두 1 byte 로 지정하였다.","Table 1, row '3 (I→R)', column 'EDHOC (RFC 9528)', notes under Table 1; Section 2 text adds 'Initiator 와 Responder가 모두 static DH를 사용하는 설정'",ambiguous: table note plus static DH setting stated in Section 2 text; header 'Message Payload Size (bytes)'
+S12BL-056,conditions,"EAD 는 사용하지 않는 것으로 가정하였으며 C_I, C_R, ID_CRED_I, IC_CRED_R 은 모두 1 byte 로 지정하였다. KEM-based EDHOC 에서는 ML-KEM 512 를 사용하였고 (public key - 800 bytes, ciphertext - 768 bytes), ML-KEM 512 가 속한 cipher suite 정의에 따라 16 bytes MAC 을 사용하였다.","Table 1, row '1 (I→R)', column 'KEM-based EDHOC', notes under Table 1",header 'Message Payload Size (bytes)'; arrow in row label extracted as 'à'
+S12BL-057,conditions,"EAD 는 사용하지 않는 것으로 가정하였으며 C_I, C_R, ID_CRED_I, IC_CRED_R 은 모두 1 byte 로 지정하였다. KEM-based EDHOC 에서는 ML-KEM 512 를 사용하였고 (public key - 800 bytes, ciphertext - 768 bytes), ML-KEM 512 가 속한 cipher suite 정의에 따라 16 bytes MAC 을 사용하였다.","Table 1, row '2 (R→I)', column 'KEM-based EDHOC', notes under Table 1",header 'Message Payload Size (bytes)'; arrow in row label extracted as 'à'
+S12BL-058,conditions,"EAD 는 사용하지 않는 것으로 가정하였으며 C_I, C_R, ID_CRED_I, IC_CRED_R 은 모두 1 byte 로 지정하였다. KEM-based EDHOC 에서는 ML-KEM 512 를 사용하였고 (public key - 800 bytes, ciphertext - 768 bytes), ML-KEM 512 가 속한 cipher suite 정의에 따라 16 bytes MAC 을 사용하였다.","Table 1, row '3 (I→R)', column 'KEM-based EDHOC', notes under Table 1",header 'Message Payload Size (bytes)'; arrow in row label extracted as 'à'
+S12BL-059,conditions,"EAD 는 사용하지 않는 것으로 가정하였으며 C_I, C_R, ID_CRED_I, IC_CRED_R 은 모두 1 byte 로 지정하였다. KEM-based EDHOC 에서는 ML-KEM 512 를 사용하였고 (public key - 800 bytes, ciphertext - 768 bytes), ML-KEM 512 가 속한 cipher suite 정의에 따라 16 bytes MAC 을 사용하였다.","Table 1, row '4 (R→I)', column 'KEM-based EDHOC', notes under Table 1",header 'Message Payload Size (bytes)'; arrow in row label extracted as 'à'
+S12BL-061,conditions,"EAD 는 사용하지 않는 것으로 가정하였으며 C_I, C_R, ID_CRED_I, IC_CRED_R 은 모두 1 byte 로 지정하였다. KEM-based EDHOC 에서는 ML-KEM 512 를 사용하였고 (public key - 800 bytes, ciphertext - 768 bytes), ML-KEM 512 가 속한 cipher suite 정의에 따라 16 bytes MAC 을 사용하였다.","Table 1, row '1 (I→R)', column 'KEM-based EDHOC-IKR', notes under Table 1; Section 2 text: 'Initiator 가 Responder 의 credential 을 미리 알고 있는 IKR 상황'",ambiguous: ML-KEM 512 note names 'KEM-based EDHOC'; unclear if it covers the IKR column
+S12BL-062,conditions,"EAD 는 사용하지 않는 것으로 가정하였으며 C_I, C_R, ID_CRED_I, IC_CRED_R 은 모두 1 byte 로 지정하였다. KEM-based EDHOC 에서는 ML-KEM 512 를 사용하였고 (public key - 800 bytes, ciphertext - 768 bytes), ML-KEM 512 가 속한 cipher suite 정의에 따라 16 bytes MAC 을 사용하였다.","Table 1, row '2 (R→I)', column 'KEM-based EDHOC-IKR', notes under Table 1; Section 2 text: 'Initiator 가 Responder 의 credential 을 미리 알고 있는 IKR 상황'",ambiguous: ML-KEM 512 note names 'KEM-based EDHOC'; unclear if it covers the IKR column
+S12BL-063,conditions,"EAD 는 사용하지 않는 것으로 가정하였으며 C_I, C_R, ID_CRED_I, IC_CRED_R 은 모두 1 byte 로 지정하였다. KEM-based EDHOC 에서는 ML-KEM 512 를 사용하였고 (public key - 800 bytes, ciphertext - 768 bytes), ML-KEM 512 가 속한 cipher suite 정의에 따라 16 bytes MAC 을 사용하였다.","Table 1, row '3 (I→R)', column 'KEM-based EDHOC-IKR', notes under Table 1; Section 2 text: 'Initiator 가 Responder 의 credential 을 미리 알고 있는 IKR 상황'",ambiguous: ML-KEM 512 note names 'KEM-based EDHOC'; unclear if it covers the IKR column
+S12A-437,operation,Encryption,"Table I, block heading row 'Encryption'",caption reads 'ENCRYPTION OF 64-BYTE INPUT DATA.'
+S12A-438,operation,MAC,"Table I, block heading row 'MAC'",caption reads 'MAC OF 128-BYTE INPUT DATA.'
+S12A-439,operation,MAC,"Table I, block heading row 'MAC'",caption reads 'MAC OF 128-BYTE INPUT DATA.'
+S12A-439,scheme,Poly1305-ChaCha20,"Table I, MAC block, row '32-bit ARM Cortex-M4 (This Work)'",
