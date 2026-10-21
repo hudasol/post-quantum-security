@@ -53,6 +53,8 @@ body = re.sub(r"\{\{(cyc|stack|code|size|eng|ms|ratio|note_ms):([^}]+)\}\}", exp
 body = body.replace("{{nrows}}", str(len(rows)))
 body = body.replace("{{n_s10}}", str(sum(1 for r in rows if r["stream"] == "S10")))
 body = body.replace("{{n_s12}}", str(sum(1 for r in rows if r["stream"] == "S12")))
+body = body.replace("{{n_s13_m33}}", str(sum(1 for r in rows if r["stream"] == "S13" and "M33" in r["core"] and r["cycles"])))
+body = body.replace("{{n_s13}}", str(sum(1 for r in rows if r["stream"] == "S13")))
 _plan = {r["devices"]: r for r in csv.DictReader(open(ROOT / "planner/results/scenario_range.csv", newline="", encoding="utf-8"))}
 def plan(m):
     field, n = m.group(1), m.group(2)
