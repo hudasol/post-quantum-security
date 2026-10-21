@@ -130,14 +130,14 @@ Figure: `plots/meta_cycles_by_core.png` (published rows only).
 
 ## Hierarchical model (replaces the max over min spread as the measure of spread)
 
-Label: modelled from published rows. `stats/meta_hierarchical.py` fits log cycles with cell (parameter set, operation, core class) as a fixed effect and implementation variant, statistic, compiler and source as crossed random effects (REML) on 408 rows in 118 cells with two or more rows. Unweighted fit shown; the fit weighted by source quality and a fit without worst observed rows are in `docs/STATISTICS_V5.md` section 2.
+Label: modelled from published rows. `stats/meta_hierarchical.py` fits log cycles with cell (parameter set, operation, core class) as a fixed effect and implementation variant, statistic, compiler and source as crossed random effects (REML) on 399 rows in 115 cells with two or more rows. Unweighted fit shown; the fit weighted by source quality and a fit without worst observed rows are in `docs/STATISTICS_V5.md` section 2.
 
 | component | sd of log cycles | share of within cell variance, percent | 95 percent interval |
 |---|---|---|---|
-| variant | 0.27 | 3.6 | 1.0 to 13.7 |
-| statistic | 0.90 | 39.4 | 0.0 to 87.4 |
-| compiler | 1.02 | 50.1 | 0.0 to 87.4 |
-| source | 0.00 | 0.0 | 0.0 to 16.1 |
-| residual | 0.38 | 7.0 | 3.2 to 28.3 |
+| variant | 0.27 | 3.6 | 1.0 to 14.9 |
+| statistic | 0.90 | 39.4 | 0.0 to 76.3 |
+| compiler | 1.01 | 49.9 | 0.0 to 81.5 |
+| source | 0.00 | 0.0 | 0.0 to 57.3 |
+| residual | 0.38 | 7.1 | 3.1 to 25.7 |
 
-Repeated measurements of one implementation differ by a residual standard deviation of 0.38 on the log scale (a factor of 1.46). Details: `docs/STATISTICS_V5.md` section 2.
+Repeated measurements of one implementation differ by a residual standard deviation of 0.38 on the log scale (a factor of 1.47). Details: `docs/STATISTICS_V5.md` section 2.
