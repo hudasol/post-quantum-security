@@ -18,9 +18,9 @@ Hash check: the predictions file matches its registered SHA-256.
 | P10 | between | Median added command latency of MAVLink 2 signing against no authentication: 3.72 ms. |
 | P11 | hit | Median hybrid session handshake time: 1.28 s. |
 | P12 | hit | Signature per command: SITL 496 ms against the mission study 380 ms (ratio 1.31). |
-| P13 | between | Hybrid session availability, SITL 0.914 with one outage per mission. Against the mission study near the same outage rate (0.916) the difference is 0.002; against the base figure the registration names (0.991, with the base outage rate) it is 0.077. The less favourable reading is used; the outage conditions differ, so this comparison is weak either way. |
-| P14 | hit | ns-3 one hop 50 kB: 5.72 s against the link model 7.12 s (-19.7 percent); published range 30 to 60 s. |
-| P15 | hit | Smallest hop count at which ns-3 reaches 30 s: 3 (first registered sweep). |
+| P13 | between | Hybrid session availability, SITL 0.914 with one outage per mission. Against the mission study near the same outage rate (0.916) the difference is 0.002; against the base figure the registration names (0.992 as registered; 0.991 after the round 5 rerun of the mission study, both with the base outage rate) it is 0.078. The less favourable reading is used; the outage conditions differ, so this comparison is weak either way. |
+| P14 | miss | Reading 1 (ns-3 defaults): 5.72 s against the link model 7.12 s (-19.7 percent), hit. Reading 2 (any one hop setting of the registered single cause sweep): inside the published 30 to 60 s for bg_16 33.2 s, minbe_8 40.1 s, which meets the refutation clause. The less favourable reading is kept. |
+| P15 | miss | Reading 1 (hop count varied, other settings at ns-3 defaults): smallest hop count reaching 30 s is 3. Reading 2 (any setting of the registered single cause sweep): 1, because one hop already reaches 30 s with bg_16 (33.2 s), minbe_8 (40.1 s). The less favourable reading is kept. |
 | P16 | hit | Largest absolute difference at DR5 between the link model (both its flight by flight calculation and its protocol simulation, the less favourable taken) and ns-3 over 4 handshake profiles: 5.43 percent (computed on the round 4 three flight handshakes the ns-3 runs used). |
 | P17 | miss | Selective repeat, registered first run: closed form inside the interval at 4 of 5 loss rates. Follow up seed blocks added after the first run are not scored. |
 | P18 | hit | Largest difference between ns-3 and the time on air formula over 22 frame sizes: 0.00 percent (both implement the same formula). |
@@ -40,9 +40,9 @@ Hash check: the predictions file matches its registered SHA-256.
 | P32 | hit | ML-DSA-44 verify, largest over smallest across 2 open cores (cv32e40p+ibex): 1.39. VexRiscv was not run. |
 | P33 | hit | ML-KEM-768 decaps: CV32E40P 2070034 cycles, Ibex 3033704. |
 | P34 | hit | M33 images built: yes; emulator log lines parsed: 100.0 percent overall; per cache pass: on 100.0, off 100.0. |
-| P35 | miss | Scheme families kept: yes (LMS for firmware, a hybrid session for commands). Design changes adopted in `docs/REFERENCE_ARCHITECTURE.md`: F1, F3. Under the less favourable reading any adopted design change meets the refutation clause. |
+| P35 | miss | Scheme families kept: yes (LMS for firmware, a hybrid session for commands). Design changes adopted in `docs/REFERENCE_ARCHITECTURE.md`: F1, F2, F3. Under the less favourable reading any adopted design change meets the refutation clause. |
 | P36 | hit | First pass: 74 findings. |
 | P37 | miss | Second pass: 1 high severity finding. |
 | P38 | not scored | Not yet scored. |
 
-Totals: 17 hit, 2 between, 16 miss, 3 not scored, of 38.
+Totals: 15 hit, 2 between, 18 miss, 3 not scored, of 38.
