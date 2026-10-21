@@ -11,7 +11,7 @@ Hash check: the predictions file matches its registered SHA-256.
 | P3 | hit | Median free static RAM share over 10 builds: 0.884 (an upper bound: heap use at run time is not visible). |
 | P4 | miss | Profile fleet median replacement share, stack optimised thresholds: 0.186 assumed against 0.398 measured, change +0.212. |
 | P5 | miss | STM32F405 class with measured memory, all scenarios: firmware update 152, hybrid 76, hardware replacement 92 device decisions. Memory is above every threshold; the replacements come from the missing updatable boot stage, not from memory. |
-| P6 | not scored | Public flight logs could not be used: the PX4 log sites disallow automated access and state no reuse licence (`flightstack/flightlog_access.csv`). |
+| P6 | miss | Flights with derived statistics: 0, below the refutation threshold of 20. Public flight logs could not be used: the PX4 log sites disallow automated access and state no reuse licence (`flightstack/flightlog_access.csv`). |
 | P7 | not scored | Public flight logs could not be used: the PX4 log sites disallow automated access and state no reuse licence (`flightstack/flightlog_access.csv`). |
 | P8 | not scored | Public flight logs could not be used: the PX4 log sites disallow automated access and state no reuse licence (`flightstack/flightlog_access.csv`). The mission study was not rerun with real traffic. |
 | P9 | not scored | No software in the loop results committed. |
@@ -26,11 +26,11 @@ Hash check: the predictions file matches its registered SHA-256.
 | P18 | hit | Largest difference between ns-3 and the time on air formula over 22 frame sizes: 0.00 percent (both implement the same formula). |
 | P19 | miss | Stated design (the reading the registered question names): command agreement proved; session key secrecy on the vehicle side proved, proved; on the ground station side counterexample, counterexample. With design change F1 all eight properties are proved. |
 | P20 | hit | Counterexamples in the first models as written: 5 (fallback_d_stated C1, firmware_stated_no_counter D1, session_b_stated A2, session_b_stated S2, session_b_stated S4). |
-| P21 | miss | No counter: counterexample; counter with an unsigned version: counterexample; counter with a signed version (F3): proved. A counter alone does not reject a downgrade, which meets the refutation clause. |
+| P21 | hit | Registered pair: with a monotonic version counter (design F3, which also signs the version) proved; without a counter counterexample. A variant written after registration, a counter with an unsigned version, gives counterexample: the counter alone is not enough. |
 | P22 | miss | Stated design: earlier session keys after long term key compromise S1 proved, S2 counterexample, S3 proved, S4 counterexample; the counterexamples follow from the missing vehicle authentication (F1). With F1: S1 proved, S2 proved, S3 proved, S4 proved. |
 | P23 | miss | Leave one implementation family out, pooled median absolute error 1.8 percent (scheme left out: 9.8 percent). |
-| P24 | between | Cluster bootstrap 95 percent interval of the median absolute error: 0.79 to 1.72 percent; the round 4 row bootstrap gave 0.7 to 1.7 (to one decimal). |
-| P25 | between | Main unweighted fit: largest share compiler (50.1 percent of within cell variance); intervals are wide and statistic and compiler are confounded with source. |
+| P24 | miss | Cluster bootstrap 95 percent interval of the median absolute error: 0.79 to 1.72 percent; the round 4 row bootstrap upper bound is 1.72 percent, compared unrounded. |
+| P25 | miss | Main unweighted fit: largest share compiler (50.1 percent), but compiler and statistic have overlapping intervals; the fit without the worst observed rows (worst observed rows excluded: main (variant as stated)) makes statistic the largest (36.9 percent), which meets the refutation clause. |
 | P26 | miss | Two readings of the registered metric: wrong in substance 7 of 425 (1.6 percent); differs verbatim 153 of 365 (41.9 percent). Both meet the refutation clause. |
 | P27 | hit | Largest total Sobol index for hybrid availability: outage_rate_per_h (0.55). |
 | P28 | hit | 234 new rows after double reading. |
@@ -40,9 +40,9 @@ Hash check: the predictions file matches its registered SHA-256.
 | P32 | hit | ML-DSA-44 verify, largest over smallest across 2 open cores (cv32e40p+ibex): 1.39. VexRiscv was not run. |
 | P33 | hit | ML-KEM-768 decaps: CV32E40P 2070034 cycles, Ibex 3033704. |
 | P34 | hit | M33 images built: yes; emulator log lines parsed: 100.0 percent overall; per cache pass: on 100.0, off 100.0. |
-| P35 | hit | After the shared input reruns the reference architecture still recommends LMS for firmware and a hybrid session (now with the vehicle signature) for commands, with no per command signatures (`docs/REFERENCE_ARCHITECTURE.md`; RUN_LOG entry 93). |
+| P35 | miss | The scheme families are unchanged (LMS for firmware, a hybrid session for commands, no per command signatures), but the designs changed in this round: the vehicle now signs the handshake (F1) and firmware needs a signed version and a monotonic counter (F3). Under the stricter reading, a change of either design meets the refutation clause (`docs/REFERENCE_ARCHITECTURE.md`; RUN_LOG entry 93). |
 | P36 | not scored | Not yet scored. |
 | P37 | not scored | Not yet scored. |
 | P38 | not scored | Not yet scored. |
 
-Totals: 15 hit, 2 between, 10 miss, 11 not scored, of 38.
+Totals: 15 hit, 0 between, 13 miss, 10 not scored, of 38.
