@@ -1,4 +1,4 @@
-# Run log, study rounds two to four (2026-10-16 to 2026-10-20)
+# Run log, study rounds two to five (2026-10-16 to 2026-10-21)
 
 Author: Huda Mueen. One line per decision, stop or deviation, in time order. Predictions for this round were hashed and committed before any run (`docs/PREDICTIONS_V2.md`, commit `59bd903`).
 
@@ -72,7 +72,7 @@ Predictions hashed before any run: `docs/PREDICTIONS_V4.md` (commit `1490f37`); 
 | 58 | WP9 | Report, brief and paper PDFs rebuilt from the final markdown; the round is tagged `round4`. | No release published. |
 | 59 | WP0 | Round 5 opened at `256d7c5`. The tag `round4` is still missing on the remote; pushing a tag from the build machine was refused again (HTTP 403 on tag writes). | Not worked around. Pushing the tag stays with the author (`docs/NEEDS_FROM_AUTHOR.md`). |
 | 60 | WP0 | The run has two cores and about 7 GB of memory. | Heavy builds (flight stacks, ns-3, open cores) are serialised so that at most two run at once; light packages run in parallel. |
-| 61 | WP6 | Systematic search: 364 records screened, 16 sources included, 265 rows staged. IEEE Xplore and ACM DL search pages could not be fetched; Semantic Scholar refused (HTTP 429); eprint.iacr.org refused curl, so its pages were read with a different free web client. | Logged as refused, not worked around; forward snowballing limited to two search engine queries; IEEE and ACM coverage listed for the author. |
+| 61 | WP6 | Systematic search: 364 records screened, 16 sources included, 265 rows staged. IEEE Xplore and ACM DL search pages could not be fetched; Semantic Scholar refused (HTTP 429); a shell request to eprint.iacr.org was refused; its pages were then read with the web fetch route that the protocol allows for every source, and no shell request followed. | Refusals of the allowed fetch route logged as refused, not worked around; the shell request should not have been made and is recorded here; forward snowballing limited to two search engine queries; IEEE and ACM coverage listed for the author. |
 | 62 | WP6 | Both readings and the third look were done as separate passes by separate readers, each given only a blank sheet or queue and its rules. | Independence kept: no reader saw staged values or another reading. |
 | 63 | WP6 | Double reading: 0 of 509 value fields disagreed; all 41 wording disagreements and 6 flagged values got a third look; 234 rows promoted, 31 left in staging because both readers left a size cell blank. | Round 4 promotion rule unchanged; wording settled by appending the source wording to the warning, keeping the label vocabulary. |
 | 64 | WP6 | No final FIPS 205 SLH-DSA software rows, no final FN-DSA rows and no new LMS or XMSS verify cycle rows on a microcontroller were found. | Reported as gaps; hardware accelerated SLH-DSA draft rows and hardened implementation figures were taken, figures only. |
