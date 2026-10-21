@@ -14,7 +14,21 @@ SEED = em.SEED
 
 
 def load_inputs():
-    return {r["name"]: r for r in em.read_csv(os.path.join(HERE, "inputs.csv"))}
+    """bootchain/inputs.csv plus the shared parameters bootchain uses (data/shared_inputs.csv) in the same format."""
+    own = {r["name"]: r for r in em.read_csv(os.path.join(HERE, "inputs.csv"))}
+    for r in em.shared_inputs.rows():
+        if "bootchain" in r["used_by"].split(";"):
+            if r["parameter"] in own:
+                raise ValueError(r["parameter"] + " is shared; remove it from bootchain/inputs.csv")
+            own[r["parameter"]] = {"name": r["parameter"], "value": r["value"], "unit": r["unit"],
+                                   "label": r["label"], "source": "data/shared_inputs.csv", "location": r["source"]}
+    return own
+
+
+def link_param_rows():
+    """Link parameters as linksim reads them (linksim/params.csv plus the shared rows)."""
+    from linksim import model as lm
+    return lm.load_param_rows()
 
 
 def inval(inputs, name):

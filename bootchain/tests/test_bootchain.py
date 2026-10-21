@@ -37,7 +37,7 @@ class TestBoot(unittest.TestCase):
         self.assertAlmostEqual(bm.pct_increase(50, 75), 50.0)
 
     def test_link_rates(self):
-        params = em.read_csv(os.path.join(bm.ROOT, "linksim", "params.csv"))
+        params = bm.link_param_rows()
         r = bm.link_rates(params)
         # SiK 64000 * 0.9 = 57600 bit/s; LoRaWAN 250 * 0.01 = 2.5 bit/s
         self.assertAlmostEqual(r["SiK 64 kbit/s air rate, 90 percent usable"][0], 57600)
@@ -47,7 +47,7 @@ class TestBoot(unittest.TestCase):
         inp = bm.load_inputs()
         self.assertEqual(bm.inval(inp, "suit_u2_lms_increase_pct"), 9.0)
         for r in inp.values():
-            self.assertIn(r["label"], ("published", "assumption"))
+            self.assertIn(r["label"], ("published", "assumption", "derived from published"))
         ev = em.load_evidence()
         for s in bm.load_schemes():
             for ref in [s["sig_bytes_ref"], s["boot_row"], s["suit_sig_bytes_ref"]] + s["suit_lib_flash_ref"].split("|"):
