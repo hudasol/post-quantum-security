@@ -125,12 +125,14 @@ def score():
                 f"Main unweighted fit: largest share {top.component} ({100 * top.share_within_cell:.1f} percent), but compiler and statistic have overlapping intervals; " + (f"the sensitivity fit without the worst observed rows makes {alt_top.component} the largest ({100 * alt_top.share_within_cell:.1f} percent), which meets the refutation clause." if alt_top is not None else "no sensitivity fit."))
 
     tl = R("data/verify5/third_look_summary.csv")
-    sub = tl[tl.measure.str.startswith("staging wrong in substance")].iloc[0]
+    # Round 4 rows reread in round 5 under the round 5 rule (a contradiction of the source); the pooled figure
+    # mixes two rules and is not used (review pass 2, R2B01).
+    sub = tl[tl.measure.str.startswith("staged text contradicts the source, all settled lines")].iloc[0]
     verb = tl[tl.measure.str.startswith("staged text differs verbatim from the source among settled")].iloc[0]
     s1, s2 = float(sub.share), float(verb.share)
     vs = [verdict(0.05 <= x <= 0.15, 0.02 <= x <= 0.25) for x in (s1, s2)]
     S["P26"] = ("miss" if "miss" in vs else ("between" if "between" in vs else "hit"),
-                f"Two readings of the registered metric: wrong in substance {int(sub['count'])} of {int(sub['of'])} ({100 * s1:.1f} percent); differs verbatim {int(verb['count'])} of {int(verb['of'])} ({100 * s2:.1f} percent). Both meet the refutation clause.")
+                f"Two readings of the registered metric: staged text contradicts the source {int(sub['count'])} of {int(sub['of'])} ({100 * s1:.1f} percent); differs verbatim {int(verb['count'])} of {int(verb['of'])} ({100 * s2:.1f} percent). Both meet the refutation clause.")
     so = R("stats/results/e2e_sobol.csv")
     y1 = so[so.output == "hybrid_availability_sik_drone"].sort_values("ST", ascending=False).iloc[0]
     link_like = any(k in y1.input for k in ("outage", "loss", "deadline", "turnaround", "rate"))

@@ -378,7 +378,9 @@ def conclusion_text():
 def method_reading():
     ev, v6 = "data/evidence.csv", "data/verify6"
     tl = "data/verify5/third_look_summary.csv"
-    sub = 'measure == "staging wrong in substance, all wording disagreements with a settled third look (round 4 sample of 60 and this round)"'
+    r4 = 'measure == "round 4 sample of 60: staging wrong after a third look (round 4 rule, any difference from the source)"'
+    r5 = 'measure == "staged text contradicts the source, all settled lines (automatic test and manual decisions)"'
+    verb = 'measure == "staged text differs verbatim from the source among settled lines"'
     vf = 'status == "disagree" and field in ["cycles", "ram_bytes", "stack_bytes", "flash_or_code_bytes", "energy_uj", "key_or_sig_size_bytes", "value"]'
     return (
         f"In this round a systematic search staged {claim('p_s13_staged', 'data/raw/S13_staged.csv', 'id', '', 'count', '{:.0f}', label='published')} rows (stream S13); two readers who saw neither the staged values nor each other's sheet read every row, "
@@ -386,9 +388,11 @@ def method_reading():
         f"{claim('p_s13_word', v6 + '/third_look_queue.csv', 'id', 'kind == \"wording\"', 'count', '{:.0f}', label='published')} wording disagreements got a third look, and "
         f"{claim('p_s13_prom', ev, 'id', 'stream == \"S13\"', 'count', '{:.0f}', label='published')} rows were promoted (`docs/VERIFICATION6.md`). "
         f"The {claim('p_tl_lines', tl, 'of', 'measure == \"lines staging_right\"', fmt='{:.0f}', label='estimated')} wording disagreements that round 4 had left without a third look were all read again by blind readers; "
-        f"over all settled wording disagreements staging was wrong in substance in {claim('p_tl_sub', tl, 'count', sub, fmt='{:.0f}', label='estimated')} of {claim('p_tl_sub_n', tl, 'of', sub, fmt='{:.0f}', label='estimated')} "
-        f"({claim('p_tl_sub_pct', tl, 'share', sub, fmt='{:.1f}', scale=100, label='estimated')} percent, Wilson interval {claim('p_tl_sub_lo', tl, 'wilson_lo', sub, fmt='{:.1f}', scale=100, label='estimated')} to "
-        f"{claim('p_tl_sub_hi', tl, 'wilson_hi', sub, fmt='{:.1f}', scale=100, label='estimated')}), and {claim('p_tl_amb', tl, 'count', 'measure == \"lines ambiguous\"', fmt='{:.0f}', label='estimated')} lines stay ambiguous (`docs/STATISTICS_V5.md`).")
+        f"the two rounds used different rules, so their rates are given apart: in the round 4 sample, where any difference from the source counted, staging was wrong in {claim('p_tl_r4', tl, 'count', r4, fmt='{:.0f}', label='estimated')} of {claim('p_tl_r4_n', tl, 'of', r4, fmt='{:.0f}', label='estimated')} "
+        f"({claim('p_tl_r4_pct', tl, 'share', r4, fmt='{:.0f}', scale=100, label='estimated')} percent, Wilson interval {claim('p_tl_r4_lo', tl, 'wilson_lo', r4, fmt='{:.1f}', scale=100, label='estimated')} to {claim('p_tl_r4_hi', tl, 'wilson_hi', r4, fmt='{:.1f}', scale=100, label='estimated')}); "
+        f"in this round, where only a contradiction of the source counted, staged text contradicted the source in {claim('p_tl_r5', tl, 'count', r5, fmt='{:.0f}', label='estimated')} of {claim('p_tl_r5_n', tl, 'of', r5, fmt='{:.0f}', label='estimated')} settled lines "
+        f"(Wilson interval {claim('p_tl_r5_lo', tl, 'wilson_lo', r5, fmt='{:.2f}', scale=100, label='estimated')} to {claim('p_tl_r5_hi', tl, 'wilson_hi', r5, fmt='{:.1f}', scale=100, label='estimated')} percent), although the staged text differed verbatim from the source in "
+        f"{claim('p_tl_verb', tl, 'count', verb, fmt='{:.0f}', label='estimated')} of them; {claim('p_tl_amb', tl, 'count', 'measure == \"lines ambiguous\"', fmt='{:.0f}', label='estimated')} lines stay ambiguous (`docs/STATISTICS_V5.md`).")
 
 
 def parts_text(fill):
