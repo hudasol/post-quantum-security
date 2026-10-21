@@ -198,8 +198,8 @@ def hypotheses(n):
          "`docs/PREDICTIONS_V5_BOARD.md` (rules 1 to 4); round 4 rows under `docs/PREDICTIONS_V4_BOARD_NOTES.md` notes 5 to 9"],
         ["H2", f"On a borrowed SiK class radio pair at default settings, the median hybrid handshake (with design change F1) lies between half and twice the first session time of {n['m_b_hs']} s in the mission study (estimated; the protocol simulation gives a similar time for the same profile)",
          "the measured median lies outside that range", "this proposal; to be hashed before the radio session"],
-        ["H3", "With the strict next sequence rule of the formal proofs enforced in the software in the loop setup of section 2.2, the hybrid session acknowledges commands within the 0.5 s deadline, outages included, at least as often as MAVLink 2 signing as shipped did in the same setup",
-         "the share acknowledged within the deadline under the replay rule is lower than that of MAVLink 2 signing as shipped in section 2.2", "this proposal; to be hashed before the rerun with the replay rule"],
+        ["H3", "With the strict next sequence rule of the formal proofs enforced in the software in the loop setup of section 2.2, rerun with the same seeds and therefore the same outage draws as the run without a replay rule, the share of hybrid session commands acknowledged within the 0.5 s deadline, outages included, falls by at most 0.05 against that run",
+         "the share falls by more than 0.05 against the paired run without a replay rule; the threshold is larger than the differences of a few hundredths that unpaired configurations do not resolve", "this proposal; to be hashed before the rerun with the replay rule"],
         ["H4", f"Run time free RAM after the flight stack (heap included) stays above the signature plus KEM RAM thresholds of `planner/results/flightstack_thresholds.csv` on every built board class; the static upper bound is now {n['ram_lo']} kB at the smallest",
          "a built board class has less run time free RAM than a threshold; flash is already known to be short on default PX4 builds (section 2)", "this proposal; to be hashed before the runs"],
     ])
