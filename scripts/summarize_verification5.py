@@ -228,6 +228,22 @@ def main():
         + ", ".join(f"{f} {n}" for f, n in field_counts.most_common()) + ".", "",
         "Fields a reader left blank because the source states them away from the cited location (for example a clock given in the body text) "
         f"are counted as not at location, not as errors: {sum(1 for x in res if x[5] == 'not_at_location')} field readings.", "",
+    ]
+    tl = V / "third_look_summary.csv"
+    if tl.exists():
+        with open(tl, newline="", encoding="utf-8") as fh:
+            t = {r["measure"]: r for r in csv.DictReader(fh)}
+        k = "staging wrong in substance, all wording disagreements with a settled third look (round 4 sample of 60 and this round)"
+        v = "staged text differs verbatim from the source among settled lines"
+        if k in t and v in t:
+            lo, hi = float(t[k]["wilson_lo"]), float(t[k]["wilson_hi"])
+            lines += [
+                f"Round 5 third look. Every remaining wording disagreement got a blind third reading (`stats/third_look_classify.py`, "
+                f"`docs/STATISTICS_V5.md` section 4). Staged wording differs verbatim from the source in {t[v]['count']} of {t[v]['of']} "
+                f"settled lines, but it contradicts the source in substance in {t[k]['count']} of {t[k]['of']} settled wording "
+                f"disagreements overall ({100 * float(t[k]['share']):.1f} percent, Wilson 95 percent interval {100 * lo:.1f} to "
+                f"{100 * hi:.1f} percent). This replaces the extrapolation in the limits paragraph above.", ""]
+    lines += [
         "Only confirmed and corrected rows enter `data/raw/S12_verified.csv` (`scripts/promote_s12.py`); single reader and blocked rows stay in staging with their reason in `data/verify5/row_status.csv`.", "",
     ]
     (ROOT / "docs" / "VERIFICATION5.md").write_text("\n".join(lines), encoding="utf-8")
