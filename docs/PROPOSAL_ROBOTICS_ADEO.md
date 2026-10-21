@@ -12,13 +12,11 @@ Drones and robots authenticate commands and firmware on microcontroller flight c
 
 Public facts that may make this work relevant are recorded, with their sources, only in `docs/CONTEXT_ENTITIES.md`: ADEO-01, ADEO-02, ADEO-03, ADEO-04. None of them implies any relationship with or endorsement by the organisation.
 
-ADEO publishes little on technology under its own name; the items above that do not name ADEO are Abu Dhabi government statements, as `docs/CONTEXT_ENTITIES.md` notes.
-
 ## What already exists
 
-- 1,530 published rows with provenance, every new row read by two independent readers.
+- 1,530 published rows with provenance, every new row read by two separate reading passes inside this project (no external reader yet).
 - Flight stack memory from 10 real builds (host measured): default PX4 builds leave 6.0 to 45.9 kB of flash free, and the fleet's median hardware replacement share rises from 0.201 to 0.300 once measured memory replaces the assumption (estimated).
-- ns-3 explains the 802.15.4 gap by sufficient causes: one hop takes 5.72 s in ns-3 against a published 30 to 60 s, and 3 hops, 16 loaded neighbours or a cited backoff setting each bring it into range (simulated (network)).
+- ns-3 explains the 802.15.4 gap by sufficient causes: one hop takes 5.72 s in ns-3 against a published 30 to 60 s, and 3 hops or a cited backoff setting each bring it into range, and 16 loaded neighbours bring the mean into range (simulated (network)).
 - Formal verification of the session and update design: 39 of 57 queries proved, and design findings F1 to F3 (vehicle authentication, replay after a power cycle, firmware downgrade) fixed and proved (modelled).
 - A cycle model with a median held out error of 1.0 percent within one code base, but 9.8 percent when a whole scheme is left out (modelled), and 36 board predictions for a caches off pass registered before any board session.
 - A mission simulation: with a hybrid session, command availability on a telemetry radio stays at 0.991; a signature on every command lowers it to 0.794 (estimated).

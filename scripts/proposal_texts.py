@@ -47,9 +47,10 @@ def sitl_numbers(c):
     ss, sc, cm = "sitl/results/summary.csv", "sitl/results/comparison.csv", "sitl/results/commands.csv"
     q = 'profile == "sik" and config == "{k}" and metric == "{m}"'
     out = {}
-    for key, k in (("sig", "signing"), ("hyb", "hybrid"), ("pq", "pqsig")):
+    for key, k in (("none", "none"), ("sig", "signing"), ("hyb", "hybrid"), ("pq", "pqsig")):
         out[f"sitl_{key}_n"] = c(f"sitl_{key}_n", ss, "value", q.format(k=k, m="missions_completed"), fmt="{:.0f}", label="SITL measured")
-        out[f"sitl_{key}_lat"] = c(f"sitl_{key}_lat", ss, "value", q.format(k=k, m="added_latency_rt_ms"), fmt="{:.1f}", label="SITL measured")
+        if key != "none":
+            out[f"sitl_{key}_lat"] = c(f"sitl_{key}_lat", ss, "value", q.format(k=k, m="added_latency_rt_ms"), fmt="{:.1f}", label="SITL measured")
         out[f"sitl_{key}_av"] = c(f"sitl_{key}_av", ss, "value", q.format(k=k, m="availability_rt_all"), fmt="{:.3f}", label="SITL measured")
         out[f"sitl_{key}_av_st"] = c(f"sitl_{key}_av_st", sc, "study_estimated", q.format(k=k, m="availability_rt_all"), fmt="{:.3f}", label="estimated")
     out["sitl_drop"] = c("sitl_drop", cm, "dropped", 'config == "signing" and dropped == "not_acknowledged_by_vehicle"', "count", "{:.0f}", label="SITL measured")
@@ -101,6 +102,8 @@ def numbers(claim, doc):
         "pub_hi": c("pub_hi", GAP, "range_high_s_published", 'cell == "base_frame"', label="published"),
         "ns_hops3": c("ns_hops3", GAP, "time_mean_s_simulated_network", 'cell == "hops_3"', fmt="{:.1f}", label="simulated (network)"),
         "ns_bg16": c("ns_bg16", GAP, "time_mean_s_simulated_network", 'cell == "bg_16"', fmt="{:.1f}", label="simulated (network)"),
+        "ns_bg16_lo": c("ns_bg16_lo", GAP, "time_ci_lo_s_simulated_network", 'cell == "bg_16"', fmt="{:.1f}", label="simulated (network)"),
+        "ns_bg16_hi": c("ns_bg16_hi", GAP, "time_ci_hi_s_simulated_network", 'cell == "bg_16"', fmt="{:.1f}", label="simulated (network)"),
         "ns_minbe8": c("ns_minbe8", GAP, "time_mean_s_simulated_network", 'cell == "minbe_8"', fmt="{:.1f}", label="simulated (network)"),
         "fv_q": c("fv_q", FORMAL, "query", aggregate="count", label="modelled"),
         "fv_models": c("fv_models", FORMAL, "model", aggregate="nunique", label="modelled"),
@@ -194,8 +197,8 @@ def hypotheses(n):
          "`docs/PREDICTIONS_V5_BOARD.md` (rules 1 to 4); round 4 rows under `docs/PREDICTIONS_V4_BOARD_NOTES.md` notes 5 to 9"],
         ["H2", f"On a borrowed SiK class radio pair at default settings, the median hybrid handshake (with design change F1) lies between half and twice the first session time of {n['m_b_hs']} s in the mission study (estimated; the protocol simulation gives a similar time for the same profile)",
          "the measured median lies outside that range", "this proposal; to be hashed before the radio session"],
-        ["H3", f"With the session layer in software in the loop, the added latency per command stays near the modelled {n['m_b_lat']} ms and inside the {n['deadline']} s command deadline of the mission study",
-         "the command stream misses its deadline more often with the session layer than without it", "this proposal; to be hashed before the software in the loop runs"],
+        ["H3", "With the strict next sequence rule of the formal proofs enforced in the software in the loop setup of section 2.2, the hybrid session acknowledges commands within the 0.5 s deadline, outages included, at least as often as MAVLink 2 signing as shipped did in the same setup",
+         "the share acknowledged within the deadline under the replay rule is lower than that of MAVLink 2 signing as shipped in section 2.2", "this proposal; to be hashed before the rerun with the replay rule"],
         ["H4", f"Run time free RAM after the flight stack (heap included) stays above the signature plus KEM RAM thresholds of `planner/results/flightstack_thresholds.csv` on every built board class; the static upper bound is now {n['ram_lo']} kB at the smallest",
          "a built board class has less run time free RAM than a threshold; flash is already known to be short on default PX4 builds (section 2)", "this proposal; to be hashed before the runs"],
     ])
@@ -219,9 +222,9 @@ Unmanned aircraft and ground robots accept commands and firmware over narrow rad
 
 ## 2. Preliminary results (this repository)
 
-1. **Evidence.** A provenance controlled table of {n['rows']} published rows, every new row read by two independent readers (`docs/VERIFICATION5.md`, `docs/VERIFICATION6.md`).
+1. **Evidence.** A provenance controlled table of {n['rows']} published rows, every new row read on blank sheets by two separate reading passes inside this project, with a third look on disagreements; no external reader has checked it (`docs/VERIFICATION5.md`, `docs/VERIFICATION6.md`).
 2. **Flight stack memory and the corrected fleet answer.** {n['fs_builds']} default builds of PX4 and ArduPilot for {n['fs_boards']} board classes (host measured, linker output) leave {n['px4_flash_lo']} to {n['px4_flash_hi']} kB of application flash free in the PX4 builds; the smallest free static RAM is {n['ram_lo']} kB, an upper bound because run time heap is not visible in a build. With these measured values the fleet study's median hardware replacement share rises from {n['hr_asm_a']} to {n['hr_asm_m']} with stack optimised thresholds, and from {n['hr_unc_a']} to {n['hr_unc_m']} with uncertain thresholds (estimated; `docs/FLIGHTSTACK_STUDY.md`). The round 4 answer, which assumed free memory, was too optimistic.
-3. **Causes of the 802.15.4 gap (ns-3).** A {n['obj_kb']} kB transfer over one hop with ns-3 defaults takes {n['ns_base']} s (simulated (network)) against {n['ls_base']} s in the link model (modelled) and a published {n['pub_lo']} to {n['pub_hi']} s. Each of these single causes brings ns-3 into the published range: {n['hops']} hops ({n['ns_hops3']} s), {n['bg']} loaded neighbours ({n['ns_bg16']} s) or a minimum backoff exponent of {n['minbe']}, a cited and allowed setting ({n['ns_minbe8']} s). The paper states none of these settings, so they are sufficient causes, not the proven cause; ns-3 also shows that the link model's multi hop forwarding is optimistic (`docs/NETSIM_STUDY.md`). Before this check the link model was {n['d_factor']} times too fast with no explanation.
+3. **Causes of the 802.15.4 gap (ns-3).** A {n['obj_kb']} kB transfer over one hop with ns-3 defaults takes {n['ns_base']} s (simulated (network)) against {n['ls_base']} s in the link model (modelled) and a published {n['pub_lo']} to {n['pub_hi']} s. Each of these single causes brings ns-3 into the published range: {n['hops']} hops ({n['ns_hops3']} s), {n['bg']} loaded neighbours ({n['ns_bg16']} s, a mean whose 95 percent interval of {n['ns_bg16_lo']} to {n['ns_bg16_hi']} s reaches below the range) or a minimum backoff exponent of {n['minbe']}, a cited and allowed setting ({n['ns_minbe8']} s). The paper states none of these settings, so they are sufficient causes, not the proven cause; ns-3 also shows that the link model's multi hop forwarding is optimistic (`docs/NETSIM_STUDY.md`). Before this check the link model was {n['d_factor']} times too fast with no explanation.
 4. **Formal verification.** ProVerif checked {n['fv_models']} model files with {n['fv_q']} queries: {n['fv_proved']} proved, {n['fv_cex']} counterexamples (stated designs and deliberate controls) and {n['fv_cnp']} that the tool could not prove (modelled; `docs/FORMAL_VERIFICATION.md`). Design findings F1 to F3 were each removed by a design change that was then proved; the reference architecture adopts them (section 2.1).
 5. **Cycle model and its transfer limits.** The trace driven model predicts held out pqm4 Cortex-M4 rows with a median error of {n['cm_med']} percent (signing misses by up to {n['cm_sign']} percent), but leaving out a whole implementation family gives {n['lofo_fam']} percent and leaving out a whole scheme {n['lofo_sch']} percent ({n['lofo_sch_red']} percent for the reduced model), and a cluster aware prediction interval is {n['pi_wide']} times as wide as the registered one (modelled; `docs/STATISTICS_V5.md`). It is an interpolation within one code base, not a general predictor.
 6. **Open core spread.** The same RV32IMC program takes {n['core_lo']} to {n['core_hi']} times as many cycles on one open core as on the other over {n['core_sets']} ML-KEM and ML-DSA parameter sets (RTL simulated; `docs/RTL_SIM_RESULTS.md`), so a figure for one core is not a figure for another of the same instruction set.
@@ -236,15 +239,16 @@ Read from `{FORMAL}` (label: modelled; abstract perfect primitives under a Dolev
 
 ### 2.2 Software in the loop comparison
 
-ArduPilot Copter 4.7.2 flew scripted missions in software in the loop behind an emulated SiK class link with one outage per mission (`docs/SITL_STUDY.md`; label SITL measured, compared with the mission study, label estimated). Configurations 3 and 4 carry the bytes and published compute delays of their designs; they do not execute cryptography.
+ArduPilot Copter 4.7.2 flew scripted missions in software in the loop behind an emulated SiK class link with one outage per mission (`docs/SITL_STUDY.md`). The hybrid session and the signature per command carry the bytes and published compute delays of their designs; they do not execute cryptography. Labels per column: missions, added latency and acknowledged share are SITL measured; the last column is estimated.
 
-| Configuration | Missions completed | Added round trip latency per command, ms | Commands acknowledged within 0.5 s, with outages | Mission study at the same outage rate |
+| Configuration | Missions completed (SITL measured) | Added round trip latency per command against no authentication, ms (SITL measured) | Commands acknowledged within 0.5 s, with outages (SITL measured) | Mission study at the same outage rate (estimated) |
 |---|---|---|---|---|
+| No authentication (reference) | {n['sitl_none_n']} | reference | {n['sitl_none_av']} | {n['sitl_none_av_st']} |
 | MAVLink 2 signing as shipped | {n['sitl_sig_n']} | {n['sitl_sig_lat']} | {n['sitl_sig_av']} | {n['sitl_sig_av_st']} |
 | Hybrid session with F1 | {n['sitl_hyb_n']} | {n['sitl_hyb_lat']} | {n['sitl_hyb_av']} | {n['sitl_hyb_av_st']} |
 | ML-DSA-44 signature per command | {n['sitl_pq_n']} | {n['sitl_pq_lat']} | {n['sitl_pq_av']} | {n['sitl_pq_av_st']} |
 
-The hybrid session behaves as the mission study predicts; a signature per command is worse than predicted once the acknowledgement round trip is counted, and the flight stack discarded {n['sitl_drop']} signed commands that arrived after a newer frame. The strict sequence rule of the formal proofs would reject such frames too, so whether to require in order delivery or to prove a replay window is an open design question for the project. The outage share differed between configurations, so availability differences of a few hundredths are not resolved.
+The hybrid session behaves as the mission study predicts; a signature per command is worse than predicted once the acknowledgement round trip is counted, and with MAVLink 2 signing as shipped the flight stack discarded {n['sitl_drop']} signed commands that arrived after a newer frame. The strict sequence rule of the formal proofs would reject such frames too, so whether to require in order delivery or to prove a replay window is an open design question for the project. The outage share differed between configurations, so availability differences of a few hundredths are not resolved.
 
 ## 3. Aim, hypotheses and measurable success criteria
 
@@ -327,9 +331,9 @@ Drones and robots authenticate commands and firmware on microcontroller flight c
 
 ## What already exists
 
-- {n['rows']} published rows with provenance, every new row read by two independent readers.
+- {n['rows']} published rows with provenance, every new row read by two separate reading passes inside this project (no external reader yet).
 - Flight stack memory from {n['fs_builds']} real builds (host measured): default PX4 builds leave {n['px4_flash_lo']} to {n['px4_flash_hi']} kB of flash free, and the fleet's median hardware replacement share rises from {n['hr_unc_a']} to {n['hr_unc_m']} once measured memory replaces the assumption (estimated).
-- ns-3 explains the 802.15.4 gap by sufficient causes: one hop takes {n['ns_base']} s in ns-3 against a published {n['pub_lo']} to {n['pub_hi']} s, and {n['hops']} hops, {n['bg']} loaded neighbours or a cited backoff setting each bring it into range (simulated (network)).
+- ns-3 explains the 802.15.4 gap by sufficient causes: one hop takes {n['ns_base']} s in ns-3 against a published {n['pub_lo']} to {n['pub_hi']} s, and {n['hops']} hops or a cited backoff setting each bring it into range, and {n['bg']} loaded neighbours bring the mean into range (simulated (network)).
 - Formal verification of the session and update design: {n['fv_proved']} of {n['fv_q']} queries proved, and design findings F1 to F3 (vehicle authentication, replay after a power cycle, firmware downgrade) fixed and proved (modelled).
 - A cycle model with a median held out error of {n['cm_med']} percent within one code base, but {n['lofo_sch']} percent when a whole scheme is left out (modelled), and {n['v5b_rows']} board predictions for a caches off pass registered before any board session.
 - A mission simulation: with a hybrid session, command availability on a telemetry radio stays at {n['m_b']}; a signature on every command lowers it to {n['m_c']} (estimated).
@@ -377,7 +381,7 @@ Author: Huda Mueen. One page, generated by `scripts/build_paper.py` from `script
 - The session and update design was checked formally: {n['fv_proved']} of {n['fv_q']} queries proved, design flaws F1 to F3 found and fixed (modelled).
 - The cycle model is accurate within one code base ({n['cm_med']} percent) but not across schemes ({n['lofo_sch']} percent); nothing is yet measured on a microcontroller.
 
-**What is proposed.** {n['months']} months, part time: one afternoon on two borrowed boards scored against {n['v5b_rows']} registered predictions, software in the loop, a borrowed radio pair, a run time memory profile, and a design note with dataset release. Readiness of the command channel: TRL {c1_now} now, TRL {c1_end} planned at the end (lab only; scale in the full proposal).
+**What is proposed.** {n['months']} months, part time: one afternoon on two borrowed boards scored against {n['v5b_rows']} registered predictions, a software in the loop rerun with the replay rule enforced, a borrowed radio pair, a run time memory profile, and a design note with dataset release. Readiness of the command channel: TRL {c1_now} now, TRL {c1_end} planned at the end (lab only; scale in the full proposal).
 
 **Fit.** Deliverables map to sections {", ".join(sorted(sections))} of the UAE National Encryption Policy (quoted terms and page in the full proposal, section 7) and to public facts {", ".join(ids)} in `docs/CONTEXT_ENTITIES.md`. The project does not fulfil any entity's duty and implies no endorsement.
 
@@ -391,7 +395,7 @@ def all_docs(claim):
 
     def lines(org, ids):
         found = [f["fact_id"] for f in facts if f["organisation"] == org and f["fact_id"] in ids]
-        note = " (EDGE-06 describes a challenge whose application window has closed.)" if "EDGE-06" in found else ""
+        note = ""
         return ("Public facts that may make this work relevant are recorded, with their sources, only in `docs/CONTEXT_ENTITIES.md`: "
                 + ", ".join(sorted(found)) + "." + note + " None of them implies any relationship with or endorsement by the organisation.")
 
@@ -401,7 +405,6 @@ def all_docs(claim):
     docs.append(variant(claim, "EDGE Group", "docs/PROPOSAL_ROBOTICS_EDGE.md",
                         lines("EDGE Group", {"EDGE-01", "EDGE-02", "EDGE-05", "EDGE-06"})))
     docs.append(variant(claim, "ADEO", "docs/PROPOSAL_ROBOTICS_ADEO.md",
-                        lines("ADEO", {"ADEO-01", "ADEO-02", "ADEO-03", "ADEO-04"})
-                        + "\n\nADEO publishes little on technology under its own name; the items above that do not name ADEO are Abu Dhabi government statements, as `docs/CONTEXT_ENTITIES.md` notes."))
+                        lines("ADEO", {"ADEO-01", "ADEO-02", "ADEO-03", "ADEO-04"})))
     docs.append(brief(claim))
     return docs
