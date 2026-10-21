@@ -5,4 +5,4 @@ modelled,weighted,residual sd of the hierarchical model (log cycles),0.339119,1.
 modelled,weighted,total within cell sd of the hierarchical model (log cycles),1.42842,4.17208,0.740948,2.14968,399,115
 modelled,unweighted,worst observed rows excluded: residual sd of the hierarchical model (log cycles),0.205969,1.22871,,,387,115
 modelled,unweighted,worst observed rows excluded: total within cell sd of the hierarchical model (log cycles),0.531104,1.70081,,,387,115
-published,unweighted,"pooled within sd of log cycles, same cell and same stated variant",1.38665,4.00141,,,47,17
+derived from published,unweighted,"pooled within sd of log cycles, same cell and same stated variant",1.38665,4.00141,,,47,17

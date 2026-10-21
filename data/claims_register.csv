@@ -56,12 +56,12 @@ ab_fl_m,docs/PAPER.md,0.300,0.3,planner/results/flightstack_mc_summary.csv,measu
 ab_ls,docs/PAPER.md,7.1,7.12266,netsim/results/gap_sweep.csv,time_s_modelled,"cell == ""base_frame""",value,0.005,modelled,,
 ab_pv_n,docs/PAPER.md,57,57.0,formal/results/proverif_results.csv,result,,count,0.005,modelled,,"57 queries, including"
 ab_pv_p,docs/PAPER.md,39,39.0,formal/results/proverif_results.csv,result,"result == ""proved""",count,0.005,modelled,,"39, and found"
-p_s13_staged,docs/PAPER.md,265,265.0,data/raw/S13_staged.csv,id,,count,0.005,published,,
-p_s13_valdis,docs/PAPER.md,0,0.0,data/verify6/summary.csv,field,"status == ""disagree"" and field in [""cycles"", ""ram_bytes"", ""stack_bytes"", ""flash_or_code_bytes"", ""energy_uj"", ""key_or_sig_size_bytes"", ""value""]",count,0.005,published,,0 value fields
-p_s13_word,docs/PAPER.md,41,41.0,data/verify6/third_look_queue.csv,id,"kind == ""wording""",count,0.005,published,,41 wording disagreements
-p_s13_prom,docs/PAPER.md,186,186.0,data/evidence.csv,id,"stream == ""S13""",count,0.005,published,,
-p_s13_dem,docs/PAPER.md,48,48.0,data/verify6/not_promoted.csv,id,"reason.str.startswith(""demoted"")",count,0.005,published,,48 were demoted
-p_s13_single,docs/PAPER.md,31,31.0,data/verify6/not_promoted.csv,id,"reason.str.startswith(""single_reader"")",count,0.005,published,,31 had a
+p_s13_staged,docs/PAPER.md,265,265.0,data/raw/S13_staged.csv,id,,count,0.005,host measured,,
+p_s13_valdis,docs/PAPER.md,0,0.0,data/verify6/summary.csv,field,"status == ""disagree"" and field in [""cycles"", ""ram_bytes"", ""stack_bytes"", ""flash_or_code_bytes"", ""energy_uj"", ""key_or_sig_size_bytes"", ""value""]",count,0.005,host measured,,0 value fields
+p_s13_word,docs/PAPER.md,41,41.0,data/verify6/third_look_queue.csv,id,"kind == ""wording""",count,0.005,host measured,,41 wording disagreements
+p_s13_prom,docs/PAPER.md,186,186.0,data/evidence.csv,id,"stream == ""S13""",count,0.005,host measured,,
+p_s13_dem,docs/PAPER.md,48,48.0,data/verify6/not_promoted.csv,id,"reason.str.startswith(""demoted"")",count,0.005,host measured,,48 were demoted
+p_s13_single,docs/PAPER.md,31,31.0,data/verify6/not_promoted.csv,id,"reason.str.startswith(""single_reader"")",count,0.005,host measured,,31 had a
 p_tl_lines,docs/PAPER.md,393,393.0,data/verify5/third_look_summary.csv,of,"measure == ""lines staging_right""",value,0.005,estimated,,
 p_tl_r4,docs/PAPER.md,6,6.0,data/verify5/third_look_summary.csv,count,"measure == ""round 4 sample of 60: staging wrong after a third look (round 4 rule, any difference from the source)""",value,0.005,estimated,,6 of 60
 p_tl_r4_n,docs/PAPER.md,60,60.0,data/verify5/third_look_summary.csv,of,"measure == ""round 4 sample of 60: staging wrong after a third look (round 4 rule, any difference from the source)""",value,0.005,estimated,,60 (10 percent

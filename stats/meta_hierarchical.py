@@ -318,7 +318,7 @@ def main(n_boot=N_BOOT):
     dev = (d["y"] - g.transform("mean"))[rep]
     dof = int(rep.sum() - (g.size() >= 2).sum())
     pooled_sd = float(np.sqrt((dev ** 2).sum() / dof)) if dof > 0 else float("nan")
-    res.append(dict(label="published", weighting="unweighted",
+    res.append(dict(label="derived from published", weighting="unweighted",
                     measure="pooled within sd of log cycles, same cell and same stated variant",
                     value=pooled_sd, factor=float(np.exp(pooled_sd)), ci_lo=np.nan, ci_hi=np.nan,
                     n_rows=int(rep.sum()), n_groups=int((g.size() >= 2).sum())))

@@ -39,6 +39,8 @@ def flow():
         ("included sources", len(inc), "decision = included"),
         ("staged rows", len(staged), "rows of S13_staged.csv"),
         ("rows confirmed by two readers and promoted", len(verified), "rows of S13_verified.csv"),
+        ("included sources that contribute promoted rows", len({r["source_url"] for r in verified}),
+         "distinct source_url of S13_verified.csv; an included source can contribute none when all its rows are unconfirmed or demoted"),
     ]
     reasons = Counter(r["exclusion_reason"] for r in scr if r["decision"] == "excluded")
     return out, reasons
