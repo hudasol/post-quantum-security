@@ -1,0 +1,18 @@
+CFG,seed,20261020
+CFG,runs,5
+CFG,timer_overhead_cycles,13
+RES,ML-DSA-65,keygen,0,6541492,ok
+RES,ML-DSA-65,sign,0,18667243,ok
+RES,ML-DSA-65,verify,0,6488243,ok
+RES,ML-DSA-65,verify_rejects_modified,0,0,ok
+RES,ML-DSA-65,sign,1,8726091,ok
+RES,ML-DSA-65,verify,1,6488353,ok
+RES,ML-DSA-65,sign,2,8726064,ok
+RES,ML-DSA-65,verify,2,6488364,ok
+RES,ML-DSA-65,sign,3,11406097,ok
+RES,ML-DSA-65,verify,3,6488332,ok
+RES,ML-DSA-65,sign,4,18652101,ok
+RES,ML-DSA-65,verify,4,6488210,ok
+DONE,ML-DSA-65,0
+EXIT SUCCESS
+- $WORK_DIR/cv32e40p/example_tb/core/tb_top.sv:140: Verilog $finish

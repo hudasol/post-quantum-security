@@ -1,0 +1,21 @@
+CFG,seed,20261020
+CFG,runs,5
+CFG,timer_overhead_cycles,13
+RES,ML-KEM-512,keygen,0,962513,ok
+RES,ML-KEM-512,encaps,0,1041418,ok
+RES,ML-KEM-512,decaps,0,1304902,ok
+RES,ML-KEM-512,keygen,1,962271,ok
+RES,ML-KEM-512,encaps,1,1041176,ok
+RES,ML-KEM-512,decaps,1,1304660,ok
+RES,ML-KEM-512,keygen,2,962439,ok
+RES,ML-KEM-512,encaps,2,1041344,ok
+RES,ML-KEM-512,decaps,2,1304828,ok
+RES,ML-KEM-512,keygen,3,962856,ok
+RES,ML-KEM-512,encaps,3,1041761,ok
+RES,ML-KEM-512,decaps,3,1305245,ok
+RES,ML-KEM-512,keygen,4,962160,ok
+RES,ML-KEM-512,encaps,4,1041065,ok
+RES,ML-KEM-512,decaps,4,1304549,ok
+DONE,ML-KEM-512,0
+EXIT SUCCESS
+- $WORK_DIR/cv32e40p/example_tb/core/tb_top.sv:140: Verilog $finish

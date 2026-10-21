@@ -35,3 +35,18 @@ STACK_LENGTH="0x40000"    # 256 kB stack
 
 BENCH_RUNS="${BENCH_RUNS:-5}"
 SEED="20261020"
+
+# Round 5: second open core. CV32E40P (OpenHW Group) at release tag cv32e40p_v1.8.3, simulated
+# with its own example testbench (example_tb/core: tb_top, cv32e40p_tb_subsystem, mm_ram,
+# dp_ram) under Verilator. Parameters are the tb_top defaults: PULP_XPULP=0, PULP_CLUSTER=0,
+# FPU=0, ZFINX=0, NUM_MHPMCOUNTERS=1, RAM_ADDR_WIDTH=22 (4 MB), BOOT_ADDR=0x180.
+CV32E40P_URL="https://github.com/openhwgroup/cv32e40p.git"
+CV32E40P_COMMIT="360d272898d81806be3377193870dbf83a3ea79f"   # tag cv32e40p_v1.8.3
+CV32E40P_STACK_SIZE="0x40000"   # 256 kB, as the Ibex runs (the stock link script gives 4 kB)
+
+# Round 5, third core (first to cut; not run, see build_vexriscv.sh): VexRiscv at a recorded
+# master commit (the repository's only tags are 1.0.0 and 1.0.1), generated with sbt.
+VEX_URL="https://github.com/SpinalHDL/VexRiscv.git"
+VEX_COMMIT="baf7dc82f855eddaf5b0a20a6802c526f127e38a"   # master, committed 2026-09-24
+SBT_VERSION="1.10.9"
+SBT_SHA256="6b704ba4976e52a91c4f1fb3994d725edbab0807c5fc3ac29cc541d7c2526335"
