@@ -1,0 +1,11 @@
+label,key,value
+assumption,seed,20261021
+assumption,runs_per_evaluation,20
+assumption,n_mc,1000
+assumption,n_sobol_base,512
+assumption,sobol_evaluations,9216
+assumption,processes,2
+assumption,mc_seconds,101
+assumption,sobol_seconds,646
+assumption,y2_deadline,added latency computed without the deadline condition (deadline set to 1e9 s)
+assumption,common_random_numbers,seed 20261021 for architecture B and 20261022 for C in every evaluation
