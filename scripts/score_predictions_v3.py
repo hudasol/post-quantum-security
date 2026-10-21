@@ -124,7 +124,7 @@ def main():
     # R13, R14: ASD and Renode.
     note = (ROOT / "data" / "raw" / "S11_standards_recheck.md").read_text(encoding="utf-8")
     asd = "Retry on 2026-10-18" in note and "timed out" in note.split("Retry on 2026-10-18")[1]
-    S.append(("R13", "hit" if asd else "miss", "Two WebFetch attempts on 2026-10-18 timed out (data/raw/S11)."))
+    S.append(("R13", "hit" if asd else "miss", "Two web fetch attempts on 2026-10-18 timed out (data/raw/S11)."))
     ren = rows("bench/mcu/renode_results/checks.csv")
     k512 = [r for r in ren if r["param"] == "ML-KEM-512"]
     S.append(("R14", "hit" if k512 and k512[0]["fail"] == "0" else "miss",

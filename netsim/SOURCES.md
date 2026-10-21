@@ -56,7 +56,7 @@ N5. University of Calgary CPSC 441 lecture 3.2 slide "Performance of Selective R
 
 ## Refused or not retrieved
 
-- https://cspages.ucalgary.ca/~unger/441/lectures/3.2/tsld018.htm (the slide before N5): the permission request was not answered; not used.
+- https://cspages.ucalgary.ca/~unger/441/lectures/3.2/tsld018.htm (the slide before N5): access to the page was not granted in time; not used.
 - https://web.mit.edu/course/16/16.682/www/lec15.pdf was read; it gives the efficiency 1 - P of ideal selective repeat but no transmission count, so it is not cited for the check.
 - https://kilyos.ee.bilkent.edu.tr/~ee538/lecture2.pdf was read; it has only a heading for selective repeat; not used.
 - arXiv:1609.01101 was read again for parameter ranges; it gives defaults only (already in data/raw/S12_link_sources.md B2), not ranges.

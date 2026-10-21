@@ -87,5 +87,5 @@ E1. IETF draft-ietf-lake-edhoc-17 (October 2022; later published as RFC 9528; dr
 - F3. LoRaWAN RX1 delay: not retrieved; the existing ASSUMPTION turnaround_lorawan_s stays.
 - F4. DTLS 1.3 record overhead, OSCORE overhead, DDS Security handshake sizes, certificate sizes: not retrieved; these are ASSUMPTIONS in linksim/params.csv and are swept.
 - F5. NB-IoT and Wi-Fi parameters: not retrieved; no Wi-Fi or cellular profile is simulated.
-- F6. Blocked fetches (permission request not answered): https://raw.githubusercontent.com/RIOT-OS/RIOT/master/sys/include/net/ieee802154.h, https://raw.githubusercontent.com/torvalds/linux/master/include/linux/ieee802154.h, and a first attempt at the D1 page (the D1 page was later retrieved through a search result).
+- F6. Blocked fetches (access to the site not granted in time): https://raw.githubusercontent.com/RIOT-OS/RIOT/master/sys/include/net/ieee802154.h, https://raw.githubusercontent.com/torvalds/linux/master/include/linux/ieee802154.h, and a first attempt at the D1 page (the D1 page was later retrieved through a search result).
 - F7. Semtech forum threads https://forum.lora-developers.semtech.com/t/sx126x-time-on-air-calculation/127 and https://forum.lora-developers.semtech.com/t/parameters-explanation-for-time-on-air/1357 were read; Semtech staff declined to give the formula there, so they are not used.

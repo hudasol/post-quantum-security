@@ -6,7 +6,7 @@ database_1,IACR ePrint and IACR TCHES (open access article pages and PDFs)
 database_2,"arXiv (public API, scripts/fetch_s13_arxiv.py, and arXiv PDFs)"
 database_3,IEEE Xplore abstract pages
 database_4,ACM Digital Library abstract pages
-database_5,"web search engine in the style of Google Scholar (WebSearch tool), including vendor and project pages"
+database_5,"web search engine in the style of Google Scholar (web search), including vendor and project pages"
 database_6,"pqm4 benchmarks.csv at its current commit, fetched by git from github.com/mupq/pqm4"
 snowballing,"one backward round (reference lists of the 20 sources in data/bibliography.bib that the most evidence rows cite, where the full text was available) and one forward round (search engine queries naming those sources; Semantic Scholar pages if fetchable)"
 inclusion_1,"a cycle count, stack, RAM, code size or signature size value stated as a number in a table or an explicit sentence"

@@ -20,7 +20,7 @@ Totals: 13 hit, 0 partial, 3 miss, 0 not scored, of 16.
 | R10 | hit | Both PDFs rebuilt with `scripts/build_pdfs_docker.sh` (pandoc 3.1 image); author metadata Huda Mueen, Huda Mueen. |
 | R11 | miss | Largest spread of run medians 120.8 percent; largest median absolute deviation over median 16.4 percent. Medians steadied, slow runs remained. |
 | R12 | hit | Signing medians: ML-DSA-44 462,221 ns, ML-DSA-65 778,783 ns, ML-DSA-87 881,272 ns. |
-| R13 | hit | Two WebFetch attempts on 2026-10-18 timed out (data/raw/S11). |
+| R13 | hit | Two web fetch attempts on 2026-10-18 timed out (data/raw/S11). |
 | R14 | hit | Renode 1.17.0 ran 4 images on its STM32F4 Discovery model; 4 pass every check, and stack equals QEMU to the byte. |
 | R15 | hit | 921 words. |
 | R16 | miss | 53 findings (2 high, 17 medium, 34 low), above the refutation line of 25; none was a high severity contradiction of a headline number, but 3 medium findings (numbers 6, 11, 12) led to corrected headline figures: the planner range and the proposal's stack range (`docs/REVIEW_FINDINGS2.csv`). |
