@@ -1,0 +1,39 @@
+parameter,value,unit,source,label,used_by,note
+clock_m4_ref_mhz,168,MHz,data/raw/S5_benchmark_plan_facts.md:77 (Matek F405-WING STM32F405 class flight controller),published,mission;energy;bootchain,reference Cortex-M4 flight controller clock; energy/platforms.csv (Crazyflie 2.1 STM32F405 from the Bitcraze datasheet) and the bootchain Crazyflie target state the same 168 MHz; the platform row keeps its own source for the platform and reads this value
+mldsa44_verify_cycles_m4,1421623,cycles,data/evidence.csv:S2-0033 (pqm4 m4f),published,mission;energy;bootchain;stats,same row in every study before this round
+mldsa44_sign_cycles_m4,3943121,cycles,data/evidence.csv:S2-0032 (pqm4 m4f; mean of a variable signing time),published,mission;energy,new in mission with design change F1 (the vehicle signs once per handshake); energy already used S2-0032
+mlkem768_encaps_cycles_m4,658754,cycles,data/evidence.csv:S2-0023 (pqm4 m4fspeed),published,mission;energy;stats,the vehicle is the encapsulating side of the hybrid handshake (formal models and mission study); energy counted key generation plus decapsulation (S2-0022 plus S2-0024; 1349923 cycles per handshake) before this round
+x25519_scalarmult_cycles_m4,548873,cycles,data/evidence.csv:S12A-332 (Emill X25519-Cortex-M4 integer version),published,mission;energy;stats,one scalar multiplication; the vehicle does two per handshake or rekey (key generation and shared secret) in every study; published range kept beside it in each study (S12A-317 S12A-321 S12A-325 S12A-333)
+ed25519_verify_cycles_m4,722000,cycles,data/evidence.csv:S12A-331 (Owens et al. STM32F407 at 24 MHz),published,mission;energy;bootchain,same row in every study before this round
+ed25519_sign_cycles_m4,239000,cycles,data/evidence.csv:S12A-330 (Owens et al. STM32F407 at 24 MHz),published,mission;energy,new in mission: the classical handshake of architecture A gets the same vehicle signature as B so that A and B stay comparable; energy already used S12A-330
+lms_verify_cycles_m4,2658884,cycles,data/evidence.csv:S8-026 (LMS SHA-256 w=16 h=10 single tree; compiler and flags stated),published,mission;energy;bootchain,mission used S2-0316 (LMS w=16 h=5 from conference slides; 2576515 cycles; compiler not stated) before this round; S8-026 is chosen because its build settings are stated and two studies already used it
+sha256_cpb_sw_m4,76.27118644067797,cycles per byte,energy/retrieved_benchmarks.csv sha256_sw_throughput rows (median over three Cortex-M4 boards of clock divided by throughput),derived from published,energy;bootchain;mission;stats,unchanged; range 75.09 to 109.59 kept in bootchain and stats
+mac_message_bytes,64,B,energy/workload_assumptions.csv command_msg_bytes nominal,assumption,energy;mission,message length covered by one per message tag; energy draws 32 to 255 B in its Monte Carlo
+mac_cycles_per_message,24406.77966101695,cycles,HMAC-SHA256 of mac_message_bytes (energy/model.py hmac_sha256_bytes) times sha256_cpb_sw_m4,derived from published,energy;mission,mission used an unverified 10000 cycle assumption before this round; the derived value is conservative for MAVLink 2 signing which hashes the frame once; mission still sweeps 2000 to 50000
+x25519_share_bytes,32,B,data/raw/S3_robotics.md:157,published,linksim;mission,unchanged
+mlkem768_ek_bytes,1184,B,data/evidence.csv:S2-0399 (FIPS 203 Table 3),published,linksim;mission,unchanged
+mlkem768_ct_bytes,1088,B,data/evidence.csv:S2-0401 (FIPS 203 Table 3),published,linksim;mission,unchanged
+mldsa44_sig_bytes,2420,B,data/evidence.csv:S2-0407 (FIPS 204 Table 2),published,linksim;mission;bootchain,bootchain/schemes.csv cites S3-024 for the same 2420 B (same standard table)
+ed25519_sig_bytes,64,B,data/raw/S3_robotics.md:125,published,linksim;mission;bootchain,bootchain/schemes.csv cites S10D-013 for the same 64 B
+confirm_bytes,16,B,linksim/params.csv assumption (no cited size),assumption,linksim;mission,key confirmation tag sent by each side; with design change F1 both sides send one
+mav_header_bytes,10,B,data/raw/S3_robotics.md:29,published,linksim;mission,unchanged
+mav_checksum_bytes,2,B,data/raw/S3_robotics.md:29,published,linksim;mission,unchanged
+mav_sig_field_bytes,13,B,data/raw/S3_robotics.md:19-20,published,linksim;mission,unchanged
+mav_ftp_header_bytes,12,B,data/raw/S3_robotics.md:61,published,linksim;mission,mission/assumptions.csv held a copy (ftp_header_bytes) before this round
+mav_ftp_data_bytes,239,B,data/raw/S3_robotics.md:61,published,linksim;mission,mission/assumptions.csv held a copy (chunk_data_bytes) before this round
+pq_image_header_bytes,5288,B,data/raw/S3_robotics.md:121 (wolfBoot LMS example header),published,linksim;bootchain,bootchain/inputs.csv held a copy before this round
+sik_air_rate_bps,64000,bit/s,data/raw/S3_robotics.md:69,published,linksim;mission;bootchain;stats,unchanged
+sik_usable_fraction,0.9,ratio,data/raw/S3_robotics.md:69 (about 90 percent without ECC),published,linksim;mission;bootchain;stats,unchanged
+ieee802154_rate_bps,250000,bit/s,data/raw/S3_robotics.md:76,published,linksim;mission;bootchain,unchanged
+ieee802154_data_bytes,81,B,data/raw/S3_robotics.md:76,published,linksim;mission,unchanged
+ieee802154_phy_max_bytes,127,B,data/raw/S3_robotics.md:76,published,linksim;mission,unchanged
+lorawan_dr0_payload_bytes,51,B,data/raw/S3_robotics.md:72,published,linksim;mission,unchanged
+lorawan_dr0_bitrate_bps,250,bit/s,data/raw/S3_robotics.md:72,published,linksim;mission;bootchain,unchanged
+lorawan_dr5_payload_bytes,222,B,data/raw/S3_robotics.md:72,published,linksim;mission,unchanged
+lorawan_dr5_bitrate_bps,5470,bit/s,data/raw/S3_robotics.md:72,published,linksim;mission,unchanged
+lorawan_duty_cycle,0.01,ratio,data/raw/S3_robotics.md:72,published,linksim;mission;bootchain,unchanged
+lorawan_frame_overhead_bytes,13,B,data/raw/S12_link_sources.md:55 (MHDR 1 + DevAddr 4 + FCtrl 1 + FCnt 2 + FPort 1 + MIC 4),published,linksim;mission,mission ignored LoRaWAN frame overhead (0 B through lorawan_phy_mac_overhead_bytes) before this round; the ns-3 LoRaWAN module counts 9 B (docs/NETSIM_STUDY.md); 13 B is kept as the default and 9 B is reported as a sensitivity in docs/PROTOCOL_SIM.md
+turnaround_s,0.05,s,linksim/params.csv assumption,assumption,linksim;mission,unchanged
+turnaround_lorawan_s,1.0,s,linksim/params.csv assumption,assumption,linksim;mission,unchanged
+rto_factor,2.0,ratio,linksim/params.csv assumption,assumption,linksim;mission;stats,unchanged; stats draws 1.5 to 4
+max_retries,20,count,linksim/params.csv assumption,assumption,linksim;mission;stats,unchanged
