@@ -67,7 +67,7 @@ def measured_free(rows, pick=min, crash_log_used=False):
             continue
         ff, fr = int(r["flash_free_bytes"]), int(r["ram_free_static_bytes"])
         if crash_log_used:
-            ff = max(0, ff - int(r["flash_crash_log_bytes"] or 0))
+            ff = max(0, ff - int(r.get("flash_crash_log_bytes") or 0))
         if r["board"] in out:
             a, b, s = out[r["board"]]
             out[r["board"]] = (pick(a, ff), pick(b, fr), s + [r["stack"]])
