@@ -17,6 +17,9 @@ Result CSV schema (RESULT_COLUMNS, one row per measurement; documented in RESULT
   clock_hz     core clock in Hz read back at the board (B1: META clock_hz_rcc; B0: --clock-hz)
   flash_ws     flash wait states read back at the board
   cache        cache and prefetch bits read back at the board
+  cache_pass   on (state left by the clock set up) or off (BENCH_CACHE_OFF image); from the image
+               name, checked against the META cache_pass line of B1 images (a mismatch is a
+               failed check). B0 pqm4 images are always the on pass.
   toolchain    arm-none-eabi-gcc version line
   commit       pqm4 commit (B0) or library commit (B1)
   library      pqm4, mlkem-native or mldsa-native
@@ -37,7 +40,7 @@ import re
 import sys
 
 RESULT_COLUMNS = ["experiment", "label", "date_utc", "board", "clock_hz", "flash_ws", "cache",
-                  "toolchain", "commit", "library", "scheme", "variant", "operation", "run", "iter",
+                  "cache_pass", "toolchain", "commit", "library", "scheme", "variant", "operation", "run", "iter",
                   "cycles", "stack_bytes", "unit", "source_log"]
 CHECK_COLUMNS = ["experiment", "label", "board", "commit", "scheme", "variant", "run", "check", "ok",
                  "fail", "source_log"]
@@ -47,7 +50,7 @@ OP_MAP = {"keypair": "keygen", "encaps": "encaps", "decaps": "decaps", "sign": "
           "verify": "verify"}
 IMG_RE = re.compile(r"(?:mupq_pqclean_|mupq_)?crypto_(kem|sign)_([a-z0-9-]+)_([a-z0-9]+)_"
                     r"(test|speed|stack|hashing|testvectors)(?:\.(?:elf|bin|hex))?$")
-B1_RE = re.compile(r"b1_(mlkem|mldsa)_(\d+)")
+B1_RE = re.compile(r"b1_(mlkem|mldsa)_(\d+)(_cacheoff)?")
 TS_LINE = re.compile(r"^(\d{4}-\d\d-\d\dT[0-9:.]+Z)\t(.*)$")
 FRAMING = {"", "==========================", "+", "#"}
 # Known pqm4 status lines (test, speed and stack binaries at the pinned commit).
@@ -91,12 +94,12 @@ def image_info(image):
     m = IMG_RE.search(image)
     if m:
         return {"experiment": "B0", "scheme": m.group(2).upper(), "variant": m.group(3), "kind": m.group(4),
-                "library": "pqm4"}
+                "library": "pqm4", "cache_pass": "on"}
     m = B1_RE.search(image)
     if m:
         lib = "mlkem-native" if m.group(1) == "mlkem" else "mldsa-native"
         return {"experiment": "B1", "scheme": None, "variant": "portable_c", "kind": "harness",
-                "library": lib}
+                "library": lib, "cache_pass": "off" if m.group(3) else "on"}
     raise ValueError(f"unknown image name: {image}")
 
 
@@ -104,7 +107,8 @@ def _base(header, info, ctx, path):
     return {"experiment": info["experiment"], "label": header.get("label", ""),
             "date_utc": header.get("start_utc", ""), "board": header.get("board", ""),
             "clock_hz": ctx.get("clock_hz", ""), "flash_ws": ctx.get("flash_ws", ""),
-            "cache": ctx.get("cache", ""), "toolchain": ctx.get("toolchain", ""),
+            "cache": ctx.get("cache", ""), "cache_pass": info.get("cache_pass", "on"),
+            "toolchain": ctx.get("toolchain", ""),
             "commit": ctx.get("commit", ""), "library": info["library"],
             "scheme": info["scheme"] or "", "variant": info["variant"], "run": header.get("run", ""),
             "source_log": os.path.basename(path)}
@@ -204,6 +208,20 @@ def parse_b1(lines, header, info, ctx, path):
                             source_log=base["source_log"]))
         elif f[0] in ("BENCH", "STACK", "CHECK"):
             unknown.append(line)
+    if "cache_pass" in meta:
+        same = meta["cache_pass"] == info.get("cache_pass")
+        chk.append(dict(experiment="B1", label=base["label"], board=base["board"],
+                        commit=base["commit"], scheme=rows[0]["scheme"] if rows else "",
+                        variant=base["variant"], run=base["run"],
+                        check=f"cache_pass_{info.get('cache_pass')}:image_matches_firmware",
+                        ok=int(same), fail=int(not same), source_log=base["source_log"]))
+    if info.get("cache_pass") == "off" and base["label"] != "emulated":
+        applied = meta.get("cache_off_applied") == "1"
+        chk.append(dict(experiment="B1", label=base["label"], board=base["board"],
+                        commit=base["commit"], scheme=rows[0]["scheme"] if rows else "",
+                        variant=base["variant"], run=base["run"],
+                        check="cache_pass_off:writes_applied_at_zero_wait_states",
+                        ok=int(applied), fail=int(not applied), source_log=base["source_log"]))
     return rows, chk, unknown, meta
 
 
@@ -232,6 +250,7 @@ TEMPLATE_ROW = {
     "experiment": "<B0|B1>", "label": "planned", "date_utc": "<capture start, UTC>",
     "board": "<board name and chip marking>", "clock_hz": "<read back, Hz>",
     "flash_ws": "<FLASH_ACR latency read back>", "cache": "<icache dcache prefetch bits>",
+    "cache_pass": "<on|off>",
     "toolchain": "<arm-none-eabi-gcc --version first line>",
     "commit": "<pqm4 or library commit>", "library": "<pqm4|mlkem-native|mldsa-native>",
     "scheme": "<ML-KEM-768|ML-DSA-44|...>", "variant": "<clean|m4fspeed|m4f|portable_c>",
@@ -246,6 +265,101 @@ def write_template(path):
     write_csv(path, RESULT_COLUMNS, [TEMPLATE_ROW])
 
 
+# Energy measurements (docs/BOARD_RUN_PROTOCOL.md section 10). One row per operation phase,
+# written by hand or by a power analyzer export at the bench. Inputs are board measured.
+ENERGY_COLUMNS = ["label", "date_utc", "board", "platform", "image", "cache_pass", "run", "scheme",
+                  "operation", "method", "instrument", "jumper", "supply_v", "current_ma_mean",
+                  "current_ma_idle", "charge_uc", "n_ops", "window_s", "note"]
+ENERGY_OUT_COLUMNS = ENERGY_COLUMNS + [
+    "cycles_board_measured_mean", "clock_hz", "time_s_per_op_board_measured",
+    "energy_uj_per_op_board_measured", "energy_uj_per_op_net_of_idle_board_measured",
+    "energy_source"]
+ENERGY_METHODS = ("multimeter_phase", "analyzer_gpio_window")
+
+
+def read_energy(path):
+    """Read an energy CSV; check the header and the method of every row."""
+    with open(path, newline="") as fh:
+        rd = csv.DictReader(fh)
+        missing = [c for c in ENERGY_COLUMNS if c not in (rd.fieldnames or [])]
+        if missing:
+            raise ValueError(f"{path}: missing energy columns {missing}")
+        rows = list(rd)
+    for r in rows:
+        if r["method"] not in ENERGY_METHODS:
+            raise ValueError(f"{path}: unknown method {r['method']!r}")
+    return rows
+
+
+def _f(x):
+    return float(x) if x not in ("", None) else None
+
+
+def energy_rows(energy, results):
+    """Derive energy per operation.
+
+    analyzer_gpio_window: the analyzer integrates charge over the window in which the firmware
+        holds a GPIO marker high around n_ops operations: E = V x charge / n_ops.
+    multimeter_phase: the meter's average current over one operation phase of a harness image (the
+        phase is delimited by the BENCH line timestamps in the capture log). The time per operation
+        is the board measured mean cycles of that image, scheme, operation and cache pass divided by
+        the clock read back: E = V x I_mean x cycles / clock. The value net of idle subtracts the
+        idle current measured with the board halted at the same supply.
+    """
+    cyc = {}
+    clock = {}
+    for r in results:
+        if r.get("cycles") in ("", None):
+            continue
+        k = (r["board"], r.get("cache_pass", "on"), r["scheme"].upper(), r["operation"])
+        cyc.setdefault(k, []).append(float(r["cycles"]))
+        if str(r.get("clock_hz", "")).isdigit():
+            clock[k] = float(r["clock_hz"])
+    out = []
+    for e in energy:
+        row = dict.fromkeys(ENERGY_OUT_COLUMNS, "")
+        row.update(e)
+        v = _f(e["supply_v"])
+        if e["method"] == "analyzer_gpio_window":
+            q, n = _f(e["charge_uc"]), _f(e["n_ops"])
+            if v is not None and q is not None and n:
+                row["energy_uj_per_op_board_measured"] = f"{v * q / n:.3f}"
+                if _f(e["window_s"]) is not None:
+                    row["time_s_per_op_board_measured"] = f"{_f(e['window_s']) / n:.6f}"
+                row["energy_source"] = "supply_v x charge_uc / n_ops"
+        else:
+            k = (e["board"], e["cache_pass"], e["scheme"].upper(), e["operation"])
+            i_mean, i_idle = _f(e["current_ma_mean"]), _f(e["current_ma_idle"])
+            if k in cyc and k in clock and v is not None and i_mean is not None:
+                c = sum(cyc[k]) / len(cyc[k])
+                t = c / clock[k]
+                row.update(cycles_board_measured_mean=f"{c:.0f}", clock_hz=f"{clock[k]:.0f}",
+                           time_s_per_op_board_measured=f"{t:.6f}",
+                           energy_uj_per_op_board_measured=f"{v * i_mean * 1e-3 * t * 1e6:.3f}",
+                           energy_source="supply_v x current_ma_mean x cycles / clock_hz")
+                if i_idle is not None:
+                    row["energy_uj_per_op_net_of_idle_board_measured"] = \
+                        f"{v * (i_mean - i_idle) * 1e-3 * t * 1e6:.3f}"
+            else:
+                row["energy_source"] = "no matching board measured cycles; energy not derived"
+        out.append(row)
+    return out
+
+
+def write_energy_template(path):
+    write_csv(path, ENERGY_COLUMNS, [{
+        "label": "planned", "date_utc": "<UTC>", "board": "<board name as in the capture header>",
+        "platform": "<nucleo-l4r5zi|nucleo-l552ze-q>", "image": "<image name>",
+        "cache_pass": "<on|off>", "run": "<power cycle>", "scheme": "<ML-KEM-768|...>",
+        "operation": "<keygen|encaps|decaps|sign|verify>",
+        "method": "<multimeter_phase|analyzer_gpio_window>",
+        "instrument": "<make, model, range>", "jumper": "<IDD jumper name from the board manual>",
+        "supply_v": "<V at the jumper>", "current_ma_mean": "<mA, meter average over the phase>",
+        "current_ma_idle": "<mA, board halted>", "charge_uc": "<uC over the window (analyzer)>",
+        "n_ops": "<operations inside the window (analyzer)>", "window_s": "<s (analyzer)>",
+        "note": ""}])
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("logs", nargs="+")
@@ -257,6 +371,8 @@ def main(argv=None):
     ap.add_argument("--cache", default="", help="B0: cache and prefetch bits read back")
     ap.add_argument("--toolchain", default="")
     ap.add_argument("--commit", default="", help="B0: pqm4 commit")
+    ap.add_argument("--energy", default=None, help="energy CSV (ENERGY_TEMPLATE.csv format)")
+    ap.add_argument("--energy-out", default=None, help="energy per operation CSV")
     ap.add_argument("--require-all", action="store_true",
                     help="exit 1 if any line is unrecognised or a check failed")
     a = ap.parse_args(argv)
@@ -278,6 +394,12 @@ def main(argv=None):
     write_csv(a.checks_out, CHECK_COLUMNS, checks)
     if a.meta_out:
         write_csv(a.meta_out, META_COLUMNS, metas)
+    if a.energy:
+        er = energy_rows(read_energy(a.energy), rows)
+        write_csv(a.energy_out or os.path.splitext(a.out)[0] + "_energy.csv", ENERGY_OUT_COLUMNS,
+                  er)
+        print(f"energy rows={len(er)} derived="
+              f"{sum(1 for r in er if r['energy_uj_per_op_board_measured'])}")
     failed = sum(int(c["fail"]) for c in checks)
     print(f"logs={len(a.logs)} lines={total} unrecognised={bad} rows={len(rows)} "
           f"checks={len(checks)} failed_checks={failed}")
