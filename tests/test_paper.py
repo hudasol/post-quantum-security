@@ -46,10 +46,11 @@ class PaperLayout(unittest.TestCase):
         for cap in re.findall(r"!\[([^\]]*)\]\(figures/paper/", self.text):
             self.assertIn("Source: `", cap)
 
-    def test_placeholder_has_no_number(self):
-        m = re.search(r"### 4\.7 Software in the loop \(placeholder\)\n\n([^\n]+)", self.text)
+    def test_software_in_the_loop_section_is_filled_and_labelled(self):
+        m = re.search(r"### 4\.7 Software in the loop\n\n([^\n]+)", self.text)
         self.assertIsNotNone(m)
-        self.assertIsNone(re.search(r"\d", m.group(1)))
+        self.assertNotIn("placeholder", m.group(1).lower())
+        self.assertIn("SITL measured", m.group(1))
 
 
 class PaperFigures(unittest.TestCase):

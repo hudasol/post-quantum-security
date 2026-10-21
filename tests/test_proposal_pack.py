@@ -95,10 +95,13 @@ class TestProposalDocs(unittest.TestCase):
         for d in DOCS:
             self.assertTrue(any(r["document"] == d for r in reg), d)
 
-    def test_sitl_placeholder_has_no_numbers(self):
+    def test_sitl_section_is_filled_from_claims(self):
         text = (ROOT / "docs" / "PROPOSAL_ROBOTICS.md").read_text(encoding="utf-8")
         sec = text.split("### 2.2", 1)[1].split("## 3.", 1)[0]
-        self.assertFalse(any(ch.isdigit() for ch in sec.replace("2.2", "")))
+        self.assertNotIn("to be filled", sec.lower())
+        self.assertIn("SITL measured", sec)
+        reg = list(csv.DictReader(open(ROOT / "data" / "claims_register.csv", encoding="utf-8")))
+        self.assertTrue(any(r["claim_id"].startswith("proposal_robotics_sitl_") for r in reg))
 
     def test_gantt_draws(self):
         sys.path.insert(0, str(ROOT / "scripts"))

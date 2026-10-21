@@ -311,8 +311,29 @@ def rq_text():
         "Board experiment. A board kit builds images for an STM32L4R5 (Cortex-M4) and an STM32L552 (Cortex-M33) board, now with an option that switches the caches off; "
         f"{claim('p_bk_n', 'bench/board_kit/predictions_v5_board.csv', 'id', 'cache_pass == \"off\"', 'count', '{:.0f}', label='modelled')} cycle predictions for the caches off pass were registered before any session, all out of sample (planned). "
         "The option is checked only by disassembly of the images and, for the L552, an emulator that logs the register write but does not model a cache, and the Cortex-M33 rows apply Cortex-M4 costs, an unsourced transfer assumption.\n")
-    L.append("### 4.7 Software in the loop (placeholder)\n")
-    L.append("[Placeholder for the software in the loop results of the two pinned flight stacks with the security architectures (SITL measured). To be filled from `docs/SITL_STUDY.md` when that package is merged. No number is stated here.]\n")
+    ss, sc, cm = "sitl/results/summary.csv", "sitl/results/comparison.csv", "sitl/results/commands.csv"
+    qs = 'profile == "sik" and config == "{c}" and metric == "{m}"'
+    qc = 'profile == "sik" and config == "{c}" and metric == "{m}"'
+    L.append("### 4.7 Software in the loop\n")
+    L.append(
+        "ArduPilot Copter 4.7.2 ran in software in the loop with its built in vehicle model, behind a relay that emulates a SiK class link with frame loss and one outage per mission, and a ground station script that sent a stream of acknowledged commands (`docs/SITL_STUDY.md`). "
+        "PX4 v1.17.0 was not used because its MAVLink module has no message signing to serve as the classical baseline. "
+        f"Each of four configurations flew {claim('p_sitl_n', ss, 'value', qs.format(c='hybrid', m='missions_completed'), fmt='{:.0f}', label='SITL measured')} scripted missions with stored seeds. "
+        f"With the link up, MAVLink 2 signing as the flight stack ships it added {claim('p_sitl_sig', ss, 'value', qs.format(c='signing', m='added_latency_rt_ms'), fmt='{:.1f}', label='SITL measured')} ms to the median command round trip and the hybrid session with design change F1 "
+        f"{claim('p_sitl_hyb', ss, 'value', qs.format(c='hybrid', m='added_latency_rt_ms'), fmt='{:.1f}', label='SITL measured')} ms (SITL measured); the one way added latency of the hybrid session, "
+        f"{claim('p_sitl_hyb_ow', ss, 'value', qs.format(c='hybrid', m='added_latency_ow_ms'), fmt='{:.2f}', label='SITL measured')} ms, matches the mission study's "
+        f"{claim('p_sitl_hyb_st', sc, 'study_estimated', qc.format(c='hybrid', m='added_latency_ow_ms'), fmt='{:.2f}', label='estimated')} ms. "
+        f"The emulated hybrid handshake of four flights took {claim('p_sitl_hs', ss, 'value', qs.format(c='hybrid', m='handshake_median_s'), fmt='{:.2f}', label='SITL measured')} s against "
+        f"{claim('p_sitl_hs_st', sc, 'study_estimated', 'profile == \"sik\" and config == \"hybrid\" and study_arch == \"B with F1\" and metric == \"handshake_median_s\"', fmt='{:.2f}', label='estimated')} s in the mission model. "
+        f"With outages, the share of commands acknowledged within 0.5 s was {claim('p_sitl_av_hyb', ss, 'value', qs.format(c='hybrid', m='availability_rt_all'), fmt='{:.3f}', label='SITL measured')} for the hybrid session against "
+        f"{claim('p_sitl_av_hyb_st', sc, 'study_estimated', qc.format(c='hybrid', m='availability_rt_all'), fmt='{:.3f}', label='estimated')} in the mission study at the matching outage rate, within the interval. "
+        f"A post quantum signature on every command added {claim('p_sitl_pq_ow', ss, 'value', qs.format(c='pqsig', m='added_latency_ow_ms'), fmt='{:.0f}', label='SITL measured')} ms one way, as the mission study predicts "
+        f"({claim('p_sitl_pq_st', sc, 'study_estimated', qc.format(c='pqsig', m='added_latency_ow_ms'), fmt='{:.0f}', label='estimated')} ms), but "
+        f"{claim('p_sitl_pq_rt', ss, 'value', qs.format(c='pqsig', m='added_latency_rt_ms'), fmt='{:.0f}', label='SITL measured')} ms on the round trip to the acknowledgement, and only "
+        f"{claim('p_sitl_pq_av', ss, 'value', qs.format(c='pqsig', m='availability_rt_all'), fmt='{:.3f}', label='SITL measured')} of its commands were acknowledged within 0.5 s, against "
+        f"{claim('p_sitl_pq_av_st', sc, 'study_estimated', qc.format(c='pqsig', m='availability_rt_all'), fmt='{:.3f}', label='estimated')} in the mission study, which counts one way delivery: the deadline falls in the tail of a delivery of several hundred milliseconds. "
+        f"The flight stack also discarded {claim('p_sitl_drop', cm, 'dropped', 'config == \"signing\" and dropped == \"not_acknowledged_by_vehicle\"', 'count', '{:.0f}', label='SITL measured')} delivered signed commands, because the emulated link layer's retransmission let a frame arrive after a newer one and fail the signing timestamp rule, an effect the mission study does not model and an argument for the strict sequence rule the formal proofs use. "
+        "Configurations 3 and 4 add the bytes and published compute delays on the link rather than executing cryptography, and the link is an emulation, not a radio. Evidence: SITL measured, against the mission study (estimated).\n")
     return "\n".join(L)
 
 
@@ -342,7 +363,8 @@ def threats_text():
         "11. Formal results hold under the Dolev Yao model with abstract perfect primitives, one identity per side, without the rekey grace period or the LMS signer state; they say nothing about an implementation.\n"
         "12. The match rules for the third look at wording disagreements were written after a first literal comparison was seen; ambiguous lines stay unsettled and are listed for the author.\n"
         "13. IEEE Xplore and the ACM Digital Library could not be searched (their search pages could not be fetched), and Semantic Scholar refused; the systematic search under covers those indexes.\n"
-        "14. The selective repeat follow up blocks and the extra ns-3 runs were added after the first results; predictions are scored on the first, registered runs only.")
+        "14. The selective repeat follow up blocks and the extra ns-3 runs were added after the first results; predictions are scored on the first, registered runs only.\n"
+        "15. Software in the loop used one flight stack (ArduPilot), one link profile (SiK class) and one outage per mission; the hybrid session and the per command signature were emulated by their bytes and published compute delays, not executed, and a first set of runs with a timing defect was replaced by a rerun with the same seeds.")
 
 
 def conclusion_text():
@@ -378,7 +400,7 @@ def parts_text(fill):
     pv = "formal/results/proverif_results.csv"
     fill["abstract_method"] = (
         f"It combines {fill['n_rows']} published rows from {fill['n_sources']} sources, the newest each read against its source by two independent readers, with a trace driven cycle model, energy, link, boot, fleet and mission models, "
-        "and checks of those models by independent tools: memory of real flight stack builds, the ns-3 network simulator, the ProVerif protocol verifier and cycle accurate simulation of two open cores.")
+        "and checks of those models by independent tools: memory of real flight stack builds, a flight stack in software in the loop, the ns-3 network simulator, the ProVerif protocol verifier and cycle accurate simulation of two open cores.")
     fill["abstract_results"] = (
         f"A cycle model fitted on half of the published rows predicts the other half of the same code base with a median error of {claim('ab_cm', cb, 'median_abs_pct', 'model == \"fitted\" and subset == \"test, all\"', fmt='{:.1f}', label='modelled')} percent, "
         f"but {claim('ab_lofo', lo, 'median_abs_pct', 'left_out_by == \"scheme\" and group == \"all groups pooled\" and model == \"fitted\"', fmt='{:.1f}', label='modelled')} percent for a scheme left out of the fit. "
