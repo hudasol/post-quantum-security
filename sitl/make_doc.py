@@ -118,7 +118,7 @@ def main():
         if len(hk):
             w(f'Hybrid session (emulated): median handshake {f(val(p, "hybrid", "handshake_median_s"), 3)} s '
               f'(range {f(val(p, "hybrid", "handshake_median_s", "ci_lo"), 3)} to {f(val(p, "hybrid", "handshake_median_s", "ci_hi"), 3)} s); '
-              f'{f(val(p, "hybrid", "teardowns"))} missions had an outage longer than the session timeout, and the median time from the end '
+              f'{f(val(p, "hybrid", "teardowns"), 0)} missions had an outage longer than the session timeout, and the median time from the end '
               f'of such an outage to a new session was {f(val(p, "hybrid", "session_recovery_median_s"), 3)} s.')
             w('')
         rec = summ[(summ.profile == p) & (summ.metric == 'command_recovery_median_s')]
@@ -156,8 +156,17 @@ def main():
     w('- The telemetry load comes from the flight stack: stream rates were set to the drone rates of `mission/traffic.csv` '
       'where the integer stream rate parameters allow it, but each stream group carries more messages than the study '
       'counts, so the channel is busier than in the study.')
-    w('- One outage per mission is a forced design, not a Poisson process, so the availability with outages is compared '
-      'with the 60 per hour sweep point only as an order of magnitude check.')
+    w('- One outage per mission is a forced design, not a Poisson process. Flights last under a minute, so the rate is '
+      'higher than the 60 per hour sweep point used for comparison, and each configuration draws its own outages (the seed '
+      'includes the configuration), so the share of flight time in outage differs between configurations. Availability '
+      'with outages is therefore an order of magnitude check, and differences between configurations of a few '
+      'hundredths are not resolved.')
+    w('- The relay of the hybrid configuration enforces no replay rule, so its availability is not that of the recommended '
+      'design with a sequence rule. The signed commands the flight stack discarded (frames delivered after a newer frame) '
+      'would also be rejected by the strict next sequence rule of the formal proofs; a deployment needs in order delivery '
+      'or a replay window that the proofs do not yet cover.')
+    w('- One way latencies and the handshake time are emulated by the relay from the mission study inputs, so their '
+      'agreement with the mission study is a consistency check; only the round trips through the flight stack test the model.')
     w('')
     w('## 6. Limits')
     w('')

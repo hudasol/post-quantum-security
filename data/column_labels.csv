@@ -147,3 +147,17 @@ rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_asm,estimated,deliberate compariso
 rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_asm_ci95_low,estimated,deliberate comparison of two labels: RTL simulated Ibex cycles over published Cortex-M4 cycles
 rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_asm_ci95_high,estimated,deliberate comparison of two labels: RTL simulated Ibex cycles over published Cortex-M4 cycles
 rtlsim/results/ibex_vs_cortex_m4.csv,magnitude_vs_asm,estimated,verbal size class of the ratio (comparison of RTL simulated and published values)
+sitl/results/sitl_summary.csv,label,key,
+sitl/results/sitl_summary.csv,configuration,key,
+sitl/results/sitl_summary.csv,link,key,
+sitl/results/sitl_summary.csv,missions,SITL measured,
+sitl/results/sitl_summary.csv,missions_completed,SITL measured,
+sitl/results/sitl_summary.csv,added_latency_ms_median,SITL measured,round trip through the flight stack
+sitl/results/sitl_summary.csv,handshake_s_median,emulated,emulated by the relay pair
+sitl/results/sitl_summary.csv,availability,SITL measured,
+sitl/results/sitl_summary.csv,mission_study_architecture,key,
+sitl/results/sitl_summary.csv,mission_study_added_latency_ms,estimated,read from mission/results/base.csv
+sitl/results/sitl_summary.csv,mission_study_availability,estimated,mission study at the nearest outage rate sweep point (sitl/results/comparison.csv)
+sitl/results/sitl_summary.csv,seed_first,key,
+sitl/results/sitl_summary.csv,seed_last,key,
+sitl/results/sitl_summary.csv,label_note,key,
