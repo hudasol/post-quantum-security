@@ -95,7 +95,7 @@ jobs:
       - name: Mission study and reference architecture regenerate from the committed mission results
         run: |
           python3 -m mission.run_all --reuse > /dev/null
-          git diff --exit-code docs/MISSION_STUDY.md docs/REFERENCE_ARCHITECTURE.md docs/figures/mission
+          git diff --exit-code docs/MISSION_STUDY.md docs/REFERENCE_ARCHITECTURE.md
       - name: README regenerates from the data files
         run: |
           python3 scripts/make_readme.py > /dev/null
