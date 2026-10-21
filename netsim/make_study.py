@@ -56,6 +56,15 @@ def summarise(vals):
     return m, sd, m - h, m + h
 
 
+MIN_FOR_CI = 3  # fewest completed runs for which an interval is printed
+SVG_SALT = "netsim-study-%s" % cells.SEED  # fixed ids so regenerated figures do not change
+
+
+def savefig(fig, name):
+    """Save an SVG figure deterministically (fixed element ids, no date)."""
+    fig.savefig(os.path.join(RES, name), metadata={"Date": None})
+
+
 def pct(a, b):
     return 100.0 * (a / b - 1.0)
 
@@ -75,6 +84,14 @@ def aggregate(runs):
         done = [r for r in rs if r["completed"] == "1"]
         ts = [float(r["time_s"]) for r in done]
         m, sd, lo, hi = summarise(ts) if ts else (float("nan"),) * 4
+        if len(ts) < MIN_FOR_CI:
+            # Too few completed runs for a t interval: report none.
+            lo = hi = float("nan")
+            if len(ts) < 2:
+                sd = float("nan")
+        elif lo < 0.0:
+            # A transfer time cannot be negative: truncate the interval at 0.
+            lo = 0.0
         sent = sum(int(r["data_sent"]) for r in rs)
         enq = sum(int(r["mac_frames_enqueued_sender"]) for r in rs)
         segs = sum(int(r["segments"]) for r in rs)
@@ -198,6 +215,7 @@ def figures(agg, gap, toa_cmp):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
+    matplotlib.rcParams["svg.hashsalt"] = SVG_SALT
     amap = {a["cell"]: a for a in agg}
     gmap = {g["cell"]: g for g in gap}
     # Hop sweep
@@ -211,7 +229,8 @@ def figures(agg, gap, toa_cmp):
                label="published prose range (ePrint 2021/781 pp. 15 to 16)")
     m = [amap[n]["time_mean_s"] for n in names]
     lo = [amap[n]["time_mean_s"] - amap[n]["time_ci_lo_s"] for n in names]
-    ax.errorbar(hops, m, yerr=lo, color=PINK, marker="o", capsize=3,
+    hi = [amap[n]["time_ci_hi_s"] - amap[n]["time_mean_s"] for n in names]
+    ax.errorbar(hops, m, yerr=[lo, hi], color=PINK, marker="o", capsize=3,
                 label="ns-3, mean and 95% interval, cells with every run completed (simulated (network))")
     ax.plot(allhops, [gmap[n]["time_s_modelled"] for n in allnames], color=GREY, marker="s", linestyle="--",
             label="linksim at the same hop count (modelled)")
@@ -225,7 +244,7 @@ def figures(agg, gap, toa_cmp):
     ax.set_title("IEEE 802.15.4 with 6LoWPAN, 50 kB, selective repeat", fontsize=10)
     ax.legend(fontsize=7, loc="upper left")
     fig.tight_layout()
-    fig.savefig(os.path.join(RES, "fig_netsim_hops.svg"))
+    savefig(fig, "fig_netsim_hops.svg")
     plt.close(fig)
     # One at a time causes
     one = [a for a in agg if a["group"] in ("S1", "S2 one")]
@@ -244,7 +263,7 @@ def figures(agg, gap, toa_cmp):
     ax.set_title("One cause at a time from the 1 hop baseline (ns-3)", fontsize=10)
     ax.legend(fontsize=7, loc="lower right")
     fig.tight_layout()
-    fig.savefig(os.path.join(RES, "fig_netsim_causes.svg"))
+    savefig(fig, "fig_netsim_causes.svg")
     plt.close(fig)
     # LoRa time on air
     fig, ax = plt.subplots(figsize=(7, 3.6))
@@ -258,7 +277,7 @@ def figures(agg, gap, toa_cmp):
     ax.set_title("LoRa time on air: linksim/lora.py (modelled) minus lorawan module (simulated (network))", fontsize=9)
     ax.legend(fontsize=8)
     fig.tight_layout()
-    fig.savefig(os.path.join(RES, "fig_netsim_lora_toa.svg"))
+    savefig(fig, "fig_netsim_lora_toa.svg")
     plt.close(fig)
 
 
@@ -332,7 +351,7 @@ def validation_rows(agg, gap, toa_cmp, fl_cmp):
                     "unit": "s", "value_published": "", "value_simulated_network": r["handshake_s_simulated_network"],
                     "value_modelled": r["blast_s_modelled"], "err_simulated_network_vs_published_pct": "",
                     "err_modelled_vs_published_pct": "", "err_modelled_vs_simulated_network_pct": r["err_blast_vs_ns3_pct"],
-                    "note": "modelled value: linksim fragments back to back with the duty cycle, no acknowledgements"})
+                    "note": "modelled value: linksim fragments back to back with the duty cycle, no acknowledgements; round 4 three flight handshake, superseded by F1"})
     return out
 
 
@@ -448,10 +467,24 @@ def document(agg, gap, toa_cmp, fl_cmp, sr, val):
     nstuck = sum(x["runs_stuck_rx"] for x in agg)
     a("Runs that did not complete (poll limit reached or simulation cap of 3600 s): %d of %d. In %d of them a node on the line kept its "
       "receiver in the BUSY_RX state for more than 1 s up to the end of the run, far longer than any frame, so a "
-      "reception never ended; this is an artefact of the simulator at the pinned version, not radio behaviour, "
-      "and it blocks the route. Means and intervals use completed runs only; a cell with fewer completed runs "
-      "than runs is reported with that count and is not used for the gap verdict." % (nfail, nruns, nstuck))
+      "reception never ended and the route was blocked. The cause was not established: no ns-3 issue, code path "
+      "or diagnostic run was traced, so these runs may show a defect of the simulator at the pinned version or a "
+      "real collapse of the multi hop transfer under load, and this study does not decide between the two. "
+      "Means and intervals use completed runs only; a cell with fewer completed runs "
+      "than runs is reported with that count and is not used for the gap verdict. An interval is printed as n/a "
+      "when fewer than %d runs completed, and a lower bound below 0 s is truncated at 0 s." % (
+          nfail, nruns, nstuck, MIN_FOR_CI))
     a("")
+    stuck_cells = [x for x in agg if x["runs_stuck_rx"] > 0 or x["completed"] < x["runs"]]
+    if stuck_cells:
+        a("Share of runs per cell that did not complete or had a stuck receiver (a result in itself; these cells "
+          "lie at 4 or more hops, or combine hops with load or datagram mode):")
+        a("")
+        L.extend(table(["cell", "runs", "not completed", "with a stuck receiver", "share stuck"],
+                       [[x["value"] if x["group"] != "S2 one" else "%s = %s" % (x["cause"], x["value"]), x["runs"],
+                         x["runs"] - x["completed"], x["runs_stuck_rx"],
+                         "%.0f%%" % (100.0 * x["runs_stuck_rx"] / x["runs"])] for x in stuck_cells]))
+        a("")
     a("Figures: `netsim/results/fig_netsim_hops.svg` (hop sweep, ns-3 against linksim) and "
       "`netsim/results/fig_netsim_causes.svg` (one cause at a time).")
     a("")
@@ -491,6 +524,24 @@ def document(agg, gap, toa_cmp, fl_cmp, sr, val):
       "published range." % (base, gmap["base_frame"]["time_s_modelled"], pct(base, cells.PROSE_LOW_S)))
     a("")
     if hits:
+        caveats = []
+        for c, h in hits:
+            lo_c, hi_c = h["time_ci_lo_s_simulated_network"], h["time_ci_hi_s_simulated_network"]
+            if lo_c < cells.PROSE_LOW_S or hi_c > cells.PROSE_HIGH_S:
+                fu = [g for g in fol if g["cause"] == c]
+                txt = ("%s = %s reaches the range on the mean only: its 95 percent interval (%.2f to %.2f s) crosses "
+                       "the edge of the range" % (c, h["value"], lo_c, hi_c))
+                if fu:
+                    txt += (", and so does the follow up interval (%.2f to %.2f s)" % (
+                        fu[0]["time_ci_lo_s_simulated_network"], fu[0]["time_ci_hi_s_simulated_network"])
+                        if (fu[0]["time_ci_lo_s_simulated_network"] < cells.PROSE_LOW_S
+                            or fu[0]["time_ci_hi_s_simulated_network"] > cells.PROSE_HIGH_S)
+                        else ", although the follow up interval (%.2f to %.2f s) lies inside it" % (
+                            fu[0]["time_ci_lo_s_simulated_network"], fu[0]["time_ci_hi_s_simulated_network"]))
+                caveats.append(txt + ", so part of the plausible range lies outside 30 to 60 s.")
+            if c == "macMinBE":
+                caveats.append("The backoff cause is not a single setting: macMinBE %s is only allowed with "
+                               "macMaxBE raised from 5 to 8, so this cause sets both to 8 together." % h["value"])
         a("Single causes that bring the ns-3 time into the published range: %s. Each is sufficient in simulation; "
           "the paper states none of these settings (N6.1), so the simulation shows which causes can explain the "
           "gap, not which one applied in the paper. %s" % ("; ".join(
@@ -501,6 +552,9 @@ def document(agg, gap, toa_cmp, fl_cmp, sr, val):
                   c for c, _ in hits if c not in ("hops", "neighbours")))
               if any(c not in ("hops", "neighbours") for c, _ in hits)
               else "None of them is tied to a cited setting; all rest on ASSUMPTIONS."))
+        if caveats:
+            a("")
+            a(" ".join(caveats))
     else:
         a("Negative result: no single cause within the swept ranges brings the ns-3 time into 30 to 60 s.")
     if comb:
@@ -535,13 +589,21 @@ def document(agg, gap, toa_cmp, fl_cmp, sr, val):
     a("")
     a("### Hybrid handshake under the EU868 duty cycle")
     a("")
-    a("Flights of the hybrid handshake of each protocol profile (`linksim/results/protocols_flights.csv`, "
-      "without the command sent after the handshake), fragmented at 51 B (DR0) or 222 B (DR5), sent as "
+    a("Flights of the hybrid handshake of each protocol profile (`netsim/results/ns3_handshake_flights.csv`, a "
+      "frozen copy of `linksim/results/protocols_flights.csv` as it was when the ns-3 runs were made, without the "
+      "command sent after the handshake), fragmented at 51 B (DR0) or 222 B (DR5), sent as "
       "unconfirmed uplinks by two class A end devices, one per side; the module's MAC enforces the duty cycle and "
       "the receive windows. No acknowledgement is simulated. The module adds a 9 B frame overhead (no message "
-      "integrity code, N3.3) where linksim adds 13 B. linksim columns: the same fragments back to back under the "
-      "duty cycle (blast), and the protocol simulation with selective repeat acknowledgements "
-      "(`linksim/results/protocols_grid.csv`, handshake_mean_s at zero loss).")
+      "integrity code, N3.3) where linksim adds 13 B. linksim columns (`netsim/results/linksim_lora_flights.csv`, "
+      "written by `python3 -m netsim.compare` on the same frozen flights): the same fragments back to back under "
+      "the duty cycle (blast), and the protocol simulation with selective repeat acknowledgements at zero loss.")
+    a("")
+    a("**Superseded handshake.** These rows use the round 4 three flight handshake. Design change F1 of "
+      "`docs/FORMAL_VERIFICATION.md` later added a fourth flight (the vehicle signature), and "
+      "`linksim/results/protocols_flights.csv` and `linksim/results/protocols_grid.csv` now hold that four flight "
+      "handshake of the reference design, so their values differ from this table. The ns-3 runs were not repeated "
+      "on the four flight handshake; the rows below check the implementation of the duty cycle and fragmentation "
+      "and are not the handshake times of the reference design.")
     a("")
     L.extend(table(["protocol", "DR", "fragments", "ns-3 (simulated (network))", "linksim blast (modelled)",
                     "linksim blast with the module's %d B overhead (modelled)" % cells.NS3_LORAWAN_OVERHEAD_BYTES,
