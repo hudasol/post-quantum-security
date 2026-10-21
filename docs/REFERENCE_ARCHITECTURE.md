@@ -8,11 +8,11 @@ Status: **design level, estimated**. Every figure below is read from `mission/re
 
 A layered design:
 
-1. **Boot:** firmware signed with LMS and verified by the bootloader (the firmware half of architecture D). Verification costs 15.3 ms at 168 MHz (derived from published cycles) and uses no radio time.
+1. **Boot:** firmware signed with LMS and verified by the bootloader (the firmware half of architecture D). Verification costs 15.8 ms at 168 MHz (derived from published cycles) and uses no radio time. The LMS signature covers the image and its version. The bootloader keeps a monotonic version counter in protected storage, boots only an image whose signed version is at least the counter, and then raises the counter (design change F3).
 
-2. **Session start on links of SiK class or faster:** hybrid key establishment X25519 plus ML-KEM-768 with an ML-DSA-44 transcript signature from the ground station, verified against a pinned key (architecture B), then the existing 13 B MAVLink 2 signing field on every message.
+2. **Session start on links of SiK class or faster:** hybrid key establishment X25519 plus ML-KEM-768 with an ML-DSA-44 transcript signature from the ground station, verified against a pinned key (architecture B), then the existing 13 B MAVLink 2 signing field on every message. The vehicle also signs the transcript with its own ML-DSA-44 key, pinned at the ground station; both signatures cover both identities and the full transcript, and each side sends a key confirmation tag before it accepts the session (design change F1, `docs/FORMAL_VERIFICATION.md`). The session key is derived from the X25519 secret, the ML-KEM-768 secret and a hash of the transcript; a rekey uses a fresh ML-KEM key pair and fresh X25519 shares, protected by the current key.
 
-3. **Provisioned session keys as the fallback** (the session half of D) for links where the B handshake cannot finish in preflight (LoRaWAN class links, where only low rate command traffic is possible at all), and as the recovery path when establishing a new session would take longer than the vehicle safety case allows.
+3. **Provisioned session keys as the fallback** (the session half of D) for links where the B handshake cannot finish in preflight (LoRaWAN class links, where only low rate command traffic is possible at all), and as the recovery path when establishing a new session would take longer than the vehicle safety case allows. Provisioned keys are never used directly as signing keys. At every session start both sides exchange fresh nonces and derive the session signing key from the provisioned key and both nonces, so that sequence numbers and timestamps are bound to the session (design change F2). This fallback has no forward secrecy: whoever later obtains the provisioned key can recompute the keys of earlier sessions from the recorded nonces, so provisioned keys should be short lived.
 
 4. **No per command ML-DSA-44 signatures on streamed commands** (architecture C). They remain an option for rare, high value commands such as a mission upload, where seconds of delay are acceptable.
 
@@ -29,30 +29,30 @@ Checks of this recommendation against the result files (computed by `mission/run
 
 | vehicle | link | arch | mean availability at 0.5 s [95% CI] | added latency ms [95% CI] | utilisation | compute share | recovery s after teardown | feasible |
 |---|---|---|---|---|---|---|---|---|
-| drone | SiK 64 kbit/s | A | 0.9919 [0.9913, 0.9926] | 1.87 [1.87, 1.87] | 0.107 | 0.0009 | 0.20 | yes |
-| drone | SiK 64 kbit/s | B | 0.9915 [0.9908, 0.9922] | 1.87 [1.87, 1.87] | 0.110 | 0.0009 | 0.91 | yes |
+| drone | SiK 64 kbit/s | A | 0.9916 [0.9910, 0.9923] | 1.95 [1.95, 1.95] | 0.107 | 0.0021 | 0.27 | yes |
+| drone | SiK 64 kbit/s | B | 0.9914 [0.9907, 0.9921] | 1.95 [1.95, 1.95] | 0.111 | 0.0023 | 1.45 | yes |
 | drone | SiK 64 kbit/s | C | 0.7943 [0.7932, 0.7953] | 379.57 [379.57, 379.57] | 0.429 | 0.0078 | n/a | no |
-| drone | SiK 64 kbit/s | D | 0.9912 [0.9905, 0.9920] | 1.87 [1.87, 1.87] | 0.107 | 0.0009 | n/a | yes |
-| drone | IEEE 802.15.4 | A | 0.9919 [0.9913, 0.9926] | 0.06 [0.06, 0.06] | 0.059 | 0.0009 | 0.19 | yes |
-| drone | IEEE 802.15.4 | B | 0.9917 [0.9911, 0.9924] | 0.06 [0.06, 0.06] | 0.060 | 0.0009 | 0.57 | yes |
+| drone | SiK 64 kbit/s | D | 0.9912 [0.9905, 0.9920] | 1.95 [1.95, 1.95] | 0.107 | 0.0021 | n/a | yes |
+| drone | IEEE 802.15.4 | A | 0.9909 [0.9901, 0.9916] | 0.15 [0.15, 0.15] | 0.059 | 0.0021 | 0.25 | yes |
+| drone | IEEE 802.15.4 | B | 0.9922 [0.9915, 0.9929] | 0.15 [0.15, 0.15] | 0.061 | 0.0023 | 0.87 | yes |
 | drone | IEEE 802.15.4 | C | 0.9337 [0.9329, 0.9345] | 287.28 [287.28, 287.28] | 0.215 | 0.0078 | n/a | no |
-| drone | IEEE 802.15.4 | D | 0.9916 [0.9909, 0.9923] | 0.06 [0.06, 0.06] | 0.059 | 0.0009 | n/a | yes |
-| drone | LoRaWAN DR5 | A | 6.67e-05 [4.93e-05, 8.55e-05] | 19.07 [19.07, 19.07] | 15.808 | 0.0009 | 3.40 | no |
-| drone | LoRaWAN DR5 | B | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 16.494 | 0.0009 | 734.35 | no |
-| drone | LoRaWAN DR5 | C | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 378.833 | 0.0078 | n/a | no |
-| drone | LoRaWAN DR5 | D | 7.39e-05 [5.51e-05, 9.57e-05] | 19.07 [19.07, 19.07] | 15.681 | 0.0009 | n/a | no |
-| robot | SiK 64 kbit/s | A | 0.9916 [0.9910, 0.9921] | 1.87 [1.87, 1.87] | 0.128 | 0.0009 | 0.20 | yes |
-| robot | SiK 64 kbit/s | B | 0.9917 [0.9911, 0.9923] | 1.87 [1.87, 1.87] | 0.131 | 0.0010 | 0.96 | yes |
+| drone | IEEE 802.15.4 | D | 0.9916 [0.9909, 0.9923] | 0.15 [0.15, 0.15] | 0.059 | 0.0021 | n/a | yes |
+| drone | LoRaWAN DR5 | A | 5.80e-05 [4.06e-05, 7.54e-05] | 19.16 [19.16, 19.16] | 19.509 | 0.0021 | 4.73 | no |
+| drone | LoRaWAN DR5 | B | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 20.268 | 0.0022 | n/a | no |
+| drone | LoRaWAN DR5 | C | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 418.217 | 0.0078 | n/a | no |
+| drone | LoRaWAN DR5 | D | 5.94e-05 [4.20e-05, 7.83e-05] | 19.16 [19.16, 19.16] | 19.367 | 0.0021 | n/a | no |
+| robot | SiK 64 kbit/s | A | 0.9918 [0.9913, 0.9924] | 1.95 [1.95, 1.95] | 0.128 | 0.0023 | 0.27 | yes |
+| robot | SiK 64 kbit/s | B | 0.9912 [0.9906, 0.9918] | 1.95 [1.95, 1.95] | 0.132 | 0.0024 | 1.45 | yes |
 | robot | SiK 64 kbit/s | C | 0.0002 [0.0002, 0.0002] | 379.57 [379.57, 379.57] | 1.875 | 0.0397 | n/a | no |
-| robot | SiK 64 kbit/s | D | 0.9920 [0.9915, 0.9926] | 1.87 [1.87, 1.87] | 0.128 | 0.0009 | n/a | yes |
-| robot | IEEE 802.15.4 | A | 0.9915 [0.9909, 0.9921] | 0.06 [0.06, 0.06] | 0.062 | 0.0009 | 0.19 | yes |
-| robot | IEEE 802.15.4 | B | 0.9914 [0.9908, 0.9920] | 0.06 [0.06, 0.06] | 0.064 | 0.0010 | 0.57 | yes |
+| robot | SiK 64 kbit/s | D | 0.9920 [0.9915, 0.9926] | 1.95 [1.95, 1.95] | 0.128 | 0.0022 | n/a | yes |
+| robot | IEEE 802.15.4 | A | 0.9911 [0.9905, 0.9918] | 0.15 [0.15, 0.15] | 0.062 | 0.0023 | 0.25 | yes |
+| robot | IEEE 802.15.4 | B | 0.9916 [0.9910, 0.9922] | 0.15 [0.15, 0.15] | 0.064 | 0.0024 | 0.87 | yes |
 | robot | IEEE 802.15.4 | C | 0.0010 [0.0010, 0.0011] | 340.85 [334.21, 355.50] | 0.859 | 0.0397 | n/a | no |
-| robot | IEEE 802.15.4 | D | 0.9921 [0.9916, 0.9927] | 0.06 [0.06, 0.06] | 0.062 | 0.0009 | n/a | yes |
-| robot | LoRaWAN DR5 | A | 1.11e-05 [8.22e-06, 1.42e-05] | 19.07 [19.07, 19.07] | 59.656 | 0.0009 | 3.40 | no |
-| robot | LoRaWAN DR5 | B | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 60.175 | 0.0009 | 735.44 | no |
-| robot | LoRaWAN DR5 | C | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 1917.689 | 0.0397 | n/a | no |
-| robot | LoRaWAN DR5 | D | 1.16e-05 [8.67e-06, 1.47e-05] | 19.07 [19.07, 19.07] | 59.539 | 0.0009 | n/a | no |
+| robot | IEEE 802.15.4 | D | 0.9921 [0.9916, 0.9927] | 0.15 [0.15, 0.15] | 0.062 | 0.0022 | n/a | yes |
+| robot | LoRaWAN DR5 | A | 6.22e-06 [4.00e-06, 8.67e-06] | 19.16 [19.16, 19.16] | 70.684 | 0.0023 | 4.73 | no |
+| robot | LoRaWAN DR5 | B | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 71.240 | 0.0023 | n/a | no |
+| robot | LoRaWAN DR5 | C | 0.0000 [0.0000, 0.0000] | n/a [n/a, n/a] | 2110.553 | 0.0397 | n/a | no |
+| robot | LoRaWAN DR5 | D | 9.56e-06 [6.89e-06, 1.22e-05] | 19.16 [19.16, 19.16] | 70.535 | 0.0022 | n/a | no |
 
 _estimated (computed from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
 
@@ -60,21 +60,21 @@ Feasible at the 0.5 s deadline (base assumptions): drone: A on IEEE 802.15.4, A 
 
 ## 3. Quantified trade offs (estimated)
 
-- **B against A on SiK (drone):** availability 0.9915 [0.9908, 0.9922] against 0.9919 [0.9913, 0.9926]; the per message cost is identical (same 13 B field), so the difference is only the session start: first session after 0.91 s against 0.20 s, and recovery after a teardown 0.91 s against 0.20 s. Handshake air bytes 4772 against 144.
+- **B against A on SiK (drone):** availability 0.9914 [0.9907, 0.9921] against 0.9916 [0.9910, 0.9923]; the per message cost is identical (same 13 B field), so the difference is only the session start: first session after 1.45 s against 0.27 s, and recovery after a teardown 1.45 s against 0.27 s. Handshake air bytes 7208 against 224.
 
 - **C on SiK:** added latency 379.6 [379.6, 379.6] ms per command and availability 0.7943 [0.7932, 0.7953] for the 1 Hz drone stream; for the 5 Hz robot stream utilisation reaches 1.875 and availability 0.0002 [0.0002, 0.0002].
 
-- **LoRaWAN:** under the 1 percent duty cycle the base command streams are not carried by any architecture: the highest mean availability on either LoRaWAN link is 7.39e-05, and the same stream without authentication reaches at most 9.86e-05, so the link, not the authentication, rules it out. In the low rate profile (one command per minute, 5 s deadline) the B handshake on DR5 needs a median 739.7 s against a 60 s preflight; feasible there: A on IEEE 802.15.4, A on SiK 64 kbit/s, B on IEEE 802.15.4, B on SiK 64 kbit/s, C on SiK 64 kbit/s, D on IEEE 802.15.4, D on SiK 64 kbit/s. On DR0 one signed setpoint needs 2 link frames, and each frame is followed by the duty cycle silence.
+- **LoRaWAN:** under the 1 percent duty cycle the base command streams are not carried by any architecture: the highest mean availability on either LoRaWAN link is 5.94e-05, and the same stream without authentication reaches at most 7.54e-05, so the link, not the authentication, rules it out. In the low rate profile (one command per minute, 5 s deadline) the B handshake on DR5 needs a median 1237.4 s against a 60 s preflight; feasible there: A on IEEE 802.15.4, A on SiK 64 kbit/s, B on IEEE 802.15.4, B on SiK 64 kbit/s, C on SiK 64 kbit/s, D on IEEE 802.15.4, D on SiK 64 kbit/s. On DR0 one signed setpoint needs 2 link frames, and each frame is followed by the duty cycle silence.
 
-- **Compute:** the largest median compute share of A, B and D in any base configuration is 0.0010 of the 168 MHz cycle budget; C costs 8.46 ms of verification per command (derived from published cycles), which matters only at high command rates.
+- **Compute:** the largest median compute share of A, B and D in any base configuration is 0.0024 of the 168 MHz cycle budget; C costs 8.46 ms of verification per command (derived from published cycles), which matters only at high command rates.
 
 
 | arch | operation | cycles | ms_at_168MHz | ms_at_480MHz | label |
 |---|---|---|---|---|---|
-| A | handshake or rekey | 1.82e+06 | 10.832 | 3.791 | derived from published |
-| B | handshake or rekey | 3.18e+06 | 18.917 | 6.621 | derived from published |
+| A | handshake or rekey | 2.06e+06 | 12.254 | 4.289 | derived from published |
+| B | handshake or rekey | 7.12e+06 | 42.388 | 14.836 | derived from published |
 | C | per command check | 1.42e+06 | 8.462 | 2.962 | derived from published |
-| D | boot verify | 2.58e+06 | 15.336 | 5.368 | derived from published |
+| D | boot verify | 2.66e+06 | 15.827 | 5.539 | derived from published |
 
 ## 4. Conditions under which the recommendation changes
 
@@ -84,15 +84,15 @@ Feasible at the 0.5 s deadline (base assumptions): drone: A on IEEE 802.15.4, A 
 - Frame loss on IEEE 802.15.4: B stays at or above the 0.99 threshold up to the highest swept frame loss (0.2), because retransmissions fit inside the 0.5 s deadline; frame loss does not change the recommendation in the swept range (a null result). C, by contrast, drops to 7.25e-06 at that loss.
 
 
-- Link loss events: at 20 outages per hour (mean 5 s) A, B and D all fall below the threshold on SiK (A 0.9712, B 0.9734, D 0.9725). The three differ by at most 0.0022, so at this rate the link, not the choice of authentication, sets availability and the recommendation does not change; the remedy is a more reliable link, not a different scheme.
+- Link loss events: at 20 outages per hour (mean 5 s) A, B and D all fall below the threshold on SiK (A 0.9722, B 0.9722, D 0.9725). The three differ by at most 0.0003, so at this rate the link, not the choice of authentication, sets availability and the recommendation does not change; the remedy is a more reliable link, not a different scheme.
 
-- Rekey interval (60 s to once per arming): the spread of mean availability across the swept intervals is 0.0002 for A and 0.0010 for B on SiK, comparable to the run to run noise; in this model the rekey interval does not change the recommendation (a null result), because the old key stays valid for the 30 s grace period while a rekey is in progress.
+- Rekey interval (60 s to once per arming): the spread of mean availability across the swept intervals is 0.0003 for A and 0.0003 for B on SiK, comparable to the run to run noise; in this model the rekey interval does not change the recommendation (a null result), because the old key stays valid for the 30 s grace period while a rekey is in progress.
 
-- LoRaWAN DR5, low rate profile: D reaches a mean availability of 0.9733 and A 0.9712 at a 5 s deadline, against 0.9733 for the same stream without authentication, so authentication costs almost nothing there, but the link itself stays below the 0.99 threshold (a lost frame waits out the duty cycle silence before it can be sent again). B reaches 0.0000 because its handshake does not finish within the mission.
+- LoRaWAN DR5, low rate profile: D reaches a mean availability of 0.9732 and A 0.9695 at a 5 s deadline, against 0.9733 for the same stream without authentication, so authentication costs almost nothing there, but the link itself stays below the 0.99 threshold (a lost frame waits out the duty cycle silence before it can be sent again). B reaches 0.0000 because its handshake does not finish within the mission.
 
 - If the link cannot complete the B handshake inside preflight (LoRaWAN class links in this study), use provisioned keys (D) and accept the key management burden: keys must be loaded over a wire before each mission and a captured vehicle exposes them until they expire.
 
-- If the safety case requires renewed authentication within a bound shorter than the B recovery time after a teardown (median 0.91 s at no frame loss and 1.41 s at a frame loss of 0.2 on SiK), keep the session alive through outages (longer session timeout) or fall back to D keys.
+- If the safety case requires renewed authentication within a bound shorter than the B recovery time after a teardown (median 1.36 s at no frame loss and 2.08 s at a frame loss of 0.2 on SiK), keep the session alive through outages (longer session timeout) or fall back to D keys.
 
 - If command streams are rare (one per minute in the low rate profile) and each command is high value, C is feasible on: SiK 64 kbit/s at a 5 s deadline, because its per command delay no longer competes with a stream.
 
@@ -104,11 +104,13 @@ Feasible at the 0.5 s deadline (base assumptions): drone: A on IEEE 802.15.4, A 
 
 | component | role | where it runs |
 |---|---|---|
-| LMS verifier in the bootloader | verifies the firmware image before start | flight controller or robot MCU |
+| LMS verifier in the bootloader | verifies the firmware image and its signed version before start | flight controller or robot MCU |
+| Monotonic version counter | rejects older signed images (design change F3) | protected storage of the flight controller or robot MCU |
 | Pinned ML-DSA-44 ground key | authenticates the ground station during session start | vehicle, provisioned over a wire |
+| Vehicle ML-DSA-44 key pair (public key pinned at the ground station) | authenticates the vehicle during session start (design change F1) | vehicle; public key provisioned at the ground station |
 | Hybrid key establishment (X25519 plus ML-KEM-768) | derives a 32 B signing key per session | ground station and vehicle (or a companion computer gateway) |
 | MAVLink 2 signing (13 B field, 6 B tag) | per message authentication | unchanged on both sides |
-| Provisioned key store | fallback session keys, rotated locally | vehicle |
+| Provisioned key store | fallback keys from which session keys are derived with fresh nonces (design change F2) | vehicle |
 | Link supervisor | session timeout, rekey timing, fallback decision | vehicle |
 
 ## 6. Limits
@@ -117,5 +119,5 @@ Feasible at the 0.5 s deadline (base assumptions): drone: A on IEEE 802.15.4, A 
 - Assumed traffic rates, outage process, timeouts and deadlines drive the verdicts; they are swept, but real values for a given vehicle may lie outside the swept ranges.
 - The 95 percent intervals in this document cover Monte Carlo noise around fixed assumptions only, not uncertainty in the inputs; input uncertainty is explored only through the sweeps and the Morris screening.
 - Feasibility on IEEE 802.15.4 rests on a link model that the link study finds about four times faster than a published 802.15.4 transfer time (`docs/LINKSIM_STUDY.md` section 4.4); real 802.15.4 networks with several hops may not meet the deadlines shown here.
-- No formal security analysis of the handshake or of the fallback logic. Specialists in protocol security would need to review any real design.
+- The formal check covers an abstract model only (docs/FORMAL_VERIFICATION.md); it does not cover timing, side channels, implementation or denial of service. Specialists in protocol security would need to review any real design.
 - Draft and standards status: ML-KEM (FIPS 203) and ML-DSA (FIPS 204) are final; MAVLink has no post quantum extension and the sketch in `docs/MAVLINK_PQ_SKETCH.md` is not a proposal to any project.
