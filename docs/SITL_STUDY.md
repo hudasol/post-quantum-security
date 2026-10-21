@@ -37,7 +37,7 @@ Delays are published cycle counts at the 168 MHz clock of the mission study (`mi
 
 _SITL measured except the last column (emulated); intervals are 95 percent cluster bootstrap intervals over missions._
 
-Hybrid session (emulated): median handshake 1.281 s (range 1.221 to 2.017 s); 4.000 missions had an outage longer than the session timeout, and the median time from the end of such an outage to a new session was 1.453 s.
+Hybrid session (emulated): median handshake 1.281 s (range 1.221 to 2.017 s); 4 missions had an outage longer than the session timeout, and the median time from the end of such an outage to a new session was 1.453 s.
 
 Median time from the end of the outage to the first accepted acknowledgement (SITL measured; it includes the wait for the next command of the 1 s stream): 1 no authentication 0.07 s; 2 MAVLink 2 signing as shipped (flight stack) 0.07 s; 3 hybrid session with change F1 and per message tag (emulated relay pair) 0.06 s; 4 ML-DSA-44 signature per command (emulated relay pair) 2.27 s.
 
@@ -81,7 +81,9 @@ Verdict "consistent" means the mission study value lies inside the 95 percent in
 
 - The mission study defines latency as one way delivery of the command to the vehicle; this study measures the round trip to the flight stack acknowledgement, which adds the acknowledgement air time, the flight stack scheduling and the queue behind telemetry. The one way columns (emulated) are the closer match to the study definition; the round trip columns are the stricter, SITL measured quantity.
 - The telemetry load comes from the flight stack: stream rates were set to the drone rates of `mission/traffic.csv` where the integer stream rate parameters allow it, but each stream group carries more messages than the study counts, so the channel is busier than in the study.
-- One outage per mission is a forced design, not a Poisson process, so the availability with outages is compared with the 60 per hour sweep point only as an order of magnitude check.
+- One outage per mission is a forced design, not a Poisson process. Flights last under a minute, so the rate is higher than the 60 per hour sweep point used for comparison, and each configuration draws its own outages (the seed includes the configuration), so the share of flight time in outage differs between configurations. Availability with outages is therefore an order of magnitude check, and differences between configurations of a few hundredths are not resolved.
+- The relay of the hybrid configuration enforces no replay rule, so its availability is not that of the recommended design with a sequence rule. The signed commands the flight stack discarded (frames delivered after a newer frame) would also be rejected by the strict next sequence rule of the formal proofs; a deployment needs in order delivery or a replay window that the proofs do not yet cover.
+- One way latencies and the handshake time are emulated by the relay from the mission study inputs, so their agreement with the mission study is a consistency check; only the round trips through the flight stack test the model.
 
 ## 6. Limits
 
