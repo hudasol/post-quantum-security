@@ -415,7 +415,7 @@ def analyse(raw=RAW, res=RES):
                 if r is not None:
                     e = f1_handshake_estimate(p)
                     comp.append(dict(profile=p, config=k, study_arch='B with F1', metric='handshake_median_s',
-                                     study_quantity='first session s, flight by flight estimate of the F1 flights without loss',
+                                     study_quantity='first session s, mission handshake model applied to the four flights and compute of this configuration',
                                      value=r['value'], ci_lo=r['ci_lo'], ci_hi=r['ci_hi'], study_estimated=e,
                                      error=r['value'] - e, verdict='no interval', label=r['label']))
     pd.DataFrame(comp).to_csv(os.path.join(res, 'comparison.csv'), index=False, float_format='%.6g')

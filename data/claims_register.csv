@@ -152,6 +152,7 @@ p_sitl_hyb_ow,docs/PAPER.md,1.94,1.9425,sitl/results/summary.csv,value,"profile 
 p_sitl_hyb_st,docs/PAPER.md,1.95,1.95083,sitl/results/comparison.csv,study_estimated,"profile == ""sik"" and config == ""hybrid"" and metric == ""added_latency_ow_ms""",value,0.005,estimated,
 p_sitl_hs,docs/PAPER.md,1.28,1.28068,sitl/results/summary.csv,value,"profile == ""sik"" and config == ""hybrid"" and metric == ""handshake_median_s""",value,0.005,emulated,
 p_sitl_hs_st,docs/PAPER.md,1.42,1.42433,sitl/results/comparison.csv,study_estimated,"profile == ""sik"" and config == ""hybrid"" and study_arch == ""B with F1"" and metric == ""handshake_median_s""",value,0.005,estimated,
+p_sitl_hs_ms,docs/PAPER.md,1.45,1.45114,sitl/results/comparison.csv,study_estimated,"profile == ""sik"" and config == ""hybrid"" and study_arch == ""B"" and metric == ""handshake_median_s""",value,0.005,estimated,
 p_sitl_av_hyb,docs/PAPER.md,0.914,0.914433,sitl/results/summary.csv,value,"profile == ""sik"" and config == ""hybrid"" and metric == ""availability_rt_all""",value,0.005,SITL measured,
 p_sitl_av_hyb_st,docs/PAPER.md,0.916,0.916433,sitl/results/comparison.csv,study_estimated,"profile == ""sik"" and config == ""hybrid"" and metric == ""availability_rt_all""",value,0.005,estimated,
 p_sitl_pq_ow,docs/PAPER.md,382,381.554,sitl/results/summary.csv,value,"profile == ""sik"" and config == ""pqsig"" and metric == ""added_latency_ow_ms""",value,0.005,emulated,
