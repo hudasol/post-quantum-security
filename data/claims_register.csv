@@ -170,6 +170,7 @@ p_sitl_pq_rt,docs/PAPER.md,496,495.571,sitl/results/summary.csv,value,"profile =
 p_sitl_pq_av,docs/PAPER.md,0.419,0.41875,sitl/results/summary.csv,value,"profile == ""sik"" and config == ""pqsig"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
 p_sitl_pq_av_st,docs/PAPER.md,0.730,0.730083,sitl/results/comparison.csv,study_estimated,"profile == ""sik"" and config == ""pqsig"" and metric == ""availability_rt_all""",value,0.005,estimated,,
 p_sitl_drop,docs/PAPER.md,16,16.0,sitl/results/commands.csv,dropped,"config == ""signing"" and dropped == ""not_acknowledged_by_vehicle""",count,0.005,SITL measured,,16 delivered signed
+p_s12_fetch,docs/PAPER.md,125,125.0,data/evidence.csv,id,"stream == ""S12"" and comparability_warning.fillna("""").str.contains(""Read with web fetch"")",count,0.005,published,,
 proposal_robotics_rows,docs/PROPOSAL_ROBOTICS.md,"1,515",1515.0,data/evidence.csv,id,,count,0.005,published,,
 proposal_robotics_cm_med,docs/PROPOSAL_ROBOTICS.md,1.0,1.04777,cyclemodel/results/error_summary.csv,median_abs_pct,"model == ""fitted"" and subset == ""test, all""",value,0.005,modelled,,
 proposal_robotics_cm_sign,docs/PROPOSAL_ROBOTICS.md,23,22.8321,cyclemodel/results/error_summary.csv,worst_abs_pct,"model == ""fitted"" and subset == ""test, all""",value,0.005,modelled,,"23 percent), but"
