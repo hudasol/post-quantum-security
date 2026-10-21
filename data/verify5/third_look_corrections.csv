@@ -1,0 +1,2 @@
+id,field,old_value,new_value,reason
+S12A-441,library,ESP-IDF v6.0 or later secure boot (library version not stated),an Espressif fork of liboqs,"Verification 5 third look (blind reader, sheet 1): source reads 'an Espressif fork of liboqs' at article body text (component description), not in the table; staged text did not match (reader_right)"

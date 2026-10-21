@@ -1,0 +1,89 @@
+id,field,substance,reason
+S12A-305,library,no contradiction,"same implementation (protected SLotH with threshold Keccak), worded differently"
+S12A-306,library,no contradiction,"same implementation (protected SLotH with threshold Keccak), worded differently"
+S12A-307,library,no contradiction,"same implementation (protected SLotH with threshold Keccak), worded differently"
+S12A-308,library,no contradiction,"same implementation (protected SLotH with threshold Keccak), worded differently"
+S12A-309,library,no contradiction,"same implementation (protected SLotH with threshold Keccak), worded differently"
+S12A-310,library,no contradiction,"same implementation (protected SLotH with threshold Keccak), worded differently"
+S12A-311,library,no contradiction,"same implementation (protected SLotH with threshold Keccak), worded differently"
+S12A-312,library,no contradiction,"same implementation (protected SLotH with threshold Keccak), worded differently"
+S12A-313,library,no contradiction,"same implementation (protected SLotH with threshold Keccak), worded differently"
+S12A-314,library,no contradiction,"same implementation (protected SLotH with threshold Keccak), worded differently"
+S12A-315,library,no contradiction,"same implementation (protected SLotH with threshold Keccak), worded differently"
+S12A-441,library,contradiction,"staged names ESP-IDF secure boot as the library; the source names an Espressif fork of liboqs, as both readers also read"
+S12BL-056,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-057,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-058,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-059,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-035,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-036,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-037,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-039,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-040,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-041,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-041,quantity,no contradiction,staged text describes the same quantity or unit in words
+S12BL-042,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-042,quantity,no contradiction,staged text describes the same quantity or unit in words
+S12BL-025,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-026,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-030,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-031,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-032,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-033,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-034,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-002,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-004,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-004,unit,no contradiction,staged text describes the same quantity or unit in words
+S12BL-005,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-005,unit,no contradiction,staged text describes the same quantity or unit in words
+S12BL-006,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-006,unit,no contradiction,staged text describes the same quantity or unit in words
+S12BL-007,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-008,unit,no contradiction,staged text describes the same quantity or unit in words
+S12BL-009,unit,no contradiction,staged text describes the same quantity or unit in words
+S12A-127,library,no contradiction,"the source labels the authors own code ""Ours""; staging names it by what the paper describes"
+S12A-136,library,no contradiction,"the source labels the authors own code ""Ours""; staging names it by what the paper describes"
+S12A-137,library,no contradiction,"the source labels the authors own code ""Ours""; staging names it by what the paper describes"
+S12A-138,library,no contradiction,"the source labels the authors own code ""Ours""; staging names it by what the paper describes"
+S12A-145,library,no contradiction,"the source labels the authors own code ""Ours""; staging names it by what the paper describes"
+S12A-146,library,no contradiction,"the source labels the authors own code ""Ours""; staging names it by what the paper describes"
+S12A-147,library,no contradiction,"the source labels the authors own code ""Ours""; staging names it by what the paper describes"
+S12A-169,library,no contradiction,"the source labels the authors own code ""Ours""; staging names it by what the paper describes"
+S12A-170,library,no contradiction,"the source labels the authors own code ""Ours""; staging names it by what the paper describes"
+S12A-171,library,no contradiction,"the source labels the authors own code ""Ours""; staging names it by what the paper describes"
+S12A-178,library,no contradiction,"the source labels the authors own code ""Ours""; staging names it by what the paper describes"
+S12A-180,library,no contradiction,"the source labels the authors own code ""Ours""; staging names it by what the paper describes"
+S12A-187,library,no contradiction,"the source labels the authors own code ""Ours""; staging names it by what the paper describes"
+S12A-188,library,no contradiction,"the source labels the authors own code ""Ours""; staging names it by what the paper describes"
+S12A-189,library,no contradiction,"the source labels the authors own code ""Ours""; staging names it by what the paper describes"
+S12BL-044,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-045,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-046,conditions,"no contradiction, text unclear","staged text ""same as above"" refers to another row instead of stating the conditions; the source passage matches the conditions of S12BL-045"
+S12BL-047,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-048,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-049,quantity,no contradiction,staged text describes the same quantity or unit in words
+S12BL-050,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-010,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-011,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-012,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-013,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-014,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-015,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-016,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-017,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-018,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-019,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-020,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-022,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12BL-023,conditions,no contradiction,staged conditions summarise or add context from the same source; the third reading copies a caption or passage; no stated condition conflicts
+S12A-354,library,"no contradiction, detail missing","same library; the source also prints the version 2.6.4, which the staged library text omits"
+S12A-355,library,"no contradiction, detail missing","same library; the source also prints the version 2.6.4, which the staged library text omits"
+S12A-356,library,"no contradiction, detail missing","same library; the source also prints the version 2.6.4, which the staged library text omits"
+S12A-357,library,"no contradiction, detail missing","same library; the source also prints the version 2.6.4, which the staged library text omits"
+S12A-358,library,"no contradiction, detail missing","same library; the source also prints the version 2.6.4, which the staged library text omits"
+S12A-359,library,"no contradiction, detail missing","same library; the source also prints the version 2.6.4, which the staged library text omits"
+S12A-360,library,"no contradiction, detail missing","same library; the source also prints the version 2.6.4, which the staged library text omits"
+S12A-361,library,"no contradiction, detail missing","same library; the source also prints the version 2.6.4, which the staged library text omits"
+S12A-362,library,"no contradiction, detail missing","same library; the source also prints the version 2.6.4, which the staged library text omits"
+S12A-363,library,"no contradiction, detail missing","same library; the source also prints the version 2.6.4, which the staged library text omits"
+S12A-366,library,"no contradiction, detail missing","same library; the source also prints the version 2.6.4, which the staged library text omits"
