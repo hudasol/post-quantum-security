@@ -1,0 +1,8 @@
+board,stacks,free_flash_bytes,free_ram_static_bytes,free_flash_kb,free_ram_kb,free_flash_bytes_larger_stack,free_ram_static_bytes_larger_stack,label
+Holybro Pixhawk 6X (FMUv6X),px4,6008,912836,751/125,228209/250,6008,912836,host measured
+Holybro Pixhawk 6C,ardupilot px4,39784,937396,4973/125,234349/250,377156,953860,host measured
+CubePilot Cube Orange,ardupilot px4,45948,939236,11487/250,234809/250,323172,971788,host measured
+Matek H743 (Wing / Slim / Mini),ardupilot,155364,937588,38841/250,234397/250,155364,937588,host measured
+Holybro Durandal,ardupilot px4,27068,936188,6767/250,234047/250,371324,968196,host measured
+Holybro Pixhawk 4 (FMUv5),px4,40392,477608,5049/125,59701/125,40392,477608,host measured
+Matek F405-Wing (F4 class),ardupilot,102392,111156,12799/125,27789/250,102392,111156,host measured
