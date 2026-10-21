@@ -161,3 +161,66 @@ sitl/results/sitl_summary.csv,mission_study_availability,estimated,mission study
 sitl/results/sitl_summary.csv,seed_first,key,
 sitl/results/sitl_summary.csv,seed_last,key,
 sitl/results/sitl_summary.csv,label_note,key,
+sitl/results/summary.csv,profile,key,
+sitl/results/summary.csv,config,key,
+sitl/results/summary.csv,metric,key,
+sitl/results/summary.csv,value,per row,"label in the label column of the row: SITL measured for round trips through the flight stack, emulated for one way, handshake and relay figures"
+sitl/results/summary.csv,ci_lo,per row,same label as value
+sitl/results/summary.csv,ci_hi,per row,same label as value
+sitl/results/summary.csv,n,key,count of missions or commands behind the row
+sitl/results/summary.csv,unit,key,
+sitl/results/summary.csv,label,key,"label of value, ci_lo and ci_hi"
+sitl/results/comparison.csv,profile,key,
+sitl/results/comparison.csv,config,key,
+sitl/results/comparison.csv,study_arch,key,
+sitl/results/comparison.csv,metric,key,
+sitl/results/comparison.csv,study_quantity,key,what the mission study value is
+sitl/results/comparison.csv,value,per row,label in the label column of the row (SITL measured or emulated)
+sitl/results/comparison.csv,ci_lo,per row,same label as value
+sitl/results/comparison.csv,ci_hi,per row,same label as value
+sitl/results/comparison.csv,study_estimated,estimated,read from the mission study results at run time
+sitl/results/comparison.csv,error,per row,"value minus study_estimated: a difference between the row label and estimated, not a measurement"
+sitl/results/comparison.csv,verdict,key,consistent when study_estimated lies inside the interval of value
+sitl/results/comparison.csv,label,key,"label of value, ci_lo and ci_hi only"
+sitl/results/commands.csv,profile,key,
+sitl/results/commands.csv,config,key,
+sitl/results/commands.csv,mission,key,
+sitl/results/commands.csv,seed,key,
+sitl/results/commands.csv,idx,key,
+sitl/results/commands.csv,t_send,SITL measured,send time on the ground station clock
+sitl/results/commands.csv,rt_s,SITL measured,round trip to the acknowledgement through the flight stack
+sitl/results/commands.csv,ow_s_emulated,emulated,one way delay applied by the relay
+sitl/results/commands.csv,result,key,
+sitl/results/commands.csv,dropped,key,reason a command was not acknowledged
+sitl/results/commands.csv,accepted_rt,SITL measured,
+sitl/results/commands.csv,delivered_ow,emulated,
+sitl/results/commands.csv,in_outage,emulated,outage drawn by the relay
+sitl/results/commands.csv,label,key,
+sitl/results/missions.csv,profile,key,
+sitl/results/missions.csv,config,key,
+sitl/results/missions.csv,mission,key,
+sitl/results/missions.csv,seed,key,
+sitl/results/missions.csv,outage_start_after_arm_s_assumption,key,"scripted input of the run, not a result"
+sitl/results/missions.csv,outage_duration_s_assumption,key,"scripted input of the run, not a result"
+sitl/results/missions.csv,completed,SITL measured,
+sitl/results/missions.csv,upload_ok,SITL measured,
+sitl/results/missions.csv,arm_ok,SITL measured,
+sitl/results/missions.csv,flight_s,SITL measured,
+sitl/results/missions.csv,handshake_s_emulated,emulated,handshake flights carried by the relay pair
+sitl/results/missions.csv,label,key,
+sitl/results/runs.csv,profile,key,
+sitl/results/runs.csv,config,key,
+sitl/results/runs.csv,base_seed,key,
+sitl/results/runs.csv,duration_s,SITL measured,
+sitl/results/runs.csv,utilisation,emulated,relay link
+sitl/results/runs.csv,wire_bytes_up,emulated,relay link
+sitl/results/runs.csv,wire_bytes_down,emulated,relay link
+sitl/results/runs.csv,frames,emulated,relay link
+sitl/results/runs.csv,lost_frames,emulated,relay link
+sitl/results/runs.csv,retransmissions,emulated,relay link
+sitl/results/runs.csv,failed_units,emulated,relay link
+sitl/results/runs.csv,buffer_drops,emulated,relay link
+sitl/results/runs.csv,commands_sent,SITL measured,ground station script
+sitl/results/runs.csv,commands_seen_by_relay,emulated,relay link
+sitl/results/runs.csv,params_ok,SITL measured,
+sitl/results/runs.csv,label,key,
