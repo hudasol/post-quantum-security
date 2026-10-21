@@ -43,6 +43,6 @@ Hash check: the predictions file matches its registered SHA-256.
 | P35 | miss | Scheme families kept: yes (LMS for firmware, a hybrid session for commands). Design changes adopted in `docs/REFERENCE_ARCHITECTURE.md`: F1, F2, F3. Under the less favourable reading any adopted design change meets the refutation clause. |
 | P36 | hit | First pass: 74 findings. |
 | P37 | miss | Second pass: 1 high severity finding. |
-| P38 | not scored | Not yet scored. |
+| P38 | between | Rubric from 5.7 to 6.2 (change +0.5). |
 
-Totals: 15 hit, 2 between, 18 miss, 3 not scored, of 38.
+Totals: 15 hit, 3 between, 18 miss, 2 not scored, of 38.

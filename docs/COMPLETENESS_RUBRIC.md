@@ -63,6 +63,19 @@ Copied from the end of round 4; the reasons are those of the section above.
 
 Weighted score at the start of round 5: **5.7 of 10**.
 
-## Score at the end of round 5
+## Score at the end of round 5 (2026-10-21, after commit 9ab670c)
 
-Filled in at the end of the round in a separate section, with the commit it refers to.
+Scored after three review passes (`docs/REVIEW_FINDINGS5.csv`, 167 findings). Each score rests on files a reader can open; where a score did not rise, the reason says what is missing.
+
+| Criterion | Score | Reason |
+|---|---|---|
+| Evidence coverage | 8 | 1514 rows; 186 new rows from a systematic search with a written protocol and PRISMA counts (`docs/SEARCH_PROTOCOL.md`), each read in two separate passes with a third look on every disagreement; 79 staged rows kept out under written rules, some applied after review and disclosed as deviations. Still no final standard SLH-DSA or FN-DSA cycle rows on a microcontroller, few Cortex-M33 rows for the standardised schemes, and 125 round 4 rows read only through a summarising fetch (paper threat 16) |
+| Model validation | 5 | the link model was checked against ns-3, which found sufficient causes for its 802.15.4 gap and showed its multi hop forwarding is optimistic; the mission model was checked against a flight stack in software in the loop, which agreed for the hybrid session and disagreed for a signature per command; the cycle model was shown not to transfer across schemes (leave one group out) and its intervals were widened by cluster. Availability under the strict replay rule is not modelled, and no model is yet compared with a board |
+| Hardware evidence | 3 | a second open core design (CV32E40P) in cycle accurate simulation beside Ibex, and free memory read from the linker output of real flight stack builds for seven board classes; still nothing measured on a microcontroller, and the caches off option is checked only by disassembly and an emulator |
+| Reproducibility | 9 | every number in the paper and proposal pack is in an anchored claims register checked in CI (short integers checked where they stand); the SITL, network and flight stack studies regenerate in CI from committed results with deterministic figures; the full SITL, ns-3 and hierarchical runs are not repeated in CI, and the round 3 proposal is a frozen record |
+| Review depth | 8 | three fresh reviewers in each of three passes; every high finding of passes 1 and 2 fixed, but passes 2 and 3 still found high findings (a reversed conclusion, a prediction scored the favourable way, tool names in data notes), so the review did not converge; all readers are passes inside this project, not external people |
+| External validity | 6 | real flight stack memory, a real flight stack command path in software in the loop and a network simulator at a published configuration; the radio link is emulated, flight logs could not be used, fleets are synthetic, and the ArduPilot free flash is mostly its crash log area (stated as a sensitivity) |
+
+Weighted score at the end of round 5: 0.20 x 8 + 0.20 x 5 + 0.20 x 3 + 0.15 x 9 + 0.10 x 8 + 0.15 x 6 = 6.25, rounded down to **6.2 of 10**.
+
+The rise of 0.5 comes from model validation, hardware evidence (simulation and builds only) and external validity. It is half of the registered target of 1.0 (P38). The largest weight, hardware evidence, stays low until the board session in `docs/NEEDS_FROM_AUTHOR.md` item 1 is done.
