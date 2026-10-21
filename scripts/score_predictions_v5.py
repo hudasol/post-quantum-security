@@ -68,14 +68,29 @@ def score():
     b = gs[gs.cell == "base_frame"].iloc[0]
     d = float(b.time_mean_s_simulated_network) / float(b.time_s_modelled) - 1
     in_pub = 30 <= float(b.time_mean_s_simulated_network) <= 60
-    S["P14"] = ("miss" if in_pub else verdict(abs(d) <= 0.30), f"ns-3 one hop 50 kB: {b.time_mean_s_simulated_network:.2f} s against the link model {b.time_s_modelled:.2f} s ({100 * d:+.1f} percent); published range 30 to 60 s.")
+    # Second reading of "at one hop" (review pass 3, R3A01 and R3A07): any one hop cell of the registered single
+    # cause sweep (group "S2 one", hop count not varied). The less favourable of the two readings is the verdict.
+    one_hop = gs[(gs.group == "S2 one") & ~gs.cell.str.startswith("hops_")]
+    one_hop_in = one_hop[(one_hop.time_mean_s_simulated_network >= 30) & (one_hop.time_mean_s_simulated_network <= 60)]
+    one_hop_30 = one_hop[one_hop.time_mean_s_simulated_network >= 30]
+    names = ", ".join(f"{r.cell} {r.time_mean_s_simulated_network:.1f} s" for r in one_hop_in.itertuples())
+    v14_default = "miss" if in_pub else verdict(abs(d) <= 0.30)
+    S["P14"] = ("miss" if len(one_hop_in) else v14_default,
+                f"Reading 1 (ns-3 defaults): {b.time_mean_s_simulated_network:.2f} s against the link model {b.time_s_modelled:.2f} s ({100 * d:+.1f} percent), {v14_default}. "
+                f"Reading 2 (any one hop setting of the registered single cause sweep): inside the published 30 to 60 s for {names or 'no setting'}, which meets the refutation clause. The less favourable reading is kept.")
     hops = gs[gs.cell.str.match(r"^hops_\d+$")].copy()
     hops["h"] = hops.cell.str.extract(r"(\d+)").astype(int)
     reach = hops[(hops.time_mean_s_simulated_network >= 30)]
     hmin = int(reach.h.min()) if len(reach) else None
     base_reach = float(b.time_mean_s_simulated_network) >= 30
     hm = 1 if base_reach else hmin
-    S["P15"] = ("not scored" if hm is None else verdict(hm >= 3, hm != 1), f"Smallest hop count at which ns-3 reaches 30 s: {hm} (first registered sweep).")
+    hm2 = 1 if (base_reach or len(one_hop_30)) else hmin
+    v15 = [verdict(x >= 3, x != 1) for x in (hm, hm2) if x is not None]
+    S["P15"] = ("not scored" if not v15 else ("miss" if "miss" in v15 else ("between" if "between" in v15 else "hit")),
+                f"Reading 1 (hop count varied, other settings at ns-3 defaults): smallest hop count reaching 30 s is {hm}. "
+                f"Reading 2 (any setting of the registered single cause sweep): {hm2}, because one hop already reaches 30 s with "
+                + (", ".join(f"{r.cell} ({r.time_mean_s_simulated_network:.1f} s)" for r in one_hop_30.itertuples()) or "no setting")
+                + ". The less favourable reading is kept.")
     lf = R("netsim/results/lora_flights_compare.csv")
     dr5 = lf[lf.dr == 5]
     worst5 = float(max(dr5.err_blast_vs_ns3_pct.abs().max(), dr5.err_protocol_sim_vs_ns3_pct.abs().max()))
@@ -173,7 +188,7 @@ def score():
     S["P34"] = (verdict(m33 and allp), f"M33 images built: {'yes' if m33 else 'no'}; emulator log lines parsed: {parsed} percent overall; per cache pass: {per_pass}.")
     ra = (ROOT / "docs/REFERENCE_ARCHITECTURE.md").read_text()
     families = ("LMS" in ra) and ("hybrid" in ra.lower())
-    changed = [f for f in ("F1", "F3") if f in ra]
+    changed = [f for f in ("F1", "F2", "F3") if f in ra]
     S["P35"] = ("miss" if changed else verdict(families), f"Scheme families kept: {'yes' if families else 'no'} (LMS for firmware, a hybrid session for commands). Design changes adopted in `docs/REFERENCE_ARCHITECTURE.md`: {', '.join(changed) or 'none'}. Under the less favourable reading any adopted design change meets the refutation clause.")
     # WP11 and WP12
     rf = ROOT / "docs/REVIEW_FINDINGS5.csv"
@@ -221,9 +236,10 @@ def score_sitl(ss):
     else:
         mb = pd.read_csv(ROOT / "mission/results/base.csv")
         reg = float(mb[(mb.vehicle == "drone") & (mb.arch == "B") & (mb.link == "sik")].avail_mean.iloc[0])
-        dd, d2 = abs(av - aref), abs(av - reg)
-        worst = max(dd, d2)
-        S["P13"] = (verdict(worst < 0.05, worst <= 0.10), f"Hybrid session availability, SITL {av:.3f} with one outage per mission. Against the mission study near the same outage rate ({aref:.3f}) the difference is {dd:.3f}; against the base figure the registration names ({reg:.3f}, with the base outage rate) it is {d2:.3f}. The less favourable reading is used; the outage conditions differ, so this comparison is weak either way.")
+        REG_P13 = 0.992  # the base figure written in docs/PREDICTIONS_V5.md before the runs (round 4 mission study)
+        dd, d2, d3 = abs(av - aref), abs(av - reg), abs(av - REG_P13)
+        worst = max(dd, d2, d3)
+        S["P13"] = (verdict(worst < 0.05, worst <= 0.10), f"Hybrid session availability, SITL {av:.3f} with one outage per mission. Against the mission study near the same outage rate ({aref:.3f}) the difference is {dd:.3f}; against the base figure the registration names ({REG_P13:.3f} as registered; {reg:.3f} after the round 5 rerun of the mission study, both with the base outage rate) it is {max(d2, d3):.3f}. The less favourable reading is used; the outage conditions differ, so this comparison is weak either way.")
     return S
 
 
