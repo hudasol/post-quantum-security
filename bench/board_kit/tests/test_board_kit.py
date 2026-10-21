@@ -644,5 +644,31 @@ class ScoreV5BoardTests(unittest.TestCase):
                             for r in rows if r["kind"] == "board summary"))
 
 
+class PartialBoardReading(unittest.TestCase):
+    """With fewer rows scored than registered, the share of the scored rows decides (less favourable reading)."""
+
+    def summary(self, verdicts, errors):
+        rows = []
+        for i in range(18):
+            r = dict.fromkeys(score_v5_board.COLUMNS, "")
+            r.update(kind="row", platform=K.PLATFORMS[0], board="b", verdict="not scored")
+            if i < len(verdicts):
+                r.update(verdict=verdicts[i], signed_error_board_measured_minus_modelled=str(errors[i]))
+            rows.append(r)
+        return score_v5_board.board_summaries(rows)[0]
+
+    def test_six_misses_of_nine_refutes(self):
+        s = self.summary(["miss"] * 6 + ["hit"] * 3, [1, -1] * 4 + [1])
+        self.assertTrue(s["rule1"].startswith("refuted"))
+
+    def test_two_misses_of_nine_does_not_refute(self):
+        s = self.summary(["miss"] * 2 + ["hit"] * 7, [1, -1] * 4 + [1])
+        self.assertTrue(s["rule1"].startswith("not refuted"))
+
+    def test_sign_share_of_partial_set_refutes(self):
+        s = self.summary(["hit"] * 9, [1] * 8 + [-1])
+        self.assertTrue(s["rule2"].startswith("refuted"))
+
+
 if __name__ == "__main__":
     unittest.main()
