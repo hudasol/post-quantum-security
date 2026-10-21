@@ -51,7 +51,7 @@ def score():
     else:
         S["P5"] = ("not scored", "No measured row for the STM32F405 class.")
     reason = "Public flight logs could not be used: the PX4 log sites disallow automated access and state no reuse licence (`flightstack/flightlog_access.csv`)."
-    S["P6"] = ("not scored", reason)
+    S["P6"] = ("miss", "Flights with derived statistics: 0, below the refutation threshold of 20. " + reason)
     S["P7"] = ("not scored", reason)
     S["P8"] = ("not scored", reason + " The mission study was not rerun with real traffic.")
     # WP2 software in the loop
@@ -96,8 +96,9 @@ def score():
     S["P20"] = (verdict(len(fails) >= 1), f"Counterexamples in the first models as written: {len(fails)} ({', '.join(sorted(set(fails.model + ' ' + fails.property_id)))}).")
     fw = fr[fr.property_id == "D1"].set_index("model").result
     with_counter = [fw.get("firmware_fixed_counter"), fw.get("firmware_counter_unsigned_version")]
-    S["P21"] = ("miss" if "counterexample" in with_counter else verdict(fw.get("firmware_stated_no_counter") == "counterexample"),
-                f"No counter: {fw.get('firmware_stated_no_counter')}; counter with an unsigned version: {fw.get('firmware_counter_unsigned_version')}; counter with a signed version (F3): {fw.get('firmware_fixed_counter')}. A counter alone does not reject a downgrade, which meets the refutation clause.")
+    S["P21"] = (verdict(fw.get("firmware_fixed_counter") == "proved" and fw.get("firmware_stated_no_counter") == "counterexample"),
+                f"Registered pair: with a monotonic version counter (design F3, which also signs the version) {fw.get('firmware_fixed_counter')}; without a counter {fw.get('firmware_stated_no_counter')}. A variant written after registration, a counter with an unsigned version, gives {fw.get('firmware_counter_unsigned_version')}: the counter alone is not enough.")
+
     fs_stated = fr[fr.model == "session_b_stated_fs_longterm"].set_index("property_id").result
     fs_fixed = fr[fr.model == "session_b_fixed_fs_longterm"].set_index("property_id").result
     S["P22"] = (verdict(all(v == "proved" for v in fs_stated)), f"Stated design: earlier session keys after long term key compromise {', '.join(f'{k} {v}' for k, v in fs_stated.items())}; the counterexamples follow from the missing vehicle authentication (F1). With F1: {', '.join(f'{k} {v}' for k, v in fs_fixed.items())}.")
@@ -109,12 +110,17 @@ def score():
     cb = R("stats/results/cycle_cluster_bootstrap.csv")
     c = cb[(cb.model == "fitted") & (cb.subset == "test, all")].iloc[0]
     hi = float(c.median_abs_cluster_ci_hi)
-    S["P24"] = (verdict(hi >= 2.5, hi > 1.7), f"Cluster bootstrap 95 percent interval of the median absolute error: {c.median_abs_cluster_ci_lo:.2f} to {hi:.2f} percent; the round 4 row bootstrap gave 0.7 to 1.7 (to one decimal).")
+    row_hi = float(c.median_abs_ci_hi) if "median_abs_ci_hi" in c.index and pd.notna(c.get("median_abs_ci_hi")) else float(R("cyclemodel/results/error_summary.csv").query('model == "fitted" and subset == "test, all"').median_abs_ci_hi.iloc[0])
+    S["P24"] = (verdict(hi >= 2.5, hi > row_hi + 1e-9), f"Cluster bootstrap 95 percent interval of the median absolute error: {c.median_abs_cluster_ci_lo:.2f} to {hi:.2f} percent; the round 4 row bootstrap upper bound is {row_hi:.2f} percent, compared unrounded.")
     hv = R("data/meta/hierarchical_variance.csv")
     main = hv[(hv.weighting == "unweighted") & (hv.fit == "main (variant as stated)") & (hv.component != "residual")]
     top = main.loc[main.share_within_cell.idxmax()]
-    S["P25"] = ("hit" if top.component == "variant" else ("miss" if top.component in ("source", "statistic") else "between"),
-                f"Main unweighted fit: largest share {top.component} ({100 * top.share_within_cell:.1f} percent of within cell variance); intervals are wide and statistic and compiler are confounded with source.")
+    alt = hv[(hv.weighting == "unweighted") & (hv.fit == "worst observed rows excluded: main (variant as stated)") & (hv.component != "residual")]
+    alt_top = alt.loc[alt.share_within_cell.idxmax()] if len(alt) else None
+    tops = {top.component} | ({alt_top.component} if alt_top is not None else set())
+    S["P25"] = ("miss" if tops & {"source", "statistic"} else ("hit" if tops == {"variant"} else "between"),
+                f"Main unweighted fit: largest share {top.component} ({100 * top.share_within_cell:.1f} percent), but compiler and statistic have overlapping intervals; " + (f"the fit without the worst observed rows ({alt_top.fit}) makes {alt_top.component} the largest ({100 * alt_top.share_within_cell:.1f} percent), which meets the refutation clause." if alt_top is not None else "no sensitivity fit."))
+
     tl = R("data/verify5/third_look_summary.csv")
     sub = tl[tl.measure.str.startswith("staging wrong in substance")].iloc[0]
     verb = tl[tl.measure.str.startswith("staged text differs verbatim from the source among settled")].iloc[0]
@@ -157,9 +163,8 @@ def score():
     allp = all(float(p.get("recognised_percent", 0)) == 100.0 for p in passes.values()) if passes else parsed == 100.0
     per_pass = ", ".join(str(k) + " " + str(v.get("recognised_percent")) for k, v in passes.items())
     S["P34"] = (verdict(m33 and allp), f"M33 images built: {'yes' if m33 else 'no'}; emulator log lines parsed: {parsed} percent overall; per cache pass: {per_pass}.")
-    ra = (ROOT / "docs/REFERENCE_ARCHITECTURE.md").read_text()
-    unchanged = ("LMS" in ra) and ("session" in ra.lower())
-    S["P35"] = (verdict(unchanged), "After the shared input reruns the reference architecture still recommends LMS for firmware and a hybrid session (now with the vehicle signature) for commands, with no per command signatures (`docs/REFERENCE_ARCHITECTURE.md`; RUN_LOG entry 93).")
+    S["P35"] = ("miss", "The scheme families are unchanged (LMS for firmware, a hybrid session for commands, no per command signatures), but the designs changed in this round: the vehicle now signs the handshake (F1) and firmware needs a signed version and a monotonic counter (F3). Under the stricter reading, a change of either design meets the refutation clause (`docs/REFERENCE_ARCHITECTURE.md`; RUN_LOG entry 93).")
+
     # WP11 and WP12
     rf = ROOT / "docs/REVIEW_FINDINGS5.csv"
     if rf.exists():
