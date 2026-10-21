@@ -1,6 +1,8 @@
 operation,cycles,label,source,range_min_cycles,range_max_cycles,range_ids,zero_wait_state_row,wait_state_factor_applied
 x25519_two_mults,1097746.0,derived from published,"S12A-332+S12A-332; X25519, two scalar multiplications (key generation plus shared secret), Emill integer version, board and clock not stated",952550.0,2073200.0,S12A-317 S12A-321 S12A-325 S12A-332 S12A-333,False,False
 ed25519_verify,722000.0,published,"S12A-331; Ed25519 verify, Owens et al., STM32F407 at 24 MHz",722000.0,1463600.0,S12A-320 S12A-324 S12A-328 S12A-331,True,True
+ed25519_sign,239000.0,published,"S12A-330; Ed25519 sign, Owens et al., STM32F407 at 24 MHz",239000.0,549000.0,S12A-319 S12A-323 S12A-327 S12A-330,True,True
 mlkem768_encaps,658754.0,published,"S2-0023; ML-KEM-768 encaps, pqm4 m4fspeed",658754.0,658754.0,S2-0023,True,True
 mldsa44_verify,1421623.0,published,"S2-0033; ML-DSA-44 verify, pqm4 m4f",1421623.0,1421623.0,S2-0033,True,True
-lms_verify,2576515.0,published,"S2-0316; LMS w=16 h=5 SHA-256 verify, Cortex-M4 (slides), clock not stated",2576515.0,2576515.0,S2-0316,False,False
+mldsa44_sign,3943121.0,published,"S2-0032; ML-DSA-44 sign, pqm4 m4f (mean of a variable signing time)",3943121.0,3943121.0,S2-0032,True,True
+lms_verify,2658884.0,published,"S8-026; LMS w=16 h=10 SHA-256 verify, Cortex-M4 (Campos et al.), clock not stated",2658884.0,2658884.0,S8-026,False,False

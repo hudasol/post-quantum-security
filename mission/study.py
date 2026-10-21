@@ -148,16 +148,39 @@ def compute_latency_table():
 
 
 def link_crosscheck():
-    """No loss handshake time of the mission transfer model against linksim's published table (model to model)."""
+    """No loss handshake time of the mission transfer model against other link estimates (model to model).
+
+    Row structure_round4: the first three flights of B (the handshake before design change F1, 4772 B, the same
+    bytes as the earlier linksim table). Row structure_f1: the full B handshake with design change F1 against the
+    protocol simulation (linksim/results/protocols_grid.csv, mavlink2_pq hybrid, zero loss), SiK only, because the
+    protocol simulation uses the round 4 frame model for IEEE 802.15.4 and the mission study does not.
+    """
     linksim_sr = {'sik': 0.8986, 'ieee802154': 0.5008}  # docs/LINK_REFERENCE_DESIGN.md section 7.2, provisioned key
     rows = []
     for l, ref in linksim_sr.items():
         cfg = sim.build_config('drone', 'B', l, frame_loss=0.0, clock_hz=1e30)
+        cfg3 = dict(cfg)
+        cfg3['ap'] = dict(cfg['ap'], flights=cfg['ap']['flights'][:3])
         rng = sim.rng_for('crosscheck|' + l)
-        t, air = sim.sample_handshake(rng, cfg)
-        rows.append(dict(link=l, mission_model_s=t, linksim_selective_repeat_s=ref,
+        t, air = sim.sample_handshake(rng, cfg3)
+        rows.append(dict(link=l, structure='round4 three flights', mission_model_s=t, reference_s=ref,
+                         reference='docs/LINK_REFERENCE_DESIGN.md section 7.2 (linksim selective repeat)',
                          relative_difference=(t - ref) / ref, air_s=air['up'] + air['down'], label='estimated',
                          note='model to model comparison of two estimates, not a validation against measurement'))
+    grid = os.path.join(os.path.dirname(HERE), 'linksim', 'results', 'protocols_grid.csv')
+    if os.path.exists(grid):
+        g = pd.read_csv(grid)
+        g = g[(g.scenario == 'ttfam') & (g.protocol == 'mavlink2_pq') & (g.variant == 'hybrid') & (g.loss == 0.0)
+              & (g.link == 'sik')]
+        if len(g) == 1 and 'handshake_mean_s' in g:
+            ref = float(g.handshake_mean_s.iloc[0])
+            cfg = sim.build_config('drone', 'B', 'sik', frame_loss=0.0, clock_hz=1e30)
+            rng = sim.rng_for('crosscheck|sik')
+            t, air = sim.sample_handshake(rng, cfg)
+            rows.append(dict(link='sik', structure='design change F1 four flights', mission_model_s=t,
+                             reference_s=ref, reference='linksim/results/protocols_grid.csv (mavlink2_pq hybrid, zero loss)',
+                             relative_difference=(t - ref) / ref, air_s=air['up'] + air['down'], label='estimated',
+                             note='model to model comparison of two estimates, not a validation against measurement'))
     return pd.DataFrame(rows)
 
 

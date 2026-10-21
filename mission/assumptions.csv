@@ -14,12 +14,8 @@ session_timeout_s,10,s,assumption,an outage longer than this tears the session d
 rekey_interval_s,300,s,assumption,session rekey interval for architectures A and B (swept; inf means once per arming)
 grace_s,30,s,assumption,old session key stays valid this long after a rekey starts
 deadline_s,0.5,s,assumption,command delivery deadline (swept)
-clock_hz,168000000,Hz,published,reference board STM32F405 class flight controller at 168 MHz (data/raw/S5_benchmark_plan_facts.md line 77)
 clock_alt_hz,480000000,Hz,published,Pixhawk 6C STM32H743 up to 480 MHz (data/raw/S5_benchmark_plan_facts.md line 75); Cortex-M7 so M4 cycle rows are not directly comparable
 wait_state_factor,1.0,ratio,assumption,multiplier on published cycles for flash wait states at the board clock (published rows use zero wait states); unverified
-mac_cycles,10000,cycles,assumption,cycles per message tag computation or check (SHA-256 based); no published row in data/evidence.csv; unverified
 ground_compute_s,0.0,s,assumption,ground station compute time is ignored (desktop class host)
-ftp_header_bytes,12,B,published,linksim/params.csv mav_ftp_header_bytes
-chunk_data_bytes,239,B,published,linksim/params.csv mav_ftp_data_bytes
 feasible_availability,0.99,ratio,assumption,an architecture is called feasible on a link when the median control availability is at least this and utilisation is at most 1
 c_timestamp_bytes,0,B,assumption,anti replay field for architecture C is not counted

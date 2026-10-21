@@ -49,11 +49,13 @@ class TestModel(unittest.TestCase):
         self.assertAlmostEqual(model.effective_cycles(['x25519_two_mults', 'ed25519_verify'], 2.0, c),
                                c['x25519_two_mults'][0] + 2 * c['ed25519_verify'][0])
         cfg = sim.build_config('drone', 'B', 'sik', wait_state_factor=1.5)
-        self.assertAlmostEqual(cfg['hs_eff'], c['x25519_two_mults'][0] + 1.5 * (c['mlkem768_encaps'][0] + c['mldsa44_verify'][0]))
+        self.assertAlmostEqual(cfg['hs_eff'], c['x25519_two_mults'][0] + 1.5 * (c['mlkem768_encaps'][0] + c['mldsa44_verify'][0]
+                                                                      + c['mldsa44_sign'][0]))
 
     def test_handshake_bytes(self):
-        self.assertEqual(model.handshake_bytes('B'), 4772)
-        self.assertEqual(model.handshake_bytes('A'), 144)
+        # design change F1: the vehicle also sends a signature and a key confirmation tag
+        self.assertEqual(model.handshake_bytes('B'), 4772 + 2420 + 16)
+        self.assertEqual(model.handshake_bytes('A'), 144 + 64 + 16)
         self.assertEqual(model.handshake_bytes('C'), 0)
         self.assertEqual(model.handshake_bytes('D'), 0)
         with self.assertRaises(ValueError):
@@ -197,8 +199,11 @@ class TestStudy(unittest.TestCase):
 
     def test_link_crosscheck(self):
         cc = study.link_crosscheck()
-        self.assertEqual(len(cc), 2)
+        self.assertEqual(len(cc[cc.structure == 'round4 three flights']), 2)
+        self.assertLessEqual(len(cc), 3)
         self.assertTrue((cc.mission_model_s > 0).all())
+        # the three flight structure reproduces the earlier linksim table within 5 percent
+        self.assertTrue((cc[cc.structure == 'round4 three flights'].relative_difference.abs() < 0.05).all())
 
     def test_job_lists(self):
         self.assertEqual(len(study.base_jobs(1)), 32)
