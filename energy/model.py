@@ -10,10 +10,17 @@ import os
 import re
 import statistics
 
+import sys
+
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
+from shared import inputs as shared_inputs  # noqa: E402
+
+SHARED_PREFIX = "shared:"
 SEED = 20261020
 NOMINAL_VDD_V = 3.3  # assumption, see workload_assumptions.csv (vdd_v nominal)
 
@@ -27,13 +34,23 @@ def load_evidence():
     return {r["id"]: r for r in read_csv(os.path.join(ROOT, "data", "evidence.csv"))}
 
 
+def resolve_shared(rows):
+    """Replace every cell written as shared:<parameter> by the value of that parameter in data/shared_inputs.csv."""
+    sh = shared_inputs.values()
+    for r in rows:
+        for k, v in r.items():
+            if isinstance(v, str) and v.startswith(SHARED_PREFIX):
+                r[k] = repr(sh[v[len(SHARED_PREFIX):]])
+    return rows
+
+
 def load_local(name):
-    return read_csv(os.path.join(HERE, name))
+    return resolve_shared(read_csv(os.path.join(HERE, name)))
 
 
 def load_assumptions():
     out = {}
-    for r in load_local("workload_assumptions.csv"):
+    for r in load_local("workload_assumptions.csv"):  # shared:<name> cells resolved by load_local
         out[r["name"]] = {k: float(r[k]) for k in ("low", "nominal", "high")}
     return out
 
@@ -76,6 +93,13 @@ def hmac_sha256_bytes(msg_bytes):
     return 64 * (inner_blocks + 2)
 
 
+def cmap_evidence_id(r):
+    """Evidence id behind a cycle_map.csv row (resolves method shared through data/shared_inputs.csv)."""
+    if r["method"] == "shared":
+        return shared_inputs.evidence_id(r["ref"])
+    return r["ref"]
+
+
 def cycles_for(op, core_class, ev, bench, cmap, msg_bytes=64):
     """Look up cycles for an operation on a core class.
 
@@ -90,7 +114,10 @@ def cycles_for(op, core_class, ev, bench, cmap, msg_bytes=64):
     if not rows:
         raise KeyError(op)
     r = rows[0]
-    if r["method"] == "evidence_cycles":
+    if r["method"] == "shared":
+        cyc = shared_inputs.value(r["ref"])
+        src = (shared_inputs.evidence_id(r["ref"]) or r["ref"]) + " (data/shared_inputs.csv " + r["ref"] + ")"
+    elif r["method"] == "evidence_cycles":
         cyc = float(ev[r["ref"]]["cycles"])
         src = r["ref"]
     elif r["method"] == "evidence_time":
@@ -102,8 +129,8 @@ def cycles_for(op, core_class, ev, bench, cmap, msg_bytes=64):
         cyc = statistics.median(vals)
         src = "energy/retrieved_benchmarks.csv " + r["ref"] + " (median of %d boards)" % len(vals)
     elif r["method"] == "hmac_estimate":
-        cyc = hmac_sha256_bytes(msg_bytes) * statistics.median(sha256_cpb(bench, "sw"))
-        src = "SHA-256 software throughput median (energy/retrieved_benchmarks.csv)"
+        cyc = hmac_sha256_bytes(msg_bytes) * shared_inputs.value("sha256_cpb_sw_m4")
+        src = "SHA-256 software throughput median (data/shared_inputs.csv sha256_cpb_sw_m4)"
     else:
         raise ValueError(r["method"])
     label = r["cycle_label"]
@@ -146,6 +173,10 @@ def workload_cycles_per_h(c, w, design):
     command), 'classical' (Ed25519 per command), 'lms' (LMS verify per command, for
     comparison only) or 'mac' (HMAC-SHA256 per command after a post quantum handshake).
     Boot verification: SHA-256 over the image plus one ML-DSA-44 verify (classical: Ed25519).
+    Vehicle side of the session handshake as in the mission study and the formal models with design change F1:
+    two X25519 scalar multiplications, one ML-KEM-768 encapsulation (the vehicle answers the ground station's
+    encapsulation key), one verification of the ground signature and one vehicle signature. A rekey repeats the
+    key exchange without signatures (fresh X25519 shares and a fresh ML-KEM encapsulation).
     """
     if design == "classical":
         hs = 2 * c["x25519_shared"] + c["ed25519_verify"] + c["ed25519_sign"]
@@ -153,8 +184,8 @@ def workload_cycles_per_h(c, w, design):
         cmd = c["ed25519_verify"]
         bootsig = c["ed25519_verify"]
     else:
-        hs = c["mlkem768_keygen"] + c["mlkem768_decaps"] + c["mldsa44_verify"] + c["mldsa44_sign"]
-        rk = c["mlkem768_keygen"] + c["mlkem768_decaps"]
+        hs = 2 * c["x25519_shared"] + c["mlkem768_encaps"] + c["mldsa44_verify"] + c["mldsa44_sign"]
+        rk = 2 * c["x25519_shared"] + c["mlkem768_encaps"]
         cmd = {"pq_sig": c["mldsa44_verify"], "lms": c["lms_verify"], "mac": c["hmac_sha256_msg"]}[design]
         bootsig = c["mldsa44_verify"]
     boot = w["image_mb"] * 1e6 * c["sha256_cpb_sw"] + bootsig

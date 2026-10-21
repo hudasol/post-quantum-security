@@ -89,8 +89,8 @@ class TestLookups(unittest.TestCase):
 
     def test_every_cycle_map_ref_exists(self):
         for r in CMAP:
-            if r["method"].startswith("evidence"):
-                self.assertIn(r["ref"], EV, r["ref"])
+            if r["method"].startswith("evidence") or r["method"] == "shared":
+                self.assertIn(model.cmap_evidence_id(r), EV, r["ref"])
 
     def test_supply_options(self):
         l4 = next(p for p in PARTS if p["part"] == "STM32L4R5")
@@ -108,14 +108,14 @@ class TestLookups(unittest.TestCase):
 class TestWorkload(unittest.TestCase):
     def setUp(self):
         self.c = {k: 1.0 for k in ("x25519_shared", "ed25519_verify", "ed25519_sign", "mlkem768_keygen",
-                                    "mlkem768_decaps", "mldsa44_verify", "mldsa44_sign", "lms_verify",
+                                    "mlkem768_decaps", "mlkem768_encaps", "mldsa44_verify", "mldsa44_sign", "lms_verify",
                                     "hmac_sha256_msg")}
         self.c["sha256_cpb_sw"] = 0.0
         self.w = {"handshakes_per_h": 1, "rekeys_per_h": 0, "commands_per_s": 1, "boots_per_h": 0, "image_mb": 1}
 
     def test_pq(self):
-        # handshake 4 ops * 1 + 3600 commands * 1 = 3604 cycles
-        self.assertEqual(model.workload_cycles_per_h(self.c, self.w, "pq_sig"), 3604)
+        # handshake (design change F1): 2 X25519 + encaps + verify + sign = 5; 3600 commands * 1 = 3605 cycles
+        self.assertEqual(model.workload_cycles_per_h(self.c, self.w, "pq_sig"), 3605)
 
     def test_classical(self):
         # handshake: 2 + 1 + 1 = 4; commands 3600
@@ -137,7 +137,7 @@ class TestMonteCarlo(unittest.TestCase):
     def test_evaluate_positive(self):
         cyc = {op: model.cycles_for(op, "Cortex-M4", EV, BENCH, CMAP)["cycles"] for op in
                ("x25519_shared", "ed25519_verify", "ed25519_sign", "mlkem768_keygen", "mlkem768_decaps",
-                "mldsa44_verify", "mldsa44_sign", "lms_verify", "hmac_sha256_msg")}
+                "mlkem768_encaps", "mldsa44_verify", "mldsa44_sign", "lms_verify", "hmac_sha256_msg")}
         cyc["sha256_cpb_sw"] = 76.0
         b, c = mc.evaluate(mc.nominal_row(ASSUME), mc.INPUTS, cyc, PLATS[0], "pq_sig")
         self.assertGreater(b[0], 0)

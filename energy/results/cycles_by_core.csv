@@ -1,40 +1,40 @@
 core_class,op,cycles,label,cycle_source_label,source
-Cortex-M4,mldsa44_verify,1421623,published,published,S2-0033
-Cortex-M4,mldsa44_sign,3943121,published,published,S2-0032
+Cortex-M4,mldsa44_verify,1421623,published,published,S2-0033 (data/shared_inputs.csv mldsa44_verify_cycles_m4)
+Cortex-M4,mldsa44_sign,3943121,published,published,S2-0032 (data/shared_inputs.csv mldsa44_sign_cycles_m4)
 Cortex-M4,mldsa65_verify,2415944,published,published,S2-0042
 Cortex-M4,mldsa87_verify,4193104,published,published,S2-0051
 Cortex-M4,mlkem768_keygen,642096,published,published,S2-0022
-Cortex-M4,mlkem768_encaps,658754,published,published,S2-0023
+Cortex-M4,mlkem768_encaps,658754,published,published,S2-0023 (data/shared_inputs.csv mlkem768_encaps_cycles_m4)
 Cortex-M4,mlkem768_decaps,707827,published,published,S2-0024
-Cortex-M4,lms_verify,2658884,published,published,S8-026
+Cortex-M4,lms_verify,2658884,published,published,S8-026 (data/shared_inputs.csv lms_verify_cycles_m4)
 Cortex-M4,xmss_verify,13071813,published,published,S8-032
 Cortex-M4,xmss_simple_verify,3676358,published,published,S8-038
 Cortex-M4,slhdsa128s_verify,7471794,published,published,S2-0060
 Cortex-M4,slhdsa128f_verify,21923628,published,published,S2-0057
-Cortex-M4,ed25519_verify,722000,published,published,S12A-331
-Cortex-M4,ed25519_sign,239000,published,published,S12A-330
+Cortex-M4,ed25519_verify,722000,published,published,S12A-331 (data/shared_inputs.csv ed25519_verify_cycles_m4)
+Cortex-M4,ed25519_sign,239000,published,published,S12A-330 (data/shared_inputs.csv ed25519_sign_cycles_m4)
 Cortex-M4,ecdsa_p256_verify,6639000,published,published,S2-0213
-Cortex-M4,x25519_shared,548873,published,published,S12A-332
-Cortex-M4,x25519_keygen,548873,published,published,S12A-332
-Cortex-M4,hmac_sha256_msg,24407,estimated,estimated,SHA-256 software throughput median (energy/retrieved_benchmarks.csv)
-Cortex-M33,mldsa44_verify,1421623,published,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0033
+Cortex-M4,x25519_shared,548873,published,published,S12A-332 (data/shared_inputs.csv x25519_scalarmult_cycles_m4)
+Cortex-M4,x25519_keygen,548873,published,published,S12A-332 (data/shared_inputs.csv x25519_scalarmult_cycles_m4)
+Cortex-M4,hmac_sha256_msg,24407,estimated,estimated,SHA-256 software throughput median (data/shared_inputs.csv sha256_cpb_sw_m4)
+Cortex-M33,mldsa44_verify,1421623,published,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0033 (data/shared_inputs.csv mldsa44_verify_cycles_m4)
 Cortex-M33,mldsa44_sign,14610000,published,published,S10C-017
 Cortex-M33,mldsa65_verify,2415944,published,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0042
 Cortex-M33,mldsa87_verify,4193104,published,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0051
 Cortex-M33,mlkem768_keygen,642096,published,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0022
-Cortex-M33,mlkem768_encaps,658754,published,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0023
+Cortex-M33,mlkem768_encaps,658754,published,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0023 (data/shared_inputs.csv mlkem768_encaps_cycles_m4)
 Cortex-M33,mlkem768_decaps,707827,published,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0024
-Cortex-M33,lms_verify,2658884,published,published; proxy: Cortex-M4 row used for Cortex-M33,S8-026
+Cortex-M33,lms_verify,2658884,published,published; proxy: Cortex-M4 row used for Cortex-M33,S8-026 (data/shared_inputs.csv lms_verify_cycles_m4)
 Cortex-M33,xmss_verify,13071813,published,published; proxy: Cortex-M4 row used for Cortex-M33,S8-032
 Cortex-M33,xmss_simple_verify,3676358,published,published; proxy: Cortex-M4 row used for Cortex-M33,S8-038
 Cortex-M33,slhdsa128s_verify,7471794,published,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0060
 Cortex-M33,slhdsa128f_verify,21923628,published,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0057
-Cortex-M33,ed25519_verify,722000,published,published; proxy: Cortex-M4 row used for Cortex-M33,S12A-331
-Cortex-M33,ed25519_sign,239000,published,published; proxy: Cortex-M4 row used for Cortex-M33,S12A-330
+Cortex-M33,ed25519_verify,722000,published,published; proxy: Cortex-M4 row used for Cortex-M33,S12A-331 (data/shared_inputs.csv ed25519_verify_cycles_m4)
+Cortex-M33,ed25519_sign,239000,published,published; proxy: Cortex-M4 row used for Cortex-M33,S12A-330 (data/shared_inputs.csv ed25519_sign_cycles_m4)
 Cortex-M33,ecdsa_p256_verify,6639000,published,published; proxy: Cortex-M4 row used for Cortex-M33,S2-0213
-Cortex-M33,x25519_shared,548873,published,published; proxy: Cortex-M4 row used for Cortex-M33,S12A-332
-Cortex-M33,x25519_keygen,548873,published,published; proxy: Cortex-M4 row used for Cortex-M33,S12A-332
-Cortex-M33,hmac_sha256_msg,24407,estimated,estimated; proxy: Cortex-M4 row used for Cortex-M33,SHA-256 software throughput median (energy/retrieved_benchmarks.csv)
+Cortex-M33,x25519_shared,548873,published,published; proxy: Cortex-M4 row used for Cortex-M33,S12A-332 (data/shared_inputs.csv x25519_scalarmult_cycles_m4)
+Cortex-M33,x25519_keygen,548873,published,published; proxy: Cortex-M4 row used for Cortex-M33,S12A-332 (data/shared_inputs.csv x25519_scalarmult_cycles_m4)
+Cortex-M33,hmac_sha256_msg,24407,estimated,estimated; proxy: Cortex-M4 row used for Cortex-M33,SHA-256 software throughput median (data/shared_inputs.csv sha256_cpb_sw_m4)
 Cortex-M7,mldsa44_verify,813339,published,published,S7-009
 Cortex-M7,mldsa44_sign,2127982,published,published,S7-008
 Cortex-M7,mldsa65_verify,1380098,published,published,S7-003
@@ -42,23 +42,23 @@ Cortex-M7,mldsa87_verify,2401930,published,published,S7-012
 Cortex-M7,mlkem768_keygen,372064,published,published,S7-013
 Cortex-M7,mlkem768_encaps,385371,published,published,S7-014
 Cortex-M7,mlkem768_decaps,417224,published,published,S7-015
-Cortex-M7,lms_verify,2658884,published,published; proxy: Cortex-M4 row used for Cortex-M7,S8-026
+Cortex-M7,lms_verify,2658884,published,published; proxy: Cortex-M4 row used for Cortex-M7,S8-026 (data/shared_inputs.csv lms_verify_cycles_m4)
 Cortex-M7,xmss_verify,13071813,published,published; proxy: Cortex-M4 row used for Cortex-M7,S8-032
 Cortex-M7,xmss_simple_verify,3676358,published,published; proxy: Cortex-M4 row used for Cortex-M7,S8-038
 Cortex-M7,slhdsa128s_verify,7471794,published,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0060
 Cortex-M7,slhdsa128f_verify,21923628,published,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0057
-Cortex-M7,ed25519_verify,722000,published,published; proxy: Cortex-M4 row used for Cortex-M7,S12A-331
-Cortex-M7,ed25519_sign,239000,published,published; proxy: Cortex-M4 row used for Cortex-M7,S12A-330
+Cortex-M7,ed25519_verify,722000,published,published; proxy: Cortex-M4 row used for Cortex-M7,S12A-331 (data/shared_inputs.csv ed25519_verify_cycles_m4)
+Cortex-M7,ed25519_sign,239000,published,published; proxy: Cortex-M4 row used for Cortex-M7,S12A-330 (data/shared_inputs.csv ed25519_sign_cycles_m4)
 Cortex-M7,ecdsa_p256_verify,6639000,published,published; proxy: Cortex-M4 row used for Cortex-M7,S2-0213
-Cortex-M7,x25519_shared,548873,published,published; proxy: Cortex-M4 row used for Cortex-M7,S12A-332
-Cortex-M7,x25519_keygen,548873,published,published; proxy: Cortex-M4 row used for Cortex-M7,S12A-332
-Cortex-M7,hmac_sha256_msg,24407,estimated,estimated; proxy: Cortex-M4 row used for Cortex-M7,SHA-256 software throughput median (energy/retrieved_benchmarks.csv)
+Cortex-M7,x25519_shared,548873,published,published; proxy: Cortex-M4 row used for Cortex-M7,S12A-332 (data/shared_inputs.csv x25519_scalarmult_cycles_m4)
+Cortex-M7,x25519_keygen,548873,published,published; proxy: Cortex-M4 row used for Cortex-M7,S12A-332 (data/shared_inputs.csv x25519_scalarmult_cycles_m4)
+Cortex-M7,hmac_sha256_msg,24407,estimated,estimated; proxy: Cortex-M4 row used for Cortex-M7,SHA-256 software throughput median (data/shared_inputs.csv sha256_cpb_sw_m4)
 RISC-V,mldsa44_verify,3674071,published,published,S2-0363
-RISC-V,mldsa44_sign,3943121,published,published; proxy: Cortex-M4 row used for RISC-V,S2-0032
+RISC-V,mldsa44_sign,3943121,published,published; proxy: Cortex-M4 row used for RISC-V,S2-0032 (data/shared_inputs.csv mldsa44_sign_cycles_m4)
 RISC-V,mldsa65_verify,2415944,published,published; proxy: Cortex-M4 row used for RISC-V,S2-0042
 RISC-V,mldsa87_verify,4193104,published,published; proxy: Cortex-M4 row used for RISC-V,S2-0051
 RISC-V,mlkem768_keygen,642096,published,published; proxy: Cortex-M4 row used for RISC-V,S2-0022
-RISC-V,mlkem768_encaps,658754,published,published; proxy: Cortex-M4 row used for RISC-V,S2-0023
+RISC-V,mlkem768_encaps,658754,published,published; proxy: Cortex-M4 row used for RISC-V,S2-0023 (data/shared_inputs.csv mlkem768_encaps_cycles_m4)
 RISC-V,mlkem768_decaps,707827,published,published; proxy: Cortex-M4 row used for RISC-V,S2-0024
 RISC-V,lms_verify,8784000,derived from published,derived from published,S10D-083 (time x clock)
 RISC-V,xmss_verify,13071813,published,published; proxy: Cortex-M4 row used for RISC-V,S8-032
@@ -66,8 +66,8 @@ RISC-V,xmss_simple_verify,3676358,published,published; proxy: Cortex-M4 row used
 RISC-V,slhdsa128s_verify,7471794,published,published; proxy: Cortex-M4 row used for RISC-V,S2-0060
 RISC-V,slhdsa128f_verify,21923628,published,published; proxy: Cortex-M4 row used for RISC-V,S2-0057
 RISC-V,ed25519_verify,2952000,derived from published,derived from published,S10D-073 (time x clock)
-RISC-V,ed25519_sign,239000,published,published; proxy: Cortex-M4 row used for RISC-V,S12A-330
+RISC-V,ed25519_sign,239000,published,published; proxy: Cortex-M4 row used for RISC-V,S12A-330 (data/shared_inputs.csv ed25519_sign_cycles_m4)
 RISC-V,ecdsa_p256_verify,22176000,derived from published,derived from published,S10D-076 (time x clock)
-RISC-V,x25519_shared,548873,published,published; proxy: Cortex-M4 row used for RISC-V,S12A-332
-RISC-V,x25519_keygen,548873,published,published; proxy: Cortex-M4 row used for RISC-V,S12A-332
-RISC-V,hmac_sha256_msg,24407,estimated,estimated; proxy: Cortex-M4 row used for RISC-V,SHA-256 software throughput median (energy/retrieved_benchmarks.csv)
+RISC-V,x25519_shared,548873,published,published; proxy: Cortex-M4 row used for RISC-V,S12A-332 (data/shared_inputs.csv x25519_scalarmult_cycles_m4)
+RISC-V,x25519_keygen,548873,published,published; proxy: Cortex-M4 row used for RISC-V,S12A-332 (data/shared_inputs.csv x25519_scalarmult_cycles_m4)
+RISC-V,hmac_sha256_msg,24407,estimated,estimated; proxy: Cortex-M4 row used for RISC-V,SHA-256 software throughput median (data/shared_inputs.csv sha256_cpb_sw_m4)

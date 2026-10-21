@@ -1,9 +1,9 @@
 platform,design,battery_pct_per_h_modelled,cpu_pct_modelled,label
-Crazyflie 2.1,ML-DSA-44 per command,0.08901,8.4864,modelled
-Crazyflie 2.1,HMAC-SHA256 per command after PQ handshake,0.00178,0.1697,modelled
-Crazyflie 2.1,LMS verify per command,0.16626,15.8511,modelled
+Crazyflie 2.1,ML-DSA-44 per command,0.08906,8.4907,modelled
+Crazyflie 2.1,HMAC-SHA256 per command after PQ handshake,0.00182,0.174,modelled
+Crazyflie 2.1,LMS verify per command,0.1663,15.8554,modelled
 Crazyflie 2.1,Ed25519 and X25519 baseline,0.04527,4.3163,modelled
-TurtleBot3 Burger,ML-DSA-44 per command,0.05055,3.7785,modelled
-TurtleBot3 Burger,HMAC-SHA256 per command after PQ handshake,0.00169,0.126,modelled
-TurtleBot3 Burger,LMS verify per command,0.16486,12.3227,modelled
+TurtleBot3 Burger,ML-DSA-44 per command,0.05063,3.7842,modelled
+TurtleBot3 Burger,HMAC-SHA256 per command after PQ handshake,0.00176,0.1317,modelled
+TurtleBot3 Burger,LMS verify per command,0.16493,12.3284,modelled
 TurtleBot3 Burger,Ed25519 and X25519 baseline,0.04491,3.3571,modelled
