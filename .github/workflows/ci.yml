@@ -96,6 +96,7 @@ jobs:
           git diff --exit-code docs/DATA_DICTIONARY.md
       - name: Paper and claims register regenerate from the result files
         run: |
+          python3 scripts/make_paper_figures.py > /dev/null
           python3 scripts/build_paper.py
           git diff --exit-code docs/PAPER.md docs/PROPOSAL_ROBOTICS*.md docs/PROPOSAL_BRIEF.md data/claims_register.csv
       - name: Flight stack memory and planner rerun regenerate from the committed build artefacts
