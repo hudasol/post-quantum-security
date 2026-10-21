@@ -2,7 +2,7 @@
 
 Author: Huda Mueen. Draft of {{date}}. Generated from `docs/PROPOSAL_ATRC_body.md` by `scripts/build_proposal.py`; every number below is read from a file in this repository.
 
-This is the earlier proposal of round 3, kept as a record. Its findings are superseded by `docs/PROPOSAL_ROBOTICS.md` and its short version `docs/PROPOSAL_ROBOTICS_ATRC.md`, which carry the round 5 results (measured flight stack memory, the ns-3 check, formal verification).
+This is the earlier proposal of round 3, kept as a record and frozen on 2026-10-21: its counts were last filled on that day, while its conclusions (link model gap, synthetic fleet result, label list) are those of round 3 and are not updated. Its findings are superseded by `docs/PROPOSAL_ROBOTICS.md` and its short version `docs/PROPOSAL_ROBOTICS_ATRC.md`, which carry the round 5 results (measured flight stack memory, the ns-3 check, formal verification).
 
 ## 1. Problem
 

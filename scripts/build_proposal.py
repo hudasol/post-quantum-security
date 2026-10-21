@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Build docs/PROPOSAL_ATRC.md from docs/PROPOSAL_ATRC_body.md, filling every {{placeholder}} from the
 committed result files, so that no number in the proposal is typed by hand. Fails on an unfilled placeholder."""
+import sys
 import csv
 import re
 import subprocess
@@ -59,6 +60,11 @@ def round3():
 
 
 def main():
+    # Frozen record (review pass 3, R3C16): the round 3 proposal is no longer regenerated, so that its counts do not
+    # move while its round 3 conclusions stay. Pass --rebuild-round3 to write it again deliberately.
+    if "--rebuild-round3" not in sys.argv:
+        print("docs/PROPOSAL_ATRC.md is a frozen round 3 record; nothing written (use --rebuild-round3)")
+        return
     ev = rows("data/evidence.csv")
     s10 = [r for r in ev if r["stream"] == "S10"]
     v3 = {r["set"]: r for r in rows("data/verify3/summary.csv")}["all"]
