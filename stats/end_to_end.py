@@ -2,8 +2,8 @@
 """End to end uncertainty: published cycles through energy, link time, protocol time and mission availability.
 
 One chain, one draw of every input per evaluation:
-  published cycles (data/evidence.csv: ML-DSA-44 verify S2-0033, ML-KEM-768 encaps S2-0023, X25519 rows of
-  mission/model.py) x implementation factor x wait state factor
+  published cycles (data/shared_inputs.csv: ML-DSA-44 verify S2-0033 and sign S2-0032, ML-KEM-768 encaps S2-0023;
+  X25519 rows of mission/model.py) x implementation factor x wait state factor
   -> compute time at the drawn clock (mission/sim.py, bootchain/model.py)
   -> energy per firmware verification (energy/model.py energy_uj times the proxy factor)
   -> link and protocol time (mission/sim.py, which reads the cited link parameters of linksim/params.csv; the
@@ -15,7 +15,7 @@ Every input is drawn uniformly from the range already stated in a parameter file
 fixed and listed in stats/results/e2e_fixed.csv. No range is invented here.
 
 Outputs
-  Y1 hybrid session availability, drone, SiK radio (architecture B of the mission study), mean over the runs of one
+  Y1 hybrid session availability, drone, SiK radio (architecture B of the mission study, with design change F1), mean over the runs of one
      evaluation, at the drawn command deadline;
   Y2 added latency per command with an ML-DSA-44 signature on every command (architecture C, drone, SiK), median
      over the commands of the mission minus the unprotected command, without the deadline condition;
@@ -100,11 +100,12 @@ def inputs():
 
 
 FIXED = [
-    ("mldsa44_verify_cycles", "published", "data/evidence.csv S2-0033 (pqm4 m4f); varied only through impl_factor"),
-    ("mlkem768_encaps_cycles", "published", "data/evidence.csv S2-0023 (pqm4 m4fspeed); varied only through impl_factor"),
+    ("mldsa44_verify_cycles", "published", "data/shared_inputs.csv mldsa44_verify_cycles_m4 (data/evidence.csv S2-0033, pqm4 m4f); varied only through impl_factor"),
+    ("mldsa44_sign_cycles", "published", "data/shared_inputs.csv mldsa44_sign_cycles_m4 (data/evidence.csv S2-0032, pqm4 m4f; vehicle signature of design change F1); varied only through impl_factor"),
+    ("mlkem768_encaps_cycles", "published", "data/shared_inputs.csv mlkem768_encaps_cycles_m4 (data/evidence.csv S2-0023, pqm4 m4fspeed); varied only through impl_factor"),
     ("image_bytes", "assumption", "1 MB as the output definition (bootchain/inputs.csv fmuv2_flash_limit_bytes)"),
-    ("sik link rate and usable fraction", "cited", "linksim/params.csv sik_air_rate_bps, sik_usable_fraction"),
-    ("message, key and signature sizes", "cited", "linksim/params.csv"),
+    ("sik link rate and usable fraction", "cited", "data/shared_inputs.csv sik_air_rate_bps, sik_usable_fraction"),
+    ("message, key and signature sizes", "cited", "data/shared_inputs.csv"),
     ("MAVLink payload lengths", "host measured", "mission/payload_lengths.csv"),
     ("traffic rates", "assumption", "mission/traffic.csv (two heartbeat rates published, the other rates assumptions)"),
     ("mission phase durations, session timeout, grace", "assumption", "mission/assumptions.csv (no stated range)"),
@@ -118,9 +119,10 @@ class Chain:
     def __init__(self, runs=RUNS):
         self.runs = runs
         self.cfg = {a: sim.build_config("drone", a, "sik") for a in ("B", "C")}
-        ev = mm.evidence_cycles(["S2-0033", "S2-0023"])
-        self.mldsa = ev["S2-0033"]
-        self.mlkem = ev["S2-0023"]
+        sh = mm.shared_inputs.values()  # data/shared_inputs.csv (one value, one source)
+        self.mldsa = sh["mldsa44_verify_cycles_m4"]
+        self.mldsa_sign = sh["mldsa44_sign_cycles_m4"]
+        self.mlkem = sh["mlkem768_encaps_cycles_m4"]
         self.names = [i[0] for i in inputs()]
 
     def _cfg(self, arch, x):
@@ -130,7 +132,8 @@ class Chain:
         clock = x["clock_mhz"] * 1e6
         pq = x["impl_factor"] * x["wait_state_factor"]
         if arch == "B":
-            hs = x["x25519_two_mults_cycles"] + (self.mlkem + self.mldsa) * pq
+            # vehicle side of the B handshake with design change F1 (mission/model.py arch_profile)
+            hs = x["x25519_two_mults_cycles"] + (self.mlkem + self.mldsa + self.mldsa_sign) * pq
             cmd = 0.0
         else:
             hs = 0.0
