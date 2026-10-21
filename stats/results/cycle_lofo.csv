@@ -1,0 +1,433 @@
+label,left_out_by,group,model,id,binary,operation,cycles_published,cycles_modelled,err_pct,seed
+modelled,implementation family,clean,fitted,S2-0001,ML-KEM-1024 clean,keygen,1.53634e+06,1.47546e+06,-3.96279,20261021
+modelled,implementation family,clean,fitted,S2-0002,ML-KEM-1024 clean,encaps,1.70807e+06,1.68927e+06,-1.10075,20261021
+modelled,implementation family,clean,fitted,S2-0003,ML-KEM-1024 clean,decaps,2.02033e+06,1.98343e+06,-1.82648,20261021
+modelled,implementation family,clean,fitted,S2-0010,ML-KEM-512 clean,keygen,595793,572944,-3.83502,20261021
+modelled,implementation family,clean,fitted,S2-0011,ML-KEM-512 clean,encaps,700605,708688,1.15367,20261021
+modelled,implementation family,clean,fitted,S2-0012,ML-KEM-512 clean,decaps,888653,891729,0.346094,20261021
+modelled,implementation family,clean,fitted,S2-0019,ML-KEM-768 clean,keygen,988722,954681,-3.44296,20261021
+modelled,implementation family,clean,fitted,S2-0020,ML-KEM-768 clean,encaps,1.13822e+06,1.13794e+06,-0.0251945,20261021
+modelled,implementation family,clean,fitted,S2-0021,ML-KEM-768 clean,decaps,1.38798e+06,1.37531e+06,-0.913399,20261021
+modelled,implementation family,clean,fitted,S2-0028,ML-DSA-44 clean,keygen,1.8744e+06,1.84366e+06,-1.63999,20261021
+modelled,implementation family,clean,fitted,S2-0029,ML-DSA-44 clean,sign,7.92596e+06,6.94864e+06,-12.3306,20261021
+modelled,implementation family,clean,fitted,S2-0030,ML-DSA-44 clean,verify,2.0631e+06,2.02078e+06,-2.05102,20261021
+modelled,implementation family,clean,fitted,S2-0037,ML-DSA-65 clean,keygen,3.20553e+06,3.13076e+06,-2.33247,20261021
+modelled,implementation family,clean,fitted,S2-0038,ML-DSA-65 clean,sign,1.23591e+07,1.05734e+07,-14.4482,20261021
+modelled,implementation family,clean,fitted,S2-0039,ML-DSA-65 clean,verify,3.3773e+06,3.28555e+06,-2.7167,20261021
+modelled,implementation family,clean,fitted,S2-0046,ML-DSA-87 clean,keygen,5.34186e+06,5.21007e+06,-2.46712,20261021
+modelled,implementation family,clean,fitted,S2-0047,ML-DSA-87 clean,sign,1.55795e+07,1.75988e+07,12.9609,20261021
+modelled,implementation family,clean,fitted,S2-0048,ML-DSA-87 clean,verify,5.6102e+06,5.43418e+06,-3.13761,20261021
+modelled,implementation family,clean,reduced,S2-0001,ML-KEM-1024 clean,keygen,1.53634e+06,1.70781e+06,11.1605,20261021
+modelled,implementation family,clean,reduced,S2-0002,ML-KEM-1024 clean,encaps,1.70807e+06,1.96053e+06,14.7804,20261021
+modelled,implementation family,clean,reduced,S2-0003,ML-KEM-1024 clean,decaps,2.02033e+06,2.34828e+06,16.2326,20261021
+modelled,implementation family,clean,reduced,S2-0010,ML-KEM-512 clean,keygen,595793,660453,10.8528,20261021
+modelled,implementation family,clean,reduced,S2-0011,ML-KEM-512 clean,encaps,700605,819483,16.9679,20261021
+modelled,implementation family,clean,reduced,S2-0012,ML-KEM-512 clean,decaps,888653,1.05647e+06,18.8846,20261021
+modelled,implementation family,clean,reduced,S2-0019,ML-KEM-768 clean,keygen,988722,1.10242e+06,11.4992,20261021
+modelled,implementation family,clean,reduced,S2-0020,ML-KEM-768 clean,encaps,1.13822e+06,1.31965e+06,15.939,20261021
+modelled,implementation family,clean,reduced,S2-0021,ML-KEM-768 clean,decaps,1.38798e+06,1.63194e+06,17.576,20261021
+modelled,implementation family,clean,reduced,S2-0028,ML-DSA-44 clean,keygen,1.8744e+06,1.96228e+06,4.68814,20261021
+modelled,implementation family,clean,reduced,S2-0029,ML-DSA-44 clean,sign,7.92596e+06,7.77923e+06,-1.85116,20261021
+modelled,implementation family,clean,reduced,S2-0030,ML-DSA-44 clean,verify,2.0631e+06,2.17577e+06,5.46137,20261021
+modelled,implementation family,clean,reduced,S2-0037,ML-DSA-65 clean,keygen,3.20553e+06,3.34077e+06,4.21893,20261021
+modelled,implementation family,clean,reduced,S2-0038,ML-DSA-65 clean,sign,1.23591e+07,1.20655e+07,-2.37485,20261021
+modelled,implementation family,clean,reduced,S2-0039,ML-DSA-65 clean,verify,3.3773e+06,3.55356e+06,5.21886,20261021
+modelled,implementation family,clean,reduced,S2-0046,ML-DSA-87 clean,keygen,5.34186e+06,5.54097e+06,3.7273,20261021
+modelled,implementation family,clean,reduced,S2-0047,ML-DSA-87 clean,sign,1.55795e+07,2.0021e+07,28.5086,20261021
+modelled,implementation family,clean,reduced,S2-0048,ML-DSA-87 clean,verify,5.6102e+06,5.85996e+06,4.45179,20261021
+modelled,implementation family,m4f,fitted,S2-0031,ML-DSA-44 m4f,keygen,1.42602e+06,1.43871e+06,0.889757,20261021
+modelled,implementation family,m4f,fitted,S2-0032,ML-DSA-44 m4f,sign,3.94312e+06,3.7451e+06,-5.02182,20261021
+modelled,implementation family,m4f,fitted,S2-0033,ML-DSA-44 m4f,verify,1.42162e+06,1.46352e+06,2.94732,20261021
+modelled,implementation family,m4f,fitted,S2-0040,ML-DSA-65 m4f,keygen,2.51601e+06,2.51972e+06,0.147675,20261021
+modelled,implementation family,m4f,fitted,S2-0041,ML-DSA-65 m4f,sign,6.19317e+06,5.67169e+06,-8.42024,20261021
+modelled,implementation family,m4f,fitted,S2-0042,ML-DSA-65 m4f,verify,2.41594e+06,2.45479e+06,1.608,20261021
+modelled,implementation family,m4f,fitted,S2-0049,ML-DSA-87 m4f,keygen,4.27586e+06,4.27108e+06,-0.111747,20261021
+modelled,implementation family,m4f,fitted,S2-0050,ML-DSA-87 m4f,sign,7.94738e+06,9.48724e+06,19.3757,20261021
+modelled,implementation family,m4f,fitted,S2-0051,ML-DSA-87 m4f,verify,4.1931e+06,4.22306e+06,0.714338,20261021
+modelled,implementation family,m4f,reduced,S2-0031,ML-DSA-44 m4f,keygen,1.42602e+06,1.45084e+06,1.74036,20261021
+modelled,implementation family,m4f,reduced,S2-0032,ML-DSA-44 m4f,sign,3.94312e+06,3.43189e+06,-12.9652,20261021
+modelled,implementation family,m4f,reduced,S2-0033,ML-DSA-44 m4f,verify,1.42162e+06,1.43103e+06,0.661417,20261021
+modelled,implementation family,m4f,reduced,S2-0040,ML-DSA-65 m4f,keygen,2.51601e+06,2.56712e+06,2.03139,20261021
+modelled,implementation family,m4f,reduced,S2-0041,ML-DSA-65 m4f,sign,6.19317e+06,5.2859e+06,-14.6495,20261021
+modelled,implementation family,m4f,reduced,S2-0042,ML-DSA-65 m4f,verify,2.41594e+06,2.44384e+06,1.15464,20261021
+modelled,implementation family,m4f,reduced,S2-0049,ML-DSA-87 m4f,keygen,4.27586e+06,4.36724e+06,2.13718,20261021
+modelled,implementation family,m4f,reduced,S2-0050,ML-DSA-87 m4f,sign,7.94738e+06,8.92519e+06,12.3035,20261021
+modelled,implementation family,m4f,reduced,S2-0051,ML-DSA-87 m4f,verify,4.1931e+06,4.25469e+06,1.46878,20261021
+modelled,implementation family,m4fspeed,fitted,S2-0004,ML-KEM-1024 m4fspeed,keygen,1.01898e+06,1.05105e+06,3.14779,20261021
+modelled,implementation family,m4fspeed,fitted,S2-0005,ML-KEM-1024 m4fspeed,encaps,1.03156e+06,1.05096e+06,1.88053,20261021
+modelled,implementation family,m4fspeed,fitted,S2-0006,ML-KEM-1024 m4fspeed,decaps,1.09401e+06,1.09627e+06,0.206581,20261021
+modelled,implementation family,m4fspeed,fitted,S2-0013,ML-KEM-512 m4fspeed,keygen,392423,399330,1.76021,20261021
+modelled,implementation family,m4fspeed,fitted,S2-0014,ML-KEM-512 m4fspeed,encaps,390881,395202,1.1054,20261021
+modelled,implementation family,m4fspeed,fitted,S2-0015,ML-KEM-512 m4fspeed,decaps,428167,422112,-1.41407,20261021
+modelled,implementation family,m4fspeed,fitted,S2-0022,ML-KEM-768 m4fspeed,keygen,642096,664656,3.51342,20261021
+modelled,implementation family,m4fspeed,fitted,S2-0023,ML-KEM-768 m4fspeed,encaps,658754,671565,1.94466,20261021
+modelled,implementation family,m4fspeed,fitted,S2-0024,ML-KEM-768 m4fspeed,decaps,707827,706417,-0.199239,20261021
+modelled,implementation family,m4fspeed,reduced,S2-0004,ML-KEM-1024 m4fspeed,keygen,1.01898e+06,1.02331e+06,0.425353,20261021
+modelled,implementation family,m4fspeed,reduced,S2-0005,ML-KEM-1024 m4fspeed,encaps,1.03156e+06,1.02962e+06,-0.188351,20261021
+modelled,implementation family,m4fspeed,reduced,S2-0006,ML-KEM-1024 m4fspeed,decaps,1.09401e+06,1.08576e+06,-0.754137,20261021
+modelled,implementation family,m4fspeed,reduced,S2-0013,ML-KEM-512 m4fspeed,keygen,392423,399377,1.77212,20261021
+modelled,implementation family,m4fspeed,reduced,S2-0014,ML-KEM-512 m4fspeed,encaps,390881,394591,0.949164,20261021
+modelled,implementation family,m4fspeed,reduced,S2-0015,ML-KEM-512 m4fspeed,decaps,428167,427482,-0.160014,20261021
+modelled,implementation family,m4fspeed,reduced,S2-0022,ML-KEM-768 m4fspeed,keygen,642096,648213,0.952697,20261021
+modelled,implementation family,m4fspeed,reduced,S2-0023,ML-KEM-768 m4fspeed,encaps,658754,660645,0.286992,20261021
+modelled,implementation family,m4fspeed,reduced,S2-0024,ML-KEM-768 m4fspeed,decaps,707827,704296,-0.498916,20261021
+modelled,implementation family,m4fstack,fitted,S2-0007,ML-KEM-1024 m4fstack,keygen,1.0202e+06,1.02678e+06,0.644885,20261021
+modelled,implementation family,m4fstack,fitted,S2-0008,ML-KEM-1024 m4fstack,encaps,1.03795e+06,1.05592e+06,1.73069,20261021
+modelled,implementation family,m4fstack,fitted,S2-0009,ML-KEM-1024 m4fstack,decaps,1.10098e+06,1.10328e+06,0.208825,20261021
+modelled,implementation family,m4fstack,fitted,S2-0016,ML-KEM-512 m4fstack,keygen,392224,395784,0.90769,20261021
+modelled,implementation family,m4fstack,fitted,S2-0017,ML-KEM-512 m4fstack,encaps,392864,408764,4.04716,20261021
+modelled,implementation family,m4fstack,fitted,S2-0018,ML-KEM-512 m4fstack,decaps,430202,437438,1.68191,20261021
+modelled,implementation family,m4fstack,fitted,S2-0025,ML-KEM-768 m4fstack,keygen,644195,654751,1.63857,20261021
+modelled,implementation family,m4fstack,fitted,S2-0026,ML-KEM-768 m4fstack,encaps,664654,684407,2.97195,20261021
+modelled,implementation family,m4fstack,fitted,S2-0027,ML-KEM-768 m4fstack,decaps,714194,720782,0.922456,20261021
+modelled,implementation family,m4fstack,fitted,S2-0034,ML-DSA-44 m4fstack,keygen,1.79906e+06,1.79554e+06,-0.195579,20261021
+modelled,implementation family,m4fstack,fitted,S2-0035,ML-DSA-44 m4fstack,sign,1.21343e+07,1.22382e+07,0.856044,20261021
+modelled,implementation family,m4fstack,fitted,S2-0036,ML-DSA-44 m4fstack,verify,3.24233e+06,3.84291e+06,18.5229,20261021
+modelled,implementation family,m4fstack,fitted,S2-0043,ML-DSA-65 m4fstack,keygen,3.41262e+06,3.42161e+06,0.263479,20261021
+modelled,implementation family,m4fstack,fitted,S2-0044,ML-DSA-65 m4fstack,sign,2.44215e+07,2.3239e+07,-4.84196,20261021
+modelled,implementation family,m4fstack,fitted,S2-0045,ML-DSA-65 m4fstack,verify,5.7324e+06,6.64197e+06,15.8673,20261021
+modelled,implementation family,m4fstack,fitted,S2-0052,ML-DSA-87 m4fstack,keygen,5.82054e+06,5.74605e+06,-1.27975,20261021
+modelled,implementation family,m4fstack,fitted,S2-0053,ML-DSA-87 m4fstack,sign,3.33579e+07,4.40982e+07,32.1972,20261021
+modelled,implementation family,m4fstack,fitted,S2-0054,ML-DSA-87 m4fstack,verify,9.91151e+06,1.14432e+07,15.4534,20261021
+modelled,implementation family,m4fstack,reduced,S2-0007,ML-KEM-1024 m4fstack,keygen,1.0202e+06,1.02099e+06,0.0770064,20261021
+modelled,implementation family,m4fstack,reduced,S2-0008,ML-KEM-1024 m4fstack,encaps,1.03795e+06,1.02785e+06,-0.97345,20261021
+modelled,implementation family,m4fstack,reduced,S2-0009,ML-KEM-1024 m4fstack,decaps,1.10098e+06,1.088e+06,-1.17895,20261021
+modelled,implementation family,m4fstack,reduced,S2-0016,ML-KEM-512 m4fstack,keygen,392224,396628,1.12288,20261021
+modelled,implementation family,m4fstack,reduced,S2-0017,ML-KEM-512 m4fstack,encaps,392864,391895,-0.246744,20261021
+modelled,implementation family,m4fstack,reduced,S2-0018,ML-KEM-512 m4fstack,decaps,430202,426348,-0.89596,20261021
+modelled,implementation family,m4fstack,reduced,S2-0025,ML-KEM-768 m4fstack,keygen,644195,646375,0.33847,20261021
+modelled,implementation family,m4fstack,reduced,S2-0026,ML-KEM-768 m4fstack,encaps,664654,659156,-0.827166,20261021
+modelled,implementation family,m4fstack,reduced,S2-0027,ML-KEM-768 m4fstack,decaps,714194,705631,-1.19904,20261021
+modelled,implementation family,m4fstack,reduced,S2-0034,ML-DSA-44 m4fstack,keygen,1.79906e+06,1.8086e+06,0.530074,20261021
+modelled,implementation family,m4fstack,reduced,S2-0035,ML-DSA-44 m4fstack,sign,1.21343e+07,1.02154e+07,-15.8135,20261021
+modelled,implementation family,m4fstack,reduced,S2-0036,ML-DSA-44 m4fstack,verify,3.24233e+06,2.94213e+06,-9.25893,20261021
+modelled,implementation family,m4fstack,reduced,S2-0043,ML-DSA-65 m4fstack,keygen,3.41262e+06,3.43562e+06,0.673824,20261021
+modelled,implementation family,m4fstack,reduced,S2-0044,ML-DSA-65 m4fstack,sign,2.44215e+07,1.91241e+07,-21.6917,20261021
+modelled,implementation family,m4fstack,reduced,S2-0045,ML-DSA-65 m4fstack,verify,5.7324e+06,5.18252e+06,-9.59253,20261021
+modelled,implementation family,m4fstack,reduced,S2-0052,ML-DSA-87 m4fstack,keygen,5.82054e+06,5.85665e+06,0.620484,20261021
+modelled,implementation family,m4fstack,reduced,S2-0053,ML-DSA-87 m4fstack,sign,3.33579e+07,3.64987e+07,9.41539,20261021
+modelled,implementation family,m4fstack,reduced,S2-0054,ML-DSA-87 m4fstack,verify,9.91151e+06,8.97604e+06,-9.43823,20261021
+modelled,parameter set,ML-DSA-44,fitted,S2-0028,ML-DSA-44 clean,keygen,1.8744e+06,1.86997e+06,-0.236602,20261021
+modelled,parameter set,ML-DSA-44,fitted,S2-0029,ML-DSA-44 clean,sign,7.92596e+06,6.82788e+06,-13.8542,20261021
+modelled,parameter set,ML-DSA-44,fitted,S2-0030,ML-DSA-44 clean,verify,2.0631e+06,2.03583e+06,-1.32144,20261021
+modelled,parameter set,ML-DSA-44,fitted,S2-0031,ML-DSA-44 m4f,keygen,1.42602e+06,1.42339e+06,-0.184517,20261021
+modelled,parameter set,ML-DSA-44,fitted,S2-0032,ML-DSA-44 m4f,sign,3.94312e+06,3.46328e+06,-12.169,20261021
+modelled,parameter set,ML-DSA-44,fitted,S2-0033,ML-DSA-44 m4f,verify,1.42162e+06,1.41529e+06,-0.445564,20261021
+modelled,parameter set,ML-DSA-44,fitted,S2-0034,ML-DSA-44 m4fstack,keygen,1.79906e+06,1.794e+06,-0.281263,20261021
+modelled,parameter set,ML-DSA-44,fitted,S2-0035,ML-DSA-44 m4fstack,sign,1.21343e+07,1.05674e+07,-12.9128,20261021
+modelled,parameter set,ML-DSA-44,fitted,S2-0036,ML-DSA-44 m4fstack,verify,3.24233e+06,3.29807e+06,1.7189,20261021
+modelled,parameter set,ML-DSA-44,reduced,S2-0028,ML-DSA-44 clean,keygen,1.8744e+06,1.86107e+06,-0.711198,20261021
+modelled,parameter set,ML-DSA-44,reduced,S2-0029,ML-DSA-44 clean,sign,7.92596e+06,6.6391e+06,-16.2359,20261021
+modelled,parameter set,ML-DSA-44,reduced,S2-0030,ML-DSA-44 clean,verify,2.0631e+06,2.00944e+06,-2.60095,20261021
+modelled,parameter set,ML-DSA-44,reduced,S2-0031,ML-DSA-44 m4f,keygen,1.42602e+06,1.43801e+06,0.840696,20261021
+modelled,parameter set,ML-DSA-44,reduced,S2-0032,ML-DSA-44 m4f,sign,3.94312e+06,3.40026e+06,-13.7673,20261021
+modelled,parameter set,ML-DSA-44,reduced,S2-0033,ML-DSA-44 m4f,verify,1.42162e+06,1.41583e+06,-0.40743,20261021
+modelled,parameter set,ML-DSA-44,reduced,S2-0034,ML-DSA-44 m4fstack,keygen,1.79906e+06,1.81341e+06,0.797274,20261021
+modelled,parameter set,ML-DSA-44,reduced,S2-0035,ML-DSA-44 m4fstack,sign,1.21343e+07,1.03644e+07,-14.5861,20261021
+modelled,parameter set,ML-DSA-44,reduced,S2-0036,ML-DSA-44 m4fstack,verify,3.24233e+06,3.07792e+06,-5.07072,20261021
+modelled,parameter set,ML-DSA-65,fitted,S2-0037,ML-DSA-65 clean,keygen,3.20553e+06,3.19181e+06,-0.428165,20261021
+modelled,parameter set,ML-DSA-65,fitted,S2-0038,ML-DSA-65 clean,sign,1.23591e+07,1.05464e+07,-14.6666,20261021
+modelled,parameter set,ML-DSA-65,fitted,S2-0039,ML-DSA-65 clean,verify,3.3773e+06,3.32074e+06,-1.67484,20261021
+modelled,parameter set,ML-DSA-65,fitted,S2-0040,ML-DSA-65 m4f,keygen,2.51601e+06,2.51269e+06,-0.13181,20261021
+modelled,parameter set,ML-DSA-65,fitted,S2-0041,ML-DSA-65 m4f,sign,6.19317e+06,5.29415e+06,-14.5163,20261021
+modelled,parameter set,ML-DSA-65,fitted,S2-0042,ML-DSA-65 m4f,verify,2.41594e+06,2.39751e+06,-0.76301,20261021
+modelled,parameter set,ML-DSA-65,fitted,S2-0043,ML-DSA-65 m4fstack,keygen,3.41262e+06,3.42816e+06,0.45545,20261021
+modelled,parameter set,ML-DSA-65,fitted,S2-0044,ML-DSA-65 m4fstack,sign,2.44215e+07,1.97662e+07,-19.0624,20261021
+modelled,parameter set,ML-DSA-65,fitted,S2-0045,ML-DSA-65 m4fstack,verify,5.7324e+06,5.70592e+06,-0.461861,20261021
+modelled,parameter set,ML-DSA-65,reduced,S2-0037,ML-DSA-65 clean,keygen,3.20553e+06,3.19345e+06,-0.376865,20261021
+modelled,parameter set,ML-DSA-65,reduced,S2-0038,ML-DSA-65 clean,sign,1.23591e+07,1.02472e+07,-17.0874,20261021
+modelled,parameter set,ML-DSA-65,reduced,S2-0039,ML-DSA-65 clean,verify,3.3773e+06,3.31184e+06,-1.93839,20261021
+modelled,parameter set,ML-DSA-65,reduced,S2-0040,ML-DSA-65 m4f,keygen,2.51601e+06,2.54153e+06,1.01458,20261021
+modelled,parameter set,ML-DSA-65,reduced,S2-0041,ML-DSA-65 m4f,sign,6.19317e+06,5.25187e+06,-15.1991,20261021
+modelled,parameter set,ML-DSA-65,reduced,S2-0042,ML-DSA-65 m4f,verify,2.41594e+06,2.41945e+06,0.145231,20261021
+modelled,parameter set,ML-DSA-65,reduced,S2-0043,ML-DSA-65 m4fstack,keygen,3.41262e+06,3.43258e+06,0.584768,20261021
+modelled,parameter set,ML-DSA-65,reduced,S2-0044,ML-DSA-65 m4fstack,sign,2.44215e+07,1.94612e+07,-20.3113,20261021
+modelled,parameter set,ML-DSA-65,reduced,S2-0045,ML-DSA-65 m4fstack,verify,5.7324e+06,5.41224e+06,-5.58512,20261021
+modelled,parameter set,ML-DSA-87,fitted,S2-0046,ML-DSA-87 clean,keygen,5.34186e+06,5.32178e+06,-0.375954,20261021
+modelled,parameter set,ML-DSA-87,fitted,S2-0047,ML-DSA-87 clean,sign,1.55795e+07,1.97526e+07,26.7859,20261021
+modelled,parameter set,ML-DSA-87,fitted,S2-0048,ML-DSA-87 clean,verify,5.6102e+06,5.65279e+06,0.75913,20261021
+modelled,parameter set,ML-DSA-87,fitted,S2-0049,ML-DSA-87 m4f,keygen,4.27586e+06,4.15666e+06,-2.7877,20261021
+modelled,parameter set,ML-DSA-87,fitted,S2-0050,ML-DSA-87 m4f,sign,7.94738e+06,9.53781e+06,20.012,20261021
+modelled,parameter set,ML-DSA-87,fitted,S2-0051,ML-DSA-87 m4f,verify,4.1931e+06,4.11674e+06,-1.82111,20261021
+modelled,parameter set,ML-DSA-87,fitted,S2-0052,ML-DSA-87 m4fstack,keygen,5.82054e+06,5.76977e+06,-0.872133,20261021
+modelled,parameter set,ML-DSA-87,fitted,S2-0053,ML-DSA-87 m4fstack,sign,3.33579e+07,4.31894e+07,29.4727,20261021
+modelled,parameter set,ML-DSA-87,fitted,S2-0054,ML-DSA-87 m4fstack,verify,9.91151e+06,1.00016e+07,0.909291,20261021
+modelled,parameter set,ML-DSA-87,reduced,S2-0046,ML-DSA-87 clean,keygen,5.34186e+06,5.42789e+06,1.61049,20261021
+modelled,parameter set,ML-DSA-87,reduced,S2-0047,ML-DSA-87 clean,sign,1.55795e+07,1.91255e+07,22.7604,20261021
+modelled,parameter set,ML-DSA-87,reduced,S2-0048,ML-DSA-87 clean,verify,5.6102e+06,5.74264e+06,2.36068,20261021
+modelled,parameter set,ML-DSA-87,reduced,S2-0049,ML-DSA-87 m4f,keygen,4.27586e+06,4.32095e+06,1.0545,20261021
+modelled,parameter set,ML-DSA-87,reduced,S2-0050,ML-DSA-87 m4f,sign,7.94738e+06,9.79336e+06,23.2275,20261021
+modelled,parameter set,ML-DSA-87,reduced,S2-0051,ML-DSA-87 m4f,verify,4.1931e+06,4.29618e+06,2.45822,20261021
+modelled,parameter set,ML-DSA-87,reduced,S2-0052,ML-DSA-87 m4fstack,keygen,5.82054e+06,5.92982e+06,1.87759,20261021
+modelled,parameter set,ML-DSA-87,reduced,S2-0053,ML-DSA-87 m4fstack,sign,3.33579e+07,3.68725e+07,10.536,20261021
+modelled,parameter set,ML-DSA-87,reduced,S2-0054,ML-DSA-87 m4fstack,verify,9.91151e+06,9.00747e+06,-9.12111,20261021
+modelled,parameter set,ML-KEM-1024,fitted,S2-0001,ML-KEM-1024 clean,keygen,1.53634e+06,1.49218e+06,-2.87449,20261021
+modelled,parameter set,ML-KEM-1024,fitted,S2-0002,ML-KEM-1024 clean,encaps,1.70807e+06,1.70565e+06,-0.14201,20261021
+modelled,parameter set,ML-KEM-1024,fitted,S2-0003,ML-KEM-1024 clean,decaps,2.02033e+06,2.00197e+06,-0.908539,20261021
+modelled,parameter set,ML-KEM-1024,fitted,S2-0004,ML-KEM-1024 m4fspeed,keygen,1.01898e+06,1.0365e+06,1.71941,20261021
+modelled,parameter set,ML-KEM-1024,fitted,S2-0005,ML-KEM-1024 m4fspeed,encaps,1.03156e+06,1.03591e+06,0.420725,20261021
+modelled,parameter set,ML-KEM-1024,fitted,S2-0006,ML-KEM-1024 m4fspeed,decaps,1.09401e+06,1.08245e+06,-1.05638,20261021
+modelled,parameter set,ML-KEM-1024,fitted,S2-0007,ML-KEM-1024 m4fstack,keygen,1.0202e+06,1.0204e+06,0.0192131,20261021
+modelled,parameter set,ML-KEM-1024,fitted,S2-0008,ML-KEM-1024 m4fstack,encaps,1.03795e+06,1.04228e+06,0.417235,20261021
+modelled,parameter set,ML-KEM-1024,fitted,S2-0009,ML-KEM-1024 m4fstack,decaps,1.10098e+06,1.08725e+06,-1.24721,20261021
+modelled,parameter set,ML-KEM-1024,reduced,S2-0001,ML-KEM-1024 clean,keygen,1.53634e+06,1.57254e+06,2.35589,20261021
+modelled,parameter set,ML-KEM-1024,reduced,S2-0002,ML-KEM-1024 clean,encaps,1.70807e+06,1.7801e+06,4.21697,20261021
+modelled,parameter set,ML-KEM-1024,reduced,S2-0003,ML-KEM-1024 clean,decaps,2.02033e+06,2.09929e+06,3.90853,20261021
+modelled,parameter set,ML-KEM-1024,reduced,S2-0004,ML-KEM-1024 m4fspeed,keygen,1.01898e+06,1.02227e+06,0.323019,20261021
+modelled,parameter set,ML-KEM-1024,reduced,S2-0005,ML-KEM-1024 m4fspeed,encaps,1.03156e+06,1.02842e+06,-0.305097,20261021
+modelled,parameter set,ML-KEM-1024,reduced,S2-0006,ML-KEM-1024 m4fspeed,decaps,1.09401e+06,1.0849e+06,-0.832619,20261021
+modelled,parameter set,ML-KEM-1024,reduced,S2-0007,ML-KEM-1024 m4fstack,keygen,1.0202e+06,1.03075e+06,1.03398,20261021
+modelled,parameter set,ML-KEM-1024,reduced,S2-0008,ML-KEM-1024 m4fstack,encaps,1.03795e+06,1.04131e+06,0.323531,20261021
+modelled,parameter set,ML-KEM-1024,reduced,S2-0009,ML-KEM-1024 m4fstack,decaps,1.10098e+06,1.09968e+06,-0.118018,20261021
+modelled,parameter set,ML-KEM-512,fitted,S2-0010,ML-KEM-512 clean,keygen,595793,582166,-2.28715,20261021
+modelled,parameter set,ML-KEM-512,fitted,S2-0011,ML-KEM-512 clean,encaps,700605,719168,2.64951,20261021
+modelled,parameter set,ML-KEM-512,fitted,S2-0012,ML-KEM-512 clean,decaps,888653,905860,1.9363,20261021
+modelled,parameter set,ML-KEM-512,fitted,S2-0013,ML-KEM-512 m4fspeed,keygen,392423,396392,1.01149,20261021
+modelled,parameter set,ML-KEM-512,fitted,S2-0014,ML-KEM-512 m4fspeed,encaps,390881,392541,0.424695,20261021
+modelled,parameter set,ML-KEM-512,fitted,S2-0015,ML-KEM-512 m4fspeed,decaps,428167,420266,-1.84526,20261021
+modelled,parameter set,ML-KEM-512,fitted,S2-0016,ML-KEM-512 m4fstack,keygen,392224,391983,-0.061441,20261021
+modelled,parameter set,ML-KEM-512,fitted,S2-0017,ML-KEM-512 m4fstack,encaps,392864,399625,1.72093,20261021
+modelled,parameter set,ML-KEM-512,fitted,S2-0018,ML-KEM-512 m4fstack,decaps,430202,426455,-0.870901,20261021
+modelled,parameter set,ML-KEM-512,reduced,S2-0010,ML-KEM-512 clean,keygen,595793,610456,2.46108,20261021
+modelled,parameter set,ML-KEM-512,reduced,S2-0011,ML-KEM-512 clean,encaps,700605,738226,5.36974,20261021
+modelled,parameter set,ML-KEM-512,reduced,S2-0012,ML-KEM-512 clean,decaps,888653,934191,5.12436,20261021
+modelled,parameter set,ML-KEM-512,reduced,S2-0013,ML-KEM-512 m4fspeed,keygen,392423,399834,1.88856,20261021
+modelled,parameter set,ML-KEM-512,reduced,S2-0014,ML-KEM-512 m4fspeed,encaps,390881,395226,1.11153,20261021
+modelled,parameter set,ML-KEM-512,reduced,S2-0015,ML-KEM-512 m4fspeed,decaps,428167,429084,0.214275,20261021
+modelled,parameter set,ML-KEM-512,reduced,S2-0016,ML-KEM-512 m4fstack,keygen,392224,400712,2.16411,20261021
+modelled,parameter set,ML-KEM-512,reduced,S2-0017,ML-KEM-512 m4fstack,encaps,392864,398155,1.34683,20261021
+modelled,parameter set,ML-KEM-512,reduced,S2-0018,ML-KEM-512 m4fstack,decaps,430202,432519,0.538586,20261021
+modelled,parameter set,ML-KEM-768,fitted,S2-0019,ML-KEM-768 clean,keygen,988722,967131,-2.18372,20261021
+modelled,parameter set,ML-KEM-768,fitted,S2-0020,ML-KEM-768 clean,encaps,1.13822e+06,1.15076e+06,1.10093,20261021
+modelled,parameter set,ML-KEM-768,fitted,S2-0021,ML-KEM-768 clean,decaps,1.38798e+06,1.39117e+06,0.229427,20261021
+modelled,parameter set,ML-KEM-768,fitted,S2-0022,ML-KEM-768 m4fspeed,keygen,642096,658412,2.54102,20261021
+modelled,parameter set,ML-KEM-768,fitted,S2-0023,ML-KEM-768 m4fspeed,encaps,658754,665302,0.993953,20261021
+modelled,parameter set,ML-KEM-768,fitted,S2-0024,ML-KEM-768 m4fspeed,decaps,707827,701303,-0.92173,20261021
+modelled,parameter set,ML-KEM-768,fitted,S2-0025,ML-KEM-768 m4fstack,keygen,644195,648968,0.740931,20261021
+modelled,parameter set,ML-KEM-768,fitted,S2-0026,ML-KEM-768 m4fstack,encaps,664654,672667,1.20559,20261021
+modelled,parameter set,ML-KEM-768,fitted,S2-0027,ML-KEM-768 m4fstack,decaps,714194,707464,-0.942362,20261021
+modelled,parameter set,ML-KEM-768,reduced,S2-0019,ML-KEM-768 clean,keygen,988722,1.01262e+06,2.4175,20261021
+modelled,parameter set,ML-KEM-768,reduced,S2-0020,ML-KEM-768 clean,encaps,1.13822e+06,1.19196e+06,4.72099,20261021
+modelled,parameter set,ML-KEM-768,reduced,S2-0021,ML-KEM-768 clean,decaps,1.38798e+06,1.44938e+06,4.42303,20261021
+modelled,parameter set,ML-KEM-768,reduced,S2-0022,ML-KEM-768 m4fspeed,keygen,642096,647999,0.919344,20261021
+modelled,parameter set,ML-KEM-768,reduced,S2-0023,ML-KEM-768 m4fspeed,encaps,658754,660313,0.236645,20261021
+modelled,parameter set,ML-KEM-768,reduced,S2-0024,ML-KEM-768 m4fspeed,decaps,707827,704641,-0.450141,20261021
+modelled,parameter set,ML-KEM-768,reduced,S2-0025,ML-KEM-768 m4fstack,keygen,644195,652551,1.29718,20261021
+modelled,parameter set,ML-KEM-768,reduced,S2-0026,ML-KEM-768 m4fstack,encaps,664654,668285,0.546327,20261021
+modelled,parameter set,ML-KEM-768,reduced,S2-0027,ML-KEM-768 m4fstack,decaps,714194,714008,-0.0260564,20261021
+modelled,scheme,ML-DSA,fitted,S2-0028,ML-DSA-44 clean,keygen,1.8744e+06,1.96408e+06,4.78421,20261021
+modelled,scheme,ML-DSA,fitted,S2-0029,ML-DSA-44 clean,sign,7.92596e+06,7.67071e+06,-3.22036,20261021
+modelled,scheme,ML-DSA,fitted,S2-0030,ML-DSA-44 clean,verify,2.0631e+06,2.20623e+06,6.93764,20261021
+modelled,scheme,ML-DSA,fitted,S2-0031,ML-DSA-44 m4f,keygen,1.42602e+06,1.46442e+06,2.69223,20261021
+modelled,scheme,ML-DSA,fitted,S2-0032,ML-DSA-44 m4f,sign,3.94312e+06,3.80114e+06,-3.60079,20261021
+modelled,scheme,ML-DSA,fitted,S2-0033,ML-DSA-44 m4f,verify,1.42162e+06,1.50402e+06,5.79614,20261021
+modelled,scheme,ML-DSA,fitted,S2-0034,ML-DSA-44 m4fstack,keygen,1.79906e+06,1.82322e+06,1.34294,20261021
+modelled,scheme,ML-DSA,fitted,S2-0035,ML-DSA-44 m4fstack,sign,1.21343e+07,1.00809e+07,-16.9225,20261021
+modelled,scheme,ML-DSA,fitted,S2-0036,ML-DSA-44 m4fstack,verify,3.24233e+06,2.88945e+06,-10.8835,20261021
+modelled,scheme,ML-DSA,fitted,S2-0037,ML-DSA-65 clean,keygen,3.20553e+06,3.3809e+06,5.47063,20261021
+modelled,scheme,ML-DSA,fitted,S2-0038,ML-DSA-65 clean,sign,1.23591e+07,1.18639e+07,-4.00679,20261021
+modelled,scheme,ML-DSA,fitted,S2-0039,ML-DSA-65 clean,verify,3.3773e+06,3.61692e+06,7.09484,20261021
+modelled,scheme,ML-DSA,fitted,S2-0040,ML-DSA-65 m4f,keygen,2.51601e+06,2.60794e+06,3.6538,20261021
+modelled,scheme,ML-DSA,fitted,S2-0041,ML-DSA-65 m4f,sign,6.19317e+06,5.88557e+06,-4.96671,20261021
+modelled,scheme,ML-DSA,fitted,S2-0042,ML-DSA-65 m4f,verify,2.41594e+06,2.55676e+06,5.82872,20261021
+modelled,scheme,ML-DSA,fitted,S2-0043,ML-DSA-65 m4fstack,keygen,3.41262e+06,3.49625e+06,2.45058,20261021
+modelled,scheme,ML-DSA,fitted,S2-0044,ML-DSA-65 m4fstack,sign,2.44215e+07,1.87369e+07,-23.2771,20261021
+modelled,scheme,ML-DSA,fitted,S2-0045,ML-DSA-65 m4fstack,verify,5.7324e+06,5.01981e+06,-12.4309,20261021
+modelled,scheme,ML-DSA,fitted,S2-0046,ML-DSA-87 clean,keygen,5.34186e+06,5.62321e+06,5.26683,20261021
+modelled,scheme,ML-DSA,fitted,S2-0047,ML-DSA-87 clean,sign,1.55795e+07,1.98243e+07,27.2457,20261021
+modelled,scheme,ML-DSA,fitted,S2-0048,ML-DSA-87 clean,verify,5.6102e+06,5.99216e+06,6.80834,20261021
+modelled,scheme,ML-DSA,fitted,S2-0049,ML-DSA-87 m4f,keygen,4.27586e+06,4.41943e+06,3.35769,20261021
+modelled,scheme,ML-DSA,fitted,S2-0050,ML-DSA-87 m4f,sign,7.94738e+06,9.99288e+06,25.7381,20261021
+modelled,scheme,ML-DSA,fitted,S2-0051,ML-DSA-87 m4f,verify,4.1931e+06,4.41986e+06,5.40777,20261021
+modelled,scheme,ML-DSA,fitted,S2-0052,ML-DSA-87 m4fstack,keygen,5.82054e+06,5.90502e+06,1.45138,20261021
+modelled,scheme,ML-DSA,fitted,S2-0053,ML-DSA-87 m4fstack,sign,3.33579e+07,3.5502e+07,6.4276,20261021
+modelled,scheme,ML-DSA,fitted,S2-0054,ML-DSA-87 m4fstack,verify,9.91151e+06,8.65471e+06,-12.6802,20261021
+modelled,scheme,ML-DSA,reduced,S2-0028,ML-DSA-44 clean,keygen,1.8744e+06,1.84629e+06,-1.49972,20261021
+modelled,scheme,ML-DSA,reduced,S2-0029,ML-DSA-44 clean,sign,7.92596e+06,6.64927e+06,-16.1077,20261021
+modelled,scheme,ML-DSA,reduced,S2-0030,ML-DSA-44 clean,verify,2.0631e+06,2.00142e+06,-2.98959,20261021
+modelled,scheme,ML-DSA,reduced,S2-0031,ML-DSA-44 m4f,keygen,1.42602e+06,1.43458e+06,0.600268,20261021
+modelled,scheme,ML-DSA,reduced,S2-0032,ML-DSA-44 m4f,sign,3.94312e+06,3.46885e+06,-12.0279,20261021
+modelled,scheme,ML-DSA,reduced,S2-0033,ML-DSA-44 m4f,verify,1.42162e+06,1.42318e+06,0.109565,20261021
+modelled,scheme,ML-DSA,reduced,S2-0034,ML-DSA-44 m4fstack,keygen,1.79906e+06,1.81255e+06,0.749692,20261021
+modelled,scheme,ML-DSA,reduced,S2-0035,ML-DSA-44 m4fstack,sign,1.21343e+07,1.02496e+07,-15.5322,20261021
+modelled,scheme,ML-DSA,reduced,S2-0036,ML-DSA-44 m4fstack,verify,3.24233e+06,3.00961e+06,-7.17775,20261021
+modelled,scheme,ML-DSA,reduced,S2-0037,ML-DSA-65 clean,keygen,3.20553e+06,3.17189e+06,-1.04948,20261021
+modelled,scheme,ML-DSA,reduced,S2-0038,ML-DSA-65 clean,sign,1.23591e+07,1.02546e+07,-17.0274,20261021
+modelled,scheme,ML-DSA,reduced,S2-0039,ML-DSA-65 clean,verify,3.3773e+06,3.2974e+06,-2.36586,20261021
+modelled,scheme,ML-DSA,reduced,S2-0040,ML-DSA-65 m4f,keygen,2.51601e+06,2.53499e+06,0.754551,20261021
+modelled,scheme,ML-DSA,reduced,S2-0041,ML-DSA-65 m4f,sign,6.19317e+06,5.33663e+06,-13.8304,20261021
+modelled,scheme,ML-DSA,reduced,S2-0042,ML-DSA-65 m4f,verify,2.41594e+06,2.42489e+06,0.370201,20261021
+modelled,scheme,ML-DSA,reduced,S2-0043,ML-DSA-65 m4fstack,keygen,3.41262e+06,3.43334e+06,0.607018,20261021
+modelled,scheme,ML-DSA,reduced,S2-0044,ML-DSA-65 m4fstack,sign,2.44215e+07,1.92317e+07,-21.2511,20261021
+modelled,scheme,ML-DSA,reduced,S2-0045,ML-DSA-65 m4fstack,verify,5.7324e+06,5.31421e+06,-7.29509,20261021
+modelled,scheme,ML-DSA,reduced,S2-0046,ML-DSA-87 clean,keygen,5.34186e+06,5.30262e+06,-0.734587,20261021
+modelled,scheme,ML-DSA,reduced,S2-0047,ML-DSA-87 clean,sign,1.55795e+07,1.70442e+07,9.40142,20261021
+modelled,scheme,ML-DSA,reduced,S2-0048,ML-DSA-87 clean,verify,5.6102e+06,5.50751e+06,-1.83043,20261021
+modelled,scheme,ML-DSA,reduced,S2-0049,ML-DSA-87 m4f,keygen,4.27586e+06,4.31086e+06,0.818649,20261021
+modelled,scheme,ML-DSA,reduced,S2-0050,ML-DSA-87 m4f,sign,7.94738e+06,9.00735e+06,13.3374,20261021
+modelled,scheme,ML-DSA,reduced,S2-0051,ML-DSA-87 m4f,verify,4.1931e+06,4.21385e+06,0.494749,20261021
+modelled,scheme,ML-DSA,reduced,S2-0052,ML-DSA-87 m4fstack,keygen,5.82054e+06,5.87031e+06,0.855064,20261021
+modelled,scheme,ML-DSA,reduced,S2-0053,ML-DSA-87 m4fstack,sign,3.33579e+07,3.67543e+07,10.1817,20261021
+modelled,scheme,ML-DSA,reduced,S2-0054,ML-DSA-87 m4fstack,verify,9.91151e+06,9.19613e+06,-7.21775,20261021
+modelled,scheme,ML-KEM,fitted,S2-0001,ML-KEM-1024 clean,keygen,1.53634e+06,1.20632e+06,-21.4814,20261021
+modelled,scheme,ML-KEM,fitted,S2-0002,ML-KEM-1024 clean,encaps,1.70807e+06,1.34016e+06,-21.5395,20261021
+modelled,scheme,ML-KEM,fitted,S2-0003,ML-KEM-1024 clean,decaps,2.02033e+06,1.49638e+06,-25.9336,20261021
+modelled,scheme,ML-KEM,fitted,S2-0004,ML-KEM-1024 m4fspeed,keygen,1.01898e+06,1.16466e+06,14.2975,20261021
+modelled,scheme,ML-KEM,fitted,S2-0005,ML-KEM-1024 m4fspeed,encaps,1.03156e+06,1.14582e+06,11.0763,20261021
+modelled,scheme,ML-KEM,fitted,S2-0006,ML-KEM-1024 m4fspeed,decaps,1.09401e+06,1.21114e+06,10.7071,20261021
+modelled,scheme,ML-KEM,fitted,S2-0007,ML-KEM-1024 m4fstack,keygen,1.0202e+06,1.11991e+06,9.77309,20261021
+modelled,scheme,ML-KEM,fitted,S2-0008,ML-KEM-1024 m4fstack,encaps,1.03795e+06,1.13229e+06,9.08846,20261021
+modelled,scheme,ML-KEM,fitted,S2-0009,ML-KEM-1024 m4fstack,decaps,1.10098e+06,1.19666e+06,8.69009,20261021
+modelled,scheme,ML-KEM,fitted,S2-0010,ML-KEM-512 clean,keygen,595793,454751,-23.6729,20261021
+modelled,scheme,ML-KEM,fitted,S2-0011,ML-KEM-512 clean,encaps,700605,528618,-24.5484,20261021
+modelled,scheme,ML-KEM,fitted,S2-0012,ML-KEM-512 clean,decaps,888653,623044,-29.889,20261021
+modelled,scheme,ML-KEM,fitted,S2-0013,ML-KEM-512 m4fspeed,keygen,392423,441618,12.5361,20261021
+modelled,scheme,ML-KEM,fitted,S2-0014,ML-KEM-512 m4fspeed,encaps,390881,429066,9.76899,20261021
+modelled,scheme,ML-KEM,fitted,S2-0015,ML-KEM-512 m4fspeed,decaps,428167,469470,9.64644,20261021
+modelled,scheme,ML-KEM,fitted,S2-0016,ML-KEM-512 m4fstack,keygen,392224,428830,9.33295,20261021
+modelled,scheme,ML-KEM,fitted,S2-0017,ML-KEM-512 m4fstack,encaps,392864,432278,10.0324,20261021
+modelled,scheme,ML-KEM,fitted,S2-0018,ML-KEM-512 m4fstack,decaps,430202,470283,9.31671,20261021
+modelled,scheme,ML-KEM,fitted,S2-0019,ML-KEM-768 clean,keygen,988722,765123,-22.615,20261021
+modelled,scheme,ML-KEM,fitted,S2-0020,ML-KEM-768 clean,encaps,1.13822e+06,877018,-22.9487,20261021
+modelled,scheme,ML-KEM,fitted,S2-0021,ML-KEM-768 clean,decaps,1.38798e+06,1.00054e+06,-27.9144,20261021
+modelled,scheme,ML-KEM,fitted,S2-0022,ML-KEM-768 m4fspeed,keygen,642096,739618,15.1881,20261021
+modelled,scheme,ML-KEM,fitted,S2-0023,ML-KEM-768 m4fspeed,encaps,658754,732360,11.1736,20261021
+modelled,scheme,ML-KEM,fitted,S2-0024,ML-KEM-768 m4fspeed,decaps,707827,783394,10.6759,20261021
+modelled,scheme,ML-KEM,fitted,S2-0025,ML-KEM-768 m4fstack,keygen,644195,713743,10.7962,20261021
+modelled,scheme,ML-KEM,fitted,S2-0026,ML-KEM-768 m4fstack,encaps,664654,730075,9.84289,20261021
+modelled,scheme,ML-KEM,fitted,S2-0027,ML-KEM-768 m4fstack,decaps,714194,779529,9.14802,20261021
+modelled,scheme,ML-KEM,reduced,S2-0001,ML-KEM-1024 clean,keygen,1.53634e+06,1.64901e+06,7.33333,20261021
+modelled,scheme,ML-KEM,reduced,S2-0002,ML-KEM-1024 clean,encaps,1.70807e+06,1.89099e+06,10.7092,20261021
+modelled,scheme,ML-KEM,reduced,S2-0003,ML-KEM-1024 clean,decaps,2.02033e+06,2.25729e+06,11.7291,20261021
+modelled,scheme,ML-KEM,reduced,S2-0004,ML-KEM-1024 m4fspeed,keygen,1.01898e+06,1.03063e+06,1.14376,20261021
+modelled,scheme,ML-KEM,reduced,S2-0005,ML-KEM-1024 m4fspeed,encaps,1.03156e+06,1.03317e+06,0.155389,20261021
+modelled,scheme,ML-KEM,reduced,S2-0006,ML-KEM-1024 m4fspeed,decaps,1.09401e+06,1.09795e+06,0.360078,20261021
+modelled,scheme,ML-KEM,reduced,S2-0007,ML-KEM-1024 m4fstack,keygen,1.0202e+06,1.04903e+06,2.82576,20261021
+modelled,scheme,ML-KEM,reduced,S2-0008,ML-KEM-1024 m4fstack,encaps,1.03795e+06,1.05925e+06,2.05167,20261021
+modelled,scheme,ML-KEM,reduced,S2-0009,ML-KEM-1024 m4fstack,decaps,1.10098e+06,1.12772e+06,2.42878,20261021
+modelled,scheme,ML-KEM,reduced,S2-0010,ML-KEM-512 clean,keygen,595793,641272,7.63328,20261021
+modelled,scheme,ML-KEM,reduced,S2-0011,ML-KEM-512 clean,encaps,700605,793164,13.2112,20261021
+modelled,scheme,ML-KEM,reduced,S2-0012,ML-KEM-512 clean,decaps,888653,1.01783e+06,14.5362,20261021
+modelled,scheme,ML-KEM,reduced,S2-0013,ML-KEM-512 m4fspeed,keygen,392423,403315,2.77557,20261021
+modelled,scheme,ML-KEM,reduced,S2-0014,ML-KEM-512 m4fspeed,encaps,390881,399690,2.25375,20261021
+modelled,scheme,ML-KEM,reduced,S2-0015,ML-KEM-512 m4fspeed,decaps,428167,438503,2.41393,20261021
+modelled,scheme,ML-KEM,reduced,S2-0016,ML-KEM-512 m4fstack,keygen,392224,405589,3.40746,20261021
+modelled,scheme,ML-KEM,reduced,S2-0017,ML-KEM-512 m4fstack,encaps,392864,405186,3.13655,20261021
+modelled,scheme,ML-KEM,reduced,S2-0018,ML-KEM-512 m4fstack,decaps,430202,444976,3.43412,20261021
+modelled,scheme,ML-KEM,reduced,S2-0019,ML-KEM-768 clean,keygen,988722,1.06579e+06,7.79429,20261021
+modelled,scheme,ML-KEM,reduced,S2-0020,ML-KEM-768 clean,encaps,1.13822e+06,1.27445e+06,11.9684,20261021
+modelled,scheme,ML-KEM,reduced,S2-0021,ML-KEM-768 clean,decaps,1.38798e+06,1.56979e+06,13.0986,20261021
+modelled,scheme,ML-KEM,reduced,S2-0022,ML-KEM-768 m4fspeed,keygen,642096,655329,2.06086,20261021
+modelled,scheme,ML-KEM,reduced,S2-0023,ML-KEM-768 m4fspeed,encaps,658754,666401,1.16078,20261021
+modelled,scheme,ML-KEM,reduced,S2-0024,ML-KEM-768 m4fspeed,decaps,707827,717671,1.39068,20261021
+modelled,scheme,ML-KEM,reduced,S2-0025,ML-KEM-768 m4fstack,keygen,644195,664814,3.20074,20261021
+modelled,scheme,ML-KEM,reduced,S2-0026,ML-KEM-768 m4fstack,encaps,664654,681580,2.54658,20261021
+modelled,scheme,ML-KEM,reduced,S2-0027,ML-KEM-768 m4fstack,decaps,714194,735438,2.97458,20261021
+modelled,binary,ML-DSA-44 clean,fitted,S2-0028,ML-DSA-44 clean,keygen,1.8744e+06,1.86453e+06,-0.526716,20261021
+modelled,binary,ML-DSA-44 clean,fitted,S2-0029,ML-DSA-44 clean,sign,7.92596e+06,6.96102e+06,-12.1743,20261021
+modelled,binary,ML-DSA-44 clean,fitted,S2-0030,ML-DSA-44 clean,verify,2.0631e+06,2.03688e+06,-1.27064,20261021
+modelled,binary,ML-DSA-44 clean,reduced,S2-0028,ML-DSA-44 clean,keygen,1.8744e+06,1.85901e+06,-0.821385,20261021
+modelled,binary,ML-DSA-44 clean,reduced,S2-0029,ML-DSA-44 clean,sign,7.92596e+06,6.71165e+06,-15.3207,20261021
+modelled,binary,ML-DSA-44 clean,reduced,S2-0030,ML-DSA-44 clean,verify,2.0631e+06,2.01374e+06,-2.39236,20261021
+modelled,binary,ML-DSA-44 m4f,fitted,S2-0031,ML-DSA-44 m4f,keygen,1.42602e+06,1.42835e+06,0.162849,20261021
+modelled,binary,ML-DSA-44 m4f,fitted,S2-0032,ML-DSA-44 m4f,sign,3.94312e+06,3.56257e+06,-9.65099,20261021
+modelled,binary,ML-DSA-44 m4f,fitted,S2-0033,ML-DSA-44 m4f,verify,1.42162e+06,1.42781e+06,0.435434,20261021
+modelled,binary,ML-DSA-44 m4f,reduced,S2-0031,ML-DSA-44 m4f,keygen,1.42602e+06,1.44341e+06,1.21881,20261021
+modelled,binary,ML-DSA-44 m4f,reduced,S2-0032,ML-DSA-44 m4f,sign,3.94312e+06,3.42681e+06,-13.0939,20261021
+modelled,binary,ML-DSA-44 m4f,reduced,S2-0033,ML-DSA-44 m4f,verify,1.42162e+06,1.42414e+06,0.176772,20261021
+modelled,binary,ML-DSA-44 m4fstack,fitted,S2-0034,ML-DSA-44 m4fstack,keygen,1.79906e+06,1.8029e+06,0.213548,20261021
+modelled,binary,ML-DSA-44 m4fstack,fitted,S2-0035,ML-DSA-44 m4fstack,sign,1.21343e+07,1.07425e+07,-11.4696,20261021
+modelled,binary,ML-DSA-44 m4fstack,fitted,S2-0036,ML-DSA-44 m4fstack,verify,3.24233e+06,3.30056e+06,1.79596,20261021
+modelled,binary,ML-DSA-44 m4fstack,reduced,S2-0034,ML-DSA-44 m4fstack,keygen,1.79906e+06,1.81624e+06,0.954783,20261021
+modelled,binary,ML-DSA-44 m4fstack,reduced,S2-0035,ML-DSA-44 m4fstack,sign,1.21343e+07,1.03364e+07,-14.8163,20261021
+modelled,binary,ML-DSA-44 m4fstack,reduced,S2-0036,ML-DSA-44 m4fstack,verify,3.24233e+06,3.025e+06,-6.70313,20261021
+modelled,binary,ML-DSA-65 clean,fitted,S2-0037,ML-DSA-65 clean,keygen,3.20553e+06,3.16226e+06,-1.35003,20261021
+modelled,binary,ML-DSA-65 clean,fitted,S2-0038,ML-DSA-65 clean,sign,1.23591e+07,1.05454e+07,-14.6745,20261021
+modelled,binary,ML-DSA-65 clean,fitted,S2-0039,ML-DSA-65 clean,verify,3.3773e+06,3.30832e+06,-2.04265,20261021
+modelled,binary,ML-DSA-65 clean,reduced,S2-0037,ML-DSA-65 clean,keygen,3.20553e+06,3.1904e+06,-0.472188,20261021
+modelled,binary,ML-DSA-65 clean,reduced,S2-0038,ML-DSA-65 clean,sign,1.23591e+07,1.03548e+07,-16.2165,20261021
+modelled,binary,ML-DSA-65 clean,reduced,S2-0039,ML-DSA-65 clean,verify,3.3773e+06,3.3166e+06,-1.79744,20261021
+modelled,binary,ML-DSA-65 m4f,fitted,S2-0040,ML-DSA-65 m4f,keygen,2.51601e+06,2.49032e+06,-1.02076,20261021
+modelled,binary,ML-DSA-65 m4f,fitted,S2-0041,ML-DSA-65 m4f,sign,6.19317e+06,5.30728e+06,-14.3042,20261021
+modelled,binary,ML-DSA-65 m4f,fitted,S2-0042,ML-DSA-65 m4f,verify,2.41594e+06,2.39045e+06,-1.05508,20261021
+modelled,binary,ML-DSA-65 m4f,reduced,S2-0040,ML-DSA-65 m4f,keygen,2.51601e+06,2.5554e+06,1.56566,20261021
+modelled,binary,ML-DSA-65 m4f,reduced,S2-0041,ML-DSA-65 m4f,sign,6.19317e+06,5.26515e+06,-14.9846,20261021
+modelled,binary,ML-DSA-65 m4f,reduced,S2-0042,ML-DSA-65 m4f,verify,2.41594e+06,2.43199e+06,0.664356,20261021
+modelled,binary,ML-DSA-65 m4fstack,fitted,S2-0043,ML-DSA-65 m4fstack,keygen,3.41262e+06,3.44457e+06,0.936313,20261021
+modelled,binary,ML-DSA-65 m4fstack,fitted,S2-0044,ML-DSA-65 m4fstack,sign,2.44215e+07,1.96514e+07,-19.5324,20261021
+modelled,binary,ML-DSA-65 m4fstack,fitted,S2-0045,ML-DSA-65 m4fstack,verify,5.7324e+06,5.70619e+06,-0.457256,20261021
+modelled,binary,ML-DSA-65 m4fstack,reduced,S2-0043,ML-DSA-65 m4fstack,keygen,3.41262e+06,3.44122e+06,0.83809,20261021
+modelled,binary,ML-DSA-65 m4fstack,reduced,S2-0044,ML-DSA-65 m4fstack,sign,2.44215e+07,1.93404e+07,-20.8058,20261021
+modelled,binary,ML-DSA-65 m4fstack,reduced,S2-0045,ML-DSA-65 m4fstack,verify,5.7324e+06,5.30866e+06,-7.39192,20261021
+modelled,binary,ML-DSA-87 clean,fitted,S2-0046,ML-DSA-87 clean,keygen,5.34186e+06,5.39123e+06,0.924241,20261021
+modelled,binary,ML-DSA-87 clean,fitted,S2-0047,ML-DSA-87 clean,sign,1.55795e+07,1.96538e+07,26.1514,20261021
+modelled,binary,ML-DSA-87 clean,fitted,S2-0048,ML-DSA-87 clean,verify,5.6102e+06,5.70277e+06,1.65004,20261021
+modelled,binary,ML-DSA-87 clean,reduced,S2-0046,ML-DSA-87 clean,keygen,5.34186e+06,5.4354e+06,1.75107,20261021
+modelled,binary,ML-DSA-87 clean,reduced,S2-0047,ML-DSA-87 clean,sign,1.55795e+07,1.84443e+07,18.3885,20261021
+modelled,binary,ML-DSA-87 clean,reduced,S2-0048,ML-DSA-87 clean,verify,5.6102e+06,5.70274e+06,1.64937,20261021
+modelled,binary,ML-DSA-87 m4f,fitted,S2-0049,ML-DSA-87 m4f,keygen,4.27586e+06,4.23761e+06,-0.894508,20261021
+modelled,binary,ML-DSA-87 m4f,fitted,S2-0050,ML-DSA-87 m4f,sign,7.94738e+06,9.79053e+06,23.1919,20261021
+modelled,binary,ML-DSA-87 m4f,fitted,S2-0051,ML-DSA-87 m4f,verify,4.1931e+06,4.21771e+06,0.586783,20261021
+modelled,binary,ML-DSA-87 m4f,reduced,S2-0049,ML-DSA-87 m4f,keygen,4.27586e+06,4.29173e+06,0.371077,20261021
+modelled,binary,ML-DSA-87 m4f,reduced,S2-0050,ML-DSA-87 m4f,sign,7.94738e+06,9.52378e+06,19.8355,20261021
+modelled,binary,ML-DSA-87 m4f,reduced,S2-0051,ML-DSA-87 m4f,verify,4.1931e+06,4.23996e+06,1.11741,20261021
+modelled,binary,ML-DSA-87 m4fstack,fitted,S2-0052,ML-DSA-87 m4fstack,keygen,5.82054e+06,5.70308e+06,-2.01801,20261021
+modelled,binary,ML-DSA-87 m4fstack,fitted,S2-0053,ML-DSA-87 m4fstack,sign,3.33579e+07,4.45792e+07,33.6391,20261021
+modelled,binary,ML-DSA-87 m4fstack,fitted,S2-0054,ML-DSA-87 m4fstack,verify,9.91151e+06,9.95575e+06,0.44635,20261021
+modelled,binary,ML-DSA-87 m4fstack,reduced,S2-0052,ML-DSA-87 m4fstack,keygen,5.82054e+06,5.904e+06,1.43387,20261021
+modelled,binary,ML-DSA-87 m4fstack,reduced,S2-0053,ML-DSA-87 m4fstack,sign,3.33579e+07,3.74364e+07,12.2266,20261021
+modelled,binary,ML-DSA-87 m4fstack,reduced,S2-0054,ML-DSA-87 m4fstack,verify,9.91151e+06,9.35633e+06,-5.6014,20261021
+modelled,binary,ML-KEM-1024 clean,fitted,S2-0001,ML-KEM-1024 clean,keygen,1.53634e+06,1.49264e+06,-2.84447,20261021
+modelled,binary,ML-KEM-1024 clean,fitted,S2-0002,ML-KEM-1024 clean,encaps,1.70807e+06,1.70629e+06,-0.104509,20261021
+modelled,binary,ML-KEM-1024 clean,fitted,S2-0003,ML-KEM-1024 clean,decaps,2.02033e+06,2.00285e+06,-0.864826,20261021
+modelled,binary,ML-KEM-1024 clean,reduced,S2-0001,ML-KEM-1024 clean,keygen,1.53634e+06,1.57255e+06,2.35638,20261021
+modelled,binary,ML-KEM-1024 clean,reduced,S2-0002,ML-KEM-1024 clean,encaps,1.70807e+06,1.78005e+06,4.21394,20261021
+modelled,binary,ML-KEM-1024 clean,reduced,S2-0003,ML-KEM-1024 clean,decaps,2.02033e+06,2.09917e+06,3.90239,20261021
+modelled,binary,ML-KEM-1024 m4fspeed,fitted,S2-0004,ML-KEM-1024 m4fspeed,keygen,1.01898e+06,1.03557e+06,1.62872,20261021
+modelled,binary,ML-KEM-1024 m4fspeed,fitted,S2-0005,ML-KEM-1024 m4fspeed,encaps,1.03156e+06,1.03515e+06,0.347723,20261021
+modelled,binary,ML-KEM-1024 m4fspeed,fitted,S2-0006,ML-KEM-1024 m4fspeed,decaps,1.09401e+06,1.08225e+06,-1.07513,20261021
+modelled,binary,ML-KEM-1024 m4fspeed,reduced,S2-0004,ML-KEM-1024 m4fspeed,keygen,1.01898e+06,1.02203e+06,0.299709,20261021
+modelled,binary,ML-KEM-1024 m4fspeed,reduced,S2-0005,ML-KEM-1024 m4fspeed,encaps,1.03156e+06,1.02827e+06,-0.319521,20261021
+modelled,binary,ML-KEM-1024 m4fspeed,reduced,S2-0006,ML-KEM-1024 m4fspeed,decaps,1.09401e+06,1.08441e+06,-0.877311,20261021
+modelled,binary,ML-KEM-1024 m4fstack,fitted,S2-0007,ML-KEM-1024 m4fstack,keygen,1.0202e+06,1.02029e+06,0.00850152,20261021
+modelled,binary,ML-KEM-1024 m4fstack,fitted,S2-0008,ML-KEM-1024 m4fstack,encaps,1.03795e+06,1.04174e+06,0.364891,20261021
+modelled,binary,ML-KEM-1024 m4fstack,fitted,S2-0009,ML-KEM-1024 m4fstack,decaps,1.10098e+06,1.08773e+06,-1.20398,20261021
+modelled,binary,ML-KEM-1024 m4fstack,reduced,S2-0007,ML-KEM-1024 m4fstack,keygen,1.0202e+06,1.03072e+06,1.03124,20261021
+modelled,binary,ML-KEM-1024 m4fstack,reduced,S2-0008,ML-KEM-1024 m4fstack,encaps,1.03795e+06,1.04123e+06,0.315252,20261021
+modelled,binary,ML-KEM-1024 m4fstack,reduced,S2-0009,ML-KEM-1024 m4fstack,decaps,1.10098e+06,1.09921e+06,-0.161315,20261021
+modelled,binary,ML-KEM-512 clean,fitted,S2-0010,ML-KEM-512 clean,keygen,595793,582132,-2.29291,20261021
+modelled,binary,ML-KEM-512 clean,fitted,S2-0011,ML-KEM-512 clean,encaps,700605,719077,2.63664,20261021
+modelled,binary,ML-KEM-512 clean,fitted,S2-0012,ML-KEM-512 clean,decaps,888653,905974,1.94918,20261021
+modelled,binary,ML-KEM-512 clean,reduced,S2-0010,ML-KEM-512 clean,keygen,595793,610282,2.43196,20261021
+modelled,binary,ML-KEM-512 clean,reduced,S2-0011,ML-KEM-512 clean,encaps,700605,738049,5.34457,20261021
+modelled,binary,ML-KEM-512 clean,reduced,S2-0012,ML-KEM-512 clean,decaps,888653,934082,5.1121,20261021
+modelled,binary,ML-KEM-512 m4fspeed,fitted,S2-0013,ML-KEM-512 m4fspeed,keygen,392423,396528,1.04602,20261021
+modelled,binary,ML-KEM-512 m4fspeed,fitted,S2-0014,ML-KEM-512 m4fspeed,encaps,390881,392502,0.414655,20261021
+modelled,binary,ML-KEM-512 m4fspeed,fitted,S2-0015,ML-KEM-512 m4fspeed,decaps,428167,420398,-1.81454,20261021
+modelled,binary,ML-KEM-512 m4fspeed,reduced,S2-0013,ML-KEM-512 m4fspeed,keygen,392423,399343,1.76347,20261021
+modelled,binary,ML-KEM-512 m4fspeed,reduced,S2-0014,ML-KEM-512 m4fspeed,encaps,390881,394555,0.939854,20261021
+modelled,binary,ML-KEM-512 m4fspeed,reduced,S2-0015,ML-KEM-512 m4fspeed,decaps,428167,427463,-0.164389,20261021
+modelled,binary,ML-KEM-512 m4fstack,fitted,S2-0016,ML-KEM-512 m4fstack,keygen,392224,393244,0.259962,20261021
+modelled,binary,ML-KEM-512 m4fstack,fitted,S2-0017,ML-KEM-512 m4fstack,encaps,392864,400335,1.90173,20261021
+modelled,binary,ML-KEM-512 m4fstack,fitted,S2-0018,ML-KEM-512 m4fstack,decaps,430202,428091,-0.490698,20261021
+modelled,binary,ML-KEM-512 m4fstack,reduced,S2-0016,ML-KEM-512 m4fstack,keygen,392224,400104,2.00895,20261021
+modelled,binary,ML-KEM-512 m4fstack,reduced,S2-0017,ML-KEM-512 m4fstack,encaps,392864,397130,1.08594,20261021
+modelled,binary,ML-KEM-512 m4fstack,reduced,S2-0018,ML-KEM-512 m4fstack,decaps,430202,430618,0.0968107,20261021
+modelled,binary,ML-KEM-768 clean,fitted,S2-0019,ML-KEM-768 clean,keygen,988722,967292,-2.16742,20261021
+modelled,binary,ML-KEM-768 clean,fitted,S2-0020,ML-KEM-768 clean,encaps,1.13822e+06,1.15112e+06,1.13314,20261021
+modelled,binary,ML-KEM-768 clean,fitted,S2-0021,ML-KEM-768 clean,decaps,1.38798e+06,1.39173e+06,0.269683,20261021
+modelled,binary,ML-KEM-768 clean,reduced,S2-0019,ML-KEM-768 clean,keygen,988722,1.01254e+06,2.40922,20261021
+modelled,binary,ML-KEM-768 clean,reduced,S2-0020,ML-KEM-768 clean,encaps,1.13822e+06,1.19188e+06,4.71415,20261021
+modelled,binary,ML-KEM-768 clean,reduced,S2-0021,ML-KEM-768 clean,decaps,1.38798e+06,1.44936e+06,4.42173,20261021
+modelled,binary,ML-KEM-768 m4fspeed,fitted,S2-0022,ML-KEM-768 m4fspeed,keygen,642096,657781,2.44279,20261021
+modelled,binary,ML-KEM-768 m4fspeed,fitted,S2-0023,ML-KEM-768 m4fspeed,encaps,658754,664757,0.911293,20261021
+modelled,binary,ML-KEM-768 m4fspeed,fitted,S2-0024,ML-KEM-768 m4fspeed,decaps,707827,700820,-0.989885,20261021
+modelled,binary,ML-KEM-768 m4fspeed,reduced,S2-0022,ML-KEM-768 m4fspeed,keygen,642096,647698,0.872533,20261021
+modelled,binary,ML-KEM-768 m4fspeed,reduced,S2-0023,ML-KEM-768 m4fspeed,encaps,658754,660124,0.20799,20261021
+modelled,binary,ML-KEM-768 m4fspeed,reduced,S2-0024,ML-KEM-768 m4fspeed,decaps,707827,703727,-0.579168,20261021
+modelled,binary,ML-KEM-768 m4fstack,fitted,S2-0025,ML-KEM-768 m4fstack,keygen,644195,648636,0.689351,20261021
+modelled,binary,ML-KEM-768 m4fstack,fitted,S2-0026,ML-KEM-768 m4fstack,encaps,664654,672123,1.12379,20261021
+modelled,binary,ML-KEM-768 m4fstack,fitted,S2-0027,ML-KEM-768 m4fstack,decaps,714194,707825,-0.891839,20261021
+modelled,binary,ML-KEM-768 m4fstack,reduced,S2-0025,ML-KEM-768 m4fstack,keygen,644195,651997,1.21105,20261021
+modelled,binary,ML-KEM-768 m4fstack,reduced,S2-0026,ML-KEM-768 m4fstack,encaps,664654,667569,0.438579,20261021
+modelled,binary,ML-KEM-768 m4fstack,reduced,S2-0027,ML-KEM-768 m4fstack,decaps,714194,712587,-0.225075,20261021

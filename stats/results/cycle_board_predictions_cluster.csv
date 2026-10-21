@@ -1,0 +1,31 @@
+label,target,parameter_set,implementation,operation,cycles_modelled,pi95_lo_round4,pi95_hi_round4,pi95_lo_recomputed,pi95_hi_recomputed,pi95_lo_cluster_outer,pi95_hi_cluster_outer,width_ratio_cluster_to_round4,extrapolation_flags,seed
+modelled,harness (bench/mcu),ML-DSA-44,mldsa-native v2.0.0 -O2,keygen,2952835,2690028,3472512,2690028,3472512,2403961,3717447,1.67861,mul_mac;load;store;dual_extra;ldm_stm_insn;ldm_stm_regs;pc_write;fpu,20261021
+modelled,harness (bench/mcu),ML-DSA-44,mldsa-native v2.0.0 -O2,sign,6627144,6037317,7793471,6037317,7793471,5395288,8343189,1.67861,store;dual_extra;ldm_stm_insn;ldm_stm_regs;pc_write;fpu,20261021
+modelled,harness (bench/mcu),ML-DSA-44,mldsa-native v2.0.0 -O2,verify,3072038,2798621,3612693,2798622,3612693,2501006,3867517,1.67861,load;store;dual_extra;ldm_stm_insn;ldm_stm_regs;pc_write;fpu,20261021
+modelled,harness (bench/mcu),ML-DSA-65,mldsa-native v2.0.0 -O2,keygen,5110942,4656059,6010429,4656060,6010429,4160918,6434379,1.67861,mul_mac;load;store;dual_extra;ldm_stm_insn;ldm_stm_regs;pc_write;fpu,20261021
+modelled,harness (bench/mcu),ML-DSA-65,mldsa-native v2.0.0 -O2,sign,12488262,11376786,14686101,11376786,14686101,10166939,15721995,1.67861,load;store;dual_extra;ldm_stm_insn;ldm_stm_regs;pc_write;fpu,20261021
+modelled,harness (bench/mcu),ML-DSA-65,mldsa-native v2.0.0 -O2,verify,5085279,4632681,5980250,4632681,5980250,4140025,6402070,1.67861,load;store;dual_extra;ldm_stm_insn;ldm_stm_regs;pc_write;fpu,20261021
+modelled,harness (bench/mcu),ML-DSA-87,mldsa-native v2.0.0 -O2,keygen,8648442,7878716,10170502,7878716,10170502,7040866,10887885,1.67861,mul_mac;load;store;dual_extra;ldm_stm_insn;ldm_stm_regs;branch_taken;pc_write;fpu,20261021
+modelled,harness (bench/mcu),ML-DSA-87,mldsa-native v2.0.0 -O2,sign,16755536,15264265,19704383,15264265,19704383,13641011,21094245,1.67861,load;store;dual_extra;ldm_stm_insn;ldm_stm_regs;pc_write;fpu,20261021
+modelled,harness (bench/mcu),ML-DSA-87,mldsa-native v2.0.0 -O2,verify,8620866,7853594,10138073,7853595,10138073,7018416,10853169,1.67861,mul_mac;load;store;dual_extra;ldm_stm_insn;ldm_stm_regs;pc_write;fpu,20261021
+modelled,harness (bench/mcu),ML-KEM-1024,mlkem-native v2.0.0 -O2,decaps,2568234,2339657,3020224,2339657,3020224,2090850,3233257,1.67861,load;store;ldm_stm_insn;ldm_stm_regs;pc_write;fpu,20261021
+modelled,harness (bench/mcu),ML-KEM-1024,mlkem-native v2.0.0 -O2,encaps,2145940,1954948,2523610,1954948,2523609,1747052,2701614,1.67861,load;store;dual_extra;ldm_stm_insn;ldm_stm_regs;pc_write;fpu,20261021
+modelled,harness (bench/mcu),ML-KEM-1024,mlkem-native v2.0.0 -O2,keygen,1971951,1796444,2319000,1796444,2318999,1605404,2482572,1.67861,load;store;ldm_stm_insn;ldm_stm_regs;pc_write;fpu,20261021
+modelled,harness (bench/mcu),ML-KEM-512,mlkem-native v2.0.0 -O2,decaps,1107387,1008828,1302279,1008828,1302279,901545,1394136,1.67861,load;store;dual_extra;ldm_stm_insn;ldm_stm_regs;pc_write;fpu,20261021
+modelled,harness (bench/mcu),ML-KEM-512,mlkem-native v2.0.0 -O2,encaps,870110,792669,1023243,792669,1023243,708374,1095418,1.67861,load;store;dual_extra;ldm_stm_insn;ldm_stm_regs;pc_write;fpu,20261021
+modelled,harness (bench/mcu),ML-KEM-512,mlkem-native v2.0.0 -O2,keygen,787125,717070,925653,717070,925653,640814,990945,1.67862,load;store;ldm_stm_insn;ldm_stm_regs;pc_write;fpu,20261021
+modelled,harness (bench/mcu),ML-KEM-768,mlkem-native v2.0.0 -O2,decaps,1746494,1591053,2053864,1591053,2053864,1421855,2198734,1.67861,load;store;dual_extra;ldm_stm_insn;ldm_stm_regs;pc_write;fpu,20261021
+modelled,harness (bench/mcu),ML-KEM-768,mlkem-native v2.0.0 -O2,encaps,1417068,1290947,1666461,1290947,1666461,1153663,1784006,1.67861,load;store;dual_extra;ldm_stm_insn;ldm_stm_regs;pc_write;fpu,20261021
+modelled,harness (bench/mcu),ML-KEM-768,mlkem-native v2.0.0 -O2,keygen,1267580,1154763,1490664,1154763,1490664,1031962,1595809,1.67861,load;store;ldm_stm_insn;ldm_stm_regs;pc_write;fpu,20261021
+modelled,pqm4 B0,ML-DSA-44,clean,keygen,1844300,1680155,2168883,1680154,2168883,1501481,2321866,1.67861,none,20261021
+modelled,pqm4 B0,ML-DSA-44,clean,sign,6978918,6357782,8207154,6357783,8207155,5681674,8786052,1.67861,ldm_stm_insn;pc_write,20261021
+modelled,pqm4 B0,ML-DSA-44,clean,verify,2027299,1846866,2384088,1846866,2384088,1650464,2552251,1.67861,none,20261021
+modelled,pqm4 B0,ML-DSA-44,m4f,keygen,1440368,1312173,1693862,1312173,1693862,1172632,1813340,1.67861,none,20261021
+modelled,pqm4 B0,ML-DSA-44,m4f,sign,3801958,3463578,4471074,3463577,4471074,3095249,4786444,1.67861,none,20261021
+modelled,pqm4 B0,ML-DSA-44,m4f,verify,1469782,1338969,1728452,1338969,1728452,1196578,1850370,1.67861,none,20261021
+modelled,pqm4 B0,ML-KEM-768,clean,decaps,1391990,1268100,1636970,1268101,1636970,1133246,1752434,1.67861,none,20261021
+modelled,pqm4 B0,ML-KEM-768,clean,encaps,1145848,1043866,1347509,1043866,1347509,932857,1442556,1.67861,none,20261021
+modelled,pqm4 B0,ML-KEM-768,clean,keygen,970779,884378,1141628,884378,1141629,790330,1222154,1.67862,none,20261021
+modelled,pqm4 B0,ML-KEM-768,m4fspeed,decaps,699432,637181,822527,637181,822527,569421,880544,1.67861,none,20261021
+modelled,pqm4 B0,ML-KEM-768,m4fspeed,encaps,652963,594848,767880,594848,767880,531590,822042,1.67861,none,20261021
+modelled,pqm4 B0,ML-KEM-768,m4fspeed,keygen,648055,590377,762107,590377,762108,527594,815864,1.67862,none,20261021
