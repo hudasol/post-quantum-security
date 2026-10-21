@@ -1,0 +1,9 @@
+label,protocol,dr,cap_bytes,fragments,fragments_sent,handshake_s_ns3,flights,seed,run
+simulated (network),dtls13,0,51,303,303,78895.2,"A:1336,B:7592,A:6472",20261021,1
+simulated (network),dtls13,5,222,72,72,2510.29,"A:1336,B:7592,A:6472",20261021,1
+simulated (network),edhoc_oscore,0,51,143,143,36820.6,"A:1229,B:3554,A:2441",20261021,1
+simulated (network),edhoc_oscore,5,222,34,34,1128.33,"A:1229,B:3554,A:2441",20261021,1
+simulated (network),mavlink2_pq,0,51,121,121,31034.9,"A:1216,B:4852,A:16",20261021,1
+simulated (network),mavlink2_pq,5,222,29,29,946.392,"A:1216,B:4852,A:16",20261021,1
+simulated (network),dds_security,0,51,320,320,83364.8,"A:5548,B:7872,A:2820",20261021,1
+simulated (network),dds_security,5,222,74,74,2583.62,"A:5548,B:7872,A:2820",20261021,1

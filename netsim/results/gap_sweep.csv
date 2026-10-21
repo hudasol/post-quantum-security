@@ -1,0 +1,63 @@
+cell,group,cause,value,time_mean_s_simulated_network,time_ci_lo_s_simulated_network,time_ci_hi_s_simulated_network,completed_simulated_network,stuck_runs_simulated_network,time_s_modelled,range_low_s_published,range_high_s_published,err_ns3_vs_low_pct,err_model_vs_ns3_pct,in_published_range,agrees_with,model_note
+base_frame,S1,baseline,frame mode,5.72107,5.7091,5.73305,10 of 10,0,7.12266,30,60,-80.9298,24.4987,False,model,"diagnosis steps 1 to 6, no loss"
+base_dgram,S1,baseline,datagram mode,3.55695,3.54515,3.56874,10 of 10,0,7.12266,30,60,-88.1435,100.247,False,neither,model always uses 1280 B datagrams
+hops_2,S2 one,hops,2,26.408,25.8776,26.9384,5 of 5,0,14.2453,30,60,-11.9734,-46.0568,False,neither,hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_3,S2 one,hops,3,55.2009,51.8129,58.589,5 of 5,0,21.368,30,60,84.0031,-61.2905,True,published,hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_4,S2 one,hops,4,124.479,92.47,156.487,5 of 5,0,28.4906,30,60,314.929,-77.1121,False,neither,hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_5,S2 one,hops,5,210.402,210.402,210.402,1 of 5,3,35.6133,30,60,601.34,-83.0737,False,incomplete runs,hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_6,S2 one,hops,6,nan,nan,nan,0 of 5,5,42.7359,30,60,nan,nan,False,incomplete runs,hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+bg_1,S2 one,neighbours,1,6.04701,5.98831,6.10572,5 of 5,0,7.12266,30,60,-79.8433,17.7881,False,model,contention not modelled
+bg_2,S2 one,neighbours,2,6.65148,6.17377,7.12918,5 of 5,0,7.12266,30,60,-77.8284,7.08387,False,model,contention not modelled
+bg_4,S2 one,neighbours,4,7.35465,7.18005,7.52924,5 of 5,0,7.12266,30,60,-75.4845,-3.1543,False,model,contention not modelled
+bg_8,S2 one,neighbours,8,10.1858,9.85712,10.5146,5 of 5,0,7.12266,30,60,-66.0472,-30.073,False,neither,contention not modelled
+bg_16,S2 one,neighbours,16,33.2116,18.9827,47.4404,5 of 5,0,7.12266,30,60,10.7052,-78.5537,True,published,contention not modelled
+minbe_0,S2 one,macMinBE,0,4.79028,4.66083,4.91973,3 of 3,0,6.28602,30,60,-84.0324,31.2244,False,neither,mean initial backoff with macMinBE 0
+minbe_1,S2 one,macMinBE,1,4.89954,4.88914,4.90994,3 of 3,0,6.40554,30,60,-83.6682,30.7376,False,neither,mean initial backoff with macMinBE 1
+minbe_2,S2 one,macMinBE,2,5.18609,5.14905,5.22313,3 of 3,0,6.64458,30,60,-82.713,28.123,False,neither,mean initial backoff with macMinBE 2
+minbe_4,S2 one,macMinBE,4,6.84131,6.69296,6.98967,3 of 3,0,8.07882,30,60,-77.1956,18.0887,False,model,mean initial backoff with macMinBE 4
+minbe_5,S2 one,macMinBE,5,9.04296,8.93287,9.15305,3 of 3,0,9.99114,30,60,-69.8568,10.4853,False,model,mean initial backoff with macMinBE 5
+minbe_6,S2 one,macMinBE,6,13.4665,13.208,13.7251,3 of 3,0,13.8158,30,60,-55.1116,2.59359,False,model,mean initial backoff with macMinBE 6; macMaxBE has no effect in the model (no busy channel)
+minbe_7,S2 one,macMinBE,7,22.1901,21.7266,22.6537,3 of 3,0,21.4651,30,60,-26.0329,-3.26737,False,model,mean initial backoff with macMinBE 7; macMaxBE has no effect in the model (no busy channel)
+minbe_8,S2 one,macMinBE,8,40.0957,37.9529,42.2386,3 of 3,0,36.7636,30,60,33.6524,-8.31044,True,both,mean initial backoff with macMinBE 8; macMaxBE has no effect in the model (no busy channel)
+maxbe_3,S2 one,macMaxBE,3,6.05664,4.71194,7.40135,3 of 3,0,7.12266,30,60,-79.8112,17.6008,False,model,macMaxBE has no effect in the model (no busy channel)
+maxbe_4,S2 one,macMaxBE,4,5.74707,5.70782,5.78631,3 of 3,0,7.12266,30,60,-80.8431,23.9356,False,model,macMaxBE has no effect in the model (no busy channel)
+maxbe_6,S2 one,macMaxBE,6,5.72883,5.68629,5.77137,3 of 3,0,7.12266,30,60,-80.9039,24.33,False,model,macMaxBE has no effect in the model (no busy channel)
+maxbe_7,S2 one,macMaxBE,7,5.72258,5.71643,5.72874,3 of 3,0,7.12266,30,60,-80.9247,24.4658,False,model,macMaxBE has no effect in the model (no busy channel)
+maxbe_8,S2 one,macMaxBE,8,5.73655,5.64419,5.82891,3 of 3,0,7.12266,30,60,-80.8782,24.1629,False,model,macMaxBE has no effect in the model (no busy channel)
+backoffs_0,S2 one,macMaxCSMABackoffs,0,6.68218,6.65943,6.70494,3 of 3,0,7.12266,30,60,-77.7261,6.59181,False,model,macMaxCSMABackoffs has no effect in the model (no busy channel)
+backoffs_1,S2 one,macMaxCSMABackoffs,1,6.05165,4.73004,7.37326,3 of 3,0,7.12266,30,60,-79.8278,17.6978,False,model,macMaxCSMABackoffs has no effect in the model (no busy channel)
+backoffs_2,S2 one,macMaxCSMABackoffs,2,5.74045,5.71633,5.76457,3 of 3,0,7.12266,30,60,-80.8652,24.0784,False,model,macMaxCSMABackoffs has no effect in the model (no busy channel)
+backoffs_3,S2 one,macMaxCSMABackoffs,3,5.7361,5.68668,5.78551,3 of 3,0,7.12266,30,60,-80.8797,24.1726,False,model,macMaxCSMABackoffs has no effect in the model (no busy channel)
+backoffs_5,S2 one,macMaxCSMABackoffs,5,5.71177,5.68334,5.74019,3 of 3,0,7.12266,30,60,-80.9608,24.7015,False,model,macMaxCSMABackoffs has no effect in the model (no busy channel)
+retries_0,S2 one,macMaxFrameRetries,0,6.04652,4.64448,7.44857,3 of 3,0,7.12266,30,60,-79.8449,17.7976,False,model,frame retries have no effect in the model (no loss)
+retries_1,S2 one,macMaxFrameRetries,1,5.71809,5.7028,5.73339,3 of 3,0,7.12266,30,60,-80.9397,24.5635,False,model,frame retries have no effect in the model (no loss)
+retries_2,S2 one,macMaxFrameRetries,2,5.74076,5.6736,5.80793,3 of 3,0,7.12266,30,60,-80.8641,24.0717,False,model,frame retries have no effect in the model (no loss)
+retries_4,S2 one,macMaxFrameRetries,4,5.74119,5.70866,5.77372,3 of 3,0,7.12266,30,60,-80.8627,24.0624,False,model,frame retries have no effect in the model (no loss)
+retries_5,S2 one,macMaxFrameRetries,5,5.74583,5.72056,5.77109,3 of 3,0,7.12266,30,60,-80.8472,23.9623,False,model,frame retries have no effect in the model (no loss)
+retries_6,S2 one,macMaxFrameRetries,6,5.74131,5.70889,5.77373,3 of 3,0,7.12266,30,60,-80.8623,24.0598,False,model,frame retries have no effect in the model (no loss)
+retries_7,S2 one,macMaxFrameRetries,7,5.74864,5.67724,5.82003,3 of 3,0,7.12266,30,60,-80.8379,23.9017,False,model,frame retries have no effect in the model (no loss)
+hops_2_bg_2,S2 combined,hops and neighbours,"2 hops, 2 neighbours",30.2149,28.0761,32.3537,3 of 3,0,14.2453,30,60,0.716333,-52.8534,True,published,contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_2_bg_4,S2 combined,hops and neighbours,"2 hops, 4 neighbours",35.3842,27.8482,42.9202,3 of 3,0,14.2453,30,60,17.9472,-59.741,True,published,contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_2_bg_8,S2 combined,hops and neighbours,"2 hops, 8 neighbours",73.1529,41.911,104.395,3 of 3,0,14.2453,30,60,143.843,-80.5267,False,neither,contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_3_bg_2,S2 combined,hops and neighbours,"3 hops, 2 neighbours",67.4292,50.0151,84.8433,3 of 3,0,21.368,30,60,124.764,-68.3105,False,neither,contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_3_bg_4,S2 combined,hops and neighbours,"3 hops, 4 neighbours",80.6069,57.1528,104.061,3 of 3,0,21.368,30,60,168.69,-73.4911,False,neither,contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_3_bg_8,S2 combined,hops and neighbours,"3 hops, 8 neighbours",214.79,128.864,300.715,3 of 3,0,21.368,30,60,615.966,-90.0517,False,neither,contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_4_bg_2,S2 combined,hops and neighbours,"4 hops, 2 neighbours",125.909,104.009,147.81,3 of 3,0,28.4906,30,60,319.698,-77.3721,False,neither,contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_4_bg_4,S2 combined,hops and neighbours,"4 hops, 4 neighbours",204.729,-233.737,643.195,2 of 3,1,28.4906,30,60,582.43,-86.0837,False,incomplete runs,contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_4_bg_8,S2 combined,hops and neighbours,"4 hops, 8 neighbours",1136.39,1136.39,1136.39,1 of 3,2,28.4906,30,60,3687.97,-97.4929,False,incomplete runs,contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_6_bg_2,S2 combined,hops and neighbours,"6 hops, 2 neighbours",nan,nan,nan,0 of 3,3,42.7359,30,60,nan,nan,False,incomplete runs,contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_6_bg_4,S2 combined,hops and neighbours,"6 hops, 4 neighbours",nan,nan,nan,0 of 3,3,42.7359,30,60,nan,nan,False,incomplete runs,contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_6_bg_8,S2 combined,hops and neighbours,"6 hops, 8 neighbours",nan,nan,nan,0 of 3,3,42.7359,30,60,nan,nan,False,incomplete runs,contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_2_minbe_5,S2 combined,hops and macMinBE,"2 hops, macMinBE 5",38.7215,38.2071,39.2359,3 of 3,0,19.9823,30,60,29.0717,-48.3948,True,published,mean initial backoff with macMinBE 5; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_2_minbe_8,S2 combined,hops and macMinBE,"2 hops, macMinBE 8",170.44,167.717,173.162,3 of 3,0,73.5272,30,60,468.132,-56.8603,False,neither,mean initial backoff with macMinBE 8; macMaxBE has no effect in the model (no busy channel); hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_3_minbe_5,S2 combined,hops and macMinBE,"3 hops, macMinBE 5",59.8635,55.3919,64.3351,3 of 3,0,29.9734,30,60,99.545,-49.9304,True,published,mean initial backoff with macMinBE 5; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_3_minbe_8,S2 combined,hops and macMinBE,"3 hops, macMinBE 8",227.947,224.469,231.426,3 of 3,0,110.291,30,60,659.824,-51.6156,False,neither,mean initial backoff with macMinBE 8; macMaxBE has no effect in the model (no busy channel); hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_2_spacing_10,S2 combined,"hops, spacing 10 m","2 hops, 10 m spacing",25.7485,24.4313,27.0656,3 of 3,0,14.2453,30,60,-14.1718,-44.6752,False,neither,hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_3_spacing_10,S2 combined,"hops, spacing 10 m","3 hops, 10 m spacing",53.2181,42.0557,64.3805,3 of 3,0,21.368,30,60,77.3936,-59.8482,True,published,hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+hops_4_spacing_10,S2 combined,"hops, spacing 10 m","4 hops, 10 m spacing",134.241,41.7884,226.694,3 of 3,0,28.4906,30,60,347.47,-78.7765,False,neither,hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+dgram_hops_2,S2 combined,"hops, datagram mode","2 hops, datagram mode",17.796,13.1451,22.4469,3 of 3,0,14.2453,30,60,-40.6799,-19.9524,False,neither,hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4); model always uses 1280 B datagrams
+dgram_hops_3,S2 combined,"hops, datagram mode","3 hops, datagram mode",1750.36,-18014,21514.7,2 of 3,0,21.368,30,60,5734.53,-98.7792,False,incomplete runs,hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4); model always uses 1280 B datagrams
+dgram_hops_4,S2 combined,"hops, datagram mode","4 hops, datagram mode",1503.09,-4590.04,7596.22,2 of 3,0,28.4906,30,60,4910.3,-98.1045,False,incomplete runs,hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4); model always uses 1280 B datagrams
+follow_hops_3,S3 follow up,hops,3,55.4822,53.6488,57.3156,10 of 10,0,21.368,30,60,84.9407,-61.4868,True,published,hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4)
+follow_bg_16,S3 follow up,neighbours,16,31.4784,28.1995,34.7574,10 of 10,0,7.12266,30,60,4.92813,-77.3729,True,published,contention not modelled
+follow_minbe_8,S3 follow up,macMinBE,8,39.969,39.4271,40.511,10 of 10,0,36.7636,30,60,33.2301,-8.01976,True,both,mean initial backoff with macMinBE 8; macMaxBE has no effect in the model (no busy channel)

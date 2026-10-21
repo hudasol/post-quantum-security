@@ -1,0 +1,9 @@
+label,protocol,dr,fragments,blast_s_linksim,blast_9b_s_linksim,protocol_sim_s_linksim
+modelled,dtls13,0,303,83810.9,78895.2,84079
+modelled,dtls13,5,72,2545.63,2510.29,2558.98
+modelled,edhoc_oscore,0,143,39114.9,36820.6,39383
+modelled,edhoc_oscore,5,34,1144.21,1128.33,1157.56
+modelled,mavlink2_pq,0,121,32968.6,31034.9,33236.7
+modelled,mavlink2_pq,5,29,959.719,946.392,997.808
+modelled,dds_security,0,320,88559,83364.8,88827.1
+modelled,dds_security,5,74,2620,2583.62,2633.34
