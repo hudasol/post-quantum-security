@@ -16,7 +16,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import kit_config as K  # noqa: E402
 
-SIZE_COLUMNS = ["label", "experiment", "platform", "scheme", "variant", "kind", "iterations",
+SIZE_COLUMNS = ["label", "experiment", "platform", "scheme", "variant", "kind", "cache_pass",
+                "iterations",
                 "image", "text_bytes", "data_bytes", "bss_bytes", "total_dec_bytes", "toolchain",
                 "pqm4_commit"]
 LICENCES = [
@@ -29,6 +30,16 @@ LICENCES = [
     ("libopencm3 (linked into nucleo-l4r5zi images)", "LGPL-3.0",
      "COPYING.LGPL3 in the libopencm3 submodule"),
     ("mlkem-native and mldsa-native v2.0.0", "Apache-2.0 OR ISC OR MIT", "bench/mcu/README.md"),
+    ("STMicroelectronics cmsis_device_l5 v1.0.7 (start up, system file, linker script and device "
+     "header linked into nucleo-l552ze-q images)", "Apache-2.0", "LICENSE.md at the tag"),
+    ("STMicroelectronics cmsis_core v5.9.0_20250520 (CMSIS core headers, nucleo-l552ze-q)",
+     "Apache-2.0", "LICENSE.md at the tag"),
+    ("STMicroelectronics cmsis_device_l4 v1.7.5 (register citation only, not built)", "Apache-2.0",
+     "LICENSE.md at the tag"),
+    ("zephyrproject-rtos/hal_stm32 pin control file (citation of the alternate function only)",
+     "Apache-2.0", "SPDX line of the file at the commit"),
+    ("Renode 1.16.1 (renode_check.py only, not linked)", "MIT", "licenses/renode-license in the "
+     "release"),
 ]
 
 
@@ -47,6 +58,7 @@ def size_rows(records):
             rows.append({"label": "host measured", "experiment": im["experiment"],
                          "platform": im["platform"], "scheme": im["scheme"],
                          "variant": im["variant"], "kind": im["kind"],
+                         "cache_pass": im.get("cache_pass", "on"),
                          "iterations": im["iterations"], "image": im["image"],
                          "text_bytes": im["text"], "data_bytes": im["data"],
                          "bss_bytes": im["bss"], "total_dec_bytes": im["dec"],
@@ -121,19 +133,34 @@ def write(records, md_path, csv_path):
          "with `common/hal-mps2.c` on mps2-an386. No start up, clock or UART code was written. "
          "B1 prints on LPUART1 at 38400 baud, the same port and rate as pqm4. The run id is set "
          "by `capture.py --run`, so one image serves all three power cycles.", "",
-         "```", "python3 bench/board_kit/build_b1.py --platform nucleo-l4r5zi",
-         "python3 bench/board_kit/build_b1.py --platform mps2-an386", "```", ""]
+         "```", "python3 bench/board_kit/build_b1.py --platform nucleo-l4r5zi --cache both",
+         "python3 bench/board_kit/build_b1.py --platform mps2-an386 --cache both", "```", "",
+         "## Round 5: cache passes and the Cortex-M33 board", "",
+         "`--cache both` builds every B1 set twice: the caches on image (`b1_<alg>_<set>`, "
+         "unchanged) and the caches off image (`b1_<alg>_<set>_cacheoff`, `b1/b1_main.c` compiled "
+         "with `-DBENCH_CACHE_OFF`). Only the glue object differs between the two. "
+         f"`--platform {K.M33_PLATFORM}` builds B1 for NUCLEO-L552ZE-Q without pqm4's platform "
+         "layer, which has no Cortex-M33 board at the pin: the vendor start up file, system file "
+         "and linker script of STMicroelectronics cmsis_device_l5 "
+         f"{K.CMSIS_DEVICE_L5[1]} (`{K.CMSIS_DEVICE_L5[2]}`) and the CMSIS core headers of "
+         f"cmsis_core {K.CMSIS_CORE[1]} (`{K.CMSIS_CORE[2]}`), used unchanged, plus "
+         "`b1/m33/hal_l552.c` (LPUART1 at 38400 baud, SysTick time, reset clock). Flags: "
+         f"`{' '.join(K.M33_CFLAGS)}`; iterations per run "
+         f"{K.B1_ITERS_M33['mlkem']} for every set.", "",
+         "```", f"python3 bench/board_kit/build_b1.py --platform {K.M33_PLATFORM} --cache both",
+         "```", ""]
     for rec in records:
         L += [f"### Commands: {rec['experiment']} {rec['platform']}", "", "```"]
         L += command_block(rec, limit=14)
         L += ["```", ""]
     L += ["## Image sizes (label: host measured, arm-none-eabi-size, whole image)", "",
-          "| Experiment | Platform | Scheme | Variant | Binary | Iterations | text | data | bss |",
-          "|---|---|---|---|---|---|---|---|---|"]
+          "| Experiment | Platform | Scheme | Variant | Binary | Cache pass | Iterations | text | "
+          "data | bss |",
+          "|---|---|---|---|---|---|---|---|---|---|"]
     for r in rows:
         L.append(f"| {r['experiment']} | {r['platform']} | {r['scheme']} | {r['variant']} | "
-                 f"{r['kind']} | {r['iterations']} | {r['text_bytes']} | {r['data_bytes']} | "
-                 f"{r['bss_bytes']} |")
+                 f"{r['kind']} | {r['cache_pass']} | {r['iterations']} | {r['text_bytes']} | "
+                 f"{r['data_bytes']} | {r['bss_bytes']} |")
     L += ["", "These are whole image sizes, so they are larger than pqm4's code size column, which "
           "counts only the scheme's own code.", "", "## Licences of the code that is built", "",
           "| Code | Licence | Where read |", "|---|---|---|"]
