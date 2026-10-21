@@ -150,6 +150,10 @@ p_sob_or,docs/PAPER.md,0.55,0.546169,stats/results/e2e_sobol.csv,ST,"output == "
 p_sob_om,docs/PAPER.md,0.48,0.477748,stats/results/e2e_sobol.csv,ST,"output == ""hybrid_availability_sik_drone"" and input == ""outage_mean_s""",value,0.005,modelled,,
 p_pv_q,docs/PAPER.md,57,57.0,formal/results/proverif_results.csv,property_id,,count,0.005,modelled,,57 queries in
 p_pv_m,docs/PAPER.md,17,17.0,formal/results/proverif_results.csv,model,,nunique,0.005,modelled,,17 models of
+p_pv_cx_stated,docs/PAPER.md,7,7.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and model.str.contains(""stated"")",count,0.005,modelled,,7 in the
+p_pv_cx_broken,docs/PAPER.md,8,8.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and model.str.contains(""both_broken"")",count,0.005,modelled,,8 in deliberate
+p_pv_cx_fs,docs/PAPER.md,1,1.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and model == ""fallback_d_fixed_fs_provisioned""",count,0.005,modelled,,1 for forward
+p_pv_cx_mid,docs/PAPER.md,1,1.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and model == ""firmware_counter_unsigned_version""",count,0.005,modelled,,1 for an
 p_pv_proved,docs/PAPER.md,39,39.0,formal/results/proverif_results.csv,result,"result == ""proved""",count,0.005,modelled,,39 | property
 p_pv_counterexample,docs/PAPER.md,17,17.0,formal/results/proverif_results.csv,result,"result == ""counterexample""",count,0.005,modelled,,17 | attack
 p_pv_cannot_be_proved,docs/PAPER.md,1,1.0,formal/results/proverif_results.csv,result,"result == ""cannot be proved""",count,0.005,modelled,,1 | MAVLink
@@ -268,6 +272,7 @@ proposal_robotics_atrc_fv_proved,docs/PROPOSAL_ROBOTICS_ATRC.md,39,39.0,formal/r
 proposal_robotics_atrc_v5b_rows,docs/PROPOSAL_ROBOTICS_ATRC.md,36,36.0,bench/board_kit/predictions_v5_board.csv,id,,count,0.005,modelled,,36 board predictions
 proposal_robotics_atrc_hops,docs/PROPOSAL_ROBOTICS_ATRC.md,3,3.0,netsim/results/gap_sweep.csv,value,"cell == ""hops_3""",value,0.005,simulated (network),,3 hops or
 proposal_robotics_atrc_bg,docs/PROPOSAL_ROBOTICS_ATRC.md,16,16.0,netsim/results/gap_sweep.csv,value,"cell == ""bg_16""",value,0.005,simulated (network),,16 loaded neighbours
+proposal_robotics_atrc_minbe,docs/PROPOSAL_ROBOTICS_ATRC.md,8,8.0,netsim/results/gap_sweep.csv,value,"cell == ""minbe_8""",value,0.005,simulated (network),,"8, a cited"
 proposal_robotics_edge_rows,docs/PROPOSAL_ROBOTICS_EDGE.md,"1,514",1514.0,data/evidence.csv,id,,count,0.005,published,,
 proposal_robotics_edge_cm_med,docs/PROPOSAL_ROBOTICS_EDGE.md,1.0,1.04777,cyclemodel/results/error_summary.csv,median_abs_pct,"model == ""fitted"" and subset == ""test, all""",value,0.005,modelled,,
 proposal_robotics_edge_lofo_sch,docs/PROPOSAL_ROBOTICS_EDGE.md,9.8,9.77104,stats/results/cycle_lofo_summary.csv,median_abs_pct,"left_out_by == ""scheme"" and group == ""all groups pooled"" and model == ""fitted""",value,0.005,modelled,,
@@ -288,6 +293,7 @@ proposal_robotics_edge_fv_proved,docs/PROPOSAL_ROBOTICS_EDGE.md,39,39.0,formal/r
 proposal_robotics_edge_v5b_rows,docs/PROPOSAL_ROBOTICS_EDGE.md,36,36.0,bench/board_kit/predictions_v5_board.csv,id,,count,0.005,modelled,,36 board predictions
 proposal_robotics_edge_hops,docs/PROPOSAL_ROBOTICS_EDGE.md,3,3.0,netsim/results/gap_sweep.csv,value,"cell == ""hops_3""",value,0.005,simulated (network),,3 hops or
 proposal_robotics_edge_bg,docs/PROPOSAL_ROBOTICS_EDGE.md,16,16.0,netsim/results/gap_sweep.csv,value,"cell == ""bg_16""",value,0.005,simulated (network),,16 loaded neighbours
+proposal_robotics_edge_minbe,docs/PROPOSAL_ROBOTICS_EDGE.md,8,8.0,netsim/results/gap_sweep.csv,value,"cell == ""minbe_8""",value,0.005,simulated (network),,"8, a cited"
 proposal_robotics_adeo_rows,docs/PROPOSAL_ROBOTICS_ADEO.md,"1,514",1514.0,data/evidence.csv,id,,count,0.005,published,,
 proposal_robotics_adeo_cm_med,docs/PROPOSAL_ROBOTICS_ADEO.md,1.0,1.04777,cyclemodel/results/error_summary.csv,median_abs_pct,"model == ""fitted"" and subset == ""test, all""",value,0.005,modelled,,
 proposal_robotics_adeo_lofo_sch,docs/PROPOSAL_ROBOTICS_ADEO.md,9.8,9.77104,stats/results/cycle_lofo_summary.csv,median_abs_pct,"left_out_by == ""scheme"" and group == ""all groups pooled"" and model == ""fitted""",value,0.005,modelled,,
@@ -308,6 +314,7 @@ proposal_robotics_adeo_fv_proved,docs/PROPOSAL_ROBOTICS_ADEO.md,39,39.0,formal/r
 proposal_robotics_adeo_v5b_rows,docs/PROPOSAL_ROBOTICS_ADEO.md,36,36.0,bench/board_kit/predictions_v5_board.csv,id,,count,0.005,modelled,,36 board predictions
 proposal_robotics_adeo_hops,docs/PROPOSAL_ROBOTICS_ADEO.md,3,3.0,netsim/results/gap_sweep.csv,value,"cell == ""hops_3""",value,0.005,simulated (network),,3 hops or
 proposal_robotics_adeo_bg,docs/PROPOSAL_ROBOTICS_ADEO.md,16,16.0,netsim/results/gap_sweep.csv,value,"cell == ""bg_16""",value,0.005,simulated (network),,16 loaded neighbours
+proposal_robotics_adeo_minbe,docs/PROPOSAL_ROBOTICS_ADEO.md,8,8.0,netsim/results/gap_sweep.csv,value,"cell == ""minbe_8""",value,0.005,simulated (network),,"8, a cited"
 proposal_brief_cm_med,docs/PROPOSAL_BRIEF.md,1.0,1.04777,cyclemodel/results/error_summary.csv,median_abs_pct,"model == ""fitted"" and subset == ""test, all""",value,0.005,modelled,,
 proposal_brief_lofo_sch,docs/PROPOSAL_BRIEF.md,9.8,9.77104,stats/results/cycle_lofo_summary.csv,median_abs_pct,"left_out_by == ""scheme"" and group == ""all groups pooled"" and model == ""fitted""",value,0.005,modelled,,
 proposal_brief_m_b,docs/PROPOSAL_BRIEF.md,0.991,0.9914391304347826,mission/results/base.csv,avail_mean,"vehicle == ""drone"" and arch == ""B"" and link == ""sik""",value,0.005,estimated,,
