@@ -174,6 +174,7 @@ Read from `data/raw/S13_protocol.csv`. The row 'written' states that the protoco
 | deviation 1 | 2026-10-21, written after screening and after the review, disclosed: inclusion 5 (gap rule). A source is included only if at least one of its rows answers a named gap of the question: final standard SLH-DSA or FN-DSA, HQC, a Cortex-M33, M55 or M85 core, a RISC-V microcontroller core, an ESP32 class device, stateful hash based signature verification, a hardened and unhardened pair, or the 168 MHz Ed25519 rows of Owens et al. Screening already applied this rule ('outside the round 5 gap list') without it being written down; it is now applied to every source, which demoted the Falcon round 2 rows of Pornin 2019. A draft of this deviation also admitted provisional FN-DSA parameters while FIPS 206 is not final; review pass 2 (R2B09) noted that this clause widened the registered question after review, so it was removed: Falcon rows of a draft standard, such as those of ePrint 2026/1915, are not eligible until FIPS 206 is final and the rows match it |
 | deviation 2 | 2026-10-21, after review: rows that break a written rule after double reading are demoted, not deleted: they stay in data/raw/S13_staged.csv and are listed with rule and reason in data/raw/S13_demoted.csv; scripts/promote_s13.py keeps them out of data/raw/S13_verified.csv |
 | deviation 3 | 2026-10-21, after review: values read only through a summarising web fetch tool count as a summary under inclusion 4; such rows are demoted until the full text is read directly |
+| deviation 4 | 2026-10-21, written after review pass 3 (R3B04), disclosed: a value from a line of a comparison table that cites earlier work is taken only when the source marks that line as its own measurement. One promoted row (S13-078) did not meet this and was demoted. |
 
 ## Round 5 flow
 
@@ -190,7 +191,7 @@ Counts from `data/raw/S13_prisma.csv`.
 | excluded after abstract or full text | 24 | count of this repository's records: decision = excluded, any stage |
 | included sources | 11 | count of this repository's records: decision = included |
 | staged rows | 265 | count of this repository's records: rows of S13_staged.csv |
-| rows confirmed by two readers and promoted | 187 | count of this repository's records: rows of S13_verified.csv |
+| rows confirmed by two readers and promoted | 186 | count of this repository's records: rows of S13_verified.csv |
 
 Exclusions after an abstract or full text was assessed, by reason:
 
@@ -239,7 +240,7 @@ Flow diagram (text form):
 [ staged rows: 265 ]
         |
         v
-[ double read and promoted: 187 ]
+[ double read and promoted: 186 ]
 ```
 
 ## Round 5 records assessed beyond the title
@@ -293,6 +294,7 @@ Rows that were double read but break a written rule are kept in staging and out 
 | A RAM-Efficient Implementation of Falcon. Thomas Pornin (NCC Group), IACR ePrint 2026/1915 | 4 (S13-226 to S13-229) | inclusion 4 and exclusion 4 | both readers and the third reader read Table 1 only through a summarising web fetch tool after curl to eprint.iacr.org was refused; inclusion 4 forbids values from a summary alone and exclusion 4 forbids working around a refusal; the rows can return only when the PDF is read directly and FIPS 206 is final with matching parameters (deviation_1) | 2026-10-21 |
 | Optimized Hardware-Software Co-Design for Kyber and Dilithium on RISC-V SoC FPGA. Tengfei  | 10 (S13-136 to S13-145) | exclusion 1 | the SiFive U54 is an RV64 application core; the same rule excluded the U74 and C908 sources at screening (these rows were already not promoted because no reader confirmed the code size) | 2026-10-21 |
 | Efficient Implementation of CRYSTALS-KYBER Key Encapsulation Mechanism on ESP32. Fabian Se | 15 (S13-087 to S13-101) | inclusion 3 | Kyber512-90s is a round 3 variant that NIST dropped and that has no ML-KEM successor (ML-KEM uses SHAKE only); round 4 excluded 90s variants and inclusion 3 is read the same way here | 2026-10-21 |
+| Fast and Clean: Auditable high-performance assembly via constraint solving. Amin Abdulrahm | 1 (S13-078 to S13-078) | deviation_4 (prior work lines) | prior work line [BBMK+21] of Table 3 of the source; the table marks it with footnote 3 ('Optimized for Cortex-M55') and, unlike the Cortex-M55 line of the same work, not with footnote 2 ('Measurement by ourselves'), so it is not shown to be a measurement of this source; prior work lines are not staged elsewhere in this round | 2026-10-21 |
 
 ## Round 5 queries
 

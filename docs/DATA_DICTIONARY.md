@@ -2120,14 +2120,14 @@ Labels used across the repository: published, host measured, emulated, estimated
 
 ### `data/claims_register.csv`
 
-11 columns.
+12 columns.
 
 | column | type | example |
 |---|---|---|
 | claim_id | text | abs_rows |
 | document | text | docs/PAPER.md |
-| text_in_document | number | 1,515 |
-| value | number | 1515.0 |
+| text_in_document | number | 1,514 |
+| value | number | 1514.0 |
 | source_file | text | data/evidence.csv |
 | column | text | id |
 | query | text | stream == "S10" |
@@ -2135,6 +2135,7 @@ Labels used across the repository: published, host measured, emulated, estimated
 | tolerance_rel | number | 0.005 |
 | label | text | published |
 | note | text | displayed as {:.0f} x 100 |
+| context | text | 60 source URLs |
 
 ### `data/context_entities.csv`
 

@@ -1,8 +1,8 @@
 claim_id,document,text_in_document,value,source_file,column,query,aggregate,tolerance_rel,label,note,context
-abs_rows,docs/PAPER.md,"1,515",1515.0,data/evidence.csv,id,,count,0.005,published,,
+abs_rows,docs/PAPER.md,"1,514",1514.0,data/evidence.csv,id,,count,0.005,published,,
 abs_sources,docs/PAPER.md,60,60.0,data/evidence.csv,source_url,,nunique,0.005,published,,60 source URLs
 n_s10,docs/PAPER.md,403,403.0,data/evidence.csv,id,"stream == ""S10""",count,0.005,published,,
-n_rows,docs/PAPER.md,"1,515",1515.0,data/evidence.csv,id,,count,0.005,published,,
+n_rows,docs/PAPER.md,"1,514",1514.0,data/evidence.csv,id,,count,0.005,published,,
 n_mcu_cycles,docs/PAPER.md,812,812.0,data/evidence.csv,cycles,"device_class == ""mcu"" and cycles == cycles",count,0.005,published,,
 n_cores,docs/PAPER.md,8,8.0,data/evidence.csv,core,"device_class == ""mcu"" and cycles == cycles",nunique,0.005,published,,8 core labels
 meta_spread,docs/PAPER.md,1.44,1.4424391677703792,data/meta/cycle_groups.csv,max_over_min,sources >= 2,median,0.005,estimated,,
@@ -59,8 +59,8 @@ ab_pv_p,docs/PAPER.md,39,39.0,formal/results/proverif_results.csv,result,"result
 p_s13_staged,docs/PAPER.md,265,265.0,data/raw/S13_staged.csv,id,,count,0.005,published,,
 p_s13_valdis,docs/PAPER.md,0,0.0,data/verify6/summary.csv,field,"status == ""disagree"" and field in [""cycles"", ""ram_bytes"", ""stack_bytes"", ""flash_or_code_bytes"", ""energy_uj"", ""key_or_sig_size_bytes"", ""value""]",count,0.005,published,,0 value fields
 p_s13_word,docs/PAPER.md,41,41.0,data/verify6/third_look_queue.csv,id,"kind == ""wording""",count,0.005,published,,41 wording disagreements
-p_s13_prom,docs/PAPER.md,187,187.0,data/evidence.csv,id,"stream == ""S13""",count,0.005,published,,
-p_s13_dem,docs/PAPER.md,47,47.0,data/verify6/not_promoted.csv,id,"reason.str.startswith(""demoted"")",count,0.005,published,,47 were demoted
+p_s13_prom,docs/PAPER.md,186,186.0,data/evidence.csv,id,"stream == ""S13""",count,0.005,published,,
+p_s13_dem,docs/PAPER.md,48,48.0,data/verify6/not_promoted.csv,id,"reason.str.startswith(""demoted"")",count,0.005,published,,48 were demoted
 p_s13_single,docs/PAPER.md,31,31.0,data/verify6/not_promoted.csv,id,"reason.str.startswith(""single_reader"")",count,0.005,published,,31 had a
 p_tl_lines,docs/PAPER.md,393,393.0,data/verify5/third_look_summary.csv,of,"measure == ""lines staging_right""",value,0.005,estimated,,
 p_tl_r4,docs/PAPER.md,6,6.0,data/verify5/third_look_summary.csv,count,"measure == ""round 4 sample of 60: staging wrong after a third look (round 4 rule, any difference from the source)""",value,0.005,estimated,,6 of 60
@@ -171,7 +171,7 @@ p_sitl_pq_av,docs/PAPER.md,0.419,0.41875,sitl/results/summary.csv,value,"profile
 p_sitl_pq_av_st,docs/PAPER.md,0.730,0.730083,sitl/results/comparison.csv,study_estimated,"profile == ""sik"" and config == ""pqsig"" and metric == ""availability_rt_all""",value,0.005,estimated,,
 p_sitl_drop,docs/PAPER.md,16,16.0,sitl/results/commands.csv,dropped,"config == ""signing"" and dropped == ""not_acknowledged_by_vehicle""",count,0.005,SITL measured,,16 delivered signed
 p_s12_fetch,docs/PAPER.md,125,125.0,data/evidence.csv,id,"stream == ""S12"" and comparability_warning.fillna("""").str.contains(""Read with web fetch"")",count,0.005,published,,
-proposal_robotics_rows,docs/PROPOSAL_ROBOTICS.md,"1,515",1515.0,data/evidence.csv,id,,count,0.005,published,,
+proposal_robotics_rows,docs/PROPOSAL_ROBOTICS.md,"1,514",1514.0,data/evidence.csv,id,,count,0.005,published,,
 proposal_robotics_cm_med,docs/PROPOSAL_ROBOTICS.md,1.0,1.04777,cyclemodel/results/error_summary.csv,median_abs_pct,"model == ""fitted"" and subset == ""test, all""",value,0.005,modelled,,
 proposal_robotics_cm_sign,docs/PROPOSAL_ROBOTICS.md,23,22.8321,cyclemodel/results/error_summary.csv,worst_abs_pct,"model == ""fitted"" and subset == ""test, all""",value,0.005,modelled,,"23 percent), but"
 proposal_robotics_lofo_fam,docs/PROPOSAL_ROBOTICS.md,1.8,1.79334,stats/results/cycle_lofo_summary.csv,median_abs_pct,"left_out_by == ""implementation family"" and group == ""all groups pooled"" and model == ""fitted""",value,0.005,modelled,,
@@ -248,7 +248,7 @@ proposal_robotics_trl_now_c3,docs/PROPOSAL_ROBOTICS.md,3,3.0,data/proposal/readi
 proposal_robotics_trl_end_c3,docs/PROPOSAL_ROBOTICS.md,4,4.0,data/proposal/readiness.csv,trl_end,"id == ""C3""",value,0.005,estimated,,4 (technology validated
 proposal_robotics_trl_now_c4,docs/PROPOSAL_ROBOTICS.md,3,3.0,data/proposal/readiness.csv,trl_now,"id == ""C4""",value,0.005,estimated,,3 (experimental proof
 proposal_robotics_trl_end_c4,docs/PROPOSAL_ROBOTICS.md,4,4.0,data/proposal/readiness.csv,trl_end,"id == ""C4""",value,0.005,estimated,,4 (technology validated
-proposal_robotics_atrc_rows,docs/PROPOSAL_ROBOTICS_ATRC.md,"1,515",1515.0,data/evidence.csv,id,,count,0.005,published,,
+proposal_robotics_atrc_rows,docs/PROPOSAL_ROBOTICS_ATRC.md,"1,514",1514.0,data/evidence.csv,id,,count,0.005,published,,
 proposal_robotics_atrc_cm_med,docs/PROPOSAL_ROBOTICS_ATRC.md,1.0,1.04777,cyclemodel/results/error_summary.csv,median_abs_pct,"model == ""fitted"" and subset == ""test, all""",value,0.005,modelled,,
 proposal_robotics_atrc_lofo_sch,docs/PROPOSAL_ROBOTICS_ATRC.md,9.8,9.77104,stats/results/cycle_lofo_summary.csv,median_abs_pct,"left_out_by == ""scheme"" and group == ""all groups pooled"" and model == ""fitted""",value,0.005,modelled,,
 proposal_robotics_atrc_m_b,docs/PROPOSAL_ROBOTICS_ATRC.md,0.991,0.9914391304347826,mission/results/base.csv,avail_mean,"vehicle == ""drone"" and arch == ""B"" and link == ""sik""",value,0.005,estimated,,
@@ -268,7 +268,7 @@ proposal_robotics_atrc_fv_proved,docs/PROPOSAL_ROBOTICS_ATRC.md,39,39.0,formal/r
 proposal_robotics_atrc_v5b_rows,docs/PROPOSAL_ROBOTICS_ATRC.md,36,36.0,bench/board_kit/predictions_v5_board.csv,id,,count,0.005,modelled,,36 board predictions
 proposal_robotics_atrc_hops,docs/PROPOSAL_ROBOTICS_ATRC.md,3,3.0,netsim/results/gap_sweep.csv,value,"cell == ""hops_3""",value,0.005,simulated (network),,3 hops or
 proposal_robotics_atrc_bg,docs/PROPOSAL_ROBOTICS_ATRC.md,16,16.0,netsim/results/gap_sweep.csv,value,"cell == ""bg_16""",value,0.005,simulated (network),,16 loaded neighbours
-proposal_robotics_edge_rows,docs/PROPOSAL_ROBOTICS_EDGE.md,"1,515",1515.0,data/evidence.csv,id,,count,0.005,published,,
+proposal_robotics_edge_rows,docs/PROPOSAL_ROBOTICS_EDGE.md,"1,514",1514.0,data/evidence.csv,id,,count,0.005,published,,
 proposal_robotics_edge_cm_med,docs/PROPOSAL_ROBOTICS_EDGE.md,1.0,1.04777,cyclemodel/results/error_summary.csv,median_abs_pct,"model == ""fitted"" and subset == ""test, all""",value,0.005,modelled,,
 proposal_robotics_edge_lofo_sch,docs/PROPOSAL_ROBOTICS_EDGE.md,9.8,9.77104,stats/results/cycle_lofo_summary.csv,median_abs_pct,"left_out_by == ""scheme"" and group == ""all groups pooled"" and model == ""fitted""",value,0.005,modelled,,
 proposal_robotics_edge_m_b,docs/PROPOSAL_ROBOTICS_EDGE.md,0.991,0.9914391304347826,mission/results/base.csv,avail_mean,"vehicle == ""drone"" and arch == ""B"" and link == ""sik""",value,0.005,estimated,,
@@ -288,7 +288,7 @@ proposal_robotics_edge_fv_proved,docs/PROPOSAL_ROBOTICS_EDGE.md,39,39.0,formal/r
 proposal_robotics_edge_v5b_rows,docs/PROPOSAL_ROBOTICS_EDGE.md,36,36.0,bench/board_kit/predictions_v5_board.csv,id,,count,0.005,modelled,,36 board predictions
 proposal_robotics_edge_hops,docs/PROPOSAL_ROBOTICS_EDGE.md,3,3.0,netsim/results/gap_sweep.csv,value,"cell == ""hops_3""",value,0.005,simulated (network),,3 hops or
 proposal_robotics_edge_bg,docs/PROPOSAL_ROBOTICS_EDGE.md,16,16.0,netsim/results/gap_sweep.csv,value,"cell == ""bg_16""",value,0.005,simulated (network),,16 loaded neighbours
-proposal_robotics_adeo_rows,docs/PROPOSAL_ROBOTICS_ADEO.md,"1,515",1515.0,data/evidence.csv,id,,count,0.005,published,,
+proposal_robotics_adeo_rows,docs/PROPOSAL_ROBOTICS_ADEO.md,"1,514",1514.0,data/evidence.csv,id,,count,0.005,published,,
 proposal_robotics_adeo_cm_med,docs/PROPOSAL_ROBOTICS_ADEO.md,1.0,1.04777,cyclemodel/results/error_summary.csv,median_abs_pct,"model == ""fitted"" and subset == ""test, all""",value,0.005,modelled,,
 proposal_robotics_adeo_lofo_sch,docs/PROPOSAL_ROBOTICS_ADEO.md,9.8,9.77104,stats/results/cycle_lofo_summary.csv,median_abs_pct,"left_out_by == ""scheme"" and group == ""all groups pooled"" and model == ""fitted""",value,0.005,modelled,,
 proposal_robotics_adeo_m_b,docs/PROPOSAL_ROBOTICS_ADEO.md,0.991,0.9914391304347826,mission/results/base.csv,avail_mean,"vehicle == ""drone"" and arch == ""B"" and link == ""sik""",value,0.005,estimated,,
