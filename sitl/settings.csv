@@ -1,0 +1,20 @@
+name,value,unit,label,note
+seed,20261021,count,assumption,round 5 seed; run i of a configuration and profile uses seed + 1000 x profile index + 100 x configuration index + i
+missions_per_config,20,count,assumption,scripted missions per configuration and link profile (acceptance test minimum)
+stream_cmd_id,183,id,assumption,MAV_CMD_DO_SET_SERVO sent as COMMAND_LONG to an unassigned output (a payload actuator command); the stream command must be acknowledged so that COMMAND_ACK times it (the mission study probe SET_POSITION_TARGET_GLOBAL_INT is not acknowledged)
+stream_servo,9,index,assumption,servo output addressed by every stream command (no function assigned; a first trial with MAV_CMD_DO_CHANGE_SPEED at 1 Hz stalled the mission at its first waypoint)
+stream_pwm_us,1500,us,assumption,pulse width carried by every stream command
+takeoff_alt_m,10,m,assumption,mission takeoff altitude above home
+leg_m,80,m,assumption,length of each of the two mission legs (north then east)
+land_speed_m_s,1.5,m/s,assumption,ArduPilot LAND_SPD_MS parameter set for the run so that a mission lasts about one minute
+wp_speed_m_s,8,m/s,assumption,ArduPilot WP_SPD parameter set for the run
+mission_timeout_s,180,s,assumption,a mission that has not landed and disarmed by then counts as not completed
+sr_extra1_hz,4,Hz,assumption,ArduPilot MAV2_EXTRA1 (ATTITUDE group) set to the drone ATTITUDE rate of mission/traffic.csv
+sr_position_hz,2,Hz,assumption,ArduPilot MAV2_POSITION set to the drone GLOBAL_POSITION_INT rate of mission/traffic.csv
+sr_extra2_hz,2,Hz,assumption,ArduPilot MAV2_EXTRA2 (VFR_HUD group) set to the drone VFR_HUD rate of mission/traffic.csv
+sr_ext_stat_hz,1,Hz,assumption,ArduPilot MAV2_EXT_STAT set to the drone SYS_STATUS rate of mission/traffic.csv
+sr_extra3_hz,1,Hz,assumption,ArduPilot MAV2_EXTRA3 (BATTERY_STATUS group); the integer parameter cannot express the 0.5 Hz of mission/traffic.csv
+sr_other_hz,0,Hz,assumption,ArduPilot MAV2_RAW_SENS MAV2_RC_CHAN MAV2_RAW_CTRL MAV2_ADSB MAV2_PARAMS (stream groups of SERIAL1) set to zero (not in mission/traffic.csv)
+outage_window_start_s,15,s,assumption,one outage per mission starts uniformly in this window after arming (cruise legs)
+outage_window_end_s,40,s,assumption,end of the outage start window after arming
+queue_limit_bytes,4096,B,assumption,bytes the emulated radio buffers per direction before it drops unreliable frames (no cited value; reliable frames are never dropped by the buffer)
