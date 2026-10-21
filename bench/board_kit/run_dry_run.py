@@ -8,6 +8,11 @@ fails, runs compare.py, and writes DRY_RUN.md plus small summary CSVs into bench
 Raw logs and the full per iteration result CSV stay outside the repository (OUT_DIR/dry_run/).
 QEMU cycle values are meaningless: they are labelled emulated and compare.py excludes them from
 every cycle comparison. This run only proves the pipeline.
+Round 5: the B1 images are run for both cache passes (b1_<set> and b1_<set>_cacheoff); the summary
+reports lines, unrecognised lines and the recognised share for each pass separately. On QEMU the
+caches off option has no register to act on (mps2-an386 has no flash interface), so the caches off
+images print their pass and the emulated cache line; the register writes are checked by
+cache_check.py (static) and renode_check.py (Renode, nucleo-l552ze-q only).
 """
 import argparse
 import csv
@@ -73,8 +78,9 @@ def main(argv=None):
         checks += r["checks"]
         total += r["n_lines"]
         bad += r["n_unrecognised"]
-        per_log.append(dict(c, parsed_lines=r["n_lines"], unrecognised=r["n_unrecognised"],
-                            rows=len(r["rows"])))
+        info = parse.image_info(r["header"].get("image", ""))
+        per_log.append(dict(c, cache_pass=info.get("cache_pass", "on"), parsed_lines=r["n_lines"],
+                            unrecognised=r["n_unrecognised"], rows=len(r["rows"])))
     full = os.path.join(a.out, "dry_run_results.csv")
     parse.write_csv(full, parse.RESULT_COLUMNS, rows)
     parse.write_csv(os.path.join(a.summary, "dry_run_checks.csv"), parse.CHECK_COLUMNS, checks)
@@ -104,13 +110,31 @@ def main(argv=None):
                "cycles_excluded": sum(1 for r in cmp_rows
                                       if r["cycles_status"].startswith("excluded")),
                "published_matched": sum(1 for r in cmp_rows if r["published_id"]),
-               "predictions_file": os.path.exists(compare.PREDICTIONS)}
+               "predictions_file": os.path.exists(compare.PREDICTIONS),
+               "passes": pass_summary(per_log, checks)}
     with open(os.path.join(a.summary, "dry_run_summary.json"), "w") as fh:
         json.dump(summary, fh, indent=1)
     write_md(os.path.join(HERE, "DRY_RUN.md"), summary, cmp_rows)
     print(json.dumps(summary, indent=1))
     ok = bad == 0 and summary["failed_checks"] == 0 and summary["ends"] == ["marker"]
     return 0 if ok else 1
+
+
+def pass_summary(per_log, checks):
+    """Lines, unrecognised lines and recognised percent for each cache pass."""
+    out = {}
+    for cp in K.CACHE_PASSES:
+        logs = [p for p in per_log if p["cache_pass"] == cp]
+        lines = sum(p["parsed_lines"] for p in logs)
+        bad = sum(p["unrecognised"] for p in logs)
+        names = {p["log"] for p in logs}
+        chk = [c for c in checks if c["source_log"] in names]
+        out[cp] = {"logs": len(logs), "b1_logs": sum(1 for p in logs if p["experiment"] == "B1"),
+                   "lines": lines, "unrecognised": bad,
+                   "recognised_percent": 100.0 * (lines - bad) / lines if lines else 0.0,
+                   "failed_checks": sum(int(c["fail"]) for c in chk),
+                   "ok_checks": sum(int(c["ok"]) for c in chk)}
+    return out
 
 
 def previous_harness_stack():
@@ -156,6 +180,18 @@ def write_md(path, s, cmp_rows):
          f"| Groups matched to a published evidence row | {s['published_matched']} |",
          f"| Modelled predictions file present | {'yes' if s['predictions_file'] else 'no'} |",
          "",
+         "## Both cache passes", "",
+         "The caches on pass holds the B0 pqm4 images and the B1 harness images; the caches off "
+         "pass holds the B1 harness images built with `-DBENCH_CACHE_OFF`. QEMU has no flash "
+         "interface or cache, so on QEMU the two passes differ only in the META lines they print.",
+         "",
+         "| Pass | Raw logs (B1) | Lines parsed | Unrecognised | Recognised | Checks passed / failed |",
+         "|---|---|---|---|---|---|"]
+    for cp, v in s.get("passes", {}).items():
+        L.append(f"| caches {cp} | {v['logs']} ({v['b1_logs']}) | {v['lines']} | "
+                 f"{v['unrecognised']} | {v['recognised_percent']:.1f} percent | "
+                 f"{v['ok_checks']} / {v['failed_checks']} |")
+    L += ["",
          "## Stack: B0 emulated against published (stack is not a cycle count)", "",
          "| Scheme | Variant | Operation | stack_emulated (bytes) | stack_published (bytes) | "
          "Evidence id |", "|---|---|---|---|---|---|"]
@@ -183,11 +219,32 @@ def write_md(path, s, cmp_rows):
     for r in b1stack:
         L.append(f"| {r['scheme']} | {r['operation']} | {r['stack_emulated']} | "
                  f"{prev.get((r['scheme'], r['operation']), 'not found')} |")
+    rc = os.path.join(HERE, "dry_run", "renode_cache_check.csv")
+    if os.path.exists(rc):
+        rr = compare.read_csv(rc)
+        L += ["", "## Cache register writes in Renode (nucleo-l552ze-q, label emulated)", "",
+              f"From `dry_run/renode_cache_check.csv` ({rr[0]['tool']}, `{rr[0]['platform_description']}`; "
+              "written by `renode_check.py`). The platform description does not model the "
+              "ICACHE peripheral or the flash interface, so the store reaches the bus and is "
+              "logged, but has no effect in the model and the read back cache line does not "
+              "show it.", "",
+              "| Image | Pass | Register | Writes logged | Last value written | Program counter | "
+              "UART lines parsed / unrecognised |",
+              "|---|---|---|---|---|---|---|"]
+        for r in rr:
+            L.append(f"| {r['image']} | {r['cache_pass']} | {r['register']} | {r['writes']} | "
+                     f"{r['last_write_value'] or 'none'} | {r['last_write_pc'] or 'none'} | "
+                     f"{r.get('uart_lines_parsed', '')} / {r.get('uart_lines_unrecognised', '')} |")
+        L += ["", "The Renode runs stop after a fixed emulated time, before the harness ends; "
+              "the UART column counts the complete lines up to that point, parsed by parse.py "
+              "(the cut last line is dropped). Renode's DWT is a tag that reads 0, so its "
+              "BENCH values are not cycle counts."]
     L += ["", "## Files", "",
           "- `dry_run/dry_run_summary.json`: the numbers in the first table.",
           "- `dry_run/dry_run_logs.csv`: one row per raw log (lines, end reason, rows).",
           "- `dry_run/dry_run_checks.csv`: correctness checks per log.",
           "- `dry_run/dry_run_compare.csv`: compare.py output (emulated cycles excluded).",
+          "- `dry_run/renode_cache_check.csv`: cache register writes seen in Renode.",
           "- Raw logs and the per iteration CSV stay outside the repository under the work "
           "directory (`board_kit_out/dry_run/`).", ""]
     with open(path, "w") as fh:

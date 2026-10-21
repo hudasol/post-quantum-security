@@ -13,7 +13,10 @@ Rules enforced here:
   * cycle counts from an emulator are meaningless: rows labelled 'emulated' get no cycle summary
     and take no part in any cycle ratio (cycles_status says so); emulated stack is kept, labelled;
   * ratios are computed only between board measured cycles and another source, with a bootstrap
-    95 percent interval (seed 20261020, 2000 resamples) of the ratio of means (pqm4 publishes means).
+    95 percent interval (seed 20261020, 2000 resamples) of the ratio of means (pqm4 publishes means);
+  * the two cache passes (round 5) are kept apart: cache_pass is part of every group key, and
+    model_conditions says whether the row matches the cycle model's conditions (zero wait states,
+    no cache): only caches off rows can (docs/PREDICTIONS_V5_BOARD.md states which rows count).
 Expected columns of the optional files: scheme, operation, cycles (or cycles_modelled), and
 optionally variant and a validation error column (any column whose name contains 'error').
 """
@@ -33,7 +36,8 @@ REPO = os.path.dirname(os.path.dirname(HERE))
 EVIDENCE = os.path.join(REPO, "data", "evidence.csv")
 PREDICTIONS = os.path.join(REPO, "cyclemodel", "results", "board_predictions.csv")
 
-COLUMNS = ["experiment", "label", "board", "scheme", "variant", "operation", "n_runs", "n_values",
+COLUMNS = ["experiment", "label", "board", "cache_pass", "scheme", "variant", "operation", "n_runs",
+           "n_values", "model_conditions",
            "cycles_status", "cycles_board_measured_mean", "cycles_board_measured_median",
            "cycles_board_measured_mean_ci_low", "cycles_board_measured_mean_ci_high",
            "cycles_published", "published_id", "ratio_board_measured_to_published",
@@ -92,6 +96,16 @@ def optional_rows(path, label):
     return out
 
 
+def model_conditions(rows, cache_pass):
+    """Whether the rows meet the model's conditions: caches off and zero wait states read back."""
+    if cache_pass != "off":
+        return "not met: caches on pass"
+    ws = {str(r.get("flash_ws", "")) for r in rows}
+    if ws == {"0"}:
+        return "met: caches off, zero wait states read back"
+    return f"unknown: flash_ws read back {sorted(ws)}"
+
+
 def lookup(table, scheme, variant, op):
     return table.get((scheme, variant, op)) or table.get((scheme, "", op))
 
@@ -108,18 +122,19 @@ def compare(results, evidence_rows, modelled=None, rtl=None):
     rtl = rtl or {}
     groups = {}
     for r in results:
-        key = (r["experiment"], r["label"], r["board"], r["scheme"].upper(), r["variant"],
-               r["operation"])
+        key = (r["experiment"], r["label"], r["board"], r.get("cache_pass") or "on",
+               r["scheme"].upper(), r["variant"], r["operation"])
         groups.setdefault(key, []).append(r)
     out = []
     for key in sorted(groups):
-        exp, label, board, scheme, variant, op = key
+        exp, label, board, cache_pass, scheme, variant, op = key
         rows = groups[key]
         cyc = [float(r["cycles"]) for r in rows if r["cycles"] not in ("", None)]
         stk = [int(r["stack_bytes"]) for r in rows if r["stack_bytes"] not in ("", None)]
         row = dict.fromkeys(COLUMNS, "")
-        row.update(experiment=exp, label=label, board=board, scheme=scheme, variant=variant,
-                   operation=op, n_runs=len({r["run"] for r in rows}), n_values=len(cyc))
+        row.update(experiment=exp, label=label, board=board, cache_pass=cache_pass, scheme=scheme,
+                   variant=variant, operation=op, n_runs=len({r["run"] for r in rows}),
+                   n_values=len(cyc), model_conditions=model_conditions(rows, cache_pass))
         p = pub.get((scheme, variant, op)) if exp == "B0" else None
         if p:
             row.update(cycles_published=p["cycles"], published_id=p["id"],
