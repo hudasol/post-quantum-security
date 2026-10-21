@@ -14,11 +14,11 @@ Hash check: the predictions file matches its registered SHA-256.
 | P6 | miss | Flights with derived statistics: 0, below the refutation threshold of 20. Public flight logs could not be used: the PX4 log sites disallow automated access and state no reuse licence (`flightstack/flightlog_access.csv`). |
 | P7 | not scored | Public flight logs could not be used: the PX4 log sites disallow automated access and state no reuse licence (`flightstack/flightlog_access.csv`). |
 | P8 | not scored | Public flight logs could not be used: the PX4 log sites disallow automated access and state no reuse licence (`flightstack/flightlog_access.csv`). The mission study was not rerun with real traffic. |
-| P9 | not scored | No software in the loop results committed. |
-| P10 | not scored | No software in the loop results committed. |
-| P11 | not scored | No software in the loop results committed. |
-| P12 | not scored | No software in the loop results committed. |
-| P13 | not scored | No software in the loop results committed. |
+| P9 | hit | Fewest completed scripted missions in a configuration on the SiK class link: 20; configurations: 4. |
+| P10 | between | Median added command latency of MAVLink 2 signing against no authentication: 3.72 ms. |
+| P11 | hit | Median hybrid session handshake time: 1.28 s. |
+| P12 | hit | Signature per command: SITL 496 ms against the mission study 380 ms (ratio 1.31). |
+| P13 | hit | Hybrid session availability: SITL 0.914 against the mission study 0.916 (difference 0.002). |
 | P14 | hit | ns-3 one hop 50 kB: 5.72 s against the link model 7.12 s (-19.7 percent); published range 30 to 60 s. |
 | P15 | hit | Smallest hop count at which ns-3 reaches 30 s: 3 (first registered sweep). |
 | P16 | hit | Largest absolute difference at DR5 between the link model (both its flight by flight calculation and its protocol simulation, the less favourable taken) and ns-3 over 4 handshake profiles: 5.43 percent (computed on the round 4 three flight handshakes the ns-3 runs used). |
@@ -45,4 +45,4 @@ Hash check: the predictions file matches its registered SHA-256.
 | P37 | not scored | Not yet scored. |
 | P38 | not scored | Not yet scored. |
 
-Totals: 15 hit, 0 between, 13 miss, 10 not scored, of 38.
+Totals: 19 hit, 1 between, 13 miss, 5 not scored, of 38.
