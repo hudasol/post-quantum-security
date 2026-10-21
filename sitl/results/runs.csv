@@ -1,0 +1,5 @@
+profile,config,base_seed,duration_s,utilisation,wire_bytes_up,wire_bytes_down,frames,lost_frames,retransmissions,failed_units,buffer_drops,commands_sent,commands_seen_by_relay,params_ok,label
+sik,hybrid,20261221,1121.761008,0.327887,395329,2252908,46972,6250,1956,4280,0,970,970,1,emulated
+sik,none,20261021,1096.790534,0.224216,144688,1625922,46116,6590,1660,4930,0,971,971,1,emulated
+sik,pqsig,20261321,1185.778361,0.643928,3891996,1605609,58450,3877,2516,1295,2063,960,960,1,emulated
+sik,signing,20261121,1092.772215,0.297124,169683,2168074,45521,4798,1193,3605,0,968,968,1,emulated

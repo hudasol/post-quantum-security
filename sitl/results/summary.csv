@@ -1,0 +1,54 @@
+profile,config,metric,value,ci_lo,ci_hi,n,unit,label
+sik,none,missions,20,,,20,count,SITL measured
+sik,none,missions_completed,20,,,20,count,SITL measured
+sik,none,commands,971,,,20,count,SITL measured
+sik,none,availability_rt_all,0.907312,0.863446,0.942564,20,ratio,SITL measured
+sik,none,availability_rt_link_up,1,1,1,20,ratio,SITL measured
+sik,none,latency_rt_median_ms,14.1175,13.923,14.347,20,ms,SITL measured
+sik,none,latency_rt_p95_ms,104.225,91.574,120.053,20,ms,SITL measured
+sik,none,availability_ow_all,0.909372,0.864666,0.944503,20,ratio,emulated
+sik,none,availability_ow_link_up,1,1,1,20,ratio,emulated
+sik,none,latency_ow_median_ms,6.4245,6.409,6.44201,20,ms,emulated
+sik,none,command_recovery_median_s,0.0717781,0.0112107,0.625799,19,s (range in ci columns),SITL measured
+sik,signing,missions,20,,,20,count,SITL measured
+sik,signing,missions_completed,20,,,20,count,SITL measured
+sik,signing,commands,968,,,20,count,SITL measured
+sik,signing,availability_rt_all,0.92562,0.896905,0.952481,20,ratio,SITL measured
+sik,signing,availability_rt_link_up,0.996614,0.993063,1,20,ratio,SITL measured
+sik,signing,latency_rt_median_ms,17.834,17.642,18.024,20,ms,SITL measured
+sik,signing,latency_rt_p95_ms,127.842,123.313,137.337,20,ms,SITL measured
+sik,signing,availability_ow_all,0.928719,0.900303,0.955716,20,ratio,emulated
+sik,signing,availability_ow_link_up,1,1,1,20,ratio,emulated
+sik,signing,latency_ow_median_ms,8.272,8.252,8.287,20,ms,emulated
+sik,signing,added_latency_rt_ms,3.7165,3.43549,4.00008,20,ms,SITL measured
+sik,signing,added_latency_ow_ms,1.8475,1.82,1.86751,20,ms,emulated
+sik,signing,command_recovery_median_s,0.0703885,0.0152629,0.582216,20,s (range in ci columns),SITL measured
+sik,hybrid,missions,20,,,20,count,SITL measured
+sik,hybrid,missions_completed,20,,,20,count,SITL measured
+sik,hybrid,commands,970,,,20,count,SITL measured
+sik,hybrid,availability_rt_all,0.914433,0.87834,0.947315,20,ratio,SITL measured
+sik,hybrid,availability_rt_link_up,0.998857,0.996487,1,20,ratio,SITL measured
+sik,hybrid,latency_rt_median_ms,17.982,17.704,18.17,20,ms,SITL measured
+sik,hybrid,latency_rt_p95_ms,93.732,83.4144,99.4941,20,ms,SITL measured
+sik,hybrid,availability_ow_all,0.914433,0.877966,0.945249,20,ratio,emulated
+sik,hybrid,availability_ow_link_up,0.998857,0.99647,1,20,ratio,emulated
+sik,hybrid,latency_ow_median_ms,8.367,8.35849,8.379,20,ms,emulated
+sik,hybrid,added_latency_rt_ms,3.8645,3.52795,4.168,20,ms,SITL measured
+sik,hybrid,added_latency_ow_ms,1.9425,1.922,1.961,20,ms,emulated
+sik,hybrid,command_recovery_median_s,0.0597783,0.0188216,1.87085,17,s (range in ci columns),SITL measured
+sik,hybrid,handshake_median_s,1.28068,1.22076,2.01701,20,s (range in ci columns),emulated
+sik,hybrid,teardowns,4,,,20,count,emulated
+sik,hybrid,session_recovery_median_s,1.45337,1.22158,1.94349,4,s (range in ci columns),emulated
+sik,pqsig,missions,20,,,20,count,SITL measured
+sik,pqsig,missions_completed,20,,,20,count,SITL measured
+sik,pqsig,commands,960,,,20,count,SITL measured
+sik,pqsig,availability_rt_all,0.41875,0.384531,0.453898,20,ratio,SITL measured
+sik,pqsig,availability_rt_link_up,0.465197,0.428567,0.502442,20,ratio,SITL measured
+sik,pqsig,latency_rt_median_ms,509.689,499.081,514.082,20,ms,SITL measured
+sik,pqsig,latency_rt_p95_ms,1636.63,936.435,2587.33,20,ms,SITL measured
+sik,pqsig,availability_ow_all,0.747917,0.70502,0.79375,20,ratio,emulated
+sik,pqsig,availability_ow_link_up,0.830626,0.802849,0.858287,20,ratio,emulated
+sik,pqsig,latency_ow_median_ms,387.979,387.856,388.323,20,ms,emulated
+sik,pqsig,added_latency_rt_ms,495.571,483.788,499.854,20,ms,SITL measured
+sik,pqsig,added_latency_ow_ms,381.554,381.43,381.915,20,ms,emulated
+sik,pqsig,command_recovery_median_s,2.26675,0.199398,6.42642,20,s (range in ci columns),SITL measured
