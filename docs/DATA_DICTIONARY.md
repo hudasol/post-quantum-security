@@ -450,6 +450,72 @@ Labels used across the repository: published, host measured, emulated, estimated
 | clocks_mhz | text | 24.0 |
 | row_ids | text | S12A-250 |
 
+### `data/meta/hierarchical_config.csv`
+
+3 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | assumption |
+| key | text | seed |
+| value | text | 20261021 |
+
+### `data/meta/hierarchical_residual.csv`
+
+9 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | modelled |
+| weighting | text | unweighted |
+| measure | text | residual sd of the hierarchical model (log cycles) |
+| value | number | 0.379152 |
+| factor | number | 1.46105 |
+| ci_lo | number | 0.350233 |
+| ci_hi | number | 0.41157 |
+| n_rows | number | 408 |
+| n_groups | number | 118 |
+
+### `data/meta/hierarchical_rows.csv`
+
+10 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | published |
+| id | text | S2-0001 |
+| cell | text | ML-KEM-1024 / keygen / Cortex-M4 |
+| variant | text | pqm4 implementation 'clean (PQClean reference C)' |
+| variant_class | text | portable C or reference |
+| statistic | text | mean |
+| compiler | text | gcc 11 |
+| source | text | https://raw.githubusercontent.com/mupq/pqm4/master/benchmark... |
+| cycles | number | 1536343.0 |
+| weight | number | 1.0 |
+
+### `data/meta/hierarchical_variance.csv`
+
+16 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | modelled |
+| weighting | text | unweighted |
+| fit | text | main (variant as stated) |
+| component | text | variant |
+| levels | number | 48 |
+| variance_log | number | 0.0732428 |
+| sd_log | number | 0.270634 |
+| factor_1sd | number | 1.3108 |
+| share_within_cell | number | 0.0355756 |
+| share_ci_lo | number | 0.0103689 |
+| share_ci_hi | number | 0.137088 |
+| sd_ci_lo | number | 0.191443 |
+| sd_ci_hi | number | 0.346767 |
+| weighting_note | text | unweighted |
+| seed | number | 20261021 |
+| n_boot | number | 100 |
+
 ### `data/verify5/adjudication.csv`
 
 5 columns.
@@ -588,6 +654,97 @@ Labels used across the repository: published, host measured, emulated, estimated
 | read | text | SPHINCS+ |
 | status | text | agree |
 
+### `data/verify5/third_look_1.csv`
+
+5 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12A-305 |
+| field | text | library |
+| value_as_in_source | text | protected SLotH (TI Keccak) |
+| location_found | text | Page 15, Table 6 caption |
+| note | text | library named only in caption, not in the cell |
+
+### `data/verify5/third_look_2.csv`
+
+5 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12BL-035 |
+| field | text | conditions |
+| value_as_in_source | text | Fragment current and time measurements; IoT device powered a... |
+| location_found | text | Section 5, Table 3 caption and Section 5 text |
+| note | text | Copied caption and the printed measurement conditions. |
+
+### `data/verify5/third_look_3.csv`
+
+5 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12BL-044 |
+| field | text | conditions |
+| value_as_in_source | text | "three duty cycling link-layer protocols: preamble-sampling,... |
+| location_found | text | Abstract |
+| note | text | fragment quoted via WebFetch; tail of the list (TSCH) paraph... |
+
+### `data/verify5/third_look_3b.csv`
+
+5 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12A-001 |
+| field | text | operation |
+| value_as_in_source | text | Key Generation |
+| location_found | text | PDF page 10, Section 5.1 Speed, Signature Schemes table (unn... |
+| note | text | column header as printed; row present at stated location |
+
+### `data/verify5/third_look_classified.csv`
+
+13 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | published |
+| id | text | S12A-305 |
+| field | text | library |
+| sheet | number | 1 |
+| staged | text | SLotH (Saarinen), Keccak threshold implementation (TI) maske... |
+| reader1 | text | Espressif fork of liboqs |
+| reader2 | text | SLotH (protected, TI Keccak) |
+| third | text | protected SLotH (TI Keccak) |
+| location_found | text | Page 15, Table 6 caption |
+| note | text | library named only in caption, not in the cell |
+| verdict | text | reader_right |
+| rule | text | readers: R1 |
+| substance | text | no contradiction (manual: same implementation (protected SLo... |
+
+### `data/verify5/third_look_corrections.csv`
+
+5 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12A-441 |
+| field | text | library |
+| old_value | text | ESP-IDF v6.0 or later secure boot (library version not state... |
+| new_value | text | an Espressif fork of liboqs |
+| reason | text | Verification 5 third look (blind reader, sheet 1): source re... |
+
+### `data/verify5/third_look_manual.csv`
+
+4 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12A-305 |
+| field | text | library |
+| substance | text | no contradiction |
+| reason | text | same implementation (protected SLotH with threshold Keccak),... |
+
 ### `data/verify5/third_look_queue.csv`
 
 3 columns.
@@ -597,6 +754,72 @@ Labels used across the repository: published, host measured, emulated, estimated
 | id | text | S12A-246 |
 | field | text | ram_bytes |
 | why | text | value disagreement |
+
+### `data/verify5/third_look_sheet_1.csv`
+
+6 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12A-305 |
+| field | text | library |
+| source_title | text | Accelerating SLH-DSA by Two Orders of Magnitude with a Singl... |
+| source_url | text | https://csrc.nist.gov/csrc/media/Events/2024/fifth-pqc-stand... |
+| supplied_file | text | 2020-470     LMS vs XMSS - Comparison of Stateful Hash-Based... |
+| location_in_source | text | Page 15, Table 6 (protected SLotH, SHAKE variants), row 'SLH... |
+
+### `data/verify5/third_look_sheet_2.csv`
+
+6 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12BL-035 |
+| field | text | conditions |
+| source_title | text | Incremental firmware update over-the-air for low-power IoT d... |
+| source_url | text | https://arxiv.org/html/2505.13764v2 |
+| supplied_file | text | 2021-781    Quantum-Resistant Security for Software Updates ... |
+| location_in_source | text | Section 5, Table 3, row 'Current', column 'Avg' |
+
+### `data/verify5/third_look_sheet_3.csv`
+
+6 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12BL-044 |
+| field | text | conditions |
+| source_title | text | DTLS Performance in Duty-Cycled Networks; Malisa Vucinic, Be... |
+| source_url | text | https://arxiv.org/pdf/1507.05810v1 |
+| supplied_file | text | 2026-2343    Post-Quantum Command Authentication for.pdf |
+| location_in_source | text | Abstract |
+
+### `data/verify5/third_look_sheet_3b.csv`
+
+6 columns.
+
+| column | type | example |
+|---|---|---|
+| id | text | S12A-001 |
+| field | text | operation |
+| source_title | text | pqm4: Testing and Benchmarking NIST PQC on ARM Cortex-M4. Ma... |
+| source_url | text | https://eprint.iacr.org/2019/844.pdf |
+| supplied_file | text | pqm4 2019-844.pdf |
+| location_in_source | text | PDF page 10, Section 5.1 Speed, Signature Schemes table (unn... |
+
+### `data/verify5/third_look_summary.csv`
+
+7 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | published |
+| measure | text | lines staging_right |
+| count | number | 212 |
+| of | number | 393 |
+| share | number | 0.53944 |
+| wilson_lo | number | 0.369656 |
+| wilson_hi | number | 0.470384 |
 
 ### `energy/results/classical_baselines.csv`
 
