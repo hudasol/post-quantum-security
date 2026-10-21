@@ -90,7 +90,8 @@ jobs:
         run: |
           python3 -m netsim.compare > /dev/null
           python3 -m netsim.make_study > /dev/null
-          git diff --exit-code netsim/results docs/NETSIM_STUDY.md
+          # figure layout depends on the fonts installed, so only data and text are compared
+          git diff --exit-code -- 'netsim/results/*.csv' docs/NETSIM_STUDY.md
       - name: Mission study and reference architecture regenerate from the committed mission results
         run: |
           python3 -m mission.run_all --reuse > /dev/null
