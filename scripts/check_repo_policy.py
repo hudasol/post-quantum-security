@@ -14,7 +14,7 @@ Rules:
 import os, subprocess, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BAD_EXT = {'.pdf','.ps','.epub','.djvu','.docx','.pptx','.xlsx','.zip','.tar','.gz','.tgz','.bz2','.xz','.7z','.rar','.html','.htm','.mhtml','.warc'}
-ALLOW = {'docs/REPORT.pdf','docs/EXECUTIVE_BRIEF.pdf','docs/PAPER.pdf'}
+ALLOW = {'docs/REPORT.pdf','docs/EXECUTIVE_BRIEF.pdf','docs/PAPER.pdf','docs/PROPOSAL_BRIEF.pdf'}
 BIN_OK_EXT = {'.png','.svg'}
 BIN_OK_DIRS = ('plots/','docs/figures/')
 THIRD = ('bench/mcu/ext/','bench/mcu/build/')
