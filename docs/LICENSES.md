@@ -18,6 +18,10 @@ Author: Huda Mueen. Generated facts in `data/third_party_licences.csv` by `scrip
 | PX4-Autopilot | WP1 firmware builds for memory use; WP2 software in the loop (fetched by `flightstack/fetch.sh`, built outside the repository) | v1.17.0, commit d6f12ad1c4f7 | LICENSE | BSD-3-Clause |
 | ArduPilot | WP1 firmware builds for memory use (fetched by `flightstack/fetch.sh`); only section headers, the linker MEMORY block and some board definition values are kept, as data, in `data/flightstack/raw/` | Copter-4.7.2, commit fb773567896014 | COPYING.txt | GPL-3.0 |
 | CrashDebug | ArduPilot H7 build dependency, build time only | as pinned by ArduPilot Copter-4.7.2 | LICENSE | GPL-2.0 |
+| OpenHW Group CV32E40P | WP7 RTL simulated cycles (fetched by `rtlsim/fetch_cv32e40p.sh`, simulated, not copied) | cv32e40p_v1.8.3, commit 360d2728 | LICENSE | Solderpad Hardware License 0.51 |
+| ST cmsis_device_l5 and ARM CMSIS core | WP7 NUCLEO-L552ZE-Q images and cache register citations (fetched at build time) | v1.0.7 e237398c; v5.9.0_20250520 b7487de1 | LICENSE.md | Apache-2.0 |
+| Renode | WP7 emulator check of the cache register writes (fetched by `bench/board_kit/fetch_renode.sh`) | 1.16.1 | licenses/renode-license | MIT |
+| VexRiscv and sbt | WP7, prepared but not built (dependency download refused) | VexRiscv baf7dc82; sbt 1.10.9 | LICENSE | MIT; Apache-2.0 |
 
 Notes:
 
