@@ -1,0 +1,5 @@
+scenario,sig_flash_kb,sig_ram_kb,kem_flash_kb,kem_ram_kb,label
+stack_asm,30,7,14,9,derived from published
+speed_asm,25,13,17,13,derived from published
+portable_c,29,34,20,25,derived from published
+reference_c,14,41,6,21,derived from published
