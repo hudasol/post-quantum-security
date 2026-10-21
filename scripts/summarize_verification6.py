@@ -10,6 +10,11 @@ The comparison rules are the round 4 rules of scripts/summarize_verification5.py
 unchanged (relative 0.5 percent for numbers, word overlap for text, a blank reader field is
 "not at location"). One change, fixed before the comparison ran: EVERY value disagreement and
 EVERY wording disagreement goes to the third look (round 4 sampled 60 wording disagreements).
+A second change was made after the first comparison had produced the list of wording
+disagreements (before the third look answers were read): the wording synonyms below, used only
+when a third reading is compared with staging and the readers. The document reports the wording
+rate with and without them. Rows listed in data/raw/S13_demoted.csv (demoted after review by
+scripts/promote_s13.py) are reported as their own outcome.
 
 Writes data/verify6/summary.csv, row_status.csv, third_look_queue.csv (id, field, source,
 location only, so the third reader sees no staged or reader value) and docs/VERIFICATION6.md.
@@ -29,7 +34,8 @@ V = ROOT / "data" / "verify6"
 FIELDS = v5.ROW_FIELDS
 VALUE = v5.VALUE_FIELDS
 WRONG = ("reader_right", "both_wrong", "not_in_source")
-# Wording synonyms, fixed before the third look answers were read: the staged operation labels
+# Wording synonyms, added after the first comparison had produced the wording disagreements and before
+# the third look answers were read (a decision taken after seeing the disagreements): the staged operation labels
 # use the evidence table vocabulary (keygen, encaps, decaps, sign, verify); a source label that
 # names the same operation in other words is the same wording.
 SYNONYMS = [(r"\bkey[\s-]*pair[\s-]*generation\b|\bkey[\s-]*generation\b|\bkey[\s-]*gen\b\.?|\bkeypair\b|\bkeygen\b", "keygen"),
@@ -46,17 +52,17 @@ def norm_words(s):
     return s
 
 
-def same_wording(field, a, b):
+def same_wording(field, a, b, synonyms=True):
     if field in VALUE or field == "clock_mhz":
         return v5.same(field, a, b)
-    return v5.same(field, a, b) or v5.same(field, norm_words(a), norm_words(b))
+    return v5.same(field, a, b) or (synonyms and v5.same(field, norm_words(a), norm_words(b)))
 
 
 def staged():
     return v5.read(RAW / "S13_staged.csv")
 
 
-def third_look(stage=None, r1=None, r2=None):
+def third_look(stage=None, r1=None, r2=None, synonyms=True):
     """Third look answers are blind: id, field, third_value, status (found, not_in_source,
     ambiguous_source), note. The verdict is derived here with the round 4 comparison rule:
     staged_right if the third value matches staging, reader_right if it matches a reader but not
@@ -73,9 +79,9 @@ def third_look(stage=None, r1=None, r2=None):
             i, f, tv, st = r["id"], r["field"], (r.get("third_value") or "").strip(), (r.get("status") or "found").strip()
             if st in ("not_in_source", "ambiguous_source") or not tv:
                 verdict = st if st in ("not_in_source", "ambiguous_source") else "not_in_source"
-            elif same_wording(f, stage.get(i, {}).get(f, ""), tv):
+            elif same_wording(f, stage.get(i, {}).get(f, ""), tv, synonyms):
                 verdict = "staged_right"
-            elif any(same_wording(f, (rd.get(i) or {}).get(f, ""), tv) for rd in (r1, r2) if (rd.get(i) or {}).get(f, "").strip()):
+            elif any(same_wording(f, (rd.get(i) or {}).get(f, ""), tv, synonyms) for rd in (r1, r2) if (rd.get(i) or {}).get(f, "").strip()):
                 verdict = "reader_right"
             else:
                 verdict = "both_wrong"
@@ -113,6 +119,20 @@ def owens_ratio():
             f"Row {ra['id']} (168 MHz, {int(float(ra['cycles']))} cycles) over row {rb['id']} (24 MHz, {int(float(rb['cycles']))} cycles): "
             f"ratio {float(ra['cycles']) / float(rb['cycles']):.3f}. Both values are printed in kilo cycles, so the ratio carries the "
             "rounding of the source (resolution 1000 cycles per value). The source does not state the flash wait states of the 168 MHz run.", ""]
+
+
+def demoted_ids():
+    p = RAW / "S13_demoted.csv"
+    if not p.exists():
+        return {}
+    with open(p, newline="", encoding="utf-8") as fh:
+        return {r["id"]: r for r in csv.DictReader(fh)}
+
+
+def field_confirmations(stage, res):
+    """Per staged value field: how many readers read the same number (0, 1 or 2)."""
+    agree = Counter((i, f) for i, f, _, _, _, st in res if st == "agree" and f in VALUE)
+    return {(i, f): agree.get((i, f), 0) for i, s in stage.items() for f in VALUE if (s.get(f) or "").strip()}
 
 
 def rate(label, k, n):
@@ -156,9 +176,18 @@ def main():
     wrong_v = [k for k in judged_v if adj[k]["verdict"] in WRONG]
     wrong_t = [k for k in judged_t if adj[k]["verdict"] in WRONG]
     flag_j = [k for k in flagged if k in adj]
+    adj_lit = third_look(stage, None, None, synonyms=False) if have else {}
+    wrong_t_lit = [k for k in judged_t if k in adj_lit and adj_lit[k]["verdict"] in WRONG]
+    conf = field_confirmations(stage, res) if have else {}
+    by_n = Counter(conf.values())
+    none_rows = sorted({i for (i, f), c in conf.items() if c == 0})
+    one_rows = sorted({i for (i, f), c in conf.items() if c == 1} - set(none_rows))
+    extra = sum(1 for x in res if x[5] == "reader_extra")
+    dem = demoted_ids()
+    dem_ok = [i for i in dem if status.get(i, ("", ""))[0] in ("confirmed", "corrected")]
     cs = Counter(s for s, _ in status.values())
     field_counts = Counter(f for _, f in txt_dis)
-    promoted = cs["confirmed"] + cs["corrected"]
+    promoted = cs["confirmed"] + cs["corrected"] - len(dem_ok)
     lines = ["# Verification 6: two independent readers for every round 5 row (stream S13)", "",
              "Author: Huda Mueen. Generated by `scripts/summarize_verification6.py`; do not edit by hand.", ""]
     if not have:
@@ -171,21 +200,37 @@ def main():
             "(blank sheets from `scripts/verify6_sheets.py`, rules in `data/verify6/READING_RULES.md`). "
             "Every value disagreement and every wording disagreement was sent to a third reader who saw only the row id, the field, "
             "the source and the location (`data/verify6/third_look_queue.csv`); verdicts are in `data/verify6/third_look.csv`. "
-            "The comparison rules are those of round 4 (`scripts/summarize_verification5.py`).", "",
+            "The comparison rules are those of round 4 (`scripts/summarize_verification5.py`) with two changes. Sending every disagreement "
+            "to the third look was fixed before the comparison ran. A list of wording synonyms (for example keygen for 'Key Generation' or "
+            "'Keypair'), used when a third reading is compared with staging, was added after the first comparison had produced the list of "
+            "wording disagreements and before the third look answers were read; the wording rate is given below with and without it.", "",
+            f"Headline: {dis_fields} of {n_fields} staged value fields disagreed with a reader, but {by_n.get(0, 0)} of {n_fields} "
+            f"({100 * by_n.get(0, 0) / n_fields:.1f} percent) were confirmed by no reader and {by_n.get(1, 0)} by one reader only; "
+            "an unconfirmed field is not a disagreement, and its row is not promoted.", "",
             "## Outcome per evidence row", "",
             "| status | rows | meaning |", "|---|---|---|",
             f"| confirmed | {cs['confirmed']} | every value read as the same number by both readers |",
             f"| corrected | {cs['corrected']} | a value was wrong in staging and is corrected from the third look |",
-            f"| single reader | {cs['single_reader']} | only one reader confirmed a value, or the row holds no value field; not promoted |",
-            f"| blocked | {cs['blocked']} | open disagreement, value not in the source, or the source is ambiguous; not promoted |", "",
+            f"| single reader | {cs['single_reader']} | a staged value was confirmed by fewer than two readers, or the row holds no value field; "
+            f"not promoted (in this round {len(none_rows)} rows have a value that no reader confirmed and {len(one_rows)} a value that one reader confirmed) |",
+            f"| blocked | {cs['blocked']} | open value disagreement, or a value field the third reader found not in the source or ambiguous; not promoted |", "",
+            "Only value fields can block a row. A wording field the third reader found ambiguous in the source does not block promotion; "
+            "it is noted in the comparability warning by `scripts/promote_s13.py`.", "",
+            f"Demoted after review: {len(dem)} rows break a written inclusion or exclusion rule of `data/raw/S13_protocol.csv` and are kept out of "
+            f"`data/raw/S13_verified.csv` with their rule and reason in `data/raw/S13_demoted.csv`; {len(dem_ok)} of them were confirmed by both readers "
+            f"and the other {len(dem) - len(dem_ok)} were single reader rows already.", "",
             f"Rows double read and promoted to `data/raw/S13_verified.csv`: {promoted}.", "",
             "## Error rates", "",
             "| measure | count | of | rate | Wilson 95 percent interval |", "|---|---|---|---|---|",
             rate("staged value fields with a disagreement between staging and a reader, before adjudication", dis_fields, n_fields),
+            rate("staged value fields confirmed by both readers", by_n.get(2, 0), n_fields),
+            rate("staged value fields confirmed by no reader (blank at the cited field or placed in another field; not a disagreement)", by_n.get(0, 0), n_fields),
+            rate("staged value fields confirmed by one reader only", by_n.get(1, 0), n_fields),
             rate("staged rows with a value disagreement, before adjudication", len(dis_rows), len(val_rows)),
             rate("staged rows with a value confirmed wrong by the third look", len({k[0] for k in wrong_v}), len(val_rows)),
             rate("value disagreements where staging was wrong after the third look", len(wrong_v), len(judged_v)),
-            rate("wording disagreements where the source wording differs from the staged label after the third look", len(wrong_t), len(judged_t)), "",
+            rate("wording disagreements where the source wording differs from the staged label after the third look", len(wrong_t), len(judged_t)),
+            rate("the same, without the wording synonyms (round 4 text rule only)", len(wrong_t_lit), len(judged_t)), "",
             "A differing wording is not a wrong value: the staged label (evidence table vocabulary, such as keygen) is kept and the source wording "
             "read by the third reader is appended to the comparability warning by `scripts/promote_s13.py`; a field the third reader found "
             "ambiguous in the source is noted there as well.", "",
@@ -194,8 +239,10 @@ def main():
             f"Third look coverage: {len(judged_v)} of {len(val_dis)} value disagreements and {len(judged_t)} of {len(txt_dis)} wording disagreements.", "",
             "Wording disagreements by field before the third look: "
             + (", ".join(f"{f} {n}" for f, n in field_counts.most_common()) or "none") + ".", "",
-            f"Fields a reader left blank because the source states them away from the cited location are counted as not at location, "
-            f"not as errors: {sum(1 for x in res if x[5] == 'not_at_location')} field readings.", "",
+            f"Field readings that a reader left blank are counted as not at location, not as errors: {sum(1 for x in res if x[5] == 'not_at_location')} "
+            "readings. They include fields the source states away from the cited location, fields the source does not state, and staged values "
+            "a reader wrote in another field; readings of a field that staging left blank are counted as reader extra "
+            f"({extra} readings, for example the pqm4 memory value staged as stack_bytes, which both readers wrote as ram_bytes).", "",
         ]
     lines += owens_ratio()
     (ROOT / "docs" / "VERIFICATION6.md").write_text("\n".join(lines), encoding="utf-8")
