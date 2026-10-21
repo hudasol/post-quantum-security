@@ -1,0 +1,12 @@
+stack=ardupilot
+target=Pixhawk6C
+commit=fb773567896014da007bca58358704d4a0d8516f
+exit_code=0
+build_seconds=397
+jobs=2
+nice=10
+toolchain=arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009
+linker_script=libraries/AP_HAL_ChibiOS/hwdef/Pixhawk6C/hwdef.dat via build/Pixhawk6C/ldscript.ld (generated)
+built_utc=2026-10-21T00:30:51Z
+elf=arducopter
+elf_sha256=9654d777590f9b07cecb032d47f7049c504b758cb3633f31342974f557d25ba0

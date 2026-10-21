@@ -1,0 +1,12 @@
+stack=px4
+target=cubepilot_cubeorange_default
+commit=d6f12ad1c4f70ad3230afd7d86e971421e02fef4
+exit_code=0
+build_seconds=189
+jobs=2
+nice=10
+toolchain=arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009
+linker_script=boards/cubepilot/cubeorange/nuttx-config/scripts/script.ld
+built_utc=2026-10-21T00:50:29Z
+elf=cubepilot_cubeorange_default.elf
+elf_sha256=9d3c78e222318ec41b60d2d66807ae2518bae418622cdd24adb84dba169497b3

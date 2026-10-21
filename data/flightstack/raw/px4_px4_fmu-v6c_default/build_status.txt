@@ -1,0 +1,12 @@
+stack=px4
+target=px4_fmu-v6c_default
+commit=d6f12ad1c4f70ad3230afd7d86e971421e02fef4
+exit_code=0
+build_seconds=261
+jobs=2
+nice=10
+toolchain=arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009
+linker_script=boards/px4/fmu-v6c/nuttx-config/scripts/script.ld
+built_utc=2026-10-21T00:47:19Z
+elf=px4_fmu-v6c_default.elf
+elf_sha256=e5b22439b1bb4c9b3df1337cf74346612d79618874dcbd4bbb94776df37e99c3

@@ -1,0 +1,12 @@
+stack=ardupilot
+target=MatekH743
+commit=fb773567896014da007bca58358704d4a0d8516f
+exit_code=0
+build_seconds=577
+jobs=2
+nice=10
+toolchain=arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009
+linker_script=libraries/AP_HAL_ChibiOS/hwdef/MatekH743/hwdef.dat via build/MatekH743/ldscript.ld (generated)
+built_utc=2026-10-21T00:14:56Z
+elf=arducopter
+elf_sha256=79b66876e15b3d3be646096642d9109c6bc19f2636fd6ddd20a4889243bf5901

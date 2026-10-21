@@ -1,0 +1,2 @@
+   text	   data	    bss	    dec	    hex	filename
+1934872	   4140	  43820	1982832	 1e4170	<third_party>/PX4-Autopilot/build/holybro_durandal-v1_default/holybro_durandal-v1_default.elf

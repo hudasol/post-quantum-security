@@ -1,0 +1,40 @@
+[1021/1050] Compiling ArduCopter/rate_thread.cpp
+[1022/1050] Compiling ArduCopter/radio.cpp
+[1023/1050] Compiling ArduCopter/mode_guided.cpp
+[1024/1050] Compiling ArduCopter/mode_follow.cpp
+[1025/1050] Compiling ArduCopter/mode_stabilize_heli.cpp
+[1026/1050] Compiling ArduCopter/mode_acro.cpp
+[1027/1050] Compiling ArduCopter/mode_althold.cpp
+[1028/1050] Compiling ArduCopter/mode_brake.cpp
+[1029/1050] Compiling ArduCopter/navigation.cpp
+[1030/1050] Compiling ArduCopter/mode_avoid_adsb.cpp
+[1031/1050] Compiling ArduCopter/mode_sport.cpp
+[1032/1050] Compiling ArduCopter/terrain.cpp
+[1033/1050] Compiling ArduCopter/mode_autorotate.cpp
+[1034/1050] Compiling ArduCopter/events.cpp
+[1035/1050] Compiling ArduCopter/sensors.cpp
+[1036/1050] Compiling ArduCopter/mode_flip.cpp
+[1037/1050] Compiling ArduCopter/AP_Arming_Copter.cpp
+[1038/1050] Compiling ArduCopter/standby.cpp
+[1039/1050] Compiling ArduCopter/mode_circle.cpp
+[1040/1050] Compiling ArduCopter/heli.cpp
+[1041/1050] Compiling ArduCopter/precision_landing.cpp
+[1042/1050] Compiling ArduCopter/UserCode.cpp
+[1043/1050] Compiling ArduCopter/AP_ExternalControl_Copter.cpp
+[1044/1050] Linking build/MatekF405-Wing/bin/arducopter
+[1045/1050] Generating bin/arducopter.bin
+[1046/1050] checking symbols build/MatekF405-Wing/bin/arducopter
+[1047/1050] app_descriptor set_app_descriptor: build/MatekF405-Wing/bin/arducopter build/MatekF405-Wing/bin/arducopter.bin
+No APP_DESCRIPTOR found
+[1048/1050] apj_gen build/MatekF405-Wing/bin/arducopter.bin
+[1049/1050] bin cleanup build/MatekF405-Wing/bin/arducopter.bin
+[1050/1050] Generating bin/arducopter_with_bl.hex
+Waf: Leaving directory `<third_party>/ardupilot/build/MatekF405-Wing'
+
+BUILD SUMMARY
+Build directory: <third_party>/ardupilot/build/MatekF405-Wing
+Target          Text (B)  Data (B)  BSS (B)  Total Flash Used (B)  Free Flash (B)  External Flash Used (B)
+----------------------------------------------------------------------------------------------------------
+bin/arducopter    877588      3056    82500                880644          102332  Not Applicable         
+
+'copter' finished successfully (23m24.859s)

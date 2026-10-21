@@ -1,0 +1,2 @@
+   text	   data	    bss	    dec	    hex	filename
+ 877588	   3056	 230448	1111092	 10f434	<third_party>/ardupilot/build/MatekF405-Wing/bin/arducopter

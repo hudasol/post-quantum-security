@@ -1,0 +1,57 @@
+
+<third_party>/ardupilot/build/Durandal/bin/arducopter:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 startup       000002e0  08020000  08020000  00001000  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 constructors  00000098  080202e0  080202e0  000012e0  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .text         00184090  08020380  08020380  00001380  2**6
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .ARM.exidx    00000008  081a4410  081a4410  00185410  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  4 .textalign    00000000  081a4418  081a4418  00187374  2**0
+                  CONTENTS
+  5 .mstack       00000600  30000000  30000000  00188000  2**0
+                  ALLOC
+  6 .pstack       00001c00  30000600  30000600  00188000  2**0
+                  ALLOC
+  7 .data         00001174  30002200  081a4418  00186200  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  8 .bss          0001ff90  30003378  081a558c  00187378  2**3
+                  ALLOC
+  9 .ram0_init    00000000  30023308  30023308  00187374  2**2
+                  CONTENTS
+ 10 .ram0         00000000  30023308  30023308  00187374  2**2
+                  CONTENTS
+ 11 .heap         0001ccf8  30023308  081a558c  00188308  2**0
+                  ALLOC
+ 12 .crash_log    0005aa74  081a558c  081a558c  0018758c  2**0
+                  ALLOC
+ 13 .ARM.attributes 0000002e  00000000  00000000  00187374  2**0
+                  CONTENTS, READONLY
+ 14 .comment      0000009b  00000000  00000000  001873a2  2**0
+                  CONTENTS, READONLY
+ 15 .debug_line   0001ca99  00000000  00000000  0018743d  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 16 .debug_line_str 0000017d  00000000  00000000  001a3ed6  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 17 .debug_info   00038a42  00000000  00000000  001a4053  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 18 .debug_abbrev 0000e06f  00000000  00000000  001dca95  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 19 .debug_aranges 00001400  00000000  00000000  001eab08  2**3
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 20 .debug_str    00004db7  00000000  00000000  001ebf08  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 21 .debug_frame  00002cd0  00000000  00000000  001f0cc0  2**2
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 22 .debug_loclists 00015257  00000000  00000000  001f3990  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 23 .debug_rnglists 00000b4f  00000000  00000000  00208be7  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 24 .debug_loc    000044e4  00000000  00000000  00209736  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 25 .debug_ranges 00000118  00000000  00000000  0020dc1a  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS

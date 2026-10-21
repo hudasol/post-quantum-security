@@ -1,0 +1,40 @@
+[1256/1284] Linking CXX static library src/systemcmds/dmesg/libsystemcmds__dmesg.a
+[1257/1284] Linking CXX static library src/systemcmds/gpio/libsystemcmds__gpio.a
+[1258/1284] Linking CXX static library src/systemcmds/hardfault_log/libsystemcmds__hardfault_log.a
+[1259/1284] Linking CXX static library src/systemcmds/i2cdetect/libsystemcmds__i2cdetect.a
+[1260/1284] Linking CXX static library src/systemcmds/led_control/libsystemcmds__led_control.a
+[1261/1284] Linking CXX static library src/systemcmds/mft/libsystemcmds__mft.a
+[1262/1284] Linking CXX static library src/systemcmds/mtd/libsystemcmds__mtd.a
+[1263/1284] Linking CXX static library src/systemcmds/nshterm/libsystemcmds__nshterm.a
+[1264/1284] Linking CXX static library src/systemcmds/param/libsystemcmds__param.a
+[1265/1284] Linking CXX static library src/systemcmds/perf/libsystemcmds__perf.a
+[1266/1284] Linking CXX static library src/systemcmds/reboot/libsystemcmds__reboot.a
+[1267/1284] Linking CXX static library src/systemcmds/sd_bench/libsystemcmds__sd_bench.a
+[1268/1284] Linking CXX static library src/systemcmds/sd_stress/libsystemcmds__sd_stress.a
+[1269/1284] Linking CXX static library src/systemcmds/system_time/libsystemcmds__system_time.a
+[1270/1284] Linking CXX static library src/systemcmds/top/libsystemcmds__top.a
+[1271/1284] Linking CXX static library src/systemcmds/topic_listener/libsystemcmds__topic_listener.a
+[1272/1284] Linking CXX static library src/systemcmds/tune_control/libsystemcmds__tune_control.a
+[1273/1284] Linking CXX static library src/systemcmds/uorb/libsystemcmds__uorb.a
+[1274/1284] Linking CXX static library src/systemcmds/usb_connected/libsystemcmds__usb_connected.a
+[1275/1284] Linking CXX static library src/systemcmds/ver/libsystemcmds__ver.a
+[1276/1284] Linking CXX static library src/systemcmds/work_queue/libsystemcmds__work_queue.a
+[1277/1284] Building C object platforms/nuttx/CMakeFiles/px4.dir/__/common/empty.c.obj
+[1278/1284] Building CXX object src/modules/mavlink/CMakeFiles/modules__mavlink.dir/modules__mavlink_unity.cpp.obj
+[1279/1284] Linking CXX static library src/modules/mavlink/libmodules__mavlink.a
+[1280/1284] Building CXX object src/modules/ekf2/CMakeFiles/modules__ekf2.dir/modules__ekf2_unity.cpp.obj
+[1281/1284] Linking CXX static library src/modules/ekf2/libmodules__ekf2.a
+[1282/1284] Linking CXX executable holybro_durandal-v1_default.elf
+Memory region         Used Size  Region Size  %age Used
+        ITCM_RAM:           0 B        64 KB      0.00%
+           FLASH:     1939012 B      1920 KB     98.62%
+       DTCM1_RAM:           0 B        64 KB      0.00%
+       DTCM2_RAM:           0 B        64 KB      0.00%
+        AXI_SRAM:       45612 B       512 KB      8.70%
+           SRAM1:           0 B       128 KB      0.00%
+           SRAM2:           0 B       128 KB      0.00%
+           SRAM3:           0 B        32 KB      0.00%
+           SRAM4:          2 KB        64 KB      3.12%
+          BKPRAM:           0 B         4 KB      0.00%
+[1283/1284] Generating ../../holybro_durandal-v1_default.bin
+[1284/1284] Creating <third_party>/PX4-Autopilot/build/holybro_durandal-v1_default/holybro_durandal-v1_default.px4

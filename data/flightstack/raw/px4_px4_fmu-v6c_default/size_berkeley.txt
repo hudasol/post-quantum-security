@@ -1,0 +1,2 @@
+   text	   data	    bss	    dec	    hex	filename
+1921864	   4432	  57868	1984164	 1e46a4	<third_party>/PX4-Autopilot/build/px4_fmu-v6c_default/px4_fmu-v6c_default.elf

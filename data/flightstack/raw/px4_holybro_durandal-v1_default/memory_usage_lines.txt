@@ -1,0 +1,10 @@
+        ITCM_RAM:           0 B        64 KB      0.00%
+           FLASH:     1939012 B      1920 KB     98.62%
+       DTCM1_RAM:           0 B        64 KB      0.00%
+       DTCM2_RAM:           0 B        64 KB      0.00%
+        AXI_SRAM:       45612 B       512 KB      8.70%
+           SRAM1:           0 B       128 KB      0.00%
+           SRAM2:           0 B       128 KB      0.00%
+           SRAM3:           0 B        32 KB      0.00%
+           SRAM4:          2 KB        64 KB      3.12%
+          BKPRAM:           0 B         4 KB      0.00%

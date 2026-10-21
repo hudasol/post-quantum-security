@@ -1,0 +1,2 @@
+   text	   data	    bss	    dec	    hex	filename
+1590136	   4620	 628988	2223744	 21ee80	<third_party>/ardupilot/build/Durandal/bin/arducopter

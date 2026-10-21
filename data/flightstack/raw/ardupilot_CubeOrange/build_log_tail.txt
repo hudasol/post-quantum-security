@@ -1,0 +1,40 @@
+[1237/1263] Compiling ArduCopter/GCS_MAVLink_Copter.cpp
+[1238/1263] Compiling ArduCopter/crash_check.cpp
+[1239/1263] Compiling ArduCopter/mode_avoid_adsb.cpp
+[1240/1263] Compiling ArduCopter/heli.cpp
+[1241/1263] Compiling ArduCopter/mode_flowhold.cpp
+[1242/1263] Compiling ArduCopter/mode_loiter.cpp
+[1243/1263] Compiling ArduCopter/AP_Rally.cpp
+[1244/1263] Compiling ArduCopter/AP_State.cpp
+[1245/1263] Compiling ArduCopter/mode_autotune.cpp
+[1246/1263] Compiling ArduCopter/mode_turtle.cpp
+[1247/1263] Compiling ArduCopter/mode_flip.cpp
+[1248/1263] Compiling ArduCopter/mode_follow.cpp
+[1249/1263] Compiling ArduCopter/Log.cpp
+[1250/1263] Compiling ArduCopter/standby.cpp
+[1251/1263] Compiling ArduCopter/RC_Channel_Copter.cpp
+[1252/1263] Compiling ArduCopter/Copter.cpp
+[1253/1263] Compiling ArduCopter/mode_zigzag.cpp
+[1254/1263] Compiling ArduCopter/mode_drift.cpp
+[1255/1263] Compiling ArduCopter/mode_systemid.cpp
+[1256/1263] Linking build/CubeOrange/bin/arducopter
+[1257/1263] Generating bin/arducopter.bin
+[1258/1263] checking symbols build/CubeOrange/bin/arducopter
+[1259/1263] app_descriptor set_app_descriptor: build/CubeOrange/bin/arducopter build/CubeOrange/bin/arducopter.bin
+No APP_DESCRIPTOR found
+[1260/1263] apj_gen build/CubeOrange/bin/arducopter.bin
+[1261/1263] bin cleanup build/CubeOrange/bin/arducopter.bin
+[1262/1263] Generating bin/arducopter.abin
+[1263/1263] Generating bin/arducopter_with_bl.hex
+githash fb773567896014da007bca58358704d4a0d8516f md5 50d586acd6a0fb20167f1fc4e10239d5
+Created bin/arducopter.abin
+
+Waf: Leaving directory `<third_party>/ardupilot/build/CubeOrange'
+
+BUILD SUMMARY
+Build directory: <third_party>/ardupilot/build/CubeOrange
+Target          Text (B)  Data (B)  BSS (B)  Total Flash Used (B)  Free Flash (B)  External Flash Used (B)
+----------------------------------------------------------------------------------------------------------
+bin/arducopter   1638284      4620   136620               1642904          323164  Not Applicable         
+
+'copter' finished successfully (9m15.592s)

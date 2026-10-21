@@ -1,0 +1,31 @@
+<third_party>/ardupilot/build/CubeOrange/bin/arducopter  :
+section               size         addr
+startup              0x2e0    0x8020000
+constructors          0x98    0x80202e0
+.text             0x18fca4    0x8020380
+.ARM.exidx             0x8    0x81b0024
+.textalign             0x4    0x81b002c
+.mstack              0x600   0x30000000
+.pstack             0x1c00   0x30000600
+.data               0x1174   0x30002200
+.bss               0x1f3a8   0x30003378
+.ram0_init             0x0   0x30022720
+.ram0                  0x0   0x30022720
+.heap              0x1d8e0   0x30022720
+.crash_log         0x4ee5c    0x81b11a4
+.ARM.attributes       0x2e          0x0
+.comment              0x9b          0x0
+.debug_line        0x1ca99          0x0
+.debug_line_str      0x17d          0x0
+.debug_info        0x38a42          0x0
+.debug_abbrev       0xe06f          0x0
+.debug_aranges      0x1400          0x0
+.debug_str          0x4db7          0x0
+.debug_frame        0x2cd0          0x0
+.debug_loclists    0x15257          0x0
+.debug_rnglists      0xb4f          0x0
+.debug_loc          0x44e4          0x0
+.debug_ranges        0x118          0x0
+Total             0x2a5839
+
+

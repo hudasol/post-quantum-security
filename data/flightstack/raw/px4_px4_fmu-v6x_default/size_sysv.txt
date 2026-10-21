@@ -1,0 +1,22 @@
+<third_party>/PX4-Autopilot/build/px4_fmu-v6x_default/px4_fmu-v6x_default.elf  :
+section                size         addr
+.text              0x1dd430    0x8020000
+.init_section         0x170    0x81fd430
+.ARM.exidx              0x8    0x81fd5a0
+.data                0x12e0   0x24000000
+.bss                0x1775c   0x24001300
+.sram4_reserve        0x800   0x38000000
+.comment               0x26          0x0
+.ARM.attributes        0x30          0x0
+.debug_abbrev      0x1d7e71          0x0
+.debug_info       0x1a072f6          0x0
+.debug_line        0x50aa0f          0x0
+.debug_aranges      0x291c8          0x0
+.debug_str         0x36e940          0x0
+.debug_line_str       0x198          0x0
+.debug_loclists    0x36b310          0x0
+.debug_rnglists     0x8dcea          0x0
+.debug_frame        0x760b0          0x0
+Total             0x2ae70fa
+
+

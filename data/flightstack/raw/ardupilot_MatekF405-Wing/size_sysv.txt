@@ -1,0 +1,29 @@
+<third_party>/ardupilot/build/MatekF405-Wing/bin/arducopter  :
+section               size         addr
+startup              0x1e0    0x8010000
+constructors          0x64    0x80101e0
+.text              0xd622c    0x8010280
+.ARM.exidx             0x8    0x80e64ac
+.textalign             0x4    0x80e64b4
+.mstack              0x600   0x20000000
+.pstack             0x1c00   0x20000600
+.data                0xb8c   0x20002200
+.bss               0x12040   0x20002d90
+.ram0_init             0x0   0x20014dd0
+.ram0                  0x0   0x20014dd0
+.heap               0xb230   0x20014dd0
+.crash_log         0x18fbc    0x80e7044
+.comment              0x26          0x0
+.ARM.attributes       0x32          0x0
+.debug_line        0x1403b          0x0
+.debug_line_str      0x17d          0x0
+.debug_info        0x251ea          0x0
+.debug_abbrev       0x9ccb          0x0
+.debug_aranges       0xef0          0x0
+.debug_str          0x3752          0x0
+.debug_frame        0x21ec          0x0
+.debug_loclists    0x1185e          0x0
+.debug_rnglists      0x917          0x0
+Total             0x16ae9c
+
+

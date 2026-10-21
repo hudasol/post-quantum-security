@@ -1,0 +1,39 @@
+
+<third_party>/PX4-Autopilot/build/px4_fmu-v5_default/px4_fmu-v5_default.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         001ed1c0  08008000  08008000  00001000  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .init_section 0000018c  081f51c0  081f51c0  001ee1c0  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .ARM.exidx    00000008  081f534c  081f534c  001ee34c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  3 .data         00000ee4  20020000  081f5354  001ef000  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+  4 .bss          0000a774  20020f00  081f6238  001eff00  2**6
+                  ALLOC
+  5 .comment      00000026  00000000  00000000  001efee4  2**0
+                  CONTENTS, READONLY
+  6 .ARM.attributes 00000030  00000000  00000000  001eff0a  2**0
+                  CONTENTS, READONLY
+  7 .debug_abbrev 001dc97f  00000000  00000000  001eff3a  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+  8 .debug_info   01b374ed  00000000  00000000  003cc8b9  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+  9 .debug_line   00521167  00000000  00000000  01f03da6  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 10 .debug_aranges 00029c58  00000000  00000000  02424f10  2**3
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 11 .ramfunc      00000000  00000000  00000000  0244eb68  2**0
+                  CONTENTS
+ 12 .debug_str    00383f7a  00000000  00000000  0244eb68  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 13 .debug_line_str 00000198  00000000  00000000  027d2ae2  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 14 .debug_loclists 0038c85f  00000000  00000000  027d2c7a  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 15 .debug_rnglists 000944b4  00000000  00000000  02b5f4d9  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 16 .debug_frame  00079444  00000000  00000000  02bf3990  2**2
+                  CONTENTS, READONLY, DEBUGGING, OCTETS

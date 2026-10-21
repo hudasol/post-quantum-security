@@ -1,0 +1,2 @@
+   text	   data	    bss	    dec	    hex	filename
+1584304	   4620	 896964	2485888	 25ee80	<third_party>/ardupilot/build/Pixhawk6C/bin/arducopter

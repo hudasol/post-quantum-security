@@ -1,0 +1,2 @@
+   text	   data	    bss	    dec	    hex	filename
+1916640	   3492	  40868	1961000	 1dec28	<third_party>/PX4-Autopilot/build/cubepilot_cubeorange_default/cubepilot_cubeorange_default.elf

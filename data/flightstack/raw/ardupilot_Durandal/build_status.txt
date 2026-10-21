@@ -1,0 +1,12 @@
+stack=ardupilot
+target=Durandal
+commit=fb773567896014da007bca58358704d4a0d8516f
+exit_code=0
+build_seconds=716
+jobs=2
+nice=10
+toolchain=arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009
+linker_script=libraries/AP_HAL_ChibiOS/hwdef/Durandal/hwdef.dat via build/Durandal/ldscript.ld (generated)
+built_utc=2026-10-21T00:42:47Z
+elf=arducopter
+elf_sha256=a4c70514e9e45b656930016e2713dd909ba067946b3b23a7b03c132cd8bd4955

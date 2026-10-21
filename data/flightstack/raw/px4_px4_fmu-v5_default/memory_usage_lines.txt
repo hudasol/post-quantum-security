@@ -1,0 +1,6 @@
+      FLASH_ITCM:           0 B      2016 KB      0.00%
+      FLASH_AXIM:     2023992 B      2016 KB     98.04%
+        ITCM_RAM:           0 B        16 KB      0.00%
+        DTCM_RAM:           0 B       128 KB      0.00%
+           SRAM1:       46708 B       368 KB     12.39%
+           SRAM2:           0 B        16 KB      0.00%

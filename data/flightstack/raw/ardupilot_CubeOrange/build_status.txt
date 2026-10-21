@@ -1,0 +1,12 @@
+stack=ardupilot
+target=CubeOrange
+commit=fb773567896014da007bca58358704d4a0d8516f
+exit_code=0
+build_seconds=557
+jobs=2
+nice=10
+toolchain=arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009
+linker_script=libraries/AP_HAL_ChibiOS/hwdef/CubeOrange/hwdef.dat via build/CubeOrange/ldscript.ld (generated)
+built_utc=2026-10-21T00:24:13Z
+elf=arducopter
+elf_sha256=289b1f61722f56fe9cd49ee809d9baf492505c379bd0484ab9706fc122f93b19
