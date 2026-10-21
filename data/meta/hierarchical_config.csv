@@ -1,0 +1,15 @@
+label,key,value
+assumption,seed,20261021
+assumption,n_boot,100
+assumption,rows_used,408
+assumption,rows_in_meta_analysis,663
+assumption,cells_used,118
+assumption,worst_observed_rows,12
+assumption,weightings,"unweighted, weighted"
+assumption,weighting,"weighted by data/source_quality.csv, weight (score + 1) / 6; 43 sources listed, 0 rows from unlisted sources at weight 1"
+assumption,response,natural log of cycles
+assumption,method,"REML, crossed random effects, cell as fixed effect"
+assumption,statsmodels_check,statsmodels MixedLM variances: variant 0.07301; statistic 0.8819; compiler 0.9918; source 0.0008349; residual 0.1437; max absolute difference to own REML 0.071
+assumption,statistic_levels,mean 291; other 87; median 18; min 12
+assumption,compiler_levels,"not stated 204; gcc 10 75; gcc 11 72; gcc, version not stated 33; gcc 9 15; gcc 8 9"
+assumption,runtime_s,814

@@ -156,7 +156,37 @@ def report(d, gr, cr):
         lines.append(f"| {r.scheme_family} | {r.parameter_set} | {r.operation} | {r.core_class} | {fmt(r.median_cycles)} | {fmt(r.cortex_m4_median_cycles)} | {r.ratio_to_cortex_m4:.2f} | {r.rows} | {r.cortex_m4_rows} |")
     lines += ["", "These ratios compare medians of different libraries and conditions on different cores; they show the order of magnitude, not a core effect isolated from the code.",
               "", "Figure: `plots/meta_cycles_by_core.png` (published rows only).", ""]
+    lines += hierarchical_section()
     return "\n".join(lines)
+
+
+def hierarchical_section():
+    """Section generated from data/meta/hierarchical_*.csv (written by stats/meta_hierarchical.py), if present."""
+    vp, rp, cp = (ROOT / "data" / "meta" / f"hierarchical_{k}.csv" for k in ("variance", "residual", "config"))
+    if not (vp.exists() and rp.exists() and cp.exists()):
+        return []
+    v = pd.read_csv(vp)
+    if "weighting" in v.columns:
+        v = v[v.weighting == "unweighted"]
+    v = v[v.fit == "main (variant as stated)"]
+    r = pd.read_csv(rp)
+    if "weighting" in r.columns:
+        r = r[r.weighting == "unweighted"]
+    r = r.set_index("measure")
+    c = pd.read_csv(cp).set_index("key")["value"]
+    res = r.loc["residual sd of the hierarchical model (log cycles)"]
+    out = ["## Hierarchical model (replaces the max over min spread as the measure of spread)", "",
+           f"Label: modelled from published rows. `stats/meta_hierarchical.py` fits log cycles with cell (parameter set, operation, "
+           f"core class) as a fixed effect and implementation variant, statistic, compiler and source as crossed random effects (REML) "
+           f"on {c['rows_used']} rows in {c['cells_used']} cells with two or more rows. Unweighted fit shown; the fit weighted by "
+           f"source quality and a fit without worst observed rows are in `docs/STATISTICS_V5.md` section 2.", "",
+           "| component | sd of log cycles | share of within cell variance, percent | 95 percent interval |", "|---|---|---|---|"]
+    for _, x in v.iterrows():
+        out.append(f"| {x.component} | {x.sd_log:.2f} | {100 * x.share_within_cell:.1f} | "
+                   f"{100 * x.share_ci_lo:.1f} to {100 * x.share_ci_hi:.1f} |")
+    out += ["", f"Repeated measurements of one implementation differ by a residual standard deviation of {res.value:.2f} on the log "
+            f"scale (a factor of {res.factor:.2f}). Details: `docs/STATISTICS_V5.md` section 2.", ""]
+    return out
 
 
 def main():
