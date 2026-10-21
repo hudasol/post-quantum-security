@@ -395,7 +395,7 @@ def analyse(raw=RAW, res=RES):
                 pairs += [('added_latency_ow_ms', 'added_latency_ms', 'added latency per command ms'),
                           ('added_latency_rt_ms', 'added_latency_ms', 'added latency per command ms')]
             if k == 'hybrid':
-                pairs += [('handshake_median_s', 'first_session_s', 'first session s (study without F1)'),
+                pairs += [('handshake_median_s', 'first_session_s', 'first session s (mission study, four flight handshake with F1)'),
                           ('session_recovery_median_s', 'ttra_s', 'recovery after teardown s')]
             for metric, skey, desc in pairs:
                 r = get(metric)
@@ -415,7 +415,7 @@ def analyse(raw=RAW, res=RES):
                 if r is not None:
                     e = f1_handshake_estimate(p)
                     comp.append(dict(profile=p, config=k, study_arch='B with F1', metric='handshake_median_s',
-                                     study_quantity='first session s, study model with the F1 flights',
+                                     study_quantity='first session s, flight by flight estimate of the F1 flights without loss',
                                      value=r['value'], ci_lo=r['ci_lo'], ci_hi=r['ci_hi'], study_estimated=e,
                                      error=r['value'] - e, verdict='no interval', label=r['label']))
     pd.DataFrame(comp).to_csv(os.path.join(res, 'comparison.csv'), index=False, float_format='%.6g')
