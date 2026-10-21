@@ -14,6 +14,9 @@ Rules enforced here:
     and take no part in any cycle ratio (cycles_status says so); emulated stack is kept, labelled;
   * ratios are computed only between board measured cycles and another source, with a bootstrap
     95 percent interval (seed 20261020, 2000 resamples) of the ratio of means (pqm4 publishes means);
+  * the boards are kept apart: board is part of every group key, and capture.py has no default
+    board, so a Cortex-M33 log cannot be filed under the Cortex-M4 board name by omission;
+  * registered round 5 predictions are scored by score_v5_board.py, not here;
   * the two cache passes (round 5) are kept apart: cache_pass is part of every group key, and
     model_conditions says whether the row matches the cycle model's conditions (zero wait states,
     no cache): only caches off rows can (docs/PREDICTIONS_V5_BOARD.md states which rows count).
@@ -96,14 +99,21 @@ def optional_rows(path, label):
     return out
 
 
-def model_conditions(rows, cache_pass):
-    """Whether the rows meet the model's conditions: caches off and zero wait states read back."""
+def model_conditions(rows, cache_pass, applied_logs=None):
+    """Whether the rows meet the model's conditions (rule 3 of docs/PREDICTIONS_V5_BOARD.md):
+    caches off pass, zero wait states read back, and cache_off_applied,1 in every log. The last
+    needs the checks CSV of parse.py (applied_logs: logs whose caches off checks all passed)."""
     if cache_pass != "off":
         return "not met: caches on pass"
     ws = {str(r.get("flash_ws", "")) for r in rows}
-    if ws == {"0"}:
-        return "met: caches off, zero wait states read back"
-    return f"unknown: flash_ws read back {sorted(ws)}"
+    if ws != {"0"}:
+        return f"unknown: flash_ws read back {sorted(ws)}"
+    if applied_logs is None:
+        return "unconfirmed: zero wait states read back; cache_off_applied not checked (give --checks)"
+    logs = {r.get("source_log") for r in rows}
+    if logs <= applied_logs:
+        return "met: caches off applied, zero wait states read back"
+    return f"not met: cache_off_applied not confirmed in {len(logs - applied_logs)} log(s)"
 
 
 def lookup(table, scheme, variant, op):
@@ -116,7 +126,7 @@ def fmt(x, nd=0):
     return f"{x:.{nd}f}" if isinstance(x, float) else str(x)
 
 
-def compare(results, evidence_rows, modelled=None, rtl=None):
+def compare(results, evidence_rows, modelled=None, rtl=None, applied_logs=None):
     pub = published_index(evidence_rows)
     modelled = modelled or {}
     rtl = rtl or {}
@@ -134,7 +144,7 @@ def compare(results, evidence_rows, modelled=None, rtl=None):
         row = dict.fromkeys(COLUMNS, "")
         row.update(experiment=exp, label=label, board=board, cache_pass=cache_pass, scheme=scheme,
                    variant=variant, operation=op, n_runs=len({r["run"] for r in rows}),
-                   n_values=len(cyc), model_conditions=model_conditions(rows, cache_pass))
+                   n_values=len(cyc), model_conditions=model_conditions(rows, cache_pass, applied_logs))
         p = pub.get((scheme, variant, op)) if exp == "B0" else None
         if p:
             row.update(cycles_published=p["cycles"], published_id=p["id"],
@@ -193,13 +203,19 @@ def main(argv=None):
     ap.add_argument("--evidence", default=EVIDENCE)
     ap.add_argument("--predictions", default=PREDICTIONS)
     ap.add_argument("--rtl", default=None)
+    ap.add_argument("--checks", action="append", default=[],
+                    help="checks CSV from parse.py, to confirm cache_off_applied for rule 3")
     ap.add_argument("--out", required=True)
     a = ap.parse_args(argv)
     results = [r for p in a.results for r in read_csv(p)]
     modelled = optional_rows(a.predictions, "modelled")
     rtl_path = find_rtl(a.rtl)
     rtl = optional_rows(rtl_path, "RTL simulated")
-    rows = compare(results, read_csv(a.evidence), modelled, rtl)
+    applied = None
+    if a.checks:
+        import score_v5_board
+        applied = score_v5_board.rule3_logs([c for p in a.checks for c in read_csv(p)])
+    rows = compare(results, read_csv(a.evidence), modelled, rtl, applied)
     with open(a.out, "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=COLUMNS)
         w.writeheader()

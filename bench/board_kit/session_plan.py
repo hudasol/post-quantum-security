@@ -272,7 +272,7 @@ def write_checklist(path, rows, flash_s, power_s, setup_s, has_uart):
         "4. Pass the read back values to `parse.py` for B0 (`--clock-hz --flash-ws --cache "
         "--toolchain --commit`).", "",
         "## Runs", "",
-        "1. Start `capture.py --port <port> --run <n> --image <name> --experiment B0|B1 "
+        "1. Start `capture.py --port <port> --board <NUCLEO-L4R5ZI|NUCLEO-L552ZE-Q> --run <n> --image <name> --experiment B0|B1 "
         "--label \"board measured\" --out <log>` before each flash or reset; it stops at `#`.",
         "2. Harness images (B1, both passes) and speed images (B0): flash once, then 3 power "
         "cycles, one capture per power cycle with `--run 1`, `2`, `3`. Iterations per run: B1 "
@@ -287,9 +287,10 @@ def write_checklist(path, rows, flash_s, power_s, setup_s, has_uart):
         "1. `parse.py <logs> --out board.csv --checks-out checks.csv --require-all "
         "[--energy energy.csv]` (exit 0 needed; the caches off check fails if a caches off image "
         "did not apply its writes).",
-        "2. `compare.py board.csv --out compare.csv`: groups are kept apart by board and cache "
+        "2. `compare.py board.csv --checks checks.csv --out compare.csv`: groups are kept apart by board and cache "
         "pass; `model_conditions` says which rows meet the model's conditions. Score "
-        "`docs/PREDICTIONS_V5_BOARD.md` on caches off rows only.",
+        "`docs/PREDICTIONS_V5_BOARD.md` with `score_v5_board.py board.csv --checks checks.csv "
+        "--out score_v5_board.csv` (caches off rows only, rules 1 to 4 per board).",
         "3. Report board measured numbers in their own table, labelled board measured, with "
         "board, clock, flash wait states, cache bits, cache pass, toolchain and commit. Never merge "
         "them into published, emulated or modelled columns. Copy logs and commands to "
@@ -317,8 +318,15 @@ def afternoon(rows, limit_min=180.0):
 
 
 STEP_TEXT = {
-    "setup": ("Set up the board: plug the NUCLEO into the laptop by USB, start the serial capture, "
-              "flash `b1_mlkem_512_cacheoff.hex` and then `b1_mlkem_512.hex` (board check).",
+    "setup": ("Set up the board: plug the NUCLEO into the laptop by USB and find its serial port "
+              "(`/dev/ttyACM0` or similar on Linux, a COM port on Windows). Board check, once per "
+              "image: start `python3 bench/board_kit/capture.py --port <port> --baud 38400 "
+              "--board {board} --run 0 --image b1_mlkem_512_cacheoff --experiment B1 --label "
+              "\"board measured\" --echo --out results/<date>/{platform}/check/"
+              "run0_b1_mlkem_512_cacheoff.log`, then flash `b1_mlkem_512_cacheoff.hex` (the flash "
+              "tool resets the board, so the capture records from the first line); then the same "
+              "for `b1_mlkem_512.hex` with `--image b1_mlkem_512` and the file name "
+              "`run0_b1_mlkem_512.log`. The check logs stay in `check/`, outside the cycle runs.",
               "META lines with `cache_pass,off`, `cache_off_applied,1`, `flash_ws,0` and all "
               "cache bits 0, then `cache_pass,on` with the enable bits set; "
               "`counter_dwt_cycles` close to `counter_systick_cycles`."),
@@ -327,11 +335,18 @@ STEP_TEXT = {
                "Each log ends with `#`; BENCH lines with cycles; CHECK lines with 0 failures."),
     "B1 on": ("Caches on pass: the same for each `b1_*.hex` image without the suffix.",
               "As above, with `cache_pass,on`."),
-    "energy": ("Energy: remove the IDD jumper, connect the ammeter in its place, rerun the listed "
-               "caches off images once, and write the meter's average current for each operation "
-               "phase into a copy of `ENERGY_TEMPLATE.csv` (results/<date>/energy.csv). The energy "
-               "logs stay in their own folder: parse.py joins them through the cycles of the "
-               "caches off pass, so they are not parsed as extra cycle runs.",
+    "energy": ("Energy: remove the IDD jumper and connect the ammeter in its place. Idle current "
+               "first, one method only: hold the board's reset button down, let the meter average "
+               "for 10 s, and write that value into `current_ma_idle` of every row of this board. "
+               "Then rerun the listed caches off images once with `--echo`. The capture prints "
+               "each line as it arrives, and an operation's phase runs while its BENCH lines (for "
+               "example `BENCH,ML-KEM,ML-KEM-512,encaps,...`) scroll: restart the meter's average "
+               "(its MIN, MAX and AVG mode) at the first BENCH line of an operation and read it at "
+               "the first BENCH line of the next operation, or at the STACK lines after the last "
+               "one. Write one row per operation phase into a copy of `ENERGY_TEMPLATE.csv` "
+               "(results/<date>/energy.csv). The energy logs stay in their own folder: parse.py "
+               "joins them through the cycles of the caches off pass, so they are not parsed as "
+               "extra cycle runs.",
                "One row per operation phase with supply voltage, mean current and idle current."),
     "B0": ("B0 reproduction of published pqm4 rows: test, speed and stack images of "
            "`build_b0.py`.", "Test images print OK lines; speed images print cycles per "
@@ -345,7 +360,7 @@ def write_one_afternoon(path, rows, limit_min=180.0):
     for r in rows:
         if r["runs"]:
             imgs.setdefault(r["block"], []).append(r["image"])
-    L = ["# One afternoon at the bench (lab assistant plan)", "",
+    L = ["# One afternoon at the bench (plan for the person at the bench)", "",
          "Author: Huda Mueen. Status: **planned**. Generated by `bench/board_kit/session_plan.py` "
          "from `session_plan.csv`; every time below is estimated (published cycle counts as stand "
          f"ins, assumed handling times). The plan keeps whole blocks, in order, while the total "
@@ -361,6 +376,7 @@ def write_one_afternoon(path, rows, limit_min=180.0):
     for b, m, cum in inside:
         platform, kind = b.split(" ", 1)
         txt, expect = STEP_TEXT[kind]
+        txt = txt.replace("{board}", K.BOARD_NAMES[platform]).replace("{platform}", platform)
         n += 1
         L.append(f"{n}. **{b}** ({m:.0f} minutes, {cum:.0f} minutes so far). {txt}")
         if kind not in ("setup",):
@@ -369,12 +385,14 @@ def write_one_afternoon(path, rows, limit_min=180.0):
                      "session, step 4).")
             if kind == "energy":
                 L.append("   Command per image (one run): `python3 bench/board_kit/capture.py "
-                         "--port <port> --baud 38400 --run 1 --image <image> --experiment B1 "
+                         f"--port <port> --baud 38400 --board {K.BOARD_NAMES[platform]} --run 1 "
+                         "--image <image> --experiment B1 --echo "
                          "--label \"board measured\" --out results/<date>/" + platform +
                          "/energy/run1_<image>.log`.")
             else:
                 L.append("   Command per image and power cycle: `python3 bench/board_kit/capture.py "
-                         "--port <port> --baud 38400 --run <1|2|3> --image <image> --experiment "
+                         f"--port <port> --baud 38400 --board {K.BOARD_NAMES[platform]} "
+                         "--run <1|2|3> --image <image> --experiment "
                          f"{'B0' if kind == 'B0' else 'B1'} --label \"board measured\" "
                          "--out results/<date>/" + platform + "/run<n>_<image>.log`.")
         L.append(f"   Expected: {expect}")
@@ -385,11 +403,16 @@ def write_one_afternoon(path, rows, limit_min=180.0):
           "--energy results/<date>/energy.csv`.",
           "   Expected: a last line with `unrecognised=0` and `failed_checks=0`; exit code 0.",
           f"{n + 1}. **Compare** `python3 bench/board_kit/compare.py results/<date>/board.csv "
-          "--out results/<date>/compare.csv`.",
+          "--checks results/<date>/checks.csv --out results/<date>/compare.csv`.",
           "   Expected: groups with `cycles_status` compared and `model_conditions` met for the "
-          "caches off rows.",
-          f"{n + 2}. **Send the results back** (the author commits and pushes; the assistant hands "
-          "over the folder):",
+          "caches off rows, one group per board (the two boards never share a group).",
+          f"{n + 2}. **Score the registered predictions** `python3 bench/board_kit/score_v5_board.py "
+          "results/<date>/board.csv --checks results/<date>/checks.csv --out "
+          "results/<date>/score_v5_board.csv`.",
+          "   Expected: one verdict per row of `docs/PREDICTIONS_V5_BOARD.md` and the verdict of "
+          "refutation rules 1 to 4 for each board.",
+          f"{n + 3}. **Send the results back** (the author commits and pushes; the person at the "
+          "bench hands over the folder):",
           "   ```",
           "   mkdir -p bench/mcu/board_results/<date>",
           "   cp -r results/<date>/* bench/mcu/board_results/<date>/",

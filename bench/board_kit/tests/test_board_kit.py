@@ -82,7 +82,7 @@ class CaptureTests(unittest.TestCase):
             with open(src, "w") as fh:
                 fh.write("\n".join(SPEED_KEM) + "\n")
             out = os.path.join(d, "out.log")
-            rc = capture.main(["--replay", src, "--run", "1", "--image",
+            rc = capture.main(["--replay", src, "--board", "QEMU mps2-an386", "--run", "1", "--image",
                                "crypto_kem_ml-kem-768_m4fspeed_speed", "--label", "emulated",
                                "--out", out])
             self.assertEqual(rc, 0)
@@ -337,8 +337,13 @@ class CachePassParseTests(unittest.TestCase):
         out = compare.compare(rows, EVID)
         self.assertEqual(len(out), 2)
         cond = {r["cache_pass"]: r["model_conditions"] for r in out}
-        self.assertTrue(cond["off"].startswith("met"))
+        self.assertTrue(cond["off"].startswith("unconfirmed"))
         self.assertTrue(cond["on"].startswith("not met"))
+        logs = {r.get("source_log") for r in rows}
+        cond = {r["cache_pass"]: r["model_conditions"] for r in compare.compare(rows, EVID, applied_logs=logs)}
+        self.assertTrue(cond["off"].startswith("met"))
+        cond = {r["cache_pass"]: r["model_conditions"] for r in compare.compare(rows, EVID, applied_logs=set())}
+        self.assertTrue(cond["off"].startswith("not met"))
 
 
 class EnergyTests(unittest.TestCase):
@@ -495,6 +500,148 @@ class PredictionsV5Tests(unittest.TestCase):
         import hashlib
         want = open(sha).read().split()[0]
         self.assertEqual(hashlib.sha256(open(md, "rb").read()).hexdigest(), want)
+
+
+def write_board_capture(path, image, lines, board, label="board measured", run=1):
+    meta = {"version": "1", "source": "test", "start_utc": fixed_clock(), "experiment": "B1",
+            "image": image, "run": run, "label": label, "board": board, "note": ""}
+    with open(path, "w") as fh:
+        capture.capture_lines([ln + "\n" for ln in lines], fh, meta, clock=fixed_clock)
+
+
+class BoardSeparationTests(unittest.TestCase):
+    """Logs of the two boards can never be pooled (finding on the L552 capture commands)."""
+
+    def l552_log(self):
+        return [x.replace("META,platform,test", "META,platform,nucleo-l552ze-q (kit hal_l552.c)")
+                for x in B1_OFF_LOG]
+
+    def test_capture_requires_board(self):
+        with tempfile.TemporaryDirectory() as d:
+            src = os.path.join(d, "in.txt")
+            with open(src, "w") as fh:
+                fh.write("\n".join(self.l552_log()) + "\n")
+            with self.assertRaises(SystemExit):
+                capture.main(["--replay", src, "--run", "1", "--image", "b1_mlkem_768_cacheoff",
+                              "--label", "board measured", "--out", os.path.join(d, "x.log")])
+
+    def test_header_without_board_is_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, "a.log")
+            write_board_capture(p, "b1_mlkem_768_cacheoff", self.l552_log(), board="")
+            with self.assertRaises(ValueError):
+                parse.parse_log(p)
+
+    def test_l552_log_under_l4_name_fails_check(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, "a.log")
+            write_board_capture(p, "b1_mlkem_768_cacheoff", self.l552_log(), board="NUCLEO-L4R5ZI")
+            names = {c["check"]: c["fail"] for c in parse.parse_log(p)["checks"]}
+            self.assertEqual(names["board:header_matches_firmware_nucleo-l552ze-q"], 1)
+            p2 = os.path.join(d, "b.log")
+            write_board_capture(p2, "b1_mlkem_768_cacheoff", self.l552_log(), board="NUCLEO-L552ZE-Q")
+            names = {c["check"]: c["fail"] for c in parse.parse_log(p2)["checks"]}
+            self.assertEqual(names["board:header_matches_firmware_nucleo-l552ze-q"], 0)
+
+    def test_compare_keeps_boards_apart(self):
+        rows = []
+        for board in ("NUCLEO-L4R5ZI", "NUCLEO-L552ZE-Q"):
+            for x in res("board measured", exp="B1", variant="portable_c"):
+                rows.append(dict(x, board=board, cache_pass="off", flash_ws="0"))
+        out = compare.compare(rows, EVID)
+        self.assertEqual(sorted(r["board"] for r in out), ["NUCLEO-L4R5ZI", "NUCLEO-L552ZE-Q"])
+
+    def test_plan_commands_name_the_board(self):
+        with open(os.path.join(KIT, "ONE_AFTERNOON.md")) as fh:
+            text = fh.read()
+        for line in text.splitlines():
+            if "capture.py --port" in line:
+                self.assertIn("--board", line)
+                if "nucleo-l552ze-q/" in line:
+                    self.assertIn("--board NUCLEO-L552ZE-Q", line)
+
+
+import score_v5_board  # noqa: E402
+
+
+class ScoreV5BoardTests(unittest.TestCase):
+    def preds(self):
+        return score_v5_board.read_csv(score_v5_board.PREDICTIONS)
+
+    def fake(self, platform, factor, applied=True):
+        board = K.BOARD_NAMES[platform]
+        results, checks = [], []
+        for p in self.preds():
+            if p["platform"] != platform:
+                continue
+            log = f"run1_{p['parameter_set']}_{p['operation']}.log"
+            for v in (0.99, 1.01):
+                results.append({"label": "board measured", "board": board, "cache_pass": "off",
+                                "flash_ws": "0", "scheme": p["parameter_set"], "operation": p["operation"],
+                                "cycles": str(float(p["cycles_modelled"]) * factor * v), "source_log": log})
+            for c in score_v5_board.RULE3_CHECKS:
+                checks.append({"check": c, "ok": "1" if applied else "0", "fail": "0" if applied else "1",
+                               "source_log": log})
+        return results, checks
+
+    def summary(self, rows, platform):
+        return [r for r in rows if r["kind"] == "board summary" and r["platform"] == platform][0]
+
+    def test_registered_file_unchanged(self):
+        self.assertTrue(score_v5_board.registered_hash_ok())
+
+    def test_no_board_data_not_scored(self):
+        rows = score_v5_board.score([], [], self.preds())
+        self.assertEqual(sum(1 for r in rows if r["kind"] == "prediction"), len(self.preds()))
+        self.assertTrue(all(r["verdict"].startswith("not scored") for r in rows if r["kind"] == "prediction"))
+        for plat in ("nucleo-l4r5zi", "nucleo-l552ze-q"):
+            self.assertTrue(self.summary(rows, plat)["board_verdict"].startswith("not scored"))
+
+    def test_emulated_rows_never_score(self):
+        res_, chk = self.fake("nucleo-l4r5zi", 1.0)
+        res_ = [dict(r, label="emulated") for r in res_]
+        rows = score_v5_board.score(res_, chk, self.preds())
+        self.assertTrue(self.summary(rows, "nucleo-l4r5zi")["board_verdict"].startswith("not scored"))
+
+    def test_all_hits_not_refuted(self):
+        res_, chk = self.fake("nucleo-l4r5zi", 1.0)
+        rows = score_v5_board.score(res_, chk, self.preds())
+        s = self.summary(rows, "nucleo-l4r5zi")
+        self.assertEqual((s["rows_scored"], s["misses"]), (18, 0))
+        self.assertTrue(s["rule1"].startswith("not refuted"))
+
+    def test_all_misses_refute_l4_and_m33_only_transfer(self):
+        res_, chk = self.fake("nucleo-l4r5zi", 2.0)
+        rows = score_v5_board.score(res_, chk, self.preds())
+        s = self.summary(rows, "nucleo-l4r5zi")
+        self.assertEqual(s["board_verdict"], "model refuted")
+        self.assertTrue(s["rule2"].startswith("refuted"))
+        self.assertTrue(self.summary(rows, "nucleo-l552ze-q")["board_verdict"].startswith("not scored"))
+        res_, chk = self.fake("nucleo-l552ze-q", 2.0)
+        rows = score_v5_board.score(res_, chk, self.preds())
+        s = self.summary(rows, "nucleo-l552ze-q")
+        self.assertEqual(s["board_verdict"], "Cortex-M4 model does not transfer")
+        self.assertIn("does not refute the model on the Cortex-M4 board", s["rule4"])
+
+    def test_rule3_excludes_logs_without_applied_writes(self):
+        res_, chk = self.fake("nucleo-l4r5zi", 2.0, applied=False)
+        rows = score_v5_board.score(res_, chk, self.preds())
+        self.assertTrue(all(r["verdict"] == "not scored: no log meets rule 3"
+                            for r in rows if r["kind"] == "prediction" and r["platform"] == "nucleo-l4r5zi"))
+        res_, chk = self.fake("nucleo-l4r5zi", 2.0)
+        res_ = [dict(r, flash_ws="1") for r in res_]
+        rows = score_v5_board.score(res_, chk, self.preds())
+        self.assertTrue(self.summary(rows, "nucleo-l4r5zi")["board_verdict"].startswith("not scored"))
+
+    def test_dry_run_output_reports_not_scored(self):
+        path = os.path.join(K.OUT_DIR, "dry_run", "dry_run_results.csv")
+        if not os.path.exists(path):
+            self.skipTest("no dry run results outside the repository")
+        rows = score_v5_board.score(score_v5_board.read_csv(path),
+                                    score_v5_board.read_csv(os.path.join(KIT, "dry_run", "dry_run_checks.csv")),
+                                    self.preds())
+        self.assertTrue(all(r["board_verdict"].startswith("not scored")
+                            for r in rows if r["kind"] == "board summary"))
 
 
 if __name__ == "__main__":

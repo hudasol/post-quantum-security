@@ -13,15 +13,26 @@ The header carries the run (power cycle number), image name, experiment and evid
 the firmware never has to be rebuilt per power cycle. parse.py reads this format.
 
 Examples:
-  python3 capture.py --port /dev/ttyACM0 --baud 38400 --run 1 --image <name> --experiment B0 \
-      --label "board measured" --out logs/run1_<name>.log
-  qemu-system-arm ... | python3 capture.py --stdin --run 1 --image <name> --label emulated --out x.log
-  python3 capture.py --replay old_output.txt --run 1 --image <name> --label emulated --out x.log
+  python3 capture.py --port /dev/ttyACM0 --baud 38400 --board NUCLEO-L4R5ZI --run 1 --image <name> \
+      --experiment B0 --label "board measured" --echo --out logs/run1_<name>.log
+  qemu-system-arm ... | python3 capture.py --stdin --board "QEMU mps2-an386" --run 1 --image <name> \
+      --label emulated --out x.log
+  python3 capture.py --replay old_output.txt --board "QEMU mps2-an386" --run 1 --image <name> \
+      --label emulated --out x.log
+
+--board is required (no default), so logs of the Cortex-M4 and Cortex-M33 boards can never share a
+board name by accident; parse.py also checks it against the META platform line of B1 images.
+--echo prints each line on the screen as it arrives, so the person at the bench can see which
+operation is running (needed to read the meter per operation phase, ONE_AFTERNOON.md).
 """
 import argparse
 import datetime as _dt
 import sys
 import time
+
+import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import kit_config as K  # noqa: E402
 
 END_MARKER = "#"  # pqm4 speed, stack and test binaries end with hal_send_str("#")
 LABELS = ("board measured", "emulated")
@@ -37,7 +48,7 @@ def header_lines(meta):
 
 
 def capture_lines(lines, out, meta, clock=utc_now, stop_on_marker=True, max_lines=None,
-                  deadline=None, monotonic=time.monotonic):
+                  deadline=None, monotonic=time.monotonic, echo=None):
     """Write header, then each incoming line with a timestamp, then a footer.
 
     `lines` is any iterable of str or bytes; returns (count, end_reason)."""
@@ -54,7 +65,11 @@ def capture_lines(lines, out, meta, clock=utc_now, stop_on_marker=True, max_line
                 reason = "timeout"
                 break
             continue
-        out.write(f"{clock()}\t{line}\n")
+        ts = clock()
+        out.write(f"{ts}\t{line}\n")
+        if echo is not None:
+            echo.write(f"{ts}  {line}\n")
+            echo.flush()
         n += 1
         if stop_on_marker and line.strip() == END_MARKER:
             reason = "marker"
@@ -96,7 +111,9 @@ def main(argv=None):
     ap.add_argument("--image", required=True, help="image name that was flashed")
     ap.add_argument("--experiment", choices=("B0", "B1"), default="B0")
     ap.add_argument("--label", choices=LABELS, required=True)
-    ap.add_argument("--board", default="NUCLEO-L4R5ZI")
+    ap.add_argument("--board", required=True, choices=sorted(K.BOARD_NAMES.values()),
+                    help="board name written to the log header; required, no default")
+    ap.add_argument("--echo", action="store_true", help="also print each line as it arrives")
     ap.add_argument("--note", default="")
     ap.add_argument("--timeout", type=float, default=3600.0, help="seconds before giving up")
     ap.add_argument("--max-lines", type=int, default=None)
@@ -113,7 +130,8 @@ def main(argv=None):
         with open(a.out, "w", encoding="ascii", errors="replace") as out:
             n, reason = capture_lines(lines, out, build_meta(a, source),
                                       stop_on_marker=not a.no_marker_stop, max_lines=a.max_lines,
-                                      deadline=time.monotonic() + a.timeout)
+                                      deadline=time.monotonic() + a.timeout,
+                                      echo=sys.stdout if a.echo else None)
     finally:
         if hasattr(lines, "close") and a.replay:
             lines.close()
