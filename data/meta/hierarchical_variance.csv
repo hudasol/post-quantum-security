@@ -1,0 +1,31 @@
+label,weighting,fit,component,levels,variance_log,sd_log,factor_1sd,share_within_cell,share_ci_lo,share_ci_hi,sd_ci_lo,sd_ci_hi,weighting_note,seed,n_boot
+modelled,unweighted,main (variant as stated),variant,48,0.0732428,0.270634,1.3108,0.0355756,0.0103689,0.137088,0.191443,0.346767,unweighted,20261021,100
+modelled,unweighted,main (variant as stated),statistic,4,0.810445,0.900247,2.46021,0.39365,3.10364e-07,0.874238,0.000465323,1.58187,unweighted,20261021,100
+modelled,unweighted,main (variant as stated),compiler,6,1.03135,1.01555,2.76089,0.500948,9.47018e-08,0.873636,0.000426311,1.8658,unweighted,20261021,100
+modelled,unweighted,main (variant as stated),source,17,1.08615e-07,0.000329567,1.00033,5.27565e-08,6.66074e-09,0.161479,9.40889e-05,0.526578,unweighted,20261021,100
+modelled,unweighted,main (variant as stated),residual,408,0.143756,0.379152,1.46105,0.0698256,0.0315379,0.283066,0.350233,0.41157,unweighted,20261021,100
+modelled,unweighted,sensitivity (variant class),variant_class,4,0.0368287,0.191908,1.21156,0.0183578,,,,,unweighted,20261021,0
+modelled,unweighted,sensitivity (variant class),statistic,4,0.802473,0.895808,2.44932,0.400005,,,,,unweighted,20261021,0
+modelled,unweighted,sensitivity (variant class),compiler,6,0.981393,0.990653,2.69299,0.48919,,,,,unweighted,20261021,0
+modelled,unweighted,sensitivity (variant class),source,17,0.0173135,0.131581,1.14063,0.00863018,,,,,unweighted,20261021,0
+modelled,unweighted,sensitivity (variant class),residual,408,0.168149,0.410059,1.50691,0.0838164,,,,,unweighted,20261021,0
+modelled,weighted,main (variant as stated),variant,48,0.0785056,0.280189,1.32338,0.0390186,0.0116539,0.160805,0.19287,0.362183,"weighted by data/source_quality.csv, weight (score + 1) / 6; 43 sources listed, 0 rows from unlisted sources at weight 1",20261021,100
+modelled,weighted,main (variant as stated),statistic,4,0.808864,0.899369,2.45805,0.402019,5.25974e-06,0.889715,0.00111618,1.58198,"weighted by data/source_quality.csv, weight (score + 1) / 6; 43 sources listed, 0 rows from unlisted sources at weight 1",20261021,100
+modelled,weighted,main (variant as stated),compiler,6,1.02195,1.01092,2.74812,0.507927,1.15874e-07,0.879805,0.000398421,1.85263,"weighted by data/source_quality.csv, weight (score + 1) / 6; 43 sources listed, 0 rows from unlisted sources at weight 1",20261021,100
+modelled,weighted,main (variant as stated),source,17,6.20803e-08,0.000249159,1.00025,3.08549e-08,7.67397e-09,0.171727,8.64854e-05,0.52531,"weighted by data/source_quality.csv, weight (score + 1) / 6; 43 sources listed, 0 rows from unlisted sources at weight 1",20261021,100
+modelled,weighted,main (variant as stated),residual,408,0.102684,0.320444,1.37774,0.0510357,0.0225406,0.217186,0.295861,0.348973,"weighted by data/source_quality.csv, weight (score + 1) / 6; 43 sources listed, 0 rows from unlisted sources at weight 1",20261021,100
+modelled,weighted,sensitivity (variant class),variant_class,4,0.0379132,0.194713,1.21496,0.0193674,,,,,"weighted by data/source_quality.csv, weight (score + 1) / 6; 43 sources listed, 0 rows from unlisted sources at weight 1",20261021,0
+modelled,weighted,sensitivity (variant class),statistic,4,0.796405,0.892415,2.44102,0.406833,,,,,"weighted by data/source_quality.csv, weight (score + 1) / 6; 43 sources listed, 0 rows from unlisted sources at weight 1",20261021,0
+modelled,weighted,sensitivity (variant class),compiler,6,0.982931,0.991429,2.69508,0.502116,,,,,"weighted by data/source_quality.csv, weight (score + 1) / 6; 43 sources listed, 0 rows from unlisted sources at weight 1",20261021,0
+modelled,weighted,sensitivity (variant class),source,17,0.0159915,0.126457,1.1348,0.00816902,,,,,"weighted by data/source_quality.csv, weight (score + 1) / 6; 43 sources listed, 0 rows from unlisted sources at weight 1",20261021,0
+modelled,weighted,sensitivity (variant class),residual,408,0.124335,0.352611,1.42278,0.0635147,,,,,"weighted by data/source_quality.csv, weight (score + 1) / 6; 43 sources listed, 0 rows from unlisted sources at weight 1",20261021,0
+modelled,unweighted,worst observed rows excluded: main (variant as stated),variant,48,0.0909221,0.301533,1.35193,0.324611,,,,,unweighted,20261021,0
+modelled,unweighted,worst observed rows excluded: main (variant as stated),statistic,4,0.103242,0.321313,1.37894,0.368596,,,,,unweighted,20261021,0
+modelled,unweighted,worst observed rows excluded: main (variant as stated),compiler,6,0.0441976,0.210232,1.23396,0.157795,,,,,unweighted,20261021,0
+modelled,unweighted,worst observed rows excluded: main (variant as stated),source,17,2.32845e-07,0.00048254,1.00048,8.31305e-07,,,,,unweighted,20261021,0
+modelled,unweighted,worst observed rows excluded: main (variant as stated),residual,396,0.0417334,0.204288,1.22665,0.148997,,,,,unweighted,20261021,0
+modelled,unweighted,worst observed rows excluded: sensitivity (variant class),variant_class,4,0.037168,0.19279,1.21263,0.142619,,,,,unweighted,20261021,0
+modelled,unweighted,worst observed rows excluded: sensitivity (variant class),statistic,4,0.0923359,0.303868,1.35509,0.354305,,,,,unweighted,20261021,0
+modelled,unweighted,worst observed rows excluded: sensitivity (variant class),compiler,6,0.0354009,0.188151,1.20702,0.135838,,,,,unweighted,20261021,0
+modelled,unweighted,worst observed rows excluded: sensitivity (variant class),source,17,0.0195006,0.139645,1.14987,0.0748265,,,,,unweighted,20261021,0
+modelled,unweighted,worst observed rows excluded: sensitivity (variant class),residual,396,0.0762059,0.276054,1.31792,0.292412,,,,,unweighted,20261021,0
