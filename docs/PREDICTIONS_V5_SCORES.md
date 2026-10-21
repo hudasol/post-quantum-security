@@ -31,7 +31,7 @@ Hash check: the predictions file matches its registered SHA-256.
 | P23 | miss | Leave one implementation family out, pooled median absolute error 1.8 percent (scheme left out: 9.8 percent). |
 | P24 | miss | Cluster bootstrap 95 percent interval of the median absolute error: 0.79 to 1.72 percent; the round 4 row bootstrap upper bound is 1.72 percent, compared unrounded. |
 | P25 | miss | Main unweighted fit: largest share compiler (50.1 percent), but compiler and statistic have overlapping intervals; the sensitivity fit without the worst observed rows makes statistic the largest (36.9 percent), which meets the refutation clause. |
-| P26 | miss | Two readings of the registered metric: wrong in substance 7 of 425 (1.6 percent); differs verbatim 153 of 365 (41.9 percent). Both meet the refutation clause. |
+| P26 | miss | Two readings of the registered metric: staged text contradicts the source 1 of 365 (0.3 percent); differs verbatim 153 of 365 (41.9 percent). Both meet the refutation clause. |
 | P27 | hit | Largest total Sobol index for hybrid availability: outage_rate_per_h (0.55). |
 | P28 | hit | 202 new rows after double reading. |
 | P29 | miss | Rows with final FIPS 205 SLH-DSA cycle counts on a microcontroller: 0 (the rows found are of the FIPS 205 initial public draft on an accelerated FPGA prototype, which the registered question, final standard, excludes). |
