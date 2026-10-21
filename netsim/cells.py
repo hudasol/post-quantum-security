@@ -123,8 +123,14 @@ def lrwpan_cells():
 def lora_flights(path=None):
     """Handshake flights (variant hybrid, scenario ttfam, without the command
     sent after the handshake) of linksim's protocol profiles:
-    [(protocol, [(side, bytes), ...])]."""
-    path = path or os.path.join(ROOT, "linksim", "results", "protocols_flights.csv")
+    [(protocol, [(side, bytes), ...])].
+
+    Read from netsim/results/ns3_handshake_flights.csv, a frozen copy of
+    linksim/results/protocols_flights.csv as it was when the ns-3 runs were
+    made (round 4 handshake, before design change F1 of
+    docs/FORMAL_VERIFICATION.md added the vehicle signature), so that the
+    ns-3 results and the linksim side of the comparison use the same flights."""
+    path = path or os.path.join(ROOT, "netsim", "results", "ns3_handshake_flights.csv")
     by = {}
     order = []
     with open(path, newline="", encoding="utf-8") as fh:

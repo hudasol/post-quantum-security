@@ -79,15 +79,17 @@ def lora_toa_rows(p=None):
 def lora_flight_rows(p=None):
     """linksim totals for the handshake flights: the no acknowledgement blast
     (same structure as the ns-3 run) and the protocol simulation with
-    selective repeat acknowledgements (linksim/results/protocols_grid.csv,
-    handshake_mean_s at zero loss)."""
+    selective repeat acknowledgements (linksim/protocols.py run_once at zero
+    loss on the same frozen flights as the ns-3 run; before design change F1
+    this equalled handshake_mean_s of linksim/results/protocols_grid.csv)."""
+    from linksim import protocols as lp
     p = p or model.load_params()
     grid = {}
-    with open(os.path.join(ROOT, "linksim", "results", "protocols_grid.csv"), newline="",
-              encoding="utf-8") as fh:
-        for r in csv.DictReader(fh):
-            if r["scenario"] == "ttfam" and r["variant"] == "hybrid" and float(r["loss"]) == 0.0:
-                grid[(r["protocol"], r["link"])] = float(r["handshake_mean_s"])
+    for prot, flights in cells.lora_flights():
+        for dr in (0, 5):
+            fl = [(s, "flight", b) for s, b in flights]
+            r = lp.run_once(lp.build_link("lora_dr%d" % dr, p), fl, 0.0, lp.SEED, p)
+            grid[(prot, "lora_dr%d" % dr)] = r["wall_s"]
     rows = []
     for prot, flights in cells.lora_flights():
         for dr in (0, 5):
