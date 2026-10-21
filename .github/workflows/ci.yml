@@ -64,7 +64,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install matplotlib pandas
+      - run: pip install -r requirements.txt
       - name: Evidence table regenerates from raw notes, corrections and the pqm4 rule
         run: |
           python3 scripts/merge_evidence.py
