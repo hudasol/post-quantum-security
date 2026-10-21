@@ -10,7 +10,7 @@ Drones and robots authenticate commands, firmware and telemetry with classical p
 
 ## 2. Gap in the evidence
 
-`data/evidence.csv` holds {{n_rows}} published rows, each with source, location and warning. Cortex-M33 cycles exist only for ML-DSA key generation and signing, from one paper (rows S10C); none for ML-KEM or verification. ML-DSA-44 stack ranges from {{min_any}} B ({{min_any_id}}, published: the most any of key generation, signing and verification needs, for a low RAM library on a Cortex-M33) to {{emu_sign}} B (signing in this repository's portable C build, emulated); memory definitions differ between sources. Link costs rest on a model checked against one published link table, and against one prose figure that it still misses by a factor of {{xc_factor4}} after the round 4 repair. No figure comes from a flight controller running its flight stack.
+`data/evidence.csv` holds {{n_rows}} published rows, each with source, location and warning. Cortex-M33 cycles for the standardised schemes exist only for ML-DSA key generation and signing, from one paper (rows S10C); none for ML-KEM or verification (the other Cortex-M33 rows are for RBLWE, which NIST did not select). ML-DSA-44 stack ranges from {{min_any}} B ({{min_any_id}}, published: the most any of key generation, signing and verification needs, for a low RAM library on a Cortex-M33) to {{emu_sign}} B (signing in this repository's portable C build, emulated); memory definitions differ between sources. Link costs rest on a model checked against one published link table, and against one prose figure that it still misses by a factor of {{xc_factor4}} after the round 4 repair. No figure comes from a flight controller running its flight stack.
 
 ## 3. Research questions
 

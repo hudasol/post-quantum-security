@@ -90,65 +90,65 @@ Not possible: no published cycle row for the mlkem-native or mldsa-native harnes
 
 ## 2. Meta analysis: hierarchical model (modelled from published rows)
 
-Response: natural log of cycles. Cells (parameter set, operation, core class) with two or more rows: 118 cells, 408 of 661 rows of `data/evidence.csv` that `scripts/meta_analysis.py` uses. Cell means are fixed effects; implementation variant (the library field as the row states it), statistic (mean, median, min, other), compiler where stated and source are crossed random effects (REML, `stats/meta_hierarchical.py`). Fits: unweighted, weighted; weighted fit: weighted by data/source_quality.csv, weight (score + 1) / 6; 40 sources listed, 0 rows from unlisted sources at weight 1. Intervals: parametric bootstrap, 100 refits per fit, seed 20261021.
+Response: natural log of cycles. Cells (parameter set, operation, core class) with two or more rows: 115 cells, 399 of 652 rows of `data/evidence.csv` that `scripts/meta_analysis.py` uses. Cell means are fixed effects; implementation variant (the library field as the row states it), statistic (mean, median, min, other), compiler where stated and source are crossed random effects (REML, `stats/meta_hierarchical.py`). Fits: unweighted, weighted; weighted fit: weighted by data/source_quality.csv, weight (score + 1) / 6; 39 sources listed, 0 rows from unlisted sources at weight 1. Intervals: parametric bootstrap, 100 refits per fit, seed 20261021.
 
 **Unweighted, all rows**
 
 | component | levels | sd of log cycles | factor at one sd | share of within cell variance, percent | 95 percent interval of the share |
 |---|---|---|---|---|---|
-| variant | 48 | 0.27 | 1.31 | 3.6 | 1.0 to 13.7 |
-| statistic | 4 | 0.90 | 2.46 | 39.4 | 0.0 to 87.4 |
-| compiler | 6 | 1.02 | 2.76 | 50.1 | 0.0 to 87.4 |
-| source | 17 | 0.00 | 1.00 | 0.0 | 0.0 to 16.1 |
-| residual | 408 | 0.38 | 1.46 | 7.0 | 3.2 to 28.3 |
+| variant | 45 | 0.27 | 1.31 | 3.6 | 1.0 to 14.9 |
+| statistic | 4 | 0.90 | 2.46 | 39.4 | 0.0 to 76.3 |
+| compiler | 5 | 1.01 | 2.76 | 49.9 | 0.0 to 81.5 |
+| source | 16 | 0.00 | 1.00 | 0.0 | 0.0 to 57.3 |
+| residual | 399 | 0.38 | 1.47 | 7.1 | 3.1 to 25.7 |
 
 **Weighted by source quality, all rows**
 
 | component | levels | sd of log cycles | factor at one sd | share of within cell variance, percent | 95 percent interval of the share |
 |---|---|---|---|---|---|
-| variant | 48 | 0.28 | 1.32 | 3.9 | 1.2 to 16.3 |
-| statistic | 4 | 0.90 | 2.46 | 40.2 | 0.0 to 89.0 |
-| compiler | 6 | 1.01 | 2.75 | 50.8 | 0.0 to 88.0 |
-| source | 17 | 0.00 | 1.00 | 0.0 | 0.0 to 17.1 |
-| residual | 408 | 0.32 | 1.38 | 5.1 | 2.3 to 21.7 |
+| variant | 45 | 0.28 | 1.33 | 4.0 | 1.2 to 17.6 |
+| statistic | 4 | 0.90 | 2.46 | 40.2 | 0.0 to 77.9 |
+| compiler | 5 | 1.01 | 2.74 | 50.7 | 0.0 to 83.5 |
+| source | 16 | 0.00 | 1.00 | 0.0 | 0.0 to 59.2 |
+| residual | 399 | 0.32 | 1.38 | 5.2 | 2.2 to 20.0 |
 
 **Unweighted, the 12 rows that report a worst observed value removed**
 
 | component | levels | sd of log cycles | factor at one sd | share of within cell variance, percent | 95 percent interval of the share |
 |---|---|---|---|---|---|
-| variant | 48 | 0.30 | 1.35 | 32.5 | n/a to n/a |
-| statistic | 4 | 0.32 | 1.38 | 36.9 | n/a to n/a |
-| compiler | 6 | 0.21 | 1.23 | 15.8 | n/a to n/a |
-| source | 17 | 0.00 | 1.00 | 0.0 | n/a to n/a |
-| residual | 396 | 0.20 | 1.23 | 14.9 | n/a to n/a |
+| variant | 45 | 0.30 | 1.36 | 32.7 | n/a to n/a |
+| statistic | 4 | 0.32 | 1.38 | 36.6 | n/a to n/a |
+| compiler | 5 | 0.21 | 1.23 | 15.6 | n/a to n/a |
+| source | 16 | 0.00 | 1.00 | 0.0 | n/a to n/a |
+| residual | 387 | 0.21 | 1.23 | 15.0 | n/a to n/a |
 
 Sensitivity fit (unweighted, all rows) with a coarse variant class (portable C, stack or memory optimised, assembly or optimised, other) in place of the verbatim library text:
 
 | component | levels | sd of log cycles | share, percent |
 |---|---|---|---|
 | variant_class | 4 | 0.19 | 1.8 |
-| statistic | 4 | 0.90 | 40.0 |
-| compiler | 6 | 0.99 | 48.9 |
-| source | 17 | 0.13 | 0.9 |
-| residual | 408 | 0.41 | 8.4 |
+| statistic | 4 | 0.90 | 40.2 |
+| compiler | 5 | 0.98 | 48.6 |
+| source | 16 | 0.13 | 0.9 |
+| residual | 399 | 0.41 | 8.5 |
 
 Spread of repeated measurements of one implementation:
 
 | measure | fit | sd of log cycles | factor | 95 percent interval of the sd |
 |---|---|---|---|---|
-| residual sd of the hierarchical model (log cycles) | unweighted | 0.38 | 1.46 | 0.35 to 0.41 |
-| total within cell sd of the hierarchical model (log cycles) | unweighted | 1.43 | 4.20 | 0.69 to 2.15 |
-| residual sd of the hierarchical model (log cycles) | weighted | 0.32 | 1.38 | 0.30 to 0.35 |
-| total within cell sd of the hierarchical model (log cycles) | weighted | 1.42 | 4.13 | 0.66 to 2.13 |
-| worst observed rows excluded: residual sd of the hierarchical model (log cycles) | unweighted | 0.20 | 1.23 | n/a to n/a |
+| residual sd of the hierarchical model (log cycles) | unweighted | 0.38 | 1.47 | 0.35 to 0.41 |
+| total within cell sd of the hierarchical model (log cycles) | unweighted | 1.44 | 4.20 | 0.75 to 2.14 |
+| residual sd of the hierarchical model (log cycles) | weighted | 0.32 | 1.38 | 0.29 to 0.35 |
+| total within cell sd of the hierarchical model (log cycles) | weighted | 1.42 | 4.13 | 0.71 to 2.13 |
+| worst observed rows excluded: residual sd of the hierarchical model (log cycles) | unweighted | 0.21 | 1.23 | n/a to n/a |
 | worst observed rows excluded: total within cell sd of the hierarchical model (log cycles) | unweighted | 0.53 | 1.70 | n/a to n/a |
 | pooled within sd of log cycles, same cell and same stated variant | unweighted | 1.39 | 4.00 | n/a to n/a |
 
 Comparison with the round 4 measure: the max over min ratio is 1.44 at the median of the 36 groups with two or more sources. That ratio mixes every factor above and grows with the number of rows in a group; the variance shares say which factor carries the spread.
 
-Statistic levels read from the notes: mean 291; other 87; median 18; min 12. Compiler levels: not stated 204; gcc 10 75; gcc 11 72; gcc, version not stated 33; gcc 9 15; gcc 8 9. Factors with few levels (statistic, compiler) give unstable variance estimates, and they are partly confounded with source and variant; the source component is near zero because each source mostly reports its own variants. The rows that report a worst observed signing time over a crafted test set (as the rows state) carry most of the statistic and compiler variance of the full fit.
+Statistic levels read from the notes: mean 291; other 78; median 18; min 12. Compiler levels: not stated 204; gcc 10 75; gcc 11 72; gcc, version not stated 33; gcc 9 15. Factors with few levels (statistic, compiler) give unstable variance estimates, and they are partly confounded with source and variant; the source component is near zero because each source mostly reports its own variants. The rows that report a worst observed signing time over a crafted test set (as the rows state) carry most of the statistic and compiler variance of the full fit.
 
-Cross check (unweighted fit): statsmodels MixedLM variances: variant 0.07301; statistic 0.8819; compiler 0.9918; source 0.0008349; residual 0.1437; max absolute difference to own REML 0.071.
+Cross check (unweighted fit): statsmodels MixedLM variances: variant 0.07836; statistic 0.812; compiler 1.054; source 0.003467; residual 0.1455; max absolute difference to own REML 0.025.
 
 ## 3. End to end uncertainty and Sobol ranking (modelled)
 

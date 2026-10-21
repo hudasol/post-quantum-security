@@ -181,16 +181,16 @@ Counts from `data/raw/S13_prisma.csv`.
 
 | stage | count | how counted |
 |---|---|---|
-| queries and sources searched | 45 | rows of S13_search_log.csv |
-| identified | 364 | sum of records_returned over queries; a record found by several queries counts once per query |
-| screened on title and snippet | 364 | sum of records_screened over queries |
-| eligible (abstract or full text assessed) | 35 | distinct records in S13_screening.csv |
-| not retrieved | 3 | records whose full text could not be retrieved |
-| full text assessed | 26 | stage_reached = full text |
-| excluded after abstract or full text | 23 | decision = excluded, any stage |
-| included sources | 12 | decision = included |
-| staged rows | 265 | rows of S13_staged.csv |
-| rows confirmed by two readers and promoted | 202 | rows of S13_verified.csv |
+| queries and sources searched | 45 | count of this repository's records: rows of S13_search_log.csv |
+| identified | 364 | count of this repository's records: sum of records_returned over queries; a record found by several queries counts once per query |
+| screened on title and snippet | 364 | count of this repository's records: sum of records_screened over queries |
+| eligible (abstract or full text assessed) | 35 | count of this repository's records: distinct records in S13_screening.csv |
+| not retrieved | 3 | count of this repository's records: records whose full text could not be retrieved |
+| full text assessed | 26 | count of this repository's records: stage_reached = full text |
+| excluded after abstract or full text | 24 | count of this repository's records: decision = excluded, any stage |
+| included sources | 11 | count of this repository's records: decision = included |
+| staged rows | 265 | count of this repository's records: rows of S13_staged.csv |
+| rows confirmed by two readers and promoted | 187 | count of this repository's records: rows of S13_verified.csv |
 
 Exclusions after an abstract or full text was assessed, by reason:
 
@@ -203,6 +203,7 @@ Exclusions after an abstract or full text was assessed, by reason:
 | application processor core (XuanTie C908) | 1 |
 | coprocessor ASIC and FPGA design, not a microcontroller core | 1 |
 | excluded after review on 2026-10-21 (exclusion 1): SiFive U54 is an RV64 application core, as the excluded U74 and C908 sources; 10 staged rows demoted (data/raw/S13_demoted.csv) | 1 |
+| excluded after review on 2026-10-21 (inclusion 3): Kyber512-90s is a round 3 variant that NIST dropped and that has no ML-KEM successor; round 4 excluded 90s variants; 15 staged rows demoted (data/raw/S13_demoted.csv) | 1 |
 | excluded after review on 2026-10-21 (inclusion 3): Saber is a round 3 finalist that was not selected and the rows are not a hardened and unhardened pair; 18 staged rows demoted (data/raw/S13_demoted.csv) | 1 |
 | excluded after review on 2026-10-21 (inclusion 4 and exclusion 4): values read only through a summarising web fetch tool after curl was refused; 4 staged rows demoted (data/raw/S13_demoted.csv); can return when the PDF is read directly | 1 |
 | excluded after review on 2026-10-21 (inclusion 5, gap rule written down as protocol deviation_1): Falcon round 2 on Cortex-M4 fills no named gap; 10 staged rows demoted (data/raw/S13_demoted.csv) | 1 |
@@ -232,13 +233,13 @@ Flow diagram (text form):
 [ eligible: 35 ]
         |
         v
-[ included sources: 12 ]
+[ included sources: 11 ]
         |
         v
 [ staged rows: 265 ]
         |
         v
-[ double read and promoted: 202 ]
+[ double read and promoted: 187 ]
 ```
 
 ## Round 5 records assessed beyond the title
@@ -250,7 +251,7 @@ Flow diagram (text form):
 | Bos et al., Masking Kyber (TCHES 2021) | W09 | full text | included |  | 23 |
 | Becker et al., Polynomial multiplication on embedded vector architectures (TCHES 2022) | W06 | full text | excluded | excluded after review on 2026-10-21 (inclusion 3): Saber is a round 3 finalist that was not selected and the rows are not a hardened and unhardened pair; 18 staged rows demoted (data/raw/S13_demoted.csv) | 18 |
 | Abdulrahman et al., Fast and Clean (TCHES 2024) | W11 | full text | included |  | 17 |
-| Segatz and Hafiz, Kyber on ESP32 (arXiv 2503.10207) | W04 | full text | included |  | 15 |
+| Segatz and Hafiz, Kyber on ESP32 (arXiv 2503.10207) | W04 | full text | excluded | excluded after review on 2026-10-21 (inclusion 3): Kyber512-90s is a round 3 variant that NIST dropped and that has no ML-KEM successor; round 4 excluded 90s variants; 15 staged rows demoted (data/raw/S13_demoted.csv) | 15 |
 | Pornin, New Efficient Constant-Time Implementations of Falcon (2019) | W15 | full text | excluded | excluded after review on 2026-10-21 (inclusion 5, gap rule written down as protocol deviation_1): Falcon round 2 on Cortex-M4 fills no named gap; 10 staged rows demoted (data/raw/S13_demoted.csv) | 10 |
 | Jang et al., HQC on Cortex-M4 (arXiv 2608.18145) | W16 | full text | included |  | 15 |
 | Additive FFTs for HQC on ARM Cortex-M4, Revisited | W17 | full text | included |  | 9 |
@@ -291,6 +292,7 @@ Rows that were double read but break a written rule are kept in staging and out 
 | New Efficient, Constant-Time Implementations of Falcon. Thomas Pornin (NCC Group), 2019-08 | 10 (S13-102 to S13-111) | inclusion 5 (gap rule, written down on 2026-10-21, see protocol deviation_1) | Falcon round 2 on Cortex-M4 at 168 MHz fills no named gap of the round 5 question (not final standard FN-DSA, Cortex-M4 is not a gap core, no hardened pair); the same rule excluded arXiv 2606.15744, TCHES 9833 and ePrint 2024/112 at screening | 2026-10-21 |
 | A RAM-Efficient Implementation of Falcon. Thomas Pornin (NCC Group), IACR ePrint 2026/1915 | 4 (S13-226 to S13-229) | inclusion 4 and exclusion 4 | both readers and the third reader read Table 1 only through a summarising web fetch tool after curl to eprint.iacr.org was refused; inclusion 4 forbids values from a summary alone and exclusion 4 forbids working around a refusal; the rows can return when the PDF is read directly | 2026-10-21 |
 | Optimized Hardware-Software Co-Design for Kyber and Dilithium on RISC-V SoC FPGA. Tengfei  | 10 (S13-136 to S13-145) | exclusion 1 | the SiFive U54 is an RV64 application core; the same rule excluded the U74 and C908 sources at screening (these rows were already not promoted because no reader confirmed the code size) | 2026-10-21 |
+| Efficient Implementation of CRYSTALS-KYBER Key Encapsulation Mechanism on ESP32. Fabian Se | 15 (S13-087 to S13-101) | inclusion 3 | Kyber512-90s is a round 3 variant that NIST dropped and that has no ML-KEM successor (ML-KEM uses SHAKE only); round 4 excluded 90s variants and inclusion 3 is read the same way here | 2026-10-21 |
 
 ## Round 5 queries
 

@@ -1,34 +1,35 @@
 stage,count,how_counted,label
-queries and sources searched,45,rows of S13_search_log.csv,derived from published
-identified,364,sum of records_returned over queries; a record found by several queries counts once per query,derived from published
-screened on title and snippet,364,sum of records_screened over queries,derived from published
-eligible (abstract or full text assessed),35,distinct records in S13_screening.csv,derived from published
-not retrieved,3,records whose full text could not be retrieved,derived from published
-full text assessed,26,stage_reached = full text,derived from published
-excluded after abstract or full text,23,"decision = excluded, any stage",derived from published
-included sources,12,decision = included,derived from published
-staged rows,265,rows of S13_staged.csv,derived from published
-rows confirmed by two readers and promoted,202,rows of S13_verified.csv,derived from published
-excluded: application processor core (Cortex-A and U74),1,S13_screening.csv exclusion_reason,derived from published
-excluded: application processor core (Cortex-A72 and x86),1,S13_screening.csv exclusion_reason,derived from published
-excluded: application processor core (Cortex-A72),1,S13_screening.csv exclusion_reason,derived from published
-excluded: application processor core (RV64),1,S13_screening.csv exclusion_reason,derived from published
-excluded: application processor core (XuanTie C908),1,S13_screening.csv exclusion_reason,derived from published
-"excluded: coprocessor ASIC and FPGA design, not a microcontroller core",1,S13_screening.csv exclusion_reason,derived from published
-"excluded: excluded after review on 2026-10-21 (exclusion 1): SiFive U54 is an RV64 application core, as the excluded U74 and C908 sources; 10 staged rows demoted (data/raw/S13_demoted.csv)",1,S13_screening.csv exclusion_reason,derived from published
-excluded: excluded after review on 2026-10-21 (inclusion 3): Saber is a round 3 finalist that was not selected and the rows are not a hardened and unhardened pair; 18 staged rows demoted (data/raw/S13_demoted.csv),1,S13_screening.csv exclusion_reason,derived from published
-excluded: excluded after review on 2026-10-21 (inclusion 4 and exclusion 4): values read only through a summarising web fetch tool after curl was refused; 4 staged rows demoted (data/raw/S13_demoted.csv); can return when the PDF is read directly,1,S13_screening.csv exclusion_reason,derived from published
-"excluded: excluded after review on 2026-10-21 (inclusion 5, gap rule written down as protocol deviation_1): Falcon round 2 on Cortex-M4 fills no named gap; 10 staged rows demoted (data/raw/S13_demoted.csv)",1,S13_screening.csv exclusion_reason,derived from published
-excluded: full text not retrieved in the time available; abstract gives only a relative figure,1,S13_screening.csv exclusion_reason,derived from published
-excluded: full text not retrieved in the time available; abstract names no platform,1,S13_screening.csv exclusion_reason,derived from published
-excluded: no per operation cost (firmware footprint and protocol latency),1,S13_screening.csv exclusion_reason,derived from published
-excluded: not retrieved (HTTP 404),1,S13_screening.csv exclusion_reason,derived from published
-excluded: not retrieved (HTTP/2 stream error),1,S13_screening.csv exclusion_reason,derived from published
-excluded: not retrieved (connection reset),1,S13_screening.csv exclusion_reason,derived from published
-excluded: outside the round 5 gap list (Cortex-M4 additional signature candidates),1,S13_screening.csv exclusion_reason,derived from published
-excluded: outside the round 5 gap list (Cortex-M4 at 168 MHz),1,S13_screening.csv exclusion_reason,derived from published
-excluded: outside the round 5 gap list (Cortex-M4 round 3 Kyber),1,S13_screening.csv exclusion_reason,derived from published
-excluded: standalone hardware accelerator without a processor core,1,S13_screening.csv exclusion_reason,derived from published
-excluded: times without a stated clock and no cycle counts,1,S13_screening.csv exclusion_reason,derived from published
-"excluded: values already taken from the authors' conference slides of the same work (pq_signatures_riscv.pdf, rows S12A-412 to S12A-419); the paper itself was not assessed, so whether it repeats the slide values is not checked (reason corrected on 2026-10-21)",1,S13_screening.csv exclusion_reason,derived from published
-excluded: values only in a figure,1,S13_screening.csv exclusion_reason,derived from published
+queries and sources searched,45,count of this repository's records: rows of S13_search_log.csv,host measured
+identified,364,count of this repository's records: sum of records_returned over queries; a record found by several queries counts once per query,host measured
+screened on title and snippet,364,count of this repository's records: sum of records_screened over queries,host measured
+eligible (abstract or full text assessed),35,count of this repository's records: distinct records in S13_screening.csv,host measured
+not retrieved,3,count of this repository's records: records whose full text could not be retrieved,host measured
+full text assessed,26,count of this repository's records: stage_reached = full text,host measured
+excluded after abstract or full text,24,"count of this repository's records: decision = excluded, any stage",host measured
+included sources,11,count of this repository's records: decision = included,host measured
+staged rows,265,count of this repository's records: rows of S13_staged.csv,host measured
+rows confirmed by two readers and promoted,187,count of this repository's records: rows of S13_verified.csv,host measured
+excluded: application processor core (Cortex-A and U74),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: application processor core (Cortex-A72 and x86),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: application processor core (Cortex-A72),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: application processor core (RV64),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: application processor core (XuanTie C908),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+"excluded: coprocessor ASIC and FPGA design, not a microcontroller core",1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+"excluded: excluded after review on 2026-10-21 (exclusion 1): SiFive U54 is an RV64 application core, as the excluded U74 and C908 sources; 10 staged rows demoted (data/raw/S13_demoted.csv)",1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: excluded after review on 2026-10-21 (inclusion 3): Kyber512-90s is a round 3 variant that NIST dropped and that has no ML-KEM successor; round 4 excluded 90s variants; 15 staged rows demoted (data/raw/S13_demoted.csv),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: excluded after review on 2026-10-21 (inclusion 3): Saber is a round 3 finalist that was not selected and the rows are not a hardened and unhardened pair; 18 staged rows demoted (data/raw/S13_demoted.csv),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: excluded after review on 2026-10-21 (inclusion 4 and exclusion 4): values read only through a summarising web fetch tool after curl was refused; 4 staged rows demoted (data/raw/S13_demoted.csv); can return when the PDF is read directly,1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+"excluded: excluded after review on 2026-10-21 (inclusion 5, gap rule written down as protocol deviation_1): Falcon round 2 on Cortex-M4 fills no named gap; 10 staged rows demoted (data/raw/S13_demoted.csv)",1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: full text not retrieved in the time available; abstract gives only a relative figure,1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: full text not retrieved in the time available; abstract names no platform,1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: no per operation cost (firmware footprint and protocol latency),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: not retrieved (HTTP 404),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: not retrieved (HTTP/2 stream error),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: not retrieved (connection reset),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: outside the round 5 gap list (Cortex-M4 additional signature candidates),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: outside the round 5 gap list (Cortex-M4 at 168 MHz),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: outside the round 5 gap list (Cortex-M4 round 3 Kyber),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: standalone hardware accelerator without a processor core,1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: times without a stated clock and no cycle counts,1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+"excluded: values already taken from the authors' conference slides of the same work (pq_signatures_riscv.pdf, rows S12A-412 to S12A-419); the paper itself was not assessed, so whether it repeats the slide values is not checked (reason corrected on 2026-10-21)",1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
+excluded: values only in a figure,1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
