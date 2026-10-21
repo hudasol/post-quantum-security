@@ -9,7 +9,7 @@ Hash check: the predictions file matches its registered SHA-256.
 | P1 | hit | 7 board classes with measured free memory from 10 builds. |
 | P2 | miss | Median free flash share over 10 builds: 0.057. |
 | P3 | hit | Median free static RAM share over 10 builds: 0.884 (an upper bound: heap use at run time is not visible). |
-| P4 | miss | Profile fleet median replacement share, stack optimised thresholds: 0.186 assumed against 0.398 measured, change +0.212. |
+| P4 | miss | Profile fleet median replacement share, stack optimised thresholds (the registered scenario): 0.186 with assumed free memory against 0.398 with measured free memory, change +0.212. The registration quoted 0.201, the round 4 median of the uncertain scenario; under that scenario the change is +0.099, which also meets the refutation clause. |
 | P5 | miss | STM32F405 class with measured memory, all scenarios: firmware update 152, hybrid 76, hardware replacement 92 device decisions. Memory is above every threshold; the replacements come from the missing updatable boot stage, not from memory. |
 | P6 | miss | Flights with derived statistics: 0, below the refutation threshold of 20. Public flight logs could not be used: the PX4 log sites disallow automated access and state no reuse licence (`flightstack/flightlog_access.csv`). |
 | P7 | not scored | Public flight logs could not be used: the PX4 log sites disallow automated access and state no reuse licence (`flightstack/flightlog_access.csv`). |
@@ -21,10 +21,10 @@ Hash check: the predictions file matches its registered SHA-256.
 | P13 | not scored | No software in the loop results committed. |
 | P14 | hit | ns-3 one hop 50 kB: 5.72 s against the link model 7.12 s (-19.7 percent); published range 30 to 60 s. |
 | P15 | hit | Smallest hop count at which ns-3 reaches 30 s: 3 (first registered sweep). |
-| P16 | hit | Largest absolute difference at DR5 between the link model and ns-3 over 4 handshake profiles: 1.41 percent (computed on the round 4 three flight handshakes the ns-3 runs used). |
+| P16 | hit | Largest absolute difference at DR5 between the link model (both its flight by flight calculation and its protocol simulation, the less favourable taken) and ns-3 over 4 handshake profiles: 5.43 percent (computed on the round 4 three flight handshakes the ns-3 runs used). |
 | P17 | miss | Selective repeat, registered first run: closed form inside the interval at 4 of 5 loss rates. Follow up seed blocks added after the first run are not scored. |
 | P18 | hit | Largest difference between ns-3 and the time on air formula over 22 frame sizes: 0.00 percent (both implement the same formula). |
-| P19 | miss | Stated design (the reading the registered question names): command agreement proved; session key secrecy on the vehicle side proved, proved; on the ground station side counterexample, counterexample. With design change F1 all eight properties are proved. |
+| P19 | miss | Stated design (the reading the registered question names): command agreement (C1) proved; secrecy of the vehicle's session keys (S1 proved, S3 proved); secrecy of the ground station's session keys (S2 counterexample, S4 counterexample), because the stated design does not let the ground station authenticate the vehicle. With design change F1 all eight properties are proved. |
 | P20 | hit | Counterexamples in the first models as written: 5 (fallback_d_stated C1, firmware_stated_no_counter D1, session_b_stated A2, session_b_stated S2, session_b_stated S4). |
 | P21 | hit | Registered pair: with a monotonic version counter (design F3, which also signs the version) proved; without a counter counterexample. A variant written after registration, a counter with an unsigned version, gives counterexample: the counter alone is not enough. |
 | P22 | miss | Stated design: earlier session keys after long term key compromise S1 proved, S2 counterexample, S3 proved, S4 counterexample; the counterexamples follow from the missing vehicle authentication (F1). With F1: S1 proved, S2 proved, S3 proved, S4 proved. |
@@ -35,7 +35,7 @@ Hash check: the predictions file matches its registered SHA-256.
 | P27 | hit | Largest total Sobol index for hybrid availability: outage_rate_per_h (0.55). |
 | P28 | hit | 234 new rows after double reading. |
 | P29 | miss | Rows with final FIPS 205 SLH-DSA cycle counts on a microcontroller: 0 (the rows found are of the FIPS 205 initial public draft on an accelerated FPGA prototype, which the registered question, final standard, excludes). |
-| P30 | hit | Staged rows with a wrong value before adjudication: 0 of 265. |
+| P30 | hit | Staged rows with a wrong value before adjudication: 0 of the 234 rows whose values two readers could judge; 31 more rows had a value that fewer than two readers confirmed, so whether they hold a wrong value is unknown. Counting all of those as wrong would give 0.117. |
 | P31 | hit | Owens et al. Ed25519 verify at 168 MHz over 24 MHz: 760000 / 722000 = 1.053 (informed). |
 | P32 | hit | ML-DSA-44 verify, largest over smallest across 2 open cores (cv32e40p+ibex): 1.39. VexRiscv was not run. |
 | P33 | hit | ML-KEM-768 decaps: CV32E40P 2070034 cycles, Ibex 3033704. |

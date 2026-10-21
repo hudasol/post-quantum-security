@@ -41,7 +41,7 @@ def score():
     ms = R("planner/results/flightstack_mc_summary.csv")
     row = ms[ms.thresholds == "stack_asm"].iloc[0]
     ch = abs(float(row.change_median))
-    S["P4"] = (verdict(ch < 0.05, ch <= 0.10), f"Profile fleet median replacement share, stack optimised thresholds: {row.assumed_median:.3f} assumed against {row.measured_median:.3f} measured, change {row.change_median:+.3f}.")
+    S["P4"] = (verdict(ch < 0.05, ch <= 0.10), f"Profile fleet median replacement share, stack optimised thresholds (the registered scenario): {row.assumed_median:.3f} with assumed free memory against {row.measured_median:.3f} with measured free memory, change {row.change_median:+.3f}. The registration quoted 0.201, the round 4 median of the uncertain scenario; under that scenario the change is {float(ms[ms.thresholds == 'uncertain'].change_median.iloc[0]):+.3f}, which also meets the refutation clause.")
     pb = R("planner/results/flightstack_per_board.csv")
     f4 = pb[(pb.board.str.contains("F405")) & (pb.free_memory == "measured")]
     if len(f4):
@@ -76,8 +76,8 @@ def score():
     S["P15"] = ("not scored" if hm is None else verdict(hm >= 3, hm != 1), f"Smallest hop count at which ns-3 reaches 30 s: {hm} (first registered sweep).")
     lf = R("netsim/results/lora_flights_compare.csv")
     dr5 = lf[lf.dr == 5]
-    worst5 = float(dr5.err_blast_vs_ns3_pct.abs().max())
-    S["P16"] = (verdict(worst5 <= 20, worst5 <= 50), f"Largest absolute difference at DR5 between the link model and ns-3 over {len(dr5)} handshake profiles: {worst5:.2f} percent (computed on the round 4 three flight handshakes the ns-3 runs used).")
+    worst5 = float(max(dr5.err_blast_vs_ns3_pct.abs().max(), dr5.err_protocol_sim_vs_ns3_pct.abs().max()))
+    S["P16"] = (verdict(worst5 <= 20, worst5 <= 50), f"Largest absolute difference at DR5 between the link model (both its flight by flight calculation and its protocol simulation, the less favourable taken) and ns-3 over {len(dr5)} handshake profiles: {worst5:.2f} percent (computed on the round 4 three flight handshakes the ns-3 runs used).")
     sr = R("netsim/results/sr_closed_form.csv")
     pre = sr[sr.role == "pre set check"]
     n_in = int(pre.inside.astype(str).eq("True").sum())
@@ -90,7 +90,7 @@ def score():
     st = fr[fr.model == "session_b_stated"].set_index("property_id").result
     keys_ok = all(st.get(k) == "proved" for k in ("S1", "S2", "S3", "S4"))
     cmd_ok = st.get("C1") == "proved"
-    S["P19"] = (verdict(keys_ok and cmd_ok), f"Stated design (the reading the registered question names): command agreement {st.get('C1')}; session key secrecy on the vehicle side {st.get('S1')}, {st.get('S3')}; on the ground station side {st.get('S2')}, {st.get('S4')}. With design change F1 all eight properties are proved.")
+    S["P19"] = (verdict(keys_ok and cmd_ok), f"Stated design (the reading the registered question names): command agreement (C1) {st.get('C1')}; secrecy of the vehicle's session keys (S1 {st.get('S1')}, S3 {st.get('S3')}); secrecy of the ground station's session keys (S2 {st.get('S2')}, S4 {st.get('S4')}), because the stated design does not let the ground station authenticate the vehicle. With design change F1 all eight properties are proved.")
     stated_models = [m for m in fr.model.unique() if "stated" in m and "fs" not in m]
     fails = fr[fr.model.isin(stated_models) & (fr.result == "counterexample")]
     S["P20"] = (verdict(len(fails) >= 1), f"Counterexamples in the first models as written: {len(fails)} ({', '.join(sorted(set(fails.model + ' ' + fails.property_id)))}).")
@@ -141,8 +141,10 @@ def score():
     S["P29"] = (verdict(len(final205) >= 1), f"Rows with final FIPS 205 SLH-DSA cycle counts on a microcontroller: {len(final205)} (the rows found are of the FIPS 205 initial public draft on an accelerated FPGA prototype, which the registered question, final standard, excludes).")
     rs = list(csv.DictReader(open(ROOT / "data/verify6/row_status.csv")))
     wrong = sum(1 for r in rs if r["status"] == "corrected")
-    rate = wrong / len(rs)
-    S["P30"] = (verdict(rate <= 0.05, rate <= 0.10), f"Staged rows with a wrong value before adjudication: {wrong} of {len(rs)}.")
+    judged = [r for r in rs if r["status"] in ("confirmed", "corrected", "blocked")]
+    unconf = len(rs) - len(judged)
+    rate = wrong / len(judged) if judged else float("nan")
+    S["P30"] = (verdict(rate <= 0.05, rate <= 0.10), f"Staged rows with a wrong value before adjudication: {wrong} of the {len(judged)} rows whose values two readers could judge; {unconf} more rows had a value that fewer than two readers confirmed, so whether they hold a wrong value is unknown. Counting all of those as wrong would give {(wrong + unconf) / len(rs):.3f}.")
     c24 = float(ev[ev.id == "S13-024"].cycles.iloc[0])
     c331 = float(ev[ev.id == "S12A-331"].cycles.iloc[0])
     ratio = c24 / c331
