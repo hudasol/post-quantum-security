@@ -1,0 +1,9 @@
+label,key,value
+assumption,seed,20261021
+assumption,n_boot,10000
+assumption,cluster,binary (parameter set and implementation)
+assumption,round4_reproduction_max_abs_difference_pct,4.6e-05
+assumption,round4_seed,20261020
+assumption,harness_rows_found,6
+assumption,harness_verdict,not possible: no published cycle row for the mlkem-native or mldsa-native harness code on a Cortex-M4; the test waits for the board
+assumption,lofo_training,all matched rows outside the left out group (both round 4 halves)

@@ -1,0 +1,8 @@
+label,id,core,library,parameter_set,operation,cycles,usable_for_harness_test,reason
+published,S2-0358,Ibex RISC-V (CHERIoT),PQ Code Package C implementation (mlkem-native / mldsa-native) as CHERIoT shared library,(not stated),keygen,5143987.0,False,different core and build (not the bench/mcu harness at -O2 on a Cortex-M4)
+published,S2-0359,Ibex RISC-V (CHERIoT),PQ Code Package C implementation (mlkem-native / mldsa-native) as CHERIoT shared library,(not stated),encaps,1773235.0,False,different core and build (not the bench/mcu harness at -O2 on a Cortex-M4)
+published,S2-0360,Ibex RISC-V (CHERIoT),PQ Code Package C implementation (mlkem-native / mldsa-native) as CHERIoT shared library,(not stated),decaps,2176226.0,False,different core and build (not the bench/mcu harness at -O2 on a Cortex-M4)
+published,S2-0361,Ibex RISC-V (CHERIoT),PQ Code Package C implementation (mlkem-native / mldsa-native) as CHERIoT shared library,ML-DSA-44,keygen,3622132.0,False,different core and build (not the bench/mcu harness at -O2 on a Cortex-M4)
+published,S2-0362,Ibex RISC-V (CHERIoT),PQ Code Package C implementation (mlkem-native / mldsa-native) as CHERIoT shared library,ML-DSA-44,sign,5391177.0,False,different core and build (not the bench/mcu harness at -O2 on a Cortex-M4)
+published,S2-0363,Ibex RISC-V (CHERIoT),PQ Code Package C implementation (mlkem-native / mldsa-native) as CHERIoT shared library,ML-DSA-44,verify,3674071.0,False,different core and build (not the bench/mcu harness at -O2 on a Cortex-M4)
+published,summary,,,,,,False,not possible: no published cycle row for the mlkem-native or mldsa-native harness code on a Cortex-M4; the test waits for the board
