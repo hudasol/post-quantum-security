@@ -1,0 +1,31 @@
+<third_party>/ardupilot/build/Pixhawk6C/bin/arducopter  :
+section               size         addr
+startup              0x2e0    0x8020000
+constructors          0x98    0x80202e0
+.text             0x1829c8    0x8020380
+.ARM.exidx             0x8    0x81a2d48
+.textalign             0x0    0x81a2d50
+.mstack              0x600   0x24000000
+.pstack             0x1c00   0x24000600
+.data               0x1174   0x24002200
+.bss               0x1fad8   0x24003378
+.ram0_init             0x0   0x24022e50
+.ram0                  0x0   0x24022e50
+.heap              0x5d1b0   0x24022e50
+.crash_log         0x5c13c    0x81a3ec4
+.ARM.attributes       0x2e          0x0
+.comment              0x9b          0x0
+.debug_line        0x1c9ea          0x0
+.debug_line_str      0x17d          0x0
+.debug_info        0x38710          0x0
+.debug_abbrev       0xdf5a          0x0
+.debug_aranges      0x13e0          0x0
+.debug_str          0x4d9f          0x0
+.debug_frame        0x2ca8          0x0
+.debug_loclists    0x15224          0x0
+.debug_rnglists      0xb4f          0x0
+.debug_loc          0x44e4          0x0
+.debug_ranges        0x118          0x0
+Total             0x2e52b0
+
+

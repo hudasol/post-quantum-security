@@ -1,0 +1,31 @@
+<third_party>/ardupilot/build/MatekH743/bin/arducopter  :
+section               size         addr
+startup              0x2e0    0x8020000
+constructors          0x98    0x80202e0
+.text             0x178c28    0x8020380
+.ARM.exidx             0x8    0x8198fa8
+.textalign             0x0    0x8198fb0
+.mstack              0x600   0x30000000
+.pstack             0x1c00   0x30000600
+.data               0x1174   0x30002200
+.bss               0x1fa18   0x30003378
+.ram0_init             0x0   0x30022d90
+.ram0                  0x0   0x30022d90
+.heap              0x1d270   0x30022d90
+.crash_log         0x25edc    0x819a124
+.ARM.attributes       0x2e          0x0
+.comment              0x9b          0x0
+.debug_line        0x1c9ea          0x0
+.debug_line_str      0x17d          0x0
+.debug_info        0x38710          0x0
+.debug_abbrev       0xdf5a          0x0
+.debug_aranges      0x13e0          0x0
+.debug_str          0x4d9f          0x0
+.debug_frame        0x2ca8          0x0
+.debug_loclists    0x15224          0x0
+.debug_rnglists      0xb4f          0x0
+.debug_loc          0x44e4          0x0
+.debug_ranges        0x118          0x0
+Total             0x2652b0
+
+

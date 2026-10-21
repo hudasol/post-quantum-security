@@ -1,0 +1,39 @@
+
+<third_party>/PX4-Autopilot/build/cubepilot_cubeorange_default/cubepilot_cubeorange_default.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         001d3ed8  08020000  08020000  00001000  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .init_section 00000154  081f3ed8  081f3ed8  001d4ed8  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .ARM.exidx    00000008  081f402c  081f402c  001d502c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  3 .data         00000c50  24000000  081f4034  001d6000  2**5
+                  CONTENTS, ALLOC, LOAD, DATA
+  4 .bss          00009fa4  24000c80  081f4c84  001d6c80  2**6
+                  ALLOC
+  5 .sram4_reserve 00000000  38000000  38000000  001d6c50  2**0
+                  CONTENTS
+  6 .comment      00000026  00000000  00000000  001d6c50  2**0
+                  CONTENTS, READONLY
+  7 .ARM.attributes 00000030  00000000  00000000  001d6c76  2**0
+                  CONTENTS, READONLY
+  8 .debug_abbrev 001b115d  00000000  00000000  001d6ca6  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+  9 .debug_info   0190af3d  00000000  00000000  00387e03  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 10 .debug_line   004c16dd  00000000  00000000  01c92d40  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 11 .debug_aranges 00025eb8  00000000  00000000  02154420  2**3
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 12 .debug_str    00360f2b  00000000  00000000  0217a2d8  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 13 .debug_line_str 00000198  00000000  00000000  024db203  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 14 .debug_loclists 00346339  00000000  00000000  024db39b  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 15 .debug_rnglists 00088c70  00000000  00000000  028216d4  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 16 .debug_frame  0006e7f4  00000000  00000000  028aa344  2**2
+                  CONTENTS, READONLY, DEBUGGING, OCTETS

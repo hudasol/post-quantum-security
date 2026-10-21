@@ -1,0 +1,40 @@
+[1316/1348] Linking CXX static library src/modules/vtol_att_control/libmodules__vtol_att_control.a
+[1317/1348] Linking CXX static library src/systemcmds/actuator_test/libsystemcmds__actuator_test.a
+[1318/1348] Linking CXX static library src/systemcmds/bl_update/libsystemcmds__bl_update.a
+[1319/1348] Linking CXX static library src/systemcmds/bsondump/libsystemcmds__bsondump.a
+[1320/1348] Linking CXX static library src/systemcmds/dmesg/libsystemcmds__dmesg.a
+[1321/1348] Linking CXX static library src/systemcmds/dumpfile/libsystemcmds__dumpfile.a
+[1322/1348] Linking CXX static library src/systemcmds/gpio/libsystemcmds__gpio.a
+[1323/1348] Linking CXX static library src/systemcmds/hardfault_log/libsystemcmds__hardfault_log.a
+[1324/1348] Linking CXX static library src/systemcmds/i2cdetect/libsystemcmds__i2cdetect.a
+[1325/1348] Linking CXX static library src/systemcmds/led_control/libsystemcmds__led_control.a
+[1326/1348] Linking CXX static library src/systemcmds/mft/libsystemcmds__mft.a
+[1327/1348] Linking CXX static library src/systemcmds/mtd/libsystemcmds__mtd.a
+[1328/1348] Linking CXX static library src/systemcmds/nshterm/libsystemcmds__nshterm.a
+[1329/1348] Linking CXX static library src/systemcmds/param/libsystemcmds__param.a
+[1330/1348] Linking CXX static library src/systemcmds/perf/libsystemcmds__perf.a
+[1331/1348] Linking CXX static library src/systemcmds/reboot/libsystemcmds__reboot.a
+[1332/1348] Linking CXX static library src/systemcmds/reflect/libsystemcmds__reflect.a
+[1333/1348] Linking CXX static library src/systemcmds/system_time/libsystemcmds__system_time.a
+[1334/1348] Linking CXX static library src/systemcmds/top/libsystemcmds__top.a
+[1335/1348] Linking CXX static library src/systemcmds/topic_listener/libsystemcmds__topic_listener.a
+[1336/1348] Linking CXX static library src/systemcmds/tune_control/libsystemcmds__tune_control.a
+[1337/1348] Linking CXX static library src/systemcmds/uorb/libsystemcmds__uorb.a
+[1338/1348] Linking CXX static library src/systemcmds/usb_connected/libsystemcmds__usb_connected.a
+[1339/1348] Linking CXX static library src/systemcmds/ver/libsystemcmds__ver.a
+[1340/1348] Linking CXX static library src/systemcmds/work_queue/libsystemcmds__work_queue.a
+[1341/1348] Building C object platforms/nuttx/CMakeFiles/px4.dir/__/common/empty.c.obj
+[1342/1348] Building CXX object src/modules/mavlink/CMakeFiles/modules__mavlink.dir/modules__mavlink_unity.cpp.obj
+[1343/1348] Linking CXX static library src/modules/mavlink/libmodules__mavlink.a
+[1344/1348] Building CXX object src/modules/ekf2/CMakeFiles/modules__ekf2.dir/modules__ekf2_unity.cpp.obj
+[1345/1348] Linking CXX static library src/modules/ekf2/libmodules__ekf2.a
+[1346/1348] Linking CXX executable px4_fmu-v5_default.elf
+Memory region         Used Size  Region Size  %age Used
+      FLASH_ITCM:           0 B      2016 KB      0.00%
+      FLASH_AXIM:     2023992 B      2016 KB     98.04%
+        ITCM_RAM:           0 B        16 KB      0.00%
+        DTCM_RAM:           0 B       128 KB      0.00%
+           SRAM1:       46708 B       368 KB     12.39%
+           SRAM2:           0 B        16 KB      0.00%
+[1347/1348] Generating ../../px4_fmu-v5_default.bin
+[1348/1348] Creating <third_party>/PX4-Autopilot/build/px4_fmu-v5_default/px4_fmu-v5_default.px4

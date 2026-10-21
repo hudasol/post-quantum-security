@@ -1,0 +1,40 @@
+[1233/1262] Compiling ArduCopter/radio.cpp
+[1234/1262] Compiling ArduCopter/fence.cpp
+[1235/1262] Compiling ArduCopter/inertia.cpp
+[1236/1262] Compiling ArduCopter/mode_auto.cpp
+[1237/1262] Compiling ArduCopter/GCS_MAVLink_Copter.cpp
+[1238/1262] Compiling ArduCopter/crash_check.cpp
+[1239/1262] Compiling ArduCopter/mode_avoid_adsb.cpp
+[1240/1262] Compiling ArduCopter/heli.cpp
+[1241/1262] Compiling ArduCopter/mode_flowhold.cpp
+[1242/1262] Compiling ArduCopter/mode_loiter.cpp
+[1243/1262] Compiling ArduCopter/AP_Rally.cpp
+[1244/1262] Compiling ArduCopter/AP_State.cpp
+[1245/1262] Compiling ArduCopter/Attitude.cpp
+[1246/1262] Compiling ArduCopter/mode_autotune.cpp
+[1247/1262] Compiling ArduCopter/mode_flip.cpp
+[1248/1262] Compiling ArduCopter/mode_follow.cpp
+[1249/1262] Compiling ArduCopter/Log.cpp
+[1250/1262] Compiling ArduCopter/standby.cpp
+[1251/1262] Compiling ArduCopter/RC_Channel_Copter.cpp
+[1252/1262] Compiling ArduCopter/mode_turtle.cpp
+[1253/1262] Compiling ArduCopter/mode_stabilize_heli.cpp
+[1254/1262] Compiling ArduCopter/Parameters.cpp
+[1255/1262] Compiling ArduCopter/mode_systemid.cpp
+[1256/1262] Linking build/Durandal/bin/arducopter
+[1257/1262] Generating bin/arducopter.bin
+[1258/1262] checking symbols build/Durandal/bin/arducopter
+[1259/1262] app_descriptor set_app_descriptor: build/Durandal/bin/arducopter build/Durandal/bin/arducopter.bin
+No APP_DESCRIPTOR found
+[1260/1262] apj_gen build/Durandal/bin/arducopter.bin
+[1261/1262] bin cleanup build/Durandal/bin/arducopter.bin
+[1262/1262] Generating bin/arducopter_with_bl.hex
+Waf: Leaving directory `<third_party>/ardupilot/build/Durandal'
+
+BUILD SUMMARY
+Build directory: <third_party>/ardupilot/build/Durandal
+Target          Text (B)  Data (B)  BSS (B)  Total Flash Used (B)  Free Flash (B)  External Flash Used (B)
+----------------------------------------------------------------------------------------------------------
+bin/arducopter   1590136      4620   139664               1594756          371316  Not Applicable         
+
+'copter' finished successfully (11m53.711s)

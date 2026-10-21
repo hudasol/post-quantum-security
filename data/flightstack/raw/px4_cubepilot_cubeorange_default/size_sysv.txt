@@ -1,0 +1,22 @@
+<third_party>/PX4-Autopilot/build/cubepilot_cubeorange_default/cubepilot_cubeorange_default.elf  :
+section                size         addr
+.text              0x1d3ed8    0x8020000
+.init_section         0x154    0x81f3ed8
+.ARM.exidx              0x8    0x81f402c
+.data                 0xc50   0x24000000
+.bss                 0x9fa4   0x24000c80
+.sram4_reserve          0x0   0x38000000
+.comment               0x26          0x0
+.ARM.attributes        0x30          0x0
+.debug_abbrev      0x1b115d          0x0
+.debug_info       0x190af3d          0x0
+.debug_line        0x4c16dd          0x0
+.debug_aranges      0x25eb8          0x0
+.debug_str         0x360f2b          0x0
+.debug_line_str       0x198          0x0
+.debug_loclists    0x346339          0x0
+.debug_rnglists     0x88c70          0x0
+.debug_frame        0x6e7f4          0x0
+Total             0x2920b0d
+
+

@@ -1,0 +1,22 @@
+<third_party>/PX4-Autopilot/build/holybro_durandal-v1_default/holybro_durandal-v1_default.elf  :
+section                size         addr
+.text              0x1d8610    0x8020000
+.init_section         0x15c    0x81f8610
+.ARM.exidx              0x8    0x81f876c
+.data                 0xed0   0x24000000
+.bss                 0xa32c   0x24000f00
+.sram4_reserve        0x800   0x38000000
+.comment               0x26          0x0
+.ARM.attributes        0x30          0x0
+.debug_abbrev      0x1c8624          0x0
+.debug_info       0x1a0e3c6          0x0
+.debug_line        0x4f4f24          0x0
+.debug_aranges      0x27e48          0x0
+.debug_str         0x36a506          0x0
+.debug_line_str       0x198          0x0
+.debug_loclists    0x36c75e          0x0
+.debug_rnglists     0x8f59f          0x0
+.debug_frame        0x73b28          0x0
+Total             0x2ab17df
+
+

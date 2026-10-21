@@ -1,0 +1,2 @@
+   text	   data	    bss	    dec	    hex	filename
+1543952	   4620	 413028	1961600	 1dee80	<third_party>/ardupilot/build/MatekH743/bin/arducopter

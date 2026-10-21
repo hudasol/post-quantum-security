@@ -1,0 +1,40 @@
+[1231/1259] Linking CXX static library src/systemcmds/bsondump/libsystemcmds__bsondump.a
+[1232/1259] Linking CXX static library src/systemcmds/dmesg/libsystemcmds__dmesg.a
+[1233/1259] Linking CXX static library src/systemcmds/gpio/libsystemcmds__gpio.a
+[1234/1259] Linking CXX static library src/systemcmds/hardfault_log/libsystemcmds__hardfault_log.a
+[1235/1259] Linking CXX static library src/systemcmds/i2c_launcher/libsystemcmds__i2c_launcher.a
+[1236/1259] Linking CXX static library src/systemcmds/i2cdetect/libsystemcmds__i2cdetect.a
+[1237/1259] Linking CXX static library src/systemcmds/led_control/libsystemcmds__led_control.a
+[1238/1259] Linking CXX static library src/systemcmds/mft/libsystemcmds__mft.a
+[1239/1259] Linking CXX static library src/systemcmds/mtd/libsystemcmds__mtd.a
+[1240/1259] Linking CXX static library src/systemcmds/netman/libmodules__netman.a
+[1241/1259] Linking CXX static library src/systemcmds/nshterm/libsystemcmds__nshterm.a
+[1242/1259] Linking CXX static library src/systemcmds/param/libsystemcmds__param.a
+[1243/1259] Linking CXX static library src/systemcmds/perf/libsystemcmds__perf.a
+[1244/1259] Linking CXX static library src/systemcmds/reboot/libsystemcmds__reboot.a
+[1245/1259] Linking CXX static library src/systemcmds/system_time/libsystemcmds__system_time.a
+[1246/1259] Linking CXX static library src/systemcmds/top/libsystemcmds__top.a
+[1247/1259] Linking CXX static library src/systemcmds/topic_listener/libsystemcmds__topic_listener.a
+[1248/1259] Linking CXX static library src/systemcmds/tune_control/libsystemcmds__tune_control.a
+[1249/1259] Linking CXX static library src/systemcmds/uorb/libsystemcmds__uorb.a
+[1250/1259] Linking CXX static library src/systemcmds/ver/libsystemcmds__ver.a
+[1251/1259] Linking CXX static library src/systemcmds/work_queue/libsystemcmds__work_queue.a
+[1252/1259] Building C object platforms/nuttx/CMakeFiles/px4.dir/__/common/empty.c.obj
+[1253/1259] Building CXX object src/modules/mavlink/CMakeFiles/modules__mavlink.dir/modules__mavlink_unity.cpp.obj
+[1254/1259] Linking CXX static library src/modules/mavlink/libmodules__mavlink.a
+[1255/1259] Building CXX object src/modules/ekf2/CMakeFiles/modules__ekf2.dir/modules__ekf2_unity.cpp.obj
+[1256/1259] Linking CXX static library src/modules/ekf2/libmodules__ekf2.a
+[1257/1259] Linking CXX executable px4_fmu-v6x_default.elf
+Memory region         Used Size  Region Size  %age Used
+        ITCM_RAM:           0 B        64 KB      0.00%
+           FLASH:     1960072 B      1920 KB     99.69%
+       DTCM1_RAM:           0 B        64 KB      0.00%
+       DTCM2_RAM:           0 B        64 KB      0.00%
+        AXI_SRAM:      100956 B       512 KB     19.26%
+           SRAM1:           0 B       128 KB      0.00%
+           SRAM2:           0 B       128 KB      0.00%
+           SRAM3:           0 B        32 KB      0.00%
+           SRAM4:          2 KB        64 KB      3.12%
+          BKPRAM:           0 B         4 KB      0.00%
+[1258/1259] Generating ../../px4_fmu-v6x_default.bin
+[1259/1259] Creating <third_party>/PX4-Autopilot/build/px4_fmu-v6x_default/px4_fmu-v6x_default.px4
