@@ -50,6 +50,7 @@ jobs:
           python3 -m unittest discover -s rtlsim -t .
           python3 -m unittest discover -s formal -t .
           python3 -m unittest discover -s stats -t .
+          python3 -m unittest discover -s netsim -t .
       - name: Planner agrees with the hand written expectations
         run: python3 scripts/compare_planner_predictions.py
   data:
@@ -83,6 +84,11 @@ jobs:
         run: |
           python3 scripts/meta_analysis.py
           git diff --exit-code docs/META_ANALYSIS.md data/meta/
+      - name: Network simulator study regenerates from its committed results
+        run: |
+          python3 -m netsim.compare > /dev/null
+          python3 -m netsim.make_study > /dev/null
+          git diff --exit-code netsim/results docs/NETSIM_STUDY.md
       - name: Data dictionary regenerates from the result files
         run: |
           python3 scripts/build_data_dictionary.py > /dev/null
