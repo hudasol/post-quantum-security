@@ -11,14 +11,14 @@ Hash check: the predictions file matches its registered SHA-256.
 | P3 | hit | Median free static RAM share over 10 builds: 0.884 (an upper bound: heap use at run time is not visible). |
 | P4 | miss | Profile fleet median replacement share, stack optimised thresholds (the registered scenario): 0.186 with assumed free memory against 0.398 with measured free memory, change +0.212. The registration quoted 0.201, the round 4 median of the uncertain scenario; under that scenario the change is +0.099, which also meets the refutation clause. |
 | P5 | miss | STM32F405 class with measured memory, all scenarios: firmware update 152, hybrid 76, hardware replacement 92 device decisions. Memory is above every threshold; the replacements come from the missing updatable boot stage, not from memory. |
-| P6 | miss | Flights with derived statistics: 0, below the refutation threshold of 20. Public flight logs could not be used: the PX4 log sites disallow automated access and state no reuse licence (`flightstack/flightlog_access.csv`). |
+| P6 | miss | Flights with derived statistics: 0. Public flight logs could not be used: the PX4 log sites disallow automated access and state no reuse licence (`flightstack/flightlog_access.csv`). |
 | P7 | not scored | Public flight logs could not be used: the PX4 log sites disallow automated access and state no reuse licence (`flightstack/flightlog_access.csv`). |
 | P8 | not scored | Public flight logs could not be used: the PX4 log sites disallow automated access and state no reuse licence (`flightstack/flightlog_access.csv`). The mission study was not rerun with real traffic. |
 | P9 | hit | Fewest completed scripted missions in a configuration on the SiK class link: 20; configurations: 4. |
 | P10 | between | Median added command latency of MAVLink 2 signing against no authentication: 3.72 ms. |
 | P11 | hit | Median hybrid session handshake time: 1.28 s. |
 | P12 | hit | Signature per command: SITL 496 ms against the mission study 380 ms (ratio 1.31). |
-| P13 | hit | Hybrid session availability: SITL 0.914 against the mission study 0.916 (difference 0.002). |
+| P13 | between | Hybrid session availability, SITL 0.914 with one outage per mission. Against the mission study near the same outage rate (0.916) the difference is 0.002; against the base figure the registration names (0.991, with the base outage rate) it is 0.077. The less favourable reading is used; the outage conditions differ, so this comparison is weak either way. |
 | P14 | hit | ns-3 one hop 50 kB: 5.72 s against the link model 7.12 s (-19.7 percent); published range 30 to 60 s. |
 | P15 | hit | Smallest hop count at which ns-3 reaches 30 s: 3 (first registered sweep). |
 | P16 | hit | Largest absolute difference at DR5 between the link model (both its flight by flight calculation and its protocol simulation, the less favourable taken) and ns-3 over 4 handshake profiles: 5.43 percent (computed on the round 4 three flight handshakes the ns-3 runs used). |
@@ -26,23 +26,23 @@ Hash check: the predictions file matches its registered SHA-256.
 | P18 | hit | Largest difference between ns-3 and the time on air formula over 22 frame sizes: 0.00 percent (both implement the same formula). |
 | P19 | miss | Stated design (the reading the registered question names): command agreement (C1) proved; secrecy of the vehicle's session keys (S1 proved, S3 proved); secrecy of the ground station's session keys (S2 counterexample, S4 counterexample), because the stated design does not let the ground station authenticate the vehicle. With design change F1 all eight properties are proved. |
 | P20 | hit | Counterexamples in the first models as written: 5 (fallback_d_stated C1, firmware_stated_no_counter D1, session_b_stated A2, session_b_stated S2, session_b_stated S4). |
-| P21 | hit | Registered pair: with a monotonic version counter (design F3, which also signs the version) proved; without a counter counterexample. A variant written after registration, a counter with an unsigned version, gives counterexample: the counter alone is not enough. |
+| P21 | miss | Without a counter: counterexample. With a monotonic counter and a signed version (F3): proved; with a counter but an unsigned version (a variant written after registration): counterexample. The registered pair alone would be a hit; under the less favourable reading a counterexample with a counter meets the refutation clause. |
 | P22 | miss | Stated design: earlier session keys after long term key compromise S1 proved, S2 counterexample, S3 proved, S4 counterexample; the counterexamples follow from the missing vehicle authentication (F1). With F1: S1 proved, S2 proved, S3 proved, S4 proved. |
 | P23 | miss | Leave one implementation family out, pooled median absolute error 1.8 percent (scheme left out: 9.8 percent). |
 | P24 | miss | Cluster bootstrap 95 percent interval of the median absolute error: 0.79 to 1.72 percent; the round 4 row bootstrap upper bound is 1.72 percent, compared unrounded. |
-| P25 | miss | Main unweighted fit: largest share compiler (50.1 percent), but compiler and statistic have overlapping intervals; the fit without the worst observed rows (worst observed rows excluded: main (variant as stated)) makes statistic the largest (36.9 percent), which meets the refutation clause. |
+| P25 | miss | Main unweighted fit: largest share compiler (50.1 percent), but compiler and statistic have overlapping intervals; the sensitivity fit without the worst observed rows makes statistic the largest (36.9 percent), which meets the refutation clause. |
 | P26 | miss | Two readings of the registered metric: wrong in substance 7 of 425 (1.6 percent); differs verbatim 153 of 365 (41.9 percent). Both meet the refutation clause. |
 | P27 | hit | Largest total Sobol index for hybrid availability: outage_rate_per_h (0.55). |
 | P28 | hit | 202 new rows after double reading. |
 | P29 | miss | Rows with final FIPS 205 SLH-DSA cycle counts on a microcontroller: 0 (the rows found are of the FIPS 205 initial public draft on an accelerated FPGA prototype, which the registered question, final standard, excludes). |
-| P30 | hit | Staged rows with a wrong value before adjudication: 0 of the 234 rows whose values two readers could judge; 31 more rows had a value that fewer than two readers confirmed, so whether they hold a wrong value is unknown. Counting all of those as wrong would give 0.117. |
+| P30 | miss | Staged rows with a wrong value before adjudication: 0 of the 234 rows whose values two readers could judge; 31 more rows had a value that fewer than two readers confirmed. Under the less favourable reading those count as possibly wrong: 0.117. |
 | P31 | hit | Owens et al. Ed25519 verify at 168 MHz over 24 MHz: 760000 / 722000 = 1.053 (informed). |
 | P32 | hit | ML-DSA-44 verify, largest over smallest across 2 open cores (cv32e40p+ibex): 1.39. VexRiscv was not run. |
 | P33 | hit | ML-KEM-768 decaps: CV32E40P 2070034 cycles, Ibex 3033704. |
 | P34 | hit | M33 images built: yes; emulator log lines parsed: 100.0 percent overall; per cache pass: on 100.0, off 100.0. |
-| P35 | miss | The scheme families are unchanged (LMS for firmware, a hybrid session for commands, no per command signatures), but the designs changed in this round: the vehicle now signs the handshake (F1) and firmware needs a signed version and a monotonic counter (F3). Under the stricter reading, a change of either design meets the refutation clause (`docs/REFERENCE_ARCHITECTURE.md`; RUN_LOG entry 93). |
+| P35 | miss | Scheme families kept: yes (LMS for firmware, a hybrid session for commands). Design changes adopted in `docs/REFERENCE_ARCHITECTURE.md`: F1, F3. Under the less favourable reading any adopted design change meets the refutation clause. |
 | P36 | hit | First pass: 74 findings. |
 | P37 | not scored | No second pass recorded. |
 | P38 | not scored | Not yet scored. |
 
-Totals: 20 hit, 1 between, 13 miss, 4 not scored, of 38.
+Totals: 17 hit, 2 between, 15 miss, 4 not scored, of 38.
