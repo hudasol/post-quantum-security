@@ -178,7 +178,7 @@ def hypotheses(n):
         ["H1", f"On the Cortex-M4 board, caches off, the board mean of at least four fifths of the {n['v5b_per']} harness rows lies inside its registered interval, and the signed errors do not share one sign",
          "more than a third of the rows miss, or more than four fifths of the signed errors share one sign; only rows whose log shows the caches off conditions count; the Cortex-M33 board is scored apart and tests transfer only",
          "`docs/PREDICTIONS_V5_BOARD.md` (rules 1 to 4); round 4 rows under `docs/PREDICTIONS_V4_BOARD_NOTES.md` notes 5 to 9"],
-        ["H2", f"On a borrowed SiK class radio pair at default settings, the median hybrid handshake (with design change F1) lies between half and twice the modelled first session time of {n['m_b_hs']} s (estimated)",
+        ["H2", f"On a borrowed SiK class radio pair at default settings, the median hybrid handshake (with design change F1) lies between half and twice the first session time of {n['m_b_hs']} s in the mission study (estimated; the protocol simulation gives a similar time for the same profile)",
          "the measured median lies outside that range", "this proposal; to be hashed before the radio session"],
         ["H3", f"With the session layer in software in the loop, the added latency per command stays near the modelled {n['m_b_lat']} ms and inside the {n['deadline']} s command deadline of the mission study",
          "the command stream misses its deadline more often with the session layer than without it", "this proposal; to be hashed before the software in the loop runs"],
@@ -212,7 +212,7 @@ Unmanned aircraft and ground robots accept commands and firmware over narrow rad
 5. **Cycle model and its transfer limits.** The trace driven model predicts held out pqm4 Cortex-M4 rows with a median error of {n['cm_med']} percent (signing misses by up to {n['cm_sign']} percent), but leaving out a whole implementation family gives {n['lofo_fam']} percent and leaving out a whole scheme {n['lofo_sch']} percent ({n['lofo_sch_red']} percent for the reduced model), and a cluster aware prediction interval is {n['pi_wide']} times as wide as the registered one (modelled; `docs/STATISTICS_V5.md`). It is an interpolation within one code base, not a general predictor.
 6. **Open core spread.** The same RV32IMC program takes {n['core_lo']} to {n['core_hi']} times as many cycles on one open core as on the other over {n['core_sets']} ML-KEM and ML-DSA parameter sets (RTL simulated; `docs/RTL_SIM_RESULTS.md`), so a figure for one core is not a figure for another of the same instruction set.
 7. **Mission and boot.** A hybrid session keeps a drone's command availability on a telemetry radio at a mean of {n['m_b']}, while a post quantum signature on every command lowers it to {n['m_c']} and adds about {n['m_c_lat']} ms per command; verifying a {n['img_mb']} MB image with LMS takes about {n['boot_sw']} ms with a software hash and {n['boot_hw']} ms with hash hardware on a {n['clock']} MHz Cortex-M4 (estimated; `docs/MISSION_STUDY.md`, `docs/BOOT_UPDATE_STUDY.md`).
-8. **Board kit ready, predictions registered.** The kit builds images for NUCLEO-L4R5ZI and NUCLEO-L552ZE-Q with a tested option that switches caches and prefetch off; {n['v5b_rows']} out of sample predictions for the caches off pass are hashed in `docs/PREDICTIONS_V5_BOARD.md`, and the bench plan keeps both boards within one afternoon of about {n['plan_min']} minutes (estimated; `bench/board_kit/ONE_AFTERNOON.md`). Nothing has yet been measured on a microcontroller.
+8. **Board kit ready, predictions registered.** The kit builds images for NUCLEO-L4R5ZI and NUCLEO-L552ZE-Q with an option that switches caches and prefetch off, checked so far only by disassembly of the images and an emulator that logs the register write but does not model a cache; {n['v5b_rows']} out of sample predictions for the caches off pass are hashed in `docs/PREDICTIONS_V5_BOARD.md`, and the bench plan keeps both boards within one afternoon of about {n['plan_min']} minutes (estimated; `bench/board_kit/ONE_AFTERNOON.md`). Nothing has yet been measured on a microcontroller.
 
 ### 2.1 Formal verification: properties, results and design changes
 
@@ -372,12 +372,10 @@ def all_docs(claim):
     facts = rows("data/context_entities.csv")
 
     def lines(org, ids):
-        out = []
-        for f in facts:
-            if f["organisation"] == org and f["fact_id"] in ids:
-                note = " The application window has closed." if f["fact_id"] == "EDGE-06" else ""
-                out.append(f"- {f['paraphrase']}{note} ({f['fact_id']})")
-        return "\n".join(out)
+        found = [f["fact_id"] for f in facts if f["organisation"] == org and f["fact_id"] in ids]
+        note = " (EDGE-06 describes a challenge whose application window has closed.)" if "EDGE-06" in found else ""
+        return ("Public facts that may make this work relevant are recorded, with their sources, only in `docs/CONTEXT_ENTITIES.md`: "
+                + ", ".join(sorted(found)) + "." + note + " None of them implies any relationship with or endorsement by the organisation.")
 
     docs = [robotics(claim)]
     docs.append(variant(claim, "TII and ATRC", "docs/PROPOSAL_ROBOTICS_ATRC.md",
