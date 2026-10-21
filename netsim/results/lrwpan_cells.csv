@@ -4,7 +4,7 @@ simulated (network),S1,base_dgram,baseline,datagram mode,1,0,3,5,4,3,1222,10,10,
 simulated (network),S2 one,hops_2,hops,2,2,0,3,5,4,3,62,5,5,26.408,0.42719,25.8776,26.9384,25.6955,26.6794,1.01735,1.01218,7,0,87,20261021,301,305
 simulated (network),S2 one,hops_3,hops,3,3,0,3,5,4,3,62,5,5,55.2009,2.72861,51.8129,58.589,52.0225,59.0086,1.19975,1.01033,34,0,1469,20261021,401,405
 simulated (network),S2 one,hops_4,hops,4,4,0,3,5,4,3,62,5,5,124.479,25.7788,92.47,156.487,93.0281,160.357,1.62751,1.00777,100,0,5070,20261021,501,505
-simulated (network),S2 one,hops_5,hops,5,5,0,3,5,4,3,62,5,1,210.402,0,210.402,210.402,210.402,210.402,1.12937,1.02677,139,3,5211,20261021,601,605
+simulated (network),S2 one,hops_5,hops,5,5,0,3,5,4,3,62,5,1,210.402,nan,nan,nan,210.402,210.402,1.12937,1.02677,139,3,5211,20261021,601,605
 simulated (network),S2 one,hops_6,hops,6,6,0,3,5,4,3,62,5,0,nan,nan,nan,nan,nan,nan,0.14399,1.23236,69,5,824,20261021,701,705
 simulated (network),S2 one,bg_1,neighbours,1,1,1,3,5,4,3,62,5,5,6.04701,0.0472793,5.98831,6.10572,6.00715,6.1123,1,1.00991,0,0,1,20261021,801,805
 simulated (network),S2 one,bg_2,neighbours,2,1,2,3,5,4,3,62,5,5,6.65148,0.38473,6.17377,7.12918,6.434,7.33779,1.00074,1.00991,2,0,5,20261021,901,905
@@ -43,8 +43,8 @@ simulated (network),S2 combined,hops_3_bg_2,hops and neighbours,"3 hops, 2 neigh
 simulated (network),S2 combined,hops_3_bg_4,hops and neighbours,"3 hops, 4 neighbours",3,4,3,5,4,3,62,3,3,80.6069,9.44154,57.1528,104.061,69.7055,86.1682,1.37629,1.0093,42,0,1645,20261021,4201,4203
 simulated (network),S2 combined,hops_3_bg_8,hops and neighbours,"3 hops, 8 neighbours",3,8,3,5,4,3,62,3,3,214.79,34.5898,128.864,300.715,178.33,247.143,1.65799,1.00847,114,0,3059,20261021,4301,4303
 simulated (network),S2 combined,hops_4_bg_2,hops and neighbours,"4 hops, 2 neighbours",4,2,3,5,4,3,62,3,3,125.909,8.81614,104.009,147.81,115.817,132.11,1.77323,1.00722,71,0,3785,20261021,4401,4403
-simulated (network),S2 combined,hops_4_bg_4,hops and neighbours,"4 hops, 4 neighbours",4,4,3,5,4,3,62,3,2,204.729,48.8017,-233.737,643.195,170.221,239.237,1.61834,1.01276,96,1,3945,20261021,4501,4503
-simulated (network),S2 combined,hops_4_bg_8,hops and neighbours,"4 hops, 8 neighbours",4,8,3,5,4,3,62,3,1,1136.39,0,1136.39,1136.39,1136.39,1136.39,1.77241,1.02144,175,2,5308,20261021,4601,4603
+simulated (network),S2 combined,hops_4_bg_4,hops and neighbours,"4 hops, 4 neighbours",4,4,3,5,4,3,62,3,2,204.729,48.8017,nan,nan,170.221,239.237,1.61834,1.01276,96,1,3945,20261021,4501,4503
+simulated (network),S2 combined,hops_4_bg_8,hops and neighbours,"4 hops, 8 neighbours",4,8,3,5,4,3,62,3,1,1136.39,nan,nan,nan,1136.39,1136.39,1.77241,1.02144,175,2,5308,20261021,4601,4603
 simulated (network),S2 combined,hops_6_bg_2,hops and neighbours,"6 hops, 2 neighbours",6,2,3,5,4,3,62,3,0,nan,nan,nan,nan,nan,nan,0.245353,1.133,50,3,859,20261021,4701,4703
 simulated (network),S2 combined,hops_6_bg_4,hops and neighbours,"6 hops, 4 neighbours",6,4,3,5,4,3,62,3,0,nan,nan,nan,nan,nan,nan,0.149112,1.22715,41,3,575,20261021,4801,4803
 simulated (network),S2 combined,hops_6_bg_8,hops and neighbours,"6 hops, 8 neighbours",6,8,3,5,4,3,62,3,0,nan,nan,nan,nan,nan,nan,0.102437,1.39919,40,3,440,20261021,4901,4903
@@ -56,8 +56,8 @@ simulated (network),S2 combined,hops_2_spacing_10,"hops, spacing 10 m","2 hops, 
 simulated (network),S2 combined,hops_3_spacing_10,"hops, spacing 10 m","3 hops, 10 m spacing",3,0,3,5,4,3,62,3,3,53.2181,4.49347,42.0557,64.3805,49.4629,58.1965,1.20198,1.01031,21,0,874,20261021,5501,5503
 simulated (network),S2 combined,hops_4_spacing_10,"hops, spacing 10 m","4 hops, 10 m spacing",4,0,3,5,4,3,62,3,3,134.241,37.2172,41.7884,226.694,110.151,177.106,1.6708,1.00742,66,0,3175,20261021,5601,5603
 simulated (network),S2 combined,dgram_hops_2,"hops, datagram mode","2 hops, datagram mode",2,0,3,5,4,3,1222,3,3,17.796,1.87225,13.1451,22.4469,16.0059,19.7408,1.80488,13.1306,10,0,150,20261021,5701,5703
-simulated (network),S2 combined,dgram_hops_3,"hops, datagram mode","3 hops, datagram mode",3,0,3,5,4,3,1222,3,2,1750.36,2199.8,-18014,21514.7,194.869,3305.85,4.5935,13.115,38,0,1244,20261021,5801,5803
-simulated (network),S2 combined,dgram_hops_4,"hops, datagram mode","4 hops, datagram mode",4,0,3,5,4,3,1222,3,2,1503.09,678.172,-4590.04,7596.22,1023.55,1982.63,6.92683,13.1749,54,0,2150,20261021,5901,5903
+simulated (network),S2 combined,dgram_hops_3,"hops, datagram mode","3 hops, datagram mode",3,0,3,5,4,3,1222,3,2,1750.36,2199.8,nan,nan,194.869,3305.85,4.5935,13.115,38,0,1244,20261021,5801,5803
+simulated (network),S2 combined,dgram_hops_4,"hops, datagram mode","4 hops, datagram mode",4,0,3,5,4,3,1222,3,2,1503.09,678.172,nan,nan,1023.55,1982.63,6.92683,13.1749,54,0,2150,20261021,5901,5903
 simulated (network),S3 follow up,follow_hops_3,hops,3,3,0,3,5,4,3,62,10,10,55.4822,2.56289,53.6488,57.3156,52.1944,60.247,1.20706,1.01027,78,0,3049,20261021,6001,6010
 simulated (network),S3 follow up,follow_bg_16,neighbours,16,1,16,3,5,4,3,62,10,10,31.4784,4.58371,28.1995,34.7574,24.0285,39.4714,1.2005,1.01032,204,0,1736,20261021,6101,6110
 simulated (network),S3 follow up,follow_minbe_8,macMinBE,8,1,0,8,8,4,3,62,10,10,39.969,0.757603,39.4271,40.511,39.0521,41.5372,1,1.01239,0,0,0,20261021,6201,6210

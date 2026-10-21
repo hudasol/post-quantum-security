@@ -103,6 +103,34 @@ class Study(unittest.TestCase):
         self.assertIn("value_simulated_network", hdr)
         self.assertIn("value_modelled", hdr)
 
+    @unittest.skipUnless(os.path.exists(os.path.join(RES, "lrwpan_runs.csv")), "no committed ns-3 results")
+    def test_rebuild_leaves_committed_figures_unchanged(self):
+        names = ("fig_netsim_hops.svg", "fig_netsim_causes.svg", "fig_netsim_lora_toa.svg")
+        make_study.build()
+        first = {}
+        for n in names:
+            with open(os.path.join(RES, n), "rb") as fh:
+                first[n] = fh.read()
+            self.assertNotIn(b"<dc:date>", first[n])
+        make_study.build()
+        for n in names:
+            with open(os.path.join(RES, n), "rb") as fh:
+                self.assertEqual(fh.read(), first[n], n)
+
+    def test_interval_rules(self):
+        runs = []
+        for i, (t, done) in enumerate(((10.0, "1"), (12.0, "1"), (0.0, "0"))):
+            runs.append({"cell": "c", "group": "g", "cause": "x", "value": "1", "hops": "1", "bg_nodes": "0",
+                         "min_be": "3", "max_be": "5", "max_backoffs": "4", "frame_retries": "3",
+                         "seg_bytes": "80", "completed": done, "time_s": str(t), "data_sent": "1",
+                         "mac_frames_enqueued_sender": "1", "segments": "1", "poll_resends": "0",
+                         "stuck_rx_nodes": "0", "mac_tx_drop": "0", "seed": "1", "run": str(i)})
+        a = make_study.aggregate(runs)[0]
+        self.assertTrue(a["time_ci_lo_s"] != a["time_ci_lo_s"])  # n/a below three completed runs
+        runs = [dict(r, completed="1", time_s=str(t)) for r, t in zip(runs, (1.0, 1.0, 100.0))]
+        a = make_study.aggregate(runs)[0]
+        self.assertEqual(a["time_ci_lo_s"], 0.0)  # truncated at zero
+
 
 if __name__ == "__main__":
     unittest.main()

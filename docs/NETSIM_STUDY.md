@@ -91,7 +91,7 @@ One cause at a time from the one hop baseline, then combined. Agreement with the
 | hops | 2 | 26.41 | 25.88 to 26.94 | 5 of 5 | 0 | 14.25 | -12.0% | no | neither | hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
 | hops | 3 | 55.20 | 51.81 to 58.59 | 5 of 5 | 0 | 21.37 | +84.0% | yes | published | hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
 | hops | 4 | 124.48 | 92.47 to 156.49 | 5 of 5 | 0 | 28.49 | +314.9% | no | neither | hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
-| hops | 5 | 210.40 | 210.40 to 210.40 | 1 of 5 | 3 | 35.61 | +601.3% | no | incomplete runs | hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
+| hops | 5 | 210.40 | n/a | 1 of 5 | 3 | 35.61 | +601.3% | no | incomplete runs | hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
 | hops | 6 | n/a | n/a | 0 of 5 | 5 | 42.74 | n/a | no | incomplete runs | hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
 | neighbours | 1 | 6.05 | 5.99 to 6.11 | 5 of 5 | 0 | 7.12 | -79.8% | no | model | contention not modelled |
 | neighbours | 2 | 6.65 | 6.17 to 7.13 | 5 of 5 | 0 | 7.12 | -77.8% | no | model | contention not modelled |
@@ -135,8 +135,8 @@ One cause at a time from the one hop baseline, then combined. Agreement with the
 | hops and neighbours | 3 hops, 4 neighbours | 80.61 | 57.15 to 104.06 | 3 of 3 | 0 | 21.37 | +168.7% | no | neither | contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
 | hops and neighbours | 3 hops, 8 neighbours | 214.79 | 128.86 to 300.72 | 3 of 3 | 0 | 21.37 | +616.0% | no | neither | contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
 | hops and neighbours | 4 hops, 2 neighbours | 125.91 | 104.01 to 147.81 | 3 of 3 | 0 | 28.49 | +319.7% | no | neither | contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
-| hops and neighbours | 4 hops, 4 neighbours | 204.73 | -233.74 to 643.19 | 2 of 3 | 1 | 28.49 | +582.4% | no | incomplete runs | contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
-| hops and neighbours | 4 hops, 8 neighbours | 1136.39 | 1136.39 to 1136.39 | 1 of 3 | 2 | 28.49 | +3688.0% | no | incomplete runs | contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
+| hops and neighbours | 4 hops, 4 neighbours | 204.73 | n/a | 2 of 3 | 1 | 28.49 | +582.4% | no | incomplete runs | contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
+| hops and neighbours | 4 hops, 8 neighbours | 1136.39 | n/a | 1 of 3 | 2 | 28.49 | +3688.0% | no | incomplete runs | contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
 | hops and neighbours | 6 hops, 2 neighbours | n/a | n/a | 0 of 3 | 3 | 42.74 | n/a | no | incomplete runs | contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
 | hops and neighbours | 6 hops, 4 neighbours | n/a | n/a | 0 of 3 | 3 | 42.74 | n/a | no | incomplete runs | contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
 | hops and neighbours | 6 hops, 8 neighbours | n/a | n/a | 0 of 3 | 3 | 42.74 | n/a | no | incomplete runs | contention not modelled; hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
@@ -148,10 +148,24 @@ One cause at a time from the one hop baseline, then combined. Agreement with the
 | hops, spacing 10 m | 3 hops, 10 m spacing | 53.22 | 42.06 to 64.38 | 3 of 3 | 0 | 21.37 | +77.4% | yes | published | hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
 | hops, spacing 10 m | 4 hops, 10 m spacing | 134.24 | 41.79 to 226.69 | 3 of 3 | 0 | 28.49 | +347.5% | no | neither | hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4) |
 | hops, datagram mode | 2 hops, datagram mode | 17.80 | 13.15 to 22.45 | 3 of 3 | 0 | 14.25 | -40.7% | no | neither | hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4); model always uses 1280 B datagrams |
-| hops, datagram mode | 3 hops, datagram mode | 1750.36 | -18014.02 to 21514.74 | 2 of 3 | 0 | 21.37 | +5734.5% | no | incomplete runs | hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4); model always uses 1280 B datagrams |
-| hops, datagram mode | 4 hops, datagram mode | 1503.09 | -4590.04 to 7596.22 | 2 of 3 | 0 | 28.49 | +4910.3% | no | incomplete runs | hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4); model always uses 1280 B datagrams |
+| hops, datagram mode | 3 hops, datagram mode | 1750.36 | n/a | 2 of 3 | 0 | 21.37 | +5734.5% | no | incomplete runs | hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4); model always uses 1280 B datagrams |
+| hops, datagram mode | 4 hops, datagram mode | 1503.09 | n/a | 2 of 3 | 0 | 28.49 | +4910.3% | no | incomplete runs | hops by store and forward without spatial reuse (ASSUMPTION of Section 4.4); model always uses 1280 B datagrams |
 
-Runs that did not complete (poll limit reached or simulation cap of 3600 s): 23 of 241. In 20 of them a node on the line kept its receiver in the BUSY_RX state for more than 1 s up to the end of the run, far longer than any frame, so a reception never ended; this is an artefact of the simulator at the pinned version, not radio behaviour, and it blocks the route. Means and intervals use completed runs only; a cell with fewer completed runs than runs is reported with that count and is not used for the gap verdict.
+Runs that did not complete (poll limit reached or simulation cap of 3600 s): 23 of 241. In 20 of them a node on the line kept its receiver in the BUSY_RX state for more than 1 s up to the end of the run, far longer than any frame, so a reception never ended and the route was blocked. The cause was not established: no ns-3 issue, code path or diagnostic run was traced, so these runs may show a defect of the simulator at the pinned version or a real collapse of the multi hop transfer under load, and this study does not decide between the two. Means and intervals use completed runs only; a cell with fewer completed runs than runs is reported with that count and is not used for the gap verdict. An interval is printed as n/a when fewer than 3 runs completed, and a lower bound below 0 s is truncated at 0 s.
+
+Share of runs per cell that did not complete or had a stuck receiver (a result in itself; these cells lie at 4 or more hops, or combine hops with load or datagram mode):
+
+| cell | runs | not completed | with a stuck receiver | share stuck |
+|---|---|---|---|---|
+| hops = 5 | 5 | 4 | 3 | 60% |
+| hops = 6 | 5 | 5 | 5 | 100% |
+| 4 hops, 4 neighbours | 3 | 1 | 1 | 33% |
+| 4 hops, 8 neighbours | 3 | 2 | 2 | 67% |
+| 6 hops, 2 neighbours | 3 | 3 | 3 | 100% |
+| 6 hops, 4 neighbours | 3 | 3 | 3 | 100% |
+| 6 hops, 8 neighbours | 3 | 3 | 3 | 100% |
+| 3 hops, datagram mode | 3 | 1 | 0 | 0% |
+| 4 hops, datagram mode | 3 | 1 | 0 | 0% |
 
 Figures: `netsim/results/fig_netsim_hops.svg` (hop sweep, ns-3 against linksim) and `netsim/results/fig_netsim_causes.svg` (one cause at a time).
 
@@ -181,6 +195,8 @@ Follow up (added after the sweep, so not part of the pre set design): 10 more ru
 At one hop with ns-3 defaults the transfer takes 5.72 s in ns-3 (simulated (network)), against 7.12 s in linksim (modelled) and 30 to 60 s in the paper (published); ns-3 is -80.9% from the low end of the published range.
 
 Single causes that bring the ns-3 time into the published range: hops = 3 (ns-3 mean 55.20 s, 95% interval 51.81 to 58.59 s; hop count is an ASSUMPTION (the paper gives none)); neighbours = 16 (ns-3 mean 33.21 s, 95% interval 18.98 to 47.44 s; background load is an ASSUMPTION (the paper gives none)); macMinBE = 8 (ns-3 mean 40.10 s, 95% interval 37.95 to 42.24 s; inside the cited range (N1.1, N2.1) with macMaxBE 8 (N1.2)). Each is sufficient in simulation; the paper states none of these settings (N6.1), so the simulation shows which causes can explain the gap, not which one applied in the paper. Causes tied to a cited setting: macMinBE; the others rest on ASSUMPTIONS.
+
+neighbours = 16 reaches the range on the mean only: its 95 percent interval (18.98 to 47.44 s) crosses the edge of the range, and so does the follow up interval (28.20 to 34.76 s), so part of the plausible range lies outside 30 to 60 s. The backoff cause is not a single setting: macMinBE 8 is only allowed with macMaxBE raised from 5 to 8, so this cause sets both to 8 together.
 
 Combined cells in the range (listed above) keep every CSMA parameter inside its cited range; their hop counts, spacing and loads are ASSUMPTIONS.
 
@@ -221,7 +237,9 @@ Figure: `netsim/results/fig_netsim_lora_toa.svg`.
 
 ### Hybrid handshake under the EU868 duty cycle
 
-Flights of the hybrid handshake of each protocol profile (`linksim/results/protocols_flights.csv`, without the command sent after the handshake), fragmented at 51 B (DR0) or 222 B (DR5), sent as unconfirmed uplinks by two class A end devices, one per side; the module's MAC enforces the duty cycle and the receive windows. No acknowledgement is simulated. The module adds a 9 B frame overhead (no message integrity code, N3.3) where linksim adds 13 B. linksim columns: the same fragments back to back under the duty cycle (blast), and the protocol simulation with selective repeat acknowledgements (`linksim/results/protocols_grid.csv`, handshake_mean_s at zero loss).
+Flights of the hybrid handshake of each protocol profile (`netsim/results/ns3_handshake_flights.csv`, a frozen copy of `linksim/results/protocols_flights.csv` as it was when the ns-3 runs were made, without the command sent after the handshake), fragmented at 51 B (DR0) or 222 B (DR5), sent as unconfirmed uplinks by two class A end devices, one per side; the module's MAC enforces the duty cycle and the receive windows. No acknowledgement is simulated. The module adds a 9 B frame overhead (no message integrity code, N3.3) where linksim adds 13 B. linksim columns (`netsim/results/linksim_lora_flights.csv`, written by `python3 -m netsim.compare` on the same frozen flights): the same fragments back to back under the duty cycle (blast), and the protocol simulation with selective repeat acknowledgements at zero loss.
+
+**Superseded handshake.** These rows use the round 4 three flight handshake. Design change F1 of `docs/FORMAL_VERIFICATION.md` later added a fourth flight (the vehicle signature), and `linksim/results/protocols_flights.csv` and `linksim/results/protocols_grid.csv` now hold that four flight handshake of the reference design, so their values differ from this table. The ns-3 runs were not repeated on the four flight handshake; the rows below check the implementation of the duty cycle and fragmentation and are not the handshake times of the reference design.
 
 | protocol | DR | fragments | ns-3 (simulated (network)) | linksim blast (modelled) | linksim blast with the module's 9 B overhead (modelled) | linksim protocol simulation (modelled) | blast vs ns-3 | blast with 9 B vs ns-3 | protocol simulation vs ns-3 |
 |---|---|---|---|---|---|---|---|---|---|

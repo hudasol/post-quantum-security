@@ -26,11 +26,11 @@ LoRa example: 13 B header only frame at SF12 (DR0),ms,1160,1155.07,1155.07,-0.42
 "LoRa time on air, DR5, 150 B PHY payload",ms,,246.016,246.016,,,0,no published value; implementation cross check
 "LoRa time on air, DR5, 200 B PHY payload",ms,,317.696,317.696,,,0,no published value; implementation cross check
 "LoRa time on air, DR5, 235 B PHY payload",ms,,368.896,368.896,,,0,no published value; implementation cross check
-"hybrid dtls13 handshake over LoRaWAN EU868 DR0, no loss",s,,78895.2,83810.9,,,6.23067,"modelled value: linksim fragments back to back with the duty cycle, no acknowledgements"
-"hybrid dtls13 handshake over LoRaWAN EU868 DR5, no loss",s,,2510.29,2545.63,,,1.40781,"modelled value: linksim fragments back to back with the duty cycle, no acknowledgements"
-"hybrid edhoc_oscore handshake over LoRaWAN EU868 DR0, no loss",s,,36820.6,39114.9,,,6.23102,"modelled value: linksim fragments back to back with the duty cycle, no acknowledgements"
-"hybrid edhoc_oscore handshake over LoRaWAN EU868 DR5, no loss",s,,1128.33,1144.21,,,1.40739,"modelled value: linksim fragments back to back with the duty cycle, no acknowledgements"
-"hybrid mavlink2_pq handshake over LoRaWAN EU868 DR0, no loss",s,,31034.9,32968.6,,,6.23073,"modelled value: linksim fragments back to back with the duty cycle, no acknowledgements"
-"hybrid mavlink2_pq handshake over LoRaWAN EU868 DR5, no loss",s,,946.392,959.719,,,1.40819,"modelled value: linksim fragments back to back with the duty cycle, no acknowledgements"
-"hybrid dds_security handshake over LoRaWAN EU868 DR0, no loss",s,,83364.8,88559,,,6.23069,"modelled value: linksim fragments back to back with the duty cycle, no acknowledgements"
-"hybrid dds_security handshake over LoRaWAN EU868 DR5, no loss",s,,2583.62,2620,,,1.4081,"modelled value: linksim fragments back to back with the duty cycle, no acknowledgements"
+"hybrid dtls13 handshake over LoRaWAN EU868 DR0, no loss",s,,78895.2,83810.9,,,6.23067,"modelled value: linksim fragments back to back with the duty cycle, no acknowledgements; round 4 three flight handshake, superseded by F1"
+"hybrid dtls13 handshake over LoRaWAN EU868 DR5, no loss",s,,2510.29,2545.63,,,1.40781,"modelled value: linksim fragments back to back with the duty cycle, no acknowledgements; round 4 three flight handshake, superseded by F1"
+"hybrid edhoc_oscore handshake over LoRaWAN EU868 DR0, no loss",s,,36820.6,39114.9,,,6.23102,"modelled value: linksim fragments back to back with the duty cycle, no acknowledgements; round 4 three flight handshake, superseded by F1"
+"hybrid edhoc_oscore handshake over LoRaWAN EU868 DR5, no loss",s,,1128.33,1144.21,,,1.40739,"modelled value: linksim fragments back to back with the duty cycle, no acknowledgements; round 4 three flight handshake, superseded by F1"
+"hybrid mavlink2_pq handshake over LoRaWAN EU868 DR0, no loss",s,,31034.9,32968.6,,,6.23073,"modelled value: linksim fragments back to back with the duty cycle, no acknowledgements; round 4 three flight handshake, superseded by F1"
+"hybrid mavlink2_pq handshake over LoRaWAN EU868 DR5, no loss",s,,946.392,959.719,,,1.40819,"modelled value: linksim fragments back to back with the duty cycle, no acknowledgements; round 4 three flight handshake, superseded by F1"
+"hybrid dds_security handshake over LoRaWAN EU868 DR0, no loss",s,,83364.8,88559,,,6.23069,"modelled value: linksim fragments back to back with the duty cycle, no acknowledgements; round 4 three flight handshake, superseded by F1"
+"hybrid dds_security handshake over LoRaWAN EU868 DR5, no loss",s,,2583.62,2620,,,1.4081,"modelled value: linksim fragments back to back with the duty cycle, no acknowledgements; round 4 three flight handshake, superseded by F1"
