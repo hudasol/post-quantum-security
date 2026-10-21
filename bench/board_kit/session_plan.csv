@@ -1,20 +1,41 @@
-label,step,experiment,image,scheme,variant,kind,runs,iterations,cycles_source,compute_s_per_run,uart_s_per_run,flash_s,handling_s,total_s
-estimated,1,B0,mupq_pqclean_crypto_kem_ml-kem-768_clean_test,ML-KEM-768,clean,test,1,30,published S2-0019+S2-0020+S2-0021,5.3,0.3,20.0,30.0,55.6
-estimated,2,B0,mupq_pqclean_crypto_kem_ml-kem-768_clean_speed,ML-KEM-768,clean,speed,3,100,published S2-0019+S2-0020+S2-0021,17.6,2.0,20.0,90.0,168.7
-estimated,3,B0,mupq_pqclean_crypto_kem_ml-kem-768_clean_stack,ML-KEM-768,clean,stack,1,1,published S2-0019+S2-0020+S2-0021,0.2,0.0,20.0,30.0,50.2
-estimated,4,B0,crypto_kem_ml-kem-768_m4fspeed_test,ML-KEM-768,m4fspeed,test,1,30,published S2-0022+S2-0023+S2-0024,3.0,0.3,20.0,30.0,53.3
-estimated,5,B0,crypto_kem_ml-kem-768_m4fspeed_speed,ML-KEM-768,m4fspeed,speed,3,100,published S2-0022+S2-0023+S2-0024,10.0,2.0,20.0,90.0,146.0
-estimated,6,B0,crypto_kem_ml-kem-768_m4fspeed_stack,ML-KEM-768,m4fspeed,stack,1,1,published S2-0022+S2-0023+S2-0024,0.1,0.0,20.0,30.0,50.1
-estimated,7,B0,mupq_pqclean_crypto_sign_ml-dsa-44_clean_test,ML-DSA-44,clean,test,1,30,published S2-0028+S2-0029+S2-0030,17.8,1.1,20.0,30.0,68.9
-estimated,8,B0,mupq_pqclean_crypto_sign_ml-dsa-44_clean_speed,ML-DSA-44,clean,speed,3,1000,published S2-0028+S2-0029+S2-0030,593.2,17.1,20.0,90.0,1941.0
-estimated,9,B0,mupq_pqclean_crypto_sign_ml-dsa-44_clean_stack,ML-DSA-44,clean,stack,1,1,published S2-0028+S2-0029+S2-0030,0.6,0.0,20.0,30.0,50.6
-estimated,10,B0,crypto_sign_ml-dsa-44_m4f_test,ML-DSA-44,m4f,test,1,30,published S2-0031+S2-0032+S2-0033,10.2,1.1,20.0,30.0,61.2
-estimated,11,B0,crypto_sign_ml-dsa-44_m4f_speed,ML-DSA-44,m4f,speed,3,1000,published S2-0031+S2-0032+S2-0033,339.5,17.0,20.0,90.0,1179.5
-estimated,12,B0,crypto_sign_ml-dsa-44_m4f_stack,ML-DSA-44,m4f,stack,1,1,published S2-0031+S2-0032+S2-0033,0.3,0.0,20.0,30.0,50.4
-estimated,13,B1,b1_mlkem_512,ML-KEM-512,portable_c,harness,3,100,stand in: pqm4 clean S2-0010+S2-0011+S2-0012,10.9,3.7,20.0,90.0,153.9
-estimated,14,B1,b1_mlkem_768,ML-KEM-768,portable_c,harness,3,100,stand in: pqm4 clean S2-0019+S2-0020+S2-0021,17.6,3.7,20.0,90.0,173.8
-estimated,15,B1,b1_mlkem_1024,ML-KEM-1024,portable_c,harness,3,100,stand in: pqm4 clean S2-0001+S2-0002+S2-0003,26.3,3.8,20.0,90.0,200.3
-estimated,16,B1,b1_mldsa_44,ML-DSA-44,portable_c,harness,3,100,stand in: pqm4 clean S2-0028+S2-0029+S2-0030,59.3,3.6,20.0,90.0,298.7
-estimated,17,B1,b1_mldsa_65,ML-DSA-65,portable_c,harness,3,100,stand in: pqm4 clean S2-0037+S2-0038+S2-0039,94.7,3.6,20.0,90.0,404.8
-estimated,18,B1,b1_mldsa_87,ML-DSA-87,portable_c,harness,3,100,stand in: pqm4 clean S2-0046+S2-0047+S2-0048,132.7,3.6,20.0,90.0,518.7
-estimated,19,both,"set up, counter check, wiring",,,,,,assumed,,,,900.0,900.0
+label,step,block,board,platform,cache_pass,experiment,image,scheme,variant,kind,runs,clock_hz,iterations,cycles_source,compute_s_per_run,uart_s_per_run,flash_s,handling_s,total_s
+estimated,1,nucleo-l4r5zi setup,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,,both,"set up, board check, counter check, wiring",,,,,20000000,,assumed,,,,900.0,900.0
+estimated,2,nucleo-l4r5zi B1 off,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,off,B1,b1_mlkem_512_cacheoff,ML-KEM-512,portable_c,harness,3,20000000,100,stand in: pqm4 clean S2-0010+S2-0011+S2-0012,10.9,3.7,20.0,90.0,153.9
+estimated,3,nucleo-l4r5zi B1 off,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,off,B1,b1_mlkem_768_cacheoff,ML-KEM-768,portable_c,harness,3,20000000,100,stand in: pqm4 clean S2-0019+S2-0020+S2-0021,17.6,3.7,20.0,90.0,173.9
+estimated,4,nucleo-l4r5zi B1 off,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,off,B1,b1_mlkem_1024_cacheoff,ML-KEM-1024,portable_c,harness,3,20000000,100,stand in: pqm4 clean S2-0001+S2-0002+S2-0003,26.3,3.8,20.0,90.0,200.4
+estimated,5,nucleo-l4r5zi B1 off,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,off,B1,b1_mldsa_44_cacheoff,ML-DSA-44,portable_c,harness,3,20000000,100,stand in: pqm4 clean S2-0028+S2-0029+S2-0030,59.3,3.6,20.0,90.0,298.7
+estimated,6,nucleo-l4r5zi B1 off,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,off,B1,b1_mldsa_65_cacheoff,ML-DSA-65,portable_c,harness,3,20000000,100,stand in: pqm4 clean S2-0037+S2-0038+S2-0039,94.7,3.6,20.0,90.0,404.9
+estimated,7,nucleo-l4r5zi B1 off,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,off,B1,b1_mldsa_87_cacheoff,ML-DSA-87,portable_c,harness,3,20000000,100,stand in: pqm4 clean S2-0046+S2-0047+S2-0048,132.7,3.6,20.0,90.0,518.7
+estimated,8,nucleo-l4r5zi B1 on,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B1,b1_mlkem_512,ML-KEM-512,portable_c,harness,3,20000000,100,stand in: pqm4 clean S2-0010+S2-0011+S2-0012,10.9,3.7,20.0,90.0,153.9
+estimated,9,nucleo-l4r5zi B1 on,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B1,b1_mlkem_768,ML-KEM-768,portable_c,harness,3,20000000,100,stand in: pqm4 clean S2-0019+S2-0020+S2-0021,17.6,3.7,20.0,90.0,173.9
+estimated,10,nucleo-l4r5zi B1 on,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B1,b1_mlkem_1024,ML-KEM-1024,portable_c,harness,3,20000000,100,stand in: pqm4 clean S2-0001+S2-0002+S2-0003,26.3,3.8,20.0,90.0,200.3
+estimated,11,nucleo-l4r5zi B1 on,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B1,b1_mldsa_44,ML-DSA-44,portable_c,harness,3,20000000,100,stand in: pqm4 clean S2-0028+S2-0029+S2-0030,59.3,3.6,20.0,90.0,298.7
+estimated,12,nucleo-l4r5zi B1 on,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B1,b1_mldsa_65,ML-DSA-65,portable_c,harness,3,20000000,100,stand in: pqm4 clean S2-0037+S2-0038+S2-0039,94.7,3.6,20.0,90.0,404.9
+estimated,13,nucleo-l4r5zi B1 on,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B1,b1_mldsa_87,ML-DSA-87,portable_c,harness,3,20000000,100,stand in: pqm4 clean S2-0046+S2-0047+S2-0048,132.7,3.6,20.0,90.0,518.7
+estimated,14,nucleo-l4r5zi energy,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,off,B1,b1_mlkem_768_cacheoff,ML-KEM-768,portable_c,energy,1,20000000,100,stand in: pqm4 clean S2-0019+S2-0020+S2-0021,17.6,3.7,20.0,30.0,71.3
+estimated,15,nucleo-l4r5zi energy,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,off,B1,b1_mldsa_44_cacheoff,ML-DSA-44,portable_c,energy,1,20000000,100,stand in: pqm4 clean S2-0028+S2-0029+S2-0030,59.3,3.6,20.0,630.0,712.9
+estimated,16,nucleo-l552ze-q setup,NUCLEO-L552ZE-Q (Cortex-M33),nucleo-l552ze-q,,both,"board swap, set up, board check, counter check",,,,,4000000,,assumed,,,,600.0,600.0
+estimated,17,nucleo-l552ze-q B1 off,NUCLEO-L552ZE-Q (Cortex-M33),nucleo-l552ze-q,off,B1,b1_mlkem_512_cacheoff,ML-KEM-512,portable_c,harness,3,4000000,20,stand in: pqm4 clean S2-0010+S2-0011+S2-0012,10.9,0.7,20.0,90.0,145.0
+estimated,18,nucleo-l552ze-q B1 off,NUCLEO-L552ZE-Q (Cortex-M33),nucleo-l552ze-q,off,B1,b1_mlkem_768_cacheoff,ML-KEM-768,portable_c,harness,3,4000000,20,stand in: pqm4 clean S2-0019+S2-0020+S2-0021,17.6,0.7,20.0,90.0,165.0
+estimated,19,nucleo-l552ze-q B1 off,NUCLEO-L552ZE-Q (Cortex-M33),nucleo-l552ze-q,off,B1,b1_mlkem_1024_cacheoff,ML-KEM-1024,portable_c,harness,3,4000000,20,stand in: pqm4 clean S2-0001+S2-0002+S2-0003,26.3,0.8,20.0,90.0,191.3
+estimated,20,nucleo-l552ze-q B1 off,NUCLEO-L552ZE-Q (Cortex-M33),nucleo-l552ze-q,off,B1,b1_mldsa_44_cacheoff,ML-DSA-44,portable_c,harness,3,4000000,20,stand in: pqm4 clean S2-0028+S2-0029+S2-0030,59.3,0.7,20.0,90.0,290.1
+estimated,21,nucleo-l552ze-q B1 off,NUCLEO-L552ZE-Q (Cortex-M33),nucleo-l552ze-q,off,B1,b1_mldsa_65_cacheoff,ML-DSA-65,portable_c,harness,3,4000000,20,stand in: pqm4 clean S2-0037+S2-0038+S2-0039,94.7,0.7,20.0,90.0,396.3
+estimated,22,nucleo-l552ze-q B1 off,NUCLEO-L552ZE-Q (Cortex-M33),nucleo-l552ze-q,off,B1,b1_mldsa_87_cacheoff,ML-DSA-87,portable_c,harness,3,4000000,20,stand in: pqm4 clean S2-0046+S2-0047+S2-0048,132.7,0.7,20.0,90.0,510.1
+estimated,23,nucleo-l552ze-q B1 on,NUCLEO-L552ZE-Q (Cortex-M33),nucleo-l552ze-q,on,B1,b1_mlkem_512,ML-KEM-512,portable_c,harness,3,4000000,20,stand in: pqm4 clean S2-0010+S2-0011+S2-0012,10.9,0.7,20.0,90.0,145.0
+estimated,24,nucleo-l552ze-q B1 on,NUCLEO-L552ZE-Q (Cortex-M33),nucleo-l552ze-q,on,B1,b1_mlkem_768,ML-KEM-768,portable_c,harness,3,4000000,20,stand in: pqm4 clean S2-0019+S2-0020+S2-0021,17.6,0.7,20.0,90.0,164.9
+estimated,25,nucleo-l552ze-q B1 on,NUCLEO-L552ZE-Q (Cortex-M33),nucleo-l552ze-q,on,B1,b1_mlkem_1024,ML-KEM-1024,portable_c,harness,3,4000000,20,stand in: pqm4 clean S2-0001+S2-0002+S2-0003,26.3,0.8,20.0,90.0,191.2
+estimated,26,nucleo-l552ze-q B1 on,NUCLEO-L552ZE-Q (Cortex-M33),nucleo-l552ze-q,on,B1,b1_mldsa_44,ML-DSA-44,portable_c,harness,3,4000000,20,stand in: pqm4 clean S2-0028+S2-0029+S2-0030,59.3,0.7,20.0,90.0,290.1
+estimated,27,nucleo-l552ze-q B1 on,NUCLEO-L552ZE-Q (Cortex-M33),nucleo-l552ze-q,on,B1,b1_mldsa_65,ML-DSA-65,portable_c,harness,3,4000000,20,stand in: pqm4 clean S2-0037+S2-0038+S2-0039,94.7,0.7,20.0,90.0,396.3
+estimated,28,nucleo-l552ze-q B1 on,NUCLEO-L552ZE-Q (Cortex-M33),nucleo-l552ze-q,on,B1,b1_mldsa_87,ML-DSA-87,portable_c,harness,3,4000000,20,stand in: pqm4 clean S2-0046+S2-0047+S2-0048,132.7,0.7,20.0,90.0,510.1
+estimated,29,nucleo-l4r5zi B0,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B0,mupq_pqclean_crypto_kem_ml-kem-768_clean_test,ML-KEM-768,clean,test,1,20000000,30,published S2-0019+S2-0020+S2-0021,5.3,0.3,20.0,30.0,55.6
+estimated,30,nucleo-l4r5zi B0,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B0,mupq_pqclean_crypto_kem_ml-kem-768_clean_speed,ML-KEM-768,clean,speed,3,20000000,100,published S2-0019+S2-0020+S2-0021,17.6,2.0,20.0,90.0,168.6
+estimated,31,nucleo-l4r5zi B0,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B0,mupq_pqclean_crypto_kem_ml-kem-768_clean_stack,ML-KEM-768,clean,stack,1,20000000,1,published S2-0019+S2-0020+S2-0021,0.2,0.0,20.0,30.0,50.2
+estimated,32,nucleo-l4r5zi B0,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B0,crypto_kem_ml-kem-768_m4fspeed_test,ML-KEM-768,m4fspeed,test,1,20000000,30,published S2-0022+S2-0023+S2-0024,3.0,0.3,20.0,30.0,53.3
+estimated,33,nucleo-l4r5zi B0,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B0,crypto_kem_ml-kem-768_m4fspeed_speed,ML-KEM-768,m4fspeed,speed,3,20000000,100,published S2-0022+S2-0023+S2-0024,10.0,2.0,20.0,90.0,146.0
+estimated,34,nucleo-l4r5zi B0,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B0,crypto_kem_ml-kem-768_m4fspeed_stack,ML-KEM-768,m4fspeed,stack,1,20000000,1,published S2-0022+S2-0023+S2-0024,0.1,0.0,20.0,30.0,50.1
+estimated,35,nucleo-l4r5zi B0,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B0,mupq_pqclean_crypto_sign_ml-dsa-44_clean_test,ML-DSA-44,clean,test,1,20000000,30,published S2-0028+S2-0029+S2-0030,17.8,1.1,20.0,30.0,68.9
+estimated,36,nucleo-l4r5zi B0,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B0,mupq_pqclean_crypto_sign_ml-dsa-44_clean_speed,ML-DSA-44,clean,speed,3,20000000,1000,published S2-0028+S2-0029+S2-0030,593.2,17.1,20.0,90.0,1940.7
+estimated,37,nucleo-l4r5zi B0,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B0,mupq_pqclean_crypto_sign_ml-dsa-44_clean_stack,ML-DSA-44,clean,stack,1,20000000,1,published S2-0028+S2-0029+S2-0030,0.6,0.0,20.0,30.0,50.6
+estimated,38,nucleo-l4r5zi B0,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B0,crypto_sign_ml-dsa-44_m4f_test,ML-DSA-44,m4f,test,1,20000000,30,published S2-0031+S2-0032+S2-0033,10.2,1.1,20.0,30.0,61.2
+estimated,39,nucleo-l4r5zi B0,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B0,crypto_sign_ml-dsa-44_m4f_speed,ML-DSA-44,m4f,speed,3,20000000,1000,published S2-0031+S2-0032+S2-0033,339.5,16.9,20.0,90.0,1179.3
+estimated,40,nucleo-l4r5zi B0,NUCLEO-L4R5ZI (Cortex-M4),nucleo-l4r5zi,on,B0,crypto_sign_ml-dsa-44_m4f_stack,ML-DSA-44,m4f,stack,1,20000000,1,published S2-0031+S2-0032+S2-0033,0.3,0.0,20.0,30.0,50.4
