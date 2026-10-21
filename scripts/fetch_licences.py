@@ -287,6 +287,16 @@ def write_doc(rows):
 
 def main():
     rows = (github_rows() if "--github" in sys.argv else kept_github_rows()) + local_rows() + debian_rows() + python_rows()
+    # A row whose local copy or interpreter is absent on this machine keeps its recorded values instead of being
+    # overwritten with 'not retrieved' (a fresh clone has no $THIRD_PARTY or $WORK_DIR folders).
+    if OUT.exists():
+        with open(OUT, newline="", encoding="utf-8") as fh:
+            old = {r["component"]: r for r in csv.DictReader(fh)}
+        for i, r in enumerate(rows):
+            o = old.get(r["component"])
+            lost = r["licence_as_read"].startswith("not retrieved") or r["pinned_commit"] in ("", "not recorded")
+            if o and lost and not o["licence_as_read"].startswith("not retrieved"):
+                rows[i] = o
     with open(OUT, "w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=FIELDS)
         w.writeheader()
