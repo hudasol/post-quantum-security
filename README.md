@@ -4,7 +4,7 @@ A sourced study of what post quantum cryptography costs on microcontroller class
 
 **For a research director:** `docs/PAPER.md` (the study, every number checked against its data file), `docs/PROPOSAL_ROBOTICS.md` (follow on robotics project, with short variants `docs/PROPOSAL_ROBOTICS_ATRC.md`, `_EDGE.md`, `_ADEO.md`) and `docs/PROPOSAL_ATRC.md` (2 pages, round 3, superseded by `docs/PROPOSAL_ROBOTICS.md` and kept for the record). Progress against a stated definition of a complete study: `docs/COMPLETENESS_RUBRIC.md`.
 
-**Start here:** `docs/PAPER.pdf` (`docs/PAPER.md`), the current study with all round 5 results. The evidence review that came first is `docs/EXECUTIVE_BRIEF.pdf` (2 pages) and `docs/REPORT.pdf` (`docs/REPORT.md`); it predates the flight stack, network simulator, formal and software in the loop results. The PDFs were last built on 2026-10-21 from an earlier text of `docs/REPORT.md` (1515 rows then, 1514 now). Rebuild with `scripts/build_pdfs.sh` or `scripts/build_pdfs_docker.sh`.
+**Start here:** `docs/PAPER.pdf` (`docs/PAPER.md`), the current study with all round 5 results. The evidence review that came first is `docs/EXECUTIVE_BRIEF.pdf` (2 pages) and `docs/REPORT.pdf` (`docs/REPORT.md`); it predates the flight stack, network simulator, formal and software in the loop results. The PDFs were built on 2026-10-21 from the current `docs/REPORT.md` (`scripts/build_pdfs.sh`, or `scripts/build_pdfs_docker.sh` without a local pandoc and XeLaTeX).
 
 ## What is published, host measured, emulated, estimated, modelled, RTL simulated, simulated (network) and planned
 
