@@ -244,7 +244,7 @@ ArduPilot Copter 4.7.2 flew scripted missions in software in the loop behind an 
 | Hybrid session with F1 | {n['sitl_hyb_n']} | {n['sitl_hyb_lat']} | {n['sitl_hyb_av']} | {n['sitl_hyb_av_st']} |
 | ML-DSA-44 signature per command | {n['sitl_pq_n']} | {n['sitl_pq_lat']} | {n['sitl_pq_av']} | {n['sitl_pq_av_st']} |
 
-The hybrid session behaves as the mission study predicts; a signature per command is worse than predicted once the acknowledgement round trip is counted, and the flight stack discarded {n['sitl_drop']} signed commands that arrived after a newer frame, which supports the strict sequence rule of the formal proofs.
+The hybrid session behaves as the mission study predicts; a signature per command is worse than predicted once the acknowledgement round trip is counted, and the flight stack discarded {n['sitl_drop']} signed commands that arrived after a newer frame. The strict sequence rule of the formal proofs would reject such frames too, so whether to require in order delivery or to prove a replay window is an open design question for the project. The outage share differed between configurations, so availability differences of a few hundredths are not resolved.
 
 ## 3. Aim, hypotheses and measurable success criteria
 

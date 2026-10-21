@@ -45,7 +45,7 @@ ArduPilot Copter 4.7.2 flew scripted missions in software in the loop behind an 
 | Hybrid session with F1 | 20 | 3.9 | 0.914 | 0.916 |
 | ML-DSA-44 signature per command | 20 | 495.6 | 0.419 | 0.730 |
 
-The hybrid session behaves as the mission study predicts; a signature per command is worse than predicted once the acknowledgement round trip is counted, and the flight stack discarded 16 signed commands that arrived after a newer frame, which supports the strict sequence rule of the formal proofs.
+The hybrid session behaves as the mission study predicts; a signature per command is worse than predicted once the acknowledgement round trip is counted, and the flight stack discarded 16 signed commands that arrived after a newer frame. The strict sequence rule of the formal proofs would reject such frames too, so whether to require in order delivery or to prove a replay window is an open design question for the project. The outage share differed between configurations, so availability differences of a few hundredths are not resolved.
 
 ## 3. Aim, hypotheses and measurable success criteria
 
