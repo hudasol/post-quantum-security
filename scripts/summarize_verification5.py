@@ -206,7 +206,8 @@ def main():
         f"Round 4 staged {n_rows} evidence rows and {len(facts_s)} link and timing facts. Each was read against its source by two readers "
         "who saw neither the staged values nor each other's sheets (blank sheets from `scripts/verify5_sheets.py`). "
         "Disagreements on values all got a third look; a seeded sample of wording disagreements got one too (`data/verify5/adjudication.csv`). "
-        "The comparison rules are in the script header and were fixed before the comparison ran.", "",
+        "The comparison rules of this round 4 comparison are in the script header and were fixed before that comparison ran "
+        "(the round 5 third look below used rules written later).", "",
         f"Limits. Only {len(txt_judged)} of {len(txt_dis)} wording disagreements (operation, scheme, library, conditions and similar fields) got a third look, "
         f"and staging was wrong in {len(txt_wrong)} of them. If that share holds for the rest, roughly "
         f"{round(len(txt_wrong) / max(len(txt_judged), 1) * (len(txt_dis) - len(txt_judged)))} wording fields of the promoted rows are still wrong; "
@@ -235,14 +236,26 @@ def main():
             t = {r["measure"]: r for r in csv.DictReader(fh)}
         k = "staging wrong in substance, all wording disagreements with a settled third look (round 4 sample of 60 and this round)"
         v = "staged text differs verbatim from the source among settled lines"
-        if k in t and v in t:
+        r4 = "round 4 sample of 60: staging wrong after a third look (round 4 rule, any difference from the source)"
+        r5 = "staged text contradicts the source, all settled lines (automatic test and manual decisions)"
+        um = "differing lines of judged fields that the automatic test could not map (counted as no contradiction found)"
+        if all(x in t for x in (k, v, r4, r5, um)):
             lo, hi = float(t[k]["wilson_lo"]), float(t[k]["wilson_hi"])
+            pc = lambda x: f"{100 * float(t[x]['share']):.1f} percent"
             lines += [
-                f"Round 5 third look. Every remaining wording disagreement got a blind third reading (`stats/third_look_classify.py`, "
-                f"`docs/STATISTICS_V5.md` section 4). Staged wording differs verbatim from the source in {t[v]['count']} of {t[v]['of']} "
-                f"settled lines, but it contradicts the source in substance in {t[k]['count']} of {t[k]['of']} settled wording "
-                f"disagreements overall ({100 * float(t[k]['share']):.1f} percent, Wilson 95 percent interval {100 * lo:.1f} to "
-                f"{100 * hi:.1f} percent). This replaces the extrapolation in the limits paragraph above.", ""]
+                f"Round 5 third look. Every remaining wording disagreement got a third reading by a reader who saw only the source, the row id, "
+                f"the field and the location (`stats/third_look_classify.py`, `docs/STATISTICS_V5.md` section 4). The comparison of those readings "
+                "was not blind and not fixed in advance: the match rules R1 to R5 were written after a first literal comparison had shown that "
+                "almost every line differed in wording, and the substance decisions for conditions, library, quantity and unit "
+                "(`data/verify5/third_look_manual.csv`) were made with all values in view. "
+                f"Staged wording differs verbatim from the source in {t[v]['count']} of {t[v]['of']} settled lines. "
+                f"It contradicts the source in substance in {t[r5]['count']} of {t[r5]['of']} settled lines of this round ({pc(r5)}); the automatic "
+                "test behind this figure is lenient (a scheme is compared only by family, a parameter set only when no number is shared, and "
+                f"{t[um]['count']} of {t[um]['of']} differing lines of the judged fields could not be mapped and count as no contradiction). "
+                f"The round 4 sample, judged under the stricter round 4 rule, gave {t[r4]['count']} of {t[r4]['of']} ({pc(r4)}). "
+                f"Pooled, the two give {t[k]['count']} of {t[k]['of']} ({100 * float(t[k]['share']):.1f} percent, Wilson 95 percent interval "
+                f"{100 * lo:.1f} to {100 * hi:.1f} percent), but the two tests differ, so the pooled figure mixes two definitions. "
+                "This replaces the extrapolation in the limits paragraph above.", ""]
     lines += [
         "Only confirmed and corrected rows enter `data/raw/S12_verified.csv` (`scripts/promote_s12.py`); single reader and blocked rows stay in staging with their reason in `data/verify5/row_status.csv`.", "",
     ]
