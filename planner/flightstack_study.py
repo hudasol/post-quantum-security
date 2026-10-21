@@ -248,12 +248,18 @@ def document(out):
     L += ["## 2. Flash and static RAM", "",
           "Flash used counts every loaded section at a load address in flash, including the initial values of "
           ".data. ArduPilot places a crash log area in the flash the image leaves unused (stated in its "
-          "`common.ld`); that area is counted as free and listed in the column `flash_crash_log_bytes`. Static RAM "
+          "`common.ld`); that area is counted as free and listed in the column `flash_crash_log_bytes`. On every "
+          "ArduPilot board built here the free flash is almost all crash log area (`data/flightstack_memory.csv`), "
+          "so code added in that flash removes the space for crash dumps: the feature is lost, not merely moved. Static RAM "
           "counts sections allocated at run addresses in RAM: data plus bss, and sections the linker reserves for "
           "stacks. A heap section marks the pool the allocator manages and is not counted. Free static RAM is capacity minus both. It is an upper bound on "
           "the RAM that new code can use: the build cannot show the heap that the flight stack fills at start up "
           "(task stacks, message buffers, the logger buffer), so the RAM really left is smaller by an amount that "
-          "only a run on the board can show.", "",
+          "only a run on the board can show. RAM capacity follows each stack's own linker description: the "
+          "regions counted are listed in `data/flightstack_memory_regions.csv` (column counted_in_capacity), and "
+          "the stacks do not count the same regions on the same chip (PX4 does not count ITCM RAM).", "",
+          "Units: the tables of this section give KiB (1024 B); section 3 gives the planner's kB (1000 B), with "
+          "three decimals, for the same quantities.", "",
           "| stack | target | board class | flash used (KiB) | flash capacity (KiB) | flash free share | data plus "
           "bss (KiB) | reserved stack sections (KiB) | RAM capacity (KiB) | static RAM free share |",
           "|---|---|---|---|---|---|---|---|---|---|"]
@@ -297,7 +303,10 @@ def document(out):
           "The Monte Carlo of `docs/PLANNER_STUDY.md` section 5.4 is repeated with the same seeds (profile fleet "
           "seeds %d to %d, threshold seed %d) and %d draws. Column `assumed`: free memory is the total times a "
           "uniform share in %s for every board (round 4). Column `measured`: the boards built here use their "
-          "measured free flash and free static RAM (the smaller value where both stacks were built); the other "
+          "measured free flash and free static RAM; where both stacks were built, the smaller value is taken for "
+          "each resource separately, so a board can get the free flash of one stack and the free RAM of the other "
+          "(column stacks), a combination no single build has. RAM never binds in this study (see the reading "
+          "below), so this choice affects only the flash side; the other "
           "boards keep the assumption. The change is measured minus assumed, with a bootstrap 95 percent interval "
           "over the paired draws (seed %d)." % (ps.SEED + 1000, ps.SEED + 1000 + ps.DRAWS - 1, ps.SEED + 1, ps.DRAWS,
                                                  ps.FREE_RANGES[ps.FREE_MAIN], DIFF_SEED), "",
