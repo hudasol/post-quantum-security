@@ -90,6 +90,14 @@ jobs:
           python3 -m netsim.compare > /dev/null
           python3 -m netsim.make_study > /dev/null
           git diff --exit-code netsim/results docs/NETSIM_STUDY.md
+      - name: Mission study and reference architecture regenerate from the committed mission results
+        run: |
+          python3 -m mission.run_all --reuse > /dev/null
+          git diff --exit-code docs/MISSION_STUDY.md docs/REFERENCE_ARCHITECTURE.md docs/figures/mission
+      - name: README regenerates from the data files
+        run: |
+          python3 scripts/make_readme.py > /dev/null
+          git diff --exit-code README.md
       - name: Data dictionary regenerates from the result files
         run: |
           python3 scripts/build_data_dictionary.py > /dev/null
