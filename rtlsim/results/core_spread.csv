@@ -1,0 +1,19 @@
+label,parameter_set,operation,n_cores,cores,cycles_median_ibex,cycles_median_cv32e40p,max_over_min,slowest_core,fastest_core
+RTL simulated,ML-DSA-44,keygen,2,cv32e40p+ibex,5380557,3789491,1.42,ibex,cv32e40p
+RTL simulated,ML-DSA-44,sign,2,cv32e40p+ibex,12553829,9408869,1.334,ibex,cv32e40p
+RTL simulated,ML-DSA-44,verify,2,cv32e40p+ibex,5405374,3878575,1.394,ibex,cv32e40p
+RTL simulated,ML-DSA-65,keygen,2,cv32e40p+ibex,9326581,6541492,1.426,ibex,cv32e40p
+RTL simulated,ML-DSA-65,sign,2,cv32e40p+ibex,15314045,11406097,1.343,ibex,cv32e40p
+RTL simulated,ML-DSA-65,verify,2,cv32e40p+ibex,9120597,6488332,1.406,ibex,cv32e40p
+RTL simulated,ML-DSA-87,keygen,2,cv32e40p+ibex,15973804,11144941,1.433,ibex,cv32e40p
+RTL simulated,ML-DSA-87,sign,2,cv32e40p+ibex,27994930,20593150,1.359,ibex,cv32e40p
+RTL simulated,ML-DSA-87,verify,2,cv32e40p+ibex,15666548,11056741,1.417,ibex,cv32e40p
+RTL simulated,ML-KEM-1024,decaps,2,cv32e40p+ibex,4517732,3078751,1.467,ibex,cv32e40p
+RTL simulated,ML-KEM-1024,encaps,2,cv32e40p+ibex,3808799,2605135,1.462,ibex,cv32e40p
+RTL simulated,ML-KEM-1024,keygen,2,cv32e40p+ibex,3558113,2426853,1.466,ibex,cv32e40p
+RTL simulated,ML-KEM-512,decaps,2,cv32e40p+ibex,1915739,1304828,1.468,ibex,cv32e40p
+RTL simulated,ML-KEM-512,encaps,2,cv32e40p+ibex,1522377,1041344,1.462,ibex,cv32e40p
+RTL simulated,ML-KEM-512,keygen,2,cv32e40p+ibex,1411651,962439,1.467,ibex,cv32e40p
+RTL simulated,ML-KEM-768,decaps,2,cv32e40p+ibex,3033704,2070034,1.466,ibex,cv32e40p
+RTL simulated,ML-KEM-768,encaps,2,cv32e40p+ibex,2484706,1703579,1.459,ibex,cv32e40p
+RTL simulated,ML-KEM-768,keygen,2,cv32e40p+ibex,2270194,1548035,1.467,ibex,cv32e40p
