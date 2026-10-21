@@ -24,6 +24,7 @@ Author: Huda Mueen. Status on 2026-10-12. Web fetch and web search were the only
 1. The NSA CNSA 2.0 algorithms advisory (separate from the FAQ).
 2. The executive regulation of the UAE policy, and the documents cited on the CISA page.
 3. Everything listed in Appendix C of `docs/REPORT.md` that is not in the table above.
+4. Pornin, A RAM-Efficient Implementation of Falcon (IACR ePrint 2026/1915), only after FIPS 206 is final: its four Falcon rows were demoted because they were read only through a summarising fetch (`data/raw/S13_demoted.csv`), and under the round 5 gap rule (protocol deviation_1) they are eligible only for final standard FN-DSA parameters.
 
 ## Rules
 
