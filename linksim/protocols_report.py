@@ -129,6 +129,11 @@ def figures(grid, sobol_rows, res=None):
     return out
 
 
+def _order(rows, lk, col):
+    sel = [r for r in rows if r["link"] == lk]
+    return [r["protocol"] + "/" + r["variant"] for r in sorted(sel, key=lambda r: f(r[col]))]
+
+
 def build_doc(res=None):
     res = res or RES
     grid = read("protocols_grid.csv", res)
@@ -187,9 +192,13 @@ def build_doc(res=None):
       "Profiles are simplified: DTLS 1.3 with mutual certificate authentication and no cookie exchange; EDHOC "
       "signature method with credentials by reference (message sizes from draft-ietf-lake-edhoc-17 Figure 1, "
       "`data/raw/S12_link_sources.md` line 79, with the 32 B share and 64 B signature replaced by the variant's); "
-      "a MAVLink 2 style signed stream whose session key comes from a three flight post quantum handshake; and a "
+      "a MAVLink 2 style signed stream whose session key comes from a four flight post quantum handshake with pinned "
+      "keys, the same handshake as the mission study and the formal models with design change F1 of "
+      "`docs/FORMAL_VERIFICATION.md` (ground and vehicle each sign the transcript and send a key confirmation tag; "
+      "earlier rounds used three flights with one signature and the public key on the air); and a "
       "DDS Security style three message authentication handshake carrying certificates both ways. Certificate "
       "overhead, DTLS, OSCORE, CoAP and DDS framing are ASSUMPTIONS (`linksim/params.csv`) swept in Section 6. "
+      "Sizes and link parameters shared with other studies come from `data/shared_inputs.csv`. "
       "Every flight uses the selective repeat transport of `linksim/sim.py`.")
     a("")
     a("| protocol | variant | handshake flights and first command, bytes (A ground, B vehicle) | rekey flights, bytes |")
@@ -334,6 +343,25 @@ def build_doc(res=None):
     else:
         a("No configuration changes rank on any link across the loss sweep.")
     a("")
+    lov = read("protocols_lorawan_overhead.csv", res) if os.path.exists(os.path.join(res, "protocols_lorawan_overhead.csv")) else []
+    if lov:
+        ch = [abs(f(r["relative_change"])) for r in lov if r["relative_change"] not in ("", "nan")]
+        hy = [r for r in lov if r["variant"] == "hybrid"]
+        a("LoRaWAN frame overhead (stated sensitivity). The ns-3 LoRaWAN module counts %g B of frame overhead where "
+          "this simulation counts %g B (`docs/NETSIM_STUDY.md`; `data/shared_inputs.csv` keeps %g B as the default). "
+          "With %g B the time to first authenticated message at zero loss changes by %.1f to %.1f percent over all "
+          "configurations on DR0 and DR5 (`linksim/results/protocols_lorawan_overhead.csv`); for the hybrid MAVLink "
+          "style profile it falls from %s to %s on DR0 and from %s to %s on DR5. The order of the configurations by "
+          "this time at zero loss is %s on both links." % (
+              f(lov[0]["overhead_alt_bytes"]), f(lov[0]["overhead_default_bytes"]), f(lov[0]["overhead_default_bytes"]),
+              f(lov[0]["overhead_alt_bytes"]), 100 * min(ch), 100 * max(ch),
+              tfmt([r for r in hy if r["link"] == "lora_dr0" and r["protocol"] == "mavlink2_pq"][0]["wall_default_s"]),
+              tfmt([r for r in hy if r["link"] == "lora_dr0" and r["protocol"] == "mavlink2_pq"][0]["wall_alt_s"]),
+              tfmt([r for r in hy if r["link"] == "lora_dr5" and r["protocol"] == "mavlink2_pq"][0]["wall_default_s"]),
+              tfmt([r for r in hy if r["link"] == "lora_dr5" and r["protocol"] == "mavlink2_pq"][0]["wall_alt_s"]),
+              "unchanged" if all(_order(lov, lk, "wall_default_s") == _order(lov, lk, "wall_alt_s")
+                                 for lk in ("lora_dr0", "lora_dr5")) else "not the same"))
+        a("")
     a("## 7. Limits")
     a("")
     a("- Modelled, not measured. No cryptographic computation time is included; on microcontrollers ML-DSA-44 "

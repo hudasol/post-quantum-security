@@ -36,20 +36,23 @@ derived from published,ttfam,edhoc_oscore,pq_only,A,authenticated command,58
 derived from published,rekey,edhoc_oscore,pq_only,A,rekey share,1200
 derived from published,rekey,edhoc_oscore,pq_only,B,rekey share and confirmation,1120
 derived from published,ttfam,mavlink2_pq,classical,A,F1 key share,32
-derived from published,ttfam,mavlink2_pq,classical,B,"F2 share, signature, public key",128
-derived from published,ttfam,mavlink2_pq,classical,A,F3 key confirmation,16
+derived from published,ttfam,mavlink2_pq,classical,B,F2 key share,32
+derived from published,ttfam,mavlink2_pq,classical,A,F3 ground signature and confirmation,80
+derived from published,ttfam,mavlink2_pq,classical,B,F4 vehicle signature and confirmation,80
 derived from published,ttfam,mavlink2_pq,classical,A,authenticated command,55
 derived from published,rekey,mavlink2_pq,classical,A,rekey share,45
 derived from published,rekey,mavlink2_pq,classical,B,rekey share and confirmation,61
 derived from published,ttfam,mavlink2_pq,hybrid,A,F1 key share,1216
-derived from published,ttfam,mavlink2_pq,hybrid,B,"F2 share, signature, public key",4852
-derived from published,ttfam,mavlink2_pq,hybrid,A,F3 key confirmation,16
+derived from published,ttfam,mavlink2_pq,hybrid,B,F2 key share,1120
+derived from published,ttfam,mavlink2_pq,hybrid,A,F3 ground signature and confirmation,2436
+derived from published,ttfam,mavlink2_pq,hybrid,B,F4 vehicle signature and confirmation,2436
 derived from published,ttfam,mavlink2_pq,hybrid,A,authenticated command,55
 derived from published,rekey,mavlink2_pq,hybrid,A,rekey share,1229
 derived from published,rekey,mavlink2_pq,hybrid,B,rekey share and confirmation,1149
 derived from published,ttfam,mavlink2_pq,pq_only,A,F1 key share,1184
-derived from published,ttfam,mavlink2_pq,pq_only,B,"F2 share, signature, public key",4820
-derived from published,ttfam,mavlink2_pq,pq_only,A,F3 key confirmation,16
+derived from published,ttfam,mavlink2_pq,pq_only,B,F2 key share,1088
+derived from published,ttfam,mavlink2_pq,pq_only,A,F3 ground signature and confirmation,2436
+derived from published,ttfam,mavlink2_pq,pq_only,B,F4 vehicle signature and confirmation,2436
 derived from published,ttfam,mavlink2_pq,pq_only,A,authenticated command,55
 derived from published,rekey,mavlink2_pq,pq_only,A,rekey share,1197
 derived from published,rekey,mavlink2_pq,pq_only,B,rekey share and confirmation,1117
