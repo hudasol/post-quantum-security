@@ -2,6 +2,8 @@
 
 Author: Huda Mueen. Draft of {{date}}. Generated from `docs/PROPOSAL_ATRC_body.md` by `scripts/build_proposal.py`; every number below is read from a file in this repository.
 
+This is the earlier proposal of round 3, kept as a record. Its findings are superseded by `docs/PROPOSAL_ROBOTICS.md` and its short version `docs/PROPOSAL_ROBOTICS_ATRC.md`, which carry the round 5 results (measured flight stack memory, the ns-3 check, formal verification).
+
 ## 1. Problem
 
 Drones and robots authenticate commands, firmware and telemetry with classical public key cryptography on microcontroller flight computers and narrow radio links. The replacements are standardised (ML-KEM and ML-DSA, FIPS 203 and 204; `docs/REPORT.md`), and buyers set dates: for US national security systems only, the CNSA 2.0 FAQ (Ver. 2.1, December 2024) expects compliant new acquisitions from 2027 and asks for ML-KEM-1024, ML-DSA-87 and LMS or XMSS for firmware (`data/raw/S10_cnsa_faq.md`, rows 4, 5, 7, 24). An operator still cannot say from evidence what the new algorithms cost on its flight controller, on its link, or across its fleet.
