@@ -1,0 +1,9 @@
+label,id,risk,likelihood,impact,trigger,mitigation
+planned,R1,No board can be borrowed,medium,high,no lab slot by the end of month 1,continue with emulators and open core simulation; the board session is one afternoon by design (bench/board_kit/ONE_AFTERNOON.md)
+planned,R2,The caches cannot be switched off on a board,low,high,a log without cache_off_applied set,report the session as a check of conditions only (docs/PREDICTIONS_V5_BOARD.md rule 3)
+planned,R3,The cycle model is refuted on the board,medium,medium,H1 refutation rule met,that is a result: refit on board data and report both fits
+planned,R4,No radio pair can be borrowed,medium,medium,no radio by month 3,keep the ns-3 and linksim results and mark H2 as not tested
+planned,R5,Run time memory cannot be read without a partner profile,medium,medium,no profile by month 5,use the software in the loop heap figures and state them as an upper bound
+planned,R6,Flight log reuse is not licensed,high,low,no licensed log source found,keep synthetic traffic in the mission study (docs/FLIGHTSTACK_STUDY.md section 4)
+planned,R7,Scope creep into implementing cryptography,low,high,any request for new cryptographic code,only pinned existing libraries are integrated and measured as benchmark subjects
+planned,R8,A collaborator reads the proposal as an endorsement,low,medium,any public use of an organisation name,every variant carries the seed note and cites organisation facts by id only
