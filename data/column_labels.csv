@@ -103,19 +103,19 @@ data/flightstack_memory.csv,flash_reserved_bytes,host measured,flash the linker 
 data/flightstack_memory.csv,flash_crash_log_bytes,host measured,ArduPilot crash log area placed in unused flash; counted as free
 data/flightstack_memory.csv,flash_capacity_bytes,published,application flash region of the pinned board definition (source in flash_capacity_source)
 data/flightstack_memory.csv,flash_capacity_source,key,path in the pinned checkout and commit
-data/flightstack_memory.csv,flash_free_bytes,host measured,published capacity minus measured use and reserved flash
-data/flightstack_memory.csv,flash_free_share,host measured,flash_free_bytes over flash_capacity_bytes
+data/flightstack_memory.csv,flash_free_bytes,estimated,"published capacity minus measured use and reserved flash; computed from a published capacity and a host measured use, so it mixes two labels and is labelled estimated (review pass 1, R1B17)"
+data/flightstack_memory.csv,flash_free_share,estimated,"flash_free_bytes over flash_capacity_bytes; ratio of a mixed column to a published capacity, labelled estimated (review pass 1, R1B17)"
 data/flightstack_memory.csv,ram_data_bss_bytes,host measured,allocated sections at RAM run addresses except reserved stack or heap sections
 data/flightstack_memory.csv,ram_reserved_stack_bytes,host measured,sections the linker reserves for stacks (a heap section marks the allocator pool and is not counted)
 data/flightstack_memory.csv,ram_static_used_bytes,host measured,data plus bss plus reserved sections; run time heap not visible
 data/flightstack_memory.csv,ram_capacity_bytes,published,RAM regions of the pinned board definition (source in ram_capacity_source)
 data/flightstack_memory.csv,ram_capacity_source,key,path in the pinned checkout and commit
-data/flightstack_memory.csv,ram_free_static_bytes,host measured,published capacity minus static use; upper bound on free RAM
-data/flightstack_memory.csv,ram_free_share,host measured,ram_free_static_bytes over ram_capacity_bytes
+data/flightstack_memory.csv,ram_free_static_bytes,estimated,"published capacity minus static use; upper bound on free RAM; computed from a published capacity and a host measured use, so it mixes two labels and is labelled estimated (review pass 1, R1B17)"
+data/flightstack_memory.csv,ram_free_share,estimated,"ram_free_static_bytes over ram_capacity_bytes; ratio of a mixed column to a published capacity, labelled estimated (review pass 1, R1B17)"
 data/flightstack_memory.csv,itcm_used_bytes,host measured,sections placed in instruction RAM
 data/flightstack_memory.csv,toolchain,host measured,compiler version string
 data/flightstack_memory.csv,failure_reason,host measured,for failed builds
-data/flightstack_memory.csv,label,key,row label
+data/flightstack_memory.csv,label,key,"row label; it applies to the columns of this file listed here as host measured. Columns listed here with another label (published release, commit and capacities; estimated free memory) carry that label instead"
 data/flightstack_memory_regions.csv,stack,key,
 data/flightstack_memory_regions.csv,target,key,
 data/flightstack_memory_regions.csv,region,key,MEMORY region of the linker script or allocator region
@@ -127,3 +127,23 @@ data/flightstack_memory_regions.csv,free_bytes,host measured,length minus used
 data/flightstack_memory_regions.csv,counted_in_capacity,key,whether the region enters ram_capacity_bytes
 data/flightstack_memory_regions.csv,sections,host measured,sections placed in the region
 data/flightstack_memory_regions.csv,label,key,row label
+rtlsim/results/ibex_vs_cortex_m4.csv,parameter_set,key,parameter set
+rtlsim/results/ibex_vs_cortex_m4.csv,operation,key,operation
+rtlsim/results/ibex_vs_cortex_m4.csv,label,key,row label (RTL simulated); applies to the cycles_median columns only
+rtlsim/results/ibex_vs_cortex_m4.csv,cycles_median,RTL simulated,median Ibex cycles
+rtlsim/results/ibex_vs_cortex_m4.csv,cycles_median_ci95_low,RTL simulated,interval of the median
+rtlsim/results/ibex_vs_cortex_m4.csv,cycles_median_ci95_high,RTL simulated,interval of the median
+rtlsim/results/ibex_vs_cortex_m4.csv,label_published,key,label of the published comparison columns
+rtlsim/results/ibex_vs_cortex_m4.csv,id_clean_published,key,evidence row id of the published portable C value
+rtlsim/results/ibex_vs_cortex_m4.csv,cycles_clean_published,published,"published Cortex-M4 cycles, portable C"
+rtlsim/results/ibex_vs_cortex_m4.csv,id_asm_published,key,evidence row id of the published assembly value
+rtlsim/results/ibex_vs_cortex_m4.csv,variant_asm_published,key,implementation variant of the published assembly value
+rtlsim/results/ibex_vs_cortex_m4.csv,cycles_asm_published,published,"published Cortex-M4 cycles, assembly"
+rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_clean,estimated,deliberate comparison of two labels: RTL simulated Ibex cycles over published Cortex-M4 cycles
+rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_clean_ci95_low,estimated,deliberate comparison of two labels: RTL simulated Ibex cycles over published Cortex-M4 cycles
+rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_clean_ci95_high,estimated,deliberate comparison of two labels: RTL simulated Ibex cycles over published Cortex-M4 cycles
+rtlsim/results/ibex_vs_cortex_m4.csv,magnitude_vs_clean,estimated,verbal size class of the ratio (comparison of RTL simulated and published values)
+rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_asm,estimated,deliberate comparison of two labels: RTL simulated Ibex cycles over published Cortex-M4 cycles
+rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_asm_ci95_low,estimated,deliberate comparison of two labels: RTL simulated Ibex cycles over published Cortex-M4 cycles
+rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_asm_ci95_high,estimated,deliberate comparison of two labels: RTL simulated Ibex cycles over published Cortex-M4 cycles
+rtlsim/results/ibex_vs_cortex_m4.csv,magnitude_vs_asm,estimated,verbal size class of the ratio (comparison of RTL simulated and published values)
