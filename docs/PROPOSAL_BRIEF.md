@@ -8,12 +8,12 @@ This is a student research proposal and a seed for discussion. It is not a deplo
 
 **What the evidence shows now.**
 
-- Real flight stack builds (10, host measured) leave little flash: 6.0 to 45.9 kB free on default PX4 builds. With measured memory the estimated median share of a fleet needing new hardware rises from 0.201 to 0.300.
+- Real flight stack builds (10, host measured) leave little flash: 6.0 to 45.9 kB free on default PX4 builds. With measured memory the estimated median share of a fleet needing new hardware rises from 0.201 to 0.300 with thresholds drawn from published rows, and from 0.186 to 0.398 with stack optimised thresholds.
 - A hybrid session keeps command availability on a telemetry radio at 0.991; signing every command lowers it to 0.794 (estimated).
 - The session and update design was checked formally: 39 of 57 queries proved, design flaws F1 to F3 found and fixed (modelled).
 - The cycle model is accurate within one code base (1.0 percent) but not across schemes (9.8 percent); nothing is yet measured on a microcontroller.
 
-**What is proposed.** 12 months, part time: one afternoon on two borrowed boards scored against 36 registered predictions, a software in the loop rerun with the replay rule enforced, a borrowed radio pair, a run time memory profile, and a design note with dataset release. Readiness of the command channel: TRL 2 now, TRL 4 planned at the end (lab only; scale in the full proposal).
+**What is proposed.** 12 months, part time: one afternoon on two borrowed boards scored against 36 registered predictions, a software in the loop rerun with the replay rule enforced, a borrowed radio pair, a run time memory profile, and a design note with dataset release. Readiness of the command channel: TRL 2 now, TRL 3 planned at the end (lab only; scale in the full proposal).
 
 **Fit.** Deliverables map to sections 6.1.1, 6.1.2, 6.1.3, 6.1.4, 6.1.5, 6.1.6 of the UAE National Encryption Policy (quoted terms and page in the full proposal, section 7) and to public facts TII-02, TII-03, EDGE-02, TII-04, TII-05, EDGE-04, TII-06, EDGE-05, ADEO-03, ADEO-04, EDGE-01, EDGE-03, TII-07, ADEO-02, TII-08 in `docs/CONTEXT_ENTITIES.md`. The project does not fulfil any entity's duty and implies no endorsement.
 

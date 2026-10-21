@@ -1,10 +1,10 @@
 label,id,phase,task,start_month,end_month,deliverable,depends_on
 planned,T1,1 board session,Borrowed NUCLEO-L4R5ZI and NUCLEO-L552ZE-Q: run the caches off and caches on passes of bench/board_kit/ONE_AFTERNOON.md,1,1,D1,
-planned,T2,1 board session,Score docs/PREDICTIONS_V4_BOARD.md and docs/PREDICTIONS_V5_BOARD.md by script; energy block with a borrowed multimeter,1,2,D1,T1
+planned,T2,1 board session,"Score docs/PREDICTIONS_V5_BOARD.md with bench/board_kit/score_v5_board.py; write the scorer for the round 4 board predictions (docs/PREDICTIONS_V4_BOARD.md) before the session, noting that rows BP19 to BP30 need the B0 block of a second session; energy block with a borrowed multimeter",1,2,D1,T1
 planned,T3,2 software in the loop,"Extend the software in the loop study of section 2.2 (done for ArduPilot behind an emulated link without a replay rule): enforce the strict next sequence rule and a replay window variant in the relay, rerun the missions and compare with the gaps allowed run",2,3,D3,
 planned,T4,2 software in the loop,Run time heap and stack use of the flight stack with the session layer (software in the loop first),3,4,D4,T3
 planned,T5,3 hardware in the loop,Borrowed SiK class radio pair: handshake rekey and update transfer timing,3,5,D2,T1
-planned,T6,3 hardware in the loop,ns-3 rerun with the four flight handshake and comparison with the radio measurement,4,5,D2,T5
+planned,T6,3 hardware in the loop,Compare the radio measurement with the mission study and the protocol simulation of the SiK profile (ns-3 has no SiK model; the ns-3 802.15.4 and LoRaWAN results stay separate),4,5,D2,T5
 planned,T7,4 fleet and inventory,Partner flight controller profile or a board run with the flight stack; rerun the fleet study and the inventory template,5,7,D4,T4
 planned,T8,4 fleet and inventory,Acquisition checklist: free memory and clock thresholds per device class,6,7,D5,T7
 planned,T9,5 formal and design,Formal model of the rekey grace period and timestamp window; update the session design note,4,8,D3,T3
