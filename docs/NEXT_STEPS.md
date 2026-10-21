@@ -22,7 +22,7 @@ FIPS 206 draft; NIST IR 8547 final; HQC FIPS; SP 800-230 final; FIPS 203/204 err
 Targets: a Cortex-M33 board (for example NUCLEO-U575ZI-Q) and a Cortex-M4F board (for example NUCLEO-L4R5ZI), borrowed or already owned; emulator first. Libraries: mlkem native v2.0.0 and mldsa native v2.0.0 (pinned; `bench/mcu/fetch_libs.sh` verifies the commits). Measure **ML-DSA-44 verify and ML-KEM-768 decaps** first (cycles, stack, code size), then the other operations and parameter sets.
 1. `cd bench/mcu && ./fetch_libs.sh && ./run_host_selftest.sh` (PC check that the harness builds).
 2. Bring up a UART printf on each board (STM32CubeIDE, Zephyr or PlatformIO; see `bench/mcu/README.md`).
-3. Run the DWT counter self check; set the core clock to a 0-wait-state value and record clock, flash latency and cache state.
+3. Run the DWT counter self check; set the core clock to a zero wait state value and record clock, flash latency and cache state.
 4. Build with `make arm ...`; `-DBENCH_CLOCK_HZ=<Hz>`; set `BENCH_STACK_SPAN` from the linker map.
 5. Run 3 power cycles x 100 iterations (1,000 for ML-DSA sign); save each UART log.
 6. `python3 -I bench/stats/analyze_runs.py run1.csv run2.csv run3.csv --out-csv s.csv --out-md s.md`.

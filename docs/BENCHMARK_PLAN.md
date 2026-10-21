@@ -24,7 +24,7 @@ The published evidence has holes that only your own boards can fill (details in 
 | Q5 | How much boot time does a post quantum image check add to a bootloader? | ms from reset to jump | E4 |
 | Q6 | How long does it take to move a PQ signature or a hybrid handshake over a real telemetry radio? | seconds, retransmissions | E5 |
 
-Pre-stated expectations (so you can tell afterwards whether the result was a surprise; these are hypotheses, not findings): verification of ML-DSA is much cheaper than signing; hash based verification is cheapest in code size but largest in signature bytes; none of the above fits MAVLink's 13-byte signature field. Report the outcome even if a hypothesis fails.
+Pre-stated expectations (so you can tell afterwards whether the result was a surprise; these are hypotheses, not findings): verification of ML-DSA is much cheaper than signing; hash based verification is cheapest in code size but largest in signature bytes; none of the above fits MAVLink's 13 B signature field. Report the outcome even if a hypothesis fails.
 
 ## 3. Hardware (nothing needs to be bought)
 
@@ -64,9 +64,9 @@ Reference only: buying U575ZI-Q + L4R5ZI + PPK2 would cost about $160 at the lis
 ## 5. Measurement method
 
 ### 5.1 Cycle counting
-- Use the DWT cycle counter `CYCCNT` (32-bit, wraps). Enable `TRCENA` in `DEMCR`, write `DWT->CYCCNT = 0`, set `CYCCNTENA`. On Cortex-M7 unlock via the lock access register first. The enable sequence matches the mlkem native test HAL for Cortex-M33.
+- Use the DWT cycle counter `CYCCNT` (32 bit, wraps). Enable `TRCENA` in `DEMCR`, write `DWT->CYCCNT = 0`, set `CYCCNTENA`. On Cortex-M7 unlock via the lock access register first. The enable sequence matches the mlkem native test HAL for Cortex-M33.
 - Cortex-M0+ (RP2040) has no DWT cycle counter; do not use it with this harness.
-- pqm4 itself uses SysTick (24-bit, overflow counted in an ISR), not DWT. Your numbers are comparable to pqm4's only after you state this difference; expect a small offset from the overflow ISR.
+- pqm4 itself uses SysTick (24 bit, overflow counted in an ISR), not DWT. Your numbers are comparable to pqm4's only after you state this difference; expect a small offset from the overflow ISR.
 - Self-check the counter once per board: time a loop of known instruction count and compare.
 - Timed region = the library call only. Print after the region. Interrupts off inside the region.
 
@@ -83,7 +83,7 @@ Fix the core clock and flash latency, print both in `META`. pqm4 takes numbers a
 The timed region uses deterministic derandomised APIs, so the TRNG is not in it. Measure TRNG cost separately on each board: time to draw 32 bytes from the hardware RNG, 1,000 repetitions, report median. Key generation in the field also needs that entropy; state it beside the keygen cycles.
 
 ### 5.5 Inputs
-Fixed 59-byte message length (the length pqm4's signature tests use). For ML-DSA signing use a different message each iteration (the harness derives them from a fixed seed) so the rejection loop sees varied data. Publish the seed. Use at least 1,000 sign iterations for the tail statistics (section 7).
+Fixed 59 B message length (the length pqm4's signature tests use). For ML-DSA signing use a different message each iteration (the harness derives them from a fixed seed) so the rejection loop sees varied data. Publish the seed. Use at least 1,000 sign iterations for the tail statistics (section 7).
 
 ## 6. Energy measurement method
 
@@ -111,11 +111,11 @@ Fixed 59-byte message length (the length pqm4's signature tests use). For ML-DSA
 
 ### E1: ML-KEM and ML-DSA cycles, stack, flash (the first experiment)
 Boards: NUCLEO-U575ZI-Q (M33) and NUCLEO-L4R5ZI (M4F). Library: mlkem native and mldsa native v2.0.0 via `bench/mcu`. Parameter sets: ML-KEM-768 and ML-DSA-44 first; then 512/1024 and 65/87.
-Steps: (1) `./fetch_libs.sh`; (2) bring up UART printf on the board; (3) counter self check; (4) Pass A at a 0-wait-state clock; (5) three power cycles; (6) `analyze_runs.py`; (7) baseline subtracted code size; (8) compare L4R5ZI numbers against the published pqm4 ML-KEM-768/ML-DSA-44 rows (`S2-0022..0027`, `S2-0031..0036`) only as a sanity check on the same core family, noting different library and different counter.
+Steps: (1) `./fetch_libs.sh`; (2) bring up UART printf on the board; (3) counter self check; (4) Pass A at a zero wait state clock; (5) three power cycles; (6) `analyze_runs.py`; (7) baseline subtracted code size; (8) compare L4R5ZI numbers against the published pqm4 ML-KEM-768/ML-DSA-44 rows (`S2-0022..0027`, `S2-0031..0036`) only as a sanity check on the same core family, noting different library and different counter.
 Pass criteria: all CHECK lines have zero failures; run-to-run CV of median below 1% for ML-KEM (if not, find the cause before publishing).
 
 ### E2: hash based firmware signature verification (specification only; no harness written)
-Goal: final parameter cycles and image header bytes for LMS/HSS (SHA-256), XMSS, SLH-DSA verification on the same two boards. Routes found: wolfCrypt (`--enable-lms`, `--enable-xmss`, `--enable-slhdsa`, `--enable-mldsa`; v5.9.4-stable), TF-PSA-Crypto v1.2.0 (LMS verify only, `MBEDTLS_LMS_C`), wolfBoot v2.10.0 (image signing with ML-DSA, LMS/HSS, XMSS/XMSS^MT). Create the test signatures **off device on a build machine** with the library's own tools; the device only verifies. Do not enable any "hazardous" key generation option on a machine whose state you cannot control (a stateful key must never sign twice; see SP 800-208 and RFC 10033). Parameters to test: LMS H10/W8 (1-level) and HSS 2-level H5/W8 (wolfBoot example config: 2644-byte signature), XMSS-SHA2_10_256 (2500-byte signature), SLH-DSA-SHA2-128s and 128f. Record cycles, stack and code size exactly as in E1.
+Goal: final parameter cycles and image header bytes for LMS/HSS (SHA-256), XMSS, SLH-DSA verification on the same two boards. Routes found: wolfCrypt (`--enable-lms`, `--enable-xmss`, `--enable-slhdsa`, `--enable-mldsa`; v5.9.4-stable), TF-PSA-Crypto v1.2.0 (LMS verify only, `MBEDTLS_LMS_C`), wolfBoot v2.10.0 (image signing with ML-DSA, LMS/HSS, XMSS/XMSS^MT). Create the test signatures **off device on a build machine** with the library's own tools; the device only verifies. Do not enable any "hazardous" key generation option on a machine whose state you cannot control (a stateful key must never sign twice; see SP 800-208 and RFC 10033). Parameters to test: LMS H10/W8 (1-level) and HSS 2-level H5/W8 (wolfBoot example config: 2644 B signature), XMSS-SHA2_10_256 (2500 B signature), SLH-DSA-SHA2-128s and 128f. Record cycles, stack and code size exactly as in E1.
 Why spec only: the research found no published final parameter MCU numbers and this plan did not build a harness for them; a harness would have been untestable without hardware.
 
 ### E3: energy per operation

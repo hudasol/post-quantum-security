@@ -813,7 +813,7 @@ Labels used across the repository: published, host measured, emulated, estimated
 
 | column | type | example |
 |---|---|---|
-| label | text | published |
+| label | text | estimated |
 | measure | text | lines staging_right |
 | count | number | 212 |
 | of | number | 393 |
@@ -2123,15 +2123,15 @@ Labels used across the repository: published, host measured, emulated, estimated
 |---|---|---|
 | claim_id | text | abs_rows |
 | document | text | docs/PAPER.md |
-| text_in_document | number | 1,562 |
-| value | number | 1562.0 |
+| text_in_document | number | 1,530 |
+| value | number | 1530.0 |
 | source_file | text | data/evidence.csv |
 | column | text | id |
 | query | text | stream == "S10" |
 | aggregate | text | count |
 | tolerance_rel | number | 0.005 |
 | label | text | published |
-| note | text | displayed as {:.1f} x 0.001 |
+| note | text | displayed as {:.1f} x 100 |
 
 ### `data/context_entities.csv`
 
