@@ -52,7 +52,7 @@ txt = f"""# Post quantum cryptography on drone and robot computers
 
 A sourced study of what post quantum cryptography costs on microcontroller class computers in drones and robots: a provenance controlled evidence table, a trace driven cycle model, a cycle accurate simulation of an open source core, energy, link, protocol, boot, fleet and mission models with their validation errors, and a ready to run board experiment whose outcome is registered in advance. Author: Huda Mueen. Evidence retrieved 2026-10-11, 2026-10-12 and 2026-10-20, policy rows 2026-10-11 to 2026-10-20 (`data/policy_timeline.csv`); supplied papers read 2026-10-16 and 2026-10-20.
 
-**For a research director:** `docs/PAPER.md` (the study, every number checked against its data file), `docs/PROPOSAL_ROBOTICS.md` (follow on robotics project, with short variants `docs/PROPOSAL_ROBOTICS_ATRC.md`, `_EDGE.md`, `_ADEO.md`) and `docs/PROPOSAL_ATRC.md` (2 pages). Progress against a stated definition of a complete study: `docs/COMPLETENESS_RUBRIC.md`.
+**For a research director:** `docs/PAPER.md` (the study, every number checked against its data file), `docs/PROPOSAL_ROBOTICS.md` (follow on robotics project, with short variants `docs/PROPOSAL_ROBOTICS_ATRC.md`, `_EDGE.md`, `_ADEO.md`) and `docs/PROPOSAL_ATRC.md` (2 pages, round 3, superseded by `docs/PROPOSAL_ROBOTICS.md` and kept for the record). Progress against a stated definition of a complete study: `docs/COMPLETENESS_RUBRIC.md`.
 
 **Start here:** `docs/EXECUTIVE_BRIEF.pdf` (2 pages), then `docs/REPORT.pdf` (`docs/REPORT.md`). {pdf_note}
 
@@ -121,10 +121,11 @@ python3 scripts/build_paper.py          # paper, proposals and claims register
 ./scripts/build_pdfs.sh                 # needs pandoc and xelatex
 python3 -m unittest discover -s tests -t .
 python3 -m unittest discover -s linksim/tests -t .
-for d in energy bootchain mission cyclemodel rtlsim formal stats netsim flightstack; do python3 -m unittest discover -s $d -t .; done
+for d in energy bootchain mission cyclemodel rtlsim formal stats netsim flightstack sitl; do python3 -m unittest discover -s $d -t .; done
 python3 -m unittest discover -s bench/board_kit/tests
 python3 -m netsim.compare && python3 -m netsim.make_study   # network study from committed ns-3 results
 python3 -m mission.run_all --reuse     # mission study and reference architecture from mission/results/
+python3 -m sitl.analyse && python3 -m sitl.make_doc   # software in the loop study from the committed raw logs
 (cd planner && python3 -m unittest)
 ```
 
