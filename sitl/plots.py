@@ -2,6 +2,7 @@
 import os
 
 import matplotlib
+matplotlib.rcParams['svg.hashsalt'] = 'sitl'
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
@@ -34,7 +35,7 @@ def latency_cdf(c, profile, res, deadline):
     _style(ax)
     ax.legend(fontsize=8, frameon=False)
     fig.tight_layout()
-    fig.savefig(os.path.join(res, f'fig_latency_cdf_{profile}.svg'))
+    fig.savefig(os.path.join(res, f'fig_latency_cdf_{profile}.svg'), metadata={'Date': None})
     plt.close(fig)
 
 
@@ -61,7 +62,7 @@ def availability(comp, profile, res):
     _style(ax)
     ax.legend(fontsize=7, frameon=False, loc='lower left')
     fig.tight_layout()
-    fig.savefig(os.path.join(res, f'fig_availability_{profile}.svg'))
+    fig.savefig(os.path.join(res, f'fig_availability_{profile}.svg'), metadata={'Date': None})
     plt.close(fig)
 
 
@@ -89,7 +90,7 @@ def timeline(c, m, profile, config, res, deadline):
     _style(ax)
     ax.legend(fontsize=7, frameon=False, loc='upper left')
     fig.tight_layout()
-    fig.savefig(os.path.join(res, f'fig_timeline_{profile}_{config}.svg'))
+    fig.savefig(os.path.join(res, f'fig_timeline_{profile}_{config}.svg'), metadata={'Date': None})
     plt.close(fig)
 
 
