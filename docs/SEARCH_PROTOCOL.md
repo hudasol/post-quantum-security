@@ -192,6 +192,7 @@ Counts from `data/raw/S13_prisma.csv`.
 | included sources | 11 | count of this repository's records: decision = included |
 | staged rows | 265 | count of this repository's records: rows of S13_staged.csv |
 | rows confirmed by two readers and promoted | 186 | count of this repository's records: rows of S13_verified.csv |
+| included sources that contribute promoted rows | 10 | count of this repository's records: distinct source_url of S13_verified.csv; an included source can contribute none when all its rows are unconfirmed or demoted |
 
 Exclusions after an abstract or full text was assessed, by reason:
 
@@ -295,6 +296,7 @@ Rows that were double read but break a written rule are kept in staging and out 
 | Optimized Hardware-Software Co-Design for Kyber and Dilithium on RISC-V SoC FPGA. Tengfei  | 10 (S13-136 to S13-145) | exclusion 1 | the SiFive U54 is an RV64 application core; the same rule excluded the U74 and C908 sources at screening (these rows were already not promoted because no reader confirmed the code size) | 2026-10-21 |
 | Efficient Implementation of CRYSTALS-KYBER Key Encapsulation Mechanism on ESP32. Fabian Se | 15 (S13-087 to S13-101) | inclusion 3 | Kyber512-90s is a round 3 variant that NIST dropped and that has no ML-KEM successor (ML-KEM uses SHAKE only); round 4 excluded 90s variants and inclusion 3 is read the same way here | 2026-10-21 |
 | Fast and Clean: Auditable high-performance assembly via constraint solving. Amin Abdulrahm | 1 (S13-078 to S13-078) | deviation_4 (prior work lines) | prior work line [BBMK+21] of Table 3 of the source; the table marks it with footnote 3 ('Optimized for Cortex-M55') and, unlike the Cortex-M55 line of the same work, not with footnote 2 ('Measurement by ourselves'), so it is not shown to be a measurement of this source; prior work lines are not staged elsewhere in this round | 2026-10-21 |
+| pqm4 benchmark results: benchmarks.csv (mupq/pqm4, GitHub) at commit e1146b1 | 12 (S13-001 to S13-012) | deviation_1 (gap rule) | pqm4 provisional FN-DSA rows: after review pass 2 removed the provisional FN-DSA clause, rows of a draft standard are not eligible until FIPS 206 is final and the rows match it (the rows were also not confirmed by two readers) | 2026-10-21 |
 
 ## Round 5 queries
 
@@ -303,7 +305,7 @@ Rows that were double read but break a written rule are kept in staging and out 
 | W01 | 2026-10-20 | Web search (search engine, Google Scholar style) | web search | SLH-DSA FIPS 205 Cortex-M4 cycles implementation microcontroller | 10 | 10 | 1 | 1 | 9 | news items, artifact pages, slides and forum posts without tables; thesis not assessed |
 | W02 | 2026-10-20 | Web search (search engine, Google Scholar style) | web search | ML-KEM ML-DSA Cortex-M55 Helium MVE cycles | 9 | 9 | 0 | 0 | 9 | four already in data/evidence.csv; OpenTitan OTBN coprocessor (abstract) not a microcontroller core; accelerator design; vendor pages without values |
 | W03 | 2026-10-20 | Web search (search engine, Google Scholar style) | web search | post-quantum Kyber Dilithium RISC-V microcontroller cycles RV32IMC implementation | 9 | 9 | 1 | 0 | 9 | TCHES 2025 RISC-V paper read in full: XuanTie C908 application class core; ePrint 2023/1505 abstract names no platform, full text not retrieved; mirrors |
-| W04 | 2026-10-20 | Web search (search engine, Google Scholar style) | web search | ESP32 post-quantum Kyber Dilithium benchmark clock cycles | 9 | 9 | 1 | 1 | 8 | ETASR and arXiv 2106.05577 already in data/evidence.csv; surveys; arXiv 2503.12952 and preprints.org not assessed |
+| W04 | 2026-10-20 | Web search (search engine, Google Scholar style) | web search | ESP32 post-quantum Kyber Dilithium benchmark clock cycles | 9 | 9 | 1 | 0 | 9 | ETASR and arXiv 2106.05577 already in data/evidence.csv; surveys; arXiv 2503.12952 and preprints.org not assessed; after review on 2026-10-21: arXiv 2503.10207 (Kyber512-90s) excluded under inclusion 3 (R2B06) |
 | W05 | 2026-10-20 | Web search (search engine, Google Scholar style) | web search | Cortex-M33 post-quantum ML-KEM benchmark cycles TrustZone | 9 | 9 | 0 | 0 | 9 | accelerator and cloud papers; CHERIoT and wolfSSL already in data/evidence.csv; host benchmarks; abstract only pages |
 | W06 | 2026-10-20 | Web search (search engine, Google Scholar style) | web search | tches.iacr.org "Polynomial multiplication on embedded vector architectures" Cortex-M55 | 9 | 9 | 1 | 0 | 9 | mirrors of the same article; other ePrint and SBSeg items not assessed; after review on 2026-10-21: TCHES 9305 (Saber) excluded under inclusion 3 |
 | W07 | 2026-10-20 | Web search (search engine, Google Scholar style) | web search | tches.iacr.org Improved Plantard Arithmetic for Lattice-based Cryptography | 10 | 10 | 1 | 0 | 10 | read in full: Cortex-M4 round 3 Kyber only, outside the round 5 gap list; mirrors |

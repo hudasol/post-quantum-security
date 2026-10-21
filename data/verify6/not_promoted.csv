@@ -1,16 +1,16 @@
 id,reason
-S13-001,single_reader: stack_bytes confirmed by fewer than two readers
-S13-002,single_reader: stack_bytes confirmed by fewer than two readers
-S13-003,single_reader: stack_bytes confirmed by fewer than two readers
-S13-004,single_reader: stack_bytes confirmed by fewer than two readers
-S13-005,single_reader: stack_bytes confirmed by fewer than two readers
-S13-006,single_reader: stack_bytes confirmed by fewer than two readers
-S13-007,single_reader: stack_bytes confirmed by fewer than two readers
-S13-008,single_reader: stack_bytes confirmed by fewer than two readers
-S13-009,single_reader: stack_bytes confirmed by fewer than two readers
-S13-010,single_reader: stack_bytes confirmed by fewer than two readers
-S13-011,single_reader: stack_bytes confirmed by fewer than two readers
-S13-012,single_reader: stack_bytes confirmed by fewer than two readers
+S13-001,"single_reader: stack_bytes confirmed by fewer than two readers; demoted after review on 2026-10-21 (deviation_1 (gap rule)): pqm4 provisional FN-DSA rows: after review pass 2 removed the provisional FN-DSA clause, rows of a draft standard are not eligible until FIPS 206 is final and the rows match it (the rows were also not confirmed by two readers)"
+S13-002,"single_reader: stack_bytes confirmed by fewer than two readers; demoted after review on 2026-10-21 (deviation_1 (gap rule)): pqm4 provisional FN-DSA rows: after review pass 2 removed the provisional FN-DSA clause, rows of a draft standard are not eligible until FIPS 206 is final and the rows match it (the rows were also not confirmed by two readers)"
+S13-003,"single_reader: stack_bytes confirmed by fewer than two readers; demoted after review on 2026-10-21 (deviation_1 (gap rule)): pqm4 provisional FN-DSA rows: after review pass 2 removed the provisional FN-DSA clause, rows of a draft standard are not eligible until FIPS 206 is final and the rows match it (the rows were also not confirmed by two readers)"
+S13-004,"single_reader: stack_bytes confirmed by fewer than two readers; demoted after review on 2026-10-21 (deviation_1 (gap rule)): pqm4 provisional FN-DSA rows: after review pass 2 removed the provisional FN-DSA clause, rows of a draft standard are not eligible until FIPS 206 is final and the rows match it (the rows were also not confirmed by two readers)"
+S13-005,"single_reader: stack_bytes confirmed by fewer than two readers; demoted after review on 2026-10-21 (deviation_1 (gap rule)): pqm4 provisional FN-DSA rows: after review pass 2 removed the provisional FN-DSA clause, rows of a draft standard are not eligible until FIPS 206 is final and the rows match it (the rows were also not confirmed by two readers)"
+S13-006,"single_reader: stack_bytes confirmed by fewer than two readers; demoted after review on 2026-10-21 (deviation_1 (gap rule)): pqm4 provisional FN-DSA rows: after review pass 2 removed the provisional FN-DSA clause, rows of a draft standard are not eligible until FIPS 206 is final and the rows match it (the rows were also not confirmed by two readers)"
+S13-007,"single_reader: stack_bytes confirmed by fewer than two readers; demoted after review on 2026-10-21 (deviation_1 (gap rule)): pqm4 provisional FN-DSA rows: after review pass 2 removed the provisional FN-DSA clause, rows of a draft standard are not eligible until FIPS 206 is final and the rows match it (the rows were also not confirmed by two readers)"
+S13-008,"single_reader: stack_bytes confirmed by fewer than two readers; demoted after review on 2026-10-21 (deviation_1 (gap rule)): pqm4 provisional FN-DSA rows: after review pass 2 removed the provisional FN-DSA clause, rows of a draft standard are not eligible until FIPS 206 is final and the rows match it (the rows were also not confirmed by two readers)"
+S13-009,"single_reader: stack_bytes confirmed by fewer than two readers; demoted after review on 2026-10-21 (deviation_1 (gap rule)): pqm4 provisional FN-DSA rows: after review pass 2 removed the provisional FN-DSA clause, rows of a draft standard are not eligible until FIPS 206 is final and the rows match it (the rows were also not confirmed by two readers)"
+S13-010,"single_reader: stack_bytes confirmed by fewer than two readers; demoted after review on 2026-10-21 (deviation_1 (gap rule)): pqm4 provisional FN-DSA rows: after review pass 2 removed the provisional FN-DSA clause, rows of a draft standard are not eligible until FIPS 206 is final and the rows match it (the rows were also not confirmed by two readers)"
+S13-011,"single_reader: stack_bytes confirmed by fewer than two readers; demoted after review on 2026-10-21 (deviation_1 (gap rule)): pqm4 provisional FN-DSA rows: after review pass 2 removed the provisional FN-DSA clause, rows of a draft standard are not eligible until FIPS 206 is final and the rows match it (the rows were also not confirmed by two readers)"
+S13-012,"single_reader: stack_bytes confirmed by fewer than two readers; demoted after review on 2026-10-21 (deviation_1 (gap rule)): pqm4 provisional FN-DSA rows: after review pass 2 removed the provisional FN-DSA clause, rows of a draft standard are not eligible until FIPS 206 is final and the rows match it (the rows were also not confirmed by two readers)"
 S13-013,single_reader: stack_bytes confirmed by fewer than two readers
 S13-014,single_reader: stack_bytes confirmed by fewer than two readers
 S13-015,single_reader: stack_bytes confirmed by fewer than two readers

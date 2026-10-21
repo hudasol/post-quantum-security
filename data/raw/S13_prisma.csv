@@ -9,6 +9,7 @@ excluded after abstract or full text,24,"count of this repository's records: dec
 included sources,11,count of this repository's records: decision = included,host measured
 staged rows,265,count of this repository's records: rows of S13_staged.csv,host measured
 rows confirmed by two readers and promoted,186,count of this repository's records: rows of S13_verified.csv,host measured
+included sources that contribute promoted rows,10,count of this repository's records: distinct source_url of S13_verified.csv; an included source can contribute none when all its rows are unconfirmed or demoted,host measured
 excluded: application processor core (Cortex-A and U74),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
 excluded: application processor core (Cortex-A72 and x86),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
 excluded: application processor core (Cortex-A72),1,count of this repository's records: S13_screening.csv exclusion_reason,host measured
