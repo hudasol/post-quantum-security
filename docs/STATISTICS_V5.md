@@ -152,7 +152,7 @@ Cross check (unweighted fit): statsmodels MixedLM variances: variant 0.07301; st
 
 ## 3. End to end uncertainty and Sobol ranking (modelled)
 
-One chain from published cycles through compute time, energy, link and protocol time to mission availability (`stats/end_to_end.py`, which calls `mission/sim.py`, `energy/model.py` and the parameter files of `linksim/`). Monte Carlo draws: 1000; Sobol base points: 512 (9216 evaluations); missions per evaluation and architecture: 20, with common random numbers (seed 20261021 for architecture B and 20261022 for C in every evaluation); seed 20261021. Run time: 101 s Monte Carlo and 646 s Sobol on 2 processes.
+One chain from published cycles through compute time, energy, link and protocol time to mission availability (`stats/end_to_end.py`, which calls `mission/sim.py`, `energy/model.py` and the parameter files of `linksim/`). Monte Carlo draws: 1000; Sobol base points: 512 (9216 evaluations); missions per evaluation and architecture: 20, with common random numbers (seed 20261021 for architecture B and 20261022 for C in every evaluation); seed 20261021. Run time: 16 s Monte Carlo and 145 s Sobol on 2 processes.
 
 Inputs (uniform over the stated range):
 
@@ -175,13 +175,13 @@ Inputs (uniform over the stated range):
 | proxy_factor | 1 | 3 | ratio | energy/workload_assumptions.csv low and high |
 | vdd_v | 1.8 | 3.6 | V | energy/workload_assumptions.csv low and high |
 
-Kept fixed (point values without a stated range): mldsa44_verify_cycles (data/evidence.csv S2-0033 (pqm4 m4f); varied only through impl_factor); mlkem768_encaps_cycles (data/evidence.csv S2-0023 (pqm4 m4fspeed); varied only through impl_factor); image_bytes (1 MB as the output definition (bootchain/inputs.csv fmuv2_flash_limit_bytes)); sik link rate and usable fraction (linksim/params.csv sik_air_rate_bps, sik_usable_fraction); message, key and signature sizes (linksim/params.csv); MAVLink payload lengths (mission/payload_lengths.csv); traffic rates (mission/traffic.csv (two heartbeat rates published, the other rates assumptions)); mission phase durations, session timeout, grace (mission/assumptions.csv (no stated range)); max_retries (linksim/params.csv); hash cost not scaled by the wait state factor (the SHA-256 rows do not state their wait state setting (mission/model.py convention)).
+Kept fixed (point values without a stated range): mldsa44_verify_cycles (data/shared_inputs.csv mldsa44_verify_cycles_m4 (data/evidence.csv S2-0033, pqm4 m4f); varied only through impl_factor); mldsa44_sign_cycles (data/shared_inputs.csv mldsa44_sign_cycles_m4 (data/evidence.csv S2-0032, pqm4 m4f; vehicle signature of design change F1); varied only through impl_factor); mlkem768_encaps_cycles (data/shared_inputs.csv mlkem768_encaps_cycles_m4 (data/evidence.csv S2-0023, pqm4 m4fspeed); varied only through impl_factor); image_bytes (1 MB as the output definition (bootchain/inputs.csv fmuv2_flash_limit_bytes)); sik link rate and usable fraction (data/shared_inputs.csv sik_air_rate_bps, sik_usable_fraction); message, key and signature sizes (data/shared_inputs.csv); MAVLink payload lengths (mission/payload_lengths.csv); traffic rates (mission/traffic.csv (two heartbeat rates published, the other rates assumptions)); mission phase durations, session timeout, grace (mission/assumptions.csv (no stated range)); max_retries (linksim/params.csv); hash cost not scaled by the wait state factor (the SHA-256 rows do not state their wait state setting (mission/model.py convention)).
 
 Output intervals:
 
 | output | unit | 2.5 percentile | median | 97.5 percentile |
 |---|---|---|---|---|
-| hybrid_availability_sik_drone | ratio | 0.8 | 0.946 | 0.999 |
+| hybrid_availability_sik_drone | ratio | 0.798 | 0.946 | 0.999 |
 | added_latency_per_command_signature_ms | ms | 380 | 552 | 3.63e+04 |
 | firmware_verify_1mb_ms | ms | 340 | 456 | 609 |
 | firmware_verify_1mb_energy_mj | mJ | 7.41 | 29.8 | 81.6 |
@@ -190,11 +190,11 @@ Inputs ranked by total Sobol index (first five per output; all in `stats/results
 
 | output | rank | input | total index | interval | first order index |
 |---|---|---|---|---|---|
-| hybrid_availability_sik_drone | 1 | outage_rate_per_h | 0.52 | 0.45 to 0.60 | 0.42 |
-| hybrid_availability_sik_drone | 2 | outage_mean_s | 0.47 | 0.38 to 0.56 | 0.35 |
-| hybrid_availability_sik_drone | 3 | deadline_s | 0.16 | 0.10 to 0.22 | 0.03 |
-| hybrid_availability_sik_drone | 4 | frame_loss | 0.08 | 0.06 to 0.11 | 0.01 |
-| hybrid_availability_sik_drone | 5 | turnaround_s | 0.06 | 0.03 to 0.10 | 0.00 |
+| hybrid_availability_sik_drone | 1 | outage_rate_per_h | 0.55 | 0.46 to 0.63 | 0.43 |
+| hybrid_availability_sik_drone | 2 | outage_mean_s | 0.48 | 0.39 to 0.56 | 0.40 |
+| hybrid_availability_sik_drone | 3 | deadline_s | 0.15 | 0.09 to 0.20 | 0.04 |
+| hybrid_availability_sik_drone | 4 | frame_loss | 0.08 | 0.06 to 0.10 | 0.02 |
+| hybrid_availability_sik_drone | 5 | turnaround_s | 0.06 | 0.02 to 0.09 | -0.00 |
 | added_latency_per_command_signature_ms | 1 | turnaround_s | 0.65 | 0.33 to 0.98 | 0.10 |
 | added_latency_per_command_signature_ms | 2 | frame_loss | 0.60 | 0.33 to 0.87 | 0.14 |
 | added_latency_per_command_signature_ms | 3 | rto_factor | 0.47 | 0.26 to 0.68 | 0.12 |

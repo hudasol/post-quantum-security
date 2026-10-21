@@ -1,9 +1,10 @@
 label,item,source
-published,mldsa44_verify_cycles,data/evidence.csv S2-0033 (pqm4 m4f); varied only through impl_factor
-published,mlkem768_encaps_cycles,data/evidence.csv S2-0023 (pqm4 m4fspeed); varied only through impl_factor
+published,mldsa44_verify_cycles,"data/shared_inputs.csv mldsa44_verify_cycles_m4 (data/evidence.csv S2-0033, pqm4 m4f); varied only through impl_factor"
+published,mldsa44_sign_cycles,"data/shared_inputs.csv mldsa44_sign_cycles_m4 (data/evidence.csv S2-0032, pqm4 m4f; vehicle signature of design change F1); varied only through impl_factor"
+published,mlkem768_encaps_cycles,"data/shared_inputs.csv mlkem768_encaps_cycles_m4 (data/evidence.csv S2-0023, pqm4 m4fspeed); varied only through impl_factor"
 assumption,image_bytes,1 MB as the output definition (bootchain/inputs.csv fmuv2_flash_limit_bytes)
-cited,sik link rate and usable fraction,"linksim/params.csv sik_air_rate_bps, sik_usable_fraction"
-cited,"message, key and signature sizes",linksim/params.csv
+cited,sik link rate and usable fraction,"data/shared_inputs.csv sik_air_rate_bps, sik_usable_fraction"
+cited,"message, key and signature sizes",data/shared_inputs.csv
 host measured,MAVLink payload lengths,mission/payload_lengths.csv
 assumption,traffic rates,"mission/traffic.csv (two heartbeat rates published, the other rates assumptions)"
 assumption,"mission phase durations, session timeout, grace",mission/assumptions.csv (no stated range)
