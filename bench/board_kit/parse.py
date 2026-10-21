@@ -39,6 +39,9 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import kit_config as K  # noqa: E402
+
 RESULT_COLUMNS = ["experiment", "label", "date_utc", "board", "clock_hz", "flash_ws", "cache",
                   "cache_pass", "toolchain", "commit", "library", "scheme", "variant", "operation", "run", "iter",
                   "cycles", "stack_bytes", "unit", "source_log"]
@@ -159,6 +162,22 @@ def parse_pqm4(lines, header, info, ctx, path):
     return rows, chk, unknown, {}
 
 
+def board_check(header, meta, base, rows):
+    """Check that the board named in the capture header is the one the firmware reports.
+
+    B1 images print META,platform,<platform> (b1/b1_main.c). A header board of another platform
+    is a failed check, so a Cortex-M33 log captured under the Cortex-M4 board name (or the
+    reverse) cannot pass parse.py --require-all."""
+    fw = (meta.get("platform") or "").split(" ")[0]
+    if fw not in K.PLATFORMS:
+        return []
+    same = K.board_platform(header.get("board", "")) == fw
+    return [dict(experiment="B1", label=base["label"], board=base["board"], commit=base["commit"],
+                 scheme=rows[0]["scheme"] if rows else "", variant=base["variant"], run=base["run"],
+                 check=f"board:header_matches_firmware_{fw}", ok=int(same), fail=int(not same),
+                 source_log=base["source_log"])]
+
+
 def parse_b1(lines, header, info, ctx, path):
     rows, chk, unknown, meta = [], [], [], {}
     for _, line in lines:
@@ -222,12 +241,15 @@ def parse_b1(lines, header, info, ctx, path):
                         variant=base["variant"], run=base["run"],
                         check="cache_pass_off:writes_applied_at_zero_wait_states",
                         ok=int(applied), fail=int(not applied), source_log=base["source_log"]))
+    chk += board_check(header, meta, base, rows)
     return rows, chk, unknown, meta
 
 
 def parse_log(path, ctx=None):
     """Parse one raw log. Returns dict with rows, checks, meta, n_lines, n_unrecognised."""
     header, lines = read_capture(path)
+    if not header.get("board"):
+        raise ValueError(f"{path}: capture header has no board; capture again with capture.py --board")
     info = image_info(header.get("image", ""))
     ctx = dict(ctx or {})
     if header.get("label") == "emulated":
@@ -304,7 +326,7 @@ def energy_rows(energy, results):
         phase is delimited by the BENCH line timestamps in the capture log). The time per operation
         is the board measured mean cycles of that image, scheme, operation and cache pass divided by
         the clock read back: E = V x I_mean x cycles / clock. The value net of idle subtracts the
-        idle current measured with the board halted at the same supply.
+        idle current measured with the board held in reset at the same supply.
     """
     cyc = {}
     clock = {}
@@ -355,7 +377,7 @@ def write_energy_template(path):
         "method": "<multimeter_phase|analyzer_gpio_window>",
         "instrument": "<make, model, range>", "jumper": "<IDD jumper name from the board manual>",
         "supply_v": "<V at the jumper>", "current_ma_mean": "<mA, meter average over the phase>",
-        "current_ma_idle": "<mA, board halted>", "charge_uc": "<uC over the window (analyzer)>",
+        "current_ma_idle": "<mA, board held in reset>", "charge_uc": "<uC over the window (analyzer)>",
         "n_ops": "<operations inside the window (analyzer)>", "window_s": "<s (analyzer)>",
         "note": ""}])
 

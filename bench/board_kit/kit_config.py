@@ -49,6 +49,19 @@ B1_ITERS = {"mlkem": 100, "mldsa": 100}
 B1_STACK_SPAN = 131072
 
 PLATFORMS = ("nucleo-l4r5zi", "mps2-an386", "nucleo-l552ze-q")
+# Board name written by capture.py --board for each platform. The name is the key that keeps
+# the boards apart in parse.py, compare.py and score_v5_board.py, so it has no default.
+BOARD_NAMES = {"nucleo-l4r5zi": "NUCLEO-L4R5ZI", "nucleo-l552ze-q": "NUCLEO-L552ZE-Q",
+               "mps2-an386": "QEMU mps2-an386"}
+
+
+def board_platform(board):
+    """Platform of a board name (capture header, result row or prediction row), or None."""
+    b = (board or "").lower().replace(" ", "-")
+    for p in PLATFORMS:
+        if p in b:
+            return p
+    return None
 
 # Cache passes (round 5). "on": the state pqm4's hal_setup(CLOCK_BENCHMARK) leaves (icache, dcache
 # and prefetch on for nucleo-l4r5zi); "off": b1_main.c built with -DBENCH_CACHE_OFF clears them
