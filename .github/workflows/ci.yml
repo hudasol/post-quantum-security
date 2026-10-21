@@ -51,6 +51,7 @@ jobs:
           python3 -m unittest discover -s formal -t .
           python3 -m unittest discover -s stats -t .
           python3 -m unittest discover -s netsim -t .
+          python3 -m unittest discover -s flightstack -t .
       - name: Planner agrees with the hand written expectations
         run: python3 scripts/compare_planner_predictions.py
   data:
@@ -97,6 +98,12 @@ jobs:
         run: |
           python3 scripts/build_paper.py
           git diff --exit-code docs/PAPER.md docs/PROPOSAL_ROBOTICS*.md data/claims_register.csv
+      - name: Flight stack memory and planner rerun regenerate from the committed build artefacts
+        run: |
+          pip install SALib numpy
+          python3 flightstack/extract_memory.py
+          cd planner && python3 flightstack_study.py && cd ..
+          git diff --exit-code data/flightstack_memory.csv data/flightstack_memory_regions.csv docs/FLIGHTSTACK_STUDY.md planner/results/flightstack_*.csv
       - name: Proposal regenerates from the result files
         run: |
           python3 scripts/build_proposal.py
