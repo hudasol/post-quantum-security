@@ -267,6 +267,14 @@ def write_environment(runs, res):
                          '(no SETUP_SIGNING handling in src/modules/mavlink), while its later documentation (v1.18) has a '
                          'page on message signing; to keep one baseline for all four configurations, all four run on '
                          'ArduPilot, whose documentation describes signing.'))
+    # The host is that of the machine that ran the missions. The run files do not record it, so it is kept from the
+    # environment.json written when the runs were analysed on that machine; a reanalysis elsewhere does not overwrite it.
+    old = os.path.join(res, 'environment.json')
+    if os.path.exists(old):
+        with open(old) as fh:
+            prev = json.load(fh)
+        if prev.get('host'):
+            env['host'] = prev['host']
     with open(os.path.join(res, 'environment.json'), 'w') as fh:
         json.dump(env, fh, indent=1)
 
