@@ -57,14 +57,17 @@ def load_measured(path=MEASURED):
         return list(csv.DictReader(fh))
 
 
-def measured_free(rows, pick=min):
+def measured_free(rows, pick=min, crash_log_used=False):
     """{board: (free_flash_bytes, free_ram_bytes, stacks)} using the smaller value over stacks
-    (pick=max gives the larger value, for the sensitivity case)."""
+    (pick=max gives the larger value, for the sensitivity case; crash_log_used=True counts the ArduPilot
+    crash log area as used flash, for the second sensitivity case)."""
     out = {}
     for r in rows:
         if r["build_status"] != "built":
             continue
         ff, fr = int(r["flash_free_bytes"]), int(r["ram_free_static_bytes"])
+        if crash_log_used:
+            ff = max(0, ff - int(r["flash_crash_log_bytes"] or 0))
         if r["board"] in out:
             a, b, s = out[r["board"]]
             out[r["board"]] = (pick(a, ff), pick(b, fr), s + [r["stack"]])
@@ -140,15 +143,19 @@ def run(draws=ps.DRAWS, measured_path=MEASURED):
     prof_m = apply_measured(profiles, free)
     free_max = measured_free(rows, pick=max)
     prof_x = apply_measured(profiles, free_max)
+    free_c = measured_free(rows, crash_log_used=True)
+    prof_c = apply_measured(profiles, free_c)
     ranges = ps.threshold_ranges()
     scen = fs.scenarios()
     base = fs.make_fleet(ps.N)
     mc_a = monte_carlo(base, profiles, ranges, scen, draws)
     mc_m = monte_carlo(base, prof_m, ranges, scen, draws)
     mc_x = monte_carlo(base, prof_x, ranges, scen, draws)
+    mc_c = monte_carlo(base, prof_c, ranges, scen, draws)
     summary = []
     for k in THRESHOLDS:
-        a, m, x = mc_a[k], mc_m[k], mc_x[k]
+        a, m, x, cc = mc_a[k], mc_m[k], mc_x[k], mc_c[k]
+        cl, ch = ps.bootstrap_median_ci(cc)
         xl, xh = ps.bootstrap_median_ci(x)
         dxl, dxh = paired_diff_ci(a, x)
         al, ah = ps.bootstrap_median_ci(a)
@@ -161,6 +168,7 @@ def run(draws=ps.DRAWS, measured_path=MEASURED):
                         "larger_stack_median": ps.median(x), "larger_stack_ci_low": xl,
                         "larger_stack_ci_high": xh, "larger_stack_change": ps.median(x) - ps.median(a),
                         "larger_stack_change_ci_low": dxl, "larger_stack_change_ci_high": dxh,
+                        "crash_log_used_median": ps.median(cc), "crash_log_used_ci_low": cl, "crash_log_used_ci_high": ch,
                         "measured_boards": len(free), "seed": ps.SEED, "diff_seed": DIFF_SEED, "label": "estimated"})
     # one seeded fleet, per board classes (planner decision per board class)
     fa = ps.profile_fleet(base, profiles, random.Random(ps.SEED), ps.FREE_RANGES[ps.FREE_MAIN])
@@ -330,6 +338,12 @@ def document(out):
         L.append("| %s | %.3f | %.3f to %.3f | %+.3f | %+.3f to %+.3f |" % (
             s["thresholds"], s["larger_stack_median"], s["larger_stack_ci_low"], s["larger_stack_ci_high"],
             s["larger_stack_change"], s["larger_stack_change_ci_low"], s["larger_stack_change_ci_high"]))
+    L += ["", "Sensitivity: the ArduPilot crash log area counted as used flash (code placed there removes crash logging), "
+          "smaller value over stacks:", "",
+          "| thresholds | median | median 95% CI |", "|---|---|---|"]
+    for s in out["summary"]:
+        L.append("| %s | %.3f | %.3f to %.3f |" % (s["thresholds"], s["crash_log_used_median"], s["crash_log_used_ci_low"],
+                                                  s["crash_log_used_ci_high"]))
     st = {s["thresholds"]: s for s in out["summary"]}
     px4_free = [int(r["flash_free_bytes"]) for r in built if r["stack"] == "px4"]
     thr = out["thresholds"]

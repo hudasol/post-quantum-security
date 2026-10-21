@@ -99,6 +99,16 @@ Sensitivity: where both stacks were built, the larger free value instead of the 
 | reference_c | 0.273 | 0.272 to 0.274 | +0.039 | +0.037 to +0.040 |
 | uncertain | 0.265 | 0.263 to 0.267 | +0.064 | +0.060 to +0.066 |
 
+Sensitivity: the ArduPilot crash log area counted as used flash (code placed there removes crash logging), smaller value over stacks:
+
+| thresholds | median | median 95% CI |
+|---|---|---|
+| stack_asm | 0.661 | 0.659 to 0.663 |
+| speed_asm | 0.661 | 0.659 to 0.663 |
+| portable_c | 0.675 | 0.672 to 0.676 |
+| reference_c | 0.640 | 0.638 to 0.642 |
+| uncertain | 0.634 | 0.632 to 0.637 |
+
 Reading. With the stack optimised thresholds the median hardware replacement share moves from 0.186 (assumed free share) to 0.398 (measured, smaller value over stacks) and 0.294 (measured, larger value). The default PX4 builds leave between 6.008 and 45.948 kB of application flash free on the boards built here. Signature plus KEM flash need per scenario that exceeds the free flash of at least one PX4 build: stack_asm (44 kB), speed_asm (42 kB), portable_c (49 kB), reference_c (20 kB). The smallest measured free static RAM is 111.156 kB against a largest signature plus KEM RAM need of 62 kB (an upper bound on free RAM, see section 2).
 
 ### 3.1 The STM32F405 class
