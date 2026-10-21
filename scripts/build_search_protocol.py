@@ -59,8 +59,9 @@ def main():
              f"| records returned | {total('records_returned')} |",
              f"| records screened | {total('records_screened')} |",
              f"| read in full | {total('read_in_full')} |",
-             f"| included (sources with at least one extracted value) | {total('included')} |",
-             "", "Counts are summed over searches; a source found by several searches is counted once per search.", "",
+             f"| included (as logged per search: evidence rows or facts taken, not sources) | {total('included')} |",
+             "", "Counts are summed over searches; a source found by several searches is counted once per search. The round 4 logs "
+             "recorded in the included column the number of rows or facts taken from the search, so it can exceed the number read in full.", "",
              "## Round 4 searches", "", "| log | stream | date | tool | query | returned | screened | read in full | included | exclusions |",
              "|---|---|---|---|---|---|---|---|---|---|"]
     for r in rows:
@@ -82,6 +83,44 @@ def cell(x):
     return str(x).replace("|", "/").replace("\n", " ")
 
 
+def first_commit(path):
+    """Hash of the commit that added the file, or '' if git has no record."""
+    r = subprocess.run(["git", "log", "--diff-filter=A", "--format=%h", "--", path], cwd=ROOT, capture_output=True, text=True)
+    lines = r.stdout.split()
+    return lines[-1] if lines else ""
+
+
+def timing_note():
+    names = ["data/raw/S13_protocol.csv", "data/raw/S13_search_log.csv", "data/raw/S13_screening.csv"]
+    c = [first_commit(n) for n in names]
+    if c[0] and c[0] == c[1] == c[2]:
+        return ("The row 'written' states that the protocol was written before the first round 5 query was screened. The git history does "
+                f"not evidence this timing: the protocol was first committed in the same commit ({c[0]}) as the search log and the screening "
+                "file, and no hash of it is recorded in the repository. Rows named deviation were added on the date they state, after "
+                "screening and after review, and are disclosed as deviations from the protocol as first written.")
+    return ("The row 'written' states when the protocol was written; rows named deviation were added later on the date they state "
+            "and are disclosed as deviations.")
+
+
+def demoted_section():
+    p = ROOT / "data" / "raw" / "S13_demoted.csv"
+    if not p.exists():
+        return []
+    dem = _csv("S13_demoted.csv")
+    staged = {r["id"]: r for r in _csv("S13_staged.csv")}
+    groups = {}
+    for d in dem:
+        k = (staged[d["id"]]["source_title"][:90], d["rule"], d["reason"], d["date"])
+        groups.setdefault(k, []).append(d["id"])
+    out = ["", "## Round 5 rows demoted after review", "",
+           "Rows that were double read but break a written rule are kept in staging and out of the evidence table "
+           "(`data/raw/S13_demoted.csv`, applied by `scripts/promote_s13.py`).", "",
+           "| source | rows | rule | reason | date |", "|---|---|---|---|---|"]
+    for (src, rule, why, date), ids in groups.items():
+        out.append(f"| {cell(src)} | {len(ids)} ({ids[0]} to {ids[-1]}) | {cell(rule)} | {cell(why)} | {date} |")
+    return out
+
+
 def round5():
     """Round 5 section: protocol from S13_protocol.csv, flow from S13_prisma.csv, queries from S13_search_log.csv."""
     if not (ROOT / "data" / "raw" / "S13_protocol.csv").exists():
@@ -92,7 +131,7 @@ def round5():
     log = _csv("S13_search_log.csv")
     scr = _csv("S13_screening.csv")
     out = ["", "## Round 5 protocol (stream S13)", "",
-           "Read from `data/raw/S13_protocol.csv`, written before the first round 5 result was screened.", "",
+           "Read from `data/raw/S13_protocol.csv`. " + timing_note(), "",
            "| item | rule |", "|---|---|"]
     out += [f"| {cell(p['key'].replace('_', ' '))} | {cell(p['value'])} |" for p in proto]
     main = [f for f in flow if not f["stage"].startswith("excluded: ")]
@@ -116,6 +155,7 @@ def round5():
     out += ["```", "", "## Round 5 records assessed beyond the title", "",
             "| record | found by | stage | decision | reason | rows staged |", "|---|---|---|---|---|---|"]
     out += [f"| {cell(r['record'])} | {r['found_by']} | {r['stage_reached']} | {r['decision']} | {cell(r['exclusion_reason'])} | {r['rows_staged']} |" for r in scr]
+    out += demoted_section()
     out += ["", "## Round 5 queries", "",
             "| id | date | tool | database | query | returned | screened | read in full | included | excluded | exclusion reasons |",
             "|---|---|---|---|---|---|---|---|---|---|---|"]
@@ -124,7 +164,8 @@ def round5():
                                                        "records_screened", "read_in_full", "included", "excluded",
                                                        "excluded_reason_summary")) + " |")
     out += ["", "A record found by several queries is counted once per query in the query table and once in the records table. "
-            "The included column of the backward snowballing row repeats sources also found by searches.", ""]
+            "The included count of each query equals the number of included records whose found by entry names it; the backward "
+            "snowballing row counts none because the sources it read in full had already been found by searches.", ""]
     return out
 
 
