@@ -183,7 +183,7 @@ def score():
         S["P36"] = (verdict(len(p1) >= 20, len(p1) >= 10), f"First pass: {len(p1)} findings.")
         has2 = any(x.get("pass") == "2" for x in f)
         p2h = [x for x in f if x.get("pass") == "2" and x.get("severity", "").lower() == "high"]
-        S["P37"] = (verdict(len(p2h) == 0) if has2 else "not scored", f"Second pass: {len(p2h)} high severity findings." if has2 else "No second pass recorded.")
+        S["P37"] = (verdict(len(p2h) == 0) if has2 else "not scored", f"Second pass: {len(p2h)} high severity finding" + ("" if len(p2h) == 1 else "s") + "." if has2 else "No second pass recorded.")
     rub = (ROOT / "docs/COMPLETENESS_RUBRIC.md").read_text()
     sec = rub.split("## Score at the start of round 5", 1)
     if len(sec) == 2:

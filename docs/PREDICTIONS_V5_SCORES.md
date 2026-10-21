@@ -42,7 +42,7 @@ Hash check: the predictions file matches its registered SHA-256.
 | P34 | hit | M33 images built: yes; emulator log lines parsed: 100.0 percent overall; per cache pass: on 100.0, off 100.0. |
 | P35 | miss | Scheme families kept: yes (LMS for firmware, a hybrid session for commands). Design changes adopted in `docs/REFERENCE_ARCHITECTURE.md`: F1, F3. Under the less favourable reading any adopted design change meets the refutation clause. |
 | P36 | hit | First pass: 74 findings. |
-| P37 | miss | Second pass: 1 high severity findings. |
+| P37 | miss | Second pass: 1 high severity finding. |
 | P38 | not scored | Not yet scored. |
 
 Totals: 17 hit, 2 between, 16 miss, 3 not scored, of 38.
