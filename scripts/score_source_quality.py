@@ -8,6 +8,13 @@ source (notes, comparability warning, location, device, clock, library, URL) sta
 matched phrase is written as the reason. A missing point therefore means "not recorded in the
 evidence table", which may understate a source whose text was not transcribed in full.
 
+Hand check (data/source_quality_checked.csv): for the round 5 sources the keyword matches were found
+to give points from incidental mentions (for example pqm4 named only as a citation). For every source
+listed there, the items listed are taken from the check against the retrieved full text (point and
+reason with a quotation or the place searched) instead of the keyword match; platform_stated stays
+from the double read device and clock fields. Rows with item 'note' are written to the note column.
+The column scoring says which method gave the points of each source.
+
 Writes data/source_quality.csv (one row per source URL). WP5 uses the score as a weight.
 """
 import csv
@@ -18,6 +25,20 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / "data" / "evidence.csv"
 OUT = ROOT / "data" / "source_quality.csv"
+CHECKED = ROOT / "data" / "source_quality_checked.csv"
+
+
+def checked():
+    """source_url -> {item: (point, reason)}, and source_url -> note, from the hand check file."""
+    pts, notes = {}, {}
+    if CHECKED.exists():
+        with open(CHECKED, newline="", encoding="utf-8") as fh:
+            for r in csv.DictReader(fh):
+                if r["item"] == "note":
+                    notes[r["source_url"]] = r["reason"]
+                else:
+                    pts.setdefault(r["source_url"], {})[r["item"]] = (int(r["point"]), f"checked in the source ({r['checked_on']}): {r['reason']}")
+    return pts, notes
 
 RULES = OrderedDict([
     ("method_stated", re.compile(r"pqm4|benchmark|measured|framework|harness|test vectors|\bKAT|executions|iterations|\bruns\b", re.I)),
@@ -69,13 +90,19 @@ def main():
             if r["cycles"].strip():
                 by.setdefault(r["source_url"], []).append(r)
     items = ["method_stated", "platform_stated", "statistic_stated", "code_available", "cycle_counter_described"]
+    pts, notes = checked()
     with open(OUT, "w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)
-        w.writerow(["source_url", "source_title", "cycle_rows", "score"] + [x for i in items for x in (i, i + "_reason")] + ["label"])
+        w.writerow(["source_url", "source_title", "cycle_rows", "score"] + [x for i in items for x in (i, i + "_reason")]
+                   + ["scoring", "note", "label"])
         for url, rows in by.items():
             s = score(rows)
+            hand = pts.get(url, {})
+            s.update(hand)
+            how = ("checked against the retrieved source for " + ", ".join(sorted(hand)) + "; other items by keyword match on the recorded rows") if hand \
+                else "keyword match on the recorded rows"
             w.writerow([url, rows[0]["source_title"][:200], len(rows), sum(v[0] for v in s.values())]
-                       + [x for i in items for x in s[i]] + ["derived from published"])
+                       + [x for i in items for x in s[i]] + [how, notes.get(url, ""), "derived from published"])
     print(f"{len(by)} sources scored")
 
 
