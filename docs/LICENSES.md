@@ -59,6 +59,6 @@ Notes:
 
 Every row of `data/evidence.csv` cites a source URL. The repository stores extracted numbers and short paraphrases, not the papers, slides or web pages. NIST publications (FIPS 203, 204, 205, SP 800-208) and IETF RFCs are cited for sizes and statements only. I have not verified the reuse terms of each paper; the numbers are factual values with attribution, and anything longer than a short phrase is paraphrased. If a rights holder objects to a row, remove it.
 
-## Licence of this repository
+## Licence of this repository 
 
 All rights reserved by Huda Mueen. Permission is needed before use, copying, modification, distribution or sale; see `LICENSE` and `docs/LICENCE_DECISION.md`. The licences in the table above belong to third party components and are not changed by this.
