@@ -1,0 +1,15 @@
+RESULT not (event(VKey(s_1,k_3)) && attacker(k_3)) is true.
+goal reachable: w_40 ≠ mac((tCmd,t_40,m_40),k_3) && w_41 ≠ mac((tCmd,t_41,m_41),k_3) && w_42 ≠ mac((tCmd,t_42,m_42),k_3) && w_43 ≠ mac((tCmd,t_43,m_43),k_3) && w_44 ≠ mac((tCmd,t_44,m_44),k_3) && attacker(t_41) && attacker(m_41) && attacker(w_41) && attacker(t_40) && attacker(m_40) && attacker(w_40) && b-inj-event(Send(s_1,4,m4_1),@occ16_1) && b-inj-event(Send(s_1,3,m3_1),@occ13_1) && b-inj-event(Send(s_1,2,m2_1),@occ10_1) && b-inj-event(Send(s_1,1,m1_1),@occ7_1) && attacker(t_42) && attacker(m_42) && attacker(w_42) && attacker(t_43) && attacker(m_43) && attacker(w_43) && attacker(t_44) && attacker(m_44) && attacker(w_44) -> inj-event(Acc(s_1,4,m4_1),@occ333_1) && inj-event(Acc(s_1,4,m4_1),@occ352_1)
+RESULT inj-event(Acc(s_1,t_40,m_40)) ==> inj-event(Send(s_1,t_40,m_40)) cannot be proved.
+RESULT (but event(Acc(s_1,t_40,m_40)) ==> event(Send(s_1,t_40,m_40)) is true.)
+goal reachable: b-event(Send(s_1,4,m4_1)) && b-event(Send(s_1,3,m3_1)) && b-event(Send(s_1,2,m2_1)) && b-event(Send(s_1,1,m1_1)) -> event(Acc(s_1,4,m4_1))
+goal reachable: b-event(Send(s_1,3,m3_1)) && b-event(Send(s_1,2,m2_1)) && b-event(Send(s_1,1,m1_1)) -> event(Acc(s_1,3,m3_1))
+goal reachable: b-event(Send(s_1,2,m2_1)) && b-event(Send(s_1,1,m1_1)) -> event(Acc(s_1,2,m2_1))
+goal reachable: b-event(Send(s_1,1,m1_1)) -> event(Acc(s_1,1,m1_1))
+RESULT event(Acc(s_1,t_40,m_40)) ==> event(Send(s_1,t_40,m_40)) is true.
+goal reachable: event(Late(s_1,3,4))
+RESULT not event(Late(s_1,t_40,hi_1)) is false.
+Query not (event(VKey(s_1,k_3)) && attacker(k_3)) is true.
+Query inj-event(Acc(s_1,t_40,m_40)) ==> inj-event(Send(s_1,t_40,m_40)) cannot be proved.
+Query event(Acc(s_1,t_40,m_40)) ==> event(Send(s_1,t_40,m_40)) is true.
+Query not event(Late(s_1,t_40,hi_1)) is false.
