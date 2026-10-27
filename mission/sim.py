@@ -160,8 +160,11 @@ def session_timeline(rng, cfg, T, o_s, o_e):
     return dict(invalid=merge_intervals(invalid), busy=merge_intervals(busy), ttra=ttra, air=air_total, n_hs=n_hs)
 
 
-def _retry_time(rng, frames, n, loss, link, ack_air, rto_factor):
-    """Per command extra time from frame retransmissions and the frame air time (vectorised over n commands)."""
+def _retry_time(rng, frames, n, loss, link, ack_air, rto_factor, return_att=False):
+    """Per command extra time from frame retransmissions and the frame air time (vectorised over n commands).
+
+    With return_att the attempts drawn for every frame (n x frames) are also returned; the draws are the same.
+    """
     frames = np.asarray(frames, float)
     if loss > 0:
         att = rng.geometric(1 - loss, size=(n, len(frames)))
@@ -172,6 +175,8 @@ def _retry_time(rng, frames, n, loss, link, ack_air, rto_factor):
     retry_wait = ((att - 1) * rto).sum(axis=1)
     # silence between frames of one command on duty cycled links
     silence = (att.sum(axis=1) - 1) * frames.mean() * (1 / link['duty'] - 1)
+    if return_att:
+        return air, retry_wait + silence, att.sum(axis=1), att
     return air, retry_wait + silence, att.sum(axis=1)
 
 
@@ -208,7 +213,8 @@ def build_config(vehicle, arch, link_name, params=None, **over):
                 grace=a['grace_s'], clock=a['clock_hz'], ws=a['wait_state_factor'], mac=a['mac_cycles'],
                 outage_rate=a['outage_rate_per_h'], outage_mean=a['outage_mean_s'], deadline=a['deadline_s'],
                 T=phases[-1][2], t_meas=phases[0][2],
-                cmd_rate=float(over.get('cmd_rate', model.command_rate(vehicle))))
+                cmd_rate=float(over.get('cmd_rate', model.command_rate(vehicle))),
+                replay_rule=over.get('replay_rule'), replay_window=over.get('replay_window'))
 
 
 def run_once(rng, cfg, deadlines):
@@ -244,7 +250,8 @@ def run_once(rng, cfg, deadlines):
         blocked = in_busy & (idx >= 0)
         arrivals = np.where(blocked, np.maximum(t, bus_e[np.clip(idx, 0, None)] if len(bus_e) else t), t) + wait
     state = rng.bit_generator.state
-    air_a, extra_a, nfa = _retry_time(rng, cfg['cmd_auth'], n, cfg['loss'], link, cfg['ack_air'], cfg['p']['rto_factor'])
+    air_a, extra_a, nfa, att_a = _retry_time(rng, cfg['cmd_auth'], n, cfg['loss'], link, cfg['ack_air'],
+                                             cfg['p']['rto_factor'], return_att=True)
     rng.bit_generator.state = state
     air_b, extra_b, _ = _retry_time(rng, cfg['cmd_base'], n, cfg['loss'], link, cfg['ack_air'], cfg['p']['rto_factor'])
     mac = cfg['mac'] if cfg['ap']['tag_bytes'] else 0.0
@@ -289,6 +296,18 @@ def run_once(rng, cfg, deadlines):
     out['ttra_s'] = float(np.mean(st['ttra'])) if st['ttra'] else float('nan')
     out['first_session_s'] = float(inv_e[0]) if cfg['ap']['session'] and len(inv_e) else 0.0
     out['n_outages'] = len(o_s)
+    if cfg.get('replay_rule'):
+        # replay acceptance rules (mission/replay.py); draws come from a separate generator, so the published
+        # rule results above are unchanged and the three rules share every draw of this run
+        from . import replay
+        rr = replay.rule_outcomes(cfg, dict(t=t, start=start_a, att=att_a, air=air_a, extra=extra_a, comp=comp,
+                                            ok=okd, valid=valid, o_s=o_s, o_e=o_e, inv_s=inv_s, inv_e=inv_e,
+                                            lat=lat_a, link_ok=link_ok), deadlines)
+        out.update(rr)
+        rule = replay.rule_key(cfg['replay_rule'], cfg.get('replay_window'))
+        out['avail'] = rr[f'avail_rule_{rule}']
+        for d in deadlines:
+            out[f'avail_{d:g}'] = rr[f'avail_rule_{rule}_{d:g}']
     return out
 
 
@@ -297,5 +316,8 @@ def run_config(vehicle, arch, link_name, runs, deadlines, key_extra='', **over):
     cfg = build_config(vehicle, arch, link_name, **over)
     key = f'{vehicle}|{arch}|{link_name}|{key_extra}'
     rng = rng_for(key)
+    if cfg.get('replay_rule'):
+        # the replay rule is not part of the key, so runs under different rules share their draws (paired)
+        cfg['rng_replay'] = rng_for(key + '|replay')
     res = [run_once(rng, cfg, deadlines) for _ in range(runs)]
     return res, cfg
