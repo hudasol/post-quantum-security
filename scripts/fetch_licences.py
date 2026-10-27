@@ -66,6 +66,8 @@ LOCAL = [
     ("PX4-Autopilot", "WP1 firmware builds for memory use; WP2 software in the loop (fetched by flightstack/fetch.sh)", TP / "PX4-Autopilot", "LICENSE", ""),
     ("ArduPilot", "WP1 firmware builds for memory use (fetched by flightstack/fetch.sh); only section headers, the linker MEMORY block and board definition values are kept as data", TP / "ardupilot", "COPYING.txt", "fb773567896014da007bca58358704d4a0d8516f (tag Copter-4.7.2; git describe prints APMrover2-beta in a shallow clone)"),
     ("ArduPilot (software in the loop copy)", "WP2 software in the loop (fetched and built by sitl/fetch.sh); nothing kept but run logs of the study", TP / "wp2_ardupilot", "COPYING.txt", "fb773567896014da007bca58358704d4a0d8516f (tag Copter-4.7.2, the same commit as the WP1 copy)"),
+    ("Monocypher", "Round 6 classical baseline (X25519, Ed25519 with SHA-512) executed in RTL simulation (fetched by rtlsim/proto/fetch.sh)", TP / "rtl6/monocypher", "LICENCE.md", "ab2b16dd619ad5f6979a4fbe69cfa324a6fcc35f (tag 4.0.3)"),
+    ("MAVLink c_library_v2", "Round 6 MAVLink 2 frames and signing tag in RTL simulation (fetched by rtlsim/proto/fetch.sh); mavlink_sha256.h carries its own BSD-3-Clause notice", TP / "rtl6/mavlink_c", "mavlink_sha256.h", "6b4243f0e54b42ddb1e65df7a3a5e8c99d15ec1f"),
     ("CrashDebug", "ArduPilot H7 build dependency, build time only", TP / "ardupilot/modules/CrashDebug", "LICENSE", ""),
     ("ARM CMSIS core", "WP7 board images and cache register citations (fetched at build time)", TP / "wp7_work/board_kit_libs/cmsis_core", "LICENSE.md", ""),
     ("ST cmsis_device_l5", "WP7 NUCLEO-L552ZE-Q images (fetched at build time)", TP / "wp7_work/board_kit_libs/cmsis_device_l5", "LICENSE.md", ""),
@@ -90,6 +92,7 @@ PATTERNS = [("Apache-2.0", r"Apache License,?\s+Version 2\.0"), ("GPL-3.0", r"GN
             ("MIT", r"Permission is hereby granted, free of charge"),
             ("ISC", r"Permission to use, copy, modify, and/or distribute this software for any purpose"),
             ("BSD-3-Clause", r"Redistribution and use in source and binary forms.{0,1500}Neither the name"),
+            ("BSD-2-Clause", r"BSD 2-Clause|2-clause BSD"),
             ("Solderpad Hardware License 0.51", r"SOLDERPAD HARDWARE LICENSE\s+version 0\.51"),
             ("CC0", r"CC0 1\.0|Creative Commons Zero"),
             ("GPL-3.0 or later (licence notice)", r"GNU General Public License as published by\s+the Free Software Foundation;?\s+either version 3")]
@@ -254,6 +257,7 @@ NOTES = """Notes:
 - mlkem native, mldsa native and slhdsa-c carry a combined licence statement (Apache-2.0, MIT or ISC, as read). TF-PSA-Crypto offers Apache-2.0 or GPL-2.0 as read.
 - wolfSSL and wolfBoot are GPL-3.0 as read. They are downloaded by `bench/mcu/fetch_libs.sh e2` for local experiments only. Do not redistribute builds without checking the licence.
 - pqm4 has no licence file at the repository root at the pinned commit. Its licences are set per implementation directory. It is used only to read published benchmark rows and to read configuration files, never copied.
+- Monocypher offers its code under BSD-2-Clause or, at the user's choice, a public domain dedication with a CC0 fallback, as read in LICENCE.md. The MAVLink C library is stated as MIT on mavlink.io (read 2026-10-28); its bundled mavlink_sha256.h carries a BSD-3-Clause notice. Both are fetched by `rtlsim/proto/fetch.sh` for local benchmark runs only.
 - liboqs is MIT as read (LICENSE.txt). Host measurements in `bench/host/` are labelled host measured.
 - Tools that run outside the repository (simulators, compilers, flight stacks, the protocol verifier) are recorded with the licence file of the copy that was used; none of their code is stored in this repository.
 - A Debian copyright file lists the licence of each part of the package; all licence names it gives are listed.
@@ -279,7 +283,7 @@ def write_doc(rows):
           "slides or web pages. NIST publications (FIPS 203, 204, 205, SP 800-208) and IETF RFCs are cited for sizes and statements only. "
           "I have not verified the reuse terms of each paper; the numbers are factual values with attribution, and anything longer than a short "
           "phrase is paraphrased. If a rights holder objects to a row, remove it.", "",
-          "## Licence of this repository", "",
+          "## Licence of this repository ", "",
           "All rights reserved by Huda Mueen. Permission is needed before use, copying, modification, distribution or sale; see `LICENSE` and "
           "`docs/LICENCE_DECISION.md`. The licences in the table above belong to third party components and are not changed by this.", ""]
     DOC.write_text("\n".join(L), encoding="utf-8")
