@@ -4,7 +4,8 @@
 Every source cited by a row of data/evidence.csv gets one entry (with the number of rows that
 cite it). Every URL recorded in a committed round 4 source note or parameter file (data/raw/S12_*), the policy
 timeline, the entity context or the reference profiles gets
-an entry too, with the file that uses it. Nothing is typed by hand; rerun after any change.
+an entry too, with the file that uses it, and so does every work of the round 6 related work file
+(data/raw/S14_related_work.csv). Nothing is typed by hand; rerun after any change.
 """
 import csv
 import re
@@ -56,6 +57,18 @@ def collect():
             e = entries.setdefault(url, {"title": "", "dates": set(), "rows": 0, "used_by": set()})
             e["used_by"].add(rel)
             e["dates"].add("2026-10-20")
+    related = ROOT / "data" / "raw" / "S14_related_work.csv"
+    if related.exists():  # round 6 related work (relwork/build_related_work.py); one entry per retrieved work
+        with open(related, newline="", encoding="utf-8") as fh:
+            for row in csv.DictReader(fh):
+                url = (row.get("url") or "").strip()
+                if not url or (row.get("read_via") or "").startswith("not retrieved"):
+                    continue  # refused full texts are recorded in the CSV, not listed as retrieved sources
+                e = entries.setdefault(url, {"title": clean(row.get("citation")), "dates": set(), "rows": 0, "used_by": set()})
+                e["title"] = e["title"] or clean(row.get("citation"))
+                e["used_by"].add("data/raw/S14_related_work.csv")
+                if row.get("retrieval_date"):
+                    e["dates"].add(row["retrieval_date"])
     return entries
 
 
