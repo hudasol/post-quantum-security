@@ -1,0 +1,7 @@
+   text	   data	    bss	    dec	    hex	filename
+  88614	      4	 280121	 368739	  5a063	primitives.elf
+  44996	      4	 267337	 312337	  4c411	classical.elf
+  56085	      4	 284145	 340234	  5310a	pq_only.elf
+  66553	      4	 284273	 350830	  55a6e	hybrid_f1.elf
+  37829	      4	 273353	 311186	  4bf92	per_command_mldsa44.elf
+  21708	      4	 268885	 290597	  46f25	mavlink_tag.elf

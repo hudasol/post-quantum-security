@@ -1,0 +1,6 @@
+primitives: monocypher monocypher_ed25519 mlkem768 mldsa44 proto_hash
+classical: monocypher monocypher_ed25519 proto_hash mld_fips202 mld_keccakf1600
+pq_only: mlkem768 mldsa44 proto_hash
+hybrid_f1: monocypher mlkem768 mldsa44 proto_hash
+per_command_mldsa44: mldsa44
+mavlink_tag: none

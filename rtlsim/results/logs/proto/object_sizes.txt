@@ -1,0 +1,9 @@
+   text	   data	    bss	    dec	    hex	filename
+  26758	      0	      0	  26758	   6886	mlkem768.o
+  40396	      0	      0	  40396	   9dcc	mldsa44.o
+   1174	      0	      0	   1174	    496	mld_fips202.o
+   8596	      0	      0	   8596	   2194	mld_keccakf1600.o
+  88612	      0	      0	  88612	  15a24	monocypher.o
+  10178	      0	      0	  10178	   27c2	monocypher_ed25519.o
+     74	      0	      0	     74	     4a	proto_hash.o
+    374	      0	      8	    382	    17e	bench_rng.o

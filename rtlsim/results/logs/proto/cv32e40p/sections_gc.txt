@@ -1,0 +1,96 @@
+primitives.elf  :
+section               size     addr
+.vectors               256        0
+.init                   80      384
+.text                81080      464
+.rodata               6848    81568
+.eh_frame              248    88416
+.init_array              4    88664
+.sdata                 102    88672
+.sbss                   33    88776
+.bss                 13848    88812
+.heap                 4096   102660
+.stack              262144   106768
+Total               387164
+
+
+classical.elf  :
+section               size    addr
+.vectors               256       0
+.init                   76     384
+.text                39632     460
+.rodata               4712   40096
+.eh_frame              248   44808
+.init_array              4   45056
+.sdata                  72   45064
+.sbss                   41   45136
+.bss                  1056   45180
+.heap                 4096   46236
+.stack              262144   50336
+Total               330762
+
+
+pq_only.elf  :
+section               size    addr
+.vectors               256       0
+.init                   80     384
+.text                53092     464
+.rodata               2400   53568
+.eh_frame              248   55968
+.init_array              4   56216
+.sdata                   9   56224
+.sbss                   41   56240
+.bss                 17864   56284
+.heap                 4096   74148
+.stack              262144   78256
+Total               351820
+
+
+hybrid_f1.elf  :
+section               size    addr
+.vectors               256       0
+.init                   80     384
+.text                63496     464
+.rodata               2464   63968
+.eh_frame              248   66432
+.init_array              4   66680
+.sdata                   9   66688
+.sbss                   41   66704
+.bss                 17992   66748
+.heap                 4096   84740
+.stack              262144   88848
+Total               369255
+
+
+per_command_mldsa44.elf  :
+section               size    addr
+.vectors               256       0
+.init                   80     384
+.text                34992     464
+.rodata               2216   35456
+.eh_frame              248   37672
+.init_array              4   37920
+.sdata                  37   37928
+.sbss                   37   37968
+.bss                  7076   38008
+.heap                 4096   45084
+.stack              262144   49184
+Total               332054
+
+
+mavlink_tag.elf  :
+section               size    addr
+.vectors               256       0
+.init                   76     384
+.text                16828     460
+.rodata               4264   17288
+.eh_frame              248   21552
+.init_array              4   21800
+.sdata                  36   21808
+.sbss                   37   21848
+.bss                  2608   21888
+.heap                 4096   24496
+.stack              262144   28592
+Total               312422
+
+

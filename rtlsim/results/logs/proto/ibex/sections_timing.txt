@@ -1,0 +1,69 @@
+primitives.elf  :
+section               size      addr
+.vectors               132   1048576
+.text               165756   1048708
+.rodata               7966   1214464
+.eh_frame               40   1222432
+.data                    0   1222472
+.bss                 13512   1222472
+.stack                8192   1835008
+Total               205254
+
+
+classical.elf  :
+section               size      addr
+.vectors               132   1048576
+.text               109736   1048708
+.rodata               5442   1158448
+.eh_frame               40   1163892
+.data                    0   1163932
+.bss                   728   1163936
+.stack                8192   1835008
+Total               133926
+
+
+pq_only.elf  :
+section               size      addr
+.vectors               132   1048576
+.text                69732   1048708
+.rodata               2645   1118464
+.data                    3   1121109
+.bss                 17536   1121112
+.stack                8192   1835008
+Total               100364
+
+
+hybrid_f1.elf  :
+section               size      addr
+.vectors               132   1048576
+.text               154292   1048708
+.rodata               6617   1203008
+.eh_frame               40   1209628
+.data                    0   1209668
+.bss                 17664   1209672
+.stack                8192   1835008
+Total               196593
+
+
+per_command_mldsa44.elf  :
+section              size      addr
+.vectors              132   1048576
+.text               46876   1048708
+.rodata              2489   1095584
+.data                   3   1098073
+.bss                 6744   1098080
+.stack               8192   1835008
+Total               75665
+
+
+mavlink_tag.elf  :
+section              size      addr
+.vectors              132   1048576
+.text               17308   1048708
+.rodata              4178   1066016
+.data                   2   1070194
+.bss                 2280   1070200
+.stack               8192   1835008
+Total               44566
+
+
