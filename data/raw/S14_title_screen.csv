@@ -1,0 +1,122 @@
+dblp_key,decision,rule,reason,round5_gap_by_title,screened_on,label
+journals/micro/MisoczkiGGDVF19,pass,inclusion 1 to 3 possible,post quantum security for embedded cores; may state costs on an embedded core,unknown from title,2026-10-28,published
+journals/corr/abs-2409-05298,pass,inclusion 1 to 3 possible,performance analysis of post quantum schemes on embedded systems; platform to be checked,unknown from title,2026-10-28,published
+journals/corr/abs-2505-02239,pass,inclusion 1 to 3 possible,performance analysis of post quantum schemes for consumer electronics; platform to be checked (exclusion 1 if application processors only),unknown from title,2026-10-28,published
+conf/icfpt/NguyenDG19,exclude,inclusion 2,high level synthesis hardware and software codesign; no microcontroller class core named,,2026-10-28,published
+conf/date/FritzmannSMRSS19,pass,inclusion 2 (core with accelerators),post quantum co-processors on a RISC-V platform,yes (RISC-V core),2026-10-28,published
+journals/corr/abs-2203-02314,exclude,inclusion 1 and 2,post quantum construction outside the question (no cost on a microcontroller class core by title),,2026-10-28,published
+journals/corr/abs-2405-11885,exclude,inclusion 1,survey without own measurements,,2026-10-28,published
+journals/iacr/BasuSNK19,exclude,inclusion 2,"hardware (FPGA or ASIC) evaluation, no processor core",,2026-10-28,published
+conf/ccs/ChaseDGORRSZ17,exclude,inclusion 1 and 2,post quantum construction outside the question (no cost on a microcontroller class core by title),,2026-10-28,published
+journals/cic/AbdolmalekiBDFKKZ25,exclude,inclusion 1 and 2,post quantum construction outside the question (no cost on a microcontroller class core by title),,2026-10-28,published
+conf/birthday/BuchmannBGP16,exclude,inclusion 1,survey without own measurements,,2026-10-28,published
+conf/IEEEares/BlazyCV19,exclude,inclusion 1 and 2,post quantum construction outside the question (no cost on a microcontroller class core by title),,2026-10-28,published
+journals/iacr/AbdolmalekiBFKKZ24,exclude,inclusion 1 and 2,post quantum construction outside the question (no cost on a microcontroller class core by title),,2026-10-28,published
+conf/pqcrypto/2013,exclude,inclusion 1,"proceedings volume record, not a paper",,2026-10-28,published
+conf/pqcrypto/2010,exclude,inclusion 1,"proceedings volume record, not a paper",,2026-10-28,published
+journals/tches/KunduGKSV25,exclude,inclusion 3,"new KEM design, not a selected scheme",,2026-10-28,published
+journals/iacr/AkcayO20,pass,inclusion 2,RISC-V compared with transport triggered architectures for a post quantum application,yes (RISC-V core),2026-10-28,published
+conf/isqed/PircherGZM21,exclude,inclusion 3,Classic McEliece is not a selected scheme; vector extension of an application class design,,2026-10-28,published
+journals/corr/abs-2505-03762,exclude,exclusion 1,"superscalar application class RISC-V core, no cryptography by title",,2026-10-28,published
+conf/host/AysuTTGO18,exclude,exclusion 5,side channel vulnerabilities (attack description),,2026-10-28,published
+journals/iacr/BonehEF18,exclude,inclusion 1 and 2,post quantum construction outside the question (no cost on a microcontroller class core by title),,2026-10-28,published
+conf/sp/CremersFJ22,exclude,inclusion 1 and 2,post quantum construction outside the question (no cost on a microcontroller class core by title),,2026-10-28,published
+conf/networking/KempfGJZC24,exclude,exclusion 1 and 2,QUIC with post quantum schemes on host machines (related work candidate),,2026-10-28,published
+conf/pqcrypto/PaquinST20,exclude,exclusion 1 and 2,TLS benchmark on host machines over emulated networks (related work candidate),,2026-10-28,published
+journals/istr/0009WFLWL021,exclude,inclusion 1 and 2,post quantum construction outside the question (no cost on a microcontroller class core by title),,2026-10-28,published
+journals/iacr/BernsteinL17a,exclude,inclusion 1,overview article without own measurements,,2026-10-28,published
+conf/ACMdis/KimL18,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/dcoss/SorbelliCPS19,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/uic/FujiiHR13,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/icc/HazarikaSDD24,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/corr/abs-2501-13733,exclude,inclusion 1 and 2,post quantum construction outside the question (no cost on a microcontroller class core by title),,2026-10-28,published
+journals/iacr/XuCCYZ23,exclude,inclusion 1 and 2,post quantum construction outside the question (no cost on a microcontroller class core by title),,2026-10-28,published
+conf/pqcrypto/BootleLLS20,exclude,inclusion 1 and 2,post quantum construction outside the question (no cost on a microcontroller class core by title),,2026-10-28,published
+journals/ijscn/DharminderDGS23,exclude,inclusion 3,"new lattice authentication protocol for satellite links, not a selected scheme (related work candidate)",,2026-10-28,published
+conf/ndss/Bernstein00Y25,exclude,exclusion 1 and 2,end to end tunnels on host machines (related work candidate),,2026-10-28,published
+conf/ccs/AlwenHKMS23,exclude,inclusion 1 and 2,post quantum construction outside the question (no cost on a microcontroller class core by title),,2026-10-28,published
+conf/eurosp/BoyenHM21,exclude,inclusion 1 and 2,post quantum construction outside the question (no cost on a microcontroller class core by title),,2026-10-28,published
+journals/tcs/DArcoPP24,exclude,inclusion 1,"theory of post quantum authentication, no platform",,2026-10-28,published
+journals/corr/abs-2211-07752,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/icra/BarutB0S21,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/corr/abs-2410-06472,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/corr/abs-2203-08903,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/case/PlasbergNTERD22,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/tse/CaldasGSPRB24,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/icse/WitteT18,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/icar/BarbosaLCLMVB15,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/fgcs/WeiSHCGTS16,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/iacr/AlagicBKM21,exclude,inclusion 1 and 2,post quantum construction outside the question (no cost on a microcontroller class core by title),,2026-10-28,published
+journals/iacr/CamposCCMRRSW23,exclude,inclusion 3,CSIDH is not a selected scheme; TLS on host machines,,2026-10-28,published
+journals/iacr/TairiMM20,exclude,inclusion 1 and 2,post quantum construction outside the question (no cost on a microcontroller class core by title),,2026-10-28,published
+journals/iacr/HeinzKLPSS22,pass,inclusion 3 (hardened pair),first order masked Kyber on Cortex-M4,possible (hardened and unhardened pair),2026-10-28,published
+conf/africacrypt/BotrosKS19,pass,inclusion 1 to 3,Kyber (round predecessor) on Cortex-M4 with memory figures,"no (Cortex-M4, unhardened)",2026-10-28,published
+journals/cryptography/GhibanC25,exclude,exclusion 5,power analysis attack (attack description),,2026-10-28,published
+journals/tches/AlkimBCG20,pass,inclusion 1 to 3,Cortex-M4 optimisations for RLWE and MLWE schemes including the Kyber round predecessor,"no (Cortex-M4, unhardened)",2026-10-28,published
+conf/eurosp/BosDKLLSSSS18,exclude,inclusion 2,scheme specification paper; no microcontroller class core named in the title,,2026-10-28,published
+conf/crypto/CarrierMST25,exclude,inclusion 1,"cryptanalysis, no cost values on a core",,2026-10-28,published
+journals/tcad/DeutelHMT25,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/tches/DucasKLLSSS18,exclude,inclusion 2,scheme specification paper; no microcontroller class core named in the title,,2026-10-28,published
+journals/iacr/DucasLLSSS17,exclude,inclusion 2,scheme specification paper; no microcontroller class core named in the title,,2026-10-28,published
+conf/pkdd/FunkBM20,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/iolts/BellarminoCHKSS22,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/host/PerrinDR25,exclude,exclusion 5,laser fault attacks on microcontrollers (attack description),,2026-10-28,published
+conf/date/KuhnS025,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/amcc/ZometaKFF12,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/isse/Broy07,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/ersa/GogniatVYCGLDB10,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+books/sp/16/PohlBDH16,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/sies/ZimmermannSVBR12,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/sosym/LiebelMTLH18,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/spe/BissyandeRLBM15,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/iacr/SchmidAWZW23,exclude,inclusion 2,"standalone hardware implementation of Falcon, no processor core",,2026-10-28,published
+journals/tches/OuyangZZYZWTZWL25,exclude,inclusion 2,standalone hardware architecture for Falcon signing,,2026-10-28,published
+journals/cic/BerthetPTBC24,exclude,inclusion 3,"Falcon masking technique; FIPS 206 not final (round 5 deviation 1), platform not named",,2026-10-28,published
+journals/tcad/ChenSMLGZ26,exclude,exclusion 5,side channel attack framework (attack description),,2026-10-28,published
+journals/tches/KarabulutA24,exclude,inclusion 2,"masked Falcon arithmetic in hardware, no processor core",,2026-10-28,published
+journals/iacr/HalmansVSCG25,exclude,inclusion 3,Falcon arithmetic variant; FIPS 206 not final (round 5 deviation 1),,2026-10-28,published
+journals/iacr/Pornin25b,exclude,inclusion 3,"key generation for Falcon, BAT and Hawk; FIPS 206 not final; BAT and Hawk not selected",,2026-10-28,published
+journals/iacr/LinZYWYXW25,exclude,exclusion 5,power analysis of Falcon samplers (attack description),,2026-10-28,published
+conf/sosp/LenersWHAW11,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/tches/AmietCZ18,exclude,inclusion 2,standalone FPGA accelerator for SPHINCS-256,,2026-10-28,published
+conf/ccs/BernsteinHKNRS19,exclude,inclusion 2,scheme specification paper; no microcontroller class core named in the title,,2026-10-28,published
+journals/iacr/BernsteinHKNRS19,exclude,inclusion 2,scheme specification paper; no microcontroller class core named in the title,,2026-10-28,published
+journals/iacr/BernsteinHHLNPSO14,exclude,inclusion 3,"SPHINCS predecessor specification, not the selected parameter family",,2026-10-28,published
+conf/uss/AlbartusNSFPT21,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/joc/Schage15,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/iacr/KansalDM19,exclude,inclusion 1 and 2,post quantum construction outside the question (no cost on a microcontroller class core by title),,2026-10-28,published
+phd/basesearch/Schage12,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/iacr/AbdallaFLT13,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/asiacrypt/BachoLSW24,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/isicir/GoswamiMBSC14,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/seaa/WeddeLRK08,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+books/sp/21/BBKPRS2021,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+books/sp/21/HaywardDP0KF21,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/imm/WangCLP22,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/tches/BernsteinBBCCKKPRT25,exclude,exclusion 5,timing attack (attack description),,2026-10-28,published
+journals/iacr/AlmeidaBBGLLOPQSSS23,exclude,inclusion 1,formal verification of implementation correctness; no cost values by title,,2026-10-28,published
+journals/corr/abs-2210-00562,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/norchip/PayvarPSMH19,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/crypto/BarbosaBDDFGHHLW22,exclude,inclusion 1,"security proof, no cost values",,2026-10-28,published
+journals/iacr/BosDKLLSSS17,exclude,inclusion 2,scheme specification paper; no microcontroller class core named in the title,,2026-10-28,published
+journals/iet-sen/BuonoCLP18,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/soict/HaNZ16,pass,inclusion 3 (classical baseline),classical certificate based authentication with DTLS on resource constrained IoT devices; core to be checked,no (classical baseline outside the gap list),2026-10-28,published
+journals/compsec/BaiWZZSZG25,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/asiaccs/LiHDH0G022,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/scn/LiWDWLW21,exclude,inclusion 3,"certificateless pairing free authentication for UAV networks, not a classical baseline scheme (related work candidate)",,2026-10-28,published
+journals/corr/abs-2208-00901,exclude,inclusion 3,"randomised RLWE authentication, not a selected scheme (related work candidate)",,2026-10-28,published
+conf/ndss/TwardokusBRM24,exclude,exclusion 2,"protocol level V2V authentication on vehicle chipsets, not a microcontroller class core (related work candidate)",,2026-10-28,published
+journals/iotj/CaoYXML19,exclude,inclusion 3,"lattice authentication scheme for NB-IoT, not a selected scheme (related work candidate)",,2026-10-28,published
+journals/corr/abs-2106-08759,exclude,exclusion 1 and 2,TLS key exchange on host machines; NTRU Prime not selected,,2026-10-28,published
+conf/ccs/SchwabeSW20,exclude,exclusion 1 and 2,KEMTLS protocol measured on host machines (related work candidate),,2026-10-28,published
+conf/icsm/AbukwaikBAB18,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/cbms/KayI15,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/arso/HertzbergWAGLOSSSS11,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/sin/Huss09,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+journals/corr/abs-2506-23726,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/iccad/OrtegaB98,exclude,inclusion 2 and 3,off topic by title: no post quantum or classical baseline scheme on a microcontroller class core,,2026-10-28,published
+conf/sp/HulsingNSWZ21,exclude,exclusion 1 and 2,post quantum WireGuard measured on host machines (related work candidate),,2026-10-28,published
+conf/asiaccs/PaulKLN22,exclude,exclusion 1 and 2,TLS certificate chains measured on host machines (related work candidate),,2026-10-28,published
+journals/ijisec/TanSZ22,exclude,inclusion 1,survey without own measurements,,2026-10-28,published
+journals/iacr/KaluderovicCM24,exclude,inclusion 1 and 2,post quantum construction outside the question (no cost on a microcontroller class core by title),,2026-10-28,published
+journals/iacr/AlkimDPS15,exclude,inclusion 3,"NewHope key exchange, not a selected scheme",,2026-10-28,published

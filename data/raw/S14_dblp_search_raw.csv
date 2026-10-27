@@ -1,0 +1,291 @@
+query_id,query,rank,title_as_shown,url,retrieval_date,label
+D00,dblp post-quantum microcontroller,1,dblp: Toward Postquantum Security for Embedded Cores.,https://dblp.org/rec/journals/micro/MisoczkiGGDVF19.html,2026-10-28,published
+D00,dblp post-quantum microcontroller,2,dblp: Evaluating Post-Quantum Cryptography on Embedded Systems: A Performance Analysis.,https://dblp.org/rec/journals/corr/abs-2409-05298.html,2026-10-28,published
+D00,dblp post-quantum microcontroller,3,dblp: Performance Analysis and Deployment Considerations of Post-Quantum Cryptography for Consumer Electronics.,https://dblp.org/rec/journals/corr/abs-2505-02239.html,2026-10-28,published
+D00,dblp post-quantum microcontroller,4,dblp: A High-Level Synthesis Approach to the Software/Hardware Codesign of NTT-Based Post-Quantum Cryptography Algorithms.,https://dblp.org/rec/conf/icfpt/NguyenDG19.html,2026-10-28,published
+D00,dblp post-quantum microcontroller,5,dblp: Post-Quantum Cryptography 2019,https://dblp.org/db/conf/pqcrypto/pqcrypto2019.html,2026-10-28,published
+D00,dblp post-quantum microcontroller,6,dblp: Towards Reliable and Secure Post-Quantum Co-Processors based on RISC-V.,https://dblp.org/rec/conf/date/FritzmannSMRSS19.html,2026-10-28,published
+D00,dblp post-quantum microcontroller,7,dblp: Constructive Post-Quantum Reductions.,https://dblp.org/rec/journals/corr/abs-2203-02314.html,2026-10-28,published
+D00,dblp post-quantum microcontroller,8,"dblp: Post-Quantum Security: Origin, Fundamentals, and Adoption.",https://dblp.org/rec/journals/corr/abs-2405-11885.html,2026-10-28,published
+D00,dblp post-quantum microcontroller,9,dblp: NIST Post-Quantum Cryptography- A Hardware Evaluation Study.,https://dblp.org/rec/journals/iacr/BasuSNK19.html,2026-10-28,published
+D00,dblp post-quantum microcontroller,10,dblp: Post-Quantum Zero-Knowledge and Signatures from Symmetric-Key Primitives.,https://dblp.org/rec/conf/ccs/ChaseDGORRSZ17.html,2026-10-28,published
+D01,post-quantum microcontroller,1,dblp: Post-Quantum Cryptography 2019,https://dblp.org/db/conf/pqcrypto/pqcrypto2019.html,2026-10-28,published
+D01,post-quantum microcontroller,2,dblp: Towards Reliable and Secure Post-Quantum Co-Processors based on RISC-V.,https://dblp.org/rec/conf/date/FritzmannSMRSS19.html,2026-10-28,published
+D01,post-quantum microcontroller,3,Post-Quantum Cryptography 2018 - PQCrypto,https://dblp.org/db/conf/pqcrypto/pqcrypto2018.html,2026-10-28,published
+D01,post-quantum microcontroller,4,dblp: Toward Postquantum Security for Embedded Cores.,https://dblp.org/rec/journals/micro/MisoczkiGGDVF19.html,2026-10-28,published
+D01,post-quantum microcontroller,5,dblp: Post-Quantum Access Control with Application to Secure Data Retrieval.,https://dblp.org/rec/journals/cic/AbdolmalekiBDFKKZ25.html,2026-10-28,published
+D01,post-quantum microcontroller,6,dblp: BibTeX records: Daniel J. Bernstein,https://dblp.org/pid/b/DanielJBernstein.html?view=bibtex,2026-10-28,published
+D01,post-quantum microcontroller,7,dblp: Post-Quantum Cryptography: State of the Art.,https://dblp.org/rec/conf/birthday/BuchmannBGP16.html,2026-10-28,published
+D01,post-quantum microcontroller,8,dblp: Post-Quantum UC-Secure Oblivious Transfer in the Standard Model with Adaptive Corruptions.,https://dblp.org/rec/conf/IEEEares/BlazyCV19.html,2026-10-28,published
+D01,post-quantum microcontroller,9,dblp: Guozhu Xin,https://dblp.org/pid/271/8429.html,2026-10-28,published
+D01,post-quantum microcontroller,10,dblp: Douglas Stebila,https://dblp.org/pid/67/675.html,2026-10-28,published
+D02,post-quantum Cortex-M,1,dblp: Performance Analysis and Deployment Considerations of Post-Quantum Cryptography for Consumer Electronics.,https://dblp.org/rec/journals/corr/abs-2505-02239.html,2026-10-28,published
+D02,post-quantum Cortex-M,2,dblp: Post-Quantum Cryptography 2014,https://dblp.org/db/conf/pqcrypto/pqcrypto2014.html,2026-10-28,published
+D02,post-quantum Cortex-M,3,dblp: Post-Quantum Cryptography,https://dblp.org/db/conf/pqcrypto/index.html,2026-10-28,published
+D02,post-quantum Cortex-M,4,dblp: Post-Quantum Cryptography 2026 - Part I,https://dblp.org/db/conf/pqcrypto/pqcrypto2026-1.html,2026-10-28,published
+D02,post-quantum Cortex-M,5,dblp: Post-Quantum Access Control with Application to Secure Data Retrieval.,https://dblp.org/rec/journals/iacr/AbdolmalekiBFKKZ24.html,2026-10-28,published
+D02,post-quantum Cortex-M,6,"dblp: Post-Quantum Cryptography - 5th International Workshop, PQCrypto 2013, Limoges, France, June 4-7, 2013. Proceedings",https://dblp.org/rec/conf/pqcrypto/2013.html,2026-10-28,published
+D02,post-quantum Cortex-M,7,dblp: Post-Quantum Cryptography 2024 - Part I,https://dblp.org/db/conf/pqcrypto/pqcrypto2024-1.html,2026-10-28,published
+D02,post-quantum Cortex-M,8,"dblp: Post-Quantum Cryptography, Third International Workshop, PQCrypto 2010, Darmstadt, Germany, May 25-28, 2010. Proceedings",https://dblp.org/rec/conf/pqcrypto/2010.html,2026-10-28,published
+D02,post-quantum Cortex-M,9,dblp: Jakub Szefer,https://dblp.org/pid/66/8277.html,2026-10-28,published
+D02,post-quantum Cortex-M,10,dblp: Rudraksh: A compact and lightweight post-quantum key-encapsulation mechanism.,https://dblp.org/rec/journals/tches/KunduGKSV25.html,2026-10-28,published
+D03,post-quantum RISC-V,1,dblp: Comparison of RISC-V and transport triggered architectures for a post-quantum cryptography application.,https://dblp.org/rec/journals/iacr/AkcayO20.html,2026-10-28,published
+D03,post-quantum RISC-V,2,dblp: Exploring the RISC-V Vector Extension for the Classic McEliece Post-Quantum Cryptosystem.,https://dblp.org/rec/conf/isqed/PircherGZM21.html,2026-10-28,published
+D03,post-quantum RISC-V,3,dblp: Towards Reliable and Secure Post-Quantum Co-Processors based on RISC-V.,https://dblp.org/rec/conf/date/FritzmannSMRSS19.html,2026-10-28,published
+D03,post-quantum RISC-V,4,dblp: Performance Analysis and Deployment Considerations of Post-Quantum Cryptography for Consumer Electronics.,https://dblp.org/rec/journals/corr/abs-2505-02239.html,2026-10-28,published
+D03,post-quantum RISC-V,5,dblp: Post-Quantum Cryptography: State of the Art.,https://dblp.org/rec/conf/birthday/BuchmannBGP16.html,2026-10-28,published
+D03,post-quantum RISC-V,6,dblp: CVA6S+: A Superscalar RISC-V Core with High-Throughput Memory Architecture.,https://dblp.org/rec/journals/corr/abs-2505-03762.html,2026-10-28,published
+D03,post-quantum RISC-V,7,dblp: Horizontal side-channel vulnerabilities of post-quantum key exchange protocols.,https://dblp.org/rec/conf/host/AysuTTGO18.html,2026-10-28,published
+D03,post-quantum RISC-V,8,dblp: Post-Quantum Group Signatures from Symmetric Primitives.,https://dblp.org/rec/journals/iacr/BonehEF18.html,2026-10-28,published
+D03,post-quantum RISC-V,9,dblp: Post-Quantum UC-Secure Oblivious Transfer in the Standard Model with Adaptive Corruptions.,https://dblp.org/rec/conf/IEEEares/BlazyCV19.html,2026-10-28,published
+D03,post-quantum RISC-V,10,dblp: Rudraksh: A compact and lightweight post-quantum key-encapsulation mechanism.,https://dblp.org/rec/journals/tches/KunduGKSV25.html,2026-10-28,published
+D04,post-quantum embedded,1,dblp: Evaluating Post-Quantum Cryptography on Embedded Systems: A Performance Analysis.,https://dblp.org/rec/journals/corr/abs-2409-05298.html,2026-10-28,published
+D04,post-quantum embedded,2,dblp: Toward Postquantum Security for Embedded Cores.,https://dblp.org/rec/journals/micro/MisoczkiGGDVF19.html,2026-10-28,published
+D04,post-quantum embedded,3,dblp: Post-Quantum Cryptography 2010,https://dblp.org/db/conf/pqcrypto/pqcrypto2010.html,2026-10-28,published
+D04,post-quantum embedded,4,dblp: A Logic and an Interactive Prover for the Computational Post-Quantum Security of Protocols.,https://dblp.org/rec/conf/sp/CremersFJ22.html,2026-10-28,published
+D04,post-quantum embedded,5,dblp: Post-Quantum Cryptography 2026 - Part II,https://dblp.org/db/conf/pqcrypto/pqcrypto2026-2.html,2026-10-28,published
+D04,post-quantum embedded,6,dblp: A Quantum of QUIC: Dissecting Cryptography with Post-Quantum Insights.,https://dblp.org/rec/conf/networking/KempfGJZC24.html,2026-10-28,published
+D04,post-quantum embedded,7,Post-Quantum Cryptography 2018 - PQCrypto,https://dblp.org/db/conf/pqcrypto/pqcrypto2018.html,2026-10-28,published
+D04,post-quantum embedded,8,dblp: Post-Quantum Cryptography: State of the Art.,https://dblp.org/rec/conf/birthday/BuchmannBGP16.html,2026-10-28,published
+D04,post-quantum embedded,9,dblp: Post-Quantum Cryptography 2024 - Part I,https://dblp.org/db/conf/pqcrypto/pqcrypto2024-1.html,2026-10-28,published
+D04,post-quantum embedded,10,dblp: Benchmarking Post-quantum Cryptography in TLS.,https://dblp.org/rec/conf/pqcrypto/PaquinST20.html,2026-10-28,published
+D05,post-quantum IoT,1,dblp: Performance Analysis and Deployment Considerations of Post-Quantum Cryptography for Consumer Electronics.,https://dblp.org/rec/journals/corr/abs-2505-02239.html,2026-10-28,published
+D05,post-quantum IoT,2,dblp: ABH 2026,https://dblp.org/db/conf/abh/abh2026.html,2026-10-28,published
+D05,post-quantum IoT,3,dblp: SecITC 2025,https://dblp.org/db/conf/secitc/secitc2025.html,2026-10-28,published
+D05,post-quantum IoT,4,dblp: SIoT 2023,https://dblp.org/db/conf/siot/siot2023.html,2026-10-28,published
+D05,post-quantum IoT,5,dblp: ICISSP 2025 (2),https://dblp.org/db/conf/icissp/icissp2025-2.html,2026-10-28,published
+D05,post-quantum IoT,6,dblp: ITASEC/SERICS 2026,https://dblp.org/db/conf/itasec/itasec2026.html,2026-10-28,published
+D05,post-quantum IoT,7,dblp: SSR 2023,https://dblp.org/db/conf/secsr/ssr2023.html,2026-10-28,published
+D05,post-quantum IoT,8,dblp: Toward Postquantum Security for Embedded Cores.,https://dblp.org/rec/journals/micro/MisoczkiGGDVF19.html,2026-10-28,published
+D05,post-quantum IoT,9,dblp: PSCPAC: Post-quantum secure certificateless public auditing scheme in cloud storage.,https://dblp.org/rec/journals/istr/0009WFLWL021.html,2026-10-28,published
+D05,post-quantum IoT,10,dblp: A Logic and an Interactive Prover for the Computational Post-Quantum Security of Protocols.,https://dblp.org/rec/conf/sp/CremersFJ22.html,2026-10-28,published
+D06,post-quantum drone,1,dblp: Post-quantum cryptography - dealing with the fallout of physics success.,https://dblp.org/rec/journals/iacr/BernsteinL17a.html,2026-10-28,published
+D06,post-quantum drone,2,dblp: A Logic and an Interactive Prover for the Computational Post-Quantum Security of Protocols.,https://dblp.org/rec/conf/sp/CremersFJ22.html,2026-10-28,published
+D06,post-quantum drone,3,dblp: Aeroquake: Drone Augmented Dance.,https://dblp.org/rec/conf/ACMdis/KimL18.html,2026-10-28,published
+D06,post-quantum drone,4,dblp: Benchmarking Post-quantum Cryptography in TLS.,https://dblp.org/rec/conf/pqcrypto/PaquinST20.html,2026-10-28,published
+D06,post-quantum drone,5,dblp: CQPC,https://dblp.org/db/conf/cqpc/index.html,2026-10-28,published
+D06,post-quantum drone,6,dblp: Automated Picking System Employing a Drone.,https://dblp.org/rec/conf/dcoss/SorbelliCPS19.html,2026-10-28,published
+D06,post-quantum drone,7,dblp: CQPC 2024,https://dblp.org/db/conf/cqpc/cqpc2024.html,2026-10-28,published
+D06,post-quantum drone,8,dblp: Endless Flyer: A Continuous Flying Drone with Automatic Battery Replacement.,https://dblp.org/rec/conf/uic/FujiiHR13.html,2026-10-28,published
+D06,post-quantum drone,9,dblp: Quantum-Driven Context-Aware Federated Learning in Heterogeneous Vehicular Metaverse Ecosystem.,https://dblp.org/rec/conf/icc/HazarikaSDD24.html,2026-10-28,published
+D06,post-quantum drone,10,"dblp: Quantum Information Processing, Volume 22",https://dblp.org/db/journals/qip/qip22.html,2026-10-28,published
+D07,post-quantum UAV,1,dblp: Post-Quantum Access Control with Application to Secure Data Retrieval.,https://dblp.org/rec/journals/cic/AbdolmalekiBDFKKZ25.html,2026-10-28,published
+D07,post-quantum UAV,2,dblp: Post-Quantum UC-Secure Oblivious Transfer in the Standard Model with Adaptive Corruptions.,https://dblp.org/rec/conf/IEEEares/BlazyCV19.html,2026-10-28,published
+D07,post-quantum UAV,3,dblp: Post-Quantum Stealth Address Protocols.,https://dblp.org/rec/journals/corr/abs-2501-13733.html,2026-10-28,published
+D07,post-quantum UAV,4,dblp: Constructive Post-Quantum Reductions.,https://dblp.org/rec/journals/corr/abs-2203-02314.html,2026-10-28,published
+D07,post-quantum UAV,5,dblp: Rudraksh: A compact and lightweight post-quantum key-encapsulation mechanism.,https://dblp.org/rec/journals/tches/KunduGKSV25.html,2026-10-28,published
+D07,post-quantum UAV,6,dblp: Post-Quantum Cryptography: State of the Art.,https://dblp.org/rec/conf/birthday/BuchmannBGP16.html,2026-10-28,published
+D07,post-quantum UAV,7,"dblp: Post-Quantum Public-key Authenticated Searchable Encryption with Forward Security: General Construction, Implementation, and Applications.",https://dblp.org/rec/journals/iacr/XuCCYZ23.html,2026-10-28,published
+D07,post-quantum UAV,8,dblp: Compact Privacy Protocols from Post-quantum and Timed Classical Assumptions.,https://dblp.org/rec/conf/pqcrypto/BootleLLS20.html,2026-10-28,published
+D07,post-quantum UAV,9,dblp: A Quantum of QUIC: Dissecting Cryptography with Post-Quantum Insights.,https://dblp.org/rec/conf/networking/KempfGJZC24.html,2026-10-28,published
+D07,post-quantum UAV,10,dblp: Toward Postquantum Security for Embedded Cores.,https://dblp.org/rec/journals/micro/MisoczkiGGDVF19.html,2026-10-28,published
+D08,post-quantum MAVLink,1,dblp: Performance Analysis and Deployment Considerations of Post-Quantum Cryptography for Consumer Electronics.,https://dblp.org/rec/journals/corr/abs-2505-02239.html,2026-10-28,published
+D08,post-quantum MAVLink,2,dblp: Post-Quantum Access Control with Application to Secure Data Retrieval.,https://dblp.org/rec/journals/cic/AbdolmalekiBDFKKZ25.html,2026-10-28,published
+D08,post-quantum MAVLink,3,dblp: A post quantum secure construction of an authentication protocol for satellite communication.,https://dblp.org/rec/journals/ijscn/DharminderDGS23.html,2026-10-28,published
+D08,post-quantum MAVLink,4,dblp: Post-Quantum Stealth Address Protocols.,https://dblp.org/rec/journals/corr/abs-2501-13733.html,2026-10-28,published
+D08,post-quantum MAVLink,5,dblp: PQConnect: Automated Post-Quantum End-to-End Tunnels.,https://dblp.org/rec/conf/ndss/Bernstein00Y25.html,2026-10-28,published
+D08,post-quantum MAVLink,6,dblp: A Logic and an Interactive Prover for the Computational Post-Quantum Security of Protocols.,https://dblp.org/rec/conf/sp/CremersFJ22.html,2026-10-28,published
+D08,post-quantum MAVLink,7,dblp: Post-Quantum Cryptography,https://dblp.org/db/conf/pqcrypto/index.html,2026-10-28,published
+D08,post-quantum MAVLink,8,dblp: Post-Quantum Multi-Recipient Public Key Encryption.,https://dblp.org/rec/conf/ccs/AlwenHKMS23.html,2026-10-28,published
+D08,post-quantum MAVLink,9,"dblp: Post-Quantum Public-key Authenticated Searchable Encryption with Forward Security: General Construction, Implementation, and Applications.",https://dblp.org/rec/journals/iacr/XuCCYZ23.html,2026-10-28,published
+D08,post-quantum MAVLink,10,dblp: Post-Quantum Cryptography: State of the Art.,https://dblp.org/rec/conf/birthday/BuchmannBGP16.html,2026-10-28,published
+D09,post-quantum robot,1,dblp: Performance Analysis and Deployment Considerations of Post-Quantum Cryptography for Consumer Electronics.,https://dblp.org/rec/journals/corr/abs-2505-02239.html,2026-10-28,published
+D09,post-quantum robot,2,dblp: Post-Quantum Access Control with Application to Secure Data Retrieval.,https://dblp.org/rec/journals/iacr/AbdolmalekiBFKKZ24.html,2026-10-28,published
+D09,post-quantum robot,3,dblp: Post-Quantum Stealth Address Protocols.,https://dblp.org/rec/journals/corr/abs-2501-13733.html,2026-10-28,published
+D09,post-quantum robot,4,dblp: Post-Quantum Cryptography 2026 - Part I,https://dblp.org/db/conf/pqcrypto/pqcrypto2026-1.html,2026-10-28,published
+D09,post-quantum robot,5,dblp: Post-Quantum Cryptography 2026 - Part II,https://dblp.org/db/conf/pqcrypto/pqcrypto2026-2.html,2026-10-28,published
+D09,post-quantum robot,6,dblp: Post-Quantum Cryptography 2024 - Part I,https://dblp.org/db/conf/pqcrypto/pqcrypto2024-1.html,2026-10-28,published
+D09,post-quantum robot,7,dblp: A Logic and an Interactive Prover for the Computational Post-Quantum Security of Protocols.,https://dblp.org/rec/conf/sp/CremersFJ22.html,2026-10-28,published
+D09,post-quantum robot,8,dblp: Epoque: Practical End-to-End Verifiable Post-Quantum-Secure E-Voting.,https://dblp.org/rec/conf/eurosp/BoyenHM21.html,2026-10-28,published
+D09,post-quantum robot,9,dblp: Efficient and reliable post-quantum authentication.,https://dblp.org/rec/journals/tcs/DArcoPP24.html,2026-10-28,published
+D09,post-quantum robot,10,dblp: Toward Postquantum Security for Embedded Cores.,https://dblp.org/rec/journals/micro/MisoczkiGGDVF19.html,2026-10-28,published
+D10,post-quantum ROS 2 robot operating system,1,"dblp: Robot Operating System 2: Design, Architecture, and Uses In The Wild.",https://dblp.org/rec/journals/corr/abs-2211-07752.html,2026-10-28,published
+D10,post-quantum ROS 2 robot operating system,2,dblp: Benchmarking Real-Time Capabilities of ROS 2 and OROCOS for Robotics Applications.,https://dblp.org/rec/conf/icra/BarutB0S21.html,2026-10-28,published
+D10,post-quantum ROS 2 robot operating system,3,dblp: Enabling Novel Mission Operations and Interactions with ROSA: The Robot Operating System Agent.,https://dblp.org/rec/journals/corr/abs-2410-06472.html,2026-10-28,published
+D10,post-quantum ROS 2 robot operating system,4,dblp: SMARTmBOT: A ROS2-based Low-cost and Open-source Mobile Robot Platform.,https://dblp.org/rec/journals/corr/abs-2203-08903.html,2026-10-28,published
+D10,post-quantum ROS 2 robot operating system,5,dblp: Towards Distributed Real-Time capable Robotic Control using ROS2.,https://dblp.org/rec/conf/case/PlasbergNTERD22.html,2026-10-28,published
+D10,post-quantum ROS 2 robot operating system,6,dblp: Runtime Verification and Field-Based Testing for ROS-Based Robotic Systems.,https://dblp.org/rec/journals/tse/CaldasGSPRB24.html,2026-10-28,published
+D10,post-quantum ROS 2 robot operating system,7,dblp: Checking consistency of robot software architectures in ROS.,https://dblp.org/rec/conf/icse/WitteT18.html,2026-10-28,published
+D10,post-quantum ROS 2 robot operating system,8,"dblp: ROS, Android and cloud robotics: How to make a powerful low cost robot.",https://dblp.org/rec/conf/icar/BarbosaLCLMVB15.html,2026-10-28,published
+D10,post-quantum ROS 2 robot operating system,9,dblp: RT-ROS: A real-time ROS architecture on multi-core processors.,https://dblp.org/rec/journals/fgcs/WeiSHCGTS16.html,2026-10-28,published
+D10,post-quantum ROS 2 robot operating system,10,"dblp: Robotics and Autonomous Systems, Volume 4",https://dblp.org/db/journals/ras/ras4.html,2026-10-28,published
+D11,post-quantum secure boot,1,dblp: Post-Quantum Access Control with Application to Secure Data Retrieval.,https://dblp.org/rec/journals/cic/AbdolmalekiBDFKKZ25.html,2026-10-28,published
+D11,post-quantum secure boot,2,dblp: A post quantum secure construction of an authentication protocol for satellite communication.,https://dblp.org/rec/journals/ijscn/DharminderDGS23.html,2026-10-28,published
+D11,post-quantum secure boot,3,dblp: Epoque: Practical End-to-End Verifiable Post-Quantum-Secure E-Voting.,https://dblp.org/rec/conf/eurosp/BoyenHM21.html,2026-10-28,published
+D11,post-quantum secure boot,4,dblp: Prasanna Ravi,https://dblp.org/pid/153/2475.html,2026-10-28,published
+D11,post-quantum secure boot,5,dblp: Post-Quantum UC-Secure Oblivious Transfer in the Standard Model with Adaptive Corruptions.,https://dblp.org/rec/conf/IEEEares/BlazyCV19.html,2026-10-28,published
+D11,post-quantum secure boot,6,dblp: A Logic and an Interactive Prover for the Computational Post-Quantum Security of Protocols.,https://dblp.org/rec/conf/sp/CremersFJ22.html,2026-10-28,published
+D11,post-quantum secure boot,7,dblp: Toward Postquantum Security for Embedded Cores.,https://dblp.org/rec/journals/micro/MisoczkiGGDVF19.html,2026-10-28,published
+D11,post-quantum secure boot,8,dblp: Post-Quantum Security of the Even-Mansour Cipher.,https://dblp.org/rec/journals/iacr/AlagicBKM21.html,2026-10-28,published
+D11,post-quantum secure boot,9,"dblp: Journal of Information Security and Applications, Volume 83",https://dblp.org/db/journals/istr/istr83.html,2026-10-28,published
+D11,post-quantum secure boot,10,dblp: Efficient and reliable post-quantum authentication.,https://dblp.org/rec/journals/tcs/DArcoPP24.html,2026-10-28,published
+D12,post-quantum firmware update,1,dblp: Performance Analysis and Deployment Considerations of Post-Quantum Cryptography for Consumer Electronics.,https://dblp.org/rec/journals/corr/abs-2505-02239.html,2026-10-28,published
+D12,post-quantum firmware update,2,dblp: PQConnect: Automated Post-Quantum End-to-End Tunnels.,https://dblp.org/rec/conf/ndss/Bernstein00Y25.html,2026-10-28,published
+D12,post-quantum firmware update,3,dblp: A Logic and an Interactive Prover for the Computational Post-Quantum Security of Protocols.,https://dblp.org/rec/conf/sp/CremersFJ22.html,2026-10-28,published
+D12,post-quantum firmware update,4,dblp: Post-Quantum Cryptography 2024 - Part I,https://dblp.org/db/conf/pqcrypto/pqcrypto2024-1.html,2026-10-28,published
+D12,post-quantum firmware update,5,dblp: Post-Quantum Cryptography: State of the Art.,https://dblp.org/rec/conf/birthday/BuchmannBGP16.html,2026-10-28,published
+D12,post-quantum firmware update,6,dblp: Efficient and reliable post-quantum authentication.,https://dblp.org/rec/journals/tcs/DArcoPP24.html,2026-10-28,published
+D12,post-quantum firmware update,7,dblp: A Quantum of QUIC: Dissecting Cryptography with Post-Quantum Insights.,https://dblp.org/rec/conf/networking/KempfGJZC24.html,2026-10-28,published
+D12,post-quantum firmware update,8,dblp: Benchmarking Post-quantum Cryptography in TLS.,https://dblp.org/rec/conf/pqcrypto/PaquinST20.html,2026-10-28,published
+D12,post-quantum firmware update,9,dblp: On the Practicality of Post-Quantum TLS Using Large-Parameter CSIDH.,https://dblp.org/rec/journals/iacr/CamposCCMRRSW23.html,2026-10-28,published
+D12,post-quantum firmware update,10,dblp: Post-Quantum Adaptor Signature for Privacy-Preserving Off-Chain Payments.,https://dblp.org/rec/journals/iacr/TairiMM20.html,2026-10-28,published
+D13,Kyber Cortex-M4,1,dblp: First-Order Masked Kyber on ARM Cortex-M4.,https://dblp.org/rec/journals/iacr/HeinzKLPSS22.html,2026-10-28,published
+D13,Kyber Cortex-M4,2,dblp: Memory-Efficient High-Speed Implementation of Kyber on Cortex-M4.,https://dblp.org/rec/conf/africacrypt/BotrosKS19.html,2026-10-28,published
+D13,Kyber Cortex-M4,3,dblp: Improved Correlation Power Analysis Attack on the Latest Cortex M4 Kyber Implementation.,https://dblp.org/rec/journals/cryptography/GhibanC25.html,2026-10-28,published
+D13,Kyber Cortex-M4,4,dblp: Peter Schwabe,https://dblp.org/pers/s/Schwabe:Peter,2026-10-28,published
+D13,Kyber Cortex-M4,5,dblp: Hanno Becker,https://dblp.org/pid/189/1065.html,2026-10-28,published
+D13,Kyber Cortex-M4,6,"dblp: Cortex-M4 optimizations for {R, M} LWE schemes.",https://dblp.org/rec/journals/tches/AlkimBCG20.html,2026-10-28,published
+D13,Kyber Cortex-M4,7,dblp: CRYSTALS - Kyber: A CCA-Secure Module-Lattice-Based KEM.,https://dblp.org/rec/conf/eurosp/BosDKLLSSSS18.html,2026-10-28,published
+D13,Kyber Cortex-M4,8,dblp: Assessing the Impact of a Variant of MATZOV's Dual Attack on Kyber.,https://dblp.org/rec/conf/crypto/CarrierMST25.html,2026-10-28,published
+D13,Kyber Cortex-M4,9,dblp: On-Device Training of Fully Quantized Deep Neural Networks on Cortex-M Microcontrollers.,https://dblp.org/rec/journals/tcad/DeutelHMT25.html,2026-10-28,published
+D13,Kyber Cortex-M4,10,"dblp: Frontiers in Computational Neuroscience, Volume 16",https://dblp.org/db/journals/ficn/ficn16.html,2026-10-28,published
+D14,Dilithium Cortex-M,1,dblp: CRYSTALS-Dilithium: A Lattice-Based Digital Signature Scheme.,https://dblp.org/rec/journals/tches/DucasKLLSSS18.html,2026-10-28,published
+D14,Dilithium Cortex-M,2,dblp: Peter Schwabe,https://dblp.org/pers/s/Schwabe:Peter,2026-10-28,published
+D14,Dilithium Cortex-M,3,dblp: Carl A. Miller,https://dblp.org/pid/131/6874.html,2026-10-28,published
+D14,Dilithium Cortex-M,4,dblp: CRYSTALS - Dilithium: Digital Signatures from Module Lattices.,https://dblp.org/rec/journals/iacr/DucasLLSSS17.html,2026-10-28,published
+D14,Dilithium Cortex-M,5,dblp: Huaxin Wang,https://dblp.org/pid/54/514.html,2026-10-28,published
+D14,Dilithium Cortex-M,6,dblp: Vadim Lyubashevsky,https://dblp.org/pid/25/2540.html,2026-10-28,published
+D14,Dilithium Cortex-M,7,dblp: Jingdian Ming,https://dblp.org/pid/225/9870.html,2026-10-28,published
+D14,Dilithium Cortex-M,8,dblp: Joost Renes,https://dblp.org/pid/170/3652.html,2026-10-28,published
+D14,Dilithium Cortex-M,9,dblp: Zehua Qiao,https://dblp.org/pid/301/5900.html,2026-10-28,published
+D14,Dilithium Cortex-M,10,dblp: Luke Beckwith,https://dblp.org/pid/268/4853.html,2026-10-28,published
+D15,ML-KEM microcontroller,1,"dblp: ACM Transactions on Embedded Computing Systems, Volume 24",https://dblp.org/db/journals/tecs/tecs24.html,2026-10-28,published
+D15,ML-KEM microcontroller,2,"dblp: IACR Cryptology ePrint Archive, Volume 2026",https://dblp.org/db/journals/iacr/iacr2026.html,2026-10-28,published
+D15,ML-KEM microcontroller,3,dblp: ML Training on a Tiny Microcontroller for a Self-adaptive Neural Network-Based DC Motor Speed Controller.,https://dblp.org/rec/conf/pkdd/FunkBM20.html,2026-10-28,published
+D15,ML-KEM microcontroller,4,dblp: Microcontroller Performance Screening: Optimizing the Characterization in the Presence of Anomalous and Noisy Data.,https://dblp.org/rec/conf/iolts/BellarminoCHKSS22.html,2026-10-28,published
+D15,ML-KEM microcontroller,5,dblp: Betrayed by Light: How Photon Emission Microscopy Empowers Register Bit-Level Laser Attacks on Microcontrollers.,https://dblp.org/rec/conf/host/PerrinDR25.html,2026-10-28,published
+D15,ML-KEM microcontroller,6,dblp: Chen-Fong Hsu,https://dblp.org/pid/369/7094.html,2026-10-28,published
+D15,ML-KEM microcontroller,7,dblp: Kyongsik Yun,https://dblp.org/pid/194/9121.html,2026-10-28,published
+D15,ML-KEM microcontroller,8,dblp: A Hardware-Assisted Approach for Non-Invasive and Fine-Grained Memory Power Management in MCUs.,https://dblp.org/rec/conf/date/KuhnS025.html,2026-10-28,published
+D15,ML-KEM microcontroller,9,"dblp: International Journal on Measurement Technologies and Instrumentation Engineering, Volume 7",https://dblp.org/db/journals/ijmtie/ijmtie7.html,2026-10-28,published
+D15,ML-KEM microcontroller,10,dblp: MLSys 2020,https://dblp.org/db/conf/mlsys/mlsys2020.html,2026-10-28,published
+D16,ML-DSA embedded implementation,1,dblp: Quinten Norga,https://dblp.org/pid/368/7602.html,2026-10-28,published
+D16,ML-DSA embedded implementation,2,dblp: Ingrid Verbauwhede,https://dblp.org/pid/92/16.html,2026-10-28,published
+D16,ML-DSA embedded implementation,3,dblp: DSA 2020,https://dblp.org/db/conf/dsa/dsa2020.html,2026-10-28,published
+D16,ML-DSA embedded implementation,4,dblp: Implementation aspects of model predictive control for embedded systems.,https://dblp.org/rec/conf/amcc/ZometaKFF12.html,2026-10-28,published
+D16,ML-DSA embedded implementation,5,dblp: Model-driven architecture-centric engineering of (embedded) software intensive systems: modeling theories and architectural milestones.,https://dblp.org/rec/journals/isse/Broy07.html,2026-10-28,published
+D16,ML-DSA embedded implementation,6,dblp: Self-reconfigurable Embedded Systems: From Modeling to Implementation.,https://dblp.org/rec/conf/ersa/GogniatVYCGLDB10.html,2026-10-28,published
+D16,ML-DSA embedded implementation,7,dblp: Advanced Model-Based Engineering of Embedded Systems.,https://dblp.org/rec/books/sp/16/PohlBDH16.html,2026-10-28,published
+D16,ML-DSA embedded implementation,8,dblp: Model-driven virtual prototyping for real-time simulation of distributed embedded systems.,https://dblp.org/rec/conf/sies/ZimmermannSVBR12.html,2026-10-28,published
+D16,ML-DSA embedded implementation,9,dblp: Model-based engineering in the embedded systems domain: an industrial survey on the state-of-practice.,https://dblp.org/rec/journals/sosym/LiebelMTLH18.html,2026-10-28,published
+D16,ML-DSA embedded implementation,10,dblp: Implementing an embedded compiler using program transformation rules.,https://dblp.org/rec/journals/spe/BissyandeRLBM15.html,2026-10-28,published
+D17,Falcon signature microcontroller implementation,1,dblp: Falcon Takes Off - A Hardware Implementation of the Falcon Signature Scheme.,https://dblp.org/rec/journals/iacr/SchmidAWZW23.html,2026-10-28,published
+D17,Falcon signature microcontroller implementation,2,dblp: FalconSign: An Efficient and High-Throughput Hardware Architecture for Falcon Signature Generation.,https://dblp.org/rec/journals/tches/OuyangZZYZWTZWL25.html,2026-10-28,published
+D17,Falcon signature microcontroller implementation,3,dblp: Masked Computation of the Floor Function and Its Application to the FALCON Signature.,https://dblp.org/rec/journals/cic/BerthetPTBC24.html,2026-10-28,published
+D17,Falcon signature microcontroller implementation,4,dblp: SERP-SCA: A Strengthened Side-Channel Attack Framework for FALCON Signature.,https://dblp.org/rec/journals/tcad/ChenSMLGZ26.html,2026-10-28,published
+D17,Falcon signature microcontroller implementation,5,dblp: Masking FALCON's Floating-Point Multiplication in Hardware.,https://dblp.org/rec/journals/tches/KarabulutA24.html,2026-10-28,published
+D17,Falcon signature microcontroller implementation,6,dblp: TWFalcon: Triple-Word Arithmetic for Falcon; Giving Falcon the Precision to Fly Securely.,https://dblp.org/rec/journals/iacr/HalmansVSCG25.html,2026-10-28,published
+D17,Falcon signature microcontroller implementation,7,"dblp: Improved (Again) Key Pair Generation for Falcon, BAT and Hawk.",https://dblp.org/rec/journals/iacr/Pornin25b.html,2026-10-28,published
+D17,Falcon signature microcontroller implementation,8,dblp: Thorough Power Analysis on Falcon Gaussian Samplers and Practical Countermeasure.,https://dblp.org/rec/journals/iacr/LinZYWYXW25.html,2026-10-28,published
+D17,Falcon signature microcontroller implementation,9,dblp: Sebastian Kolby,https://dblp.org/pid/263/4571.html,2026-10-28,published
+D17,Falcon signature microcontroller implementation,10,dblp: Detecting failures in distributed systems with the Falcon spy network.,https://dblp.org/rec/conf/sosp/LenersWHAW11.html,2026-10-28,published
+D18,SPHINCS+ embedded microcontroller,1,dblp: Julian Wälde,https://dblp.org/pid/119/6699.html,2026-10-28,published
+D18,SPHINCS+ embedded microcontroller,2,dblp: FPGA-based Accelerator for Post-Quantum Signature Scheme SPHINCS-256.,https://dblp.org/rec/journals/tches/AmietCZ18.html,2026-10-28,published
+D18,SPHINCS+ embedded microcontroller,3,dblp: The SPHINCS<sup>+</sup> Signature Framework.,https://dblp.org/rec/conf/ccs/BernsteinHKNRS19.html,2026-10-28,published
+D18,SPHINCS+ embedded microcontroller,4,dblp: The SPHINCS+ Signature Framework.,https://dblp.org/rec/journals/iacr/BernsteinHKNRS19.html,2026-10-28,published
+D18,SPHINCS+ embedded microcontroller,5,dblp: Felix Oberhansl,https://dblp.org/pid/329/4900.html,2026-10-28,published
+D18,SPHINCS+ embedded microcontroller,6,dblp: Stefan Kölbl,https://dblp.org/pers/hd/k/K=ouml=lbl:Stefan,2026-10-28,published
+D18,SPHINCS+ embedded microcontroller,7,dblp: SPHINCS: practical stateless hash-based signatures.,https://dblp.org/rec/journals/iacr/BernsteinHHLNPSO14.html,2026-10-28,published
+D18,SPHINCS+ embedded microcontroller,8,dblp: Louiza Papachristodoulou,https://dblp.org/pers/hd/p/Papachristodoulou:Louiza,2026-10-28,published
+D18,SPHINCS+ embedded microcontroller,9,Post-Quantum Cryptography 2018 - PQCrypto,https://dblp.org/db/conf/pqcrypto/pqcrypto2018.html,2026-10-28,published
+D18,SPHINCS+ embedded microcontroller,10,dblp: On the Design and Misuse of Microcoded (Embedded) Processors - A Cautionary Note.,https://dblp.org/rec/conf/uss/AlbartusNSFPT21.html,2026-10-28,published
+D19,LMS XMSS hash-based signature secure boot,1,dblp: Erik Dahmen,https://dblp.org/pers/hd/d/Dahmen:Erik,2026-10-28,published
+D19,LMS XMSS hash-based signature secure boot,2,"dblp: IACR Cryptology ePrint Archive, Volume 2021",https://dblp.org/db/journals/iacr/iacr2021.html,2026-10-28,published
+D19,LMS XMSS hash-based signature secure boot,3,dblp: BibTeX records: Johannes Buchmann 0001,https://dblp.org/pid/b/JohannesBuchmann.html?view=bibtex,2026-10-28,published
+D19,LMS XMSS hash-based signature secure boot,4,dblp: Provable Security 2024 - Part I,https://dblp.org/db/conf/provsec/provsec2024-1.html,2026-10-28,published
+D19,LMS XMSS hash-based signature secure boot,5,dblp: Tight Security for Signature Schemes Without Random Oracles.,https://dblp.org/rec/journals/joc/Schage15.html,2026-10-28,published
+D19,LMS XMSS hash-based signature secure boot,6,dblp: Efficient Construction of Nominative Signature Secure under Symmetric Key Primitives and Standard Assumptions on Lattice.,https://dblp.org/rec/journals/iacr/KansalDM19.html,2026-10-28,published
+D19,LMS XMSS hash-based signature secure boot,7,dblp: Efficient and provably secure signature schemes in the standard model,https://dblp.org/rec/phd/basesearch/Schage12.html,2026-10-28,published
+D19,LMS XMSS hash-based signature secure boot,8,dblp: SPHINCS: practical stateless hash-based signatures.,https://dblp.org/rec/journals/iacr/BernsteinHHLNPSO14.html,2026-10-28,published
+D19,LMS XMSS hash-based signature secure boot,9,dblp: Tightly-Secure Signatures From Lossy Identification Schemes.,https://dblp.org/rec/journals/iacr/AbdallaFLT13.html,2026-10-28,published
+D19,LMS XMSS hash-based signature secure boot,10,"dblp: HARTS: High-Threshold, Adaptively Secure, and Robust Threshold Schnorr Signatures.",https://dblp.org/rec/conf/asiacrypt/BachoLSW24.html,2026-10-28,published
+D20,XMSS embedded devices,1,dblp: Erik Dahmen,https://dblp.org/pers/hd/d/Dahmen:Erik,2026-10-28,published
+D20,XMSS embedded devices,2,dblp: Fault-tolerant embedded control systems for unreliable hardware.,https://dblp.org/rec/conf/isicir/GoswamiMBSC14.html,2026-10-28,published
+D20,XMSS embedded devices,3,dblp: Model Driven Engineering Languages and Systems 2011,https://dblp.org/db/conf/models/models2011.html,2026-10-28,published
+D20,XMSS embedded devices,4,dblp: Distributed Embedded Real-Time Systems and Beyond: A Vision of Future Road Vehicle Management.,https://dblp.org/rec/conf/seaa/WeddeLRK08.html,2026-10-28,published
+D20,XMSS embedded devices,5,dblp: SOHOMA 2018,https://dblp.org/db/conf/sohoma/sohoma2018.html,2026-10-28,published
+D20,XMSS embedded devices,6,dblp: Model-Based Engineering of Collaborative Embedded Systems,https://dblp.org/rec/books/sp/21/BBKPRS2021.html,2026-10-28,published
+D20,XMSS embedded devices,7,dblp: Advanced Model-Based Engineering of Embedded Systems.,https://dblp.org/rec/books/sp/16/PohlBDH16.html,2026-10-28,published
+D20,XMSS embedded devices,8,dblp: International Workshop System-on-Chip for Real-Time Applications 2003,https://dblp.org/db/conf/iwsoc/iwsoc2003.html,2026-10-28,published
+D20,XMSS embedded devices,9,dblp: Function Modeling for Collaborative Embedded Systems.,https://dblp.org/rec/books/sp/21/HaywardDP0KF21.html,2026-10-28,published
+D20,XMSS embedded devices,10,dblp: An Embedded Instrument for Online Condition Monitoring of Unmanned and Autonomous Systems.,https://dblp.org/rec/journals/imm/WangCLP22.html,2026-10-28,published
+D21,Kyber RISC-V,1,dblp: Assessing the Impact of a Variant of MATZOV's Dual Attack on Kyber.,https://dblp.org/rec/conf/crypto/CarrierMST25.html,2026-10-28,published
+D21,Kyber RISC-V,2,dblp: CVA6S+: A Superscalar RISC-V Core with High-Throughput Memory Architecture.,https://dblp.org/rec/journals/corr/abs-2505-03762.html,2026-10-28,published
+D21,Kyber RISC-V,3,dblp: KyberSlash: Exploiting secret-dependent division timings in Kyber implementations.,https://dblp.org/rec/journals/tches/BernsteinBBCCKKPRT25.html,2026-10-28,published
+D21,Kyber RISC-V,4,dblp: CRYSTALS - Kyber: A CCA-Secure Module-Lattice-Based KEM.,https://dblp.org/rec/conf/eurosp/BosDKLLSSSS18.html,2026-10-28,published
+D21,Kyber RISC-V,5,dblp: Yipeng Shi,https://dblp.org/pid/173/5671.html,2026-10-28,published
+D21,Kyber RISC-V,6,dblp: Memory-Efficient High-Speed Implementation of Kyber on Cortex-M4.,https://dblp.org/rec/conf/africacrypt/BotrosKS19.html,2026-10-28,published
+D21,Kyber RISC-V,7,dblp: Formally verifying Kyber Part I: Implementation Correctness.,https://dblp.org/rec/journals/iacr/AlmeidaBBGLLOPQSSS23.html,2026-10-28,published
+D21,Kyber RISC-V,8,dblp: RISC-V Toolchain and Agile Development based Open-source Neuromorphic Processor.,https://dblp.org/rec/journals/corr/abs-2210-00562.html,2026-10-28,published
+D21,Kyber RISC-V,9,dblp: Jeehoon Kang,https://dblp.org/pid/130/9065.html,2026-10-28,published
+D21,Kyber RISC-V,10,dblp: Instruction Extension of a RISC-V Processor Modeled with IP-XACT.,https://dblp.org/rec/conf/norchip/PayvarPSMH19.html,2026-10-28,published
+D22,Dilithium RISC-V,1,dblp: Konstantina Miteloudi,https://dblp.org/pid/306/7123.html,2026-10-28,published
+D22,Dilithium RISC-V,2,dblp: Joost Renes,https://dblp.org/pid/170/3652.html,2026-10-28,published
+D22,Dilithium RISC-V,3,dblp: BibTeX records: Olivier Bronchain,https://dblp.org/pid/227/9029.html?view=bibtex,2026-10-28,published
+D22,Dilithium RISC-V,4,dblp: Fixing and Mechanizing the Security Proof of Fiat-Shamir with Aborts and Dilithium.,https://dblp.org/rec/conf/crypto/BarbosaBDDFGHHLW22.html,2026-10-28,published
+D22,Dilithium RISC-V,5,dblp: Carl A. Miller,https://dblp.org/pid/131/6874.html,2026-10-28,published
+D22,Dilithium RISC-V,6,dblp: Huaxin Wang,https://dblp.org/pid/54/514.html,2026-10-28,published
+D22,Dilithium RISC-V,7,dblp: Vadim Lyubashevsky,https://dblp.org/pers/l/Lyubashevsky:Vadim,2026-10-28,published
+D22,Dilithium RISC-V,8,dblp: Luke Beckwith,https://dblp.org/pid/268/4853.html,2026-10-28,published
+D22,Dilithium RISC-V,9,dblp: BibTeX records: Peeter Laud,https://dblp.org/pid/l/PeeterLaud.html?view=bibtex,2026-10-28,published
+D22,Dilithium RISC-V,10,dblp: Steven Madec,https://dblp.org/pid/338/7816.html,2026-10-28,published
+D23,Kyber IoT devices,1,dblp: CRYSTALS - Kyber: a CCA-secure module-lattice-based KEM.,https://dblp.org/rec/journals/iacr/BosDKLLSSS17.html,2026-10-28,published
+D23,Kyber IoT devices,2,"dblp: Internet Things Cyber Phys. Syst., Volume 1",https://dblp.org/db/journals/iotcps/iotcps1.html,2026-10-28,published
+D23,Kyber IoT devices,3,dblp: First-Order Masked Kyber on ARM Cortex-M4.,https://dblp.org/rec/journals/iacr/HeinzKLPSS22.html,2026-10-28,published
+D23,Kyber IoT devices,4,dblp: EUDroid: a formal language specifying the behaviour of IoT devices.,https://dblp.org/rec/journals/iet-sen/BuonoCLP18.html,2026-10-28,published
+D23,Kyber IoT devices,5,dblp: Efficient authentication of resource-constrained IoT devices based on ECQV implicit certificates and datagram transport layer security protocol.,https://dblp.org/rec/conf/soict/HaNZ16.html,2026-10-28,published
+D23,Kyber IoT devices,6,dblp: ZKSA: Secure mutual Attestation against TOCTOU Zero-knowledge Proof based for IoT Devices.,https://dblp.org/rec/journals/compsec/BaiWZZSZG25.html,2026-10-28,published
+D23,Kyber IoT devices,7,"dblp: IEEE Internet of Things Journal, Volume 9",https://dblp.org/db/journals/iotj/iotj9.html,2026-10-28,published
+D23,Kyber IoT devices,8,"dblp: Cybersecurity, Volume 4",https://dblp.org/db/journals/cybersec/cybersec4.html,2026-10-28,published
+D23,Kyber IoT devices,9,dblp: Understanding and Detecting Remote Infection on Linux-based IoT Devices.,https://dblp.org/rec/conf/asiaccs/LiHDH0G022.html,2026-10-28,published
+D23,Kyber IoT devices,10,dblp: Euro-CYBERSEC 2021,https://dblp.org/db/conf/eurocybersec/eurocybersec2021.html,2026-10-28,published
+D24,post-quantum unmanned aerial vehicle authentication,1,dblp: A post quantum secure construction of an authentication protocol for satellite communication.,https://dblp.org/rec/journals/ijscn/DharminderDGS23.html,2026-10-28,published
+D24,post-quantum unmanned aerial vehicle authentication,2,dblp: A Certificateless Pairing-Free Authentication Scheme for Unmanned Aerial Vehicle Networks.,https://dblp.org/rec/journals/scn/LiWDWLW21.html,2026-10-28,published
+D24,post-quantum unmanned aerial vehicle authentication,3,dblp: PSAA: Provable Secure and Anti-Quantum Authentication Based on Randomized RLWE for Space Information Network.,https://dblp.org/rec/journals/corr/abs-2208-00901.html,2026-10-28,published
+D24,post-quantum unmanned aerial vehicle authentication,4,dblp: Efficient and reliable post-quantum authentication.,https://dblp.org/rec/journals/tcs/DArcoPP24.html,2026-10-28,published
+D24,post-quantum unmanned aerial vehicle authentication,5,dblp: When Cryptography Needs a Hand: Practical Post-Quantum Authentication for V2V Communications.,https://dblp.org/rec/conf/ndss/TwardokusBRM24.html,2026-10-28,published
+D24,post-quantum unmanned aerial vehicle authentication,6,dblp: VehicleSec 2026,https://dblp.org/db/conf/vehiclesec/vehiclesec2026.html,2026-10-28,published
+D24,post-quantum unmanned aerial vehicle authentication,7,dblp: Post-Quantum Stealth Address Protocols.,https://dblp.org/rec/journals/corr/abs-2501-13733.html,2026-10-28,published
+D24,post-quantum unmanned aerial vehicle authentication,8,dblp: Anti-Quantum Fast Authentication and Data Transmission Scheme for Massive Devices in 5G NB-IoT System.,https://dblp.org/rec/journals/iotj/CaoYXML19.html,2026-10-28,published
+D24,post-quantum unmanned aerial vehicle authentication,9,dblp: Xizhao Luo,https://dblp.org/pid/79/3405.html,2026-10-28,published
+D24,post-quantum unmanned aerial vehicle authentication,10,dblp: Post-Quantum Access Control with Application to Secure Data Retrieval.,https://dblp.org/rec/journals/cic/AbdolmalekiBDFKKZ25.html,2026-10-28,published
+D25,post-quantum TLS embedded microcontroller,1,dblp: Raymond K. Zhao,https://dblp.org/pid/233/0126.html,2026-10-28,published
+D25,post-quantum TLS embedded microcontroller,2,dblp: Post-Quantum Cryptography 2010,https://dblp.org/db/conf/pqcrypto/pqcrypto2010.html,2026-10-28,published
+D25,post-quantum TLS embedded microcontroller,3,dblp: Toward Postquantum Security for Embedded Cores.,https://dblp.org/rec/journals/micro/MisoczkiGGDVF19.html,2026-10-28,published
+D25,post-quantum TLS embedded microcontroller,4,dblp: On the Practicality of Post-Quantum TLS Using Large-Parameter CSIDH.,https://dblp.org/rec/journals/iacr/CamposCCMRRSW23.html,2026-10-28,published
+D25,post-quantum TLS embedded microcontroller,5,dblp: OpenSSLNTRU: Faster post-quantum TLS key exchange.,https://dblp.org/rec/journals/corr/abs-2106-08759.html,2026-10-28,published
+D25,post-quantum TLS embedded microcontroller,6,dblp: Post-Quantum TLS Without Handshake Signatures.,https://dblp.org/rec/conf/ccs/SchwabeSW20.html,2026-10-28,published
+D25,post-quantum TLS embedded microcontroller,7,dblp: BibTeX records: Daniel J. Bernstein,https://dblp.org/pid/b/DanielJBernstein.html?view=bibtex,2026-10-28,published
+D25,post-quantum TLS embedded microcontroller,8,dblp: Douglas Stebila,https://dblp.org/pid/67/675.html,2026-10-28,published
+D25,post-quantum TLS embedded microcontroller,9,dblp: A Logic and an Interactive Prover for the Computational Post-Quantum Security of Protocols.,https://dblp.org/rec/conf/sp/CremersFJ22.html,2026-10-28,published
+D25,post-quantum TLS embedded microcontroller,10,dblp: A High-Level Synthesis Approach to the Software/Hardware Codesign of NTT-Based Post-Quantum Cryptography Algorithms.,https://dblp.org/rec/conf/icfpt/NguyenDG19.html,2026-10-28,published
+D26,KEMTLS embedded,1,dblp: BibTeX records: Douglas Stebila,https://dblp.org/pid/67/675.html?view=bibtex,2026-10-28,published
+D26,KEMTLS embedded,2,dblp: Douglas Stebila,https://dblp.org/pid/67/675.html,2026-10-28,published
+D26,KEMTLS embedded,3,dblp: Semi-Automated Feature Traceability with Embedded Annotations.,https://dblp.org/rec/conf/icsm/AbukwaikBAB18.html,2026-10-28,published
+D26,KEMTLS embedded,4,dblp: Embedded Systems Letters,https://dblp.org/db/journals/esl/index.html,2026-10-28,published
+D26,KEMTLS embedded,5,dblp: Reconfigurable Embedded System for ECG Signal Acquisition.,https://dblp.org/rec/conf/cbms/KayI15.html,2026-10-28,published
+D26,KEMTLS embedded,6,dblp: On the impact of embedded knowledge-based systems.,https://dblp.org/rec/conf/arso/HertzbergWAGLOSSSS11.html,2026-10-28,published
+D26,KEMTLS embedded,7,dblp: Embedded systems for IT security applications: properties and design considerations.,https://dblp.org/rec/conf/sin/Huss09.html,2026-10-28,published
+D26,KEMTLS embedded,8,dblp: System-Embedded Diffusion Bridge Models.,https://dblp.org/rec/journals/corr/abs-2506-23726.html,2026-10-28,published
+D26,KEMTLS embedded,9,dblp: Communication synthesis for distributed embedded systems.,https://dblp.org/rec/conf/iccad/OrtegaB98.html,2026-10-28,published
+D26,KEMTLS embedded,10,dblp: CRYSTALS - Kyber: A CCA-Secure Module-Lattice-Based KEM.,https://dblp.org/rec/conf/eurosp/BosDKLLSSSS18.html,2026-10-28,published
+D27,post-quantum WireGuard,1,dblp: Post-quantum WireGuard.,https://dblp.org/rec/conf/sp/HulsingNSWZ21.html,2026-10-28,published
+D27,post-quantum WireGuard,2,dblp: Post-Quantum Access Control with Application to Secure Data Retrieval.,https://dblp.org/rec/journals/cic/AbdolmalekiBDFKKZ25.html,2026-10-28,published
+D27,post-quantum WireGuard,3,dblp: Mixed Certificate Chains for the Transition to Post-Quantum Authentication in TLS 1.3.,https://dblp.org/rec/conf/asiaccs/PaulKLN22.html,2026-10-28,published
+D27,post-quantum WireGuard,4,"dblp: Post-Quantum Public-key Authenticated Searchable Encryption with Forward Security: General Construction, Implementation, and Applications.",https://dblp.org/rec/journals/iacr/XuCCYZ23.html,2026-10-28,published
+D27,post-quantum WireGuard,5,dblp: Post-Quantum UC-Secure Oblivious Transfer in the Standard Model with Adaptive Corruptions.,https://dblp.org/rec/conf/IEEEares/BlazyCV19.html,2026-10-28,published
+D27,post-quantum WireGuard,6,dblp: PSCPAC: Post-quantum secure certificateless public auditing scheme in cloud storage.,https://dblp.org/rec/journals/istr/0009WFLWL021.html,2026-10-28,published
+D27,post-quantum WireGuard,7,dblp: Benchmarking Post-quantum Cryptography in TLS.,https://dblp.org/rec/conf/pqcrypto/PaquinST20.html,2026-10-28,published
+D27,post-quantum WireGuard,8,dblp: When Cryptography Needs a Hand: Practical Post-Quantum Authentication for V2V Communications.,https://dblp.org/rec/conf/ndss/TwardokusBRM24.html,2026-10-28,published
+D27,post-quantum WireGuard,9,dblp: Post-Quantum Cryptography: State of the Art.,https://dblp.org/rec/conf/birthday/BuchmannBGP16.html,2026-10-28,published
+D27,post-quantum WireGuard,10,dblp: Efficient and reliable post-quantum authentication.,https://dblp.org/rec/journals/tcs/DArcoPP24.html,2026-10-28,published
+D28,post-quantum DDS publish subscribe robotics,1,dblp: Challenges of post-quantum digital signing in real-world applications: a survey.,https://dblp.org/rec/journals/ijisec/TanSZ22.html,2026-10-28,published
+D28,post-quantum DDS publish subscribe robotics,2,dblp: Performance Analysis and Deployment Considerations of Post-Quantum Cryptography for Consumer Electronics.,https://dblp.org/rec/journals/corr/abs-2505-02239.html,2026-10-28,published
+D28,post-quantum DDS publish subscribe robotics,3,dblp: A post-quantum Distributed OPRF from the Legendre PRF.,https://dblp.org/rec/journals/iacr/KaluderovicCM24.html,2026-10-28,published
+D28,post-quantum DDS publish subscribe robotics,4,dblp: Post-Quantum Stealth Address Protocols.,https://dblp.org/rec/journals/corr/abs-2501-13733.html,2026-10-28,published
+D28,post-quantum DDS publish subscribe robotics,5,dblp: A Logic and an Interactive Prover for the Computational Post-Quantum Security of Protocols.,https://dblp.org/rec/conf/sp/CremersFJ22.html,2026-10-28,published
+D28,post-quantum DDS publish subscribe robotics,6,dblp: Shunyu Dong,https://dblp.org/pid/342/7678.html,2026-10-28,published
+D28,post-quantum DDS publish subscribe robotics,7,dblp: Post-Quantum Group Signatures from Symmetric Primitives.,https://dblp.org/rec/journals/iacr/BonehEF18.html,2026-10-28,published
+D28,post-quantum DDS publish subscribe robotics,8,dblp: Toward Postquantum Security for Embedded Cores.,https://dblp.org/rec/journals/micro/MisoczkiGGDVF19.html,2026-10-28,published
+D28,post-quantum DDS publish subscribe robotics,9,dblp: Post-quantum key exchange - a new hope.,https://dblp.org/rec/journals/iacr/AlkimDPS15.html,2026-10-28,published
+D28,post-quantum DDS publish subscribe robotics,10,dblp: Post-Quantum Adaptor Signature for Privacy-Preserving Off-Chain Payments.,https://dblp.org/rec/journals/iacr/TairiMM20.html,2026-10-28,published

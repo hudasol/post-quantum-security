@@ -1,0 +1,33 @@
+query_id,date,tool,database,query,results_returned,record_pages,person_pages,venue_or_volume_pages,records_first_seen,records_passing_title_screen,status,note,label
+D00,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),dblp post-quantum microcontroller,10,9,0,1,9,4,run,"result count of the search tool, not a dblp hit count",published
+D01,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),post-quantum microcontroller,10,5,3,2,3,2,run,"result count of the search tool, not a dblp hit count",published
+D02,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),post-quantum Cortex-M,10,5,1,4,4,1,run,"result count of the search tool, not a dblp hit count",published
+D03,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),post-quantum RISC-V,10,10,0,0,5,3,run,"result count of the search tool, not a dblp hit count",published
+D04,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),post-quantum embedded,10,6,0,4,3,2,run,"result count of the search tool, not a dblp hit count",published
+D05,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),post-quantum IoT,10,4,0,6,1,2,run,"result count of the search tool, not a dblp hit count",published
+D06,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),post-quantum drone,10,7,0,3,5,0,run,"result count of the search tool, not a dblp hit count",published
+D07,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),post-quantum UAV,10,10,0,0,3,1,run,"result count of the search tool, not a dblp hit count",published
+D08,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),post-quantum MAVLink,10,9,0,1,3,1,run,"result count of the search tool, not a dblp hit count",published
+D09,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),post-quantum robot,10,7,0,3,2,2,run,"result count of the search tool, not a dblp hit count",published
+D10,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),post-quantum ROS 2 robot operating system,10,9,0,1,9,0,run,"result count of the search tool, not a dblp hit count",published
+D11,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),post-quantum secure boot,10,8,1,1,1,1,run,"result count of the search tool, not a dblp hit count",published
+D12,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),post-quantum firmware update,10,9,0,1,2,1,run,"result count of the search tool, not a dblp hit count",published
+D13,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),Kyber Cortex-M4,10,7,2,1,7,3,run,"result count of the search tool, not a dblp hit count",published
+D14,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),Dilithium Cortex-M,10,2,8,0,2,0,run,"result count of the search tool, not a dblp hit count",published
+D15,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),ML-KEM microcontroller,10,4,2,4,4,0,run,"result count of the search tool, not a dblp hit count",published
+D16,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),ML-DSA embedded implementation,10,7,2,1,7,0,run,"result count of the search tool, not a dblp hit count",published
+D17,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),Falcon signature microcontroller implementation,10,9,1,0,9,0,run,"result count of the search tool, not a dblp hit count",published
+D18,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),SPHINCS+ embedded microcontroller,10,5,4,1,5,0,run,"result count of the search tool, not a dblp hit count",published
+D19,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),LMS XMSS hash-based signature secure boot,10,6,2,2,5,0,run,"result count of the search tool, not a dblp hit count",published
+D20,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),XMSS embedded devices,10,6,1,3,5,0,run,"result count of the search tool, not a dblp hit count",published
+D21,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),Kyber RISC-V,10,8,2,0,4,1,run,"result count of the search tool, not a dblp hit count",published
+D22,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),Dilithium RISC-V,10,1,9,0,1,0,run,"result count of the search tool, not a dblp hit count",published
+D23,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),Kyber IoT devices,10,6,0,4,5,2,run,"result count of the search tool, not a dblp hit count",published
+D24,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),post-quantum unmanned aerial vehicle authentication,10,8,1,1,4,0,run,"result count of the search tool, not a dblp hit count",published
+D25,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),post-quantum TLS embedded microcontroller,10,6,3,1,2,1,run,"result count of the search tool, not a dblp hit count",published
+D26,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),KEMTLS embedded,10,7,2,1,6,0,run,"result count of the search tool, not a dblp hit count",published
+D27,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),post-quantum WireGuard,10,10,0,0,2,0,run,"result count of the search tool, not a dblp hit count",published
+D28,2026-10-28,web search restricted to the dblp.org domain,dblp (through the search tool),post-quantum DDS publish subscribe robotics,10,9,1,0,3,2,run,"result count of the search tool, not a dblp hit count",published
+R01,2026-10-28,web fetch,dblp search API (JSON),https://dblp.org/search/publ/api?q=post-quantum%20microcontroller&format=json&h=100,0,0,0,0,0,0,refused,"refused by the fetch tool: URL not on the allowlist of the session; recorded, not worked around",published
+R02,2026-10-28,web fetch,dblp search page (HTML),https://dblp.org/search?q=post-quantum%20microcontroller,0,0,0,0,0,0,refused,"refused by the fetch tool: URL not on the allowlist of the session; recorded, not worked around",published
+R03,2026-10-28,web fetch,dblp record page,https://dblp.org/rec/journals/micro/MisoczkiGGDVF19.html,0,0,0,0,0,0,refused,"retrieved page was a bot protection notice without the record; record pages not read; recorded, not worked around",published
