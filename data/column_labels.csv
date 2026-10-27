@@ -224,3 +224,60 @@ sitl/results/runs.csv,commands_sent,SITL measured,ground station script
 sitl/results/runs.csv,commands_seen_by_relay,emulated,relay link
 sitl/results/runs.csv,params_ok,SITL measured,
 sitl/results/runs.csv,label,key,
+rtlsim/results/proto_primitives.csv,label,key,"row label (RTL simulated); applies to the cycle, stack and correctness columns"
+rtlsim/results/proto_primitives.csv,core,key,core design
+rtlsim/results/proto_primitives.csv,operation,key,primitive operation
+rtlsim/results/proto_primitives.csv,library,key,pinned library
+rtlsim/results/proto_primitives.csv,input,key,input of the call
+rtlsim/results/proto_primitives.csv,n_runs,key,number of runs
+rtlsim/results/proto_primitives.csv,log_complete,key,log ended with DONE
+rtlsim/results/proto_primitives.csv,seed_first,key,seed of run 0; run r uses seed_first + r
+rtlsim/results/proto_primitives.csv,cycles_median,RTL simulated,median cycles over runs
+rtlsim/results/proto_primitives.csv,cycles_ci95_low,RTL simulated,bootstrap interval of the median
+rtlsim/results/proto_primitives.csv,cycles_ci95_high,RTL simulated,bootstrap interval of the median
+rtlsim/results/proto_primitives.csv,cycles_min,RTL simulated,smallest run
+rtlsim/results/proto_primitives.csv,cycles_max,RTL simulated,largest run
+rtlsim/results/proto_primitives.csv,peak_stack_bytes,RTL simulated,largest peak stack over runs (stack painting)
+rtlsim/results/proto_primitives.csv,stack_saturated,RTL simulated,painted area used up in any run
+rtlsim/results/proto_primitives.csv,correctness,RTL simulated,calls and checks passed
+rtlsim/results/proto_primitives.csv,round5_cycles_median,RTL simulated,round 5 median of the same operation (rtlsim/results/<core>_cycles.csv)
+rtlsim/results/proto_primitives.csv,this_over_round5,RTL simulated,this round median over round 5 median
+rtlsim/results/proto_sessions.csv,label,key,row label (RTL simulated); size columns are host measured (see their rows)
+rtlsim/results/proto_sessions.csv,core,key,core design
+rtlsim/results/proto_sessions.csv,design,key,protocol design
+rtlsim/results/proto_sessions.csv,unit,key,unit of work
+rtlsim/results/proto_sessions.csv,side,key,vehicle or ground
+rtlsim/results/proto_sessions.csv,steps,key,timed steps summed per run
+rtlsim/results/proto_sessions.csv,n_runs,key,number of runs
+rtlsim/results/proto_sessions.csv,log_complete,key,log ended with DONE
+rtlsim/results/proto_sessions.csv,seed_first,key,seed of run 0; run r uses seed_first + r
+rtlsim/results/proto_sessions.csv,cycles_median,RTL simulated,median over runs of the summed steps
+rtlsim/results/proto_sessions.csv,cycles_ci95_low,RTL simulated,bootstrap interval of the median
+rtlsim/results/proto_sessions.csv,cycles_ci95_high,RTL simulated,bootstrap interval of the median
+rtlsim/results/proto_sessions.csv,cycles_min,RTL simulated,smallest run
+rtlsim/results/proto_sessions.csv,cycles_max,RTL simulated,largest run
+rtlsim/results/proto_sessions.csv,peak_stack_bytes,RTL simulated,largest peak stack over steps and runs
+rtlsim/results/proto_sessions.csv,stack_saturated,RTL simulated,painted area used up
+rtlsim/results/proto_sessions.csv,bytes_per_flight,RTL simulated,message sizes as built by the simulated program
+rtlsim/results/proto_sessions.csv,bytes_total,RTL simulated,bytes on air per unit of work
+rtlsim/results/proto_sessions.csv,correctness,RTL simulated,steps and checks passed
+rtlsim/results/proto_sessions.csv,runs_correct,RTL simulated,runs with all steps and checks passed
+rtlsim/results/proto_sessions.csv,text_bytes_host_measured,host measured,text of the simulated image (code and read only data)
+rtlsim/results/proto_sessions.csv,data_bytes_host_measured,host measured,data of the simulated image
+rtlsim/results/proto_sessions.csv,bss_bytes_host_measured,host measured,bss of the simulated image without stack and heap reservations
+rtlsim/results/proto_sessions.csv,text_bytes_gc_host_measured,host measured,text of the size only build with unused sections removed
+rtlsim/results/proto_sizes.csv,label,key,row label (host measured)
+rtlsim/results/proto_sizes.csv,core,key,core
+rtlsim/results/proto_sizes.csv,image,key,image
+rtlsim/results/proto_sizes.csv,variant,key,variant
+rtlsim/results/proto_sizes.csv,text_bytes,host measured,text bytes from the toolchain size output
+rtlsim/results/proto_sizes.csv,data_bytes,host measured,data bytes from the toolchain size output
+rtlsim/results/proto_sizes.csv,bss_bytes,host measured,bss bytes from the toolchain size output
+rtlsim/results/proto_time_estimated.csv,label,key,row label (estimated)
+rtlsim/results/proto_time_estimated.csv,core,key,core
+rtlsim/results/proto_time_estimated.csv,design,key,design
+rtlsim/results/proto_time_estimated.csv,unit,key,unit
+rtlsim/results/proto_time_estimated.csv,side,key,side
+rtlsim/results/proto_time_estimated.csv,basis,key,basis
+rtlsim/results/proto_time_estimated.csv,clock_mhz,key,stated clock (64 MHz; 168 MHz is clock_m4_ref_mhz of data/shared_inputs.csv)
+rtlsim/results/proto_time_estimated.csv,time_ms,estimated,cycles_median of proto_sessions.csv divided by the clock
