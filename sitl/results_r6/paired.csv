@@ -1,0 +1,8 @@
+profile,config,minus_config,metric,difference,ci_lo,ci_hi,missions_paired,label
+sik,hybrid_strict,hybrid_published,availability_rt_all,-0.0332963,-0.0473703,-0.0194894,20,SITL measured
+sik,hybrid_cache,hybrid_published,availability_rt_all,0.000641201,0.000158851,0.0013007,20,SITL measured
+sik,hybrid_strict,hybrid_cache,availability_rt_all,-0.0339375,-0.0485967,-0.0197742,20,SITL measured
+sik,hybrid_published,classical,availability_rt_all,-0.00401196,-0.00817124,-0.000653295,20,SITL measured
+sik,classical,signing,availability_rt_all,0.00301967,-4.12042e-05,0.0061792,20,SITL measured
+sik,hybrid_published,none,availability_rt_all,-0.00407871,-0.00904257,-0.00055839,20,SITL measured
+sik,pqsig_real,hybrid_published,availability_rt_all,-0.513581,-0.557326,-0.476506,20,SITL measured

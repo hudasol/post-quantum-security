@@ -1,0 +1,5 @@
+profile,config,arrivals,arrivals_after_higher_counter,max_reorder_depth,label
+sik,classical,1108,11,2,emulated
+sik,hybrid_cache,1102,12,2,emulated
+sik,hybrid_published,1094,11,2,emulated
+sik,hybrid_strict,1058,4,2,emulated

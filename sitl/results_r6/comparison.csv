@@ -1,0 +1,10 @@
+profile,config,mission_arch,mission_rule,quantity,value,ci_lo,ci_hi,mission_model_estimated,error,verdict,label
+sik,none,A,none,"share acknowledged within 0.5 s, outages included",0.935185,0.901531,0.96304,0.918867,0.0163185,consistent,SITL measured
+sik,signing,D,published,"share acknowledged within 0.5 s, outages included",0.932099,0.901528,0.961857,0.920528,0.0115712,consistent,SITL measured
+sik,classical,A,published,"share acknowledged within 0.5 s, outages included",0.935118,0.90422,0.964913,0.918201,0.016917,consistent,SITL measured
+sik,hybrid_published,B,published,"share acknowledged within 0.5 s, outages included",0.931106,0.896441,0.961379,0.916433,0.0146731,consistent,SITL measured
+sik,hybrid_strict,B,strict,"share acknowledged within 0.5 s, outages included",0.89781,0.857889,0.936462,0.907248,-0.00943761,consistent,SITL measured
+sik,hybrid_cache,B,cache,"share acknowledged within 0.5 s, outages included",0.931748,0.898548,0.963901,0.916433,0.0153143,consistent,SITL measured
+sik,pqsig_real,C,no rule,"share acknowledged within 0.5 s, outages included",0.417526,0.373838,0.458848,0.730083,-0.312557,model higher,SITL measured
+sik,hybrid_published,B,,median handshake s (mission transfer model with the executed flight sizes and RTL delays),1.48616,1.46223,1.49501,1.58359,-0.0974377,model higher,emulated
+sik,classical,A,,median handshake s (mission transfer model with the executed flight sizes and RTL delays),0.190246,0.17831,0.201549,0.34518,-0.154934,model higher,emulated

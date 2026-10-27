@@ -20,7 +20,7 @@ SUFFIXES = {"published", "host_measured", "emulated", "estimated", "planned", "m
             "derived", "assumption", "synthetic", "board_measured",
             "simulated_network", "sitl_measured"}
 ROUND4_DIRS = ["cyclemodel/results", "rtlsim/results", "energy/results", "bootchain/results", "mission/results",
-               "bench/board_kit/dry_run", "formal/results", "stats/results", "sitl/results"]
+               "bench/board_kit/dry_run", "formal/results", "stats/results", "sitl/results", "sitl/results_r6"]
 # round 4 files inside folders that also hold earlier files (whose label column has other meanings)
 ROUND4_FILES = ["linksim/results/validation_v4.csv", "linksim/results/diagnosis_v4.csv", "linksim/results/closed_form_v4.csv",
                 "linksim/results/protocols_*.csv", "planner/results/profile_*.csv", "planner/results/mosca_*.csv",

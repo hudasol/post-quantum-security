@@ -1,0 +1,58 @@
+profile,config,scope,reason,count,label
+sik,classical,stream commands not acknowledged within 0.5 s,link_up,41,SITL measured
+sik,classical,stream commands not acknowledged within 0.5 s,rejected_late_or_duplicate,11,SITL measured
+sik,classical,stream commands not acknowledged within 0.5 s,acknowledged late or rejected by the flight stack,9,SITL measured
+sik,classical,stream commands not acknowledged within 0.5 s,no_session,2,SITL measured
+sik,hybrid_cache,stream commands not acknowledged within 0.5 s,link_up,41,SITL measured
+sik,hybrid_cache,stream commands not acknowledged within 0.5 s,acknowledged late or rejected by the flight stack,21,SITL measured
+sik,hybrid_cache,stream commands not acknowledged within 0.5 s,no_session,3,SITL measured
+sik,hybrid_cache,stream commands not acknowledged within 0.5 s,no_session_vehicle,1,SITL measured
+sik,hybrid_published,stream commands not acknowledged within 0.5 s,link_up,40,SITL measured
+sik,hybrid_published,stream commands not acknowledged within 0.5 s,rejected_late_or_duplicate,11,SITL measured
+sik,hybrid_published,stream commands not acknowledged within 0.5 s,acknowledged late or rejected by the flight stack,11,SITL measured
+sik,hybrid_published,stream commands not acknowledged within 0.5 s,no_session,3,SITL measured
+sik,hybrid_published,stream commands not acknowledged within 0.5 s,no_session_vehicle,1,SITL measured
+sik,hybrid_strict,stream commands not acknowledged within 0.5 s,no_session,58,SITL measured
+sik,hybrid_strict,stream commands not acknowledged within 0.5 s,link_up,23,SITL measured
+sik,hybrid_strict,stream commands not acknowledged within 0.5 s,rejected_ahead_of_next,13,SITL measured
+sik,hybrid_strict,stream commands not acknowledged within 0.5 s,acknowledged late or rejected by the flight stack,4,SITL measured
+sik,none,stream commands not acknowledged within 0.5 s,link_up,41,SITL measured
+sik,none,stream commands not acknowledged within 0.5 s,acknowledged late or rejected by the flight stack,22,SITL measured
+sik,pqsig_real,stream commands not acknowledged within 0.5 s,acknowledged late or rejected by the flight stack,552,SITL measured
+sik,pqsig_real,stream commands not acknowledged within 0.5 s,link_up,13,SITL measured
+sik,signing,stream commands not acknowledged within 0.5 s,link_up,40,SITL measured
+sik,signing,stream commands not acknowledged within 0.5 s,not_acknowledged_by_vehicle,17,SITL measured
+sik,signing,stream commands not acknowledged within 0.5 s,acknowledged late or rejected by the flight stack,9,SITL measured
+sik,classical,uplink frames rejected by the vehicle side gateway,stream0_late_or_duplicate,11,emulated
+sik,classical,frames dropped by a gateway without a session,down_no_session,93,emulated
+sik,classical,frames dropped by a gateway without a session,up_no_session_initial,4,emulated
+sik,classical,frames dropped by a gateway without a session,up_no_session_none,2,emulated
+sik,classical,frames dropped by a gateway without a session,up_no_session_teardown,3,emulated
+sik,classical,resynchronisations (strict rule),all triggers,0,emulated
+sik,hybrid_cache,uplink frames rejected by the vehicle side gateway,no_session_vehicle,1,emulated
+sik,hybrid_cache,frames dropped by a gateway without a session,down_no_session,116,emulated
+sik,hybrid_cache,frames dropped by a gateway without a session,up_no_session_initial,29,emulated
+sik,hybrid_cache,frames dropped by a gateway without a session,up_no_session_none,2,emulated
+sik,hybrid_cache,frames dropped by a gateway without a session,up_no_session_teardown,5,emulated
+sik,hybrid_cache,resynchronisations (strict rule),all triggers,0,emulated
+sik,hybrid_published,uplink frames rejected by the vehicle side gateway,no_session_vehicle,1,emulated
+sik,hybrid_published,uplink frames rejected by the vehicle side gateway,stream0_late_or_duplicate,11,emulated
+sik,hybrid_published,downlink frames rejected by the ground side gateway,bad_or_unknown_key,3,emulated
+sik,hybrid_published,frames dropped by a gateway without a session,down_no_session,115,emulated
+sik,hybrid_published,frames dropped by a gateway without a session,up_no_session_initial,34,emulated
+sik,hybrid_published,frames dropped by a gateway without a session,up_no_session_none,1,emulated
+sik,hybrid_published,frames dropped by a gateway without a session,up_no_session_teardown,5,emulated
+sik,hybrid_published,resynchronisations (strict rule),all triggers,0,emulated
+sik,hybrid_strict,uplink frames rejected by the vehicle side gateway,stream0_ahead_of_next,13,emulated
+sik,hybrid_strict,frames dropped by a gateway without a session,down_no_session,142,emulated
+sik,hybrid_strict,frames dropped by a gateway without a session,up_no_session_initial,30,emulated
+sik,hybrid_strict,frames dropped by a gateway without a session,up_no_session_none,2,emulated
+sik,hybrid_strict,frames dropped by a gateway without a session,up_no_session_resync_ground_give_up,66,emulated
+sik,hybrid_strict,frames dropped by a gateway without a session,up_no_session_resync_vehicle_request,7,emulated
+sik,hybrid_strict,frames dropped by a gateway without a session,up_no_session_retry_after_give_up,41,emulated
+sik,hybrid_strict,resynchronisations (strict rule),all triggers,12,emulated
+sik,hybrid_strict,resynchronisations (strict rule),ground_give_up,10,emulated
+sik,hybrid_strict,resynchronisations (strict rule),vehicle_request,2,emulated
+sik,none,resynchronisations (strict rule),all triggers,0,emulated
+sik,pqsig_real,resynchronisations (strict rule),all triggers,0,emulated
+sik,signing,resynchronisations (strict rule),all triggers,0,emulated

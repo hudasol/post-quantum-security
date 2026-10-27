@@ -1,0 +1,19 @@
+name,core,used_in_runs,cycles,clock_hz,delay_ms,source,label,label_note
+classical_vehicle_f2,ibex,1,7928945.0,168000000.0,47.196101190476185,proto_primitives.csv x25519_keygen + x25519_shared + shake256_kdf + shake256_kdf,estimated,estimated from RTL simulated cycles
+classical_vehicle_f4,ibex,1,7501236.0,168000000.0,44.650214285714284,proto_sessions.csv classical vehicle vehicle_f2+vehicle_f4 minus the F2 step,estimated,estimated from RTL simulated cycles
+classical_vehicle_total,ibex,1,15430181.0,168000000.0,91.84631547619047,proto_sessions.csv classical vehicle vehicle_f2+vehicle_f4,estimated,estimated from RTL simulated cycles
+hybrid_vehicle_f2,ibex,1,11101157.0,168000000.0,66.07831547619047,proto_primitives.csv x25519_keygen + x25519_shared + mlkem768_encaps + shake256_transcript_hybrid + shake256_kdf,estimated,estimated from RTL simulated cycles
+hybrid_vehicle_f4,ibex,1,18272639.0,168000000.0,108.76570833333334,proto_sessions.csv hybrid_f1 vehicle vehicle_f2+vehicle_f4 minus the F2 step,estimated,estimated from RTL simulated cycles
+hybrid_vehicle_total,ibex,1,29373796.0,168000000.0,174.8440238095238,proto_sessions.csv hybrid_f1 vehicle vehicle_f2+vehicle_f4,estimated,estimated from RTL simulated cycles
+mldsa44_verify_command,ibex,1,5405110.0,168000000.0,32.17327380952381,proto_sessions.csv per_command_mldsa44 vehicle vehicle_verify_command,estimated,estimated from RTL simulated cycles
+tag_check,ibex,1,21489.0,168000000.0,0.12791071428571427,proto_sessions.csv mavlink_tag vehicle vehicle_receive_command_long,estimated,estimated from RTL simulated cycles
+tag_make,ibex,1,14263.0,168000000.0,0.08489880952380952,proto_sessions.csv mavlink_tag ground ground_tag_frame60,estimated,estimated from RTL simulated cycles
+classical_vehicle_f2,cv32e40p,0,6378683.0,168000000.0,37.968351190476184,proto_primitives.csv x25519_keygen + x25519_shared + shake256_kdf + shake256_kdf,estimated,estimated from RTL simulated cycles
+classical_vehicle_f4,cv32e40p,0,6039085.0,168000000.0,35.946934523809524,proto_sessions.csv classical vehicle vehicle_f2+vehicle_f4 minus the F2 step,estimated,estimated from RTL simulated cycles
+classical_vehicle_total,cv32e40p,0,12417768.0,168000000.0,73.91528571428572,proto_sessions.csv classical vehicle vehicle_f2+vehicle_f4,estimated,estimated from RTL simulated cycles
+hybrid_vehicle_f2,cv32e40p,0,8542339.0,168000000.0,50.847255952380955,proto_primitives.csv x25519_keygen + x25519_shared + mlkem768_encaps + shake256_transcript_hybrid + shake256_kdf,estimated,estimated from RTL simulated cycles
+hybrid_vehicle_f4,cv32e40p,0,13373639.0,168000000.0,79.60499404761904,proto_sessions.csv hybrid_f1 vehicle vehicle_f2+vehicle_f4 minus the F2 step,estimated,estimated from RTL simulated cycles
+hybrid_vehicle_total,cv32e40p,0,21915978.0,168000000.0,130.45225,proto_sessions.csv hybrid_f1 vehicle vehicle_f2+vehicle_f4,estimated,estimated from RTL simulated cycles
+mldsa44_verify_command,cv32e40p,0,3883354.0,168000000.0,23.115202380952383,proto_sessions.csv per_command_mldsa44 vehicle vehicle_verify_command,estimated,estimated from RTL simulated cycles
+tag_check,cv32e40p,0,18907.0,168000000.0,0.11254166666666666,proto_sessions.csv mavlink_tag vehicle vehicle_receive_command_long,estimated,estimated from RTL simulated cycles
+tag_make,cv32e40p,0,13055.0,168000000.0,0.07770833333333332,proto_sessions.csv mavlink_tag ground ground_tag_frame60,estimated,estimated from RTL simulated cycles
