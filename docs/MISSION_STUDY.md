@@ -374,6 +374,47 @@ _estimated (computed from published sizes and cycle counts plus labelled assumpt
 
 Null result: across rekey intervals from 60 s to once per arming, mean availability changes by at most 0.0007 (A 0.0003, B 0.0007), while the number of handshakes per mission changes by an order of magnitude. With a 30 s grace period, rekeying and link loss do not interact strongly in this model; teardowns from outages longer than the 10 s session timeout dominate.
 
+### 6.1 Replay acceptance rules (estimated)
+
+The vehicle can accept an authenticated command under one of three rules (parameter `replay_rule` of `mission/sim.py`, rules in `mission/replay.py`): **published**, the MAVLink 2 rule (counter greater than the last accepted one, gaps allowed), used by every other result of this study; **strict**, only the next counter, the rule of the proofs C1 and C2 (`docs/FORMAL_VERIFICATION.md`); and **replay cache**, any counter not yet seen inside a window of W counters below the highest accepted one. W is 64 (assumption, from the minimum window sizes of 32 and 64 that RFC 6479 Section 1 reports for IPsec; `mission/replay_assumptions.csv`) and is swept over 1, 4, 32, 64.
+
+Model of the strict rule: the link layer of this model delivers in order, so a frame that is retransmitted already holds the frames behind it (part of the latency). A command that the link layer gives up (fewer attempt instants outside outages than its frame loss draws need, with at most 20 retransmissions) leaves a gap; every later command is rejected until a resynchronisation, modelled as a new handshake of the architecture that the ground station starts when its link layer reports the give up (the same four flights and vehicle compute as a rekey, paused during outages), or until an earlier teardown handshake ends. The three rules are evaluated on the same draws of every run (paired); the strict rule draws its resynchronisation handshakes from a separate generator, so the published rule results regenerate identically (29 of 29 configurations checked, `mission/results/replay_regeneration_check.csv`).
+
+Drone, base inputs, session architectures (LoRaWAN rows are in `mission/results/replay_base.csv`; there no command meets the deadline under any rule):
+
+| link | arch | rule | mean availability at 0.5 s [95% CI] | paired difference to published [95% CI] | commands given up per run | commands rejected per run | resynchronisations per run |
+|---|---|---|---|---|---|---|---|
+| IEEE 802.15.4 | A | published | 0.9909 [0.9901, 0.9916] | 0.00000 [0.00000, 0.00000] | 3.399 | 0.000 | 0.000 |
+| IEEE 802.15.4 | A | strict | 0.9907 [0.9900, 0.9914] | -0.00020 [-0.00023, -0.00017] | 3.399 | 1.373 | 0.704 |
+| IEEE 802.15.4 | A | cache W=64 | 0.9909 [0.9902, 0.9916] | 0.00000 [0.00000, 0.00000] | 3.399 | 0.000 | 0.000 |
+| IEEE 802.15.4 | B | published | 0.9922 [0.9916, 0.9929] | 0.00000 [0.00000, 0.00000] | 2.835 | 0.000 | 0.000 |
+| IEEE 802.15.4 | B | strict | 0.9916 [0.9909, 0.9923] | -0.00063 [-0.00069, -0.00058] | 2.835 | 1.607 | 0.629 |
+| IEEE 802.15.4 | B | cache W=64 | 0.9922 [0.9916, 0.9929] | 0.00000 [0.00000, 0.00000] | 2.835 | 0.000 | 0.000 |
+| SiK 64 kbit/s | A | published | 0.9916 [0.9910, 0.9923] | 0.00000 [0.00000, 0.00000] | 3.144 | 0.000 | 0.000 |
+| SiK 64 kbit/s | A | strict | 0.9914 [0.9908, 0.9921] | -0.00021 [-0.00024, -0.00018] | 3.144 | 1.348 | 0.658 |
+| SiK 64 kbit/s | A | cache W=64 | 0.9916 [0.9910, 0.9923] | 0.00000 [0.00000, 0.00000] | 3.144 | 0.000 | 0.000 |
+| SiK 64 kbit/s | B | published | 0.9914 [0.9907, 0.9921] | 0.00000 [0.00000, 0.00000] | 3.162 | 0.000 | 0.000 |
+| SiK 64 kbit/s | B | strict | 0.9904 [0.9896, 0.9912] | -0.00103 [-0.00114, -0.00094] | 3.162 | 1.930 | 0.661 |
+| SiK 64 kbit/s | B | cache W=64 | 0.9914 [0.9907, 0.9921] | 0.00000 [0.00000, 0.00000] | 3.162 | 0.000 | 0.000 |
+
+_estimated (computed from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
+
+Replay cache window sweep: over W = 1, 4, 32, 64, the largest absolute paired difference to the published rule is 0.00000. Because this model delivers in order, a frame never arrives after a newer one, so the replay cache accepts exactly what the published rule accepts for every W; out of order delivery is examined with an executing gateway in `docs/SITL_STUDY_R6.md`.
+
+Frame loss sweep, drone, SiK, architecture B (the draws of each loss value are those of the Section 5 sweep):
+
+| frame loss | published, mean availability at 0.5 s | strict, mean availability at 0.5 s | strict minus published [95% CI] |
+|---|---|---|---|
+| 0.000 | 0.9915 | 0.9906 | -0.00091 [-0.00100, -0.00082] |
+| 0.010 | 0.9915 | 0.9905 | -0.00100 [-0.00109, -0.00091] |
+| 0.050 | 0.9913 | 0.9902 | -0.00109 [-0.00120, -0.00100] |
+| 0.100 | 0.9914 | 0.9901 | -0.00128 [-0.00139, -0.00117] |
+| 0.200 | 0.9915 | 0.9901 | -0.00141 [-0.00154, -0.00129] |
+
+_estimated (computed from published sizes and cycle counts plus labelled assumptions; not measured); seed 20261020_
+
+Outage rate sweep, drone, architecture B (the draws of the Section 5 outage sweep; `mission/results/replay_outage_sweep.csv`): the strict rule cost grows with the outage rate on both links. IEEE 802.15.4 at 0 per hour: published 1.0000, strict 1.0000, difference 0.00000 [0.00000, 0.00000]; IEEE 802.15.4 at 2 per hour: published 0.9972, strict 0.9970, difference -0.00021 [-0.00025, -0.00018]; IEEE 802.15.4 at 20 per hour: published 0.9718, strict 0.9697, difference -0.00208 [-0.00218, -0.00197]; IEEE 802.15.4 at 60 per hour: published 0.9180, strict 0.9122, difference -0.00586 [-0.00603, -0.00570]; SiK 64 kbit/s at 0 per hour: published 1.0000, strict 1.0000, difference 0.00000 [0.00000, 0.00000]; SiK 64 kbit/s at 2 per hour: published 0.9969, strict 0.9966, difference -0.00035 [-0.00041, -0.00029]; SiK 64 kbit/s at 20 per hour: published 0.9722, strict 0.9688, difference -0.00337 [-0.00354, -0.00320]; SiK 64 kbit/s at 60 per hour: published 0.9164, strict 0.9072, difference -0.00919 [-0.00945, -0.00892].
+
 ## 7. Design envelope
 
 Feasible means mean availability at least 0.99 and utilisation at most 1 (assumption). Base traffic profile:
@@ -474,6 +515,6 @@ The difference arises because this model acknowledges each flight once, while `l
 
 ```
 <python with pymavlink> mission/measure_payloads.py   # optional, needs pymavlink outside the repository
-python3 -m mission.run_all
+python3 -m mission.run_all            # includes python3 -m mission.replay (replay rules)
 python3 -m unittest discover -s mission/tests -t .
 ```

@@ -69,7 +69,84 @@ def load():
     mo = pd.read_csv(os.path.join(RES, 'morris.csv'))
     with open(os.path.join(RES, 'config.json')) as f:
         cfg = json.load(f)
-    return dict(base=base, sweeps=sweeps, low=low, env=env, comp=comp, src=src, cross=cross, mo=mo, cfg=cfg)
+    rep = {}
+    for k, fn in [('base', 'replay_base.csv'), ('loss', 'replay_loss_sweep.csv'), ('outage', 'replay_outage_sweep.csv'),
+                  ('check', 'replay_regeneration_check.csv')]:
+        path = os.path.join(RES, fn)
+        if os.path.exists(path):
+            rep[k] = pd.read_csv(path)
+    return dict(base=base, sweeps=sweeps, low=low, env=env, comp=comp, src=src, cross=cross, mo=mo, cfg=cfg, replay=rep)
+
+
+# ------------------------------------------------------------------ replay rules
+
+def replay_rows(d, link='sik', arch='B'):
+    """Rows of mission/results/replay_base.csv for one link and architecture: published, strict, cache (base W)."""
+    rb = d['replay'].get('base')
+    if rb is None:
+        return None
+    r = rb[(rb.vehicle == 'drone') & (rb.link == link) & (rb.arch == arch)]
+    out = {'published': r[r.replay_rule == 'published'].iloc[0], 'strict': r[r.replay_rule == 'strict'].iloc[0]}
+    c = r[(r.replay_rule == 'cache') & (r.base_window == 1)]
+    out['cache'] = c.iloc[0]
+    return out
+
+
+def replay_section(d):
+    """Text of the replay rule section of docs/MISSION_STUDY.md (empty when the replay results are absent)."""
+    rep = d['replay']
+    if 'base' not in rep:
+        return ''
+    from . import replay
+    ra = replay.load_replay_assumptions()
+    rb, rl, chk = rep['base'], rep.get('loss'), rep.get('check')
+    L = []
+    w = L.append
+    w('### 6.1 Replay acceptance rules (estimated)\n')
+    w('The vehicle can accept an authenticated command under one of three rules (parameter `replay_rule` of `mission/sim.py`, rules in `mission/replay.py`): **published**, the MAVLink 2 rule (counter greater than the last accepted one, gaps allowed), used by every other result of this study; **strict**, only the next counter, the rule of the proofs C1 and C2 (`docs/FORMAL_VERIFICATION.md`); and **replay cache**, any counter not yet seen inside a window of W counters below the highest accepted one. '
+      f"W is {int(ra['replay_window_counters'])} (assumption, from the minimum window sizes of 32 and 64 that RFC 6479 Section 1 reports for IPsec; `mission/replay_assumptions.csv`) and is swept over {', '.join(str(x) for x in ra['replay_window_sweep'])}.\n")
+    w(f"Model of the strict rule: the link layer of this model delivers in order, so a frame that is retransmitted already holds the frames behind it (part of the latency). A command that the link layer gives up (fewer attempt instants outside outages than its frame loss draws need, with at most {int(model.load_link_params()['max_retries'])} retransmissions) leaves a gap; every later command is rejected until a resynchronisation, modelled as a new handshake of the architecture that the ground station starts when its link layer reports the give up (the same four flights and vehicle compute as a rekey, paused during outages), or until an earlier teardown handshake ends. The three rules are evaluated on the same draws of every run (paired); the strict rule draws its resynchronisation handshakes from a separate generator, so the published rule results regenerate identically "
+      + (f"({int(chk.identical.sum())} of {len(chk)} configurations checked, `mission/results/replay_regeneration_check.csv`)" if chk is not None else '') + '.\n')
+    t = rb[(rb.replay_rule != 'cache') | (rb.base_window == 1)].copy()
+    t = t[t.link.isin(['sik', 'ieee802154'])]
+    t['Link'] = t.link.map(model.LINK_NAMES)
+    t['rule'] = t.apply(lambda r: r.replay_rule + (f" W={int(r.replay_window)}" if r.replay_rule == 'cache' else ''), axis=1)
+    t['mean availability at 0.5 s'] = t.apply(lambda r: f"{fmt(r.avail_mean, 4)} [{fmt(r.avail_mean_lo, 4)}, {fmt(r.avail_mean_hi, 4)}]", axis=1)
+    t['paired difference to published'] = t.apply(lambda r: f"{fmt(r.diff_vs_published_mean, 5)} [{fmt(r.diff_vs_published_lo, 5)}, {fmt(r.diff_vs_published_hi, 5)}]", axis=1)
+    w('Drone, base inputs, session architectures (LoRaWAN rows are in `mission/results/replay_base.csv`; there no command meets the deadline under any rule):\n')
+    w(md_table(t.sort_values(['link', 'arch']), ['Link', 'arch', 'rule', 'mean availability at 0.5 s', 'paired difference to published',
+                                                'given_up_per_run_mean', 'rejected_per_run_mean', 'resync_per_run_mean'],
+               ['link', 'arch', 'rule', 'mean availability at 0.5 s [95% CI]', 'paired difference to published [95% CI]',
+                'commands given up per run', 'commands rejected per run', 'resynchronisations per run']))
+    w('\n' + LABEL + '\n')
+    cw = rb[(rb.replay_rule == 'cache') & rb.link.isin(['sik', 'ieee802154'])]
+    w(f"Replay cache window sweep: over W = {', '.join(str(x) for x in ra['replay_window_sweep'])}, the largest absolute paired difference to the published rule is {fmt(cw.diff_vs_published_mean.abs().max(), 5)}. Because this model delivers in order, a frame never arrives after a newer one, so the replay cache accepts exactly what the published rule accepts for every W; out of order delivery is examined with an executing gateway in `docs/SITL_STUDY_R6.md`.\n")
+    if rl is not None:
+        x = rl[rl.replay_rule != 'cache'].copy()
+        x = x.pivot_table(index='over_frame_loss', columns='replay_rule', values=['avail_mean', 'diff_vs_published_mean',
+                                                                                  'diff_vs_published_lo', 'diff_vs_published_hi']).reset_index()
+        x.columns = ['_'.join(c).strip('_') for c in x.columns]
+        x['strict minus published [95% CI]'] = x.apply(lambda r: f"{fmt(r.diff_vs_published_mean_strict, 5)} [{fmt(r.diff_vs_published_lo_strict, 5)}, {fmt(r.diff_vs_published_hi_strict, 5)}]", axis=1)
+        w('Frame loss sweep, drone, SiK, architecture B (the draws of each loss value are those of the Section 5 sweep):\n')
+        x['pub'] = x.avail_mean_published.map(lambda v: fmt(v, 4))
+        x['str'] = x.avail_mean_strict.map(lambda v: fmt(v, 4))
+        w(md_table(x, ['over_frame_loss', 'pub', 'str', 'strict minus published [95% CI]'],
+                   ['frame loss', 'published, mean availability at 0.5 s', 'strict, mean availability at 0.5 s',
+                    'strict minus published [95% CI]']))
+        w('\n' + LABEL + '\n')
+    ro = rep.get('outage')
+    if ro is not None:
+        x = ro[(ro.arch == 'B') & (ro.replay_rule == 'strict')].sort_values(['link', 'over_outage_rate_per_h'])
+        parts = []
+        for _, r in x.iterrows():
+            pub = ro[(ro.arch == 'B') & (ro.link == r.link) & (ro.replay_rule == 'published')
+                     & (ro.over_outage_rate_per_h == r.over_outage_rate_per_h)].avail_mean.iloc[0]
+            parts.append(f"{model.LINK_NAMES[r.link]} at {r.over_outage_rate_per_h:g} per hour: published {fmt(pub, 4)}, strict {fmt(r.avail_mean, 4)}, difference {fmt(r.diff_vs_published_mean, 5)} [{fmt(r.diff_vs_published_lo, 5)}, {fmt(r.diff_vs_published_hi, 5)}]")
+        mono = all((g.sort_values('over_outage_rate_per_h').diff_vs_published_mean.diff().dropna() <= 0).all()
+                   for _, g in x.groupby('link'))
+        trend = 'the strict rule cost grows with the outage rate on both links' if mono else 'the strict rule cost changes with the outage rate'
+        w('Outage rate sweep, drone, architecture B (the draws of the Section 5 outage sweep; `mission/results/replay_outage_sweep.csv`): ' + trend + '. ' + '; '.join(parts) + '.\n')
+    return '\n'.join(L)
 
 
 # ------------------------------------------------------------------ figures
@@ -309,6 +386,9 @@ def study_doc(d, paths):
     w('\n' + LABEL + '\n')
     spread = t.groupby('arch').avail_mean.agg(lambda v: v.max() - v.min())
     w(f"Null result: across rekey intervals from 60 s to once per arming, mean availability changes by at most {fmt(spread.max(), 4)} (A {fmt(spread.get('A'), 4)}, B {fmt(spread.get('B'), 4)}), while the number of handshakes per mission changes by an order of magnitude. With a {a['grace_s']:g} s grace period, rekeying and link loss do not interact strongly in this model; teardowns from outages longer than the {a['session_timeout_s']:g} s session timeout dominate.\n")
+    rs = replay_section(d)
+    if rs:
+        w(rs)
     # low rate
     w('## 7. Design envelope\n')
     w(f"Feasible means mean availability at least {a['feasible_availability']} and utilisation at most 1 (assumption). Base traffic profile:\n")
@@ -342,7 +422,7 @@ def study_doc(d, paths):
         w(f"- The link parameters are those of linksim (`linksim/params.csv`). A later check in ns-3 (`docs/NETSIM_STUDY.md`, label simulated (network)) found the single hop IEEE 802.15.4 transfer of 50 kB faster in ns-3 than in linksim ({fmt(ng['base_frame'][0], 2)} s against {fmt(ng['base_frame'][1], 2)} s), but multi hop store and forward optimistic in linksim ({fmt(ng['hops_3'][0], 2)} s in ns-3 against {fmt(ng['hops_3'][1], 2)} s in linksim at 3 hops); this study models one hop.")
     w('- Loss is independent per frame; real loss is bursty. Outages are Poisson with exponential durations; both rates are assumptions.\n- The 13 B LoRaWAN frame overhead is counted but the PHY preamble and header are not (nominal bit rate model, understates air time), and class A receive windows are not modelled; the 1 percent duty cycle is applied per transmitter.\n- The robot uses MAVLink framing; ROS 2 DDS Security per message overhead could not be verified (`data/raw/S12_traffic_sources.md`).\n- X25519 and Ed25519 cycles come from Cortex-M4 rows (S12A-332 with clock not stated, S12A-331 at 24 MHz) and are applied at 168 MHz; the wait state factor is applied only to the zero wait state rows; the per message tag cost has no published row; it is derived from published SHA-256 throughput as one HMAC-SHA256 over a 64 B message (`data/shared_inputs.csv` mac_cycles_per_message) and swept.\n- Ground station compute is ignored. One vehicle, one ground station, no contention from other users of the band.\n- Security properties of the session and update design were checked only in an abstract model (`docs/FORMAL_VERIFICATION.md`); it does not cover timing, side channels, implementation or denial of service.\n- Message counts come from the traffic table, not from a simulator. A later software in the loop study with ArduPilot (`docs/SITL_STUDY.md`) compares the latency and availability of this study with a flight stack behind an emulated link.\n')
     w('## 9. Reproduction\n')
-    w('```\n<python with pymavlink> mission/measure_payloads.py   # optional, needs pymavlink outside the repository\npython3 -m mission.run_all\npython3 -m unittest discover -s mission/tests -t .\n```\n')
+    w('```\n<python with pymavlink> mission/measure_payloads.py   # optional, needs pymavlink outside the repository\npython3 -m mission.run_all            # includes python3 -m mission.replay (replay rules)\npython3 -m unittest discover -s mission/tests -t .\n```\n')
     return '\n'.join(L)
 
 
@@ -375,7 +455,7 @@ def arch_doc(d, paths):
     w('A layered design:\n')
     w('1. **Boot:** firmware signed with LMS and verified by the bootloader (the firmware half of architecture D). Verification costs ' +
       fmt(_row(comp, arch='D', operation='boot verify').ms_at_168MHz, 1) + ' ms at 168 MHz for the signature verification alone, excluding the hash of the image (derived from published cycles); hashing the image adds a cost that grows with its size, given for a 1 MB image in `docs/BOOT_UPDATE_STUDY.md`. Boot verification uses no radio time. The LMS signature covers the image and its version. The bootloader keeps a monotonic version counter in protected storage, boots only an image whose signed version is at least the counter, and then raises the counter (design change F3).\n')
-    w('2. **Session start on links of SiK class or faster:** hybrid key establishment X25519 plus ML-KEM-768 with an ML-DSA-44 transcript signature from the ground station, verified against a pinned key (architecture B), then the existing 13 B MAVLink 2 signing field on every message. The vehicle also signs the transcript with its own ML-DSA-44 key, pinned at the ground station; both signatures cover both identities and the full transcript, and each side sends a key confirmation tag before it accepts the session (design change F1, `docs/FORMAL_VERIFICATION.md`). The session key is derived from the X25519 secret, the ML-KEM-768 secret and a hash of the transcript; a rekey uses a fresh ML-KEM key pair and fresh X25519 shares, protected by the current key. **Replay rule:** the proofs of C1 and C2 in `docs/FORMAL_VERIFICATION.md` use a strict acceptance rule (the vehicle accepts only the next sequence number on a stream); for the published MAVLink 2 rule (timestamp greater than the last one, gaps allowed) injective agreement could not be proved (row `session_timestamp_rule`, only the non injective form holds). This architecture therefore adopts the strict rule for commands in a session as the only proved option, provisionally: the software in the loop runs showed that link layer retransmission can deliver frames out of order, which the strict rule rejects, so whether to require in order delivery below the session layer or to prove a replay window instead is an open design question (`docs/SITL_STUDY.md`). Where lost frames make the strict rule impractical and the published rule is kept, the residual risk is stated: that each command is accepted at most once is not proved for that rule; this is a limit of the abstraction, not a known attack. Every availability figure for B in the mission study and in this document (Section 2 and the frame loss sweeps) is modelled under the published rule with gaps allowed; availability under the strict rule, where a lost frame also blocks the frames after it until recovery, is not modelled, and the software in the loop runs (`docs/SITL_STUDY.md`) enforced no replay rule either.\n')
+    w('2. **Session start on links of SiK class or faster:** hybrid key establishment X25519 plus ML-KEM-768 with an ML-DSA-44 transcript signature from the ground station, verified against a pinned key (architecture B), then the existing 13 B MAVLink 2 signing field on every message. The vehicle also signs the transcript with its own ML-DSA-44 key, pinned at the ground station; both signatures cover both identities and the full transcript, and each side sends a key confirmation tag before it accepts the session (design change F1, `docs/FORMAL_VERIFICATION.md`). The session key is derived from the X25519 secret, the ML-KEM-768 secret and a hash of the transcript; a rekey uses a fresh ML-KEM key pair and fresh X25519 shares, protected by the current key. **Replay rule:** the proofs of C1 and C2 in `docs/FORMAL_VERIFICATION.md` use a strict acceptance rule (the vehicle accepts only the next sequence number on a stream); for the published MAVLink 2 rule (timestamp greater than the last one, gaps allowed) injective agreement could not be proved (row `session_timestamp_rule`, only the non injective form holds). This architecture therefore adopts the strict rule for commands in a session as the only proved option, provisionally: the software in the loop runs showed that link layer retransmission can deliver frames out of order, which the strict rule rejects, so whether to require in order delivery below the session layer or to prove a replay window instead is an open design question (`docs/SITL_STUDY.md`). Where lost frames make the strict rule impractical and the published rule is kept, the residual risk is stated: that each command is accepted at most once is not proved for that rule; this is a limit of the abstraction, not a known attack. Every availability figure for B in Sections 2 and 3 and in the frame loss sweeps is modelled under the published rule with gaps allowed; availability per rule is given in Section 6 (Limits) and in `docs/MISSION_STUDY.md` Section 6.1, and the round 5 software in the loop runs (`docs/SITL_STUDY.md`) enforced no replay rule, while the round 6 runs with an executing gateway enforce each rule (`docs/SITL_STUDY_R6.md`).\n')
     w('3. **Provisioned session keys as the fallback** (the session half of D) for links where the B handshake cannot finish in preflight (LoRaWAN class links, where only low rate command traffic is possible at all), and as the recovery path when establishing a new session would take longer than the vehicle safety case allows. Provisioned keys are never used directly as signing keys. At every session start both sides exchange fresh nonces and derive the session signing key from the provisioned key and both nonces, so that sequence numbers and timestamps are bound to the session (design change F2). This fallback has no forward secrecy: whoever later obtains the provisioned key can recompute the keys of earlier sessions from the recorded nonces, so provisioned keys should be short lived.\n')
     w('4. **No per command ML-DSA-44 signatures on streamed commands** (architecture C). They remain an option for rare, high value commands such as a mission upload, where seconds of delay are acceptable.\n')
     checks = [
@@ -466,6 +546,14 @@ def arch_doc(d, paths):
     w('## 5. Components and interfaces (design level)\n')
     w('| component | role | where it runs |\n|---|---|---|\n| LMS verifier in the bootloader | verifies the firmware image and its signed version before start | flight controller or robot MCU |\n| Monotonic version counter | rejects older signed images (design change F3) | protected storage of the flight controller or robot MCU |\n| Pinned ML-DSA-44 ground key | authenticates the ground station during session start | vehicle, provisioned over a wire |\n| Vehicle ML-DSA-44 key pair (public key pinned at the ground station) | authenticates the vehicle during session start (design change F1) | vehicle; public key provisioned at the ground station |\n| Hybrid key establishment (X25519 plus ML-KEM-768) | derives a 32 B signing key per session | ground station and vehicle (or a companion computer gateway) |\n| MAVLink 2 signing (13 B field, 6 B tag) | per message authentication | both sides; frame format unchanged, vehicle acceptance set to the strict next sequence rule of the proofs (Section 1, item 2) |\n| Provisioned key store | fallback keys from which session keys are derived with fresh nonces (design change F2) | vehicle |\n| Link supervisor | session timeout, rekey timing, fallback decision | vehicle |\n')
     w('## 6. Limits\n')
+    rr = replay_rows(d)
+    if rr is not None:
+        p, st, c = rr['published'], rr['strict'], rr['cache']
+        w(f"- Availability per replay rule (drone, SiK, architecture B, 0.5 s, `mission/results/replay_base.csv`): published {fmt(p.avail_mean, 4)}, strict {fmt(st.avail_mean, 4)} (paired difference {fmt(st.diff_vs_published_mean, 5)} [{fmt(st.diff_vs_published_lo, 5)}, {fmt(st.diff_vs_published_hi, 5)}], from {fmt(st.resync_per_run_mean, 3)} resynchronisations per run after commands given up during outages), replay cache with W = {int(c.replay_window)} {fmt(c.avail_mean, 4)}. The mission model delivers in order, so the replay cache equals the published rule there by construction; the cost of out of order delivery is measured with an executing gateway in `docs/SITL_STUDY_R6.md`. The strict rule cost depends on the resynchronisation model (a new handshake after a give up), which is an assumption of this study.")
+        rl = d['replay'].get('loss')
+        if rl is not None:
+            hi = rl[(rl.replay_rule == 'strict')].sort_values('over_frame_loss').iloc[-1]
+            w(f"- Frame loss under the strict rule (drone, SiK, B): at a frame loss of {hi.over_frame_loss:g} the strict rule gives {fmt(hi.avail_mean, 4)} against {fmt(rl[(rl.replay_rule == 'published') & (rl.over_frame_loss == hi.over_frame_loss)].avail_mean.iloc[0], 4)} under the published rule; with up to {int(model.load_link_params()['max_retries'])} retransmissions per frame, frame loss alone almost never makes the link layer give a command up, so the gaps come from outages, and the cost grows with frame loss because each resynchronisation handshake takes longer.")
     w('- Estimated throughout; no radio, flight controller or cryptographic library was run. The link model is checked against another model and against ns-3 (a simulator, not a radio).\n- Assumed traffic rates, outage process, timeouts and deadlines drive the verdicts; they are swept, but real values for a given vehicle may lie outside the swept ranges.\n- The 95 percent intervals in this document cover Monte Carlo noise around fixed assumptions only, not uncertainty in the inputs; input uncertainty is explored only through the sweeps and the Morris screening.')
     ng = netsim_gap()
     w("- Feasibility on IEEE 802.15.4 rests on the linksim parameters at one hop. The link study found linksim faster than a published 802.15.4 transfer time (`docs/LINKSIM_STUDY.md` section 4.4); the ns-3 check (`docs/NETSIM_STUDY.md`) found that more hops, more background load (on the mean only, with an interval that crosses 30 s) or larger backoff exponents (macMinBE and macMaxBE raised to 8 together) each bring the ns-3 time into the published range, and that linksim's multi hop store and forward is optimistic"
@@ -479,6 +567,8 @@ def main(argv=None):
     argv = argv if argv is not None else sys.argv[1:]
     if '--reuse' not in argv:
         study.main()
+        from . import replay
+        replay.main()
     else:
         # cheap deterministic tables are always regenerated from the current inputs
         comp, src = study.compute_latency_table()
