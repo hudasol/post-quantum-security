@@ -12,7 +12,7 @@ The models follow `docs/REFERENCE_ARCHITECTURE.md` (sections 1 and 5), the archi
 2. **Fallback with provisioned keys (architecture D, session half).** A key loaded over a wire is used as the signing key in every session.
 3. **Firmware update (architecture D, boot half).** An image and its version are signed with an abstract stateful hash based signature (LMS) and verified by the bootloader, with and without a monotonic version counter in protected storage.
 
-In total 17 model files and 57 queries were run: 39 proved, 17 counterexamples and 1 that the tool could not prove. The counterexamples include the control rows in which both components are broken on purpose (section 7) and the stated designs before each change (section 6). The session and fallback models allow an unbounded number of sessions; the firmware models allow an unbounded number of devices, each booting three times, with three signed releases.
+In total 24 model files and 86 queries were run: 62 proved, 21 counterexamples and 3 that the tool could not prove. The counterexamples include the control rows in which both components are broken on purpose (section 7), the stated designs before each change (section 6), and the controls and reachability checks of the replay rules (section 9). The session and fallback models allow an unbounded number of sessions; the firmware models allow an unbounded number of devices, each booting three times, with three signed releases. The replay rule models of section 9 state their own bounds on commands per key.
 
 ## 2. Assumptions and what is not modelled
 
@@ -24,8 +24,8 @@ In total 17 model files and 57 queries were run: 39 proved, 17 counterexamples a
 
 ## 3. Modelling choices
 
-- **Replay rule.** MAVLink 2 accepts a signed message if its timestamp is greater than the last one on the same stream (`data/raw/S3_robotics.md`, line 25). ProVerif abstracts state, and with a greater than rule and gaps it could not prove injective agreement (row `session_timestamp_rule` in section 5; the non injective form holds). The other models therefore use a stricter rule: the vehicle accepts only the next sequence number. This is a limit of the abstraction, not a finding about the design; the result for the published rule is recorded as cannot be proved, not as proved.
-- **Session length.** Each modelled session carries one command, a rekey and one command under the new key, then ends. A new handshake is a new copy of the process, so outage, teardown and a new session are covered by the unbounded number of copies.
+- **Replay rule.** MAVLink 2 accepts a signed message if its timestamp is greater than the last one on the same stream (`data/raw/S3_robotics.md`, line 25). ProVerif abstracts state, and with a greater than rule and gaps it could not prove injective agreement (row `session_timestamp_rule` in section 5; the non injective form holds). The other models therefore use a stricter rule: the vehicle accepts only the next sequence number. This is a limit of the abstraction, not a finding about the design; the result for the published rule is recorded as cannot be proved, not as proved. Rules that accept commands out of order (a replay cache and a bounded window) are modelled separately in section 9.
+- **Session length.** Each session model of sections 6 and 7 carries one command, a rekey and one command under the new key, then ends. The replay rule models of section 9 carry several commands per key (bounds in section 9). A new handshake is a new copy of the process, so outage, teardown and a new session are covered by the unbounded number of copies.
 - **Ground station key pair for the KEM.** In architecture B the ground station sends the KEM public key and the vehicle encapsulates (`mission/model.py`, flights of architecture B).
 - **Persisted replay state with provisioned keys.** The cited guidance recommends persisting the timestamp but notes that stored timestamps often stay at the provisioning value because vehicles are powered off by pulling the battery (`data/raw/S3_robotics.md`, line 37). The fallback model therefore restarts the replay state of the vehicle at each power cycle.
 
@@ -47,6 +47,11 @@ In total 17 model files and 57 queries were run: 39 proved, 17 counterexamples a
 | fallback | FS | Keys of earlier sessions stay secret even if the provisioned key is stolen later. |
 | firmware | D1 | After a device has booted an image of some version, it never boots an image released with a lower version (downgrade rejection), even though the attacker can offer any image ever signed. |
 | timestamp | C1 | With the published MAVLink rule (any timestamp greater than the last one, gaps allowed), each command is accepted at most once and only if sent in that session. |
+| replay | S0 | Sanity check of the command layer models: the abstract session key is never revealed (true by construction, since the key is never sent). |
+| replay | S1 to S4 | The same as S1 to S4 of the session group, for the session with change F1 and a replay rule that accepts commands out of order (section 9). |
+| replay | C1 | With the replay rule of the model, the vehicle accepts a command in a session only if the ground station sent that command in that session, and accepts it at most once. |
+| replay | C2 | With the replay rule of the model, a command sent in one session is never accepted in another session. |
+| replay | R1 | Functional check, not a security property: the vehicle can accept a command whose counter is below the highest counter it accepted before. A counterexample is the expected result. |
 
 ## 5. Results (modelled)
 
@@ -108,6 +113,35 @@ In total 17 model files and 57 queries were run: 39 proved, 17 counterexamples a
 | session_b_stated_fs_longterm | forward secrecy: the ground station signature key given to the attacker after the sessions (phase 1) | S2 | counterexample |  | 54.9 |
 | session_b_stated_fs_longterm | forward secrecy: the ground station signature key given to the attacker after the sessions (phase 1) | S3 | proved |  | 54.9 |
 | session_b_stated_fs_longterm | forward secrecy: the ground station signature key given to the attacker after the sessions (phase 1) | S4 | counterexample |  | 54.9 |
+| session_replay_cache | Dolev Yao attacker, no secret given | C1 | proved |  | 83.6 |
+| session_replay_cache | Dolev Yao attacker, no secret given | C2 | proved |  | 83.6 |
+| session_replay_cache | Dolev Yao attacker, no secret given | S1 | proved |  | 83.6 |
+| session_replay_cache | Dolev Yao attacker, no secret given | S2 | proved |  | 83.6 |
+| session_replay_cache | Dolev Yao attacker, no secret given | S3 | proved |  | 83.6 |
+| session_replay_cache | Dolev Yao attacker, no secret given | S4 | proved |  | 83.6 |
+| session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | C1 | counterexample | non injective form proved | 64.8 |
+| session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | C2 | proved |  | 64.8 |
+| session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | S1 | proved |  | 64.8 |
+| session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | S3 | proved |  | 64.8 |
+| session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | C1 | proved |  | 29.3 |
+| session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | C2 | proved |  | 29.3 |
+| session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | S1 | proved |  | 29.3 |
+| session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | S3 | proved |  | 29.3 |
+| session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | C1 | counterexample | non injective form proved | 63.1 |
+| session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | C2 | proved |  | 63.1 |
+| session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | S1 | proved |  | 63.1 |
+| session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | S3 | proved |  | 63.1 |
+| session_replay_cache_table_sequential | Dolev Yao attacker, no secret given | C1 | cannot be proved | non injective form proved | 126.1 |
+| session_replay_cache_table_sequential | Dolev Yao attacker, no secret given | C2 | proved |  | 126.1 |
+| session_replay_cache_table_sequential | Dolev Yao attacker, no secret given | S0 | proved |  | 126.1 |
+| session_replay_window | Dolev Yao attacker, no secret given | C1 | proved |  | 11.0 |
+| session_replay_window | Dolev Yao attacker, no secret given | C2 | proved |  | 11.0 |
+| session_replay_window | Dolev Yao attacker, no secret given | R1 | counterexample |  | 11.0 |
+| session_replay_window | Dolev Yao attacker, no secret given | S0 | proved |  | 11.0 |
+| session_replay_window_no_restriction | Dolev Yao attacker, no secret given | C1 | cannot be proved | non injective form proved | 2.9 |
+| session_replay_window_no_restriction | Dolev Yao attacker, no secret given | C2 | proved |  | 2.9 |
+| session_replay_window_no_restriction | Dolev Yao attacker, no secret given | R1 | counterexample |  | 2.9 |
+| session_replay_window_no_restriction | Dolev Yao attacker, no secret given | S0 | proved |  | 2.9 |
 | session_timestamp_rule | Dolev Yao attacker, no secret given | C1 | cannot be proved | non injective form proved | 0.0 |
 
 _result and weaker form: modelled (ProVerif under the Dolev Yao model with abstract primitives); run time: host measured, wall clock time of the whole model file on the run host, which holds several queries_
@@ -164,7 +198,65 @@ Reading: the session keys stay secret when either component is broken, and stay 
 4. Boot: "The LMS signature covers the image and its version. The bootloader keeps a monotonic version counter in protected storage, boots only an image whose signed version is at least the counter, and then raises the counter." (F3)
 5. Limits: "The formal check covers an abstract model only (docs/FORMAL_VERIFICATION.md); it does not cover timing, side channels, implementation or denial of service."
 
-## 9. Reproduce
+## 9. Replay rules that accept commands out of order
+
+The open design question of `docs/LIMITATIONS_AND_PLAN_R6.md` (item L4) is whether the vehicle may accept commands out of order. Sections 3 and 6 prove C1 for the strict next sequence rule only, and C1 could not be proved for the published timestamp rule. The models of this section replace only the rule by which the vehicle accepts a command. The tool behaviour cited below is taken from the ProVerif 2.05 manual (`data/raw/proverif_manual_notes.md`).
+
+### 9.1 Encodings
+
+- **Seen counter table as a restriction** (models `session_replay_cache`, `session_replay_cache_fresh_counters`, `session_replay_window`). Every branch of the vehicle that accepts a command draws a fresh stamp and records the event Mark(session, counter, stamp). A restriction keeps only the traces in which no two branches record the same session and counter with different stamps; ProVerif proves the queries on exactly those traces (manual, section 6.2). A branch that would accept a pair already accepted therefore cannot proceed, which is the behaviour of a vehicle that looks the pair up in a table of accepted pairs and inserts it in one indivisible step, with a table that never forgets an entry and is keyed by the session identifier. The restriction is an assumption about the vehicle, not something the tool proves. What the tool proves under it is that every accepted command was sent by the ground station in that session (the tag and the session binding), and, with counters that the sender never repeats under one key, that each sent command is accepted at most once.
+- **ProVerif tables** (models `session_replay_cache_table_concurrent` and `session_replay_cache_table_sequential`). The vehicle runs `get seen(=session, =counter) in (drop) else insert seen(session, counter); accept`. Records cannot be deleted from a table (manual, section 4.1.5), so a table can express a cache that never forgets but not a window that evicts old counters. In the concurrent model the vehicle handles command messages in parallel branches, so the lookup and the insert are two steps that other branches can interleave. In the sequential model the vehicle reads command messages one after the other.
+- **Bounded window** (models `session_replay_window` and `session_replay_window_no_restriction`, W = 2). The vehicle reads command messages one after the other and keeps in process variables the highest accepted counter and the counters accepted so far. It accepts counter t if the tag is valid, t is greater than the highest accepted counter minus W, and t was not accepted before. Inside the bound on messages the state is exact, and every counter at or below the highest minus W is rejected by the window test, as in a window that keeps a bitmap of the last W counters. In `session_replay_window` the seen counter restriction is added to help the tool; it removes no trace of this process, because the process itself never accepts a counter twice under one key (a hand argument from the process text, not checked by the tool). `session_replay_window_no_restriction` is the same rule without that help.
+- **Control** (model `session_replay_cache_broken_no_check`). The vehicle accepts any command with a valid tag and does not consult a table.
+- **Full handshake or command layer.** The models with parallel acceptance branches keep the whole session with change F1 (hybrid exchange, both transcript signatures, key confirmation, rekey) and ask the secrecy queries of section 4 as a sanity check. The models that read messages one after the other exhausted the memory of the run host inside the full handshake, so they are written on the command layer only, in the style of `session_timestamp_rule`: each session is a fresh abstract key and a fresh session identifier. Their secrecy query S0 holds by construction and only checks that the command layer does not send the key.
+- **Commands per key.** The ground station sends several commands per key, with counters starting at 1 under each key; in `session_replay_cache_fresh_counters` it sends any number of commands per key. In the full handshake models, commands under the first key are accepted in parallel with the rekey, so an old key command may still be accepted after the rekey; this is a longer grace period than the 30 s of the architecture and therefore gives the attacker at least as much room.
+
+### 9.2 Bounds of each model
+
+Every model allows an unbounded number of sessions in parallel. Command messages read at the vehicle include messages sent by the attacker.
+
+| Model | Session part | Acceptance rule | Encoding of seen counters | Commands sent per key | Command messages read per key at the vehicle |
+|---|---|---|---|---|---|
+| session_replay_cache | full handshake with F1, two keys per session | replay cache | restriction (indivisible lookup and insert, never forgets) | 3 | unbounded |
+| session_replay_cache_fresh_counters | full handshake with F1, two keys per session | replay cache | restriction; counters are fresh values | unbounded | unbounded |
+| session_replay_window | command layer only, one key per session | bounded window, W = 2 | process variables, plus the restriction | 4 | 4 |
+| session_replay_window_no_restriction | command layer only, one key per session | bounded window, W = 2 | process variables only | 4 | 4 |
+| session_replay_cache_table_sequential | command layer only, one key per session | replay cache | ProVerif table, one message after the other | 4 | 4 |
+| session_replay_cache_table_concurrent | full handshake with F1, two keys per session | replay cache | ProVerif table, messages in parallel branches | 3 | unbounded |
+| session_replay_cache_broken_no_check | full handshake with F1, two keys per session | none (control) | no check | 3 | unbounded |
+
+### 9.3 Results (modelled)
+
+| Model | S0 | S1 | S2 | S3 | S4 | C1 | C2 | R1 | C1 weaker form |
+|---|---|---|---|---|---|---|---|---|---|
+| session_replay_cache | not asked | proved | proved | proved | proved | proved | proved | not asked | none reported |
+| session_replay_cache_fresh_counters | not asked | proved | not asked | proved | not asked | proved | proved | not asked | none reported |
+| session_replay_window | proved | not asked | not asked | not asked | not asked | proved | proved | counterexample | none reported |
+| session_replay_window_no_restriction | proved | not asked | not asked | not asked | not asked | cannot be proved | proved | counterexample | non injective form proved |
+| session_replay_cache_table_sequential | proved | not asked | not asked | not asked | not asked | cannot be proved | proved | not asked | non injective form proved |
+| session_replay_cache_table_concurrent | not asked | proved | not asked | proved | not asked | counterexample | proved | not asked | non injective form proved |
+| session_replay_cache_broken_no_check | not asked | proved | not asked | proved | not asked | counterexample | proved | not asked | non injective form proved |
+
+_modelled: ProVerif under the Dolev Yao model with abstract primitives. R1 is a reachability check whose expected result is a counterexample; run times are in section 5._
+
+### 9.4 Reading
+
+- **Replay cache, indivisible lookup and insert.** C1 proved and C2 proved with 3 commands per key, and C1 proved and C2 proved with any number of commands per key, in the full handshake. The session keys stay secret in the same model (S1 proved, S2 proved, S3 proved, S4 proved), so adding the rule does not disturb the handshake. In the model, a vehicle may therefore accept commands out of order and with gaps, provided it remembers every accepted (session, counter) pair for the life of the key and checks and records a pair in one step.
+- **Control without the check.** C1 counterexample (weaker form: non injective form proved): the attacker delivers a recorded command twice and the vehicle accepts it twice. The proof of the cache model therefore rests on the table, not on the rest of the model.
+- **Tables, lookup and insert in two steps.** C1 counterexample: two branches of the vehicle both find no entry for the same command, both insert it, and both accept it (the goal statement of the trace is in `formal/results/logs/session_replay_cache_table_concurrent.txt`). A vehicle that checks and records counters on two receive paths at once (two radios, or a check and a store in different tasks) needs the lookup and the insert to be one indivisible step.
+- **Tables, one message after the other.** C1 cannot be proved (weaker form: non injective form proved). The tool ignores how often an action repeats (manual, section 6.2), so the absence of a table entry is not kept in its abstraction. As for the published timestamp rule in section 3, this is a limit of the tool, not a finding about the design, and it is recorded as such.
+- **Bounded window, W = 2.** C1 proved and C2 proved with the restriction, inside the bound of 4 command messages per key. Without the restriction C1 cannot be proved (weaker form: non injective form proved) and C2 proved, for the same reason as the sequential table. R1 counterexample: the vehicle does accept a command older than the highest accepted one, so the model is not the strict rule in disguise.
+
+### 9.5 What these proofs do not say about a real replay window
+
+- A real window forgets counters that fall out of it. The cache models never forget, and the window model keeps every counter it accepted within its bound on messages. The proof covers a real window only through the window test, which rejects every counter at or below the highest accepted minus W; a cache that evicts entries without such a floor is in the position of the control model.
+- Counters are unbounded natural numbers. Finite counter width, wrap around and the 48 bit MAVLink timestamp field are not represented.
+- The vehicle state is never lost inside a key. A reset of the table while the same key stays in use (a reboot that keeps the key) is not modelled; in architecture B and in the fallback with change F2 every reboot starts a new handshake and therefore a new session identifier.
+- The window and sequential table models are bounded in the number of command messages the vehicle reads per key, attacker messages included, and cover the command layer only; an attack that needs more deliveries under one key is outside them.
+- The restriction is an assumption that the implementation checks and records a pair in one step and keeps the table for the life of the key; the tool does not prove it, and the concurrent table model shows what happens without it.
+- Availability is not covered: a window rejects late commands that a cache would accept, and the cost of that in lost commands is a question for the mission and flight stack studies, not for this model.
+
+## 10. Reproduce
 
 ```
 sh formal/install.sh            # ProVerif pinned version, built outside the repository
