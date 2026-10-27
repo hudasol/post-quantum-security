@@ -8,3 +8,4 @@ SALib==1.6.0
 unicorn==2.1.4
 capstone==5.0.9
 statsmodels==0.15.0
+cryptography==50.0.1

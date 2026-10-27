@@ -1,0 +1,5 @@
+name,value,unit,label,note
+seed_base_r6,20311021,count,assumption,round 6 seed block (20261021 plus 50000; separate from round 5); mission i on profile j uses this plus 1000 x j plus i for every configuration so that outage draws and command phases are paired
+missions_per_config_r6,20,count,assumption,scripted missions per configuration and link profile (minimum of the round 6 plan)
+rtl_core,ibex,name,assumption,core of the RTL runs whose cycles set the vehicle side delays: the core with the larger vehicle side cycles of the hybrid session in rtlsim/results/proto_sessions.csv (the conservative choice); the other core is recorded beside it
+rtl_statistic,median,name,assumption,statistic of the RTL runs used as the delay
