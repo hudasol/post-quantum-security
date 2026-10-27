@@ -1,0 +1,30 @@
+vehicle,arch,link,config_key,replay_avail_mean,earlier_avail_mean,identical,label
+drone,A,sik,base|{},0.9916434782608696,0.9916434782608696,True,estimated
+drone,B,sik,base|{},0.9914391304347826,0.9914391304347826,True,estimated
+drone,A,ieee802154,base|{},0.9908739130434783,0.9908739130434784,True,estimated
+drone,B,ieee802154,base|{},0.9922463768115942,0.9922463768115942,True,estimated
+drone,A,lora_dr5,base|{},5.797101449275363e-05,5.797101449275363e-05,True,estimated
+drone,B,lora_dr5,base|{},0.0,0.0,True,estimated
+drone,A,lora_dr0,base|{},0.0,0.0,True,estimated
+drone,B,lora_dr0,base|{},0.0,0.0,True,estimated
+drone,B,sik,"sweep:frame_loss|{""frame_loss"": 0.0}",0.9915101449275363,0.9915101449275364,True,estimated
+drone,B,sik,"sweep:frame_loss|{""frame_loss"": 0.01}",0.9914608695652174,0.9914608695652174,True,estimated
+drone,B,sik,"sweep:frame_loss|{""frame_loss"": 0.05}",0.991285507246377,0.991285507246377,True,estimated
+drone,B,sik,"sweep:frame_loss|{""frame_loss"": 0.1}",0.9914072463768115,0.9914072463768115,True,estimated
+drone,B,sik,"sweep:frame_loss|{""frame_loss"": 0.2}",0.9914710144927538,0.9914710144927538,True,estimated
+drone,A,sik,"sweep:outage_rate_per_h|{""outage_rate_per_h"": 0.0}",1.0,1.0,True,estimated
+drone,B,sik,"sweep:outage_rate_per_h|{""outage_rate_per_h"": 0.0}",1.0,1.0,True,estimated
+drone,A,ieee802154,"sweep:outage_rate_per_h|{""outage_rate_per_h"": 0.0}",1.0,1.0,True,estimated
+drone,B,ieee802154,"sweep:outage_rate_per_h|{""outage_rate_per_h"": 0.0}",1.0,1.0,True,estimated
+drone,A,sik,"sweep:outage_rate_per_h|{""outage_rate_per_h"": 2.0}",0.9972144927536233,0.9972144927536232,True,estimated
+drone,B,sik,"sweep:outage_rate_per_h|{""outage_rate_per_h"": 2.0}",0.996904347826087,0.996904347826087,True,estimated
+drone,A,ieee802154,"sweep:outage_rate_per_h|{""outage_rate_per_h"": 2.0}",0.997108695652174,0.997108695652174,True,estimated
+drone,B,ieee802154,"sweep:outage_rate_per_h|{""outage_rate_per_h"": 2.0}",0.9972231884057972,0.9972231884057972,True,estimated
+drone,A,sik,"sweep:outage_rate_per_h|{""outage_rate_per_h"": 20.0}",0.9721797101449277,0.9721797101449275,True,estimated
+drone,B,sik,"sweep:outage_rate_per_h|{""outage_rate_per_h"": 20.0}",0.9721985507246377,0.9721985507246376,True,estimated
+drone,A,ieee802154,"sweep:outage_rate_per_h|{""outage_rate_per_h"": 20.0}",0.9716101449275364,0.9716101449275364,True,estimated
+drone,B,ieee802154,"sweep:outage_rate_per_h|{""outage_rate_per_h"": 20.0}",0.9718217391304347,0.9718217391304348,True,estimated
+drone,A,sik,"sweep:outage_rate_per_h|{""outage_rate_per_h"": 60.0}",0.9182014492753624,0.9182014492753624,True,estimated
+drone,B,sik,"sweep:outage_rate_per_h|{""outage_rate_per_h"": 60.0}",0.9164333333333334,0.9164333333333334,True,estimated
+drone,A,ieee802154,"sweep:outage_rate_per_h|{""outage_rate_per_h"": 60.0}",0.9203260869565217,0.9203260869565216,True,estimated
+drone,B,ieee802154,"sweep:outage_rate_per_h|{""outage_rate_per_h"": 60.0}",0.9180115942028986,0.9180115942028986,True,estimated
