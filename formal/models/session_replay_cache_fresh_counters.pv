@@ -67,6 +67,12 @@ query s: bitstring, k: key; event(VRekey(s, k)) && attacker(k) ==> false.
 query s: bitstring, t: ctr, m: bitstring; inj-event(Acc(s, t, m)) ==> inj-event(Send(s, t, m)).
 (* C2: no replay of a command into another session (across rekey, link outage and new handshake) *)
 query s: bitstring, t: ctr, m: bitstring; event(Acc(s, t, m)) ==> event(Send(s, t, m)).
+(* R0: reachability check: the vehicle accepts at least one command (a counterexample is the expected result and shows that acceptance is reachable, so the proofs of C1 and C2 are not vacuous) *)
+query s: bitstring, t: ctr, m: bitstring; event(Acc(s, t, m)) ==> false.
+(* A1: vehicle authenticates the ground station (injective agreement on the handshake) *)
+query s: bitstring, k: key; inj-event(VAccept(s, k)) ==> inj-event(GSKey(s, k)).
+(* A2: ground station authenticates the vehicle (injective agreement on the handshake) *)
+query s: bitstring, k: key; inj-event(GSAccept(s, k)) ==> inj-event(VRun(s)).
 
 (* Commands sent by the ground station under one key. *)
 let GSCmds(sid: bitstring, k: key) =

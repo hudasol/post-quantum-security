@@ -10,7 +10,16 @@ goal reachable: b-event(Send(h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_
 goal reachable: b-event(Send(h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),2,m2_2)) && b-event(Send(h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),1,m1_2)) -> event(Acc(h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),2,m2_2))
 goal reachable: b-event(Send(h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),1,m1_2)) -> event(Acc(h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),1,m1_2))
 RESULT event(Acc(s,t_2,m_2)) ==> event(Send(s,t_2,m_2)) is true.
+goal reachable: event(Acc(h((h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),exp(g,x2_1),kpk(dk2_1),exp(g,y2_1),kct(kpk(dk2_1),r2_1))),3,m3_2))
+RESULT not event(Acc(s,t_2,m_2)) is false.
+goal reachable: b-inj-event(GSKey(h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),kdf(exp(exp(g,y_1),x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))))),@occ17_1) -> inj-event(VAccept(h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),kdf(exp(exp(g,y_1),x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))))),@occ68_1)
+RESULT inj-event(VAccept(s,k_2)) ==> inj-event(GSKey(s,k_2)) is true.
+goal reachable: b-event(@p_act(@occ64_1,(tF3,sign((tF3,idG,idV,(exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),skG[]),mac((tConfG,h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1)))),kdf(exp(exp(g,y_1),x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1)))))))) && b-inj-event(VRun(h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1)))),@occ62_1) -> inj-event(GSAccept(h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),kdf(exp(exp(g,y_1),x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))))),@occ22_1)
+RESULT inj-event(GSAccept(s,k_2)) ==> inj-event(VRun(s)) is true.
 Query not (event(VAccept(s,k_2)) && attacker(k_2)) is true.
 Query not (event(VRekey(s,k_2)) && attacker(k_2)) is true.
 Query inj-event(Acc(s,t_2,m_2)) ==> inj-event(Send(s,t_2,m_2)) is false.
 Query event(Acc(s,t_2,m_2)) ==> event(Send(s,t_2,m_2)) is true.
+Query not event(Acc(s,t_2,m_2)) is false.
+Query inj-event(VAccept(s,k_2)) ==> inj-event(GSKey(s,k_2)) is true.
+Query inj-event(GSAccept(s,k_2)) ==> inj-event(VRun(s)) is true.

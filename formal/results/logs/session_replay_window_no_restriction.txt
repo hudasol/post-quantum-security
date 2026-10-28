@@ -9,7 +9,10 @@ goal reachable: b-event(Send(s_1,1,m1_1)) -> event(Acc(s_1,1,m1_1))
 RESULT event(Acc(s_1,t_40,m_40)) ==> event(Send(s_1,t_40,m_40)) is true.
 goal reachable: event(Late(s_1,3,4))
 RESULT not event(Late(s_1,t_40,hi_1)) is false.
+goal reachable: event(Acc(s_1,4,m4_1))
+RESULT not event(Acc(s_1,t_40,m_40)) is false.
 Query not (event(VKey(s_1,k_3)) && attacker(k_3)) is true.
 Query inj-event(Acc(s_1,t_40,m_40)) ==> inj-event(Send(s_1,t_40,m_40)) cannot be proved.
 Query event(Acc(s_1,t_40,m_40)) ==> event(Send(s_1,t_40,m_40)) is true.
 Query not event(Late(s_1,t_40,hi_1)) is false.
+Query not event(Acc(s_1,t_40,m_40)) is false.

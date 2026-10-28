@@ -21,6 +21,8 @@ query s: bitstring, k: key; event(VKey(s, k)) && attacker(k) ==> false.
 query s: bitstring, t: nat, m: bitstring; inj-event(Acc(s, t, m)) ==> inj-event(Send(s, t, m)).
 (* C2: no command is accepted in a session other than the one in which it was sent *)
 query s: bitstring, t: nat, m: bitstring; event(Acc(s, t, m)) ==> event(Send(s, t, m)).
+(* R0: reachability check: the vehicle accepts at least one command (a counterexample is the expected result and shows that acceptance is reachable, so the proofs of C1 and C2 are not vacuous) *)
+query s: bitstring, t: nat, m: bitstring; event(Acc(s, t, m)) ==> false.
 
 (* Commands sent by the ground station under one key. *)
 let GSCmds(sid: bitstring, k: key) =
