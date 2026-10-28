@@ -1,6 +1,6 @@
 # What only the author can supply
 
-Author: Huda Mueen. Opened 2026-10-16, updated 2026-10-21 after round 5. Items are in order of value to the study. Nothing here was worked around.
+Author: Huda Mueen. Opened 2026-10-16, updated 2026-10-21 after round 5 and 2026-10-28 in round 6. Items are in order of value to the study. Nothing here was worked around.
 
 | # | Item | Why it is needed | Blocks |
 |---|---|---|---|
@@ -19,3 +19,7 @@ Author: Huda Mueen. Opened 2026-10-16, updated 2026-10-21 after round 5. Items a
 | 13 | The full text of the ten sources whose quality could not be checked (rows with 'full text not retrieved' in `data/source_quality.csv`), as PDFs in the sources folder or by allowing the fetches | their checked items are scored 0, which down weights them in the weighted meta analysis fit for a reason of access | a fair weighted fit |
 | 14 | IACR ePrint 2026/1915 as a PDF, only after FIPS 206 is final (`docs/SOURCES_TO_UPLOAD.md` item 4) | its Falcon rows were read only through a summarising fetch and are of a draft standard | new FN-DSA rows |
 | 15 | The full texts behind the round 4 rows that were read only through a summarising web fetch (threat 16 of `docs/PAPER.md`), first the Ed25519 paper of Owens et al. and the X25519 Cortex-M4 repository README that the mission and energy studies use | round 5 excludes values read that way; the round 4 rows were not held to that rule | firm classical baselines |
+| 16 | A decision on submitting the conference paper (`docs/conference/paper_anon.pdf`) to PPT-PQC 2027, a workshop of PerCom 2027, deadline 17 November 2026 (`data/raw/S14_venues.md`), or to an alternative listed there | inclusion in the proceedings needs a full PerCom registration and an in person presentation in Goa, India (8 to 12 March 2027); these are costs only the author can decide on, and nothing has been registered or submitted | submission |
+| 17 | A decision on anonymity for double blind review: the repository is public and holds `docs/conference/paper.pdf` with the author's name and the same title | a reviewer who searches the title can find the author; options are to keep the artifact link withheld, to make the repository private until notification, or to share an anonymised mirror (anonymous.4open.science is free) | double blind submission |
+| 18 | Push a tag `round6` to the remote, as for item 8 | tag writes from the build machine have been refused before | a fixed reference to the round 6 results |
+
