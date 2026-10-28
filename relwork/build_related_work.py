@@ -94,7 +94,9 @@ def render():
            "## Scope and reading rule", "",
            "Round 6 collected published designs and measurements of post quantum and classical authentication and key exchange "
            "for drones, UAVs, MAVLink, ROS 2 and DDS, robots and other constrained wireless links, and of post quantum secure "
-           "boot and update on embedded processors. Searches used the web search and fetch tools of the working environment; "
+           "boot and update on embedded processors. After the program committee review of round 6 it added MAVLink security "
+           "analyses, post quantum TLS under packet loss and latency, KEM authentication with pre distributed keys, stack "
+           "optimised Dilithium on Cortex-M and post quantum cryptography on RISC-V cores. Searches used the web search and fetch tools of the working environment; "
            "refused fetches are recorded in the CSV and in `data/raw/S14_dblp_log.csv`, not worked around.", "",
            f"Works retrieved: {len(rs)}. Full text read directly from a copy the author supplied (the same file as the URL): {len(direct)} ({fmt(direct)}). "
            f"Full text read only through the summarising fetch tool: {len(fetched)}. Abstract only, partly read or not retrieved: "
