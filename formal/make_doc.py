@@ -125,7 +125,7 @@ def build(rows):
     a("The models follow `docs/REFERENCE_ARCHITECTURE.md` (sections 1 and 5), the architecture definitions in "
       "`mission/model.py` (architectures B and D) and the rekey assumption of `linksim/protocols.py` (a fresh key "
       "exchange inside the existing session, without signatures). Where the architecture text is silent, the model "
-      "states the choice it makes (section 3). Three parts were modelled:")
+      "states the choice it makes (section 3). Four parts were modelled:")
     a("")
     a("1. **Command channel (architecture B).** The ground station sends a classical Diffie Hellman share and a "
       "fresh KEM public key; the vehicle answers with its own share and a KEM ciphertext; the ground station signs "

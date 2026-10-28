@@ -508,7 +508,7 @@ def write_doc(logs, prims, sessions, sizes, times, decomp=None, ratios_rows=None
       "signed input of the signature designs does, so that each key is bound to the pair of parties and "
       "not only through the KEM secrets. No flaw was found in the proposed flights otherwise; as in every "
       "design here, the vehicle does its F2 work on an F1 it cannot yet authenticate, so an outsider can "
-      "make it spend that work. This document does not check the design with a formal model. Its steps: "
+      "make it spend that work. Its formal model is in `docs/FORMAL_VERIFICATION.md` section 10. Its steps: "
       "ground F1; vehicle F2 processing; ground F2 check, acceptance and F3; vehicle F3 check and "
       "acceptance.")
     a("- Vehicle and ground are computed separately in one image per design: each step is timed on its "
@@ -1006,8 +1006,9 @@ def write_doc(logs, prims, sessions, sizes, times, decomp=None, ratios_rows=None
       "runs vary more than the other operations.")
     a("- The classical baseline is one portable C library (Monocypher); see the section on the classical "
       "baseline. The X25519 against ML-KEM-768 comparison holds for portable C on these cores only.")
-    a("- The KEM authenticated design is executed here for cost and correctness; this document does not "
-      "check its security with a formal model.")
+    a("- The KEM authenticated design is executed here for cost and correctness; its security is checked "
+      "in ProVerif in `docs/FORMAL_VERIFICATION.md` section 10 (keys not secret if ML-KEM is broken; authentication "
+      "of the vehicle by the ground station proved only with typed static keys).")
     a("- Stack values include the benchmark glue frames and have a 256 B floor; the static session "
       "state (bss) is listed with the code size.")
     a("- The CV32E40P model was built with the BLKANDNBLK check of Verilator switched off for the counter "

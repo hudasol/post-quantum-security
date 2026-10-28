@@ -6,7 +6,7 @@ Label of every result in this document: **modelled**. A result is a proof or a c
 
 ## 1. What was checked
 
-The models follow `docs/REFERENCE_ARCHITECTURE.md` (sections 1 and 5), the architecture definitions in `mission/model.py` (architectures B and D) and the rekey assumption of `linksim/protocols.py` (a fresh key exchange inside the existing session, without signatures). Where the architecture text is silent, the model states the choice it makes (section 3). Three parts were modelled:
+The models follow `docs/REFERENCE_ARCHITECTURE.md` (sections 1 and 5), the architecture definitions in `mission/model.py` (architectures B and D) and the rekey assumption of `linksim/protocols.py` (a fresh key exchange inside the existing session, without signatures). Where the architecture text is silent, the model states the choice it makes (section 3). Four parts were modelled:
 
 1. **Command channel (architecture B).** The ground station sends a classical Diffie Hellman share and a fresh KEM public key; the vehicle answers with its own share and a KEM ciphertext; the ground station signs the transcript and confirms the key; both derive the session key from the Diffie Hellman secret, the KEM secret and a hash of the transcript. Commands then carry a MAC tag and a sequence number under that key. A rekey runs a fresh exchange, with a fresh KEM key, protected by the current key. After a link outage the session is torn down and a new handshake starts.
 2. **Fallback with provisioned keys (architecture D, session half).** A key loaded over a wire is used as the signing key in every session.
