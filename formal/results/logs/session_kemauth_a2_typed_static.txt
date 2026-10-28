@@ -1,0 +1,6 @@
+goal reachable: b-inj-event(VRun(h((idG,idV,exp(g,x_1),kpk(dk_1),kcts(kpks(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kcts(kpks(skKG[]),r3_1)))),@occ52_1) -> inj-event(GSAccept(h((idG,idV,exp(g,x_1),kpk(dk_1),kcts(kpks(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kcts(kpks(skKG[]),r3_1))),kdf(exp(exp(g,x_1),y_1),(ksss(kpks(skKV[]),r1_1),kss(kpk(dk_1),r2_1),ksss(kpks(skKG[]),r3_1)),h((idG,idV,exp(g,x_1),kpk(dk_1),kcts(kpks(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kcts(kpks(skKG[]),r3_1))))),@occ21_1)
+RESULT inj-event(GSAccept(s,k_2)) ==> inj-event(VRun(s)) is true.
+goal reachable: event(Acc(h((idG,idV,exp(g,x_1),kpk(dk_1),kcts(kpks(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kcts(kpks(skKG[]),r3_1))),1,m1_2))
+RESULT not event(Acc(s,t,m)) is false.
+Query inj-event(GSAccept(s,k_2)) ==> inj-event(VRun(s)) is true.
+Query not event(Acc(s,t,m)) is false.

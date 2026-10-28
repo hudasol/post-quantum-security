@@ -1,0 +1,8 @@
+RESULT not (event(VAccept(s,k_2)) && attacker_p1(k_2)) is true.
+RESULT not (event(GSAccept(s,k_2)) && attacker_p1(k_2)) is true.
+RESULT not (event(VRekey(s,k_2)) && attacker_p1(k_2)) is true.
+RESULT not (event(GSRekey(s,k_2)) && attacker_p1(k_2)) is true.
+Query not (event(VAccept(s,k_2)) && attacker_p1(k_2)) is true.
+Query not (event(GSAccept(s,k_2)) && attacker_p1(k_2)) is true.
+Query not (event(VRekey(s,k_2)) && attacker_p1(k_2)) is true.
+Query not (event(GSRekey(s,k_2)) && attacker_p1(k_2)) is true.

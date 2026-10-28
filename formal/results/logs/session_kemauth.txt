@@ -1,0 +1,22 @@
+RESULT not (event(VAccept(s,k_2)) && attacker(k_2)) is true.
+RESULT not (event(GSAccept(s,k_2)) && attacker(k_2)) is true.
+RESULT not (event(VRekey(s,k_2)) && attacker(k_2)) is true.
+RESULT not (event(GSRekey(s,k_2)) && attacker(k_2)) is true.
+goal reachable: b-inj-event(GSKey(h((idG,idV,exp(g,x_1),kpk(dk_1),kct(kpk(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kct(kpk(skKG[]),r3_1))),kdf(exp(exp(g,y_1),x_1),(kss(kpk(skKV[]),r1_1),kss(kpk(dk_1),r2_1),kss(kpk(skKG[]),r3_1)),h((idG,idV,exp(g,x_1),kpk(dk_1),kct(kpk(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kct(kpk(skKG[]),r3_1))))),@occ19_1) -> inj-event(VAccept(h((idG,idV,exp(g,x_1),kpk(dk_1),kct(kpk(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kct(kpk(skKG[]),r3_1))),kdf(exp(exp(g,y_1),x_1),(kss(kpk(skKV[]),r1_1),kss(kpk(dk_1),r2_1),kss(kpk(skKG[]),r3_1)),h((idG,idV,exp(g,x_1),kpk(dk_1),kct(kpk(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kct(kpk(skKG[]),r3_1))))),@occ56_1)
+RESULT inj-event(VAccept(s,k_2)) ==> inj-event(GSKey(s,k_2)) is true.
+goal reachable: b-inj-event(Send(h((idG,idV,exp(g,x_1),kpk(dk_1),kct(kpk(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kct(kpk(skKG[]),r3_1))),1,m1_2),@occ24_1) -> inj-event(Acc(h((idG,idV,exp(g,x_1),kpk(dk_1),kct(kpk(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kct(kpk(skKG[]),r3_1))),1,m1_2),@occ60_1)
+goal reachable: b-inj-event(Send(h((h((idG,idV,exp(g,x_1),kpk(dk_1),kct(kpk(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kct(kpk(skKG[]),r3_1))),exp(g,x2_1),kpk(dk2_1),exp(g,y2_1),kct(kpk(dk2_1),r4_1))),2,m2_2),@occ37_1) && b-event(@p_act(@occ31_2,(tRk2,exp(g,y2_1),kct(kpk(dk2_1),r4_1),mac((tRk2,exp(g,x2_1),kpk(dk2_1),exp(g,y2_1),kct(kpk(dk2_1),r4_1)),kdf(exp(exp(g,x_1),y_1),(kss(kpk(skKV[]),r1_1),kss(kpk(dk_1),r2_1),kss(kpk(skKG[]),r3_1)),h((idG,idV,exp(g,x_1),kpk(dk_1),kct(kpk(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kct(kpk(skKG[]),r3_1)))))))) && b-inj-event(Send(h((idG,idV,exp(g,x_1),kpk(dk_1),kct(kpk(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kct(kpk(skKG[]),r3_1))),1,m1_2),@occ24_1) -> inj-event(Acc(h((h((idG,idV,exp(g,x_1),kpk(dk_1),kct(kpk(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kct(kpk(skKG[]),r3_1))),exp(g,x2_1),kpk(dk2_1),exp(g,y2_1),kct(kpk(dk2_1),r4_1))),2,m2_2),@occ74_1)
+RESULT inj-event(Acc(s,t,m)) ==> inj-event(Send(s,t,m)) is true.
+goal reachable: b-event(Send(h((idG,idV,exp(g,x_1),kpk(dk_1),kct(kpk(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kct(kpk(skKG[]),r3_1))),1,m1_2)) -> event(Acc(h((idG,idV,exp(g,x_1),kpk(dk_1),kct(kpk(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kct(kpk(skKG[]),r3_1))),1,m1_2))
+goal reachable: b-event(Send(h((h((idG,idV,exp(g,x_1),kpk(dk_1),kct(kpk(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kct(kpk(skKG[]),r3_1))),exp(g,x2_1),kpk(dk2_1),exp(g,y2_1),kct(kpk(dk2_1),r4_1))),2,m2_2)) && b-event(Send(h((idG,idV,exp(g,x_1),kpk(dk_1),kct(kpk(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kct(kpk(skKG[]),r3_1))),1,m1_2)) -> event(Acc(h((h((idG,idV,exp(g,x_1),kpk(dk_1),kct(kpk(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kct(kpk(skKG[]),r3_1))),exp(g,x2_1),kpk(dk2_1),exp(g,y2_1),kct(kpk(dk2_1),r4_1))),2,m2_2))
+RESULT event(Acc(s,t,m)) ==> event(Send(s,t,m)) is true.
+goal reachable: event(Acc(h((idG,idV,exp(g,x_1),kpk(dk_1),kct(kpk(skKV[]),r1_1),exp(g,y_1),kct(kpk(dk_1),r2_1),kct(kpk(skKG[]),r3_1))),1,m1_2))
+RESULT not event(Acc(s,t,m)) is false.
+Query not (event(VAccept(s,k_2)) && attacker(k_2)) is true.
+Query not (event(GSAccept(s,k_2)) && attacker(k_2)) is true.
+Query not (event(VRekey(s,k_2)) && attacker(k_2)) is true.
+Query not (event(GSRekey(s,k_2)) && attacker(k_2)) is true.
+Query inj-event(VAccept(s,k_2)) ==> inj-event(GSKey(s,k_2)) is true.
+Query inj-event(Acc(s,t,m)) ==> inj-event(Send(s,t,m)) is true.
+Query event(Acc(s,t,m)) ==> event(Send(s,t,m)) is true.
+Query not event(Acc(s,t,m)) is false.
