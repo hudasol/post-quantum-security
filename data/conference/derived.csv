@@ -21,4 +21,7 @@ RTL simulated,cv32e40p,hybrid_f1_f1_bytes,1216.0,"bytes of flight F1 as built, h
 RTL simulated,cv32e40p,hybrid_f1_f2_bytes,1120.0,"bytes of flight F2 as built, hybrid_f1",rtlsim/results/proto_sessions.csv
 RTL simulated,cv32e40p,hybrid_f1_f3_bytes,2436.0,"bytes of flight F3 as built, hybrid_f1",rtlsim/results/proto_sessions.csv
 RTL simulated,cv32e40p,hybrid_f1_f4_bytes,2436.0,"bytes of flight F4 as built, hybrid_f1",rtlsim/results/proto_sessions.csv
+RTL simulated,cv32e40p,kem_auth_f1_bytes,2304.0,"bytes of flight F1 as built, kem_auth",rtlsim/results/proto_sessions.csv
+RTL simulated,cv32e40p,kem_auth_f2_bytes,2224.0,"bytes of flight F2 as built, kem_auth",rtlsim/results/proto_sessions.csv
+RTL simulated,cv32e40p,kem_auth_f3_bytes,16.0,"bytes of flight F3 as built, kem_auth",rtlsim/results/proto_sessions.csv
 RTL simulated,ibex over cv32e40p,hyb_vehicle,1.341381,"hybrid_f1 vehicle session start, Ibex over CV32E40P",rtlsim/results/proto_sessions.csv
