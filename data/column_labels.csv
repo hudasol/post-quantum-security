@@ -281,3 +281,73 @@ rtlsim/results/proto_time_estimated.csv,side,key,side
 rtlsim/results/proto_time_estimated.csv,basis,key,basis
 rtlsim/results/proto_time_estimated.csv,clock_mhz,key,stated clock (64 MHz; 168 MHz is clock_m4_ref_mhz of data/shared_inputs.csv)
 rtlsim/results/proto_time_estimated.csv,time_ms,estimated,cycles_median of proto_sessions.csv divided by the clock
+rtlsim/results/proto_sessions.csv,cycles_median_first5_runs,RTL simulated,"median of the summed steps over runs 0 to 4 (seeds 20261021 to 20261025, those of the round 6 five run snapshot)"
+rtlsim/results/proto_sessions_runs5.csv,label,key,row label (RTL simulated); size columns are host measured (see their rows); frozen round 6 five run snapshot of proto_sessions.csv (not regenerated; hashed by the SITL study)
+rtlsim/results/proto_sessions_runs5.csv,core,key,core design
+rtlsim/results/proto_sessions_runs5.csv,design,key,protocol design
+rtlsim/results/proto_sessions_runs5.csv,unit,key,unit of work
+rtlsim/results/proto_sessions_runs5.csv,side,key,vehicle or ground
+rtlsim/results/proto_sessions_runs5.csv,steps,key,timed steps summed per run
+rtlsim/results/proto_sessions_runs5.csv,n_runs,key,number of runs
+rtlsim/results/proto_sessions_runs5.csv,log_complete,key,log ended with DONE
+rtlsim/results/proto_sessions_runs5.csv,seed_first,key,seed of run 0; run r uses seed_first + r
+rtlsim/results/proto_sessions_runs5.csv,cycles_median,RTL simulated,median over runs of the summed steps
+rtlsim/results/proto_sessions_runs5.csv,cycles_ci95_low,RTL simulated,bootstrap interval of the median
+rtlsim/results/proto_sessions_runs5.csv,cycles_ci95_high,RTL simulated,bootstrap interval of the median
+rtlsim/results/proto_sessions_runs5.csv,cycles_min,RTL simulated,smallest run
+rtlsim/results/proto_sessions_runs5.csv,cycles_max,RTL simulated,largest run
+rtlsim/results/proto_sessions_runs5.csv,peak_stack_bytes,RTL simulated,largest peak stack over steps and runs
+rtlsim/results/proto_sessions_runs5.csv,stack_saturated,RTL simulated,painted area used up
+rtlsim/results/proto_sessions_runs5.csv,bytes_per_flight,RTL simulated,message sizes as built by the simulated program
+rtlsim/results/proto_sessions_runs5.csv,bytes_total,RTL simulated,bytes on air per unit of work
+rtlsim/results/proto_sessions_runs5.csv,correctness,RTL simulated,steps and checks passed
+rtlsim/results/proto_sessions_runs5.csv,runs_correct,RTL simulated,runs with all steps and checks passed
+rtlsim/results/proto_sessions_runs5.csv,text_bytes_host_measured,host measured,text of the simulated image (code and read only data)
+rtlsim/results/proto_sessions_runs5.csv,data_bytes_host_measured,host measured,data of the simulated image
+rtlsim/results/proto_sessions_runs5.csv,bss_bytes_host_measured,host measured,bss of the simulated image without stack and heap reservations
+rtlsim/results/proto_sessions_runs5.csv,text_bytes_gc_host_measured,host measured,text of the size only build with unused sections removed
+rtlsim/results/proto_primitives_runs5.csv,label,key,"row label (RTL simulated); applies to the cycle, stack and correctness columns; frozen round 6 five run snapshot of proto_primitives.csv (not regenerated; hashed by the SITL study)"
+rtlsim/results/proto_primitives_runs5.csv,core,key,core design
+rtlsim/results/proto_primitives_runs5.csv,operation,key,primitive operation
+rtlsim/results/proto_primitives_runs5.csv,library,key,pinned library
+rtlsim/results/proto_primitives_runs5.csv,input,key,input of the call
+rtlsim/results/proto_primitives_runs5.csv,n_runs,key,number of runs
+rtlsim/results/proto_primitives_runs5.csv,log_complete,key,log ended with DONE
+rtlsim/results/proto_primitives_runs5.csv,seed_first,key,seed of run 0; run r uses seed_first + r
+rtlsim/results/proto_primitives_runs5.csv,cycles_median,RTL simulated,median cycles over runs
+rtlsim/results/proto_primitives_runs5.csv,cycles_ci95_low,RTL simulated,bootstrap interval of the median
+rtlsim/results/proto_primitives_runs5.csv,cycles_ci95_high,RTL simulated,bootstrap interval of the median
+rtlsim/results/proto_primitives_runs5.csv,cycles_min,RTL simulated,smallest run
+rtlsim/results/proto_primitives_runs5.csv,cycles_max,RTL simulated,largest run
+rtlsim/results/proto_primitives_runs5.csv,peak_stack_bytes,RTL simulated,largest peak stack over runs (stack painting)
+rtlsim/results/proto_primitives_runs5.csv,stack_saturated,RTL simulated,painted area used up in any run
+rtlsim/results/proto_primitives_runs5.csv,correctness,RTL simulated,calls and checks passed
+rtlsim/results/proto_primitives_runs5.csv,round5_cycles_median,RTL simulated,round 5 median of the same operation (rtlsim/results/<core>_cycles.csv)
+rtlsim/results/proto_primitives_runs5.csv,this_over_round5,RTL simulated,this round median over round 5 median
+rtlsim/results/proto_decomposition.csv,label,key,row label (RTL simulated); every value is RTL simulated cycles or derived from them
+rtlsim/results/proto_decomposition.csv,core,key,core design
+rtlsim/results/proto_decomposition.csv,design,key,session design
+rtlsim/results/proto_decomposition.csv,side,key,vehicle or ground
+rtlsim/results/proto_decomposition.csv,measured_cycles_median,RTL simulated,median of the side in proto_sessions.csv
+rtlsim/results/proto_decomposition.csv,measured_ci95_low,RTL simulated,bootstrap interval of the median (proto_sessions.csv)
+rtlsim/results/proto_decomposition.csv,measured_ci95_high,RTL simulated,bootstrap interval of the median (proto_sessions.csv)
+rtlsim/results/proto_decomposition.csv,measured_min,RTL simulated,smallest run of the side
+rtlsim/results/proto_decomposition.csv,measured_max,RTL simulated,largest run of the side
+rtlsim/results/proto_decomposition.csv,primitive_sum_cycles,RTL simulated,"sum of the primitive medians (proto_primitives.csv) of the calls of the side, derived"
+rtlsim/results/proto_decomposition.csv,primitive_sum_sign_min,RTL simulated,"same sum with the ML-DSA-44 signing call at its smallest run, derived"
+rtlsim/results/proto_decomposition.csv,primitive_sum_sign_max,RTL simulated,"same sum with the ML-DSA-44 signing call at its largest run, derived"
+rtlsim/results/proto_decomposition.csv,residual_cycles,RTL simulated,"measured median minus primitive sum (glue and call differences), derived"
+rtlsim/results/proto_decomposition.csv,sum_over_measured_ratio,RTL simulated,"primitive sum over measured median, derived"
+rtlsim/results/proto_decomposition.csv,has_mldsa44_sign,key,the side signs with ML-DSA-44
+rtlsim/results/proto_decomposition.csv,components,RTL simulated,calls of the side with count and subtotal at the primitive medians
+rtlsim/results/proto_ratios.csv,label,key,row label (RTL simulated); ratios derived from RTL simulated cycles
+rtlsim/results/proto_ratios.csv,core,key,core design
+rtlsim/results/proto_ratios.csv,side,key,vehicle or ground
+rtlsim/results/proto_ratios.csv,numerator,key,design in the numerator
+rtlsim/results/proto_ratios.csv,denominator,key,design in the denominator
+rtlsim/results/proto_ratios.csv,basis,key,"session medians, primitive sums, or primitive sums with signing at its smallest or largest run"
+rtlsim/results/proto_ratios.csv,ratio,RTL simulated,"ratio of the two values, derived"
+rtlsim/results/proto_ratios.csv,ci95_low,RTL simulated,bootstrap 95 percent interval of the ratio of medians (session medians only)
+rtlsim/results/proto_ratios.csv,ci95_high,RTL simulated,bootstrap 95 percent interval of the ratio of medians (session medians only)
+rtlsim/results/proto_ratios.csv,n_runs_numerator,key,runs of the numerator design
+rtlsim/results/proto_ratios.csv,n_runs_denominator,key,runs of the denominator design

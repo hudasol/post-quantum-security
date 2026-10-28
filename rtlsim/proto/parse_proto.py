@@ -12,6 +12,7 @@ Log line formats (see rtlsim/proto/sw/proto_util.h):
 Lines of any other form (simulator messages) are ignored. A log without a DONE line is incomplete.
 """
 import os
+import random
 import statistics
 import sys
 from dataclasses import dataclass, field
@@ -24,10 +25,14 @@ SEED = 20261021
 # Steps that make up each side of one unit of work, per design. Session designs: one session start.
 SESSION_STEPS = {"vehicle": ["vehicle_f2", "vehicle_f4"],
                  "ground": ["ground_f1", "ground_f3", "ground_accept"]}
+# KEM authenticated design: three flights; the ground accepts in ground_f3, the vehicle in vehicle_accept.
+KEM_AUTH_STEPS = {"vehicle": ["vehicle_f2", "vehicle_accept"],
+                  "ground": ["ground_f1", "ground_f3"]}
 UNITS = {
     "classical": [("session start", SESSION_STEPS)],
     "pq_only": [("session start", SESSION_STEPS)],
     "hybrid_f1": [("session start", SESSION_STEPS)],
+    "kem_auth": [("session start", KEM_AUTH_STEPS)],
     "per_command_mldsa44": [("per command, ML-DSA-44 signature",
                              {"vehicle": ["vehicle_verify_command"], "ground": ["ground_sign_command"]})],
     "mavlink_tag": [
@@ -41,7 +46,7 @@ UNITS = {
          {"vehicle": ["vehicle_receive_command_long"], "ground": ["ground_pack_signed_command_long"]}),
     ],
 }
-DESIGNS = ["classical", "pq_only", "hybrid_f1", "per_command_mldsa44", "mavlink_tag"]
+DESIGNS = ["classical", "pq_only", "hybrid_f1", "kem_auth", "per_command_mldsa44", "mavlink_tag"]
 
 
 @dataclass
@@ -122,17 +127,22 @@ def checks_for(log, set_name, run=None):
     return sum(c), len(c)
 
 
-def unit_totals(log, set_name, steps, seed=SEED):
+def unit_totals(log, set_name, steps, seed=SEED, runs=None):
     """Sum the cycles of the steps of one side for every run and summarise across runs.
 
     Returns a dict with per run totals, n, median, interval, min, max, the peak stack over the steps and
-    runs, the number of runs whose steps all succeeded and whose checks all passed, and the run count."""
+    runs, the number of runs whose steps all succeeded and whose checks all passed, and the run count.
+    runs, if given, limits the summary to those run indices (for example range(5) for the first five)."""
     by_run = {}
     for s, op, run, cyc, ok in log.res:
+        if runs is not None and run not in runs:
+            continue
         if s == set_name and op in steps:
             by_run.setdefault(run, {})[op] = (cyc, ok)
     stack = {}
     for s, op, run, b, sat in log.stk:
+        if runs is not None and run not in runs:
+            continue
         if s == set_name and op in steps:
             stack.setdefault(run, []).append((b, sat))
     totals, good = [], 0
@@ -151,6 +161,35 @@ def unit_totals(log, set_name, steps, seed=SEED):
     return {"totals": totals, "n": len(totals), "median": statistics.median(totals), "min": min(totals),
             "max": max(totals), "ci_low": lo, "ci_high": hi, "stack_max": max(all_st) if all_st else None,
             "stack_saturated": any(sat for v in stack.values() for _, sat in v), "runs_correct": good}
+
+
+def run_values(log, set_name, op):
+    """{run: cycles} of one timed operation of a set."""
+    return {run: cyc for s, o, run, cyc, _ in log.res if s == set_name and o == op}
+
+
+def bootstrap_ratio_ci(num, den, seed=SEED, n_boot=10000, alpha=0.05):
+    """Percentile bootstrap interval of the ratio of two medians, resampling the two samples independently
+    (the designs run in separate images, so their runs are not paired). With constant samples the interval
+    is the ratio itself."""
+    a, b = list(num), list(den)
+    if not a or not b:
+        raise ValueError("no values")
+    point = statistics.median(a) / statistics.median(b)
+    if len(set(a)) == 1 and len(set(b)) == 1:
+        return point, point
+    rng = random.Random(seed)
+    rs = sorted(statistics.median(rng.choices(a, k=len(a))) / statistics.median(rng.choices(b, k=len(b)))
+                for _ in range(n_boot))
+    return rs[int((alpha / 2) * n_boot)], rs[min(n_boot - 1, int((1 - alpha / 2) * n_boot))]
+
+
+def decompose(prim_medians, parts):
+    """Sum of primitive costs for a list of (primitive, count). prim_medians maps a primitive to its cycles.
+    Returns (total, [(primitive, count, cycles of one call, subtotal)]); raises KeyError for a primitive
+    that was not measured."""
+    rows = [(op, n, prim_medians[op], n * prim_medians[op]) for op, n in parts]
+    return sum(r[3] for r in rows), rows
 
 
 def flights(log, set_name):
