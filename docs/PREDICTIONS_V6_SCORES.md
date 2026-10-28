@@ -23,4 +23,4 @@ Totals: 12 hit, 1 between, 1 miss, 0 not scored, of 14.
 | Q11 | hit | Mission model drop, strict against published, drone, SiK, B: 0.0010. | estimated |
 | Q12 | miss | Injective agreement (C1) per encoding of the seen counter table: session_replay_cache proved; session_replay_cache_fresh_counters proved; session_replay_cache_table_concurrent counterexample; session_replay_cache_table_sequential cannot be proved. Check and insert as one step is proved; a table that concurrent branches read before either inserts gives a counterexample, so the cache must check and record atomically. The less favourable reading is kept. | modelled |
 | Q13 | hit | Records passing title screening not seen in round 5: 9; also new to the repository: 7. The index was reached through a web search limited to dblp.org, not its API (refused). | published |
-| Q14 | hit | Compiled paper: 5 pages including references (the less favourable reading of 'without references'). | host measured |
+| Q14 | hit | Compiled paper: 6 pages including references (the less favourable reading of 'without references'). | host measured |
