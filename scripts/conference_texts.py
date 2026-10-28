@@ -94,6 +94,7 @@ def numbers(c, doc):
 
     n = {}
     n["runs"] = c("cf_runs", SES, "n_runs", 'unit == "session start"', "min", "{:.0f}", label="RTL simulated", doc=doc)
+    n["runs_tag"] = c("cf_runs_tag", SES, "n_runs", 'design == "mavlink_tag"', "max", "{:.0f}", label="RTL simulated", doc=doc)
     for core in ("ibex", "cv32e40p"):
         for d in SESSION_DESIGNS:
             for side in ("vehicle", "ground"):
@@ -252,9 +253,9 @@ Design & F1 & F2 & F3 & F4 & Total \\
 
 \section{Method}
 \label{sec:method}
-\emph{RTL simulation.} Ibex in its small configuration \cite{ibex} and CV32E40P \cite{cv32e40p}, both RV32IMC without caches or wait states, are simulated cycle accurately with Verilator. One firmware image per design runs the vehicle and the ground side, each step timed with the cycle counter, """ + n["runs"] + r""" runs per image with a fixed seed block; every run checks that both sides derive the same key, that all signatures and tags verify, and known answers for the hash functions. Medians carry 95\% intervals over runs. Libraries are pinned and unmodified: mlkem-native \cite{mlkemnative}, mldsa-native \cite{mldsanative} and Monocypher \cite{monocypher}, all portable C, compiled with one compiler at \texttt{-O3}. Peak stack is measured by stack painting and includes the harness; code size is the text section of each image with unused sections removed, both sides and the harness included.
+\emph{RTL simulation.} Ibex in its small configuration \cite{ibex} and CV32E40P \cite{cv32e40p}, both RV32IMC without caches or wait states, are simulated cycle accurately with Verilator. One firmware image per design runs the vehicle and the ground side, each step timed with the cycle counter, """ + n["runs"] + r""" runs per session image with a fixed seed block (""" + n["runs_tag"] + r""" for the deterministic tag image); every run checks that both sides derive the same key, that all signatures and tags verify, and known answers for the hash functions. Medians carry 95\% intervals over runs. Libraries are pinned and unmodified: mlkem-native \cite{mlkemnative}, mldsa-native \cite{mldsanative} and Monocypher \cite{monocypher}, all portable C, compiled with one compiler at \texttt{-O3}. Peak stack is measured by stack painting and includes the harness; code size is the text section of each image with unused sections removed, both sides and the harness included.
 
-\emph{Software in the loop.} ArduPilot Copter 4.7.2 \cite{ardupilot} flies a scripted mission of about """ + s["flight_s"] + r"""~s (take off, two legs, land) with its built in vehicle model; the ground station sends one acknowledged command per second. A relay emulates a SiK class radio of """ + n["sik_kbps"] + r"""~kbit/s with independent frame loss of """ + n["loss"] + r""", link layer retransmission that can deliver frames out of order, and one outage per mission starting """ + n["out_a"] + r"""--""" + n["out_b"] + r"""~s after arming with an exponential duration of mean """ + n["out_mean"] + r"""~s; an outage longer than """ + n["sess_to"] + r"""~s tears the session down. A gateway pair in front of the ground station and the flight stack executes the handshake, the tags and the replay rule with the same algorithms (Python cryptography and host builds of the same libraries). Vehicle side operations are released after a delay equal to their Ibex cycles at """ + n["clock"] + r"""~MHz, fixed from the first runs before the flights; ground side compute runs at host speed. """ + s["method"] + r"""
+\emph{Software in the loop.} ArduPilot Copter 4.7.2 \cite{ardupilot} flies a scripted mission of about """ + s["flight_s"] + r"""~s (take off, two legs, land) with its built in vehicle model; the ground station sends one acknowledged command per second. A relay emulates a SiK class radio of """ + n["sik_kbps"] + r"""~kbit/s with independent frame loss of """ + n["loss"] + r""", link layer retransmission that can deliver frames out of order, and one outage per mission starting """ + n["out_a"] + r"""--""" + n["out_b"] + r"""~s after arming with an exponential duration of mean """ + n["out_mean"] + r"""~s; an outage longer than """ + n["sess_to"] + r"""~s tears the session down. A gateway pair in front of the ground station and the flight stack executes the handshake, the tags and the replay rule with the same algorithms (Python cryptography and host builds of the same libraries). Vehicle side operations are released after a delay equal to their Ibex cycles at """ + n["clock"] + r"""~MHz, fixed from the first runs before the flights (for design K, flown later, from the medians of all runs); ground side compute runs at host speed. """ + s["method"] + r"""
 
 \emph{Formal models.} ProVerif \cite{proverif} checks secrecy, agreement and reachability under a Dolev Yao attacker with abstract primitives and unbounded sessions. Session models carry one command, a rekey and a further command per session; replay cache models carry three commands per key; the bounded window is modelled on the command layer for a window of two counters. Rekey grace periods, counter wrap and timestamps are not modelled. Breaking a component is modelled by giving its secrets to the attacker.
 
@@ -271,7 +272,7 @@ Design & F1 & F2 & F3 & F4 & Total \\
 \end{figure}
 Table~\ref{tab:rtl} gives the cost of one session start and of one command. The hybrid session costs """ + n["cv32e40p_r_hybrid_f1_classical_vehicle"] + r"""$\times$ [""" + n["cv32e40p_r_hybrid_f1_classical_vehicle_lo"] + r""", """ + n["cv32e40p_r_hybrid_f1_classical_vehicle_hi"] + r"""] the classical vehicle side on CV32E40P and """ + n["ibex_r_hybrid_f1_classical_vehicle"] + r"""$\times$ [""" + n["ibex_r_hybrid_f1_classical_vehicle_lo"] + r""", """ + n["ibex_r_hybrid_f1_classical_vehicle_hi"] + r"""] on Ibex; on the ground side, which signs first, """ + n["cv32e40p_r_hybrid_f1_classical_ground"] + r"""$\times$ and """ + n["ibex_r_hybrid_f1_classical_ground"] + r"""$\times$. Over the post quantum only session it costs """ + n["cv32e40p_r_hybrid_f1_pq_only_vehicle"] + r"""$\times$ [""" + n["cv32e40p_r_hybrid_f1_pq_only_vehicle_lo"] + r""", """ + n["cv32e40p_r_hybrid_f1_pq_only_vehicle_hi"] + r"""] on the vehicle side and """ + n["cv32e40p_r_hybrid_f1_pq_only_ground"] + r"""$\times$ on the ground side. The two designs differ by two X25519 multiplications, a fixed cost, while ML-DSA-44 signing repeats with rejection and took """ + n["sign_min"] + r""" to """ + n["sign_max"] + r"""~M cycles per signature (Fig.~\ref{fig:rtl}); the spread of a signing design comes from there. With Monocypher, one X25519 multiplication (""" + n["cv_x25519_shared"] + r"""~M cycles on CV32E40P) costs more than an ML-KEM-768 encapsulation (""" + n["cv_mlkem768_encaps"] + r"""~M), and an Ed25519 verification """ + n["cv_ed25519_verify"] + r"""~M; this is a property of one portable C library designed for size, and a faster classical library would raise every ratio over the classical session.
 
-Design K avoids both ML-DSA-44 operations: its vehicle side costs """ + n["cv32e40p_r_kem_auth_classical_vehicle"] + r"""$\times$ the classical session and """ + n["cv32e40p_r_kem_auth_hybrid_f1_vehicle"] + r"""$\times$ [""" + n["cv32e40p_r_kem_auth_hybrid_f1_vehicle_lo"] + r""", """ + n["cv32e40p_r_kem_auth_hybrid_f1_vehicle_hi"] + r"""] the hybrid one, it needs """ + n["stack_kem_auth"] + r"""~kB of stack against """ + n["stack_hybrid_f1"] + r"""~kB for the hybrid (""" + n["stack_classical"] + r"""~kB classical), and it carries """ + n["bytes_kem_auth"] + r"""~B in three flights against """ + n["bytes_hybrid_f1"] + r"""~B, """ + n["bytes_hyb_over_cls"] + r"""$\times$ the classical handshake. Code, counted for both sides and the harness together, grows from """ + n["code_classical"] + r"""~kB (classical) to """ + n["code_hybrid_f1"] + r"""~kB (hybrid) and """ + n["code_kem_auth"] + r"""~kB (design K). After the handshake a command costs a tag check of """ + n["tag_v"] + r""" cycles on a COMMAND\_LONG (the tag alone, without parsing); verifying an ML-DSA-44 signature on the same frame instead costs """ + n["cv32e40p_pqc_over_tag_vehicle"] + r"""$\times$ as much, and signing it on the ground side about twice that. At """ + n["clock"] + r"""~MHz the vehicle side of the hybrid session start would take about """ + n["t168_hyb"] + r"""~ms on CV32E40P (estimated), against """ + n["t168_cls"] + r"""~ms for the classical session. Ibex needs """ + n["core_ratio_hyb"] + r"""$\times$ the cycles of CV32E40P for the same hybrid handshake, so a cycle count for one core of an instruction set does not transfer to another.
+Design K avoids both ML-DSA-44 operations: its vehicle side costs """ + n["cv32e40p_r_kem_auth_classical_vehicle"] + r"""$\times$ the classical session and """ + n["cv32e40p_r_kem_auth_hybrid_f1_vehicle"] + r"""$\times$ [""" + n["cv32e40p_r_kem_auth_hybrid_f1_vehicle_lo"] + r""", """ + n["cv32e40p_r_kem_auth_hybrid_f1_vehicle_hi"] + r"""] the hybrid one, it needs """ + n["stack_kem_auth"] + r"""~kB of stack against """ + n["stack_hybrid_f1"] + r"""~kB for the hybrid (""" + n["stack_classical"] + r"""~kB classical), and it carries """ + n["bytes_kem_auth"] + r"""~B in three flights against """ + n["bytes_hybrid_f1"] + r"""~B for the hybrid session, which is """ + n["bytes_hyb_over_cls"] + r"""$\times$ the classical handshake. Code, counted for both sides and the harness together, grows from """ + n["code_classical"] + r"""~kB (classical) to """ + n["code_hybrid_f1"] + r"""~kB (hybrid) and """ + n["code_kem_auth"] + r"""~kB (design K). After the handshake a command costs a tag check of """ + n["tag_v"] + r""" cycles on a COMMAND\_LONG (the tag alone, without parsing); verifying an ML-DSA-44 signature on the same frame instead costs """ + n["cv32e40p_pqc_over_tag_vehicle"] + r"""$\times$ as much, and signing it on the ground side about twice that. At """ + n["clock"] + r"""~MHz the vehicle side of the hybrid session start would take about """ + n["t168_hyb"] + r"""~ms on CV32E40P (estimated), against """ + n["t168_cls"] + r"""~ms for the classical session. Ibex needs """ + n["core_ratio_hyb"] + r"""$\times$ the cycles of CV32E40P for the same hybrid handshake, so a cycle count for one core of an instruction set does not transfer to another.
 
 \section{Flight stack in the loop and availability}
 \label{sec:sitl}
@@ -297,7 +298,7 @@ Primitives are benchmarked on Cortex-M4 with pqm4 \cite{pqm4}, with stack optimi
 \centering
 \caption{Closest prior work and this paper (as recorded from each source)}
 \label{tab:rw}
-\setlength{\tabcolsep}{3pt}
+\setlength{\tabcolsep}{2pt}
 \footnotesize
 \begin{tabular}{llllll}
 \toprule
@@ -310,7 +311,7 @@ Work & Platform & Link and stack & Per command cost & Availability & Formal chec
 \cite{ahmed26} & x86 laptop & none; SiK radio times computed & not reported & not reported & proof on paper \\
 \cite{meneses26} & modelled Cortex-M4 & UAV, EDHOC variant, computed delays & not reported & not reported & Tamarin \\
 \cite{twardokus24} & V2V chipset & DSRC, simulated and on road & measured & frame loss ratio & proof on paper \\
-This paper & two RISC-V cores (RTL), host & emulated SiK radio, ArduPilot in the loop & executed (RTL) & acknowledged share per rule & ProVerif \\
+This paper & two RISC-V cores (RTL) & emulated SiK radio, ArduPilot & executed (RTL) & measured per rule & ProVerif \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -342,7 +343,7 @@ def rtl_table(n):
     body = "\n".join(f"{a} & {b} & {c} & {d} & {e} & {f} \\\\" for a, b, c, d, e, f in rows)
     return r"""\begin{table}[t]
 \centering
-\caption{Executed baselines: million cycles per unit (RTL simulated, medians of """ + n["runs"] + r""" runs) and code size on CV32E40P}
+\caption{Executed baselines: million cycles per unit (RTL simulated, medians of """ + n["runs"] + r""" runs) and code size on CV32E40P (host measured)}
 \label{tab:rtl}
 \setlength{\tabcolsep}{2.5pt}
 \begin{tabular}{lrrrrr}
@@ -373,7 +374,8 @@ CFGS_ALL = [("none", "No authentication"), ("signing", "MAVLink 2 signing as shi
 # paired differences of the share acknowledged within 0.5 s that the paper and Fig. 2 report: (config, minus, label)
 PAIRS_ALL = [("hybrid_strict", "hybrid_published", "strict $-$ published"), ("hybrid_cache", "hybrid_published", "cache $-$ published"),
              ("hybrid_published", "classical", "hybrid $-$ classical"), ("hybrid_published", "none", "hybrid $-$ none"),
-             ("classical", "signing", "classical $-$ signing"), ("kem_auth", "hybrid_published", "design K $-$ hybrid")]
+             ("classical", "signing", "classical $-$ signing"), ("kem_auth", "hybrid_published", "design K $-$ hybrid"),
+             ("kem_auth", "classical", "design K $-$ classical")]
 
 
 def _present():
@@ -474,14 +476,14 @@ Configuration & Handshake (s) & Added round trip (ms) & Share acknowledged withi
 \bottomrule
 \end{tabular}
 
-\smallskip\footnotesize Handshake: median, emulated link and executed cryptography with RTL derived vehicle delays. Added round trip: median round trip to the flight stack's acknowledgement against no authentication (SITL measured). Acknowledged share includes one outage per mission. $^{a}$ signing inside ArduPilot and the ground station at host speed, without RTL derived delays.
+\smallskip\footnotesize Handshake: median from F1 until both sides hold the key (vehicle accepting F3 for design K, ground accepting F4 otherwise), emulated link and executed cryptography with RTL derived vehicle delays. Added round trip: median round trip to the flight stack's acknowledgement against no authentication (SITL measured). Acknowledged share includes one outage per mission. $^{a}$ signing inside ArduPilot and the ground station at host speed, without RTL derived delays.
 \end{table*}
 """
     s = {}
     k_sent = ""
     if "kem_auth" in keys:
         k_sent = (" Design K completes its handshake in " + t["kem_auth_hs"] + "~s and differs from the hybrid session by "
-                  + t["d_kem_auth_hybrid_published"] + " (" + t["d_kem_auth_hybrid_published_lo"] + " to " + t["d_kem_auth_hybrid_published_hi"] + "); it was flown after the other configurations, alone on the host, on the same seeds, and the host overran the applied tag delay most often in its runs (" + t["hx_k"] + " tags), so this comparison is less clean than the others.")
+                  + t["d_kem_auth_hybrid_published"] + " (" + t["d_kem_auth_hybrid_published_lo"] + " to " + t["d_kem_auth_hybrid_published_hi"] + ") and from the classical session by " + t["d_kem_auth_classical"] + " (" + t["d_kem_auth_classical_lo"] + " to " + t["d_kem_auth_classical_hi"] + "); it was flown after the other configurations, alone on the host, on the same seeds, and the host overran the applied tag delay most often in its runs (" + t["hx_k"] + " tags), so this comparison is less clean than the others.")
     s["abstract"] = ("With ArduPilot in the loop over an emulated telemetry radio and real cryptography, the hybrid session keeps the share of commands acknowledged within 0.5~s, outages included, at "
                      + t["hybrid_published_av"] + " against " + t["none_av"] + " without authentication, while a signature per command drops it to "
                      + t["pqsig_real_av"] + ", a figure that moves to " + t["pq_dl_1.0"] + " at a 1~s deadline. A strict next counter rule loses "
