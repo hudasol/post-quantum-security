@@ -154,10 +154,13 @@ p_pv_cx_stated,docs/PAPER.md,7,7.0,formal/results/proverif_results.csv,result,"r
 p_pv_cx_broken,docs/PAPER.md,12,12.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and model.str.contains(""both_broken"")",count,0.005,modelled,,12 in deliberate
 p_pv_cx_fs,docs/PAPER.md,1,1.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and model == ""fallback_d_fixed_fs_provisioned""",count,0.005,modelled,,1 for forward
 p_pv_cx_mid,docs/PAPER.md,1,1.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and model == ""firmware_counter_unsigned_version""",count,0.005,modelled,,1 for an
-p_pv_cx_replay,docs/PAPER.md,11,11.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and model.str.startswith(""session_replay"")",count,0.005,modelled,,11 in the
-p_pv_proved,docs/PAPER.md,97,97.0,formal/results/proverif_results.csv,result,"result == ""proved""",count,0.005,modelled,,97 | property
-p_pv_counterexample,docs/PAPER.md,39,39.0,formal/results/proverif_results.csv,result,"result == ""counterexample""",count,0.005,modelled,,39 | attack
-p_pv_cannot_be_proved,docs/PAPER.md,3,3.0,formal/results/proverif_results.csv,result,"result == ""cannot be proved""",count,0.005,modelled,,3 | MAVLink
+p_pv_cx_replay,docs/PAPER.md,2,2.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and model.str.startswith(""session_replay"") and property_id not in (""R0"", ""R1"")",count,0.005,modelled,,2 in the
+p_pv_cx_kem,docs/PAPER.md,4,4.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and model == ""session_kemauth_kem_broken""",count,0.005,modelled,,4 for design
+p_pv_cx_reach,docs/PAPER.md,12,12.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and property_id in (""R0"", ""R1"")",count,0.005,modelled,,12 reachability checks
+p_pv_to,docs/PAPER.md,1800,1800.0,formal/results/proverif_results.csv,run_time_s_host_measured,"model == ""session_kemauth_a2"" and property_id == ""A2""",value,0.005,host measured,,
+p_pv_proved,docs/PAPER.md,97,97.0,formal/results/proverif_results.csv,result,"result.str.startswith(""proved"")",count,0.005,modelled,,97 | property
+p_pv_counterexample,docs/PAPER.md,39,39.0,formal/results/proverif_results.csv,result,"result.str.startswith(""counterexample"")",count,0.005,modelled,,39 | attack
+p_pv_cannot_be_proved,docs/PAPER.md,4,4.0,formal/results/proverif_results.csv,result,"result.str.startswith(""cannot be proved"")",count,0.005,modelled,,4 | MAVLink
 p_bk_n,docs/PAPER.md,36,36.0,bench/board_kit/predictions_v5_board.csv,id,"cache_pass == ""off""",count,0.005,modelled,,36 cycle predictions
 p_sitl_n,docs/PAPER.md,20,20.0,sitl/results/summary.csv,value,"profile == ""sik"" and config == ""hybrid"" and metric == ""missions_completed""",value,0.005,SITL measured,,20 scripted missions
 p_sitl_sig,docs/PAPER.md,3.7,3.7165,sitl/results/summary.csv,value,"profile == ""sik"" and config == ""signing"" and metric == ""added_latency_rt_ms""",value,0.005,SITL measured,,
@@ -232,7 +235,7 @@ proposal_robotics_fv_q,docs/PROPOSAL_ROBOTICS.md,140,140.0,formal/results/prover
 proposal_robotics_fv_models,docs/PROPOSAL_ROBOTICS.md,33,33.0,formal/results/proverif_results.csv,model,,nunique,0.005,modelled,,33 model files
 proposal_robotics_fv_proved,docs/PROPOSAL_ROBOTICS.md,97,97.0,formal/results/proverif_results.csv,query,"result == ""proved""",count,0.005,modelled,,"97 proved, 39"
 proposal_robotics_fv_cex,docs/PROPOSAL_ROBOTICS.md,39,39.0,formal/results/proverif_results.csv,query,"result == ""counterexample""",count,0.005,modelled,,39 counterexamples (stated
-proposal_robotics_fv_cnp,docs/PROPOSAL_ROBOTICS.md,3,3.0,formal/results/proverif_results.csv,query,"result == ""cannot be proved""",count,0.005,modelled,,3 that the
+proposal_robotics_fv_cnp,docs/PROPOSAL_ROBOTICS.md,4,4.0,formal/results/proverif_results.csv,query,"result.str.startswith(""cannot be proved"")",count,0.005,modelled,,4 that the
 proposal_robotics_v5b_rows,docs/PROPOSAL_ROBOTICS.md,36,36.0,bench/board_kit/predictions_v5_board.csv,id,,count,0.005,modelled,,36 out of
 proposal_robotics_v5b_per,docs/PROPOSAL_ROBOTICS.md,18,18.0,bench/board_kit/predictions_v5_board.csv,id,"platform == ""nucleo-l4r5zi""",count,0.005,modelled,,18 harness rows
 proposal_robotics_plan_min,docs/PROPOSAL_ROBOTICS.md,153,9180.5,bench/board_kit/session_plan.csv,total_s,"~block.str.contains(""B0"")",sum,0.005,estimated,displayed as {:.0f} x 0.016666666666666666,

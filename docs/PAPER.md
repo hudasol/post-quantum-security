@@ -2,7 +2,7 @@
 
 Author: Huda Mueen. Draft of 2026-10-21. Generated from `docs/PAPER_body.md` by `scripts/build_paper.py`; every number below is read from a file in this repository, and `scripts/check_numbers.py` fails the build when a stated number drifts from its file. Licence: all rights reserved (`LICENSE`).
 
-Target venue: a six page workshop paper with one additional page (PPT-PQC 2027, `data/raw/S13_venue.md`). Sections 1 to 6 and the references form the submission; the section marked Supplementary is for the repository version only. Length of the main part (abstract to conclusion, table included, figure captions and references excluded): 4457 words, about 5.0 pages at 900 words per two column page, before the references and the three figures, each about a third of a column high.
+Target venue: a six page workshop paper with one additional page (PPT-PQC 2027, `data/raw/S13_venue.md`). Sections 1 to 6 and the references form the submission; the section marked Supplementary is for the repository version only. Length of the main part (abstract to conclusion, table included, figure captions and references excluded): 4507 words, about 5.0 pages at 900 words per two column page, before the references and the three figures, each about a third of a column high.
 
 ## Abstract
 
@@ -75,8 +75,8 @@ Table 1. ProVerif results by outcome (modelled). Source: `formal/results/proveri
 | Outcome | Queries | Meaning |
 |---|---|---|
 | proved | 97 | property holds for every run the model allows: unbounded sessions for the command channel, one command per key before a rekey in the round 5 models and three or four per key in the replay rule models; the firmware model is bounded to three releases and three boots per device |
-| counterexample | 39 | attack trace found: 7 in the stated designs (findings F1 to F3), 12 in deliberate controls with both components broken, 1 for forward secrecy of the provisioned key fallback (inherent, documented), 1 for an intermediate firmware design with a counter but an unsigned version, and 11 in the replay rule models (a control without the seen counter check, a table read by concurrent branches, and the expected finding that a window accepts commands out of order) |
-| cannot be proved | 3 | MAVLink timestamp rule with gaps, and the replay window and sequential table encodings without the tool help; their weaker non injective forms hold |
+| counterexample | 39 | attack trace found: 7 in the stated designs (findings F1 to F3), 12 in deliberate controls with both components broken, 1 for forward secrecy of the provisioned key fallback (inherent, documented), 1 for an intermediate firmware design with a counter but an unsigned version, 2 in the replay rule models (a control without the seen counter check and a table read by concurrent branches), 4 for design K (KEM authentication with pinned keys) with ML-KEM broken, where its keys are not secret, and 12 reachability checks that must fail (the vehicle can accept a command, and a window accepts commands out of order) |
+| cannot be proved | 4 | MAVLink timestamp rule with gaps, and the replay window and sequential table encodings without the tool help (their weaker non injective forms hold), and authentication of the vehicle by the ground station in the general design K model, which reached the time limit of 1800 s |
 
 Board experiment. A board kit builds images for an STM32L4R5 (Cortex-M4) and an STM32L552 (Cortex-M33) board, now with an option that switches the caches off; 36 cycle predictions for the caches off pass were registered before any session, all out of sample (planned). The option is checked only by disassembly of the images and, for the L552, an emulator that logs the register write but does not model a cache, and the Cortex-M33 rows apply Cortex-M4 costs, an unsourced transfer assumption.
 

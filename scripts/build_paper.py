@@ -373,12 +373,15 @@ def formal_table():
             ("counterexample", f"attack trace found: {claim('p_pv_cx_stated', pv, 'result', 'result == \"counterexample\" and model.str.contains(\"stated\")', 'count', '{:.0f}', label='modelled')} in the stated designs (findings F1 to F3), "
              f"{claim('p_pv_cx_broken', pv, 'result', 'result == \"counterexample\" and model.str.contains(\"both_broken\")', 'count', '{:.0f}', label='modelled')} in deliberate controls with both components broken, "
              f"{claim('p_pv_cx_fs', pv, 'result', 'result == \"counterexample\" and model == \"fallback_d_fixed_fs_provisioned\"', 'count', '{:.0f}', label='modelled')} for forward secrecy of the provisioned key fallback (inherent, documented), "
-             f"{claim('p_pv_cx_mid', pv, 'result', 'result == \"counterexample\" and model == \"firmware_counter_unsigned_version\"', 'count', '{:.0f}', label='modelled')} for an intermediate firmware design with a counter but an unsigned version, and "
-             f"{claim('p_pv_cx_replay', pv, 'result', 'result == \"counterexample\" and model.str.startswith(\"session_replay\")', 'count', '{:.0f}', label='modelled')} in the replay rule models (a control without the seen counter check, a table read by concurrent branches, and the expected finding that a window accepts commands out of order)"),
-            ("cannot be proved", "MAVLink timestamp rule with gaps, and the replay window and sequential table encodings without the tool help; their weaker non injective forms hold")]
+             f"{claim('p_pv_cx_mid', pv, 'result', 'result == \"counterexample\" and model == \"firmware_counter_unsigned_version\"', 'count', '{:.0f}', label='modelled')} for an intermediate firmware design with a counter but an unsigned version, "
+             f"{claim('p_pv_cx_replay', pv, 'result', 'result == \"counterexample\" and model.str.startswith(\"session_replay\") and property_id not in (\"R0\", \"R1\")', 'count', '{:.0f}', label='modelled')} in the replay rule models (a control without the seen counter check and a table read by concurrent branches), "
+             f"{claim('p_pv_cx_kem', pv, 'result', 'result == \"counterexample\" and model == \"session_kemauth_kem_broken\"', 'count', '{:.0f}', label='modelled')} for design K (KEM authentication with pinned keys) with ML-KEM broken, where its keys are not secret, and "
+             f"{claim('p_pv_cx_reach', pv, 'result', 'result == \"counterexample\" and property_id in (\"R0\", \"R1\")', 'count', '{:.0f}', label='modelled')} reachability checks that must fail (the vehicle can accept a command, and a window accepts commands out of order)"),
+            ("cannot be proved", "MAVLink timestamp rule with gaps, and the replay window and sequential table encodings without the tool help (their weaker non injective forms hold), and authentication of the vehicle by the ground station in the general design K model, which reached the time limit of "
+             f"{claim('p_pv_to', pv, 'run_time_s_host_measured', 'model == \"session_kemauth_a2\" and property_id == \"A2\"', 'value', '{:.0f}', label='host measured')} s")]
     t = ["Table 1. ProVerif results by outcome (modelled). Source: `formal/results/proverif_results.csv`.\n", "| Outcome | Queries | Meaning |", "|---|---|---|"]
     for r, meaning in rows:
-        t.append(f"| {r} | {claim('p_pv_' + r.replace(' ', '_'), pv, 'result', f'result == \"{r}\"', 'count', '{:.0f}', label='modelled')} | {meaning} |")
+        t.append(f"| {r} | {claim('p_pv_' + r.replace(' ', '_'), pv, 'result', f'result.str.startswith(\"{r}\")', 'count', '{:.0f}', label='modelled')} | {meaning} |")
     return "\n".join(t)
 
 

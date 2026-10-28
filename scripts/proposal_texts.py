@@ -110,7 +110,7 @@ def numbers(claim, doc):
         "fv_models": c("fv_models", FORMAL, "model", aggregate="nunique", label="modelled"),
         "fv_proved": c("fv_proved", FORMAL, "query", 'result == "proved"', "count", label="modelled"),
         "fv_cex": c("fv_cex", FORMAL, "query", 'result == "counterexample"', "count", label="modelled"),
-        "fv_cnp": c("fv_cnp", FORMAL, "query", 'result == "cannot be proved"', "count", label="modelled"),
+        "fv_cnp": c("fv_cnp", FORMAL, "query", 'result.str.startswith("cannot be proved")', "count", label="modelled"),
         "v5b_rows": c("v5b_rows", V5B, "id", aggregate="count", label="modelled"),
         "v5b_per": c("v5b_per", V5B, "id", 'platform == "nucleo-l4r5zi"', "count", label="modelled"),
         "plan_min": c("plan_min", PLAN, "total_s", '~block.str.contains("B0")', "sum", fmt="{:.0f}", scale=1 / 60, label="estimated"),
