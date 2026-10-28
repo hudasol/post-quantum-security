@@ -529,6 +529,12 @@ def main():
         (ROOT / pdoc).write_text(ptext, encoding="utf-8")
         # a number prepared for a document but not used in it is not a claim of that document
         CLAIMS[:] = [c for c in CLAIMS if c["document"] != pdoc or c.get("_used")]
+    if (ROOT / "sitl/results_r6/summary.csv").exists():
+        import conference_texts
+        for cdoc, ctext in conference_texts.build(claim):
+            ctext = anchor(ctext)
+            (ROOT / cdoc).write_text(ctext, encoding="utf-8")
+            CLAIMS[:] = [c for c in CLAIMS if c["document"] != cdoc or c.get("_used")]
     fields = ["claim_id", "document", "text_in_document", "value", "source_file", "column", "query", "aggregate", "tolerance_rel", "label", "note", "context"]
     with open(ROOT / "data" / "claims_register.csv", "w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=fields, extrasaction="ignore")
