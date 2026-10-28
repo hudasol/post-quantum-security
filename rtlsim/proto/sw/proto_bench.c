@@ -14,6 +14,8 @@
  *   PROTO_DESIGN_CLASSICAL    X25519 exchange, Ed25519 transcript signatures by both sides, key confirmation
  *   PROTO_DESIGN_PQ_ONLY      ML-KEM-768, ML-DSA-44 transcript signatures by both sides, key confirmation
  *   PROTO_DESIGN_HYBRID_F1    X25519 plus ML-KEM-768, ML-DSA-44 by both sides, key confirmation (design F1)
+ *   PROTO_DESIGN_KEM_AUTH     X25519 plus ML-KEM-768, authentication by static ML-KEM-768 keys pinned at the
+ *                             other side, no signatures, key confirmation (see the section of that design)
  *   PROTO_DESIGN_PER_COMMAND  ML-DSA-44 signature on each command (ground signs, vehicle verifies)
  *   PROTO_DESIGN_MAVLINK_TAG  MAVLink 2 signing tag per message (ground signs, vehicle checks)
  *
@@ -68,6 +70,13 @@
 #define USE_DSA 1
 #define USE_MAV 0
 #define SESSION 1
+#elif defined(PROTO_DESIGN_KEM_AUTH)
+#define SET "kem_auth"
+#define USE_X25519 1
+#define USE_KEM 1
+#define USE_ED 0
+#define USE_DSA 0
+#define USE_MAV 0
 #elif defined(PROTO_DESIGN_PER_COMMAND)
 #define SET "per_command_mldsa44"
 #define USE_X25519 0
@@ -125,7 +134,7 @@ static const uint8_t dsa_ctx[1] = {0};
 #include "common/mavlink.h"
 #endif
 
-#if defined(SESSION) || defined(PROTO_DESIGN_PRIMITIVES)
+#if defined(SESSION) || defined(PROTO_DESIGN_PRIMITIVES) || defined(PROTO_DESIGN_KEM_AUTH)
 /* Constant time comparison from the classical library where it is linked; otherwise a plain loop
  * without early exit (benchmark glue). */
 static int eq16(const uint8_t *a, const uint8_t *b)
@@ -203,6 +212,38 @@ static void sign_input(uint8_t m[SIGN_INPUT_BYTES], uint8_t flight, const uint8_
   memcpy(m + 1, ida, 32);
   memcpy(m + 33, idb, 32);
   memcpy(m + 65, th, 32);
+}
+#endif
+
+#if defined(PROTO_DESIGN_PRIMITIVES) || defined(PROTO_DESIGN_KEM_AUTH)
+/* Glue of the KEM authenticated design: the transcript hash also covers both pinned identities, and the
+ * session key covers the X25519 secret and three ML-KEM secrets (vehicle static, ground ephemeral, ground
+ * static, in that order). */
+static void transcript_hash_ids(uint8_t th[32], const uint8_t idg[32], const uint8_t idv[32],
+                                const uint8_t *f1, size_t f1len, const uint8_t *f2, size_t f2len)
+{
+  ph_ctx c;
+  ph_init(&c);
+  ph_absorb(&c, LABEL_TH, sizeof(LABEL_TH));
+  ph_absorb(&c, idg, 32);
+  ph_absorb(&c, idv, 32);
+  ph_absorb(&c, f1, f1len);
+  ph_absorb(&c, f2, f2len);
+  ph_squeeze(&c, th, 32);
+}
+
+static void kdf4(uint8_t k[32], const uint8_t ssx[32], const uint8_t ss_v[32], const uint8_t ss_e[32],
+                 const uint8_t ss_g[32], const uint8_t th[32])
+{
+  ph_ctx c;
+  ph_init(&c);
+  ph_absorb(&c, LABEL_KDF, sizeof(LABEL_KDF));
+  ph_absorb(&c, ssx, 32);
+  ph_absorb(&c, ss_v, 32);
+  ph_absorb(&c, ss_e, 32);
+  ph_absorb(&c, ss_g, 32);
+  ph_absorb(&c, th, 32);
+  ph_squeeze(&c, k, 32);
 }
 #endif
 
@@ -424,6 +465,169 @@ static void run_design(void)
 #endif /* SESSION */
 
 /* ---------------------------------------------------------------------------------------------- */
+#if defined(PROTO_DESIGN_KEM_AUTH)
+/*
+ * KEM authenticated session with pinned static keys and no signatures (in the spirit of post quantum
+ * WireGuard and of KEMTLS with pre distributed keys). Each side holds a static ML-KEM-768 key pair whose
+ * encapsulation key is pinned at the other side (provisioned untimed, like the long term keys of the
+ * signature designs).
+ *   F1 ground to vehicle: ground ephemeral X25519 share gx (32 B), ground ephemeral ML-KEM-768
+ *      encapsulation key ekE (1184 B), ciphertext ctV encapsulated to the vehicle static key (1088 B)
+ *   F2 vehicle to ground: vehicle X25519 share gy (32 B), ciphertext ctE to ekE (1088 B), ciphertext ctG
+ *      to the ground static key (1088 B), vehicle confirmation tag cV (16 B)
+ *   F3 ground to vehicle: ground confirmation tag cG (16 B)
+ * th = SHAKE256(label_th || idG || idV || F1 || F2 without cV, 32), k = SHAKE256(label_kdf || ss_x25519 ||
+ * ssV || ssE || ssG || th, 32), cV and cG as in the signature designs. The ground accepts after checking cV
+ * (only the holder of the vehicle static key can derive ssV); the vehicle accepts after checking cG (only
+ * the holder of the ground static key can derive ssG). The ephemeral X25519 and ML-KEM parts give forward
+ * secrecy against a later loss of the static keys. Change against the proposed flights: the transcript hash
+ * also covers both pinned identities, as the signed input of the signature designs does.
+ */
+#define F1_BYTES (32 + KEM_PK + KEM_CT)
+#define F2_BODY (32 + KEM_CT + KEM_CT)
+#define F2_BYTES (F2_BODY + 16)
+#define F3_BYTES 16
+#define F1_EK 32
+#define F1_CTV (32 + KEM_PK)
+#define F2_CTE 32
+#define F2_CTG (32 + KEM_CT)
+
+/* Static keys (provisioned before the session, untimed); each side knows the other's pinned public key. */
+static uint8_t skGs[KEM_SK], pkGs[KEM_PK], skVs[KEM_SK], pkVs[KEM_PK];
+static uint8_t idG[32], idV[32];
+static uint8_t F1[F1_BYTES], F2[F2_BYTES], F3[F3_BYTES];
+/* Ground state. */
+static uint8_t g_x[32], g_dk[KEM_SK], g_ssv[32], g_th[32], g_k[32];
+static int g_accept;
+/* Vehicle state. */
+static uint8_t v_y[32], v_th[32], v_k[32];
+static int v_accept;
+
+/* Ground: fresh X25519 share, fresh ML-KEM-768 key pair, encapsulation to the pinned vehicle static key;
+ * build F1. */
+__attribute__((noinline)) static int ground_f1(void)
+{
+  int rc = 0;
+  g_accept = 0;
+  randombytes(g_x, 32);
+  crypto_x25519_public_key(F1, g_x);
+  rc |= KEM_KEYPAIR(F1 + F1_EK, g_dk);
+  rc |= KEM_ENC(F1 + F1_CTV, g_ssv, pkVs);
+  return rc;
+}
+
+/* Vehicle: fresh X25519 share and X25519 secret, decapsulation of ctV with the vehicle static key,
+ * encapsulation to the ground ephemeral key and to the pinned ground static key, transcript hash, session
+ * key, vehicle confirmation tag; build F2. */
+__attribute__((noinline)) static int vehicle_f2(void)
+{
+  int rc = 0;
+  uint8_t ssx[32], ssv[32], sse[32], ssg[32];
+  v_accept = 0;
+  randombytes(v_y, 32);
+  crypto_x25519_public_key(F2, v_y);
+  crypto_x25519(ssx, v_y, F1);
+  rc |= KEM_DEC(ssv, F1 + F1_CTV, skVs);
+  rc |= KEM_ENC(F2 + F2_CTE, sse, F1 + F1_EK);
+  rc |= KEM_ENC(F2 + F2_CTG, ssg, pkGs);
+  transcript_hash_ids(v_th, idG, idV, F1, sizeof(F1), F2, F2_BODY);
+  kdf4(v_k, ssx, ssv, sse, ssg, v_th);
+  confirm_tag(F2 + F2_BODY, v_k, LABEL_CV, sizeof(LABEL_CV), v_th);
+  return rc;
+}
+
+/* Ground: X25519 secret, decapsulation of ctE with the ephemeral key and of ctG with the ground static
+ * key, transcript hash, session key; check the vehicle tag, accept, and build F3 with the ground tag.
+ * Returns 1 if the vehicle tag does not match (nothing is sent). */
+__attribute__((noinline)) static int ground_f3(void)
+{
+  int rc = 0;
+  uint8_t ssx[32], sse[32], ssg[32], t[16];
+  crypto_x25519(ssx, g_x, F2);
+  rc |= KEM_DEC(sse, F2 + F2_CTE, g_dk);
+  rc |= KEM_DEC(ssg, F2 + F2_CTG, skGs);
+  transcript_hash_ids(g_th, idG, idV, F1, sizeof(F1), F2, F2_BODY);
+  kdf4(g_k, ssx, g_ssv, sse, ssg, g_th);
+  confirm_tag(t, g_k, LABEL_CV, sizeof(LABEL_CV), g_th);
+  if (!eq16(t, F2 + F2_BODY))
+  {
+    return 1;
+  }
+  confirm_tag(F3, g_k, LABEL_CG, sizeof(LABEL_CG), g_th);
+  g_accept = 1;
+  return rc ? 2 : 0;
+}
+
+/* Vehicle: check the ground tag and accept. */
+__attribute__((noinline)) static int vehicle_accept(void)
+{
+  uint8_t t[16];
+  confirm_tag(t, v_k, LABEL_CG, sizeof(LABEL_CG), v_th);
+  if (!eq16(t, F3))
+  {
+    return 1;
+  }
+  v_accept = 1;
+  return 0;
+}
+
+static void run_design(void)
+{
+  (void)sign_input;
+  (void)kdf;
+  (void)transcript_hash;
+  pu_msg(SET, "F1", "ground_to_vehicle", sizeof(F1));
+  pu_msg(SET, "F2", "vehicle_to_ground", sizeof(F2));
+  pu_msg(SET, "F3", "ground_to_vehicle", sizeof(F3));
+  for (int r = 0; r < PROTO_RUNS; r++)
+  {
+    bench_rng_seed((uint64_t)PROTO_SEED + (uint64_t)r);
+    /* Provisioning, untimed: static key pairs and identities, public keys pinned at the other side. */
+    pu_chk(SET, "provisioning_ground_static_keypair", r, KEM_KEYPAIR(pkGs, skGs) == 0);
+    pu_chk(SET, "provisioning_vehicle_static_keypair", r, KEM_KEYPAIR(pkVs, skVs) == 0);
+    hash_id(idG, pkGs, sizeof(pkGs));
+    hash_id(idV, pkVs, sizeof(pkVs));
+
+    PU_STEP(SET, "ground_f1", r, ground_f1());
+    PU_STEP(SET, "vehicle_f2", r, vehicle_f2());
+    PU_STEP(SET, "ground_f3", r, ground_f3());
+    PU_STEP(SET, "vehicle_accept", r, vehicle_accept());
+
+    pu_chk(SET, "same_session_key", r, memcmp(g_k, v_k, 32) == 0);
+    pu_chk(SET, "same_transcript_hash", r, memcmp(g_th, v_th, 32) == 0);
+    pu_chk(SET, "vehicle_accepted", r, v_accept == 1);
+    pu_chk(SET, "ground_accepted", r, g_accept == 1);
+    if (r == 0)
+    {
+      /* Negative checks, untimed, first run only: a modified F3 tag, a modified F2 tag and a modified
+       * ciphertext to the ground static key must each be rejected; then an F1 whose ciphertext to the
+       * vehicle static key was replaced in transit by an encapsulation of a third party (who knows its
+       * secret) must lead the ground to reject F2. */
+      F3[0] ^= 1u;
+      pu_chk(SET, "vehicle_rejects_modified_f3_tag", r, vehicle_accept() == 1);
+      F3[0] ^= 1u;
+      F2[F2_BODY] ^= 1u;
+      pu_chk(SET, "ground_rejects_modified_f2_tag", r, ground_f3() == 1);
+      F2[F2_BODY] ^= 1u;
+      F2[F2_CTG + 3] ^= 1u;
+      pu_chk(SET, "ground_rejects_modified_ciphertext_to_ground_static_key", r, ground_f3() == 1);
+      F2[F2_CTG + 3] ^= 1u;
+      pu_chk(SET, "ground_accepts_restored_f2", r, ground_f3() == 0);
+      {
+        uint8_t ss_third[32];
+        uint8_t f1_saved[KEM_CT];
+        memcpy(f1_saved, F1 + F1_CTV, KEM_CT);
+        pu_chk(SET, "third_party_encapsulation_to_vehicle_static_key", r, KEM_ENC(F1 + F1_CTV, ss_third, pkVs) == 0);
+        pu_chk(SET, "vehicle_f2_runs_on_replaced_f1", r, vehicle_f2() == 0);
+        memcpy(F1 + F1_CTV, f1_saved, KEM_CT); /* the ground keeps the F1 it sent */
+        pu_chk(SET, "ground_rejects_f2_after_replaced_f1_ciphertext", r, ground_f3() == 1);
+      }
+    }
+  }
+}
+#endif
+
+/* ---------------------------------------------------------------------------------------------- */
 #if defined(PROTO_DESIGN_PER_COMMAND)
 static uint8_t skG[DSA_SK], pkG[DSA_PK], sig[DSA_SIG];
 static uint8_t frame[MAVLINK_MAX_PACKET_LEN];
@@ -605,6 +809,9 @@ static uint8_t kem_pk[KEM_PK], kem_sk[KEM_SK], kem_ct[KEM_CT], ss_e[32], ss_d[32
 static uint8_t dsa_pk[DSA_PK], dsa_sk[DSA_SK], dsa_sig[DSA_SIG];
 static uint8_t m97[SIGN_INPUT_BYTES];
 static uint8_t tr_f1[32 + KEM_PK], tr_f2[32 + KEM_CT];
+/* Transcript inputs of the other session designs, same sizes as their flights. */
+static uint8_t tr_pq_f1[KEM_PK], tr_pq_f2[KEM_CT];
+static uint8_t tr_ka_f1[32 + KEM_PK + KEM_CT], tr_ka_f2[32 + KEM_CT + KEM_CT], tr_ids[64];
 
 static void run_design(void)
 {
@@ -691,6 +898,22 @@ static void run_design(void)
              DSA_VERIFY(dsa_sig, m97, sizeof(m97), dsa_ctx, 0, dsa_pk) != 0);
       m97[0] ^= 1u;
     }
+
+    /* Added after the operations of the first round 6 run, so that their random stream, and with it the
+     * number of ML-DSA-44 signing rounds per seed, is unchanged. Transcript hashes of the other session
+     * designs over inputs of their flight sizes (classical 64 B, post quantum only 2,272 B, KEM
+     * authenticated 4,576 B with both identities), and the key derivation of the KEM authenticated design
+     * (four secrets) with a known answer. */
+    PU_STEP(SET, "shake256_transcript_classical", r, ({ transcript_hash(th, tr_f1, 32, tr_f2, 32); 0; }));
+    randombytes(tr_pq_f1, sizeof(tr_pq_f1));
+    randombytes(tr_pq_f2, sizeof(tr_pq_f2));
+    PU_STEP(SET, "shake256_transcript_pq_only", r, ({ transcript_hash(th, tr_pq_f1, sizeof(tr_pq_f1), tr_pq_f2, sizeof(tr_pq_f2)); 0; }));
+    randombytes(tr_ka_f1, sizeof(tr_ka_f1));
+    randombytes(tr_ka_f2, sizeof(tr_ka_f2));
+    randombytes(tr_ids, sizeof(tr_ids));
+    PU_STEP(SET, "shake256_transcript_kem_auth", r, ({ transcript_hash_ids(th, tr_ids, tr_ids + 32, tr_ka_f1, sizeof(tr_ka_f1), tr_ka_f2, sizeof(tr_ka_f2)); 0; }));
+    PU_STEP(SET, "shake256_kdf_kem_auth", r, ({ kdf4(k, KAT_KDF_SSX, KAT_KDF_SSKEM, KAT_KDF_SSKEM2, KAT_KDF_SSKEM3, KAT_KDF_TH); 0; }));
+    pu_chk(SET, "shake256_kdf_kem_auth_known_answer", r, memcmp(k, KAT_KDF4_OUT, 32) == 0);
   }
 }
 #endif

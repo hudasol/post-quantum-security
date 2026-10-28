@@ -23,7 +23,17 @@ MAVLINK_URL="https://github.com/mavlink/c_library_v2.git"
 MAVLINK_COMMIT="6b4243f0e54b42ddb1e65df7a3a5e8c99d15ec1f"   # master, committed 2026-10-25
 
 # Images: one per design. The primitives image times each operation alone.
-PROTO_IMAGES="primitives classical pq_only hybrid_f1 per_command_mldsa44 mavlink_tag"
-PROTO_RUNS="${PROTO_RUNS:-5}"
-PROTO_SEED="20261021"          # run r uses seed PROTO_SEED + r (seed block 20261021 to 20261025 for 5 runs)
+PROTO_IMAGES="primitives classical pq_only hybrid_f1 kem_auth per_command_mldsa44 mavlink_tag"
+# Runs per image. Round 6 first ran 5 runs per image (seed block 20261021 to 20261025); after the review,
+# the session designs, the per command design and the primitives run 15 runs (seed block 20261021 to
+# 20261035, which extends the first block, so runs 0 to 4 repeat the first runs seed for seed). The tag
+# image has no data dependent operation and stays at 5 runs.
+PROTO_RUNS="${PROTO_RUNS:-15}"
+PROTO_RUNS_TAG="${PROTO_RUNS_TAG:-5}"
+PROTO_SEED="20261021"          # run r uses seed PROTO_SEED + r
+
+# Runs of one image (mavlink_tag: PROTO_RUNS_TAG; every other image: PROTO_RUNS).
+proto_runs_for() {
+  if [ "$1" = mavlink_tag ]; then echo "$PROTO_RUNS_TAG"; else echo "$PROTO_RUNS"; fi
+}
 STACK_PAINT_BYTES="0x30000"    # 192 kB painted below the caller of each timed step (stack is 256 kB)

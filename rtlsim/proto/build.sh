@@ -89,7 +89,7 @@ build_variant() {
     ( cd "$OBJ" && $SIZE $(for l in $LIBOBJS; do echo "$l.o"; done) ) > "$LOGS/object_sizes.txt"
   fi
 
-  local PF="$F -DMLK_CONFIG_PARAMETER_SET=768 -DMLD_CONFIG_PARAMETER_SET=44 -DPROTO_RUNS=$PROTO_RUNS \
+  local PF="$F -DMLK_CONFIG_PARAMETER_SET=768 -DMLD_CONFIG_PARAMETER_SET=44 \
     -DPROTO_SEED=${PROTO_SEED}u -DSTACK_PAINT_BYTES=$STACK_PAINT_BYTES -I$INC -I$HERE/sw \
     -I$PROTO_BUILD/kat -I$MLKEM -I$MLDSA -I$MONO -I$MAV"
   $CC $PF -c "$HERE/sw/proto_util.c" -o "$OUT/proto_util.o"
@@ -103,13 +103,14 @@ build_variant() {
     local macro="PROTO_DESIGN_$(echo "$img" | tr a-z A-Z)"
     [ "$img" = per_command_mldsa44 ] && macro=PROTO_DESIGN_PER_COMMAND
     # -Wno-address-of-packed-member silences warnings from the MAVLink headers; it does not change code.
-    $CC $PF -Wno-address-of-packed-member -D"$macro" -c "$HERE/sw/proto_bench.c" -o "$OUT/proto_$img.o"
+    $CC $PF -DPROTO_RUNS="$(proto_runs_for "$img")" -Wno-address-of-packed-member -D"$macro" -c "$HERE/sw/proto_bench.c" -o "$OUT/proto_$img.o"
     local libs
     case "$img" in
       primitives)          libs="monocypher monocypher_ed25519 mlkem768 mldsa44 proto_hash" ;;
       classical)           libs="monocypher monocypher_ed25519 proto_hash mld_fips202 mld_keccakf1600" ;;
       pq_only)             libs="mlkem768 mldsa44 proto_hash" ;;
       hybrid_f1)           libs="monocypher mlkem768 mldsa44 proto_hash" ;;
+      kem_auth)            libs="monocypher mlkem768 proto_hash mld_fips202 mld_keccakf1600" ;;
       per_command_mldsa44) libs="mldsa44" ;;
       mavlink_tag)         libs="" ;;
     esac
@@ -142,6 +143,7 @@ build_variant gc "-ffunction-sections -fdata-sections" "-Wl,--gc-sections"
   echo "monocypher_commit=$MONO_COMMIT"
   echo "mavlink_c_commit=$MAVLINK_COMMIT"
   echo "runs=$PROTO_RUNS"
+  echo "runs_mavlink_tag=$PROTO_RUNS_TAG"
   echo "seed_first=$PROTO_SEED"
   echo "stack_paint_bytes=$STACK_PAINT_BYTES"
   if [ "$CORE" = cv32e40p ]; then echo "cv32e40p_commit=$CV32E40P_COMMIT stack_size=$CV32E40P_STACK_SIZE"; fi

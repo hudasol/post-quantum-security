@@ -8,7 +8,8 @@ Python standard library (hashlib), so that the simulated code is checked against
     guide (https://mavlink.io/en/guide/message_signing.html, read 2026-10-28):
     sha256_48(secret_key + header + payload + CRC + link-ID + timestamp), timestamp as 6 bytes,
     little endian as the MAVLink C library serialises it,
-  - the SHAKE256 key derivation of the session designs over fixed inputs.
+  - the SHAKE256 key derivation of the session designs over fixed inputs, with one ML-KEM secret (the
+    signature designs) and with three (the KEM authenticated design).
 Research benchmark support; no cryptographic primitive is implemented here.
 Usage: gen_kat.py <output kat.h>
 """
@@ -33,6 +34,8 @@ TAG_TIMESTAMP = 0x00002A0000001234
 KDF_SSX = bytes(range(32))
 KDF_SSKEM = bytes(0x40 + i for i in range(32))
 KDF_TH = bytes(0x80 + i for i in range(32))
+KDF_SSKEM2 = bytes(0xA0 + i for i in range(32))
+KDF_SSKEM3 = bytes(0xC0 + i for i in range(32))
 
 
 def mavlink_tag(key, header, payload, crc, link_id, timestamp):
@@ -43,6 +46,12 @@ def mavlink_tag(key, header, payload, crc, link_id, timestamp):
 
 def kdf(ssx, sskem, th):
     return hashlib.shake_256(LABELS["LABEL_KDF"] + ssx + sskem + th).digest(32)
+
+
+def kdf4(ssx, ss_v, ss_e, ss_g, th):
+    """Key derivation of the KEM authenticated design: X25519 secret, then the ML-KEM secrets of the
+    vehicle static key, the ground ephemeral key and the ground static key, then the transcript hash."""
+    return hashlib.shake_256(LABELS["LABEL_KDF"] + ssx + ss_v + ss_e + ss_g + th).digest(32)
 
 
 def carray(name, data):
@@ -69,6 +78,9 @@ def header_text():
     lines.append(carray("KAT_KDF_SSKEM", KDF_SSKEM))
     lines.append(carray("KAT_KDF_TH", KDF_TH))
     lines.append(carray("KAT_KDF_OUT", kdf(KDF_SSX, KDF_SSKEM, KDF_TH)))
+    lines.append(carray("KAT_KDF_SSKEM2", KDF_SSKEM2))
+    lines.append(carray("KAT_KDF_SSKEM3", KDF_SSKEM3))
+    lines.append(carray("KAT_KDF4_OUT", kdf4(KDF_SSX, KDF_SSKEM, KDF_SSKEM2, KDF_SSKEM3, KDF_TH)))
     lines.append("#endif")
     return "\n".join(lines) + "\n"
 
