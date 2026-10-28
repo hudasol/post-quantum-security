@@ -9,11 +9,18 @@ data/shared_inputs.csv. Writes:
                                            data/column_labels.csv)
   rtlsim/results/proto_sizes.csv           text, data, bss of every image (label host measured)
   rtlsim/results/proto_time_estimated.csv  cycles divided by a stated clock (label estimated)
+  rtlsim/results/proto_decomposition.csv   each session design and side against the sum of its primitive
+                                           medians (label RTL simulated)
+  rtlsim/results/proto_ratios.csv          ratios between session designs, from the session medians with a
+                                           bootstrap interval and from the primitive sums (label RTL simulated)
+and reads, without changing them, the frozen five run snapshots of round 6
+(rtlsim/results/proto_sessions_runs5.csv, rtlsim/results/proto_primitives_runs5.csv).
   docs/figures/rtl_baselines_vehicle.png   vehicle side cycles per design and core
   docs/RTL_BASELINES.md
 Usage: python3 rtlsim/proto/make_doc.py
 """
 import csv
+import statistics
 import sys
 from pathlib import Path
 
@@ -27,20 +34,23 @@ import parse_proto as pp  # noqa: E402
 LABEL = "RTL simulated"
 CORES = ["ibex", "cv32e40p"]
 CORE_NAME = {"ibex": "Ibex (small)", "cv32e40p": "CV32E40P"}
-IMAGES = ["primitives", "classical", "pq_only", "hybrid_f1", "per_command_mldsa44", "mavlink_tag"]
-SESSION_DESIGNS = ["classical", "pq_only", "hybrid_f1"]
+IMAGES = ["primitives", "classical", "pq_only", "hybrid_f1", "kem_auth", "per_command_mldsa44", "mavlink_tag"]
+SESSION_DESIGNS = ["classical", "pq_only", "hybrid_f1", "kem_auth"]
 DESIGN_NAME = {
     "classical": "Classical session (X25519, Ed25519 by both sides, key confirmation)",
     "pq_only": "Post quantum only session (ML-KEM-768, ML-DSA-44 by both sides, key confirmation)",
     "hybrid_f1": "Hybrid session with F1 (X25519 plus ML-KEM-768, ML-DSA-44 by both sides, key confirmation)",
+    "kem_auth": ("KEM authenticated session (X25519 plus ML-KEM-768, static ML-KEM-768 keys pinned at the "
+                 "other side, no signatures, key confirmation)"),
     "per_command_mldsa44": "ML-DSA-44 signature per command",
     "mavlink_tag": "MAVLink 2 signing tag per message",
 }
 CLOCKS_MHZ = [64, 168]
 PRIM_ORDER = ["x25519_keygen", "x25519_shared", "ed25519_keygen", "ed25519_sign", "ed25519_verify",
               "sha256_60B", "mavlink_tag_frame60", "shake256_kdf", "shake256_confirm_tag",
-              "shake256_transcript_hybrid", "mlkem768_keygen", "mlkem768_encaps", "mlkem768_decaps",
-              "mldsa44_keygen", "mldsa44_sign", "mldsa44_verify"]
+              "shake256_transcript_hybrid", "shake256_transcript_classical", "shake256_transcript_pq_only",
+              "shake256_transcript_kem_auth", "shake256_kdf_kem_auth", "mlkem768_keygen", "mlkem768_encaps",
+              "mlkem768_decaps", "mldsa44_keygen", "mldsa44_sign", "mldsa44_verify"]
 PRIM_INFO = {
     "x25519_keygen": ("Monocypher", "public key from a 32 B secret (crypto_x25519_public_key)"),
     "x25519_shared": ("Monocypher", "shared secret, one scalar multiplication (crypto_x25519)"),
@@ -52,6 +62,10 @@ PRIM_INFO = {
     "shake256_kdf": ("mldsa-native FIPS 202", "session key derivation over 3 x 32 B plus label"),
     "shake256_confirm_tag": ("mldsa-native FIPS 202", "16 B key confirmation tag"),
     "shake256_transcript_hybrid": ("mldsa-native FIPS 202", "transcript hash over F1 and F2 of the hybrid design (2,336 B)"),
+    "shake256_transcript_classical": ("mldsa-native FIPS 202", "transcript hash over F1 and F2 of the classical design (64 B)"),
+    "shake256_transcript_pq_only": ("mldsa-native FIPS 202", "transcript hash over F1 and F2 of the post quantum only design (2,272 B)"),
+    "shake256_transcript_kem_auth": ("mldsa-native FIPS 202", "transcript hash over both identities, F1 and F2 without its tag, KEM authenticated design (4,576 B)"),
+    "shake256_kdf_kem_auth": ("mldsa-native FIPS 202", "session key derivation over 5 x 32 B plus label (KEM authenticated design)"),
     "mlkem768_keygen": ("mlkem-native", "keypair"),
     "mlkem768_encaps": ("mlkem-native", "enc"),
     "mlkem768_decaps": ("mlkem-native", "dec"),
@@ -62,6 +76,39 @@ PRIM_INFO = {
 ROUND5 = {"mlkem768_keygen": ("ML-KEM-768", "keygen"), "mlkem768_encaps": ("ML-KEM-768", "encaps"),
           "mlkem768_decaps": ("ML-KEM-768", "decaps"), "mldsa44_keygen": ("ML-DSA-44", "keygen"),
           "mldsa44_sign": ("ML-DSA-44", "sign"), "mldsa44_verify": ("ML-DSA-44", "verify")}
+# Primitive calls that make up each side of one session start (see rtlsim/proto/sw/proto_bench.c). Glue
+# outside these calls (random bytes for the X25519 secrets, copies, comparisons, the signed input) is left
+# in the residual. The signature primitives were timed over the 97 B signed input of the session designs.
+DECOMP = {
+    "classical": {
+        "vehicle": [("x25519_keygen", 1), ("x25519_shared", 1), ("shake256_transcript_classical", 1),
+                    ("shake256_kdf", 1), ("ed25519_verify", 1), ("shake256_confirm_tag", 2), ("ed25519_sign", 1)],
+        "ground": [("x25519_keygen", 1), ("x25519_shared", 1), ("shake256_transcript_classical", 1),
+                   ("shake256_kdf", 1), ("ed25519_sign", 1), ("shake256_confirm_tag", 2), ("ed25519_verify", 1)]},
+    "pq_only": {
+        "vehicle": [("mlkem768_encaps", 1), ("shake256_transcript_pq_only", 1), ("shake256_kdf", 1),
+                    ("mldsa44_verify", 1), ("shake256_confirm_tag", 2), ("mldsa44_sign", 1)],
+        "ground": [("mlkem768_keygen", 1), ("mlkem768_decaps", 1), ("shake256_transcript_pq_only", 1),
+                   ("shake256_kdf", 1), ("mldsa44_sign", 1), ("shake256_confirm_tag", 2), ("mldsa44_verify", 1)]},
+    "hybrid_f1": {
+        "vehicle": [("x25519_keygen", 1), ("x25519_shared", 1), ("mlkem768_encaps", 1),
+                    ("shake256_transcript_hybrid", 1), ("shake256_kdf", 1), ("mldsa44_verify", 1),
+                    ("shake256_confirm_tag", 2), ("mldsa44_sign", 1)],
+        "ground": [("x25519_keygen", 1), ("mlkem768_keygen", 1), ("x25519_shared", 1), ("mlkem768_decaps", 1),
+                   ("shake256_transcript_hybrid", 1), ("shake256_kdf", 1), ("mldsa44_sign", 1),
+                   ("shake256_confirm_tag", 2), ("mldsa44_verify", 1)]},
+    "kem_auth": {
+        "vehicle": [("x25519_keygen", 1), ("x25519_shared", 1), ("mlkem768_decaps", 1), ("mlkem768_encaps", 2),
+                    ("shake256_transcript_kem_auth", 1), ("shake256_kdf_kem_auth", 1), ("shake256_confirm_tag", 2)],
+        "ground": [("x25519_keygen", 1), ("mlkem768_keygen", 1), ("mlkem768_encaps", 1), ("x25519_shared", 1),
+                   ("mlkem768_decaps", 2), ("shake256_transcript_kem_auth", 1), ("shake256_kdf_kem_auth", 1),
+                   ("shake256_confirm_tag", 2)]},
+}
+RATIO_PAIRS = [("hybrid_f1", "classical"), ("pq_only", "classical"), ("hybrid_f1", "pq_only"),
+               ("kem_auth", "classical"), ("kem_auth", "hybrid_f1"), ("kem_auth", "pq_only")]
+SNAPSHOT_SESSIONS = "proto_sessions_runs5.csv"
+SNAPSHOT_PRIMITIVES = "proto_primitives_runs5.csv"
+FIRST_RUNS = 5   # runs 0 to 4 have the seeds of the round 6 five run snapshot
 SESSION_SIDE_STEPS = {"vehicle": "F2 processing and F4 (vehicle_f2 plus vehicle_f4)",
                       "ground": "F1, F3 and acceptance (ground_f1 plus ground_f3 plus ground_accept)"}
 
@@ -183,6 +230,7 @@ def build_sessions(logs):
                     t = pp.unit_totals(lg, design, steps[side])
                     if t is None:
                         continue
+                    t5 = pp.unit_totals(lg, design, steps[side], runs=range(FIRST_RUNS))
                     passed, total = pp.checks_for(lg, design)
                     sz = sizes.get(design, {})
                     szg = sizes_gc.get(design, {})
@@ -207,7 +255,115 @@ def build_sessions(logs):
                         "correctness": correctness_text(passed, total, t["runs_correct"], t["n"]),
                         "runs_correct": t["runs_correct"], "log_complete": lg.done,
                         "seed_first": lg.config.get("seed_first", ""),
+                        "cycles_median_first5_runs": t5["median"] if t5 and t5["n"] == FIRST_RUNS else "",
                     })
+    return rows
+
+
+def load_snapshot(name):
+    """Rows of a frozen round 6 five run snapshot (empty if absent)."""
+    p = RTL / "results" / name
+    if not p.exists():
+        return []
+    with open(p) as fh:
+        return list(csv.DictReader(fh))
+
+
+def snapshot_median(snap, **kw):
+    r = [x for x in snap if all(x.get(k) == v for k, v in kw.items())]
+    return float(r[0]["cycles_median"]) if r else None
+
+
+def primitive_first_runs(logs, psnap):
+    """[(core, operation, snapshot median, median of runs 0 to 4 of the primitives log)]."""
+    out = []
+    for r in psnap:
+        lg = logs.get((r["core"], "primitives"))
+        if lg is None:
+            continue
+        rv = pp.run_values(lg, "primitives", r["operation"])
+        if all(k in rv for k in range(FIRST_RUNS)):
+            out.append((r["core"], r["operation"], float(r["cycles_median"]),
+                        float(statistics.median(rv[k] for k in range(FIRST_RUNS)))))
+    return out
+
+
+def prim_values(prims, core, field="cycles_median"):
+    return {r["operation"]: float(r[field]) for r in prims if r["core"] == core}
+
+
+def build_decomposition(prims, sessions):
+    """Each session design and side against the sum of the medians of its primitive calls; also the sum
+    with the ML-DSA-44 signing call at its smallest and largest run."""
+    rows = []
+    for core in CORES:
+        med = prim_values(prims, core)
+        if not med:
+            continue
+        lo, hi = dict(med), dict(med)
+        lo.update({k: v for k, v in prim_values(prims, core, "cycles_min").items() if k == "mldsa44_sign"})
+        hi.update({k: v for k, v in prim_values(prims, core, "cycles_max").items() if k == "mldsa44_sign"})
+        for design in SESSION_DESIGNS:
+            for side in ("vehicle", "ground"):
+                s = get(sessions, core=core, design=design, side=side)
+                if s is None:
+                    continue
+                parts = DECOMP[design][side]
+                try:
+                    total, comp = pp.decompose(med, parts)
+                except KeyError:
+                    continue
+                tmin, _ = pp.decompose(lo, parts)
+                tmax, _ = pp.decompose(hi, parts)
+                rows.append({
+                    "label": LABEL, "core": core, "design": design, "side": side,
+                    "measured_cycles_median": s["cycles_median"], "measured_ci95_low": s["cycles_ci95_low"],
+                    "measured_ci95_high": s["cycles_ci95_high"], "measured_min": s["cycles_min"],
+                    "measured_max": s["cycles_max"], "primitive_sum_cycles": total,
+                    "primitive_sum_sign_min": tmin, "primitive_sum_sign_max": tmax,
+                    "residual_cycles": s["cycles_median"] - total,
+                    "sum_over_measured_ratio": round(total / s["cycles_median"], 4),
+                    "has_mldsa44_sign": any(op == "mldsa44_sign" for op, _ in parts),
+                    "components": "; ".join(f"{op} x{n} = {int(sub)}" for op, n, _, sub in comp),
+                })
+    return rows
+
+
+def build_ratios(logs, sessions, decomp):
+    """Ratios of session designs per core and side: from the session medians (bootstrap interval of the
+    ratio of medians over the runs) and from the primitive sums (point value with the ML-DSA-44 signing
+    call at its median, and the values with signing at its smallest and largest run)."""
+    rows = []
+    for core in CORES:
+        for num, den in RATIO_PAIRS:
+            for side in ("vehicle", "ground"):
+                ln, ld = logs.get((core, num)), logs.get((core, den))
+                if ln is None or ld is None:
+                    continue
+                tn = pp.unit_totals(ln, num, pp.UNITS[num][0][1][side])
+                td = pp.unit_totals(ld, den, pp.UNITS[den][0][1][side])
+                if tn is None or td is None:
+                    continue
+                lo, hi = pp.bootstrap_ratio_ci(tn["totals"], td["totals"])
+                rows.append({"label": LABEL, "core": core, "side": side, "numerator": num, "denominator": den,
+                             "basis": "session medians", "ratio": round(tn["median"] / td["median"], 4),
+                             "ci95_low": round(lo, 4), "ci95_high": round(hi, 4),
+                             "n_runs_numerator": tn["n"], "n_runs_denominator": td["n"]})
+                dn = get(decomp, core=core, design=num, side=side)
+                dd = get(decomp, core=core, design=den, side=side)
+                if dn and dd:
+                    rows.append({"label": LABEL, "core": core, "side": side, "numerator": num,
+                                 "denominator": den, "basis": "primitive sums",
+                                 "ratio": round(dn["primitive_sum_cycles"] / dd["primitive_sum_cycles"], 4),
+                                 "ci95_low": "", "ci95_high": "",
+                                 "n_runs_numerator": "", "n_runs_denominator": ""})
+                    for which in ("min", "max"):
+                        rows.append({"label": LABEL, "core": core, "side": side, "numerator": num,
+                                     "denominator": den, "basis": f"primitive sums, signing at its {which}",
+                                     "ratio": round(dn[f"primitive_sum_sign_{which}"]
+                                                    / dd[f"primitive_sum_sign_{which}"], 4),
+                                     "ci95_low": "", "ci95_high": "",
+                                     "n_runs_numerator": "", "n_runs_denominator": ""})
     return rows
 
 
@@ -247,9 +403,9 @@ def make_figure(sessions, path):
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     designs = SESSION_DESIGNS + ["per_command_mldsa44", "mavlink_tag"]
-    names = ["classical\nsession", "post quantum\nonly session", "hybrid\nwith F1",
+    names = ["classical\nsession", "post quantum\nonly session", "hybrid\nwith F1", "KEM\nauthenticated",
              "ML-DSA-44\nper command", "MAVLink 2 tag\nper message"]
-    fig, ax = plt.subplots(figsize=(7.5, 3.8))
+    fig, ax = plt.subplots(figsize=(8.2, 3.8))
     width = 0.38
     for i, core in enumerate(CORES):
         vals = []
@@ -276,12 +432,15 @@ def get(rows, **kw):
     return out[0] if out else None
 
 
-def write_doc(logs, prims, sessions, sizes, times):
+def write_doc(logs, prims, sessions, sizes, times, decomp=None, ratios_rows=None):
+    decomp = decomp or []
+    ratios_rows = ratios_rows or []
     L = []
     a = L.append
     info = {c: read_build_info(c) for c in CORES}
     bi = info["ibex"] or info["cv32e40p"]
     runs = bi.get("runs", "")
+    runs_tag = bi.get("runs_mavlink_tag", runs)
     seed = bi.get("seed_first", "")
     a("# Executed protocol baselines on open RISC-V cores (RTL simulated)")
     a("")
@@ -334,6 +493,24 @@ def write_doc(logs, prims, sessions, sizes, times):
       "post quantum only design drops the X25519 parts. The architecture names no concrete key "
       "derivation; SHAKE256 is used for every design so that the designs differ only in the parts under "
       "comparison. A rekey is not timed.")
+    a("- KEM authenticated design (added after the review, in the spirit of post quantum WireGuard and of "
+      "KEMTLS with pre distributed keys): each side holds a static ML-KEM-768 key pair whose encapsulation "
+      "key is pinned at the other side; there are no signatures. F1 (ground to vehicle) carries the ground "
+      "ephemeral X25519 share, a ground ephemeral ML-KEM-768 encapsulation key and a ciphertext "
+      "encapsulated to the vehicle static key; F2 (vehicle to ground) carries the vehicle X25519 share, a "
+      "ciphertext to the ground ephemeral key, a ciphertext to the ground static key and a 16 B vehicle "
+      "confirmation tag; F3 (ground to vehicle) carries a 16 B ground confirmation tag. The session key is "
+      "SHAKE256 over a label, the X25519 secret, the three ML-KEM secrets (vehicle static, ground "
+      "ephemeral, ground static) and the transcript hash. The ground accepts after checking the vehicle "
+      "tag, which only the holder of the vehicle static key can compute; the vehicle accepts after "
+      "checking the ground tag, which only the holder of the ground static key can compute. One change "
+      "against the flights first proposed: the transcript hash also covers both pinned identities, as the "
+      "signed input of the signature designs does, so that each key is bound to the pair of parties and "
+      "not only through the KEM secrets. No flaw was found in the proposed flights otherwise; as in every "
+      "design here, the vehicle does its F2 work on an F1 it cannot yet authenticate, so an outsider can "
+      "make it spend that work. This document does not check the design with a formal model. Its steps: "
+      "ground F1; vehicle F2 processing; ground F2 check, acceptance and F3; vehicle F3 check and "
+      "acceptance.")
     a("- Vehicle and ground are computed separately in one image per design: each step is timed on its "
       "own (ground F1; vehicle F2 processing; ground F3; vehicle F3 check and F4; ground acceptance), and "
       "a side's cost is the sum of its steps in that run. Long term keys and identities are provisioned "
@@ -347,11 +524,12 @@ def write_doc(logs, prims, sessions, sizes, times):
       "MAVLink message signing guide (https://mavlink.io/en/guide/message_signing.html, read "
       "2026-10-28): the first 48 bits of SHA-256 over secret key, header, payload, checksum, link id and "
       "timestamp. A known answer test checks the library tag against that formula computed on the host.")
-    a(f"- Runs and seeds: {runs} runs per image; run r reseeds the test generator with {seed} + r "
-      f"(seed block {seed} to {int(seed) + int(runs) - 1 if seed and runs else ''}). The generator "
+    a(f"- Runs and seeds: {runs} runs per image (the MAVLink tag image {runs_tag}, as it has no data "
+      f"dependent operation); run r reseeds the test generator with {seed} + r (seed block {seed} to "
+      f"{int(seed) + int(runs) - 1 if seed and runs else ''}). The generator "
       "(`rtlsim/sw/bench_rng.c`, splitmix64) is a deterministic test generator and is NOT a secure random "
       "number generator. Medians with a bootstrap 95 percent interval of the median (10,000 resamples, "
-      f"seed {pp.SEED}); with five runs the interval is coarse.")
+      f"seed {pp.SEED}), and the smallest and largest run.")
     a("- Cycles: `mcycle` read before and after each timed call, the cost of two back to back reads "
       "removed (as round 5). Peak stack: before each timed call the harness fills "
       f"{int(bi.get('stack_paint_bytes', '0'), 0) // 1024 if bi.get('stack_paint_bytes') else ''} kB "
@@ -364,7 +542,10 @@ def write_doc(logs, prims, sessions, sizes, times):
       "SHA-256, the MAVLink tag and the key derivation; ML-KEM shared secrets equal; X25519 secrets "
       "agree. First run only (untimed): a modified F3 signature, a modified F3 tag and a modified F4 "
       "signature are rejected; a modified signed input is rejected by Ed25519 and ML-DSA-44; a replayed "
-      "MAVLink frame and a modified payload are rejected.")
+      "MAVLink frame and a modified payload are rejected. KEM authenticated design, first run only: a "
+      "modified F3 tag, a modified F2 tag and a modified ciphertext to the ground static key are "
+      "rejected, and the ground rejects F2 when the ciphertext to the vehicle static key in F1 was replaced "
+      "in transit by an encapsulation of a third party.")
     a("- Code size: text (code plus read only data), data and bss of each image, excluding the stack and "
       "heap reservations of the link scripts. Two link variants: the simulated image (whole library "
       "objects, as round 5) and a size only build with `-ffunction-sections -fdata-sections` and "
@@ -427,12 +608,19 @@ def write_doc(logs, prims, sessions, sizes, times):
     a("## Designs, vehicle and ground side (label: RTL simulated)")
     a("")
     a("One unit of work per design: a session start for the session designs, one command for the per "
-      "command design, one message for the tag. Source: `rtlsim/results/proto_sessions.csv`. Message "
-      "bytes are the sizes of the buffers the program built (`MSG` lines of the logs).")
+      "command design, one message for the tag. Each cell gives the median cycles, the bootstrap 95 percent "
+      "interval of the median in brackets and the smallest to largest run after it. Source: "
+      "`rtlsim/results/proto_sessions.csv`.")
     a("")
-    a("| Design | Unit | Side | Ibex median cycles | CV32E40P median cycles | Peak stack Ibex / CV32E40P (B) | "
-      "Bytes on air per unit | Runs correct Ibex / CV32E40P |")
-    a("|---|---|---|---|---|---|---|---|")
+    a("| Design | Unit | Side | Ibex cycles: median [95% CI] (min to max) | CV32E40P cycles: median [95% CI] "
+      "(min to max) | Runs correct Ibex / CV32E40P |")
+    a("|---|---|---|---|---|---|")
+
+    def cyc_cell(r):
+        if not r:
+            return "not run"
+        return (f"{fmt_int(r['cycles_median'])} [{fmt_int(r['cycles_ci95_low'])} to "
+                f"{fmt_int(r['cycles_ci95_high'])}] ({fmt_int(r['cycles_min'])} to {fmt_int(r['cycles_max'])})")
     for design in pp.DESIGNS:
         for unit, _ in pp.UNITS[design]:
             for side in ("vehicle", "ground"):
@@ -440,36 +628,199 @@ def write_doc(logs, prims, sessions, sizes, times):
                 rc = get(sessions, core="cv32e40p", design=design, unit=unit, side=side)
                 if not ri and not rc:
                     continue
-                r0 = ri or rc
-                a(f"| {DESIGN_NAME[design]} | {unit} | {side} | "
-                  f"{fmt_int(ri['cycles_median']) if ri else 'not run'} | "
-                  f"{fmt_int(rc['cycles_median']) if rc else 'not run'} | "
-                  f"{ri['peak_stack_bytes'] if ri else ''} / {rc['peak_stack_bytes'] if rc else ''} | "
-                  f"{r0['bytes_total']} | "
+                a(f"| {DESIGN_NAME[design]} | {unit} | {side} | {cyc_cell(ri)} | {cyc_cell(rc)} | "
                   f"{(str(ri['runs_correct']) + '/' + str(ri['n_runs'])) if ri else ''} / "
                   f"{(str(rc['runs_correct']) + '/' + str(rc['n_runs'])) if rc else ''} |")
     a("")
-    a("Bytes per flight (from the logs): " + "; ".join(
-        f"{d}: {get(sessions, design=d)['bytes_per_flight']}" for d in pp.DESIGNS if get(sessions, design=d)) + ".")
+    a("| Design | Unit | Peak stack Ibex / CV32E40P (B) | Bytes on air per unit | Bytes per flight |")
+    a("|---|---|---|---|---|")
+    for design in pp.DESIGNS:
+        for unit, _ in pp.UNITS[design]:
+            ri = get(sessions, core="ibex", design=design, unit=unit, side="vehicle")
+            rc = get(sessions, core="cv32e40p", design=design, unit=unit, side="vehicle")
+            gi = get(sessions, core="ibex", design=design, unit=unit, side="ground")
+            gc = get(sessions, core="cv32e40p", design=design, unit=unit, side="ground")
+            r0 = ri or rc
+            if not r0:
+                continue
+
+            def stk(*rs):
+                v = [r["peak_stack_bytes"] for r in rs if r and r["peak_stack_bytes"] is not None]
+                return str(max(v)) if v else ""
+            a(f"| {design} | {unit} | {stk(ri, gi)} / {stk(rc, gc)} | {r0['bytes_total']} | "
+              f"{r0['bytes_per_flight'] if design != 'mavlink_tag' else 'signature field ' + str(r0['bytes_total'])} |")
+    a("")
+    a("Peak stack is the larger of the vehicle and ground values. Message bytes are the sizes of the "
+      "buffers the program built (`MSG` lines of the logs).")
     a("")
 
-    # Ratios
-    a("## Ratios (label: RTL simulated, derived from the medians)")
-    a("")
-    a("| Ratio | Side | Ibex | CV32E40P |")
-    a("|---|---|---|---|")
-    pairs = [("hybrid_f1", "classical"), ("pq_only", "classical"), ("hybrid_f1", "pq_only")]
-    ratios = {}
-    for num, den in pairs:
+    # Rerun against the snapshot
+    snap = load_snapshot(SNAPSHOT_SESSIONS)
+    if snap:
+        a("## The 15 run rerun and the five run snapshot of round 6")
+        a("")
+        a(f"The first runs of round 6 used {FIRST_RUNS} runs per image (seed block {seed} to "
+          f"{int(seed) + FIRST_RUNS - 1 if seed else ''}). After the review the images were run again with "
+          f"{runs} runs whose seed block extends the first one, and the 15 run values replace the five run "
+          "values in `rtlsim/results/proto_sessions.csv` and `rtlsim/results/proto_primitives.csv`. The "
+          "five run tables are kept unchanged as frozen snapshots, `rtlsim/results/"
+          f"{SNAPSHOT_SESSIONS}` and `rtlsim/results/{SNAPSHOT_PRIMITIVES}`, because the software in the "
+          "loop study of round 6 (`docs/SITL_STUDY_R6.md`) set its compute delays from the five run medians "
+          "and recorded the SHA-256 of those two files in its raw outputs (`sitl/raw_r6/`); the snapshots "
+          "are byte for byte the files it hashed. Their logs are those of the repository history before "
+          "this rerun. Runs 0 to 4 of the rerun have the seeds of the snapshot, so the median of those five "
+          "runs should reproduce it; the table checks this for the vehicle and ground totals.")
+        a("")
+        a("| Design | Side | Core | Five run snapshot median | Median of runs 0 to 4 of the rerun | Same | "
+          "Median of all runs |")
+        a("|---|---|---|---|---|---|---|")
+        n_same = n_all = 0
+        for design in pp.DESIGNS:
+            if design == "mavlink_tag":
+                continue
+            unit = pp.UNITS[design][0][0]
+            for side in ("vehicle", "ground"):
+                for core in CORES:
+                    r = get(sessions, core=core, design=design, unit=unit, side=side)
+                    sm = snapshot_median(snap, core=core, design=design, unit=unit, side=side)
+                    if not r or sm is None:
+                        continue
+                    f5 = r["cycles_median_first5_runs"]
+                    same = f5 != "" and float(f5) == sm
+                    n_same += same
+                    n_all += 1
+                    a(f"| {design} | {side} | {CORE_NAME[core]} | {fmt_int(sm)} | "
+                      f"{fmt_int(f5) if f5 != '' else 'not available'} | {'yes' if same else 'no'} | "
+                      f"{fmt_int(r['cycles_median'])} |")
+        a("")
+        a(f"Reproduced exactly: {n_same} of {n_all} rows. The KEM authenticated design is new and has no "
+          "snapshot row.")
+        a("")
+        psnap = load_snapshot(SNAPSHOT_PRIMITIVES)
+        cmp_ = primitive_first_runs(logs, psnap)
+        if cmp_:
+            same = sum(1 for _, _, sv, fv in cmp_ if sv == fv)
+            maxd = max(abs(sv - fv) for _, _, sv, fv in cmp_)
+            maxrel = max(abs(sv - fv) / sv for _, _, sv, fv in cmp_ if sv)
+            a(f"Primitives image: {same} of {len(cmp_)} operation medians of runs 0 to 4 equal the snapshot; "
+              f"the largest difference is {fmt_int(maxd)} cycles ({100 * maxrel:.4f} percent of that "
+              "median). The primitives image gained the transcript hashes and the key derivation of the "
+              "new design after the round 6 operations, which leaves their random stream, and so the "
+              "ML-DSA-44 signing rounds per seed, unchanged but moves code in memory; we attribute the few cycles of "
+              "difference per call to that layout change without having traced it further. The session images changed only in "
+              "their run count.")
+            a("")
+
+    # Decomposition
+    if decomp:
+        a("## Where the cycles go: each side against its primitive costs (label: RTL simulated)")
+        a("")
+        a("Each side of a session start is a fixed list of calls to the pinned libraries plus glue. The "
+          "tables list those calls, each costed at its median in the primitives image "
+          "(`rtlsim/results/proto_primitives.csv`), and compare their sum with the measured median of the "
+          "side; the residual is glue (random bytes for the X25519 secrets, copies, comparisons, the signed "
+          "input) and the difference between a call in the session and the same call in the primitives "
+          "image. ML-DSA-44 signing has a data dependent number of rounds (rejection sampling), so its "
+          "cost differs from seed to seed and the session image signs other messages with other keys than "
+          "the primitives image: for the designs that sign, the sum is also given with the signing call at "
+          "its smallest and largest run. Source: `rtlsim/results/proto_decomposition.csv`.")
+        a("")
         for side in ("vehicle", "ground"):
-            vals = []
+            a(f"### {side.capitalize()} side")
+            a("")
+            for design in SESSION_DESIGNS:
+                di = get(decomp, core="ibex", design=design, side=side)
+                dc = get(decomp, core="cv32e40p", design=design, side=side)
+                if not di and not dc:
+                    continue
+                if side == "vehicle":
+                    a(f"{DESIGN_NAME[design]}:")
+                    a("")
+                    a("| Call | Count | Ibex cycles | CV32E40P cycles | Share of the primitive sum, CV32E40P |")
+                    a("|---|---|---|---|---|")
+                    mi = prim_values(prims, "ibex")
+                    mc = prim_values(prims, "cv32e40p")
+                    for op, n in DECOMP[design][side]:
+                        ci = n * mi[op] if op in mi else None
+                        cc = n * mc[op] if op in mc else None
+                        share = (f"{100 * cc / dc['primitive_sum_cycles']:.1f} %" if cc is not None and dc
+                                 else "")
+                        a(f"| {op} | {n} | {fmt_int(ci) if ci is not None else ''} | "
+                          f"{fmt_int(cc) if cc is not None else ''} | {share} |")
+                    a(f"| sum of primitive medians | | {fmt_int(di['primitive_sum_cycles']) if di else ''} | "
+                      f"{fmt_int(dc['primitive_sum_cycles']) if dc else ''} | |")
+                    a(f"| measured median of the side | | {fmt_int(di['measured_cycles_median']) if di else ''} | "
+                      f"{fmt_int(dc['measured_cycles_median']) if dc else ''} | |")
+                    a(f"| sum over measured | | {di['sum_over_measured_ratio']:.3f} | {dc['sum_over_measured_ratio']:.3f} | |"
+                      if di and dc else "| sum over measured | | | | |")
+                    a("")
+            a(f"Summary, {side} side:")
+            a("")
+            a("| Design | Core | Sum of primitive medians | Sum, signing at its smallest / largest run | "
+              "Measured median [95% CI] | Sum over measured |")
+            a("|---|---|---|---|---|---|")
+            for design in SESSION_DESIGNS:
+                for core in CORES:
+                    d = get(decomp, core=core, design=design, side=side)
+                    if not d:
+                        continue
+                    rng = (f"{fmt_int(d['primitive_sum_sign_min'])} / {fmt_int(d['primitive_sum_sign_max'])}"
+                           if d["has_mldsa44_sign"] else "no signing call")
+                    a(f"| {design} | {CORE_NAME[core]} | {fmt_int(d['primitive_sum_cycles'])} | {rng} | "
+                      f"{fmt_int(d['measured_cycles_median'])} [{fmt_int(d['measured_ci95_low'])} to "
+                      f"{fmt_int(d['measured_ci95_high'])}] | {d['sum_over_measured_ratio']:.3f} |")
+            a("")
+
+    # Ratios
+    a("## Ratios between designs (label: RTL simulated)")
+    a("")
+    a("Two readings of each ratio. From the session medians: the ratio of the two medians over the runs, "
+      "with a bootstrap 95 percent interval of that ratio (the two designs run in separate images, so "
+      "their runs are resampled independently). From the primitive sums: the ratio of the sums of the "
+      "previous section, which does not depend on which seeds fell into which design but assumes the calls "
+      "cost in the session what they cost alone; for designs that sign, the range uses the signing call "
+      "at its smallest and at its largest run in both designs. ML-DSA-44 signing has a data dependent "
+      "number of rounds, so ratios that involve a signing design move with the seeds; the KEM authenticated "
+      "design has no data dependent call of that kind. Source: `rtlsim/results/proto_ratios.csv`.")
+    a("")
+    a("| Ratio | Side | Core | From session medians [95% CI] | From primitive sums (signing at smallest to "
+      "largest) |")
+    a("|---|---|---|---|---|")
+    ratios = {}
+    for num, den in RATIO_PAIRS:
+        for side in ("vehicle", "ground"):
             for core in CORES:
-                n = get(sessions, core=core, design=num, side=side)
-                d = get(sessions, core=core, design=den, side=side)
-                v = n["cycles_median"] / d["cycles_median"] if n and d else None
-                ratios[(num, den, side, core)] = v
-                vals.append(fmt_ratio(v) if v else "not available")
-            a(f"| {num} over {den} | {side} | {vals[0]} | {vals[1]} |")
+                m = get(ratios_rows, core=core, side=side, numerator=num, denominator=den,
+                        basis="session medians")
+                ps = get(ratios_rows, core=core, side=side, numerator=num, denominator=den,
+                         basis="primitive sums")
+                pmin = get(ratios_rows, core=core, side=side, numerator=num, denominator=den,
+                           basis="primitive sums, signing at its min")
+                pmax = get(ratios_rows, core=core, side=side, numerator=num, denominator=den,
+                           basis="primitive sums, signing at its max")
+                if not m:
+                    continue
+                ratios[(num, den, side, core)] = m["ratio"]
+                pcell = "not available"
+                if ps:
+                    lo_, hi_ = sorted((pmin["ratio"], pmax["ratio"]))
+                    pcell = (f"{ps['ratio']:.2f} ({lo_:.2f} to {hi_:.2f})" if lo_ != hi_
+                             else f"{ps['ratio']:.2f}")
+                a(f"| {num} over {den} | {side} | {CORE_NAME[core]} | {m['ratio']:.2f} "
+                  f"[{m['ci95_low']:.2f} to {m['ci95_high']:.2f}] | {pcell} |")
+    a("")
+    for core in CORES:
+        h = get(decomp, core=core, design="hybrid_f1", side="vehicle")
+        q = get(decomp, core=core, design="pq_only", side="vehicle")
+        if h and q:
+            diff = h["primitive_sum_cycles"] - q["primitive_sum_cycles"]
+            a(f"- {CORE_NAME[core]}, vehicle side: the hybrid and the post quantum only designs differ by a "
+              f"fixed set of calls, the X25519 key generation and shared secret and the longer transcript, "
+              f"{fmt_int(diff)} cycles at the primitive medians; the signing call alone spans "
+              f"{fmt_int(get(prims, core=core, operation='mldsa44_sign')['cycles_min'])} to "
+              f"{fmt_int(get(prims, core=core, operation='mldsa44_sign')['cycles_max'])} cycles over its runs, "
+              "so with few runs the ratio of session medians reflects the signing seeds as much as the "
+              "designs.")
     a("")
     a("| Design | Unit | Side | Ibex over CV32E40P |")
     a("|---|---|---|---|")
@@ -482,8 +833,28 @@ def write_doc(logs, prims, sessions, sizes, times):
                     a(f"| {design} | {unit} | {side} | {fmt_ratio(ri['cycles_median'] / rc['cycles_median'])} |")
     a("")
 
+    # Classical baseline
+    xs = get(prims, core="cv32e40p", operation="x25519_shared")
+    xk = get(prims, core="cv32e40p", operation="x25519_keygen")
+    ke = get(prims, core="cv32e40p", operation="mlkem768_encaps")
+    a("## The classical baseline is one portable C library")
+    a("")
+    a("The classical designs use Monocypher, a library written in portable C for size and simplicity, "
+      "with no assembly on either core; the post quantum libraries also run their portable C backends. "
+      "Monocypher computes the ephemeral X25519 public key with the same variable base ladder as the "
+      "shared secret, so key generation costs as much as a scalar multiplication"
+      + (f" ({fmt_int(xk['cycles_median'])} against {fmt_int(xs['cycles_median'])} cycles on CV32E40P)"
+         if xs and xk else "")
+      + ". Every statement here that compares X25519 with ML-KEM-768"
+      + (f" (for example one X25519 scalar multiplication at {fmt_int(xs['cycles_median'])} cycles against "
+         f"{fmt_int(ke['cycles_median'])} for an ML-KEM-768 encapsulation on CV32E40P)" if xs and ke else "")
+      + " therefore holds for portable C on these two cores only. A speed oriented X25519 (assembly, or a "
+      "fixed base key generation) would make the X25519 parts cheaper, lower the classical session and "
+      "raise the hybrid over classical ratio; no second classical implementation was measured.")
+    a("")
+
     # Per command against session
-    a("### Signature per command against a session with a tag per message")
+    a("## Signature per command against a session with a tag per message (label: RTL simulated)")
     a("")
     for core in CORES:
         h = get(sessions, core=core, design="hybrid_f1", side="vehicle")
@@ -534,29 +905,40 @@ def write_doc(logs, prims, sessions, sizes, times):
     a("Bytes of each image; text includes read only data. Source: `rtlsim/results/proto_sizes.csv` and "
       "`rtlsim/results/logs/proto/object_sizes.txt` for the library objects.")
     a("")
-    a("| Image | Ibex text | Ibex data | Ibex bss | CV32E40P text | CV32E40P bss | Ibex text, unused sections removed |")
-    a("|---|---|---|---|---|---|---|")
-    for img in IMAGES:
-        si = get(sizes, core="ibex", image=img, variant="timing")
-        sc = get(sizes, core="cv32e40p", image=img, variant="timing")
-        sg = get(sizes, core="ibex", image=img, variant="gc")
-        if not si and not sc:
-            continue
-        a(f"| {img} | {fmt_int(si['text_bytes']) if si else ''} | {si['data_bytes'] if si else ''} | "
-          f"{fmt_int(si['bss_bytes']) if si else ''} | {fmt_int(sc['text_bytes']) if sc else ''} | "
-          f"{fmt_int(sc['bss_bytes']) if sc else ''} | {fmt_int(sg['text_bytes']) if sg else ''} |")
-    a("")
+    for variant, what in (("timing", "Simulated images (whole library objects linked)"),
+                          ("gc", "Size only build with unused sections removed")):
+        a(f"{what}:")
+        a("")
+        a("| Image | Ibex text | Ibex data | Ibex bss | CV32E40P text | CV32E40P data | CV32E40P bss |")
+        a("|---|---|---|---|---|---|---|")
+        for img in IMAGES:
+            si = get(sizes, core="ibex", image=img, variant=variant)
+            sc = get(sizes, core="cv32e40p", image=img, variant=variant)
+            if not si and not sc:
+                continue
+
+            def tri(r):
+                if not r:
+                    return " | | "
+                return f"{fmt_int(r['text_bytes'])} | {fmt_int(r['data_bytes'])} | {fmt_int(r['bss_bytes'])}"
+            a(f"| {img} | {tri(si)} | {tri(sc)} |")
+        a("")
     for variant, what in (("timing", "simulated images"), ("gc", "size only build with unused sections removed")):
         h = get(sizes, core="ibex", image="hybrid_f1", variant=variant)
         c = get(sizes, core="ibex", image="classical", variant=variant)
         p = get(sizes, core="ibex", image="pq_only", variant=variant)
+        k = get(sizes, core="ibex", image="kem_auth", variant=variant)
         if h and c and p:
             a(f"- Ibex, {what}: hybrid over classical text {h['text_bytes'] / c['text_bytes']:.2f}; post quantum "
-              f"only over classical {p['text_bytes'] / c['text_bytes']:.2f}.")
+              f"only over classical {p['text_bytes'] / c['text_bytes']:.2f}"
+              + (f"; KEM authenticated over classical {k['text_bytes'] / c['text_bytes']:.2f}, over hybrid "
+                 f"{k['text_bytes'] / h['text_bytes']:.2f}" if k else "") + ".")
     a("")
-    a("The simulated classical image links the whole Monocypher object, which also holds functions the "
-      "protocol never calls (for example Argon2, BLAKE2b, ChaCha20 and Poly1305), so its text is large "
-      "beside the post quantum only image; the size only build removes them.")
+    a("The simulated classical, hybrid and KEM authenticated images link the whole Monocypher object, "
+      "which also holds functions the protocol never calls (for example Argon2, BLAKE2b, ChaCha20 and "
+      "Poly1305), so their text is large beside the post quantum only image; the size only build removes "
+      "them. The bss of the session images holds the static session state and messages; the KEM "
+      "authenticated image also holds both static ML-KEM-768 key pairs.")
     a("")
 
     # Registered metrics
@@ -619,8 +1001,13 @@ def write_doc(logs, prims, sessions, sizes, times):
     a("- The X25519 secrets are not checked for the all zero output, nothing here is constant time "
       "reviewed, secrets are not wiped, and the random generator is a test generator: this is a cost "
       "benchmark, not an implementation for use.")
-    a("- Five runs per image; intervals of the median are coarse. Signing with ML-DSA-44 has a data "
-      "dependent number of rejection rounds, so its runs vary more than the other operations.")
+    a(f"- {runs} runs per image ({runs_tag} for the tag image); intervals of the median remain wide for "
+      "every design that signs with ML-DSA-44, whose number of rejection rounds depends on the data, so its "
+      "runs vary more than the other operations.")
+    a("- The classical baseline is one portable C library (Monocypher); see the section on the classical "
+      "baseline. The X25519 against ML-KEM-768 comparison holds for portable C on these cores only.")
+    a("- The KEM authenticated design is executed here for cost and correctness; this document does not "
+      "check its security with a formal model.")
     a("- Stack values include the benchmark glue frames and have a 256 B floor; the static session "
       "state (bss) is listed with the code size.")
     a("- The CV32E40P model was built with the BLKANDNBLK check of Verilator switched off for the counter "
@@ -636,7 +1023,7 @@ def write_doc(logs, prims, sessions, sizes, times):
     a("```")
     a("bash rtlsim/proto/fetch.sh")
     a("bash rtlsim/proto/build.sh ibex && bash rtlsim/proto/build.sh cv32e40p")
-    a("bash rtlsim/proto/run.sh ibex && bash rtlsim/proto/run.sh cv32e40p")
+    a("bash rtlsim/proto/run.sh ibex && bash rtlsim/proto/run.sh cv32e40p   # about 100 minutes per core")
     a("python3 rtlsim/proto/make_doc.py")
     a("python3 -m unittest discover -s rtlsim -t .")
     a("```")
@@ -661,14 +1048,18 @@ def main():
     sessions = build_sessions(logs)
     sizes = build_sizes()
     times = build_time(sessions)
+    decomp = build_decomposition(prims, sessions)
+    ratios_rows = build_ratios(logs, sessions, decomp)
     res = RTL / "results"
     write_csv(res / "proto_primitives.csv", prims)
     write_csv(res / "proto_sessions.csv", sessions)
     write_csv(res / "proto_sizes.csv", sizes)
     write_csv(res / "proto_time_estimated.csv", times)
+    write_csv(res / "proto_decomposition.csv", decomp)
+    write_csv(res / "proto_ratios.csv", ratios_rows)
     if sessions:
         make_figure(sessions, ROOT / "docs" / "figures" / "rtl_baselines_vehicle.png")
-    write_doc(logs, prims, sessions, sizes, times)
+    write_doc(logs, prims, sessions, sizes, times, decomp, ratios_rows)
     print(f"logs {len(logs)}, primitive rows {len(prims)}, session rows {len(sessions)}")
 
 

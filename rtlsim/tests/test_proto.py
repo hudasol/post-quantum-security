@@ -35,6 +35,38 @@ def session_log(design, cyc, fail_check_run=None, bad_line=False):
     return lines
 
 
+def kem_auth_log(cyc):
+    """Synthetic log of the KEM authenticated design: per run ground_f1 c, vehicle_f2 2c, ground_f3 3c,
+    vehicle_accept 1."""
+    lines = ["CFG,set,kem_auth", "CFG,seed_first,20261021", f"CFG,runs,{len(cyc)}",
+             "MSG,kem_auth,F1,ground_to_vehicle,2304", "MSG,kem_auth,F2,vehicle_to_ground,2224",
+             "MSG,kem_auth,F3,ground_to_vehicle,16"]
+    for r, c in enumerate(cyc):
+        for step, v in (("ground_f1", c), ("vehicle_f2", 2 * c), ("ground_f3", 3 * c), ("vehicle_accept", 1)):
+            lines.append(f"RES,kem_auth,{step},{r},{v},ok")
+            lines.append(f"STK,kem_auth,{step},{r},2000,ok")
+        lines.append(f"CHK,kem_auth,same_session_key,{r},ok")
+    lines.append("DONE,kem_auth,0")
+    return lines
+
+
+PRIM_OPS = ["x25519_keygen", "x25519_shared", "ed25519_sign", "ed25519_verify", "shake256_kdf",
+            "shake256_confirm_tag", "shake256_transcript_hybrid", "shake256_transcript_classical",
+            "shake256_transcript_pq_only", "shake256_transcript_kem_auth", "shake256_kdf_kem_auth",
+            "mlkem768_keygen", "mlkem768_encaps", "mlkem768_decaps", "mldsa44_sign", "mldsa44_verify"]
+
+
+def prim_rows(core, scale=1):
+    """Synthetic primitive rows: every call costs 10 * scale, signing 100 * scale (min 50, max 300)."""
+    rows = []
+    for op in PRIM_OPS:
+        m = (100 if op == "mldsa44_sign" else 10) * scale
+        rows.append({"core": core, "operation": op, "cycles_median": m,
+                     "cycles_min": 50 * scale if op == "mldsa44_sign" else m,
+                     "cycles_max": 300 * scale if op == "mldsa44_sign" else m})
+    return rows
+
+
 class ParseTests(unittest.TestCase):
     def test_parse_and_totals(self):
         lg = pp.parse_lines(session_log("hybrid_f1", [100, 300, 200]) + ["simulator noise"])
@@ -76,6 +108,41 @@ class ParseTests(unittest.TestCase):
         self.assertEqual(rows["ground_f3"]["ok"], 3)
         self.assertFalse(rows["ground_f3"]["stack_saturated"])
 
+    def test_kem_auth_steps(self):
+        lg = pp.parse_lines(kem_auth_log([100, 300, 200]))
+        self.assertIn("kem_auth", pp.DESIGNS)
+        v = pp.unit_totals(lg, "kem_auth", pp.UNITS["kem_auth"][0][1]["vehicle"])
+        self.assertEqual(v["totals"], [201, 601, 401])
+        g = pp.unit_totals(lg, "kem_auth", pp.KEM_AUTH_STEPS["ground"])
+        self.assertEqual(g["median"], 800)
+        self.assertEqual(pp.flights(lg, "kem_auth")[2], ("F3", "ground_to_vehicle", 16))
+
+    def test_runs_filter_and_run_values(self):
+        lg = pp.parse_lines(kem_auth_log([100, 300, 200, 50, 70, 900]))
+        first = pp.unit_totals(lg, "kem_auth", pp.KEM_AUTH_STEPS["ground"], runs=range(5))
+        self.assertEqual(first["n"], 5)
+        self.assertEqual(first["median"], 400)
+        self.assertEqual(pp.unit_totals(lg, "kem_auth", pp.KEM_AUTH_STEPS["ground"])["n"], 6)
+        self.assertIsNone(pp.unit_totals(lg, "kem_auth", pp.KEM_AUTH_STEPS["ground"], runs=[]))
+        self.assertEqual(pp.run_values(lg, "kem_auth", "vehicle_f2")[5], 1800)
+
+    def test_bootstrap_ratio(self):
+        self.assertEqual(pp.bootstrap_ratio_ci([4, 4], [2, 2, 2]), (2.0, 2.0))
+        a, b = [10, 12, 30, 11, 13], [5, 6, 5, 7, 6]
+        lo, hi = pp.bootstrap_ratio_ci(a, b)
+        self.assertLessEqual(lo, 12 / 6)
+        self.assertGreaterEqual(hi, 12 / 6)
+        self.assertEqual((lo, hi), pp.bootstrap_ratio_ci(a, b))
+        with self.assertRaises(ValueError):
+            pp.bootstrap_ratio_ci([], [1])
+
+    def test_decompose(self):
+        total, rows = pp.decompose({"a": 10, "b": 3}, [("a", 2), ("b", 1)])
+        self.assertEqual(total, 23)
+        self.assertEqual(rows[0], ("a", 2, 10, 20))
+        with self.assertRaises(KeyError):
+            pp.decompose({"a": 1}, [("c", 1)])
+
     def test_sections(self):
         tmp = tempfile.mkdtemp()
         try:
@@ -111,6 +178,97 @@ class KatTests(unittest.TestCase):
         self.assertIn(", ".join(f"0x{b:02x}" for b in out), h)
 
 
+class KatKemAuthTests(unittest.TestCase):
+    def test_kdf4(self):
+        h = gen_kat.header_text()
+        out = hashlib.shake_256(b"r6 session key" + gen_kat.KDF_SSX + gen_kat.KDF_SSKEM + gen_kat.KDF_SSKEM2
+                                + gen_kat.KDF_SSKEM3 + gen_kat.KDF_TH).digest(32)
+        self.assertIn("KAT_KDF4_OUT[32] = {" + ", ".join(f"0x{b:02x}" for b in out), h)
+        self.assertIn("KAT_KDF_SSKEM3[32]", h)
+
+
+class DecompositionTests(unittest.TestCase):
+    def setUp(self):
+        self.logs = {}
+        for core, f in (("ibex", 3), ("cv32e40p", 2)):
+            self.logs[(core, "classical")] = pp.parse_lines(session_log("classical", [10 * f] * 5 + [11 * f]))
+            self.logs[(core, "hybrid_f1")] = pp.parse_lines(session_log("hybrid_f1", [40 * f, 60 * f, 50 * f]))
+            self.logs[(core, "pq_only")] = pp.parse_lines(session_log("pq_only", [30 * f, 35 * f, 50 * f]))
+            self.logs[(core, "kem_auth")] = pp.parse_lines(kem_auth_log([20 * f, 20 * f, 20 * f]))
+        self.sessions = make_doc.build_sessions(self.logs)
+        self.prims = prim_rows("ibex", 3) + prim_rows("cv32e40p", 2)
+
+    def test_decomposition(self):
+        d = make_doc.build_decomposition(self.prims, self.sessions)
+        k = make_doc.get(d, core="cv32e40p", design="kem_auth", side="vehicle")
+        # 9 calls of 20 cycles; measured vehicle_f2 + vehicle_accept = 2 * 40 + 1
+        self.assertEqual(k["primitive_sum_cycles"], 9 * 20)
+        self.assertEqual(k["measured_cycles_median"], 81)
+        self.assertFalse(k["has_mldsa44_sign"])
+        self.assertEqual(k["primitive_sum_sign_min"], k["primitive_sum_sign_max"])
+        h = make_doc.get(d, core="cv32e40p", design="hybrid_f1", side="vehicle")
+        self.assertTrue(h["has_mldsa44_sign"])
+        self.assertEqual(h["primitive_sum_cycles"], 8 * 20 + 200)
+        self.assertEqual(h["primitive_sum_sign_min"], 8 * 20 + 100)
+        self.assertEqual(h["primitive_sum_sign_max"], 8 * 20 + 600)
+        self.assertEqual(h["label"], "RTL simulated")
+        self.assertIn("mldsa44_sign x1 = 200", h["components"])
+        g = make_doc.get(d, core="ibex", design="kem_auth", side="ground")
+        self.assertEqual(g["primitive_sum_cycles"], 10 * 30)
+
+    def test_ratios(self):
+        d = make_doc.build_decomposition(self.prims, self.sessions)
+        r = make_doc.build_ratios(self.logs, self.sessions, d)
+        m = make_doc.get(r, core="cv32e40p", side="vehicle", numerator="hybrid_f1", denominator="classical",
+                         basis="session medians")
+        self.assertAlmostEqual(m["ratio"], 300 / 60, places=4)
+        self.assertLessEqual(m["ci95_low"], m["ratio"])
+        self.assertGreaterEqual(m["ci95_high"], m["ratio"])
+        p = make_doc.get(r, core="cv32e40p", side="vehicle", numerator="hybrid_f1", denominator="pq_only",
+                         basis="primitive sums")
+        self.assertAlmostEqual(p["ratio"], round(360 / (6 * 20 + 200), 4))
+        pmin = make_doc.get(r, core="cv32e40p", side="vehicle", numerator="hybrid_f1", denominator="pq_only",
+                            basis="primitive sums, signing at its min")
+        self.assertAlmostEqual(pmin["ratio"], round(260 / 220, 4))
+        self.assertIsNotNone(make_doc.get(r, numerator="kem_auth", denominator="hybrid_f1", side="ground"))
+
+    def test_doc_sections(self):
+        d = make_doc.build_decomposition(self.prims, self.sessions)
+        r = make_doc.build_ratios(self.logs, self.sessions, d)
+        sizes = [{"label": "host measured", "core": c, "image": i, "variant": v, "text_bytes": 1000,
+                  "data_bytes": 4, "bss_bytes": 50} for c in ("ibex", "cv32e40p") for i in ("classical", "kem_auth")
+                 for v in ("timing", "gc")]
+        prims = [dict(x, label="RTL simulated", round5_cycles_median="", cycles_ci95_low=x["cycles_median"],
+                      cycles_ci95_high=x["cycles_median"], peak_stack_bytes=400,
+                      stack_saturated=False) for x in self.prims]
+        tmp = Path(tempfile.mkdtemp())
+        old_root, old_rtl = make_doc.ROOT, make_doc.RTL
+        try:
+            (tmp / "docs").mkdir()
+            (tmp / "data").mkdir()
+            (tmp / "rtl" / "results").mkdir(parents=True)
+            shutil.copy(old_root / "data" / "shared_inputs.csv", tmp / "data" / "shared_inputs.csv")
+            snap = [{"core": "cv32e40p", "design": "classical", "unit": "session start", "side": "vehicle",
+                     "cycles_median": "60"}]
+            make_doc.write_csv(tmp / "rtl" / "results" / make_doc.SNAPSHOT_SESSIONS, snap)
+            make_doc.ROOT, make_doc.RTL = tmp, tmp / "rtl"
+            make_doc.write_doc(self.logs, prims, self.sessions, sizes, [], d, r)
+            text = (tmp / "docs" / "RTL_BASELINES.md").read_text()
+        finally:
+            make_doc.ROOT, make_doc.RTL = old_root, old_rtl
+            shutil.rmtree(tmp)
+        self.assertIn("## Where the cycles go", text)
+        self.assertIn("| sum of primitive medians | | 270 | 180 | |", text)
+        self.assertIn("| hybrid_f1 over pq_only | ground | CV32E40P |", text)
+        self.assertIn("## The classical baseline is one portable C library", text)
+        self.assertIn("portable C on these two cores only", text)
+        self.assertIn("| kem_auth | 1,000 | 4 | 50 | 1,000 | 4 | 50 |", text)
+        self.assertIn("| classical | vehicle | CV32E40P | 60 | 60 | yes | 60 |", text)
+        self.assertNotIn("| hybrid_f1 | vehicle | CV32E40P | 60 |", text)
+        self.assertIn("Reproduced exactly: 1 of 1 rows.", text)
+        self.assertNotIn(chr(0x2014), text)
+
+
 class DocTests(unittest.TestCase):
     def test_sessions_ratios_and_doc(self):
         logs = {}
@@ -133,12 +291,12 @@ class DocTests(unittest.TestCase):
             (tmp / "data").mkdir()
             shutil.copy(old / "data" / "shared_inputs.csv", tmp / "data" / "shared_inputs.csv")
             make_doc.ROOT = tmp
-            make_doc.write_doc(logs, [], sessions, [], times)
+            make_doc.write_doc(logs, [], sessions, [], times, [], make_doc.build_ratios(logs, sessions, []))
             text = (tmp / "docs" / "RTL_BASELINES.md").read_text()
         finally:
             make_doc.ROOT = old
             shutil.rmtree(tmp)
-        self.assertIn("| hybrid_f1 over classical | vehicle | 4.00 | 4.00 |", text)
+        self.assertIn("| hybrid_f1 over classical | vehicle | CV32E40P | 4.00 [4.00 to 4.00] | not available |", text)
         self.assertIn("| classical | session start | vehicle | 1.50 |", text)
         self.assertIn("**RTL simulated**", text)
         self.assertNotIn(chr(0x2014), text)
