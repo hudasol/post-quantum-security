@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """Fail if a round 4 result file mixes evidence labels or uses a label outside the vocabulary.
 
-Scope: CSV files under the round 4 result folders (see ROUND4_DIRS). Each such file must have a
-`label` column whose values are in LABELS. A column that carries values of a second label must
+Scope: CSV files under the round 4 result folders (see ROUND4_DIRS) and the files named in ROUND4_FILES,
+which include the round 6 search records, the conference ratios and the prediction scores. Each such file must
+have a `label` column whose values are in LABELS. A software in the loop result file (REGISTER_DIRS) whose rows
+carry more than one label must have every column registered in data/column_labels.csv, the round 5 rule
+(tests/test_column_labels.py checks that the register matches the header). A column that carries values of a second label must
 say so with a suffix (for example `cycles_published`); a column suffix that names a label not
 in the vocabulary fails. data/evidence.csv must hold only published or derived from published
 rows. The README defines the labels.
@@ -27,12 +30,23 @@ ROUND4_FILES = ["linksim/results/validation_v4.csv", "linksim/results/diagnosis_
                 "bench/board_kit/image_sizes.csv", "data/reference_profiles.csv",
                 "data/meta/hierarchical_*.csv",
                 "planner/results/flightstack_*.csv", "data/flightstack_memory*.csv", "flightstack/*.csv",
-                "data/shared_inputs.csv"]
+                "data/shared_inputs.csv", "data/raw/S14_*.csv", "data/conference/derived.csv",
+                "data/predictions_v*_scores.csv"]
 LABELISH = re.compile(r"_(published|measured|emulated|estimated|planned|modelled|modeled|simulated|derived|synthetic)$")
+
+
+def registered():
+    with open(ROOT / "data" / "column_labels.csv", newline="", encoding="utf-8") as fh:
+        return {r["file"] for r in csv.DictReader(fh)}
+
+
+REGISTERED = registered()
+REGISTER_DIRS = ("sitl/results/", "sitl/results_r6/")
 
 
 def check_file(path):
     problems = []
+    seen = set()
     if Path(path).name.endswith("config.csv"):
         return []  # run configuration records, not results
     with open(ROOT / path, newline="", encoding="utf-8") as fh:
@@ -49,6 +63,10 @@ def check_file(path):
             if v not in LABELS:
                 problems.append(f"{path} line {i}: label {v!r} not in the vocabulary")
                 break
+            seen.add(v)
+    rel = str(path).replace("\\", "/")
+    if len(seen) > 1 and rel.startswith(REGISTER_DIRS) and rel not in REGISTERED:
+        problems.append(f"{path}: rows carry {len(seen)} labels ({', '.join(sorted(seen))}) but the columns are not in data/column_labels.csv")
     return problems
 
 

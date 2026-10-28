@@ -351,3 +351,30 @@ rtlsim/results/proto_ratios.csv,ci95_low,RTL simulated,bootstrap 95 percent inte
 rtlsim/results/proto_ratios.csv,ci95_high,RTL simulated,bootstrap 95 percent interval of the ratio of medians (session medians only)
 rtlsim/results/proto_ratios.csv,n_runs_numerator,key,runs of the numerator design
 rtlsim/results/proto_ratios.csv,n_runs_denominator,key,runs of the denominator design
+sitl/results_r6/summary.csv,profile,key,
+sitl/results_r6/summary.csv,config,key,
+sitl/results_r6/summary.csv,metric,key,
+sitl/results_r6/summary.csv,value,per row,"label in the label column of the row: SITL measured for round trips through the flight stack and counts of missions and commands, emulated for one way and handshake figures"
+sitl/results_r6/summary.csv,ci_lo,per row,same label as value
+sitl/results_r6/summary.csv,ci_hi,per row,same label as value
+sitl/results_r6/summary.csv,n,key,count of missions behind the row
+sitl/results_r6/summary.csv,unit,key,
+sitl/results_r6/summary.csv,label,key,"label of value, ci_lo and ci_hi"
+sitl/results_r6/comparison.csv,profile,key,
+sitl/results_r6/comparison.csv,config,key,
+sitl/results_r6/comparison.csv,mission_arch,key,mission study architecture compared with
+sitl/results_r6/comparison.csv,mission_rule,key,replay rule of the mission study compared with
+sitl/results_r6/comparison.csv,quantity,key,
+sitl/results_r6/comparison.csv,value,per row,label in the label column of the row (SITL measured for the acknowledged share or emulated for the handshake)
+sitl/results_r6/comparison.csv,ci_lo,per row,same label as value
+sitl/results_r6/comparison.csv,ci_hi,per row,same label as value
+sitl/results_r6/comparison.csv,mission_model_estimated,estimated,read from the mission model results
+sitl/results_r6/comparison.csv,error,per row,"value minus mission_model_estimated: a difference between the row label and estimated, not a measurement"
+sitl/results_r6/comparison.csv,verdict,key,consistent when mission_model_estimated lies inside the interval of value
+sitl/results_r6/comparison.csv,label,key,"label of value, ci_lo and ci_hi only"
+sitl/results_r6/rejections.csv,profile,key,
+sitl/results_r6/rejections.csv,config,key,
+sitl/results_r6/rejections.csv,scope,key,
+sitl/results_r6/rejections.csv,reason,key,
+sitl/results_r6/rejections.csv,count,per row,"label in the label column of the row: SITL measured for commands not acknowledged in time, emulated for frames handled by the gateways and resynchronisations"
+sitl/results_r6/rejections.csv,label,key,label of count
