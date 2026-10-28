@@ -1,12 +1,12 @@
 primitives.elf  :
 section               size      addr
 .vectors               132   1048576
-.text                81120   1048708
-.rodata               6848   1129856
-.data                    0   1136704
-.bss                 13512   1136704
+.text                82188   1048708
+.rodata               7104   1130912
+.data                    0   1138016
+.bss                 20360   1138016
 .stack                8192   1835008
-Total               111928
+Total               120100
 
 
 classical.elf  :
@@ -40,6 +40,17 @@ section              size      addr
 .bss                17664   1114752
 .stack               8192   1835008
 Total               94132
+
+
+kem_auth.elf  :
+section              size      addr
+.vectors              132   1048576
+.text               43916   1048708
+.rodata              1536   1092640
+.data                   0   1094176
+.bss                14456   1094176
+.stack               8192   1835008
+Total               70356
 
 
 per_command_mldsa44.elf  :

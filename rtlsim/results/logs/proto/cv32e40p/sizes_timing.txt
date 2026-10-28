@@ -1,7 +1,8 @@
    text	   data	    bss	    dec	    hex	filename
- 174454	      4	 280121	 454579	  6efb3	primitives.elf
+ 175730	      4	 286969	 462703	  70f6f	primitives.elf
  115724	      4	 267337	 383065	  5d859	classical.elf
   72925	      4	 284145	 357074	  572d2	pq_only.elf
  161457	      4	 284273	 445734	  6cd26	hybrid_f1.elf
+ 131976	      4	 281065	 413045	  64d75	kem_auth.elf
   50021	      4	 273353	 323378	  4ef32	per_command_mldsa44.elf
   21996	      4	 268885	 290885	  47045	mavlink_tag.elf

@@ -1,3 +1,3 @@
-Executed cycles:  441326006
-Simulation speed: 811539 cycles/s (811.539 kHz)
-wall_seconds=544
+Executed cycles:  1211282138
+Simulation speed: 634696 cycles/s (634.696 kHz)
+wall_seconds=1909
