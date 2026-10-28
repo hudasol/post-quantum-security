@@ -52,8 +52,12 @@ jobs:
           python3 -m unittest discover -s stats -t .
           python3 -m unittest discover -s netsim -t .
           python3 -m unittest discover -s flightstack -t .
-          python3 -m unittest discover -s sitl -t .
           python3 -m unittest discover -s relwork -t .
+      - name: SITL gateway tests with host builds of the pinned post quantum libraries (fetched, not committed)
+        run: |
+          sh sitl/pqlib/build.sh "$RUNNER_TEMP/pqsrc" "$RUNNER_TEMP/pqlib"
+          SITL_PQLIB="$RUNNER_TEMP/pqlib" python3 -m unittest discover -s sitl -t . 2>&1 | tee sitl_tests.log
+          ! grep -q "skipped=" sitl_tests.log
       - name: Planner agrees with the hand written expectations
         run: python3 scripts/compare_planner_predictions.py
   data:
