@@ -24,10 +24,10 @@ THIS_STUDY = {
     "platform": "Ibex and CV32E40P open RISC-V cores in cycle accurate RTL simulation; Cortex-M boards prepared, not measured",
     "link": "SiK class telemetry link emulated in software in the loop; IEEE 802.15.4 and LoRa in ns-3",
     "measured": "RTL simulated, SITL measured, emulated and modelled, each labelled",
-    "handshake": "planned in round 6: the baselines of docs/LIMITATIONS_AND_PLAN_R6.md (section 2) executed with one code base; results in docs/RTL_SIM_RESULTS.md once integrated",
-    "per_message": "planned in round 6: tag per command and signature per command executed (same documents)",
-    "availability": "modelled in the mission study under the published MAVLink rule; strict next sequence and replay cache rules planned in round 6 (docs/MISSION_STUDY.md)",
-    "formal": "ProVerif models of the stated and changed designs (docs/FORMAL_VERIFICATION.md); replay cache model planned in round 6",
+    "handshake": "executed in round 6 with one code base on two open RISC-V core designs (RTL simulated, docs/RTL_BASELINES.md) and over an emulated SiK radio with ArduPilot in the loop (docs/SITL_STUDY_R6.md)",
+    "per_message": "tag per message and signature per command executed in round 6 (same documents)",
+    "availability": "SITL measured with ArduPilot under the published, strict next sequence and replay cache rules on paired seeds, and modelled per rule (docs/SITL_STUDY_R6.md, docs/MISSION_STUDY.md)",
+    "formal": "ProVerif models of the stated and changed designs and of replay rules (docs/FORMAL_VERIFICATION.md, sections 5 and 9)",
 }
 
 
@@ -96,7 +96,7 @@ def render():
            "for drones, UAVs, MAVLink, ROS 2 and DDS, robots and other constrained wireless links, and of post quantum secure "
            "boot and update on embedded processors. Searches used the web search and fetch tools of the working environment; "
            "refused fetches are recorded in the CSV and in `data/raw/S14_dblp_log.csv`, not worked around.", "",
-           f"Works retrieved: {len(rs)}. Full text read directly from an author supplied copy: {len(direct)} ({fmt(direct)}). "
+           f"Works retrieved: {len(rs)}. Full text read directly from a copy the author supplied (the same file as the URL): {len(direct)} ({fmt(direct)}). "
            f"Full text read only through the summarising fetch tool: {len(fetched)}. Abstract only, partly read or not retrieved: "
            f"{len(partial)} ({fmt(partial)}).", "",
            "Values are copied as each source states them, with the table or section in brackets. Under the round 5 rules "
@@ -119,13 +119,12 @@ def render():
             f"{fmt(est_handshake)}. A machine checked symbolic model of the design is reported by {fmt(machine_formal)}. "
             f"Availability of a message stream under loss is reported by {fmt(availability)}, for vehicle to vehicle "
             "broadcast rather than a command channel.", "",
-            "Against this retrieved set, what this study can add is the combination, not any single part, provided the round 6 "
-            "work completes as planned (`docs/LIMITATIONS_AND_PLAN_R6.md`): one code base that executes the command channel "
+            "Against this retrieved set, what this study adds is the combination, not any single part: one code base that executes the command channel "
             "baselines, from no authentication to a post quantum signature per command, on the Ibex and CV32E40P cores at cycle "
-            "level; the same designs checked in ProVerif, including a replay cache rule; and command availability modelled "
-            "under the published, strict next sequence and replay cache rules on telemetry class links. Each part has "
+            "level and with ArduPilot in the loop; the same designs checked in ProVerif, including a replay cache rule; and command "
+            "availability measured and modelled under the published, strict next sequence and replay cache rules on a telemetry class link. Each part has "
             "precedents above: embedded handshake measurements, emulated UAV link handshakes and Tamarin models of a UAV key "
-            "exchange. Until the round 6 results are integrated, this paragraph states a plan, not a finding.", "",
+            "exchange.", "",
             "Limits of this comparison. The values above were measured by others on other processors, libraries, links and "
             "settings, so the table compares designs and methods, not numbers. Cycle accurate simulation of open cores is not a "
             "measurement on a Cortex-M board or over a radio, which this study still lacks. The retrieved set is not exhaustive: "
