@@ -284,7 +284,7 @@ For streamed commands the results support a session: its post quantum cost is pa
 \emph{Threats to validity.} (i) Cycles come from two open core designs with single cycle memories; Cortex-M flight controllers have flash wait states, caches and other multipliers, and stack optimised signing \cite{greconici21} or RISC-V extensions \cite{alkim20,fritzmann20} would change the figures. (ii) One classical library was measured, and it favours the post quantum designs. (iii) In the loop, vehicle compute is a delay at an assumed clock, applied per event without a busy processor, so frames arriving during a verification are not queued behind it; the host was slower than the delay for a small share of tags. (iv) The radio is an emulation with independent frame loss and one scripted outage per mission; real loss is bursty. (v) Twenty missions per configuration, a bootstrap over missions that may under cover, and no correction for the several paired comparisons. (vi) Prior work figures are not comparable to ours because platforms and links differ; Table~\ref{tab:rw} compares methods, not figures. (vii) All reviews of this study so far were internal. The next step is to repeat the executed baselines on Cortex-M4 and Cortex-M33 boards and to fly design K over a real telemetry radio.
 
 \section{Related work}
-Kannwischer et al.\ established the pqm4 method for Cortex-M4 measurements \cite{pqm4}, and stack optimised Dilithium shows how far signing memory can be reduced \cite{greconici21}; on RISC-V, lattice schemes have been accelerated with instruction set extensions \cite{alkim20,fritzmann20}. Post quantum TLS has been measured on embedded clients \cite{burstinghaus20} and over emulated networks with loss \cite{paquin20,sikeridis20}; KEMTLS replaces handshake signatures with encapsulation \cite{kemtls20,gonzalez22}, with pre distributed keys \cite{kemtlspdk21}, and post quantum WireGuard and post quantum Noise do the same for VPN and Noise handshakes \cite{pqwg21,pqnoise22}. Firmware signatures have been measured on low power boards and in secure boot \cite{banegas21,kumar20,wagner22,campos20}. For drones, MAVSec adds encryption to MAVLink \cite{mavsec19}, de Meneses et al.\ design and formally verify a post quantum EDHOC variant with estimated costs \cite{meneses26}, and Hyoung et al.\ evaluate post quantum key exchange for command channels over an emulated radio \cite{hyoung26}. Twardokus et al.\ show for vehicle to vehicle messages that frame loss, not computation, can decide whether post quantum authentication is practical \cite{twardokus24}. Table~\ref{tab:rw} compares the closest of them with this paper.
+Primitives are benchmarked on Cortex-M4 with pqm4 \cite{pqm4}, with stack optimised Dilithium \cite{greconici21} and with RISC-V extensions \cite{alkim20,fritzmann20}. Post quantum TLS has been measured on embedded clients \cite{burstinghaus20} and under loss \cite{paquin20,sikeridis20}; KEMTLS \cite{kemtls20,gonzalez22,kemtlspdk21}, post quantum WireGuard and Noise \cite{pqwg21,pqnoise22} authenticate by encapsulation. Firmware signatures have been measured on low power boards and in secure boot \cite{banegas21,kumar20,wagner22,campos20}. For drones, MAVSec encrypts MAVLink \cite{mavsec19} and de Meneses et al.\ verify a post quantum EDHOC variant with estimated costs \cite{meneses26}; for vehicle to vehicle messages, frame loss can decide practicality \cite{twardokus24}. Table~\ref{tab:rw} compares the closest works with this paper.
 
 \begin{table*}[t]
 \centering
@@ -401,8 +401,8 @@ def sitl_numbers(c, doc):
     t["cmd_max"] = c("cs_cmd_max", SS, "value", 'profile == "sik" and metric == "commands"', "max", "{:.0f}", label="SITL measured", doc=doc)
 
     def pd_(cid, a, b, col="difference", fmt="{:+.4f}", scale=1.0):
-        return c(cid, SP, col, f'profile == "sik" and config == "{a}" and minus_config == "{b}" and metric == "availability_rt_all"',
-                 fmt=fmt, label="SITL measured", scale=scale, doc=doc)
+        return "\\mbox{" + c(cid, SP, col, f'profile == "sik" and config == "{a}" and minus_config == "{b}" and metric == "availability_rt_all"',
+                               fmt=fmt, label="SITL measured", scale=scale, doc=doc) + "}"
     for a, b, _ in PAIRS:
         k = f"d_{a}_{b}"
         t[k] = pd_("cs_" + k, a, b)
@@ -466,7 +466,7 @@ Configuration & Handshake (s) & Added round trip (ms) & Share acknowledged withi
     k_sent = ""
     if "kem_auth" in keys:
         k_sent = (" Design K completes its handshake in " + t["kem_auth_hs"] + "~s and differs from the hybrid session by "
-                  + t["d_kem_auth_hybrid_published"] + " (" + t["d_kem_auth_hybrid_published_lo"] + " to " + t["d_kem_auth_hybrid_published_hi"] + ").")
+                  + t["d_kem_auth_hybrid_published"] + " (" + t["d_kem_auth_hybrid_published_lo"] + " to " + t["d_kem_auth_hybrid_published_hi"] + "); it was flown after the other configurations, alone on the host, on the same seeds.")
     s["abstract"] = ("With ArduPilot in the loop over an emulated telemetry radio and real cryptography, the hybrid session keeps the share of commands acknowledged within 0.5~s, outages included, at "
                      + t["hybrid_published_av"] + " against " + t["none_av"] + " without authentication, while a signature per command drops it to "
                      + t["pqsig_real_av"] + ", a figure that moves to " + t["pq_dl_1.0"] + " at a 1~s deadline. A strict next counter rule loses "
