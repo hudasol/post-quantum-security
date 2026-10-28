@@ -1,0 +1,36 @@
+CFG,set,per_command_mldsa44
+CFG,seed_first,20261021
+CFG,runs,5
+CFG,timer_overhead_cycles,13
+CFG,stack_paint_bytes,196608
+MSG,per_command_mldsa44,command_frame,ground_to_vehicle,44
+MSG,per_command_mldsa44,command_signature,ground_to_vehicle,2420
+CHK,per_command_mldsa44,provisioning_keypair,0,ok
+RES,per_command_mldsa44,ground_sign_command,0,7128096,ok
+STK,per_command_mldsa44,ground_sign_command,0,50164,ok
+RES,per_command_mldsa44,vehicle_verify_command,0,3883461,ok
+STK,per_command_mldsa44,vehicle_verify_command,0,30148,ok
+CHK,per_command_mldsa44,vehicle_rejects_modified_command,0,ok
+CHK,per_command_mldsa44,provisioning_keypair,1,ok
+RES,per_command_mldsa44,ground_sign_command,1,5578050,ok
+STK,per_command_mldsa44,ground_sign_command,1,50164,ok
+RES,per_command_mldsa44,vehicle_verify_command,1,3883354,ok
+STK,per_command_mldsa44,vehicle_verify_command,1,30148,ok
+CHK,per_command_mldsa44,provisioning_keypair,2,ok
+RES,per_command_mldsa44,ground_sign_command,2,7284957,ok
+STK,per_command_mldsa44,ground_sign_command,2,50164,ok
+RES,per_command_mldsa44,vehicle_verify_command,2,3883331,ok
+STK,per_command_mldsa44,vehicle_verify_command,2,30148,ok
+CHK,per_command_mldsa44,provisioning_keypair,3,ok
+RES,per_command_mldsa44,ground_sign_command,3,7284968,ok
+STK,per_command_mldsa44,ground_sign_command,3,50164,ok
+RES,per_command_mldsa44,vehicle_verify_command,3,3883421,ok
+STK,per_command_mldsa44,vehicle_verify_command,3,30148,ok
+CHK,per_command_mldsa44,provisioning_keypair,4,ok
+RES,per_command_mldsa44,ground_sign_command,4,5578072,ok
+STK,per_command_mldsa44,ground_sign_command,4,50164,ok
+RES,per_command_mldsa44,vehicle_verify_command,4,3883331,ok
+STK,per_command_mldsa44,vehicle_verify_command,4,30148,ok
+DONE,per_command_mldsa44,0
+EXIT SUCCESS
+- $CV32_WORK_DIR/cv32e40p/example_tb/core/tb_top.sv:140: Verilog $finish
