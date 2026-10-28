@@ -106,7 +106,7 @@ jobs:
           git diff --exit-code -- 'sitl/results_r6/*.csv' docs/SITL_STUDY_R6.md
       - name: Round 6 executed baselines and prediction scores regenerate
         run: |
-          sudo apt-get install -y poppler-utils > /dev/null
+          which pdfinfo || (sudo apt-get update -q > /dev/null && sudo apt-get install -y -q poppler-utils > /dev/null)
           python3 rtlsim/proto/make_doc.py > /dev/null
           python3 scripts/score_predictions_v6.py > /dev/null
           git diff --exit-code -- docs/RTL_BASELINES.md data/predictions_v6_scores.csv
