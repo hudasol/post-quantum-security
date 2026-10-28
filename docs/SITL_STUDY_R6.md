@@ -161,6 +161,9 @@ _SITL measured; paired bootstrap over mission indices (the same seed in both con
 
 Reasons: `link_up` the link layer gave the command up; `no_session` the ground side gateway had no session (handshake, teardown or resynchronisation in progress); `rejected_<reason>` the vehicle side gateway rejected the frame (`late_or_duplicate` published rule, `ahead_of_next` or `behind_next` strict rule, `outside_window` or `duplicate` replay cache, `bad_tag` or `bad_signature` check failed); `not_acknowledged_by_vehicle` delivered but not answered by the flight stack; the remaining commands were acknowledged later than 0.5 s or rejected by the flight stack.
 
+
+Design K had one uplink frame rejected for a bad tag although no attacker was present. Its handshake has three flights: the ground side gateway accepts on F2 and tags the uplink with the new key at once, while the vehicle side gateway holds that key only after it accepts F3. A frame sent in that interval is checked against a key the vehicle does not yet hold. This is the likely cause; the raw logs do not record which frame was rejected, so it was not confirmed frame by frame. It is a property of the three flight design as executed, not an attack, and it is counted, not removed.
+
 Out of order arrivals on link id 0 at the vehicle side gateway (emulated), SiK class 64 kbit/s:
 
 | configuration | frames arrived | frames that arrived after a higher counter of the same key | largest distance below the highest counter seen |
