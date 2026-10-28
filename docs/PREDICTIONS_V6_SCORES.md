@@ -8,19 +8,19 @@ Verdicts: hit when the expectation holds; miss when the refutation clause is met
 
 Totals: 12 hit, 1 between, 1 miss, 0 not scored, of 14.
 
-| ID | verdict | evidence |
-|---|---|---|
-| Q1 | hit | X25519 shared secret over ML-KEM-768 encaps on CV32E40P: 1.85. |
-| Q2 | hit | Vehicle side hybrid handshake on CV32E40P: 21,758,082 cycles. |
-| Q3 | hit | Hybrid over classical, vehicle side, CV32E40P: 1.75. |
-| Q4 | hit | Ibex over CV32E40P, vehicle side hybrid: 1.34. |
-| Q5 | hit | MAVLink 2 signing tag over a 60 B frame on CV32E40P: generation 13,055, check 13,426 cycles; the larger is scored. |
-| Q6 | hit | Peak stack of the vehicle side hybrid handshake (larger of the two cores): 50,516 B. |
-| Q7 | between | Hybrid over classical text size, Ibex: timing build 1.40; gc build 1.48. The less favourable reading is kept. |
-| Q8 | hit | Hybrid handshake with executed cryptography 1.486 s against 1.28 s registered (+16.1 percent). |
-| Q9 | hit | Drop of the acknowledged share, strict against published, paired: 0.0333. |
-| Q10 | hit | Absolute difference, replay cache against published, paired: 0.0006. |
-| Q11 | hit | Mission model drop, strict against published, drone, SiK, B: 0.0010. |
-| Q12 | miss | Injective agreement (C1) per encoding of the seen counter table: session_replay_cache proved; session_replay_cache_fresh_counters proved; session_replay_cache_table_concurrent counterexample; session_replay_cache_table_sequential cannot be proved. Check and insert as one step is proved; a table that concurrent branches read before either inserts gives a counterexample, so the cache must check and record atomically. The less favourable reading is kept. |
-| Q13 | hit | Records passing title screening not seen in round 5: 9; also new to the repository: 7. The index was reached through a web search limited to dblp.org, not its API (refused). |
-| Q14 | hit | Compiled paper: 5 pages including references (the less favourable reading of 'without references'). |
+| ID | verdict | evidence | label of the evidence |
+|---|---|---|---|
+| Q1 | hit | X25519 shared secret over ML-KEM-768 encaps on CV32E40P: 1.85. | RTL simulated |
+| Q2 | hit | Vehicle side hybrid handshake on CV32E40P: 21,758,082 cycles. | RTL simulated |
+| Q3 | hit | Hybrid over classical, vehicle side, CV32E40P: 1.75. | RTL simulated |
+| Q4 | hit | Ibex over CV32E40P, vehicle side hybrid: 1.34. | RTL simulated |
+| Q5 | hit | MAVLink 2 signing tag over a 60 B frame on CV32E40P: generation 13,055, check 13,426 cycles; the larger is scored. | RTL simulated |
+| Q6 | hit | Peak stack of the vehicle side hybrid handshake (larger of the two cores): 50,516 B. | RTL simulated |
+| Q7 | between | Hybrid over classical text size, Ibex: timing build 1.40; gc build 1.48. The less favourable reading is kept. | host measured |
+| Q8 | hit | Hybrid handshake with executed cryptography 1.486 s against 1.28 s registered (+16.1 percent). | emulated |
+| Q9 | hit | Drop of the acknowledged share, strict against published, paired: 0.0333. | SITL measured |
+| Q10 | hit | Absolute difference, replay cache against published, paired: 0.0006. | SITL measured |
+| Q11 | hit | Mission model drop, strict against published, drone, SiK, B: 0.0010. | estimated |
+| Q12 | miss | Injective agreement (C1) per encoding of the seen counter table: session_replay_cache proved; session_replay_cache_fresh_counters proved; session_replay_cache_table_concurrent counterexample; session_replay_cache_table_sequential cannot be proved. Check and insert as one step is proved; a table that concurrent branches read before either inserts gives a counterexample, so the cache must check and record atomically. The less favourable reading is kept. | modelled |
+| Q13 | hit | Records passing title screening not seen in round 5: 9; also new to the repository: 7. The index was reached through a web search limited to dblp.org, not its API (refused). | published |
+| Q14 | hit | Compiled paper: 5 pages including references (the less favourable reading of 'without references'). | host measured |

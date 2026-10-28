@@ -19,6 +19,12 @@ def verdict(hit, not_refuted):
     return "hit" if hit else ("between" if not_refuted else "miss")
 
 
+# label of the evidence each prediction is scored on (the label of the rows the score reads)
+LABEL = {"Q1": "RTL simulated", "Q2": "RTL simulated", "Q3": "RTL simulated", "Q4": "RTL simulated", "Q5": "RTL simulated",
+         "Q6": "RTL simulated", "Q7": "host measured", "Q8": "emulated", "Q9": "SITL measured", "Q10": "SITL measured",
+         "Q11": "estimated", "Q12": "modelled", "Q13": "published", "Q14": "host measured"}
+
+
 def worst(vs):
     return max(vs, key=lambda v: ORDER[v])
 
@@ -108,9 +114,9 @@ def main():
          f"Hash check: stored {stored[:16]}..., file now {now[:16]}... ({'match' if stored == now else 'MISMATCH'}).", "",
          "Verdicts: hit when the expectation holds; miss when the refutation clause is met; between when neither holds; not scored when the metric could not be computed as registered. When a metric reads two ways, the less favourable verdict is kept and named.", "",
          "Totals: " + ", ".join(f"{counts.get(k, 0)} {k}" for k in ("hit", "between", "miss", "not scored")) + f", of {len(S)}.", "",
-         "| ID | verdict | evidence |", "|---|---|---|"] + [f"| {k} | {v} | {e} |" for k, (v, e) in S.items()]
+         "| ID | verdict | evidence | label of the evidence |", "|---|---|---|---|"] + [f"| {k} | {v} | {e} | {LABEL[k]} |" for k, (v, e) in S.items()]
     (ROOT / "docs/PREDICTIONS_V6_SCORES.md").write_text("\n".join(L) + "\n", encoding="utf-8")
-    pd.DataFrame([{"id": k, "verdict": v, "evidence": e, "label": "host measured"} for k, (v, e) in S.items()]).to_csv(
+    pd.DataFrame([{"id": k, "verdict": v, "evidence": e, "label": LABEL[k]} for k, (v, e) in S.items()]).to_csv(
         ROOT / "data/predictions_v6_scores.csv", index=False, lineterminator="\n")
     print(L[8])
 
