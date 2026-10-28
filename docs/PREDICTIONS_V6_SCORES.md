@@ -11,8 +11,8 @@ Totals: 12 hit, 1 between, 1 miss, 0 not scored, of 14.
 | ID | verdict | evidence |
 |---|---|---|
 | Q1 | hit | X25519 shared secret over ML-KEM-768 encaps on CV32E40P: 1.85. |
-| Q2 | hit | Vehicle side hybrid handshake on CV32E40P: 21,915,978 cycles. |
-| Q3 | hit | Hybrid over classical, vehicle side, CV32E40P: 1.76. |
+| Q2 | hit | Vehicle side hybrid handshake on CV32E40P: 21,758,082 cycles. |
+| Q3 | hit | Hybrid over classical, vehicle side, CV32E40P: 1.75. |
 | Q4 | hit | Ibex over CV32E40P, vehicle side hybrid: 1.34. |
 | Q5 | hit | MAVLink 2 signing tag over a 60 B frame on CV32E40P: generation 13,055, check 13,426 cycles; the larger is scored. |
 | Q6 | hit | Peak stack of the vehicle side hybrid handshake (larger of the two cores): 50,516 B. |

@@ -1,13 +1,13 @@
 label,core,ratio,value,basis,source
-RTL simulated,ibex,hyb_over_cls_vehicle,1.903659,"hybrid_f1 over classical, vehicle, session start",rtlsim/results/proto_sessions.csv
-RTL simulated,ibex,hyb_over_pq_vehicle,1.116437,"hybrid_f1 over pq_only, vehicle, session start",rtlsim/results/proto_sessions.csv
-RTL simulated,ibex,hyb_over_cls_ground,2.27437,"hybrid_f1 over classical, ground, session start",rtlsim/results/proto_sessions.csv
-RTL simulated,ibex,pqc_over_tag_vehicle,370.644586,"ML-DSA-44 verify per command over the tag check of the same COMMAND_LONG frame, vehicle",rtlsim/results/proto_sessions.csv
+RTL simulated,ibex,hyb_over_cls_vehicle,1.888455,"hybrid_f1 over classical, vehicle, session start",rtlsim/results/proto_sessions.csv
+RTL simulated,ibex,hyb_over_pq_vehicle,1.228049,"hybrid_f1 over pq_only, vehicle, session start",rtlsim/results/proto_sessions.csv
+RTL simulated,ibex,hyb_over_cls_ground,2.089525,"hybrid_f1 over classical, ground, session start",rtlsim/results/proto_sessions.csv
+RTL simulated,ibex,pqc_over_tag_vehicle,370.650963,"ML-DSA-44 verify per command over the tag check of the same COMMAND_LONG frame, vehicle",rtlsim/results/proto_sessions.csv
 RTL simulated,ibex,bytes_hyb_over_cls,32.178571,"session start bytes on air, hybrid_f1 over classical",rtlsim/results/proto_sessions.csv
-RTL simulated,cv32e40p,hyb_over_cls_vehicle,1.764889,"hybrid_f1 over classical, vehicle, session start",rtlsim/results/proto_sessions.csv
-RTL simulated,cv32e40p,hyb_over_pq_vehicle,1.141009,"hybrid_f1 over pq_only, vehicle, session start",rtlsim/results/proto_sessions.csv
-RTL simulated,cv32e40p,hyb_over_cls_ground,2.099563,"hybrid_f1 over classical, ground, session start",rtlsim/results/proto_sessions.csv
-RTL simulated,cv32e40p,pqc_over_tag_vehicle,291.674478,"ML-DSA-44 verify per command over the tag check of the same COMMAND_LONG frame, vehicle",rtlsim/results/proto_sessions.csv
+RTL simulated,cv32e40p,hyb_over_cls_vehicle,1.749523,"hybrid_f1 over classical, vehicle, session start",rtlsim/results/proto_sessions.csv
+RTL simulated,cv32e40p,hyb_over_pq_vehicle,1.259519,"hybrid_f1 over pq_only, vehicle, session start",rtlsim/results/proto_sessions.csv
+RTL simulated,cv32e40p,hyb_over_cls_ground,1.923333,"hybrid_f1 over classical, ground, session start",rtlsim/results/proto_sessions.csv
+RTL simulated,cv32e40p,pqc_over_tag_vehicle,291.67951,"ML-DSA-44 verify per command over the tag check of the same COMMAND_LONG frame, vehicle",rtlsim/results/proto_sessions.csv
 RTL simulated,cv32e40p,bytes_hyb_over_cls,32.178571,"session start bytes on air, hybrid_f1 over classical",rtlsim/results/proto_sessions.csv
 RTL simulated,cv32e40p,classical_f1_bytes,32.0,"bytes of flight F1 as built, classical",rtlsim/results/proto_sessions.csv
 RTL simulated,cv32e40p,classical_f2_bytes,32.0,"bytes of flight F2 as built, classical",rtlsim/results/proto_sessions.csv
@@ -21,4 +21,4 @@ RTL simulated,cv32e40p,hybrid_f1_f1_bytes,1216.0,"bytes of flight F1 as built, h
 RTL simulated,cv32e40p,hybrid_f1_f2_bytes,1120.0,"bytes of flight F2 as built, hybrid_f1",rtlsim/results/proto_sessions.csv
 RTL simulated,cv32e40p,hybrid_f1_f3_bytes,2436.0,"bytes of flight F3 as built, hybrid_f1",rtlsim/results/proto_sessions.csv
 RTL simulated,cv32e40p,hybrid_f1_f4_bytes,2436.0,"bytes of flight F4 as built, hybrid_f1",rtlsim/results/proto_sessions.csv
-RTL simulated,ibex over cv32e40p,hyb_vehicle,1.340291,"hybrid_f1 vehicle session start, Ibex over CV32E40P",rtlsim/results/proto_sessions.csv
+RTL simulated,ibex over cv32e40p,hyb_vehicle,1.341381,"hybrid_f1 vehicle session start, Ibex over CV32E40P",rtlsim/results/proto_sessions.csv
