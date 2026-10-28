@@ -6,3 +6,5 @@ sik,hybrid_published,classical,availability_rt_all,-0.00401196,-0.00817124,-0.00
 sik,classical,signing,availability_rt_all,0.00301967,-4.12042e-05,0.0061792,20,SITL measured
 sik,hybrid_published,none,availability_rt_all,-0.00407871,-0.00904257,-0.00055839,20,SITL measured
 sik,pqsig_real,hybrid_published,availability_rt_all,-0.513581,-0.557326,-0.476506,20,SITL measured
+sik,kem_auth,hybrid_published,availability_rt_all,0.00333682,0.000288396,0.00670926,20,SITL measured
+sik,kem_auth,classical,availability_rt_all,-0.000675146,-0.00138042,-0.000210873,20,SITL measured

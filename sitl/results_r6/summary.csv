@@ -72,3 +72,14 @@ sik,pqsig_real,latency_rt_p95_ms,1563.79,936.851,2528.38,20,ms,SITL measured
 sik,pqsig_real,availability_ow_all,0.716495,0.660816,0.768362,20,ratio,emulated
 sik,pqsig_real,latency_ow_median_ms,411.781,411.581,414.906,20,ms,emulated
 sik,pqsig_real,added_latency_rt_ms,496.109,487.391,500.203,20,ms,SITL measured
+sik,kem_auth,missions,20,,,20,count,SITL measured
+sik,kem_auth,missions_completed,20,,,20,count,SITL measured
+sik,kem_auth,commands,961,,,20,count,SITL measured
+sik,kem_auth,availability_rt_all,0.934443,0.902923,0.963656,20,ratio,SITL measured
+sik,kem_auth,availability_rt_link_up,1,1,1,20,ratio,SITL measured
+sik,kem_auth,latency_rt_median_ms,18.489,18.247,18.751,20,ms,SITL measured
+sik,kem_auth,latency_rt_p95_ms,115.107,97.7738,128.675,20,ms,SITL measured
+sik,kem_auth,availability_ow_all,0.934443,0.901247,0.964044,20,ratio,emulated
+sik,kem_auth,latency_ow_median_ms,8.403,8.38649,8.42451,20,ms,emulated
+sik,kem_auth,added_latency_rt_ms,4.703,4.45795,5.03705,20,ms,SITL measured
+sik,kem_auth,handshake_median_s,0.923299,0.88713,0.996458,20,s,emulated

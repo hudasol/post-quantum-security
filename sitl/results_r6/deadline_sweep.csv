@@ -41,3 +41,9 @@ sik,hybrid_published,2,0.941545,0.908429,0.971759,SITL measured
 sik,hybrid_strict,2,0.901981,0.862496,0.941667,SITL measured
 sik,hybrid_cache,2,0.949328,0.917355,0.976216,SITL measured
 sik,pqsig_real,2,0.880412,0.824056,0.931822,SITL measured
+sik,kem_auth,0.25,0.92924,0.895282,0.959627,SITL measured
+sik,kem_auth,0.5,0.934443,0.902821,0.963974,SITL measured
+sik,kem_auth,0.55,0.934443,0.900521,0.963392,SITL measured
+sik,kem_auth,0.75,0.938606,0.904259,0.967995,SITL measured
+sik,kem_auth,1,0.939646,0.907096,0.969634,SITL measured
+sik,kem_auth,2,0.942768,0.910508,0.970895,SITL measured

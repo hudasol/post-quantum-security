@@ -37,3 +37,11 @@ sik,hybrid_strict,ground_tag,2105,0.050542,0.561419,0,0,ground,host measured
 sik,hybrid_strict,vehicle_tag_check,2023,0.0519289,1.09862,0.127911,24,vehicle,host measured
 sik,pqsig_real,ground_sign_command,1150,0.503049,2.98608,0,0,ground,host measured
 sik,pqsig_real,vehicle_verify_command,1137,0.169726,3.13918,32.1733,0,vehicle,host measured
+sik,kem_auth,ground_f1,21,0.583109,5.0364,0,0,ground,host measured
+sik,kem_auth,vehicle_f2,21,0.621511,0.915004,103.252,0,vehicle,host measured
+sik,kem_auth,ground_f3,21,0.535364,0.764233,0,0,ground,host measured
+sik,kem_auth,vehicle_accept,21,0.072152,0.145449,0.26756,0,vehicle,host measured
+sik,kem_auth,ground_tag,2218,0.0700533,2.69755,0,0,ground,host measured
+sik,kem_auth,vehicle_tag_check,2083,0.0819517,3.25534,0.127911,120,vehicle,host measured
+sik,kem_auth,vehicle_tag,42277,0.0181032,4.17905,0.0848988,1178,vehicle,host measured
+sik,kem_auth,ground_tag_check,38796,0.0800894,6.08023,0,0,ground,host measured
