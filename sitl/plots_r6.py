@@ -10,7 +10,8 @@ import numpy as np  # noqa: E402
 from . import config_r6 as c6  # noqa: E402
 
 COLORS = {'none': '#7a6f8f', 'signing': '#d98cb3', 'classical': '#8f9fb8', 'hybrid_published': '#b0476f',
-          'hybrid_strict': '#7d2a4c', 'hybrid_cache': '#e7a1bf', 'pqsig_real': '#4f6d8f'}
+          'hybrid_strict': '#7d2a4c', 'hybrid_cache': '#e7a1bf', 'pqsig_real': '#4f6d8f',
+          'kem_auth': '#c9a227'}
 
 
 def _style(ax):

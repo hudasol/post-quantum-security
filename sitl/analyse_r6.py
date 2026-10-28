@@ -8,6 +8,9 @@ estimated from RTL simulated cycles); the delays themselves are estimated (from 
 side compute times are host measured; mission model values are estimated.
 Intervals: 95 percent cluster bootstrap over missions (2000 resamples); differences between configurations are
 paired by mission index (the same seed in every configuration). Bootstrap seeds: 20311021 + 5000 + offsets.
+Row order: the rows of the configuration added after the first seven runs (kem_auth, design K) are written after
+the rows of the first seven in every output file, so that the earlier rows are unchanged
+(sitl/tests/test_r6_rows_unchanged.py).
 """
 import glob
 import json
@@ -28,17 +31,24 @@ RES = os.path.join(HERE, 'results_r6')
 BOOT = 2000
 PAIRS = [('hybrid_strict', 'hybrid_published'), ('hybrid_cache', 'hybrid_published'),
          ('hybrid_strict', 'hybrid_cache'), ('hybrid_published', 'classical'), ('classical', 'signing'),
-         ('hybrid_published', 'none'), ('pqsig_real', 'hybrid_published')]
+         ('hybrid_published', 'none'), ('pqsig_real', 'hybrid_published'),
+         ('kem_auth', 'hybrid_published'), ('kem_auth', 'classical')]
+NO_MODEL_VERDICT = 'not compared: the mission model has no architecture for design K'
+KEM_AUTH_DELAY_NOTE = 'estimated from RTL simulated cycles (median of the 15 run files rtlsim/results/proto_*.csv)'
 
 
 def load_raw(raw=RAW):
     cmds, mis, runs, arr = [], [], [], []
+    tags = []
     for f in sorted(glob.glob(os.path.join(raw, '*_missions.csv'))):
         tag = os.path.basename(f)[:-len('_missions.csv')]
-        mis.append(pd.read_csv(f))
-        cmds.append(pd.read_csv(os.path.join(raw, f'{tag}_commands.csv')))
         with open(os.path.join(raw, f'{tag}_run.json')) as fh:
             info = json.load(fh)
+        tags.append((info['config'] in c6.ADDED, tag, info))
+    # runs of the first seven configurations in name order, then the added configuration
+    for _, tag, info in sorted(tags, key=lambda x: (x[0], x[1])):
+        mis.append(pd.read_csv(os.path.join(raw, f'{tag}_missions.csv')))
+        cmds.append(pd.read_csv(os.path.join(raw, f'{tag}_commands.csv')))
         info['_tag'] = tag
         runs.append(info)
         ap = os.path.join(raw, f'{tag}_arrivals.csv')
@@ -150,6 +160,32 @@ def reorder_stats(arr):
     return pd.DataFrame(rows)
 
 
+def rejection_rows(c, runs):
+    """Rows of rejections.csv: stream commands not acknowledged in time (commands.csv) and gateway counters."""
+    rj = []
+    for (p, k), g in c.groupby(['profile', 'config']):
+        not_ok = g[~g.accepted_rt]
+        for why, n in not_ok.dropped.fillna('acknowledged late or rejected by the flight stack').value_counts().items():
+            rj.append(dict(profile=p, config=k, scope='stream commands not acknowledged within 0.5 s', reason=why,
+                           count=int(n), label='SITL measured'))
+    for info in runs:
+        for why, n in sorted(info['gateway']['rejects'].items()):
+            rj.append(dict(profile=info['profile'], config=info['config'], scope='uplink frames rejected by the vehicle side gateway',
+                           reason=why, count=int(n), label='emulated'))
+        for why, n in sorted(info['gateway']['down_rejects'].items()):
+            rj.append(dict(profile=info['profile'], config=info['config'], scope='downlink frames rejected by the ground side gateway',
+                           reason=why, count=int(n), label='emulated'))
+        for why, n in sorted(info['relay_drops'].items()):
+            rj.append(dict(profile=info['profile'], config=info['config'], scope='frames dropped by a gateway without a session',
+                           reason=why, count=int(n), label='emulated'))
+        rj.append(dict(profile=info['profile'], config=info['config'], scope='resynchronisations (strict rule)',
+                       reason='all triggers', count=len(info['gateway']['resyncs']), label='emulated'))
+        for trig in sorted({t for _, t in info['gateway']['resyncs']}):
+            rj.append(dict(profile=info['profile'], config=info['config'], scope='resynchronisations (strict rule)',
+                           reason=trig, count=sum(1 for _, t in info['gateway']['resyncs'] if t == trig), label='emulated'))
+    return rj
+
+
 DEADLINE_SWEEP = (0.25, 0.5, 0.55, 0.75, 1.0, 2.0)
 
 
@@ -182,6 +218,14 @@ def analyse(raw=RAW, res=RES):
         drows += [dict(name=k, core=v['core'], used_in_runs=used, cycles=v['cycles'], clock_hz=a['clock_hz'],
                        delay_ms=v['seconds'] * 1e3, source=v['source'], label='estimated',
                        label_note='estimated from RTL simulated cycles') for k, v in sorted(dd.items())]
+    # design K delays, from the run of the added configuration (15 run RTL files)
+    for info in runs:
+        if info['config'] not in c6.ADDED:
+            continue
+        for used, dd in [(1, info['rtl_delays'])] + [(0, v) for _, v in sorted(info.get('rtl_delays_other_cores', {}).items())]:
+            drows += [dict(name=k, core=v['core'], used_in_runs=used, cycles=v['cycles'], clock_hz=a['clock_hz'],
+                           delay_ms=v['seconds'] * 1e3, source=v['source'], label='estimated',
+                           label_note=KEM_AUTH_DELAY_NOTE) for k, v in sorted(dd.items()) if k.startswith(info['config'] + '_')]
     pd.DataFrame(drows).to_csv(os.path.join(res, 'delays.csv'), index=False)
     hc = []
     for info in runs:
@@ -195,37 +239,37 @@ def analyse(raw=RAW, res=RES):
 
     def add(p, k, metric, val, lo, hi, n, unit, label):
         rows.append(dict(profile=p, config=k, metric=metric, value=val, ci_lo=lo, ci_hi=hi, n=n, unit=unit, label=label))
-    for p in c6.PROFILES:
-        for ki, k in enumerate(c6.CONFIGS):
-            g = c[(c.profile == p) & (c.config == k)]
-            if len(g) == 0:
-                continue
-            gm = m[(m.profile == p) & (m.config == k)]
-            sd = seed0 + 100 * c6.PROFILES.index(p) + 10 * ki
-            up = g[~g.in_outage]
-            acc_up = up[up.acked & (up.result == 0)]
-            add(p, k, 'missions', len(gm), np.nan, np.nan, len(gm), 'count', 'SITL measured')
-            add(p, k, 'missions_completed', int(gm.completed.sum()), np.nan, np.nan, len(gm), 'count', 'SITL measured')
-            add(p, k, 'commands', len(g), np.nan, np.nan, len(gm), 'count', 'SITL measured')
-            for name, df, fn, unit, lab in [
-                    ('availability_rt_all', g, share('accepted_rt'), 'ratio', 'SITL measured'),
-                    ('availability_rt_link_up', up, share('accepted_rt'), 'ratio', 'SITL measured'),
-                    ('latency_rt_median_ms', acc_up, a5.med_ms('rt_s'), 'ms', 'SITL measured'),
-                    ('latency_rt_p95_ms', acc_up, a5.p95_ms('rt_s'), 'ms', 'SITL measured'),
-                    ('availability_ow_all', g, share('delivered_ow'), 'ratio', 'emulated'),
-                    ('latency_ow_median_ms', up, a5.med_ms('ow_s'), 'ms', 'emulated')]:
-                v, lo, hi = a5.cluster_boot(df, fn, sd + len(rows))
-                add(p, k, name, v, lo, hi, len(gm), unit, lab)
-            if k != 'none':
-                b = c[(c.profile == p) & (c.config == 'none')]
-                if len(b):
-                    bu = b[~b.in_outage]
-                    bacc = bu[bu.acked & (bu.result == 0)]
-                    v, lo, hi, n = paired_boot(acc_up, bacc, a5.med_ms('rt_s'), sd + 50)
-                    add(p, k, 'added_latency_rt_ms', v, lo, hi, n, 'ms', 'SITL measured')
-            if c6.STUDY[k][1] is not None:
-                v, lo, hi = handshake_boot(gm, sd + 60)
-                add(p, k, 'handshake_median_s', v, lo, hi, int(gm.handshake_s.notna().sum()), 's', 'emulated')
+    for p, k in [(p, k) for group in (c6.FIRST, c6.ADDED) for p in c6.PROFILES for k in group]:
+        ki = c6.CONFIGS.index(k)
+        g = c[(c.profile == p) & (c.config == k)]
+        if len(g) == 0:
+            continue
+        gm = m[(m.profile == p) & (m.config == k)]
+        sd = seed0 + 100 * c6.PROFILES.index(p) + 10 * ki
+        up = g[~g.in_outage]
+        acc_up = up[up.acked & (up.result == 0)]
+        add(p, k, 'missions', len(gm), np.nan, np.nan, len(gm), 'count', 'SITL measured')
+        add(p, k, 'missions_completed', int(gm.completed.sum()), np.nan, np.nan, len(gm), 'count', 'SITL measured')
+        add(p, k, 'commands', len(g), np.nan, np.nan, len(gm), 'count', 'SITL measured')
+        for name, df, fn, unit, lab in [
+                ('availability_rt_all', g, share('accepted_rt'), 'ratio', 'SITL measured'),
+                ('availability_rt_link_up', up, share('accepted_rt'), 'ratio', 'SITL measured'),
+                ('latency_rt_median_ms', acc_up, a5.med_ms('rt_s'), 'ms', 'SITL measured'),
+                ('latency_rt_p95_ms', acc_up, a5.p95_ms('rt_s'), 'ms', 'SITL measured'),
+                ('availability_ow_all', g, share('delivered_ow'), 'ratio', 'emulated'),
+                ('latency_ow_median_ms', up, a5.med_ms('ow_s'), 'ms', 'emulated')]:
+            v, lo, hi = a5.cluster_boot(df, fn, sd + len(rows))
+            add(p, k, name, v, lo, hi, len(gm), unit, lab)
+        if k != 'none':
+            b = c[(c.profile == p) & (c.config == 'none')]
+            if len(b):
+                bu = b[~b.in_outage]
+                bacc = bu[bu.acked & (bu.result == 0)]
+                v, lo, hi, n = paired_boot(acc_up, bacc, a5.med_ms('rt_s'), sd + 50)
+                add(p, k, 'added_latency_rt_ms', v, lo, hi, n, 'ms', 'SITL measured')
+        if c6.STUDY[k][1] is not None:
+            v, lo, hi = handshake_boot(gm, sd + 60)
+            add(p, k, 'handshake_median_s', v, lo, hi, int(gm.handshake_s.notna().sum()), 's', 'emulated')
     summ = pd.DataFrame(rows)
     summ.to_csv(os.path.join(res, 'summary.csv'), index=False, float_format='%.6g')
     # paired differences between configurations
@@ -244,33 +288,17 @@ def analyse(raw=RAW, res=RES):
     pr.to_csv(os.path.join(res, 'paired.csv'), index=False, float_format='%.6g')
     # rejections by reason: stream commands (commands.csv) and all stream 0 frames (gateway counters)
     rj = []
-    for (p, k), g in c.groupby(['profile', 'config']):
-        not_ok = g[~g.accepted_rt]
-        for why, n in not_ok.dropped.fillna('acknowledged late or rejected by the flight stack').value_counts().items():
-            rj.append(dict(profile=p, config=k, scope='stream commands not acknowledged within 0.5 s', reason=why,
-                           count=int(n), label='SITL measured'))
-    for info in runs:
-        for why, n in sorted(info['gateway']['rejects'].items()):
-            rj.append(dict(profile=info['profile'], config=info['config'], scope='uplink frames rejected by the vehicle side gateway',
-                           reason=why, count=int(n), label='emulated'))
-        for why, n in sorted(info['gateway']['down_rejects'].items()):
-            rj.append(dict(profile=info['profile'], config=info['config'], scope='downlink frames rejected by the ground side gateway',
-                           reason=why, count=int(n), label='emulated'))
-        for why, n in sorted(info['relay_drops'].items()):
-            rj.append(dict(profile=info['profile'], config=info['config'], scope='frames dropped by a gateway without a session',
-                           reason=why, count=int(n), label='emulated'))
-        rj.append(dict(profile=info['profile'], config=info['config'], scope='resynchronisations (strict rule)',
-                       reason='all triggers', count=len(info['gateway']['resyncs']), label='emulated'))
-        for trig in sorted({t for _, t in info['gateway']['resyncs']}):
-            rj.append(dict(profile=info['profile'], config=info['config'], scope='resynchronisations (strict rule)',
-                           reason=trig, count=sum(1 for _, t in info['gateway']['resyncs'] if t == trig), label='emulated'))
+    for group in (c6.FIRST, c6.ADDED):
+        rj += rejection_rows(c[c.config.isin(group)], [r for r in runs if r['config'] in group])
     pd.DataFrame(rj).to_csv(os.path.join(res, 'rejections.csv'), index=False)
-    reorder_stats(arr).reindex(columns=['profile', 'config', 'arrivals', 'arrivals_after_higher_counter',
-                                        'max_reorder_depth', 'label']).to_csv(os.path.join(res, 'reorder.csv'), index=False)
+    ro = pd.concat([reorder_stats(arr[arr.config.isin(group)]) if len(arr) else pd.DataFrame()
+                    for group in (c6.FIRST, c6.ADDED)], ignore_index=True)
+    ro.reindex(columns=['profile', 'config', 'arrivals', 'arrivals_after_higher_counter',
+                        'max_reorder_depth', 'label']).to_csv(os.path.join(res, 'reorder.csv'), index=False)
     # comparison with the mission model per rule
     comp = []
     for p in c6.PROFILES:
-        for k in c6.CONFIGS:
+        for k in c6.FIRST:
             sv = summ[(summ.profile == p) & (summ.config == k) & (summ.metric == 'availability_rt_all')]
             if len(sv) == 0:
                 continue
@@ -292,22 +320,38 @@ def analyse(raw=RAW, res=RES):
                              quantity='median handshake s (mission transfer model with the executed flight sizes and RTL delays)',
                              value=r.value, ci_lo=r.ci_lo, ci_hi=r.ci_hi, mission_model_estimated=est,
                              error=r.value - est, verdict=verdict, label='emulated'))
+    for p in c6.PROFILES:
+        for k in c6.ADDED:
+            sv = summ[(summ.profile == p) & (summ.config == k) & (summ.metric == 'availability_rt_all')]
+            if len(sv) == 0:
+                continue
+            r = sv.iloc[0]
+            comp.append(dict(profile=p, config=k, mission_arch='', mission_rule=c6.STUDY[k][1],
+                             quantity='share acknowledged within 0.5 s, outages included', value=r.value, ci_lo=r.ci_lo,
+                             ci_hi=r.ci_hi, mission_model_estimated=np.nan, error=np.nan, verdict=NO_MODEL_VERDICT,
+                             label='SITL measured'))
     pd.DataFrame(comp).to_csv(os.path.join(res, 'comparison.csv'), index=False, float_format='%.6g')
     write_environment(runs, res)
     from . import plots_r6
+    cache = {}
+
+    def prepared(d):
+        if d not in cache:
+            cache[d] = prepare(cmds, mis, d)[0]
+        return cache[d]
     # Sensitivity of the acknowledged share to the command deadline (review round 6, R6A06): the same statistic as
     # availability_rt_all, recomputed for other deadlines from the same raw runs.
     dsw = []
-    for d in DEADLINE_SWEEP:
-        cd, _ = prepare(cmds, mis, d)
-        for p in c6.PROFILES:
-            for ki, k in enumerate(c6.CONFIGS):
-                g = cd[(cd.profile == p) & (cd.config == k)]
-                if len(g) == 0:
-                    continue
-                v, lo, hi = a5.cluster_boot(g, share('accepted_rt'), seed0 + 2000 + 10 * ki + int(d * 100))
-                dsw.append(dict(profile=p, config=k, deadline_s=d, availability_rt_all=v, ci_lo=lo, ci_hi=hi,
-                                label='SITL measured'))
+    for d, p, k in ([(d, p, k) for d in DEADLINE_SWEEP for p in c6.PROFILES for k in c6.FIRST]
+                    + [(d, p, k) for d in DEADLINE_SWEEP for p in c6.PROFILES for k in c6.ADDED]):
+        cd = prepared(d)
+        ki = c6.CONFIGS.index(k)
+        g = cd[(cd.profile == p) & (cd.config == k)]
+        if len(g) == 0:
+            continue
+        v, lo, hi = a5.cluster_boot(g, share('accepted_rt'), seed0 + 2000 + 10 * ki + int(d * 100))
+        dsw.append(dict(profile=p, config=k, deadline_s=d, availability_rt_all=v, ci_lo=lo, ci_hi=hi,
+                        label='SITL measured'))
     pd.DataFrame(dsw).to_csv(os.path.join(res, 'deadline_sweep.csv'), index=False, float_format='%.6g')
     plots_r6.all_figures(c, summ, pr, m, res, deadline)
     print('wrote', res)
