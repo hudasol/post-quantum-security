@@ -10,7 +10,7 @@ This is a student research proposal and a seed for discussion. It is not a deplo
 
 - Real flight stack builds (10, host measured) leave little flash: 6.0 to 45.9 kB free on default PX4 builds. With measured memory the estimated median share of a fleet needing new hardware rises from 0.201 to 0.300 with thresholds drawn from published rows, and from 0.186 to 0.398 with stack optimised thresholds.
 - A hybrid session keeps command availability on a telemetry radio at 0.991; signing every command lowers it to 0.794 (estimated).
-- The session and update design was checked formally: 62 of 86 queries proved, design flaws F1 to F3 found and fixed (modelled).
+- The session and update design was checked formally: 97 of 140 queries proved, design flaws F1 to F3 found and fixed (modelled).
 - The cycle model is accurate within one code base (1.0 percent median error) but not across schemes (9.8 percent) (modelled); nothing is yet measured on a microcontroller.
 
 **What is proposed.** 12 months, part time: one afternoon on two borrowed boards scored against 36 registered predictions, a software in the loop rerun with the replay rule enforced, a borrowed radio pair, a run time memory profile, and a design note with dataset release. Readiness of the command channel: TRL 2 now, TRL 3 planned at the end (lab only; scale in the full proposal).
