@@ -32,7 +32,7 @@ class TestAnalyseR6(unittest.TestCase):
         self.assertEqual(r.max_reorder_depth, 1)
 
     def test_mission_model_values_per_rule(self):
-        vals = {k: an.mission_model_value('sik', k)[2] for k in c6.CONFIGS}
+        vals = {k: an.mission_model_value('sik', k)[2] for k in c6.FIRST}
         self.assertLessEqual(vals['hybrid_strict'], vals['hybrid_published'])
         self.assertEqual(vals['hybrid_cache'], vals['hybrid_published'])
         for v in vals.values():
