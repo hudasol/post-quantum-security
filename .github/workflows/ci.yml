@@ -53,6 +53,7 @@ jobs:
           python3 -m unittest discover -s netsim -t .
           python3 -m unittest discover -s flightstack -t .
           python3 -m unittest discover -s sitl -t .
+          python3 -m unittest discover -s relwork -t .
       - name: Planner agrees with the hand written expectations
         run: python3 scripts/compare_planner_predictions.py
   data:
@@ -98,6 +99,17 @@ jobs:
           python3 -m sitl.make_doc > /dev/null
           # figure layout depends on the fonts installed, so only data and text are compared
           git diff --exit-code -- 'sitl/results/*.csv' docs/SITL_STUDY.md
+      - name: Round 6 software in the loop study regenerates from its committed raw logs
+        run: |
+          python3 -m sitl.analyse_r6 > /dev/null
+          python3 -m sitl.make_doc_r6 > /dev/null
+          git diff --exit-code -- 'sitl/results_r6/*.csv' docs/SITL_STUDY_R6.md
+      - name: Round 6 executed baselines and prediction scores regenerate
+        run: |
+          sudo apt-get install -y poppler-utils > /dev/null
+          python3 rtlsim/proto/make_doc.py > /dev/null
+          python3 scripts/score_predictions_v6.py > /dev/null
+          git diff --exit-code -- docs/RTL_BASELINES.md data/predictions_v6_scores.csv
       - name: Mission study and reference architecture regenerate from the committed mission results
         run: |
           python3 -m mission.run_all --reuse > /dev/null
@@ -114,7 +126,7 @@ jobs:
         run: |
           python3 scripts/make_paper_figures.py > /dev/null
           python3 scripts/build_paper.py
-          git diff --exit-code docs/PAPER.md docs/PROPOSAL_ROBOTICS*.md docs/PROPOSAL_BRIEF.md data/claims_register.csv
+          git diff --exit-code docs/PAPER.md docs/PROPOSAL_ROBOTICS*.md docs/PROPOSAL_BRIEF.md data/claims_register.csv docs/conference/paper.tex docs/conference/paper_anon.tex docs/conference/references.bib data/conference/derived.csv
       - name: Flight stack memory and planner rerun regenerate from the committed build artefacts
         run: |
           pip install SALib numpy
