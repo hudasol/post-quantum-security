@@ -127,7 +127,7 @@ class TestReplayResults(unittest.TestCase):
                     self.assertEqual(self.got[(name, q)]["result"], "proved", (name, q))
 
     def test_earlier_results_unchanged(self):
-        rows = [r for r in self.rows if not r["model"].startswith("session_replay")]
+        rows = [r for r in self.rows if not r["model"].startswith(("session_replay", "session_kemauth"))]
         self.assertEqual(len(rows), EARLIER_ROWS)
         key = "\n".join(sorted(f"{r['model']},{r['property_id']},{r['result']},{r['weaker_form']}" for r in rows))
         self.assertEqual(hashlib.sha256(key.encode()).hexdigest(), EARLIER_SHA256)
