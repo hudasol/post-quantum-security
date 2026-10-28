@@ -141,6 +141,81 @@ class TestHandshake(unittest.TestCase):
         self.assertEqual(V2.on_f3(G2.on_f2(V2.on_f1(G2.start())))[1], 'f3_signature')
 
 
+@unittest.skipUnless(HAVE_PQ, 'host builds of mlkem-native and mldsa-native not found')
+class TestKemAuth(unittest.TestCase):
+    """Design K (kem_auth) against the executed C reference (rtlsim/proto/sw/proto_bench.c)."""
+
+    def run_hs(self):
+        g, v = gw.LongTerm('kem_auth'), gw.LongTerm('kem_auth')
+        G = gw.KemAuthGround(g, v.pk)
+        V = gw.KemAuthVehicle(v, g.pk)
+        f1 = G.start()
+        f2 = V.on_f1(f1)
+        f3, why = G.on_f2(f2)
+        self.assertIsNone(why)
+        self.assertIsNone(V.on_f3(f3))
+        return g, v, G, V, f1, f2, f3
+
+    def test_session_and_sizes_match_rtl(self):
+        g, v, G, V, f1, f2, f3 = self.run_hs()
+        self.assertEqual(G.key, V.key)
+        self.assertEqual(G.th, V.th)
+        self.assertTrue(G.accepted and V.accepted)
+        self.assertEqual([len(f1), len(f2), len(f3)], gw.flight_sizes('kem_auth'))
+        self.assertEqual(gw.flight_sizes('kem_auth'), [2304, 2224, 16])
+        import csv
+        with open(os.path.join(c6.ROOT, 'rtlsim', 'results', 'proto_sessions.csv'), newline='') as f:
+            rows = [r for r in csv.DictReader(f) if r['design'] == 'kem_auth']
+        self.assertTrue(rows)
+        for r in rows:
+            self.assertEqual(r['bytes_per_flight'], 'F1 ground_to_vehicle 2304; F2 vehicle_to_ground 2224; F3 ground_to_vehicle 16')
+
+    def test_key_derivation_matches_known_answer(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('gen_kat', os.path.join(c6.ROOT, 'rtlsim', 'proto', 'gen_kat.py'))
+        kat = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(kat)
+        self.assertEqual(gw.ka_kdf(kat.KDF_SSX, kat.KDF_SSKEM, kat.KDF_SSKEM2, kat.KDF_SSKEM3, kat.KDF_TH),
+                         kat.kdf4(kat.KDF_SSX, kat.KDF_SSKEM, kat.KDF_SSKEM2, kat.KDF_SSKEM3, kat.KDF_TH))
+        self.assertEqual((gw.LABEL_TH, gw.LABEL_KDF, gw.LABEL_CG, gw.LABEL_CV, gw.LABEL_ID),
+                         tuple(kat.LABELS[k] for k in ('LABEL_TH', 'LABEL_KDF', 'LABEL_CG', 'LABEL_CV', 'LABEL_ID')))
+
+    def test_transcript_and_key_layout(self):
+        g, v, G, V, f1, f2, f3 = self.run_hs()
+        body = f2[:-16]
+        self.assertEqual(G.th, gw.shake256(gw.LABEL_TH + g.id + v.id + f1 + body, 32))
+        self.assertEqual(f2[-16:], gw.shake256(G.key + gw.LABEL_CV + G.th, 16))
+        self.assertEqual(f3, gw.shake256(G.key + gw.LABEL_CG + G.th, 16))
+
+    def test_negative_checks_of_the_reference(self):
+        g, v, G, V, f1, f2, f3 = self.run_hs()
+        bad = bytearray(f3)
+        bad[0] ^= 1
+        V2 = gw.KemAuthVehicle(v, g.pk)
+        G2 = gw.KemAuthGround(g, v.pk)
+        f2b = V2.on_f1(G2.start())
+        self.assertEqual(V.on_f3(bytes(bad)), 'f3_confirmation')
+        t = bytearray(f2b)
+        t[gw.KA_F2_BODY] ^= 1
+        self.assertEqual(G2.on_f2(bytes(t)), (None, 'f2_confirmation'))
+        t = bytearray(f2b)
+        t[32 + 1088 + 3] ^= 1  # ciphertext to the ground static key
+        self.assertEqual(G2.on_f2(bytes(t)), (None, 'f2_confirmation'))
+        self.assertIsNone(G2.on_f2(f2b)[1])
+        # an F1 whose ciphertext to the vehicle static key was replaced by a third party
+        G3 = gw.KemAuthGround(g, v.pk)
+        f1c = G3.start()
+        ct, _ = pqcrypto.mlkem768_enc(v.pk)
+        V3 = gw.KemAuthVehicle(v, g.pk)
+        f2c = V3.on_f1(f1c[:32 + 1184] + ct)
+        self.assertEqual(G3.on_f2(f2c), (None, 'f2_confirmation'))
+        # a vehicle that pinned another ground key does not derive the ground key
+        other = gw.LongTerm('kem_auth')
+        G4 = gw.KemAuthGround(g, v.pk)
+        V4 = gw.KemAuthVehicle(v, other.pk)
+        self.assertEqual(G4.on_f2(V4.on_f1(G4.start())), (None, 'f2_confirmation'))
+
+
 class TestRtlDelays(unittest.TestCase):
     def test_reader(self):
         with tempfile.TemporaryDirectory() as d:
@@ -162,6 +237,26 @@ class TestRtlDelays(unittest.TestCase):
             self.assertEqual(dl['tag_check']['label'], 'estimated from RTL simulated cycles')
             with self.assertRaises(KeyError):
                 c6.rtl_delays(d, 'nosuchcore', 168e6)
+
+    def test_kem_auth_delays_from_the_15_run_files(self):
+        rtl = os.path.join(c6.ROOT, 'rtlsim', 'results')
+        dl = c6.rtl_delays(rtl, 'ibex', 168e6, kem_auth=True)
+        self.assertEqual(dl['kem_auth_vehicle_total']['cycles'], 17391267)
+        self.assertAlmostEqual(dl['kem_auth_vehicle_f2']['cycles'] + dl['kem_auth_vehicle_accept']['cycles'], 17391267)
+        # the accept step is one confirmation tag (42971 cycles) and its comparison
+        self.assertTrue(42971 <= dl['kem_auth_vehicle_accept']['cycles'] < 50000)
+        self.assertAlmostEqual(dl['kem_auth_vehicle_f2']['seconds'], dl['kem_auth_vehicle_f2']['cycles'] / 168e6)
+        with tempfile.TemporaryDirectory() as d:
+            for fn in ('proto_sessions', 'proto_primitives'):
+                with open(os.path.join(rtl, fn + '_runs5.csv')) as f, open(os.path.join(d, fn + '.csv'), 'w') as g:
+                    g.write(f.read())
+            # the per message delays are the same in the five run snapshot and in the 15 run files
+            d5 = c6.rtl_delays(d, 'ibex', 168e6)
+            for k in ('tag_check', 'tag_make'):
+                self.assertEqual(dl[k]['cycles'], d5[k]['cycles'])
+            # the snapshot has no design K rows
+            with self.assertRaises(KeyError):
+                c6.rtl_delays(d, 'ibex', 168e6, kem_auth=True)
 
     def test_paired_seeds(self):
         s = c6.load_settings()
@@ -251,6 +346,56 @@ class TestGatewayRelay(unittest.TestCase):
         self.run_until(r, 3.1, 7.0)
         self.assertIn('ground_give_up', [x[1] for x in r.resyncs])
         self.assertEqual(r.cmds[-1]['dropped'], 'link_up')
+
+    @unittest.skipUnless(HAVE_PQ, 'host builds of mlkem-native and mldsa-native not found')
+    def test_kem_auth_session_and_command(self):
+        sec = c6.security_config('kem_auth')
+        self.assertEqual((sec['design'], sec['rule'], sec['session'], sec['tag_bytes']), ('kem_auth', 'published', True, 13))
+        r = self.session('kem_auth', delays={'kem_auth_vehicle_f2': 0.1, 'kem_auth_vehicle_accept': 0.01,
+                                             'tag_check': 0.001})
+        log = r.hs_log[0]
+        self.assertIsNotNone(log['t_ground_accept'])
+        self.assertGreater(log['t_done'], log['t_ground_accept'])
+        self.assertEqual(r.hs_times[0][2], log['t_done'])
+        self.assertGreaterEqual(r.chan.stats['wire_bytes']['down'], 2224)
+        f = command_long()
+        r._uplink(parse(f), 3.0)
+        self.run_until(r, 3.0, 3.5)
+        self.assertEqual(r.tcp.sent[-1], f)
+        self.assertEqual(r.cmds[-1]['counter'], 0)
+        self.assertEqual(set(r.host), {'ground_f1', 'vehicle_f2', 'ground_f3', 'vehicle_accept', 'ground_tag',
+                                       'vehicle_tag_check'})
+
+    @unittest.skipUnless(HAVE_PQ, 'host builds of mlkem-native and mldsa-native not found')
+    def test_kem_auth_second_handshake_waits_for_the_vehicle(self):
+        # the runner starts a new handshake per mission while the previous session is up; the session counts as
+        # up again only when the vehicle has accepted the new F3, and that handshake time is recorded
+        r = self.session('kem_auth', delays={'kem_auth_vehicle_f2': 0.1, 'kem_auth_vehicle_accept': 0.05})
+        self.assertTrue(r.session_up())
+        r._start_handshake(3.0)
+        t = 3.0
+        seen_ground_only = False
+        while not r.session_up():
+            t += 0.005
+            self.step(r, t)
+            seen_ground_only |= r.g_state == 'up' and r.v_state == 'up'
+        self.assertTrue(seen_ground_only)
+        self.assertEqual(len(r.hs_times), 2)
+        self.assertEqual(r.hs_times[-1][0], r.hs_id)
+        self.assertGreaterEqual(r.hs_times[-1][2] - r.hs_log[-1]['t_ground_accept'], 0.05 - 1e-9)
+
+    @unittest.skipUnless(HAVE_PQ, 'host builds of mlkem-native and mldsa-native not found')
+    def test_kem_auth_f3_give_up_restarts(self):
+        r = self.make('kem_auth')
+        r._start_handshake(0.0)
+        # cut the link after F2 has reached the ground, so that F3 is given up
+        t = 0.0
+        while r.g_state != 'up':
+            t += 0.005
+            self.step(r, t)
+        r.add_outage(t, t + 10.0)
+        self.run_until(r, t, t + 9.0)
+        self.assertIn('retry_after_give_up', [h['reason'] for h in r.hs_log])
 
     @unittest.skipUnless(HAVE_PQ, 'host builds of mlkem-native and mldsa-native not found')
     def test_pqsig_real(self):

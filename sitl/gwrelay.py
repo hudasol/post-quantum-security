@@ -14,6 +14,13 @@ retransmits, commands among them) and is checked under the configured replay rul
 heartbeat and is checked under the published rule. Downlink frames are tagged by the vehicle side gateway and
 checked by the ground side gateway under the published rule.
 
+Design K (kem_auth, three flights, no signatures): the vehicle side gateway answers F1 with F2 after the delay of
+its F2 step; the ground side gateway checks the vehicle tag in F2, accepts (it tags the uplink from then on) and
+sends F3; the vehicle side gateway checks F3 and accepts after the delay of its accept step (it tags the downlink
+from then on). The handshake is complete, and its time is recorded, when the vehicle side gateway accepts (both
+sides then hold the key), which is the point of the hybrid design where the ground accepts F4. A link layer give
+up of F3 makes the ground side gateway start a new handshake, as a give up of any flight does in the hybrid design.
+
 Strict rule resynchronisation: the ground side gateway starts a new handshake when its link layer gives up an
 uplink frame of stream 0, or when the vehicle side gateway sends a resynchronisation request (16 B,
 authenticated with the session key) because a counter above the next one was seen and the next one has not
@@ -61,6 +68,16 @@ class GatewayRelay(lr.Relay):
         self.rs_sent_at = None
         self.gap_wait = (prof['max_retries'] + 1) * prof['rto']
 
+    def session_up(self):
+        """Both sides hold the key of the current handshake. For design K the ground accepts first (on F2), and
+        the vehicle side gateway may still be up with the previous key, so the current handshake must also be
+        complete at the vehicle (recorded in hs_times when it accepts F3)."""
+        with self.lock:
+            up = self.g_state == 'up' and self.v_state == 'up'
+            if self.design == 'kem_auth':
+                up = up and bool(self.hs_times) and self.hs_times[-1][0] == self.hs_id
+            return up
+
     # ------------------------------------------------------------ helpers
     def _host(self, op, host_s, rtl_s=None):
         h = self.host[op]
@@ -86,11 +103,16 @@ class GatewayRelay(lr.Relay):
         self.hs_start = now
         self.hs_reason = reason
         self.session_events.append(('hs_start', now, self.hs_id))
-        self.g_hs = gw.GroundHandshake(self.design, self.lt_g, self.lt_v.pk)
+        if self.design == 'kem_auth':
+            self.g_hs = gw.KemAuthGround(self.lt_g, self.lt_v.pk)
+        else:
+            self.g_hs = gw.GroundHandshake(self.design, self.lt_g, self.lt_v.pk)
         t0 = time.perf_counter()
         f1 = self.g_hs.start()
         self._host('ground_f1', time.perf_counter() - t0)
         self.hs_log.append(dict(hs=self.hs_id, reason=reason, t_start=now, t_done=None, failed=None))
+        if self.design == 'kem_auth':
+            self.hs_log[-1]['t_ground_accept'] = None
         self._submit_flight(0, f1, now)
 
     def _submit_flight(self, k, data, now):
@@ -104,6 +126,9 @@ class GatewayRelay(lr.Relay):
             return
         k, data = m['k'], m['data']
         d = self.design
+        if d == 'kem_auth':
+            self._on_flight_kem_auth(k, data, t)
+            return
         if k == 0:
             self.last_rx['up'] = t
             if self.v_state != 'up':
@@ -152,6 +177,51 @@ class GatewayRelay(lr.Relay):
             self.hs_times.append((self.hs_id, self.hs_start, t))
             self.hs_log[-1]['t_done'] = t
             self.session_events.append(('hs_done', t, self.hs_id))
+
+    def _on_flight_kem_auth(self, k, data, t):
+        """Design K: F1 at the vehicle, F2 at the ground (the ground accepts), F3 at the vehicle (it accepts)."""
+        if k == 0:
+            self.last_rx['up'] = t
+            if self.v_state != 'up':
+                self.v_state = 'hs'
+            self.v_hs = gw.KemAuthVehicle(self.lt_v, self.lt_g.pk)
+            t0 = time.perf_counter()
+            f2 = self.v_hs.on_f1(data)
+            rtl = self.delays.get('kem_auth_vehicle_f2', 0.0)
+            self._host('vehicle_f2', time.perf_counter() - t0, rtl)
+            self._push(t + rtl, 'vflight', (1, f2, self.hs_id))
+        elif k == 1:
+            self.last_rx['down'] = t
+            t0 = time.perf_counter()
+            f3, why = self.g_hs.on_f2(data)
+            self._host('ground_f3', time.perf_counter() - t0)
+            if why is not None:
+                self.session_events.append(('hs_rejected_ground_' + why, t, self.hs_id))
+                return
+            self.g_epoch += 1
+            self.g_keys[self.g_epoch] = dict(key=self.g_hs.key, acc={0: gw.Acceptor('published'), 1: gw.Acceptor('published')})
+            self.g_keys.pop(self.g_epoch - 2, None)
+            self.g_ctr = {0: 0, 1: 0}
+            self.g_state = 'up'
+            self.hs_log[-1]['t_ground_accept'] = t
+            self.session_events.append(('hs_ground_accepted', t, self.hs_id))
+            self._submit_flight(2, f3, t)
+        elif k == 2:
+            self.last_rx['up'] = t
+            t0 = time.perf_counter()
+            why = self.v_hs.on_f3(data)
+            rtl = self.delays.get('kem_auth_vehicle_accept', 0.0)
+            self._host('vehicle_accept', time.perf_counter() - t0, rtl)
+            if why is not None:
+                self.session_events.append(('hs_rejected_vehicle_' + why, t, self.hs_id))
+                return
+            self.v_epoch += 1
+            self.v_keys[self.v_epoch] = dict(key=self.v_hs.key, acc={0: gw.Acceptor(self.sec['rule'], self.sec['window']),
+                                                                    1: gw.Acceptor('published')})
+            self.v_keys.pop(self.v_epoch - 2, None)
+            self.gap_since = None
+            self.rs_sent_at = None
+            self._push(t + rtl, 'vflight', ('accept', None, self.hs_id))
 
     def _resync(self, t, trigger):
         if self.g_state != 'up':
@@ -287,6 +357,9 @@ class GatewayRelay(lr.Relay):
                     self.hs_log[-1]['failed'] = t
                 if self.g_state == 'hs' and m['hs'] == self.hs_id:
                     self._start_handshake(max(t, self.now()), 'retry_after_give_up')
+                elif self.design == 'kem_auth' and m['k'] == 2 and m['hs'] == self.hs_id:
+                    # the ground had accepted, but F3 never reached the vehicle
+                    self._start_handshake(max(t, self.now()), 'retry_after_give_up')
             elif m['kind'] == 'rs':
                 self.rs_sent_at = None
             else:
@@ -413,6 +486,15 @@ class GatewayRelay(lr.Relay):
             if side == 'vflight':
                 k, data, hs = m
                 if hs != self.hs_id:
+                    continue
+                if k == 'accept':
+                    # design K: the vehicle accepts F3 and tags the downlink with the new key from now on
+                    self.v_send_epoch = self.v_epoch
+                    self.v_ctr = {0: 0, 1: 0}
+                    self.v_state = 'up'
+                    self.hs_times.append((self.hs_id, self.hs_start, t))
+                    self.hs_log[-1]['t_done'] = t
+                    self.session_events.append(('hs_done', t, self.hs_id))
                     continue
                 if k == 3:
                     # the vehicle tags the downlink with the new key from the moment it sends F4

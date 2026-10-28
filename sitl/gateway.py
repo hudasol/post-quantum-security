@@ -15,9 +15,19 @@ benchmark of round 6 (rtlsim/proto/sw/proto_bench.c):
   cG = SHAKE256(k || label_cg || th, 16), cV = SHAKE256(k || label_cv || th, 16),
   id = SHAKE256(label_id || long term public key, 32).
 The classical session has no ML-KEM parts and uses Ed25519 signatures (64 B).
+Design K (kem_auth, the PROTO_DESIGN_KEM_AUTH section of rtlsim/proto/sw/proto_bench.c): no signatures; each side
+holds a static ML-KEM-768 key pair whose encapsulation key is pinned at the other side; three flights:
+  F1 ground to vehicle: gx (32 B) || ekE (ground ephemeral ML-KEM-768 encapsulation key, 1184 B) || ctV
+     (encapsulation to the vehicle static key, 1088 B)
+  F2 vehicle to ground: gy (32 B) || ctE (to ekE, 1088 B) || ctG (to the ground static key, 1088 B) || cV (16 B)
+  F3 ground to vehicle: cG (16 B)
+  th = SHAKE256(label_th || idG || idV || F1 || F2 without cV, 32),
+  k = SHAKE256(label_kdf || ss_x25519 || ssV || ssE || ssG || th, 32), cV and cG as above.
+The ground accepts after checking cV and the vehicle after checking cG.
 Per message tag: the 13 B MAVLink 2 signing field (link id, 6 B counter in the timestamp field, 6 B tag), with
 tag = first 6 B of SHA-256(k || frame || link id || counter), the formula of the MAVLink 2 signing guide.
 """
+import hmac
 import math
 
 from cryptography.hazmat.primitives import hashes, serialization
@@ -56,18 +66,29 @@ def ident(pk):
 # ---------------------------------------------------------------- long term keys
 
 class LongTerm:
-    """A long term signing key pair of one side (Ed25519 for the classical session, ML-DSA-44 otherwise)."""
+    """A long term key pair of one side: Ed25519 for the classical session, a static ML-KEM-768 key pair for
+    design K (kem_auth, no signatures), ML-DSA-44 otherwise."""
 
     def __init__(self, design):
         self.design = design
-        if design == 'classical':
+        if design == 'kem_auth':
+            self.pk, self._sk = pqcrypto.mlkem768_keypair()
+        elif design == 'classical':
             self._sk = ed25519.Ed25519PrivateKey.generate()
             self.pk = self._sk.public_key().public_bytes(RAW, RAWPUB)
         else:
             self.pk, self._sk = pqcrypto.mldsa44_keypair()
         self.id = ident(self.pk)
 
+    def decaps(self, ct):
+        """Decapsulation with the static ML-KEM-768 key (design K only)."""
+        if self.design != 'kem_auth':
+            raise ValueError('no static ML-KEM key')
+        return pqcrypto.mlkem768_dec(ct, self._sk)
+
     def sign(self, m):
+        if self.design == 'kem_auth':
+            raise ValueError('design K has no signatures')
         if self.design == 'classical':
             return self._sk.sign(m)
         return pqcrypto.mldsa44_sign(m, self._sk)
@@ -90,7 +111,9 @@ def sig_bytes(design):
 
 
 def flight_sizes(design):
-    """Bytes of F1 to F4 as sent (the same sizes as the RTL benchmark)."""
+    """Bytes of the flights as sent (the same sizes as the RTL benchmark): F1 to F4, or F1 to F3 for design K."""
+    if design == 'kem_auth':
+        return [KA_F1, KA_F2, CONFIRM_BYTES]
     kem = design == 'hybrid'
     f1 = 32 + (pqcrypto.MLKEM768_PK if kem else 0)
     f2 = 32 + (pqcrypto.MLKEM768_CT if kem else 0)
@@ -188,6 +211,97 @@ class VehicleHandshake:
         sig = self.lt.sign(_sign_input(4, self.lt.id, self.id_g, self.th))
         self.accepted = True
         return sig + shake256(self.key + LABEL_CV + self.th, CONFIRM_BYTES), None
+
+
+# ---------------------------------------------------------------- design K (kem_auth)
+
+KA_F1 = 32 + pqcrypto.MLKEM768_PK + pqcrypto.MLKEM768_CT
+KA_F2_BODY = 32 + 2 * pqcrypto.MLKEM768_CT
+KA_F2 = KA_F2_BODY + CONFIRM_BYTES
+
+
+def ka_transcript(id_g, id_v, f1, f2_body):
+    """Transcript hash of design K: both pinned identities, F1 and F2 without its tag."""
+    return shake256(LABEL_TH + id_g + id_v + f1 + f2_body, 32)
+
+
+def ka_kdf(ssx, ss_v, ss_e, ss_g, th):
+    """Session key of design K: X25519 secret, then the ML-KEM secrets of the vehicle static key, the ground
+    ephemeral key and the ground static key, then the transcript hash (kdf4 of the RTL benchmark)."""
+    return shake256(LABEL_KDF + ssx + ss_v + ss_e + ss_g + th, 32)
+
+
+def confirm(key, label, th):
+    return shake256(key + label + th, CONFIRM_BYTES)
+
+
+class KemAuthGround:
+    """Ground side of design K: start() gives F1; on_f2() checks cV and returns (F3, None) or (None, reason)."""
+
+    def __init__(self, lt_g, pk_v_pinned):
+        self.design = 'kem_auth'
+        self.lt = lt_g
+        self.pk_v = pk_v_pinned
+        self.id_v = ident(pk_v_pinned)
+        self.key = None
+        self.accepted = False
+
+    def start(self):
+        self._x = x25519.X25519PrivateKey.generate()
+        gx = self._x.public_key().public_bytes(RAW, RAWPUB)
+        ek, self._dk = pqcrypto.mlkem768_keypair()
+        ct_v, self._ss_v = pqcrypto.mlkem768_enc(self.pk_v)
+        self.f1 = gx + ek + ct_v
+        return self.f1
+
+    def on_f2(self, f2):
+        if len(f2) != KA_F2:
+            return None, 'f2_length'
+        body, tag = f2[:KA_F2_BODY], f2[KA_F2_BODY:]
+        ssx = self._x.exchange(x25519.X25519PublicKey.from_public_bytes(body[:32]))
+        ss_e = pqcrypto.mlkem768_dec(body[32:32 + pqcrypto.MLKEM768_CT], self._dk)
+        ss_g = self.lt.decaps(body[32 + pqcrypto.MLKEM768_CT:])
+        self.th = ka_transcript(self.lt.id, self.id_v, self.f1, body)
+        self.key = ka_kdf(ssx, self._ss_v, ss_e, ss_g, self.th)
+        if not hmac.compare_digest(tag, confirm(self.key, LABEL_CV, self.th)):
+            self.key = None
+            return None, 'f2_confirmation'
+        self.accepted = True
+        return confirm(self.key, LABEL_CG, self.th), None
+
+
+class KemAuthVehicle:
+    """Vehicle side of design K: on_f1() gives F2 (with cV); on_f3() checks cG and returns a reason or None."""
+
+    def __init__(self, lt_v, pk_g_pinned):
+        self.design = 'kem_auth'
+        self.lt = lt_v
+        self.pk_g = pk_g_pinned
+        self.id_g = ident(pk_g_pinned)
+        self.key = None
+        self.accepted = False
+
+    def on_f1(self, f1):
+        if len(f1) != KA_F1:
+            raise ValueError('F1 length')
+        y = x25519.X25519PrivateKey.generate()
+        gy = y.public_key().public_bytes(RAW, RAWPUB)
+        ssx = y.exchange(x25519.X25519PublicKey.from_public_bytes(f1[:32]))
+        ss_v = self.lt.decaps(f1[32 + pqcrypto.MLKEM768_PK:])
+        ct_e, ss_e = pqcrypto.mlkem768_enc(f1[32:32 + pqcrypto.MLKEM768_PK])
+        ct_g, ss_g = pqcrypto.mlkem768_enc(self.pk_g)
+        body = gy + ct_e + ct_g
+        self.th = ka_transcript(self.id_g, self.lt.id, f1, body)
+        self.key = ka_kdf(ssx, ss_v, ss_e, ss_g, self.th)
+        return body + confirm(self.key, LABEL_CV, self.th)
+
+    def on_f3(self, f3):
+        if len(f3) != CONFIRM_BYTES:
+            return 'f3_length'
+        if not hmac.compare_digest(f3, confirm(self.key, LABEL_CG, self.th)):
+            return 'f3_confirmation'
+        self.accepted = True
+        return None
 
 
 # ---------------------------------------------------------------- per message tag

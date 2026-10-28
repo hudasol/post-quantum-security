@@ -1,6 +1,6 @@
 """Configurations of the round 6 software in the loop study with executed cryptography.
 
-Seven configurations on the same flight stack, missions, link profile and paired seeds:
+Eight configurations on the same flight stack, missions, link profile and paired seeds:
   none                no authentication
   signing             MAVLink 2 signing as shipped (flight stack and ground station; key provisioned on a wire)
   classical           classical session: X25519 with Ed25519 transcript signatures by both sides, key
@@ -10,6 +10,10 @@ Seven configurations on the same flight stack, missions, link profile and paired
   hybrid_strict       the same session; strict next counter rule with resynchronisation by a new handshake
   hybrid_cache        the same session; replay cache rule with a window of W counters
   pqsig_real          ML-DSA-44 signature on every command (ground signs, vehicle verifies); no session
+  kem_auth            design K: KEM authentication with static ML-KEM-768 keys pinned on both sides, X25519 plus
+                      ML-KEM-768 ephemeral exchange, no signatures, three flights, then the 13 B tag; published
+                      replay rule (added after the first seven; its vehicle side delays come from the 15 run RTL
+                      files, see rtl_delays)
 The gateway pair executes the cryptography with pinned libraries (sitl/gateway.py). Vehicle side compute
 delays come from RTL simulated cycles (rtlsim/results/proto_sessions.csv and proto_primitives.csv of the round 6
 RTL runs) at the mission study clock and are labelled estimated from RTL simulated cycles.
@@ -24,7 +28,12 @@ from . import config as cfgmod
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 
-CONFIGS = ['none', 'signing', 'classical', 'hybrid_published', 'hybrid_strict', 'hybrid_cache', 'pqsig_real']
+CONFIGS = ['none', 'signing', 'classical', 'hybrid_published', 'hybrid_strict', 'hybrid_cache', 'pqsig_real',
+           'kem_auth']
+# the configurations of the first round 6 runs, and the one added later (design K); analyse_r6 writes the rows of
+# the added configuration after those of the first seven so that the earlier rows stay unchanged
+FIRST = CONFIGS[:7]
+ADDED = ['kem_auth']
 CONFIG_NAMES = {
     'none': '1 no authentication',
     'signing': '2 MAVLink 2 signing as shipped',
@@ -33,13 +42,16 @@ CONFIG_NAMES = {
     'hybrid_strict': '5 hybrid session with F1, strict rule',
     'hybrid_cache': '6 hybrid session with F1, replay cache rule',
     'pqsig_real': '7 ML-DSA-44 signature per command',
+    'kem_auth': '8 KEM authenticated session (design K), published rule',
 }
 SHORT = {'none': 'none', 'signing': 'signing', 'classical': 'classical', 'hybrid_published': 'hybrid pub',
-         'hybrid_strict': 'hybrid strict', 'hybrid_cache': 'hybrid cache', 'pqsig_real': 'ML-DSA-44 cmd'}
-# mission study architecture and replay rule used for the comparison of each configuration
+         'hybrid_strict': 'hybrid strict', 'hybrid_cache': 'hybrid cache', 'pqsig_real': 'ML-DSA-44 cmd',
+         'kem_auth': 'KEM auth'}
+# mission study architecture and replay rule used for the comparison of each configuration; the mission model has
+# no architecture for design K, so kem_auth has none (its comparison row carries no model value)
 STUDY = {'none': ('A', None), 'signing': ('D', None), 'classical': ('A', 'published'),
          'hybrid_published': ('B', 'published'), 'hybrid_strict': ('B', 'strict'), 'hybrid_cache': ('B', 'cache'),
-         'pqsig_real': ('C', None)}
+         'pqsig_real': ('C', None), 'kem_auth': (None, 'published')}
 PROFILES = cfgmod.PROFILES
 
 # Rows of the RTL result files used for the vehicle side delays. Sessions: (design, side, steps) of
@@ -61,6 +73,17 @@ RTL_SPLIT = {
     'hybrid_vehicle_f2': ['x25519_keygen', 'x25519_shared', 'mlkem768_encaps', 'shake256_transcript_hybrid', 'shake256_kdf'],
     'classical_vehicle_f2': ['x25519_keygen', 'x25519_shared', 'shake256_kdf', 'shake256_kdf'],
 }
+
+# Design K (kem_auth): rows of the 15 run RTL files (rtlsim/results/proto_sessions.csv and proto_primitives.csv;
+# the five run snapshots used for the first seven configurations have no design K rows). Design K has no signing
+# rejection loop, so its cycles barely vary between runs. The vehicle total covers the F2 step and the accept step;
+# the F2 step is costed from the primitives (X25519 key generation and shared secret, one ML-KEM-768
+# decapsulation, two encapsulations, the transcript hash over both identities, F1 and F2, the key derivation over
+# five inputs and the vehicle confirmation tag) and the accept step is the rest of the total (the ground
+# confirmation tag and its comparison).
+RTL_KEM_AUTH_ROW = ('kem_auth', 'vehicle', 'vehicle_f2+vehicle_accept')
+RTL_KEM_AUTH_F2 = ['x25519_keygen', 'x25519_shared', 'mlkem768_decaps', 'mlkem768_encaps', 'mlkem768_encaps',
+                   'shake256_transcript_kem_auth', 'shake256_kdf_kem_auth', 'shake256_confirm_tag']
 
 
 def load_settings(path=os.path.join(HERE, 'settings_r6.csv')):
@@ -85,8 +108,11 @@ def _read(path):
         return list(csv.DictReader(f))
 
 
-def rtl_delays(rtl_dir, core, clock_hz, statistic='median'):
-    """Vehicle side delays {name: dict(seconds, cycles, source, core, label)} from the RTL result files."""
+def rtl_delays(rtl_dir, core, clock_hz, statistic='median', kem_auth=False):
+    """Vehicle side delays {name: dict(seconds, cycles, source, core, label)} from the RTL result files.
+
+    kem_auth=True adds the design K delays (kem_auth_vehicle_total, kem_auth_vehicle_f2, kem_auth_vehicle_accept),
+    which need the design K rows of the 15 run files."""
     if statistic != 'median':
         raise ValueError('only the median of the RTL runs is used')
     sess = _read(os.path.join(rtl_dir, 'proto_sessions.csv'))
@@ -114,6 +140,27 @@ def rtl_delays(rtl_dir, core, clock_hz, statistic='median'):
         src[f'{design}_vehicle_f2'] = 'proto_primitives.csv ' + ' + '.join(RTL_SPLIT[f'{design}_vehicle_f2'])
         cyc[f'{design}_vehicle_f4'] = tot - f2
         src[f'{design}_vehicle_f4'] = f'{src[design + "_vehicle_total"]} minus the F2 step'
+    if kem_auth:
+        design, side, steps = RTL_KEM_AUTH_ROW
+        m = [r for r in sess if r['core'].lower() == core.lower() and r['design'] == design and r['side'] == side
+             and r['steps'] == steps]
+        if len(m) != 1:
+            raise KeyError(f'proto_sessions.csv row for kem_auth_vehicle_total: {len(m)} matches (core {core})')
+        tot = float(m[0]['cycles_median'])
+        cyc['kem_auth_vehicle_total'] = tot
+        src['kem_auth_vehicle_total'] = f'proto_sessions.csv {design} {side} {steps}'
+        for op in sorted(set(RTL_KEM_AUTH_F2) - set(pc)):
+            mm = [r for r in prim if r['core'].lower() == core.lower() and r['operation'] == op]
+            if len(mm) != 1:
+                raise KeyError(f'proto_primitives.csv row for {op}: {len(mm)} matches (core {core})')
+            pc[op] = float(mm[0]['cycles_median'])
+        f2 = sum(pc[op] for op in RTL_KEM_AUTH_F2)
+        if not 0 < f2 < tot:
+            raise ValueError(f'kem_auth: F2 step from primitives ({f2}) outside the session total ({tot})')
+        cyc['kem_auth_vehicle_f2'] = f2
+        src['kem_auth_vehicle_f2'] = 'proto_primitives.csv ' + ' + '.join(RTL_KEM_AUTH_F2)
+        cyc['kem_auth_vehicle_accept'] = tot - f2
+        src['kem_auth_vehicle_accept'] = f'{src["kem_auth_vehicle_total"]} minus the F2 step'
     return {k: dict(seconds=v / clock_hz, cycles=v, source=src[k], core=core,
                     label='estimated from RTL simulated cycles') for k, v in cyc.items()}
 
@@ -132,8 +179,8 @@ def security_config(name, delays=None):
     if name == 'pqsig_real':
         base.update(pqsig=True, cmd_extra_bytes=int(p['mldsa44_sig_bytes']), cmd_delay_s=d.get('mldsa44_verify_command', 0.0))
         return base
-    design = 'classical' if name == 'classical' else 'hybrid'
-    rule = 'published' if name in ('classical', 'hybrid_published') else name.split('_')[1]
+    design = {'classical': 'classical', 'kem_auth': 'kem_auth'}.get(name, 'hybrid')
+    rule = 'published' if name in ('classical', 'hybrid_published', 'kem_auth') else name.split('_')[1]
     base.update(design=design, rule=rule, session=True, tag_bytes=int(p['mav_sig_field_bytes']),
                 cmd_delay_s=d.get('tag_check', 0.0))
     return base

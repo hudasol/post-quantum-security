@@ -5,7 +5,8 @@ The flight stack, mission script, command stream, link profile and outage design
 sitl/gwrelay.py, which executes the cryptography with pinned libraries; the seeds are paired across
 configurations (mission i on a profile uses the same seed in every configuration, so outage start, outage
 duration, command phases and the channel loss generator start from the same state); vehicle side compute delays
-come from the RTL simulated cycles of the round 6 RTL runs at the mission study clock.
+come from the RTL simulated cycles of the round 6 RTL runs at the mission study clock (for kem_auth, design K,
+from the 15 run files in rtlsim/results/, which hold its rows).
 
 Usage (repository root, flight stack built by sitl/fetch.sh, libraries by sitl/pqlib/build.sh):
   SITL_PQLIB=<folder> python3 -m sitl.run_missions_r6 --config hybrid_strict --profile sik --rtl <rtl results folder>
@@ -63,12 +64,13 @@ def main(argv=None):
     n_missions = args.missions or int(s['missions_per_config_r6'])
     a = model.load_assumptions()
     prof = cfgmod.link_profile(args.profile)
-    delays = c6.rtl_delays(args.rtl, s['rtl_core'], a['clock_hz'], s['rtl_statistic'])
+    ka = args.config == 'kem_auth'
+    delays = c6.rtl_delays(args.rtl, s['rtl_core'], a['clock_hz'], s['rtl_statistic'], kem_auth=ka)
     other = {}
     for core in ('ibex', 'cv32e40p'):
         if core != s['rtl_core']:
             try:
-                other[core] = c6.rtl_delays(args.rtl, core, a['clock_hz'], s['rtl_statistic'])
+                other[core] = c6.rtl_delays(args.rtl, core, a['clock_hz'], s['rtl_statistic'], kem_auth=ka)
             except (KeyError, ValueError):
                 pass
     sec = c6.security_config(args.config, delays)
