@@ -11,8 +11,9 @@ The models follow `docs/REFERENCE_ARCHITECTURE.md` (sections 1 and 5), the archi
 1. **Command channel (architecture B).** The ground station sends a classical Diffie Hellman share and a fresh KEM public key; the vehicle answers with its own share and a KEM ciphertext; the ground station signs the transcript and confirms the key; both derive the session key from the Diffie Hellman secret, the KEM secret and a hash of the transcript. Commands then carry a MAC tag and a sequence number under that key. A rekey runs a fresh exchange, with a fresh KEM key, protected by the current key. After a link outage the session is torn down and a new handshake starts.
 2. **Fallback with provisioned keys (architecture D, session half).** A key loaded over a wire is used as the signing key in every session.
 3. **Firmware update (architecture D, boot half).** An image and its version are signed with an abstract stateful hash based signature (LMS) and verified by the bootloader, with and without a monotonic version counter in protected storage.
+4. **KEM authenticated session (design K, round 6).** The same hybrid exchange, but each side is authenticated by a static KEM key pinned at the other side and by key confirmation, without signatures (section 10).
 
-In total 24 model files and 86 queries were run: 62 proved, 21 counterexamples and 3 that the tool could not prove. The counterexamples include the control rows in which both components are broken on purpose (section 7), the stated designs before each change (section 6), and the controls and reachability checks of the replay rules (section 9). The session and fallback models allow an unbounded number of sessions; the firmware models allow an unbounded number of devices, each booting three times, with three signed releases. The replay rule models of section 9 state their own bounds on commands per key.
+In total 33 model files and 140 queries were run: 97 proved, 39 counterexamples and 4 that the tool could not prove. The counterexamples include the control rows in which both components are broken on purpose (section 7), the stated designs before each change (section 6), and the controls and reachability checks of the replay rules (section 9), the reachability checks and the settings with a broken KEM of design K (section 10). The session and fallback models allow an unbounded number of sessions; the firmware models allow an unbounded number of devices, each booting three times, with three signed releases. The replay rule models of section 9 state their own bounds on commands per key, and section 11 lists the bounds of every model.
 
 ## 2. Assumptions and what is not modelled
 
@@ -52,6 +53,10 @@ In total 24 model files and 86 queries were run: 62 proved, 21 counterexamples a
 | replay | C1 | With the replay rule of the model, the vehicle accepts a command in a session only if the ground station sent that command in that session, and accepts it at most once. |
 | replay | C2 | With the replay rule of the model, a command sent in one session is never accepted in another session. |
 | replay | R1 | Functional check, not a security property: the vehicle can accept a command whose counter is below the highest counter it accepted before. A counterexample is the expected result. |
+| replay | R0 | Sanity check, not a security property: the vehicle can accept at least one command. A counterexample is the expected result; it shows that C1 and C2 are not proved only because acceptance can never happen. |
+| replay | A1, A2 | The same as A1 and A2 of the session group, asked in the replay rule models with the full handshake. |
+| kemauth | S1 to S4, A1, A2, C1, C2 | The same as the session group, for design K (section 10): authentication by pinned static KEM keys and key confirmation, without signatures. |
+| kemauth | R0 | The same sanity check as R0 of the replay group, in the models of design K. |
 
 ## 5. Results (modelled)
 
@@ -113,33 +118,87 @@ In total 24 model files and 86 queries were run: 62 proved, 21 counterexamples a
 | session_b_stated_fs_longterm | forward secrecy: the ground station signature key given to the attacker after the sessions (phase 1) | S2 | counterexample |  | 54.9 |
 | session_b_stated_fs_longterm | forward secrecy: the ground station signature key given to the attacker after the sessions (phase 1) | S3 | proved |  | 54.9 |
 | session_b_stated_fs_longterm | forward secrecy: the ground station signature key given to the attacker after the sessions (phase 1) | S4 | counterexample |  | 54.9 |
+| session_kemauth | Dolev Yao attacker, no secret given | A1 | proved |  | 117.0 |
+| session_kemauth | Dolev Yao attacker, no secret given | C1 | proved |  | 117.0 |
+| session_kemauth | Dolev Yao attacker, no secret given | C2 | proved |  | 117.0 |
+| session_kemauth | Dolev Yao attacker, no secret given | R0 | counterexample |  | 117.0 |
+| session_kemauth | Dolev Yao attacker, no secret given | S1 | proved |  | 117.0 |
+| session_kemauth | Dolev Yao attacker, no secret given | S2 | proved |  | 117.0 |
+| session_kemauth | Dolev Yao attacker, no secret given | S3 | proved |  | 117.0 |
+| session_kemauth | Dolev Yao attacker, no secret given | S4 | proved |  | 117.0 |
+| session_kemauth_a2 | Dolev Yao attacker, no secret given | A2 | cannot be proved (timeout 1800 s) |  | 1800.0 |
+| session_kemauth_a2_typed_static | Dolev Yao attacker, no secret given; modelling variant: static and ephemeral KEM keys have distinct types, so the attacker cannot offer a pinned static public key in place of the ground ephemeral key | A2 | proved |  | 86.9 |
+| session_kemauth_a2_typed_static | Dolev Yao attacker, no secret given; modelling variant: static and ephemeral KEM keys have distinct types, so the attacker cannot offer a pinned static public key in place of the ground ephemeral key | R0 | counterexample |  | 86.9 |
+| session_kemauth_both_broken | both components broken (control: every Diffie Hellman exponent and every KEM secret key is given to the attacker) | S1 | counterexample |  | 23.9 |
+| session_kemauth_both_broken | both components broken (control: every Diffie Hellman exponent and every KEM secret key is given to the attacker) | S2 | counterexample |  | 23.9 |
+| session_kemauth_both_broken | both components broken (control: every Diffie Hellman exponent and every KEM secret key is given to the attacker) | S3 | counterexample |  | 23.9 |
+| session_kemauth_both_broken | both components broken (control: every Diffie Hellman exponent and every KEM secret key is given to the attacker) | S4 | counterexample |  | 23.9 |
+| session_kemauth_classical_broken | classical component broken: every Diffie Hellman exponent is given to the attacker | S1 | proved |  | 10.5 |
+| session_kemauth_classical_broken | classical component broken: every Diffie Hellman exponent is given to the attacker | S2 | proved |  | 10.5 |
+| session_kemauth_classical_broken | classical component broken: every Diffie Hellman exponent is given to the attacker | S3 | proved |  | 10.5 |
+| session_kemauth_classical_broken | classical component broken: every Diffie Hellman exponent is given to the attacker | S4 | proved |  | 10.5 |
+| session_kemauth_fs_longterm | forward secrecy: both static KEM secret keys given to the attacker after the sessions (phase 1) | S1 | proved |  | 37.2 |
+| session_kemauth_fs_longterm | forward secrecy: both static KEM secret keys given to the attacker after the sessions (phase 1) | S2 | proved |  | 37.2 |
+| session_kemauth_fs_longterm | forward secrecy: both static KEM secret keys given to the attacker after the sessions (phase 1) | S3 | proved |  | 37.2 |
+| session_kemauth_fs_longterm | forward secrecy: both static KEM secret keys given to the attacker after the sessions (phase 1) | S4 | proved |  | 37.2 |
+| session_kemauth_fs_longterm_classical_broken | forward secrecy: static KEM keys given after the sessions, and the classical component broken | S1 | proved |  | 23.4 |
+| session_kemauth_fs_longterm_classical_broken | forward secrecy: static KEM keys given after the sessions, and the classical component broken | S2 | proved |  | 23.4 |
+| session_kemauth_fs_longterm_classical_broken | forward secrecy: static KEM keys given after the sessions, and the classical component broken | S3 | proved |  | 23.4 |
+| session_kemauth_fs_longterm_classical_broken | forward secrecy: static KEM keys given after the sessions, and the classical component broken | S4 | proved |  | 23.4 |
+| session_kemauth_kem_broken | KEM component broken: every KEM secret key, static and ephemeral, is given to the attacker | S1 | counterexample |  | 428.9 |
+| session_kemauth_kem_broken | KEM component broken: every KEM secret key, static and ephemeral, is given to the attacker | S2 | counterexample |  | 428.9 |
+| session_kemauth_kem_broken | KEM component broken: every KEM secret key, static and ephemeral, is given to the attacker | S3 | counterexample |  | 428.9 |
+| session_kemauth_kem_broken | KEM component broken: every KEM secret key, static and ephemeral, is given to the attacker | S4 | counterexample |  | 428.9 |
+| session_kemauth_replay_cache | Dolev Yao attacker, no secret given | A1 | proved |  | 392.6 |
+| session_kemauth_replay_cache | Dolev Yao attacker, no secret given | C1 | proved |  | 392.6 |
+| session_kemauth_replay_cache | Dolev Yao attacker, no secret given | C2 | proved |  | 392.6 |
+| session_kemauth_replay_cache | Dolev Yao attacker, no secret given | R0 | counterexample |  | 392.6 |
+| session_kemauth_replay_cache | Dolev Yao attacker, no secret given | S1 | proved |  | 392.6 |
+| session_kemauth_replay_cache | Dolev Yao attacker, no secret given | S2 | proved |  | 392.6 |
+| session_kemauth_replay_cache | Dolev Yao attacker, no secret given | S3 | proved |  | 392.6 |
+| session_kemauth_replay_cache | Dolev Yao attacker, no secret given | S4 | proved |  | 392.6 |
+| session_replay_cache | Dolev Yao attacker, no secret given | A1 | proved |  | 134.7 |
+| session_replay_cache | Dolev Yao attacker, no secret given | A2 | proved |  | 134.7 |
 | session_replay_cache | Dolev Yao attacker, no secret given | C1 | proved |  | 83.6 |
 | session_replay_cache | Dolev Yao attacker, no secret given | C2 | proved |  | 83.6 |
+| session_replay_cache | Dolev Yao attacker, no secret given | R0 | counterexample |  | 134.7 |
 | session_replay_cache | Dolev Yao attacker, no secret given | S1 | proved |  | 83.6 |
 | session_replay_cache | Dolev Yao attacker, no secret given | S2 | proved |  | 83.6 |
 | session_replay_cache | Dolev Yao attacker, no secret given | S3 | proved |  | 83.6 |
 | session_replay_cache | Dolev Yao attacker, no secret given | S4 | proved |  | 83.6 |
+| session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | A1 | proved |  | 111.9 |
+| session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | A2 | proved |  | 111.9 |
 | session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | C1 | counterexample | non injective form proved | 64.8 |
 | session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | C2 | proved |  | 64.8 |
+| session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | R0 | counterexample |  | 111.9 |
 | session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | S1 | proved |  | 64.8 |
 | session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | S3 | proved |  | 64.8 |
+| session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | A1 | proved |  | 59.1 |
+| session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | A2 | proved |  | 59.1 |
 | session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | C1 | proved |  | 29.3 |
 | session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | C2 | proved |  | 29.3 |
+| session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | R0 | counterexample |  | 59.1 |
 | session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | S1 | proved |  | 29.3 |
 | session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | S3 | proved |  | 29.3 |
+| session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | A1 | proved |  | 119.4 |
+| session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | A2 | proved |  | 119.4 |
 | session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | C1 | counterexample | non injective form proved | 63.1 |
 | session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | C2 | proved |  | 63.1 |
+| session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | R0 | counterexample |  | 119.4 |
 | session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | S1 | proved |  | 63.1 |
 | session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | S3 | proved |  | 63.1 |
 | session_replay_cache_table_sequential | Dolev Yao attacker, no secret given | C1 | cannot be proved | non injective form proved | 126.1 |
 | session_replay_cache_table_sequential | Dolev Yao attacker, no secret given | C2 | proved |  | 126.1 |
+| session_replay_cache_table_sequential | Dolev Yao attacker, no secret given | R0 | counterexample |  | 157.8 |
 | session_replay_cache_table_sequential | Dolev Yao attacker, no secret given | S0 | proved |  | 126.1 |
 | session_replay_window | Dolev Yao attacker, no secret given | C1 | proved |  | 11.0 |
 | session_replay_window | Dolev Yao attacker, no secret given | C2 | proved |  | 11.0 |
+| session_replay_window | Dolev Yao attacker, no secret given | R0 | counterexample |  | 13.3 |
 | session_replay_window | Dolev Yao attacker, no secret given | R1 | counterexample |  | 11.0 |
 | session_replay_window | Dolev Yao attacker, no secret given | S0 | proved |  | 11.0 |
 | session_replay_window_no_restriction | Dolev Yao attacker, no secret given | C1 | cannot be proved | non injective form proved | 2.9 |
 | session_replay_window_no_restriction | Dolev Yao attacker, no secret given | C2 | proved |  | 2.9 |
+| session_replay_window_no_restriction | Dolev Yao attacker, no secret given | R0 | counterexample |  | 2.1 |
 | session_replay_window_no_restriction | Dolev Yao attacker, no secret given | R1 | counterexample |  | 2.9 |
 | session_replay_window_no_restriction | Dolev Yao attacker, no secret given | S0 | proved |  | 2.9 |
 | session_timestamp_rule | Dolev Yao attacker, no secret given | C1 | cannot be proved | non injective form proved | 0.0 |
@@ -227,25 +286,27 @@ Every model allows an unbounded number of sessions in parallel. Command messages
 
 ### 9.3 Results (modelled)
 
-| Model | S0 | S1 | S2 | S3 | S4 | C1 | C2 | R1 | C1 weaker form |
-|---|---|---|---|---|---|---|---|---|---|
-| session_replay_cache | not asked | proved | proved | proved | proved | proved | proved | not asked | none reported |
-| session_replay_cache_fresh_counters | not asked | proved | not asked | proved | not asked | proved | proved | not asked | none reported |
-| session_replay_window | proved | not asked | not asked | not asked | not asked | proved | proved | counterexample | none reported |
-| session_replay_window_no_restriction | proved | not asked | not asked | not asked | not asked | cannot be proved | proved | counterexample | non injective form proved |
-| session_replay_cache_table_sequential | proved | not asked | not asked | not asked | not asked | cannot be proved | proved | not asked | non injective form proved |
-| session_replay_cache_table_concurrent | not asked | proved | not asked | proved | not asked | counterexample | proved | not asked | non injective form proved |
-| session_replay_cache_broken_no_check | not asked | proved | not asked | proved | not asked | counterexample | proved | not asked | non injective form proved |
+| Model | S0 | S1 | S2 | S3 | S4 | A1 | A2 | C1 | C2 | R0 | R1 | C1 weaker form |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| session_replay_cache | not asked | proved | proved | proved | proved | proved | proved | proved | proved | counterexample | not asked | none reported |
+| session_replay_cache_fresh_counters | not asked | proved | not asked | proved | not asked | proved | proved | proved | proved | counterexample | not asked | none reported |
+| session_replay_window | proved | not asked | not asked | not asked | not asked | not asked | not asked | proved | proved | counterexample | counterexample | none reported |
+| session_replay_window_no_restriction | proved | not asked | not asked | not asked | not asked | not asked | not asked | cannot be proved | proved | counterexample | counterexample | non injective form proved |
+| session_replay_cache_table_sequential | proved | not asked | not asked | not asked | not asked | not asked | not asked | cannot be proved | proved | counterexample | not asked | non injective form proved |
+| session_replay_cache_table_concurrent | not asked | proved | not asked | proved | not asked | proved | proved | counterexample | proved | counterexample | not asked | non injective form proved |
+| session_replay_cache_broken_no_check | not asked | proved | not asked | proved | not asked | proved | proved | counterexample | proved | counterexample | not asked | non injective form proved |
 
-_modelled: ProVerif under the Dolev Yao model with abstract primitives. R1 is a reachability check whose expected result is a counterexample; run times are in section 5._
+_modelled: ProVerif under the Dolev Yao model with abstract primitives. R0 and R1 are reachability checks whose expected result is a counterexample (a counterexample means the event is reachable); A1, A2 and R0 were added after a review and run in a second run of the same model files; run times are in section 5._
 
 ### 9.4 Reading
 
-- **Replay cache, indivisible lookup and insert.** C1 proved and C2 proved with 3 commands per key, and C1 proved and C2 proved with any number of commands per key, in the full handshake. The session keys stay secret in the same model (S1 proved, S2 proved, S3 proved, S4 proved), so adding the rule does not disturb the handshake. In the model, a vehicle may therefore accept commands out of order and with gaps, provided it remembers every accepted (session, counter) pair for the life of the key and checks and records a pair in one step.
+- **Replay cache, indivisible lookup and insert.** C1 proved and C2 proved with 3 commands per key, and C1 proved and C2 proved with any number of commands per key, in the full handshake. The session keys stay secret in the same model (S1 proved, S2 proved, S3 proved, S4 proved), and the handshake agreement queries of `session_b_fixed` hold as well (A1 proved, A2 proved; with any number of commands per key A1 proved, A2 proved), so adding the rule does not disturb the handshake. The vehicle does accept commands in these models (R0 counterexample and counterexample, a counterexample meaning that acceptance is reachable), so C1 and C2 are not proved vacuously. In the model, a vehicle may therefore accept commands out of order and with gaps, provided it remembers every accepted (session, counter) pair for the life of the key and checks and records a pair in one step.
 - **Control without the check.** C1 counterexample (weaker form: non injective form proved): the attacker delivers a recorded command twice and the vehicle accepts it twice. The proof of the cache model therefore rests on the table, not on the rest of the model.
 - **Tables, lookup and insert in two steps.** C1 counterexample: two branches of the vehicle both find no entry for the same command, both insert it, and both accept it (the goal statement of the trace is in `formal/results/logs/session_replay_cache_table_concurrent.txt`). A vehicle that checks and records counters on two receive paths at once (two radios, or a check and a store in different tasks) needs the lookup and the insert to be one indivisible step.
-- **Tables, one message after the other.** C1 cannot be proved (weaker form: non injective form proved). The tool ignores how often an action repeats (manual, section 6.2), so the absence of a table entry is not kept in its abstraction. As for the published timestamp rule in section 3, this is a limit of the tool, not a finding about the design, and it is recorded as such.
+- **Tables, one message after the other.** C1 cannot be proved (weaker form: non injective form proved). From the manual: the tool ignores how often an action repeats, because processes are translated into Horn clauses, and this can yield false attacks (manual, section 6.2). The author's reading, which the manual does not state: the abstraction therefore does not keep the fact that a table entry is absent when the else branch of a lookup runs, so a second acceptance of the same command cannot be ruled out (the derivation in the log of this model reaches the same acceptance event at two occurrences). As for the published timestamp rule in section 3, this is a limit of the tool, not a finding about the design, and it is recorded as such.
 - **Bounded window, W = 2.** C1 proved and C2 proved with the restriction, inside the bound of 4 command messages per key. Without the restriction C1 cannot be proved (weaker form: non injective form proved) and C2 proved, for the same reason as the sequential table. R1 counterexample: the vehicle does accept a command older than the highest accepted one, so the model is not the strict rule in disguise.
+- **Reachability in every replay rule model.** R0 results: `session_replay_cache` counterexample, `session_replay_cache_fresh_counters` counterexample, `session_replay_window` counterexample, `session_replay_window_no_restriction` counterexample, `session_replay_cache_table_sequential` counterexample, `session_replay_cache_table_concurrent` counterexample, `session_replay_cache_broken_no_check` counterexample. A counterexample to R0 is the expected result: it is a trace in which the vehicle accepts a command, so every proof of C1 and C2 in this section is about a model in which commands are accepted.
+- **Handshake agreement in the other full handshake models.** In the control `session_replay_cache_broken_no_check` A1 proved and A2 proved; in `session_replay_cache_table_concurrent` A1 proved and A2 proved. The replay rule acts after the handshake, so the handshake results do not depend on it.
 
 ### 9.5 What these proofs do not say about a real replay window
 
@@ -256,12 +317,74 @@ _modelled: ProVerif under the Dolev Yao model with abstract primitives. R1 is a 
 - The restriction is an assumption that the implementation checks and records a pair in one step and keeps the table for the life of the key; the tool does not prove it, and the concurrent table model shows what happens without it.
 - Availability is not covered: a window rejects late commands that a cache would accept, and the cost of that in lost commands is a question for the mission and flight stack studies, not for this model.
 
-## 10. Reproduce
+## 10. KEM authenticated hybrid session (design K)
+
+Round 6 adds to the RTL harness a session in which signatures are replaced by KEM authentication with pinned static keys. This section checks the design of that session in the same way as design B with change F1 (sections 6 and 7). Only the design is modelled; the harness code is not checked by these models.
+
+### 10.1 Messages
+
+The ground station and the vehicle each hold a static ML-KEM-768 key pair; each static public key is pinned at the other side, as the ML-DSA-44 keys are in design B.
+
+1. **F1, ground station to vehicle:** an ephemeral X25519 share, an ephemeral ML-KEM-768 public key, and a ciphertext encapsulated to the static key of the vehicle.
+2. **F2, vehicle to ground station:** the X25519 share of the vehicle, a ciphertext encapsulated to the ephemeral key of the ground station, a ciphertext encapsulated to the static key of the ground station, and the key confirmation tag of the vehicle.
+3. **F3, ground station to vehicle:** the key confirmation tag of the ground station.
+
+The session key is derived from the Diffie Hellman secret, the three KEM secrets and a hash of the transcript, which includes both identities and the flights F1 and F2 without the vehicle tag, as in the KEM authenticated design of the RTL harness (`rtlsim/proto/sw/proto_bench.c`, design kem_auth, with the KEM secrets in the same order: vehicle static, ground ephemeral, ground static). Only the holder of the vehicle static key can compute the first KEM secret, so a valid vehicle tag authenticates the vehicle; only the holder of the ground static key can compute the third, so a valid ground tag authenticates the ground station. Commands then use the per message tag under the strict next sequence rule with one command, a rekey and one command under the new key, as in the session models (`session_kemauth` and its variants), or the replay cache rule of section 9 with 3 commands per key (`session_kemauth_replay_cache`). The rekey is the one of design B: fresh X25519 shares and a fresh ephemeral KEM key, protected by the current key.
+
+Modelling choices specific to design K: decapsulation of a ciphertext that was not made for the key returns a value that only the holder of the secret key can compute (implicit rejection), so the vehicle answers any F1; the KEM secret of the ground station for the ciphertext of F1 is the one it encapsulated. The broken KEM setting gives the attacker every KEM secret key, static and ephemeral, from the start, which is what a break of ML-KEM means for this design; the forward secrecy settings give the two static KEM secret keys to the attacker after all sessions have ended.
+
+Two choices help the tool finish; both are stated in the model files. First, the names that the vehicle draws after it reads F1 are written `new y[]`, the construct of ProVerif that sets which arguments the internal representation of a name has (CHANGES file of the ProVerif source, version 1.90). Each run still draws a fresh value. With the default representation the tool did not finish even S1 on the run host, because the attacker can pass a ciphertext made in one vehicle session into F1 of another session and the representation grows with each pass. In the two settings with a broken KEM the names that the ground station draws after it reads F2 are written the same way: without it those settings did not finish S1, and with it the setting without a broken component did not finish within the time limit, so it is used only there. The author's reading, not checked by the tool, is that this changes the precision of the abstraction and not the set of attacks it covers. Second, A2 is asked in a file of its own: in one file with the other queries it kept the whole file from finishing within the time limit of `formal/run_all.py` (1800 s). A2 is asked twice: in `session_kemauth_a2`, with the same model as the other queries, and in `session_kemauth_a2_typed_static`, in which static and ephemeral KEM keys have distinct types, so the attacker cannot offer a pinned static public key in place of the ground ephemeral key (a restriction of the attacker that the real design does not have; it removes the chains of passes described above).
+
+### 10.2 Results (modelled)
+
+| Setting (design K) | Model | S1 | S2 | S3 | S4 | A1 | A2 | C1 | C2 | R0 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| no secret given (A2 in session_kemauth_a2) | session_kemauth | proved | proved | proved | proved | proved | cannot be proved (timeout 1800 s) | proved | proved | counterexample |
+| no secret given, static keys typed apart (A2 and R0 only) | session_kemauth_a2_typed_static | not asked | not asked | not asked | not asked | not asked | proved | not asked | not asked | counterexample |
+| classical component broken | session_kemauth_classical_broken | proved | proved | proved | proved | not asked | not asked | not asked | not asked | not asked |
+| KEM component broken (static and ephemeral KEM keys) | session_kemauth_kem_broken | counterexample | counterexample | counterexample | counterexample | not asked | not asked | not asked | not asked | not asked |
+| both broken (control) | session_kemauth_both_broken | counterexample | counterexample | counterexample | counterexample | not asked | not asked | not asked | not asked | not asked |
+| static KEM keys stolen later | session_kemauth_fs_longterm | proved | proved | proved | proved | not asked | not asked | not asked | not asked | not asked |
+| static KEM keys stolen later and classical broken | session_kemauth_fs_longterm_classical_broken | proved | proved | proved | proved | not asked | not asked | not asked | not asked | not asked |
+| no secret given, replay cache rule | session_kemauth_replay_cache | proved | proved | proved | proved | proved | not asked | proved | proved | counterexample |
+
+_modelled: ProVerif under the Dolev Yao model with abstract primitives. R0 is a reachability check whose expected result is a counterexample (the vehicle accepts a command); run times are in section 5._
+
+### 10.3 Reading
+
+- **No secret given.** Secrecy of both session keys and of both rekeyed keys (S1 proved, S2 proved, S3 proved, S4 proved), authentication of the ground station to the vehicle as injective agreement on the session (A1 proved) and agreement on each command (C1 proved, C2 proved). R0 counterexample: commands are accepted, so the command results are not vacuous. Authentication of the vehicle to the ground station (A2): cannot be proved (timeout 1800 s) in the same model, and proved when static and ephemeral KEM keys are typed apart (R0 of that variant counterexample). In the model, design K therefore reaches secrecy, authentication of the ground station and agreement on commands without a signature on either side; authentication of the vehicle is shown only under the typing restriction stated in section 10.1, and stays open for the general model. No attack on A2 was found; the tool did not finish.
+- **Classical component broken.** S1 proved, S2 proved, S3 proved, S4 proved: the KEM secrets alone keep the keys secret.
+- **KEM component broken.** S1 counterexample, S2 counterexample, S3 counterexample, S4 counterexample. This differs from design B, where the same setting keeps the keys secret (`session_b_fixed_kem_broken`: S1 proved). In design K the KEM carries the authentication as well as a part of the key: in the goal statement of the trace (`formal/results/logs/session_kemauth_kem_broken.txt`) the attacker sends F1 itself with a KEM key of its own, decapsulates with the stolen static keys, and the vehicle accepts a key that the attacker knows. In design B the ML-DSA-44 signatures keep the exchange authenticated, and the Diffie Hellman secret keeps the key secret. The author's reading, not asked of the tool: the X25519 share of design K still protects against an attacker who breaks ML-KEM but only records the link. Design K is therefore not hybrid against an active attacker who can break ML-KEM, which is a reason to keep a signature, or another authentication that does not rest on ML-KEM, where a break of ML-KEM must be survived.
+- **Both broken (control).** S1 counterexample: the model is not secret by construction.
+- **Static KEM keys stolen later.** S1 proved, S2 proved, S3 proved, S4 proved; with the classical component also broken S1 proved, S2 proved, S3 proved, S4 proved. The ephemeral X25519 shares and the ephemeral KEM key give forward secrecy, and the ephemeral KEM key alone keeps it when the classical component is broken.
+- **Replay cache rule.** With the cache of section 9 in design K: C1 proved, C2 proved, A1 proved, S1 to S4 proved, proved, proved, proved, R0 counterexample (A2 not asked, for the reason given in section 10.1), under the same atomicity restriction as `session_replay_cache` (an assumption, not proved by the tool).
+
+### 10.4 Not covered for design K
+
+- Compromise of one static key only. Whoever holds the static KEM key of the vehicle can compute the first KEM secret, and whoever holds that of the ground station the third; whether a stolen static key of one side lets the attacker pose as the other side to it (key compromise impersonation) was not asked.
+- Everything listed in section 2 as not modelled, including the truncation of the tag, the grace period of a rekey, clocks and the width of the counter.
+- Provisioning, storage and rotation of the static KEM keys.
+
+## 11. Bounds of every model
+
+Every model allows an unbounded number of sessions (or devices) in parallel with the attacker. The bounds below are the work inside one session or one device.
+
+| Models | Handshake | Keys per session | Commands per key | Command messages read per key at the vehicle | Replay rule |
+|---|---|---|---|---|---|
+| session_b_* | design B, as stated or with change F1 | 2 (one rekey) | 1 | 1 | next sequence number |
+| session_kemauth (and its broken and forward secrecy variants) | design K | 2 (one rekey) | 1 | 1 | next sequence number |
+| session_kemauth_replay_cache | design K | 2 (one rekey) | 3 | unbounded | replay cache (restriction) |
+| fallback_d_* | provisioned key, with or without change F2 | 1 | 2 | 2 | next sequence number |
+| session_timestamp_rule | none (abstract key) | 1 | 2 (counters 1 and 3) | 2 | published timestamp rule |
+| session_replay_* | see section 9.2 | 1 or 2 | 3, 4 or unbounded | 4 or unbounded | see section 9.2 |
+| firmware_* | none | not applicable | three signed releases | three boots per device | version counter or none |
+
+## 12. Reproduce
 
 ```
 sh formal/install.sh            # ProVerif pinned version, built outside the repository
 python3 -m formal.build_models
-python3 -m formal.run_all
+python3 -m formal.run_all       # or --models <names> --keep-existing: rerun some models one at a time, keep earlier rows
 python3 -m formal.make_doc
 python3 -m unittest discover -s formal -t .
 ```

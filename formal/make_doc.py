@@ -8,7 +8,7 @@ Every result, time and version in the document is read from the results file.
 import csv
 import os
 
-from formal import build_models
+from formal import build_models, run_all
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -51,6 +51,15 @@ PLAIN = {
                       "session.",
     ("replay", "R1"): "Functional check, not a security property: the vehicle can accept a command whose counter is "
                       "below the highest counter it accepted before. A counterexample is the expected result.",
+    ("replay", "R0"): "Sanity check, not a security property: the vehicle can accept at least one command. A "
+                      "counterexample is the expected result; it shows that C1 and C2 are not proved only because "
+                      "acceptance can never happen.",
+    ("replay", "A1, A2"): "The same as A1 and A2 of the session group, asked in the replay rule models with the full "
+                          "handshake.",
+    ("kemauth", "S1 to S4, A1, A2, C1, C2"): "The same as the session group, for design K (section 10): "
+                                              "authentication by pinned static KEM keys and key confirmation, without "
+                                              "signatures.",
+    ("kemauth", "R0"): "The same sanity check as R0 of the replay group, in the models of design K.",
 }
 
 
@@ -63,6 +72,8 @@ def family(model):
         return "timestamp"
     if model.startswith("session_replay"):
         return "replay"
+    if model.startswith("session_kemauth"):
+        return "kemauth"
     return "session"
 
 
@@ -127,14 +138,18 @@ def build(rows):
     a("3. **Firmware update (architecture D, boot half).** An image and its version are signed with an abstract "
       "stateful hash based signature (LMS) and verified by the bootloader, with and without a monotonic version "
       "counter in protected storage.")
+    a("4. **KEM authenticated session (design K, round 6).** The same hybrid exchange, but each side is "
+      "authenticated by a static KEM key pinned at the other side and by key confirmation, without signatures "
+      "(section 10).")
     a("")
     a(f"In total {len(models)} model files and {n} queries were run: {n_proved} proved, {n_cex} counterexamples "
       f"and {n_cbp} that the tool could not prove. The counterexamples include the control rows in which both "
       "components are broken on purpose (section 7), the stated designs before each change (section 6), and the "
-      "controls and reachability checks of the replay rules (section 9). The "
+      "controls and reachability checks of the replay rules (section 9), the reachability checks and the "
+      "settings with a broken KEM of design K (section 10). The "
       "session and fallback models allow an unbounded number of sessions; the firmware models allow an unbounded "
       "number of devices, each booting three times, with three signed releases. The replay rule models of section 9 "
-      "state their own bounds on commands per key.")
+      "state their own bounds on commands per key, and section 11 lists the bounds of every model.")
     a("")
     a("## 2. Assumptions and what is not modelled")
     a("")
@@ -287,12 +302,15 @@ def build(rows):
       "cover timing, side channels, implementation or denial of service.\"")
     a("")
     replay_section(rows, a)
-    a("## 10. Reproduce")
+    kemauth_section(rows, a)
+    bounds_section(a)
+    a("## 12. Reproduce")
     a("")
     a("```")
     a("sh formal/install.sh            # ProVerif pinned version, built outside the repository")
     a("python3 -m formal.build_models")
-    a("python3 -m formal.run_all")
+    a("python3 -m formal.run_all       # or --models <names> --keep-existing: rerun some models one at a time, "
+      "keep earlier rows")
     a("python3 -m formal.make_doc")
     a("python3 -m unittest discover -s formal -t .")
     a("```")
@@ -401,15 +419,16 @@ def replay_section(rows, a):
     a("")
     a("### 9.3 Results (modelled)")
     a("")
-    qids = ["S0", "S1", "S2", "S3", "S4", "C1", "C2", "R1"]
+    qids = ["S0", "S1", "S2", "S3", "S4", "A1", "A2", "C1", "C2", "R0", "R1"]
     a("| Model | " + " | ".join(qids) + " | C1 weaker form |")
     a("|---|" + "---|" * (len(qids) + 1))
     for m in REPLAY_MODELS:
         cells = [get(rows, m, q) if get(rows, m, q) != "not run" else "not asked" for q in qids]
         a(f"| {m} | " + " | ".join(cells) + f" | {weak_form(rows, m, 'C1')} |")
     a("")
-    a("_modelled: ProVerif under the Dolev Yao model with abstract primitives. R1 is a reachability check whose "
-      "expected result is a counterexample; run times are in section 5._")
+    a("_modelled: ProVerif under the Dolev Yao model with abstract primitives. R0 and R1 are reachability checks "
+      "whose expected result is a counterexample (a counterexample means the event is reachable); A1, A2 and R0 "
+      "were added after a review and run in a second run of the same model files; run times are in section 5._")
     a("")
     a("### 9.4 Reading")
     a("")
@@ -417,9 +436,13 @@ def replay_section(rows, a):
       f"with {n} commands per key, and C1 {get(rows, rf, 'C1')} and C2 {get(rows, rf, 'C2')} with any number of "
       "commands per key, in the full handshake. The session keys stay secret in the same model "
       f"(S1 {get(rows, rc, 'S1')}, S2 {get(rows, rc, 'S2')}, S3 {get(rows, rc, 'S3')}, S4 {get(rows, rc, 'S4')}), "
-      "so adding the rule does not disturb the handshake. In the model, a vehicle may therefore accept commands out "
-      "of order and with gaps, provided it remembers every accepted (session, counter) pair for the life of the key "
-      "and checks and records a pair in one step.")
+      f"and the handshake agreement queries of `session_b_fixed` hold as well (A1 {get(rows, rc, 'A1')}, "
+      f"A2 {get(rows, rc, 'A2')}; with any number of commands per key A1 {get(rows, rf, 'A1')}, "
+      f"A2 {get(rows, rf, 'A2')}), so adding the rule does not disturb the handshake. The vehicle does accept "
+      f"commands in these models (R0 {get(rows, rc, 'R0')} and {get(rows, rf, 'R0')}, a counterexample meaning "
+      "that acceptance is reachable), so C1 and C2 are not proved vacuously. In the model, a vehicle may therefore "
+      "accept commands out of order and with gaps, provided it remembers every accepted (session, counter) pair for "
+      "the life of the key and checks and records a pair in one step.")
     a(f"- **Control without the check.** C1 {get(rows, br, 'C1')} (weaker form: {weak_form(rows, br, 'C1')}): "
       "the attacker delivers a recorded command twice and the vehicle accepts it twice. The proof of the cache "
       "model therefore rests on the table, not on the rest of the model.")
@@ -429,14 +452,25 @@ def replay_section(rows, a):
       "(two radios, or a check and a store in different tasks) needs the lookup and the insert to be one "
       "indivisible step.")
     a(f"- **Tables, one message after the other.** C1 {get(rows, ts, 'C1')} (weaker form: "
-      f"{weak_form(rows, ts, 'C1')}). The tool ignores how often an action repeats (manual, section 6.2), so the "
-      "absence of a table entry is not kept in its abstraction. As for the published timestamp rule in section 3, "
+      f"{weak_form(rows, ts, 'C1')}). From the manual: the tool ignores how often an action repeats, because "
+      "processes are translated into Horn clauses, and this can yield false attacks (manual, section 6.2). The "
+      "author's reading, which the manual does not state: the abstraction therefore does not keep the fact that a "
+      "table entry is absent when the else branch of a lookup runs, so a second acceptance of the same command "
+      "cannot be ruled out (the derivation in the log of this model reaches the same acceptance event at two "
+      "occurrences). As for the published timestamp rule in section 3, "
       "this is a limit of the tool, not a finding about the design, and it is recorded as such.")
     a(f"- **Bounded window, W = {w}.** C1 {get(rows, rw, 'C1')} and C2 {get(rows, rw, 'C2')} with the restriction, "
       f"inside the bound of {nr} command messages per key. Without the restriction C1 {get(rows, rn, 'C1')} "
       f"(weaker form: {weak_form(rows, rn, 'C1')}) and C2 {get(rows, rn, 'C2')}, for the same reason as the "
       f"sequential table. R1 {get(rows, rw, 'R1')}: the vehicle does accept a command older than the highest "
       "accepted one, so the model is not the strict rule in disguise.")
+    a("- **Reachability in every replay rule model.** R0 results: "
+      + ", ".join(f"`{m}` {get(rows, m, 'R0')}" for m in REPLAY_MODELS) +
+      ". A counterexample to R0 is the expected result: it is a trace in which the vehicle accepts a command, so "
+      "every proof of C1 and C2 in this section is about a model in which commands are accepted.")
+    a(f"- **Handshake agreement in the other full handshake models.** In the control `{br}` A1 "
+      f"{get(rows, br, 'A1')} and A2 {get(rows, br, 'A2')}; in `{tc}` A1 {get(rows, tc, 'A1')} and A2 "
+      f"{get(rows, tc, 'A2')}. The replay rule acts after the handshake, so the handshake results do not depend on it.")
     a("")
     a("### 9.5 What these proofs do not say about a real replay window")
     a("")
@@ -460,6 +494,169 @@ def replay_section(rows, a):
     a("")
 
 
+KEMAUTH_SETTINGS = [
+    ("no secret given (A2 in session_kemauth_a2)", "session_kemauth"),
+    ("no secret given, static keys typed apart (A2 and R0 only)", "session_kemauth_a2_typed_static"),
+    ("classical component broken", "session_kemauth_classical_broken"),
+    ("KEM component broken (static and ephemeral KEM keys)", "session_kemauth_kem_broken"),
+    ("both broken (control)", "session_kemauth_both_broken"),
+    ("static KEM keys stolen later", "session_kemauth_fs_longterm"),
+    ("static KEM keys stolen later and classical broken", "session_kemauth_fs_longterm_classical_broken"),
+    ("no secret given, replay cache rule", "session_kemauth_replay_cache"),
+]
+KEMAUTH_MODELS = [m for _, m in KEMAUTH_SETTINGS] + ["session_kemauth_a2"]
+
+
+def kemauth_cell(rows, m, q):
+    if m == "session_kemauth" and q == "A2":
+        m = "session_kemauth_a2"
+    r = get(rows, m, q)
+    return "not asked" if r == "not run" else r
+
+
+def kemauth_section(rows, a):
+    k, kc, kk, kb = ("session_kemauth", "session_kemauth_classical_broken", "session_kemauth_kem_broken",
+                     "session_kemauth_both_broken")
+    kf, kfc, kr = ("session_kemauth_fs_longterm", "session_kemauth_fs_longterm_classical_broken",
+                   "session_kemauth_replay_cache")
+    bk = "session_b_fixed_kem_broken"
+    a("## 10. KEM authenticated hybrid session (design K)")
+    a("")
+    a("Round 6 adds to the RTL harness a session in which signatures are replaced by KEM authentication with "
+      "pinned static keys. This section checks the design of "
+      "that session in the same way as design B with change F1 (sections 6 and 7). Only the design is modelled; "
+      "the harness code is not checked by these models.")
+    a("")
+    a("### 10.1 Messages")
+    a("")
+    a("The ground station and the vehicle each hold a static ML-KEM-768 key pair; each static public key is pinned "
+      "at the other side, as the ML-DSA-44 keys are in design B.")
+    a("")
+    a("1. **F1, ground station to vehicle:** an ephemeral X25519 share, an ephemeral ML-KEM-768 public key, and a "
+      "ciphertext encapsulated to the static key of the vehicle.")
+    a("2. **F2, vehicle to ground station:** the X25519 share of the vehicle, a ciphertext encapsulated to the "
+      "ephemeral key of the ground station, a ciphertext encapsulated to the static key of the ground station, and "
+      "the key confirmation tag of the vehicle.")
+    a("3. **F3, ground station to vehicle:** the key confirmation tag of the ground station.")
+    a("")
+    a("The session key is derived from the Diffie Hellman secret, the three KEM secrets and a hash of the "
+      "transcript, which includes both identities and the flights F1 and F2 without the vehicle tag, as in the KEM "
+      "authenticated design of the RTL harness (`rtlsim/proto/sw/proto_bench.c`, design kem_auth, with the KEM "
+      "secrets in the same order: vehicle static, ground ephemeral, ground static). Only the holder of the vehicle static key can compute the first "
+      "KEM secret, so a valid vehicle tag authenticates the vehicle; only the holder of the ground static key can "
+      "compute the third, so a valid ground tag authenticates the ground station. Commands then use the per message "
+      "tag under the strict next sequence rule with one command, a rekey and one command under the new key, as in "
+      "the session models (`session_kemauth` and its variants), or the replay cache rule of section 9 with "
+      f"{build_models.CMDS_PER_KEY} commands per key (`{kr}`). The rekey is the one of design B: fresh X25519 shares "
+      "and a fresh ephemeral KEM key, protected by the current key.")
+    a("")
+    a("Modelling choices specific to design K: decapsulation of a ciphertext that was not made for the key returns "
+      "a value that only the holder of the secret key can compute (implicit rejection), "
+      "so the vehicle answers any F1; the KEM secret of the ground station for the ciphertext of F1 is the one it "
+      "encapsulated. The broken KEM setting gives the attacker every KEM secret key, static and ephemeral, from the "
+      "start, which is what a break of ML-KEM means for this design; the forward secrecy settings give the two "
+      "static KEM secret keys to the attacker after all sessions have ended.")
+    a("")
+    a("Two choices help the tool finish; both are stated in the model files. First, the names that the vehicle draws "
+      "after it reads F1 are written `new y[]`, the construct of ProVerif that sets which arguments the internal "
+      "representation of a name has (CHANGES file of the ProVerif source, version 1.90). Each run still draws a "
+      "fresh value. With the default representation the tool did not finish even S1 on the run host, because the "
+      "attacker can pass a ciphertext made in one vehicle session into F1 of another session and the representation "
+      "grows with each pass. In the two settings with a broken KEM the names that the ground station draws after it "
+      "reads F2 are written the same way: without it those settings did not finish S1, and with it the setting "
+      "without a broken component did not finish within the time limit, so it is used only there. The author's "
+      "reading, not checked by the tool, is that this changes the precision of "
+      "the abstraction and not the set of attacks it covers. Second, A2 is asked in a file of its own: in one file "
+      f"with the other queries it kept the whole file from finishing within the time limit of `formal/run_all.py` "
+      f"({run_all.TIMEOUT_S} s). A2 is asked twice: in `session_kemauth_a2`, with the same model as the other "
+      "queries, and in `session_kemauth_a2_typed_static`, in which static and ephemeral KEM keys have distinct "
+      "types, so the attacker cannot offer a pinned static public key in place of the ground ephemeral key (a "
+      "restriction of the attacker that the real design does not have; it removes the chains of passes described "
+      "above).")
+    a("")
+    a("### 10.2 Results (modelled)")
+    a("")
+    qids = ["S1", "S2", "S3", "S4", "A1", "A2", "C1", "C2", "R0"]
+    a("| Setting (design K) | Model | " + " | ".join(qids) + " |")
+    a("|---|---|" + "---|" * len(qids))
+    for label, m in KEMAUTH_SETTINGS:
+        cells = [kemauth_cell(rows, m, q) for q in qids]
+        a(f"| {label} | {m} | " + " | ".join(cells) + " |")
+    a("")
+    a("_modelled: ProVerif under the Dolev Yao model with abstract primitives. R0 is a reachability check whose "
+      "expected result is a counterexample (the vehicle accepts a command); run times are in section 5._")
+    a("")
+    a("### 10.3 Reading")
+    a("")
+    a(f"- **No secret given.** Secrecy of both session keys and of both rekeyed keys (S1 {get(rows, k, 'S1')}, "
+      f"S2 {get(rows, k, 'S2')}, S3 {get(rows, k, 'S3')}, S4 {get(rows, k, 'S4')}), authentication of the "
+      f"ground station to the vehicle as injective agreement on the session (A1 {get(rows, k, 'A1')}) and "
+      f"agreement on each command (C1 {get(rows, k, 'C1')}, C2 {get(rows, k, 'C2')}). R0 {get(rows, k, 'R0')}: "
+      "commands are accepted, so the command results are not vacuous. Authentication of the vehicle to the ground "
+      f"station (A2): {get(rows, 'session_kemauth_a2', 'A2')} in the same model, and "
+      f"{get(rows, 'session_kemauth_a2_typed_static', 'A2')} when static and ephemeral KEM keys are typed apart "
+      f"(R0 of that variant {get(rows, 'session_kemauth_a2_typed_static', 'R0')}). In the model, design K therefore "
+      "reaches secrecy, authentication of the ground station and agreement on commands without a signature on "
+      "either side; authentication of the vehicle is shown only under the typing restriction stated in section "
+      "10.1, and stays open for the general model. No attack on A2 was found; the tool did not finish.")
+    a(f"- **Classical component broken.** S1 {get(rows, kc, 'S1')}, S2 {get(rows, kc, 'S2')}, "
+      f"S3 {get(rows, kc, 'S3')}, S4 {get(rows, kc, 'S4')}: the KEM secrets alone keep the keys secret.")
+    a(f"- **KEM component broken.** S1 {get(rows, kk, 'S1')}, S2 {get(rows, kk, 'S2')}, S3 {get(rows, kk, 'S3')}, "
+      f"S4 {get(rows, kk, 'S4')}. This differs from design B, where the same setting keeps the keys secret "
+      f"(`{bk}`: S1 {get(rows, bk, 'S1')}). In design K the KEM carries the authentication as well as a part of "
+      "the key: in the goal statement of the trace (`formal/results/logs/session_kemauth_kem_broken.txt`) the "
+      "attacker sends F1 itself with a KEM key of its own, decapsulates with the stolen static keys, and the vehicle "
+      "accepts a key that the attacker knows. In design B the ML-DSA-44 signatures keep the exchange authenticated, "
+      "and the Diffie Hellman secret keeps the key secret. The author's reading, not asked of the tool: the X25519 "
+      "share of design K still protects against an attacker who breaks ML-KEM but only records the link. Design K "
+      "is therefore not hybrid against an active attacker who can break ML-KEM, which is a reason to keep a "
+      "signature, or another authentication that does not rest on ML-KEM, where a break of ML-KEM must be "
+      "survived.")
+    a(f"- **Both broken (control).** S1 {get(rows, kb, 'S1')}: the model is not secret by construction.")
+    a(f"- **Static KEM keys stolen later.** S1 {get(rows, kf, 'S1')}, S2 {get(rows, kf, 'S2')}, "
+      f"S3 {get(rows, kf, 'S3')}, S4 {get(rows, kf, 'S4')}; with the classical component also broken "
+      f"S1 {get(rows, kfc, 'S1')}, S2 {get(rows, kfc, 'S2')}, S3 {get(rows, kfc, 'S3')}, "
+      f"S4 {get(rows, kfc, 'S4')}. The ephemeral X25519 shares and the ephemeral KEM key give forward secrecy, "
+      "and the ephemeral KEM key alone keeps it when the classical component is broken.")
+    a(f"- **Replay cache rule.** With the cache of section 9 in design K: C1 {get(rows, kr, 'C1')}, "
+      f"C2 {get(rows, kr, 'C2')}, A1 {get(rows, kr, 'A1')}, S1 to S4 {get(rows, kr, 'S1')}, "
+      f"{get(rows, kr, 'S2')}, {get(rows, kr, 'S3')}, {get(rows, kr, 'S4')}, R0 {get(rows, kr, 'R0')} (A2 not "
+      "asked, for the reason given in section 10.1), under the same atomicity restriction as `session_replay_cache` (an assumption, "
+      "not proved by the tool).")
+    a("")
+    a("### 10.4 Not covered for design K")
+    a("")
+    a("- Compromise of one static key only. Whoever holds the static KEM key of the vehicle can compute the first "
+      "KEM secret, and whoever holds that of the ground station the third; whether a stolen static key of one side "
+      "lets the attacker pose as the other side to it (key compromise impersonation) was not asked.")
+    a("- Everything listed in section 2 as not modelled, including the truncation of the tag, the grace period of "
+      "a rekey, clocks and the width of the counter.")
+    a("- Provisioning, storage and rotation of the static KEM keys.")
+    a("")
+
+
+def bounds_section(a):
+    n, na, nr = build_models.CMDS_PER_KEY, build_models.ABSTRACT_CMDS_PER_KEY, build_models.SEQ_READS_PER_KEY
+    a("## 11. Bounds of every model")
+    a("")
+    a("Every model allows an unbounded number of sessions (or devices) in parallel with the attacker. The bounds "
+      "below are the work inside one session or one device.")
+    a("")
+    a("| Models | Handshake | Keys per session | Commands per key | Command messages read per key at the vehicle | "
+      "Replay rule |")
+    a("|---|---|---|---|---|---|")
+    a("| session_b_* | design B, as stated or with change F1 | 2 (one rekey) | 1 | 1 | next sequence number |")
+    a("| session_kemauth (and its broken and forward secrecy variants) | design K | 2 (one rekey) | 1 | 1 | "
+      "next sequence number |")
+    a(f"| session_kemauth_replay_cache | design K | 2 (one rekey) | {n} | unbounded | replay cache (restriction) |")
+    a("| fallback_d_* | provisioned key, with or without change F2 | 1 | 2 | 2 | next sequence number |")
+    a("| session_timestamp_rule | none (abstract key) | 1 | 2 (counters 1 and 3) | 2 | published timestamp rule |")
+    a(f"| session_replay_* | see section 9.2 | 1 or 2 | {n}, {na} or unbounded | {nr} or unbounded | "
+      "see section 9.2 |")
+    a("| firmware_* | none | not applicable | three signed releases | three boots per device | version counter or none |")
+    a("")
+
+
 EXPECTED = {
     ("session_b_stated", "A2"): "counterexample", ("session_b_stated", "S2"): "counterexample",
     ("session_b_stated", "A1"): "proved", ("session_b_stated", "S1"): "proved", ("session_b_stated", "C1"): "proved",
@@ -480,6 +677,29 @@ EXPECTED = {
     ("session_replay_window", "C1"): "proved", ("session_replay_window", "C2"): "proved",
     ("session_replay_window", "R1"): "counterexample",
     ("session_replay_window_no_restriction", "C1"): "cannot be proved",
+    # sanity queries added after the round 6 review
+    ("session_replay_cache", "R0"): "counterexample", ("session_replay_cache", "A1"): "proved",
+    ("session_replay_cache", "A2"): "proved", ("session_replay_cache_fresh_counters", "A1"): "proved",
+    ("session_replay_cache_fresh_counters", "A2"): "proved",
+    ("session_replay_cache_fresh_counters", "R0"): "counterexample",
+    ("session_replay_cache_broken_no_check", "R0"): "counterexample",
+    ("session_replay_cache_table_concurrent", "R0"): "counterexample",
+    ("session_replay_cache_table_sequential", "R0"): "counterexample",
+    ("session_replay_window", "R0"): "counterexample", ("session_replay_window_no_restriction", "R0"): "counterexample",
+    # design K
+    ("session_kemauth", "S1"): "proved", ("session_kemauth", "S2"): "proved", ("session_kemauth", "S3"): "proved",
+    ("session_kemauth", "S4"): "proved", ("session_kemauth", "A1"): "proved", ("session_kemauth", "C1"): "proved",
+    ("session_kemauth", "C2"): "proved", ("session_kemauth", "R0"): "counterexample",
+    ("session_kemauth_a2", "A2"): f"cannot be proved (timeout {run_all.TIMEOUT_S} s)",
+    ("session_kemauth_a2_typed_static", "A2"): "proved", ("session_kemauth_a2_typed_static", "R0"): "counterexample",
+    ("session_kemauth_classical_broken", "S1"): "proved", ("session_kemauth_classical_broken", "S2"): "proved",
+    ("session_kemauth_kem_broken", "S1"): "counterexample", ("session_kemauth_kem_broken", "S2"): "counterexample",
+    ("session_kemauth_both_broken", "S1"): "counterexample",
+    ("session_kemauth_fs_longterm", "S1"): "proved", ("session_kemauth_fs_longterm", "S2"): "proved",
+    ("session_kemauth_fs_longterm_classical_broken", "S1"): "proved",
+    ("session_kemauth_fs_longterm_classical_broken", "S2"): "proved",
+    ("session_kemauth_replay_cache", "C1"): "proved", ("session_kemauth_replay_cache", "C2"): "proved",
+    ("session_kemauth_replay_cache", "R0"): "counterexample",
 }
 
 
