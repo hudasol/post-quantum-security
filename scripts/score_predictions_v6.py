@@ -110,7 +110,7 @@ def main():
          "Totals: " + ", ".join(f"{counts.get(k, 0)} {k}" for k in ("hit", "between", "miss", "not scored")) + f", of {len(S)}.", "",
          "| ID | verdict | evidence |", "|---|---|---|"] + [f"| {k} | {v} | {e} |" for k, (v, e) in S.items()]
     (ROOT / "docs/PREDICTIONS_V6_SCORES.md").write_text("\n".join(L) + "\n", encoding="utf-8")
-    pd.DataFrame([{"id": k, "verdict": v, "evidence": e, "label": "derived from published"} for k, (v, e) in S.items()]).to_csv(
+    pd.DataFrame([{"id": k, "verdict": v, "evidence": e, "label": "host measured"} for k, (v, e) in S.items()]).to_csv(
         ROOT / "data/predictions_v6_scores.csv", index=False, lineterminator="\n")
     print(L[8])
 
