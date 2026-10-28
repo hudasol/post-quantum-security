@@ -2209,7 +2209,55 @@ Labels used across the repository: published, host measured, emulated, estimated
 | ratio_to_asm_ci95_high | number | 3.598 |
 | magnitude_vs_asm | text | same order of magnitude |
 
+### `rtlsim/results/proto_decomposition.csv`
+
+16 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | RTL simulated |
+| core | text | ibex |
+| design | text | classical |
+| side | text | vehicle |
+| measured_cycles_median | number | 15454894 |
+| measured_ci95_low | number | 15435470.0 |
+| measured_ci95_high | number | 15493668.0 |
+| measured_min | number | 15311975 |
+| measured_max | number | 15542431 |
+| primitive_sum_cycles | number | 15458878.0 |
+| primitive_sum_sign_min | number | 15458878.0 |
+| primitive_sum_sign_max | number | 15458878.0 |
+| residual_cycles | number | -3984.0 |
+| sum_over_measured_ratio | number | 1.0003 |
+| has_mldsa44_sign | text | False |
+| components | text | x25519_keygen x1 = 3920681; x25519_shared x1 = 3920680; shak... |
+
 ### `rtlsim/results/proto_primitives.csv`
+
+18 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | RTL simulated |
+| core | text | ibex |
+| operation | text | x25519_keygen |
+| library | text | Monocypher |
+| input | text | public key from a 32 B secret (crypto_x25519_public_key) |
+| cycles_median | number | 3920681 |
+| cycles_ci95_low | number | 3920681.0 |
+| cycles_ci95_high | number | 3920681.0 |
+| cycles_min | number | 3920681 |
+| cycles_max | number | 3920681 |
+| n_runs | number | 15 |
+| peak_stack_bytes | number | 808 |
+| stack_saturated | text | False |
+| correctness | text | calls succeeded 15/15; related checks passed 15/15 |
+| log_complete | text | True |
+| seed_first | number | 20261021 |
+| round5_cycles_median | number | 2270194.0 |
+| this_over_round5 | number | 0.9976 |
+
+### `rtlsim/results/proto_primitives_runs5.csv`
 
 18 columns.
 
@@ -2234,7 +2282,57 @@ Labels used across the repository: published, host measured, emulated, estimated
 | round5_cycles_median | number | 2270194.0 |
 | this_over_round5 | number | 0.9978 |
 
+### `rtlsim/results/proto_ratios.csv`
+
+11 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | RTL simulated |
+| core | text | ibex |
+| side | text | vehicle |
+| numerator | text | hybrid_f1 |
+| denominator | text | classical |
+| basis | text | session medians |
+| ratio | number | 1.8885 |
+| ci95_low | number | 1.7173 |
+| ci95_high | number | 1.9089 |
+| n_runs_numerator | number | 15 |
+| n_runs_denominator | number | 15 |
+
 ### `rtlsim/results/proto_sessions.csv`
+
+25 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | RTL simulated |
+| core | text | ibex |
+| design | text | classical |
+| unit | text | session start |
+| side | text | vehicle |
+| steps | text | vehicle_f2+vehicle_f4 |
+| cycles_median | number | 15454894 |
+| cycles_ci95_low | number | 15435470.0 |
+| cycles_ci95_high | number | 15493668.0 |
+| cycles_min | number | 15311975 |
+| cycles_max | number | 15542431 |
+| n_runs | number | 15 |
+| peak_stack_bytes | number | 2104 |
+| stack_saturated | text | False |
+| text_bytes_host_measured | number | 115350 |
+| data_bytes_host_measured | number | 0 |
+| bss_bytes_host_measured | number | 728 |
+| text_bytes_gc_host_measured | number | 44724 |
+| bytes_per_flight | text | F1 ground_to_vehicle 32; F2 vehicle_to_ground 32; F3 ground_... |
+| bytes_total | number | 224 |
+| correctness | text | steps succeeded 15/15; checks passed 63/63 |
+| runs_correct | number | 15 |
+| log_complete | text | True |
+| seed_first | number | 20261021 |
+| cycles_median_first5_runs | number | 15430181 |
+
+### `rtlsim/results/proto_sessions_runs5.csv`
 
 24 columns.
 
@@ -2275,9 +2373,9 @@ Labels used across the repository: published, host measured, emulated, estimated
 | core | text | ibex |
 | image | text | primitives |
 | variant | text | timing |
-| text_bytes | number | 173894 |
+| text_bytes | number | 175202 |
 | data_bytes | number | 0 |
-| bss_bytes | number | 13512 |
+| bss_bytes | number | 20360 |
 
 ### `rtlsim/results/proto_time_estimated.csv`
 
@@ -2291,7 +2389,7 @@ Labels used across the repository: published, host measured, emulated, estimated
 | unit | text | session start |
 | side | text | vehicle |
 | clock_mhz | number | 64 |
-| time_ms | number | 241.0966 |
+| time_ms | number | 241.4827 |
 | basis | text | cycles_median of rtlsim/results/proto_sessions.csv divided b... |
 
 ### `data/reference_profiles.csv`
