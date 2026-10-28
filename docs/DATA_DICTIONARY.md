@@ -1527,6 +1527,140 @@ Labels used across the repository: published, host measured, emulated, estimated
 | seed | number | 20261020 |
 | label | text | estimated |
 
+### `mission/results/replay_base.csv`
+
+32 columns.
+
+| column | type | example |
+|---|---|---|
+| vehicle | text | drone |
+| arch | text | A |
+| link | text | sik |
+| tag | text | base |
+| config_key | text | base/{} |
+| runs | number | 1000 |
+| seed | number | 20261020 |
+| replay_rule | text | published |
+| replay_window | number | 1.0 |
+| base_window | number | 1 |
+| deadline_s | number | 0.5 |
+| avail_mean | number | 0.9916434782608696 |
+| avail_mean_lo | number | 0.9909724275362319 |
+| avail_mean_hi | number | 0.9923275362318841 |
+| avail_median | number | 0.9956521739130435 |
+| diff_vs_published_mean | number | 0.0 |
+| diff_vs_published_lo | number | 0.0 |
+| diff_vs_published_hi | number | 0.0 |
+| share_runs_lower_than_published | number | 0.0 |
+| rejected_per_run_mean | number | 0.0 |
+| given_up_per_run_mean | number | 3.144 |
+| resync_per_run_mean | number | 0.0 |
+| stall_s_per_run_mean | number | 0.0 |
+| commands_per_run_mean | number | 689.186 |
+| label | text | estimated |
+| avail_mean_0.1 | number | 0.9717797101449276 |
+| avail_mean_0.25 | number | 0.9916333333333335 |
+| avail_mean_0.5 | number | 0.9916434782608696 |
+| avail_mean_1 | number | 0.9916434782608696 |
+| avail_mean_2 | number | 0.9916434782608696 |
+| avail_mean_5 | number | 0.9916434782608696 |
+| avail_mean_10 | number | 0.9916434782608696 |
+
+### `mission/results/replay_loss_sweep.csv`
+
+33 columns.
+
+| column | type | example |
+|---|---|---|
+| vehicle | text | drone |
+| arch | text | B |
+| link | text | sik |
+| tag | text | sweep:frame_loss |
+| config_key | text | sweep:frame_loss/{"frame_loss": 0.0} |
+| runs | number | 1000 |
+| seed | number | 20261020 |
+| replay_rule | text | published |
+| replay_window | number | 1.0 |
+| base_window | number | 1 |
+| deadline_s | number | 0.5 |
+| avail_mean | number | 0.9915101449275363 |
+| avail_mean_lo | number | 0.9908072101449277 |
+| avail_mean_hi | number | 0.9921985869565217 |
+| avail_median | number | 0.9956521739130435 |
+| diff_vs_published_mean | number | 0.0 |
+| diff_vs_published_lo | number | 0.0 |
+| diff_vs_published_hi | number | 0.0 |
+| share_runs_lower_than_published | number | 0.0 |
+| rejected_per_run_mean | number | 0.0 |
+| given_up_per_run_mean | number | 3.074 |
+| resync_per_run_mean | number | 0.0 |
+| stall_s_per_run_mean | number | 0.0 |
+| commands_per_run_mean | number | 688.923 |
+| label | text | estimated |
+| over_frame_loss | number | 0.0 |
+| avail_mean_0.1 | number | 0.9915101449275363 |
+| avail_mean_0.25 | number | 0.9915101449275363 |
+| avail_mean_0.5 | number | 0.9915101449275363 |
+| avail_mean_1 | number | 0.9915101449275363 |
+| avail_mean_2 | number | 0.9915101449275363 |
+| avail_mean_5 | number | 0.9915101449275363 |
+| avail_mean_10 | number | 0.9915101449275363 |
+
+### `mission/results/replay_outage_sweep.csv`
+
+33 columns.
+
+| column | type | example |
+|---|---|---|
+| vehicle | text | drone |
+| arch | text | A |
+| link | text | sik |
+| tag | text | sweep:outage_rate_per_h |
+| config_key | text | sweep:outage_rate_per_h/{"outage_rate_per_h": 0.0} |
+| runs | number | 1000 |
+| seed | number | 20261020 |
+| replay_rule | text | published |
+| replay_window | number | 1.0 |
+| base_window | number | 1 |
+| deadline_s | number | 0.5 |
+| avail_mean | number | 1.0 |
+| avail_mean_lo | number | 1.0 |
+| avail_mean_hi | number | 1.0 |
+| avail_median | number | 1.0 |
+| diff_vs_published_mean | number | 0.0 |
+| diff_vs_published_lo | number | 0.0 |
+| diff_vs_published_hi | number | 0.0 |
+| share_runs_lower_than_published | number | 0.0 |
+| rejected_per_run_mean | number | 0.0 |
+| given_up_per_run_mean | number | 0.0 |
+| resync_per_run_mean | number | 0.0 |
+| stall_s_per_run_mean | number | 0.0 |
+| commands_per_run_mean | number | 690.0 |
+| label | text | estimated |
+| over_outage_rate_per_h | number | 0.0 |
+| avail_mean_0.1 | number | 0.9804086956521738 |
+| avail_mean_0.25 | number | 0.999995652173913 |
+| avail_mean_0.5 | number | 1.0 |
+| avail_mean_1 | number | 1.0 |
+| avail_mean_2 | number | 1.0 |
+| avail_mean_5 | number | 1.0 |
+| avail_mean_10 | number | 1.0 |
+
+### `mission/results/replay_regeneration_check.csv`
+
+8 columns.
+
+| column | type | example |
+|---|---|---|
+| vehicle | text | drone |
+| arch | text | A |
+| link | text | sik |
+| config_key | text | base/{} |
+| replay_avail_mean | number | 0.9916434782608696 |
+| earlier_avail_mean | number | 0.9916434782608696 |
+| identical | text | True |
+| label | text | estimated |
+
 ### `mission/results/sweeps.csv`
 
 67 columns.
@@ -2074,6 +2208,91 @@ Labels used across the repository: published, host measured, emulated, estimated
 | ratio_to_asm_ci95_low | number | 3.597 |
 | ratio_to_asm_ci95_high | number | 3.598 |
 | magnitude_vs_asm | text | same order of magnitude |
+
+### `rtlsim/results/proto_primitives.csv`
+
+18 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | RTL simulated |
+| core | text | ibex |
+| operation | text | x25519_keygen |
+| library | text | Monocypher |
+| input | text | public key from a 32 B secret (crypto_x25519_public_key) |
+| cycles_median | number | 3920681 |
+| cycles_ci95_low | number | 3920681.0 |
+| cycles_ci95_high | number | 3920681.0 |
+| cycles_min | number | 3920681 |
+| cycles_max | number | 3920681 |
+| n_runs | number | 5 |
+| peak_stack_bytes | number | 808 |
+| stack_saturated | text | False |
+| correctness | text | calls succeeded 5/5; related checks passed 5/5 |
+| log_complete | text | True |
+| seed_first | number | 20261021 |
+| round5_cycles_median | number | 2270194.0 |
+| this_over_round5 | number | 0.9978 |
+
+### `rtlsim/results/proto_sessions.csv`
+
+24 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | RTL simulated |
+| core | text | ibex |
+| design | text | classical |
+| unit | text | session start |
+| side | text | vehicle |
+| steps | text | vehicle_f2+vehicle_f4 |
+| cycles_median | number | 15430181 |
+| cycles_ci95_low | number | 15311975.0 |
+| cycles_ci95_high | number | 15463106.0 |
+| cycles_min | number | 15311975 |
+| cycles_max | number | 15463106 |
+| n_runs | number | 5 |
+| peak_stack_bytes | number | 2104 |
+| stack_saturated | text | False |
+| text_bytes_host_measured | number | 115350 |
+| data_bytes_host_measured | number | 0 |
+| bss_bytes_host_measured | number | 728 |
+| text_bytes_gc_host_measured | number | 44724 |
+| bytes_per_flight | text | F1 ground_to_vehicle 32; F2 vehicle_to_ground 32; F3 ground_... |
+| bytes_total | number | 224 |
+| correctness | text | steps succeeded 5/5; checks passed 23/23 |
+| runs_correct | number | 5 |
+| log_complete | text | True |
+| seed_first | number | 20261021 |
+
+### `rtlsim/results/proto_sizes.csv`
+
+7 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | host measured |
+| core | text | ibex |
+| image | text | primitives |
+| variant | text | timing |
+| text_bytes | number | 173894 |
+| data_bytes | number | 0 |
+| bss_bytes | number | 13512 |
+
+### `rtlsim/results/proto_time_estimated.csv`
+
+8 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | estimated |
+| core | text | ibex |
+| design | text | classical |
+| unit | text | session start |
+| side | text | vehicle |
+| clock_mhz | number | 64 |
+| time_ms | number | 241.0966 |
+| basis | text | cycles_median of rtlsim/results/proto_sessions.csv divided b... |
 
 ### `data/reference_profiles.csv`
 
