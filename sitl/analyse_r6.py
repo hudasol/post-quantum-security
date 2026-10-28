@@ -150,6 +150,9 @@ def reorder_stats(arr):
     return pd.DataFrame(rows)
 
 
+DEADLINE_SWEEP = (0.25, 0.5, 0.55, 0.75, 1.0, 2.0)
+
+
 def analyse(raw=RAW, res=RES):
     a = model.load_assumptions()
     s = c6.load_settings()
@@ -292,6 +295,20 @@ def analyse(raw=RAW, res=RES):
     pd.DataFrame(comp).to_csv(os.path.join(res, 'comparison.csv'), index=False, float_format='%.6g')
     write_environment(runs, res)
     from . import plots_r6
+    # Sensitivity of the acknowledged share to the command deadline (review round 6, R6A06): the same statistic as
+    # availability_rt_all, recomputed for other deadlines from the same raw runs.
+    dsw = []
+    for d in DEADLINE_SWEEP:
+        cd, _ = prepare(cmds, mis, d)
+        for p in c6.PROFILES:
+            for ki, k in enumerate(c6.CONFIGS):
+                g = cd[(cd.profile == p) & (cd.config == k)]
+                if len(g) == 0:
+                    continue
+                v, lo, hi = a5.cluster_boot(g, share('accepted_rt'), seed0 + 2000 + 10 * ki + int(d * 100))
+                dsw.append(dict(profile=p, config=k, deadline_s=d, availability_rt_all=v, ci_lo=lo, ci_hi=hi,
+                                label='SITL measured'))
+    pd.DataFrame(dsw).to_csv(os.path.join(res, 'deadline_sweep.csv'), index=False, float_format='%.6g')
     plots_r6.all_figures(c, summ, pr, m, res, deadline)
     print('wrote', res)
     return 0
