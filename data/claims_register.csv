@@ -337,7 +337,7 @@ proposal_brief_months,docs/PROPOSAL_BRIEF.md,12,12.0,data/proposal/plan.csv,end_
 proposal_brief_buy,docs/PROPOSAL_BRIEF.md,0,0.0,data/proposal/equipment.csv,purchase_count,,sum,0.005,planned,,0
 proposal_brief_trl_now_c1,docs/PROPOSAL_BRIEF.md,2,2.0,data/proposal/readiness.csv,trl_now,"id == ""C1""",value,0.005,estimated,,"2 now, TRL"
 proposal_brief_trl_end_c1,docs/PROPOSAL_BRIEF.md,3,3.0,data/proposal/readiness.csv,trl_end,"id == ""C1""",value,0.005,estimated,,3 planned at
-cf_runs,docs/conference/paper.tex,15,15.0,rtlsim/results/proto_sessions.csv,n_runs,"unit == ""session start""",min,0.005,RTL simulated,,15 runs) and
+cf_runs,docs/conference/paper.tex,15,15.0,rtlsim/results/proto_sessions.csv,n_runs,"unit == ""session start""",min,0.005,RTL simulated,,"15 runs, 5"
 cf_runs_tag,docs/conference/paper.tex,5,5.0,rtlsim/results/proto_sessions.csv,n_runs,"design == ""mavlink_tag""",max,0.005,RTL simulated,,5 for the
 cf_ibex_classical_vehicle,docs/conference/paper.tex,15.5,15454894.0,rtlsim/results/proto_sessions.csv,cycles_median,"core == ""ibex"" and design == ""classical"" and side == ""vehicle"" and unit == ""session start""",value,0.005,RTL simulated,displayed as {:.1f} x 1e-06,
 cf_ibex_classical_ground,docs/conference/paper.tex,15.4,15445645.0,rtlsim/results/proto_sessions.csv,cycles_median,"core == ""ibex"" and design == ""classical"" and side == ""ground"" and unit == ""session start""",value,0.005,RTL simulated,displayed as {:.1f} x 1e-06,
@@ -414,28 +414,25 @@ cf_code_hybrid_f1,docs/conference/paper.tex,66.5,66548.0,rtlsim/results/proto_si
 cf_code_kem_auth,docs/conference/paper.tex,46.0,46036.0,rtlsim/results/proto_sizes.csv,text_bytes,"core == ""cv32e40p"" and variant == ""gc"" and image == ""kem_auth""",value,0.005,host measured,displayed as {:.1f} x 0.001,
 cf_code_per_command_mldsa44,docs/conference/paper.tex,37.8,37796.0,rtlsim/results/proto_sizes.csv,text_bytes,"core == ""cv32e40p"" and variant == ""gc"" and image == ""per_command_mldsa44""",value,0.005,host measured,displayed as {:.1f} x 0.001,
 cf_code_mavlink_tag,docs/conference/paper.tex,21.7,21676.0,rtlsim/results/proto_sizes.csv,text_bytes,"core == ""cv32e40p"" and variant == ""gc"" and image == ""mavlink_tag""",value,0.005,host measured,displayed as {:.1f} x 0.001,
-cf_t168_hyb,docs/conference/paper.tex,130,129.5124,rtlsim/results/proto_time_estimated.csv,time_ms,"core == ""cv32e40p"" and design == ""hybrid_f1"" and side == ""vehicle"" and clock_mhz == 168",value,0.005,estimated,,
-cf_t168_cls,docs/conference/paper.tex,74,74.0273,rtlsim/results/proto_time_estimated.csv,time_ms,"core == ""cv32e40p"" and design == ""classical"" and side == ""vehicle"" and clock_mhz == 168",value,0.005,estimated,,74~ms for the
 cf_cv_pqc_over_tag,docs/conference/paper.tex,292,291.67951,data/conference/derived.csv,value,"core == ""cv32e40p"" and ratio == ""pqc_over_tag_vehicle""",value,0.005,RTL simulated,,
-cf_ibex_pqc_over_tag,docs/conference/paper.tex,371,370.650963,data/conference/derived.csv,value,"core == ""ibex"" and ratio == ""pqc_over_tag_vehicle""",value,0.005,RTL simulated,,
-cf_bytes_hyb_over_cls,docs/conference/paper.tex,32,32.178571,data/conference/derived.csv,value,"core == ""cv32e40p"" and ratio == ""bytes_hyb_over_cls""",value,0.005,RTL simulated,,32$\times$ the classical
+cf_bytes_hyb_over_cls,docs/conference/paper.tex,32,32.178571,data/conference/derived.csv,value,"core == ""cv32e40p"" and ratio == ""bytes_hyb_over_cls""",value,0.005,RTL simulated,,32$\times$ the bytes
 cf_core_ratio_hyb,docs/conference/paper.tex,1.34,1.341381,data/conference/derived.csv,value,"core == ""ibex over cv32e40p"" and ratio == ""hyb_vehicle""",value,0.005,RTL simulated,,
-cf_q_n,docs/conference/paper.tex,14,14.0,data/predictions_v6_scores.csv,id,,count,0.005,host measured,,14 predictions with
-cf_q_hit,docs/conference/paper.tex,12,12.0,data/predictions_v6_scores.csv,id,"verdict == ""hit""",count,0.005,host measured,,"12 hit, 1"
-cf_q_between,docs/conference/paper.tex,1,1.0,data/predictions_v6_scores.csv,id,"verdict == ""between""",count,0.005,host measured,,1 between and
-cf_q_miss,docs/conference/paper.tex,1,1.0,data/predictions_v6_scores.csv,id,"verdict == ""miss""",count,0.005,host measured,,1 missed. The
-cf_pv_q,docs/conference/paper.tex,140,140.0,formal/results/proverif_results.csv,result,,count,0.005,modelled,,
-cf_pv_m,docs/conference/paper.tex,33,33.0,formal/results/proverif_results.csv,model,,nunique,0.005,modelled,,33 model files
-cf_pv_p,docs/conference/paper.tex,97,97.0,formal/results/proverif_results.csv,result,"result == ""proved""",count,0.005,modelled,,"97 proved, 39"
-cf_pv_cx,docs/conference/paper.tex,39,39.0,formal/results/proverif_results.csv,result,"result == ""counterexample""",count,0.005,modelled,,39 counterexamples and
-cf_pv_cnp,docs/conference/paper.tex,3,3.0,formal/results/proverif_results.csv,result,"result == ""cannot be proved""",count,0.005,modelled,,3 that the
-cf_pv_r0,docs/conference/paper.tex,12,12.0,formal/results/proverif_results.csv,result,"property_id in (""R0"", ""R1"") and result == ""counterexample""",count,0.005,modelled,,12 are reachability
-cf_pv_to,docs/conference/paper.tex,1,1.0,formal/results/proverif_results.csv,result,"result.str.startswith(""cannot be proved (timeout"")",count,0.005,modelled,,1 reached the
-cf_pv_a2_t,docs/conference/paper.tex,1800,1800.0,formal/results/proverif_results.csv,run_time_s_host_measured,"model == ""session_kemauth_a2"" and property_id == ""A2""",value,0.005,host measured,,
-cf_m4c_lo,docs/conference/paper.tex,2.2,2.183,rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_clean,"parameter_set in (""ML-KEM-768"", ""ML-DSA-44"") and operation != ""sign""",min,0.005,RTL simulated,,
-cf_m4c_hi,docs/conference/paper.tex,2.9,2.871,rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_clean,"parameter_set in (""ML-KEM-768"", ""ML-DSA-44"") and operation != ""sign""",max,0.005,RTL simulated,,
-cf_m4a_lo,docs/conference/paper.tex,3.5,3.536,rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_asm,"parameter_set in (""ML-KEM-768"", ""ML-DSA-44"") and operation != ""sign""",min,0.005,RTL simulated,,
-cf_m4a_hi,docs/conference/paper.tex,4.3,4.286,rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_asm,"parameter_set in (""ML-KEM-768"", ""ML-DSA-44"") and operation != ""sign""",max,0.005,RTL simulated,,
+cf_m4c_lo2,docs/conference/paper.tex,1.6,1.584,rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_clean,"parameter_set in (""ML-KEM-768"", ""ML-DSA-44"")",min,0.005,RTL simulated,,
+cf_m4c_hi2,docs/conference/paper.tex,2.9,2.871,rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_clean,"parameter_set in (""ML-KEM-768"", ""ML-DSA-44"")",max,0.005,RTL simulated,,
+cf_m4a_lo2,docs/conference/paper.tex,3.2,3.184,rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_asm,"parameter_set in (""ML-KEM-768"", ""ML-DSA-44"")",min,0.005,RTL simulated,,
+cf_m4a_hi2,docs/conference/paper.tex,4.3,4.286,rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_asm,"parameter_set in (""ML-KEM-768"", ""ML-DSA-44"")",max,0.005,RTL simulated,,
+cf_fs_flash_lo,docs/conference/paper.tex,102,102392.0,data/flightstack_memory.csv,flash_free_bytes,"stack == ""ardupilot""",min,0.005,host measured,displayed as {:.0f} x 0.001,
+cf_fs_flash_hi,docs/conference/paper.tex,377,377156.0,data/flightstack_memory.csv,flash_free_bytes,"stack == ""ardupilot""",max,0.005,host measured,displayed as {:.0f} x 0.001,
+cf_fs_ram_lo,docs/conference/paper.tex,111,111156.0,data/flightstack_memory.csv,ram_free_static_bytes,"stack == ""ardupilot""",min,0.005,host measured,displayed as {:.0f} x 0.001,
+cf_fs_boards,docs/conference/paper.tex,5,5.0,data/flightstack_memory.csv,board,"stack == ""ardupilot""",count,0.005,host measured,,5 ArduPilot builds
+cf_falcon_sig,docs/conference/paper.tex,666,666.0,data/raw/S15_signature_sizes.csv,signature_bytes,"scheme == ""Falcon-512""",value,0.005,published,,
+cf_mldsa_sig,docs/conference/paper.tex,"2,464",2464.0,rtlsim/results/proto_sessions.csv,bytes_total,"core == ""cv32e40p"" and design == ""per_command_mldsa44"" and side == ""vehicle""",value,0.005,RTL simulated,,
+cf_x_pair,docs/conference/paper.tex,6.32,6319585.0,data/conference/derived.csv,value,"ratio == ""x25519_pair_cycles""",value,0.005,RTL simulated,displayed as {:.2f} x 1e-06,
+cf_hyb_minus_pq,docs/conference/paper.tex,4.48,4483167.0,data/conference/derived.csv,value,"ratio == ""hyb_minus_pq_vehicle_cycles""",value,0.005,RTL simulated,displayed as {:.2f} x 1e-06,
+cf_qt_n,docs/conference/paper.tex,12,12.0,data/predictions_v6_scores.csv,id,"id not in (""Q13"", ""Q14"")",count,0.005,host measured,,12 technical predictions
+cf_qt_hit,docs/conference/paper.tex,10,10.0,data/predictions_v6_scores.csv,id,"id not in (""Q13"", ""Q14"") and verdict == ""hit""",count,0.005,host measured,,"10 hit, 1"
+cf_qt_between,docs/conference/paper.tex,1,1.0,data/predictions_v6_scores.csv,id,"id not in (""Q13"", ""Q14"") and verdict == ""between""",count,0.005,host measured,,1 fell between
+cf_qt_miss,docs/conference/paper.tex,1,1.0,data/predictions_v6_scores.csv,id,"id not in (""Q13"", ""Q14"") and verdict == ""miss""",count,0.005,host measured,,1 missed; the
 cf_sik_kbps,docs/conference/paper.tex,64,64000.0,data/shared_inputs.csv,value,"parameter == ""sik_air_rate_bps""",value,0.005,published,displayed as {:.0f} x 0.001,64~kbit/s with independent
 cf_clock,docs/conference/paper.tex,168,168.0,data/shared_inputs.csv,value,"parameter == ""clock_m4_ref_mhz""",value,0.005,published,,
 cf_loss,docs/conference/paper.tex,0.02,0.02,mission/assumptions.csv,value,"name == ""frame_loss""",value,0.005,assumption,,
@@ -443,9 +440,7 @@ cf_out_mean,docs/conference/paper.tex,5,5.0,mission/assumptions.csv,value,"name 
 cf_sess_to,docs/conference/paper.tex,10,10.0,mission/assumptions.csv,value,"name == ""session_timeout_s""",value,0.005,assumption,,10~s tears the
 cf_out_a,docs/conference/paper.tex,15,15.0,sitl/settings.csv,value,"name == ""outage_window_start_s""",value,0.005,assumption,,15--40~s after arming
 cf_out_b,docs/conference/paper.tex,40,40.0,sitl/settings.csv,value,"name == ""outage_window_end_s""",value,0.005,assumption,,40~s after arming
-cf_win,docs/conference/paper.tex,64,64.0,mission/replay_assumptions.csv,value,"name == ""replay_window_counters""",value,0.005,assumption,,"64 counters).
-
-\begin{table}[t]"
+cf_win,docs/conference/paper.tex,64,64.0,mission/replay_assumptions.csv,value,"name == ""replay_window_counters""",value,0.005,assumption,,64 flown. Rekey
 cs_none_av,docs/conference/paper.tex,0.935,0.935185,sitl/results_r6/summary.csv,value,"profile == ""sik"" and config == ""none"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
 cs_none_av_lo,docs/conference/paper.tex,0.902,0.901531,sitl/results_r6/summary.csv,ci_lo,"profile == ""sik"" and config == ""none"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
 cs_none_av_hi,docs/conference/paper.tex,0.963,0.96304,sitl/results_r6/summary.csv,ci_hi,"profile == ""sik"" and config == ""none"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
@@ -485,47 +480,39 @@ cs_pqsig_real_lat,docs/conference/paper.tex,496.1,496.109,sitl/results_r6/summar
 cs_n_miss,docs/conference/paper.tex,20,20.0,sitl/results_r6/summary.csv,value,"profile == ""sik"" and metric == ""missions_completed""",min,0.005,SITL measured,,20 paired missions
 cs_cmd_min,docs/conference/paper.tex,958,958.0,sitl/results_r6/summary.csv,value,"profile == ""sik"" and metric == ""commands""",min,0.005,SITL measured,,
 cs_cmd_max,docs/conference/paper.tex,972,972.0,sitl/results_r6/summary.csv,value,"profile == ""sik"" and metric == ""commands""",max,0.005,SITL measured,,
-cs_d_hybrid_cache_hybrid_published,docs/conference/paper.tex,+0.0006,0.000641201,sitl/results_r6/paired.csv,difference,"profile == ""sik"" and config == ""hybrid_cache"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_hybrid_cache_hybrid_published_lo,docs/conference/paper.tex,+0.0002,0.000158851,sitl/results_r6/paired.csv,ci_lo,"profile == ""sik"" and config == ""hybrid_cache"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_hybrid_cache_hybrid_published_hi,docs/conference/paper.tex,+0.0013,0.0013007,sitl/results_r6/paired.csv,ci_hi,"profile == ""sik"" and config == ""hybrid_cache"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_hybrid_published_classical,docs/conference/paper.tex,-0.0040,-0.00401196,sitl/results_r6/paired.csv,difference,"profile == ""sik"" and config == ""hybrid_published"" and minus_config == ""classical"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_hybrid_published_classical_lo,docs/conference/paper.tex,-0.0082,-0.00817124,sitl/results_r6/paired.csv,ci_lo,"profile == ""sik"" and config == ""hybrid_published"" and minus_config == ""classical"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_hybrid_published_classical_hi,docs/conference/paper.tex,-0.0007,-0.000653295,sitl/results_r6/paired.csv,ci_hi,"profile == ""sik"" and config == ""hybrid_published"" and minus_config == ""classical"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_hybrid_published_none,docs/conference/paper.tex,-0.0041,-0.00407871,sitl/results_r6/paired.csv,difference,"profile == ""sik"" and config == ""hybrid_published"" and minus_config == ""none"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_hybrid_published_none_lo,docs/conference/paper.tex,-0.0090,-0.00904257,sitl/results_r6/paired.csv,ci_lo,"profile == ""sik"" and config == ""hybrid_published"" and minus_config == ""none"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_hybrid_published_none_hi,docs/conference/paper.tex,-0.0006,-0.00055839,sitl/results_r6/paired.csv,ci_hi,"profile == ""sik"" and config == ""hybrid_published"" and minus_config == ""none"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_kem_auth_hybrid_published,docs/conference/paper.tex,+0.0033,0.00333682,sitl/results_r6/paired.csv,difference,"profile == ""sik"" and config == ""kem_auth"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_kem_auth_hybrid_published_lo,docs/conference/paper.tex,+0.0003,0.000288396,sitl/results_r6/paired.csv,ci_lo,"profile == ""sik"" and config == ""kem_auth"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_kem_auth_hybrid_published_hi,docs/conference/paper.tex,+0.0067,0.00670926,sitl/results_r6/paired.csv,ci_hi,"profile == ""sik"" and config == ""kem_auth"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_kem_auth_classical,docs/conference/paper.tex,-0.0007,-0.000675146,sitl/results_r6/paired.csv,difference,"profile == ""sik"" and config == ""kem_auth"" and minus_config == ""classical"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_kem_auth_classical_lo,docs/conference/paper.tex,-0.0014,-0.00138042,sitl/results_r6/paired.csv,ci_lo,"profile == ""sik"" and config == ""kem_auth"" and minus_config == ""classical"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_kem_auth_classical_hi,docs/conference/paper.tex,-0.0002,-0.000210873,sitl/results_r6/paired.csv,ci_hi,"profile == ""sik"" and config == ""kem_auth"" and minus_config == ""classical"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
 cs_strict_loss,docs/conference/paper.tex,0.033,-0.0332963,sitl/results_r6/paired.csv,difference,"profile == ""sik"" and config == ""hybrid_strict"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,displayed as {:.3f} x -1.0,
 cs_strict_loss_lo,docs/conference/paper.tex,0.019,-0.0194894,sitl/results_r6/paired.csv,ci_hi,"profile == ""sik"" and config == ""hybrid_strict"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,displayed as {:.3f} x -1.0,
 cs_strict_loss_hi,docs/conference/paper.tex,0.047,-0.0473703,sitl/results_r6/paired.csv,ci_lo,"profile == ""sik"" and config == ""hybrid_strict"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,displayed as {:.3f} x -1.0,
-cs_pq_drop,docs/conference/paper.tex,0.51,-0.513581,sitl/results_r6/paired.csv,difference,"profile == ""sik"" and config == ""pqsig_real"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,displayed as {:.2f} x -1.0,
 cs_strict_nosession,docs/conference/paper.tex,58,58.0,sitl/results_r6/rejections.csv,count,"profile == ""sik"" and config == ""hybrid_strict"" and scope == ""stream commands not acknowledged within 0.5 s"" and reason == ""no_session""",value,0.005,SITL measured,,58 commands were
 cs_strict_ahead,docs/conference/paper.tex,13,13.0,sitl/results_r6/rejections.csv,count,"profile == ""sik"" and config == ""hybrid_strict"" and scope == ""stream commands not acknowledged within 0.5 s"" and reason == ""rejected_ahead_of_next""",value,0.005,SITL measured,,13 rejected as
 cs_pub_late,docs/conference/paper.tex,11,11.0,sitl/results_r6/rejections.csv,count,"profile == ""sik"" and config == ""hybrid_published"" and scope == ""stream commands not acknowledged within 0.5 s"" and reason == ""rejected_late_or_duplicate""",value,0.005,SITL measured,,11 of them
+cs_sign_nack,docs/conference/paper.tex,17,17.0,sitl/results_r6/rejections.csv,count,"profile == ""sik"" and config == ""signing"" and scope == ""stream commands not acknowledged within 0.5 s"" and reason == ""not_acknowledged_by_vehicle""",value,0.005,SITL measured,,17 commands that
 cs_resync,docs/conference/paper.tex,12,12.0,sitl/results_r6/rejections.csv,count,"profile == ""sik"" and config == ""hybrid_strict"" and scope == ""resynchronisations (strict rule)"" and reason == ""all triggers""",value,0.005,emulated,,"12 resynchronisations, 10"
 cs_resync_gu,docs/conference/paper.tex,10,10.0,sitl/results_r6/rejections.csv,count,"profile == ""sik"" and config == ""hybrid_strict"" and scope == ""resynchronisations (strict rule)"" and reason == ""ground_give_up""",value,0.005,emulated,,10 of them
 cs_reorder_depth,docs/conference/paper.tex,2,2.0,sitl/results_r6/reorder.csv,max_reorder_depth,"profile == ""sik""",max,0.005,emulated,,"2), and the"
-cs_pq_model,docs/conference/paper.tex,0.730,0.730083,sitl/results_r6/comparison.csv,mission_model_estimated,"profile == ""sik"" and config == ""pqsig_real""",value,0.005,estimated,,
-cs_m_strict_60,docs/conference/paper.tex,-0.0092,-0.0091855072463768,mission/results/replay_outage_sweep.csv,diff_vs_published_mean,"vehicle == ""drone"" and arch == ""B"" and link == ""sik"" and replay_rule == ""strict"" and over_outage_rate_per_h == 60",value,0.005,estimated,,
-cs_m_rate,docs/conference/paper.tex,60,60.0,mission/results/replay_outage_sweep.csv,over_outage_rate_per_h,"vehicle == ""drone"" and arch == ""B"" and link == ""sik"" and replay_rule == ""strict"" and over_outage_rate_per_h == 60",value,0.005,assumption,,60 per hour
 cs_pq_dl_055,docs/conference/paper.tex,0.636,0.636082,sitl/results_r6/deadline_sweep.csv,availability_rt_all,"profile == ""sik"" and config == ""pqsig_real"" and deadline_s == 0.55",value,0.005,SITL measured,,
 cs_pq_dl_075,docs/conference/paper.tex,0.743,0.743299,sitl/results_r6/deadline_sweep.csv,availability_rt_all,"profile == ""sik"" and config == ""pqsig_real"" and deadline_s == 0.75",value,0.005,SITL measured,,
 cs_pq_dl_10,docs/conference/paper.tex,0.851,0.850515,sitl/results_r6/deadline_sweep.csv,availability_rt_all,"profile == ""sik"" and config == ""pqsig_real"" and deadline_s == 1.0",value,0.005,SITL measured,,
 cs_pq_delay,docs/conference/paper.tex,32,32.17327380952381,sitl/results_r6/delays.csv,delay_ms,"name == ""mldsa44_verify_command"" and core == ""ibex""",value,0.005,estimated,,32~ms; this puts
+cs_dos_k,docs/conference/paper.tex,103,103.2518869047619,sitl/results_r6/delays.csv,delay_ms,"name == ""kem_auth_vehicle_f2"" and core == ""ibex""",value,0.005,estimated,,
+cs_dos_h,docs/conference/paper.tex,66,66.07831547619047,sitl/results_r6/delays.csv,delay_ms,"name == ""hybrid_vehicle_f2"" and core == ""ibex""",value,0.005,estimated,,66~ms (hybrid) at
 cs_tagd_lo,docs/conference/paper.tex,0.08,0.0848988095238095,sitl/results_r6/delays.csv,delay_ms,"core == ""ibex"" and name in (""tag_check"", ""tag_make"")",min,0.005,estimated,,
 cs_tagd_hi,docs/conference/paper.tex,0.13,0.1279107142857142,sitl/results_r6/delays.csv,delay_ms,"core == ""ibex"" and name in (""tag_check"", ""tag_make"")",max,0.005,estimated,,
 cs_flight_s,docs/conference/paper.tex,48,48.0383645,sitl/results_r6/missions.csv,flight_s,"profile == ""sik""",median,0.005,SITL measured,,48~s (take off
-cs_hx_k,docs/conference/paper.tex,"1,178",1178.0,sitl/results_r6/host_compute.csv,host_exceeds_rtl_delay,"profile == ""sik"" and config == ""kem_auth"" and operation == ""vehicle_tag""",value,0.005,host measured,,
 cs_hx_tag,docs/conference/paper.tex,"2,695",2695.0,sitl/results_r6/host_compute.csv,host_exceeds_rtl_delay,"profile == ""sik"" and operation == ""vehicle_tag""",sum,0.005,host measured,,
 cs_hx_tag_n,docs/conference/paper.tex,"212,157",212157.0,sitl/results_r6/host_compute.csv,count,"profile == ""sik"" and operation == ""vehicle_tag""",sum,0.005,host measured,,
 cs_hx_tag_max,docs/conference/paper.tex,"1,178",1178.0,sitl/results_r6/host_compute.csv,host_exceeds_rtl_delay,"profile == ""sik"" and operation == ""vehicle_tag""",max,0.005,host measured,,
-cs_hx_chk,docs/conference/paper.tex,173,173.0,sitl/results_r6/host_compute.csv,host_exceeds_rtl_delay,"profile == ""sik"" and operation == ""vehicle_tag_check""",sum,0.005,host measured,,
-cf_runs,docs/conference/paper_anon.tex,15,15.0,rtlsim/results/proto_sessions.csv,n_runs,"unit == ""session start""",min,0.005,RTL simulated,,15 runs) and
+cs_air13,docs/conference/paper.tex,1.6,1.625,data/conference/derived.csv,value,"ratio == ""sig_field_airtime_ms""",value,0.005,estimated,,
+cs_ow_rise,docs/conference/paper.tex,1.8,1.833,data/conference/derived.csv,value,"ratio == ""ow_rise_signing_ms""",value,0.005,emulated,,
+cf_pv_q,docs/conference/paper.tex,140,140.0,formal/results/proverif_results.csv,result,,count,0.005,modelled,,
+cf_pv_m,docs/conference/paper.tex,33,33.0,formal/results/proverif_results.csv,model,,nunique,0.005,modelled,,33 model files
+cf_pv_p,docs/conference/paper.tex,97,97.0,formal/results/proverif_results.csv,result,"result == ""proved""",count,0.005,modelled,,"97 proved, 39"
+cf_pv_cx,docs/conference/paper.tex,39,39.0,formal/results/proverif_results.csv,result,"result == ""counterexample""",count,0.005,modelled,,"39 counterexamples, 3"
+cf_pv_cnp,docs/conference/paper.tex,3,3.0,formal/results/proverif_results.csv,result,"result == ""cannot be proved""",count,0.005,modelled,,3 that the
+cf_pv_to,docs/conference/paper.tex,1,1.0,formal/results/proverif_results.csv,result,"result.str.startswith(""cannot be proved (timeout"")",count,0.005,modelled,,1 that reached
+cf_pv_r0,docs/conference/paper.tex,12,12.0,formal/results/proverif_results.csv,result,"property_id.str.startswith(""R"") and result == ""counterexample""",count,0.005,modelled,,12 are reachability
+cf_pv_a2_t,docs/conference/paper.tex,1800,1800.0,formal/results/proverif_results.csv,run_time_s_host_measured,"model == ""session_kemauth_a2"" and property_id == ""A2""",value,0.005,host measured,,
+cf_runs,docs/conference/paper_anon.tex,15,15.0,rtlsim/results/proto_sessions.csv,n_runs,"unit == ""session start""",min,0.005,RTL simulated,,"15 runs, 5"
 cf_runs_tag,docs/conference/paper_anon.tex,5,5.0,rtlsim/results/proto_sessions.csv,n_runs,"design == ""mavlink_tag""",max,0.005,RTL simulated,,5 for the
 cf_ibex_classical_vehicle,docs/conference/paper_anon.tex,15.5,15454894.0,rtlsim/results/proto_sessions.csv,cycles_median,"core == ""ibex"" and design == ""classical"" and side == ""vehicle"" and unit == ""session start""",value,0.005,RTL simulated,displayed as {:.1f} x 1e-06,
 cf_ibex_classical_ground,docs/conference/paper_anon.tex,15.4,15445645.0,rtlsim/results/proto_sessions.csv,cycles_median,"core == ""ibex"" and design == ""classical"" and side == ""ground"" and unit == ""session start""",value,0.005,RTL simulated,displayed as {:.1f} x 1e-06,
@@ -602,28 +589,25 @@ cf_code_hybrid_f1,docs/conference/paper_anon.tex,66.5,66548.0,rtlsim/results/pro
 cf_code_kem_auth,docs/conference/paper_anon.tex,46.0,46036.0,rtlsim/results/proto_sizes.csv,text_bytes,"core == ""cv32e40p"" and variant == ""gc"" and image == ""kem_auth""",value,0.005,host measured,displayed as {:.1f} x 0.001,
 cf_code_per_command_mldsa44,docs/conference/paper_anon.tex,37.8,37796.0,rtlsim/results/proto_sizes.csv,text_bytes,"core == ""cv32e40p"" and variant == ""gc"" and image == ""per_command_mldsa44""",value,0.005,host measured,displayed as {:.1f} x 0.001,
 cf_code_mavlink_tag,docs/conference/paper_anon.tex,21.7,21676.0,rtlsim/results/proto_sizes.csv,text_bytes,"core == ""cv32e40p"" and variant == ""gc"" and image == ""mavlink_tag""",value,0.005,host measured,displayed as {:.1f} x 0.001,
-cf_t168_hyb,docs/conference/paper_anon.tex,130,129.5124,rtlsim/results/proto_time_estimated.csv,time_ms,"core == ""cv32e40p"" and design == ""hybrid_f1"" and side == ""vehicle"" and clock_mhz == 168",value,0.005,estimated,,
-cf_t168_cls,docs/conference/paper_anon.tex,74,74.0273,rtlsim/results/proto_time_estimated.csv,time_ms,"core == ""cv32e40p"" and design == ""classical"" and side == ""vehicle"" and clock_mhz == 168",value,0.005,estimated,,74~ms for the
 cf_cv_pqc_over_tag,docs/conference/paper_anon.tex,292,291.67951,data/conference/derived.csv,value,"core == ""cv32e40p"" and ratio == ""pqc_over_tag_vehicle""",value,0.005,RTL simulated,,
-cf_ibex_pqc_over_tag,docs/conference/paper_anon.tex,371,370.650963,data/conference/derived.csv,value,"core == ""ibex"" and ratio == ""pqc_over_tag_vehicle""",value,0.005,RTL simulated,,
-cf_bytes_hyb_over_cls,docs/conference/paper_anon.tex,32,32.178571,data/conference/derived.csv,value,"core == ""cv32e40p"" and ratio == ""bytes_hyb_over_cls""",value,0.005,RTL simulated,,32$\times$ the classical
+cf_bytes_hyb_over_cls,docs/conference/paper_anon.tex,32,32.178571,data/conference/derived.csv,value,"core == ""cv32e40p"" and ratio == ""bytes_hyb_over_cls""",value,0.005,RTL simulated,,32$\times$ the bytes
 cf_core_ratio_hyb,docs/conference/paper_anon.tex,1.34,1.341381,data/conference/derived.csv,value,"core == ""ibex over cv32e40p"" and ratio == ""hyb_vehicle""",value,0.005,RTL simulated,,
-cf_q_n,docs/conference/paper_anon.tex,14,14.0,data/predictions_v6_scores.csv,id,,count,0.005,host measured,,14 predictions with
-cf_q_hit,docs/conference/paper_anon.tex,12,12.0,data/predictions_v6_scores.csv,id,"verdict == ""hit""",count,0.005,host measured,,"12 hit, 1"
-cf_q_between,docs/conference/paper_anon.tex,1,1.0,data/predictions_v6_scores.csv,id,"verdict == ""between""",count,0.005,host measured,,1 between and
-cf_q_miss,docs/conference/paper_anon.tex,1,1.0,data/predictions_v6_scores.csv,id,"verdict == ""miss""",count,0.005,host measured,,1 missed. The
-cf_pv_q,docs/conference/paper_anon.tex,140,140.0,formal/results/proverif_results.csv,result,,count,0.005,modelled,,
-cf_pv_m,docs/conference/paper_anon.tex,33,33.0,formal/results/proverif_results.csv,model,,nunique,0.005,modelled,,33 model files
-cf_pv_p,docs/conference/paper_anon.tex,97,97.0,formal/results/proverif_results.csv,result,"result == ""proved""",count,0.005,modelled,,"97 proved, 39"
-cf_pv_cx,docs/conference/paper_anon.tex,39,39.0,formal/results/proverif_results.csv,result,"result == ""counterexample""",count,0.005,modelled,,39 counterexamples and
-cf_pv_cnp,docs/conference/paper_anon.tex,3,3.0,formal/results/proverif_results.csv,result,"result == ""cannot be proved""",count,0.005,modelled,,3 that the
-cf_pv_r0,docs/conference/paper_anon.tex,12,12.0,formal/results/proverif_results.csv,result,"property_id in (""R0"", ""R1"") and result == ""counterexample""",count,0.005,modelled,,12 are reachability
-cf_pv_to,docs/conference/paper_anon.tex,1,1.0,formal/results/proverif_results.csv,result,"result.str.startswith(""cannot be proved (timeout"")",count,0.005,modelled,,1 reached the
-cf_pv_a2_t,docs/conference/paper_anon.tex,1800,1800.0,formal/results/proverif_results.csv,run_time_s_host_measured,"model == ""session_kemauth_a2"" and property_id == ""A2""",value,0.005,host measured,,
-cf_m4c_lo,docs/conference/paper_anon.tex,2.2,2.183,rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_clean,"parameter_set in (""ML-KEM-768"", ""ML-DSA-44"") and operation != ""sign""",min,0.005,RTL simulated,,
-cf_m4c_hi,docs/conference/paper_anon.tex,2.9,2.871,rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_clean,"parameter_set in (""ML-KEM-768"", ""ML-DSA-44"") and operation != ""sign""",max,0.005,RTL simulated,,
-cf_m4a_lo,docs/conference/paper_anon.tex,3.5,3.536,rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_asm,"parameter_set in (""ML-KEM-768"", ""ML-DSA-44"") and operation != ""sign""",min,0.005,RTL simulated,,
-cf_m4a_hi,docs/conference/paper_anon.tex,4.3,4.286,rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_asm,"parameter_set in (""ML-KEM-768"", ""ML-DSA-44"") and operation != ""sign""",max,0.005,RTL simulated,,
+cf_m4c_lo2,docs/conference/paper_anon.tex,1.6,1.584,rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_clean,"parameter_set in (""ML-KEM-768"", ""ML-DSA-44"")",min,0.005,RTL simulated,,
+cf_m4c_hi2,docs/conference/paper_anon.tex,2.9,2.871,rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_clean,"parameter_set in (""ML-KEM-768"", ""ML-DSA-44"")",max,0.005,RTL simulated,,
+cf_m4a_lo2,docs/conference/paper_anon.tex,3.2,3.184,rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_asm,"parameter_set in (""ML-KEM-768"", ""ML-DSA-44"")",min,0.005,RTL simulated,,
+cf_m4a_hi2,docs/conference/paper_anon.tex,4.3,4.286,rtlsim/results/ibex_vs_cortex_m4.csv,ratio_to_asm,"parameter_set in (""ML-KEM-768"", ""ML-DSA-44"")",max,0.005,RTL simulated,,
+cf_fs_flash_lo,docs/conference/paper_anon.tex,102,102392.0,data/flightstack_memory.csv,flash_free_bytes,"stack == ""ardupilot""",min,0.005,host measured,displayed as {:.0f} x 0.001,
+cf_fs_flash_hi,docs/conference/paper_anon.tex,377,377156.0,data/flightstack_memory.csv,flash_free_bytes,"stack == ""ardupilot""",max,0.005,host measured,displayed as {:.0f} x 0.001,
+cf_fs_ram_lo,docs/conference/paper_anon.tex,111,111156.0,data/flightstack_memory.csv,ram_free_static_bytes,"stack == ""ardupilot""",min,0.005,host measured,displayed as {:.0f} x 0.001,
+cf_fs_boards,docs/conference/paper_anon.tex,5,5.0,data/flightstack_memory.csv,board,"stack == ""ardupilot""",count,0.005,host measured,,5 ArduPilot builds
+cf_falcon_sig,docs/conference/paper_anon.tex,666,666.0,data/raw/S15_signature_sizes.csv,signature_bytes,"scheme == ""Falcon-512""",value,0.005,published,,
+cf_mldsa_sig,docs/conference/paper_anon.tex,"2,464",2464.0,rtlsim/results/proto_sessions.csv,bytes_total,"core == ""cv32e40p"" and design == ""per_command_mldsa44"" and side == ""vehicle""",value,0.005,RTL simulated,,
+cf_x_pair,docs/conference/paper_anon.tex,6.32,6319585.0,data/conference/derived.csv,value,"ratio == ""x25519_pair_cycles""",value,0.005,RTL simulated,displayed as {:.2f} x 1e-06,
+cf_hyb_minus_pq,docs/conference/paper_anon.tex,4.48,4483167.0,data/conference/derived.csv,value,"ratio == ""hyb_minus_pq_vehicle_cycles""",value,0.005,RTL simulated,displayed as {:.2f} x 1e-06,
+cf_qt_n,docs/conference/paper_anon.tex,12,12.0,data/predictions_v6_scores.csv,id,"id not in (""Q13"", ""Q14"")",count,0.005,host measured,,12 technical predictions
+cf_qt_hit,docs/conference/paper_anon.tex,10,10.0,data/predictions_v6_scores.csv,id,"id not in (""Q13"", ""Q14"") and verdict == ""hit""",count,0.005,host measured,,"10 hit, 1"
+cf_qt_between,docs/conference/paper_anon.tex,1,1.0,data/predictions_v6_scores.csv,id,"id not in (""Q13"", ""Q14"") and verdict == ""between""",count,0.005,host measured,,1 fell between
+cf_qt_miss,docs/conference/paper_anon.tex,1,1.0,data/predictions_v6_scores.csv,id,"id not in (""Q13"", ""Q14"") and verdict == ""miss""",count,0.005,host measured,,1 missed; the
 cf_sik_kbps,docs/conference/paper_anon.tex,64,64000.0,data/shared_inputs.csv,value,"parameter == ""sik_air_rate_bps""",value,0.005,published,displayed as {:.0f} x 0.001,64~kbit/s with independent
 cf_clock,docs/conference/paper_anon.tex,168,168.0,data/shared_inputs.csv,value,"parameter == ""clock_m4_ref_mhz""",value,0.005,published,,
 cf_loss,docs/conference/paper_anon.tex,0.02,0.02,mission/assumptions.csv,value,"name == ""frame_loss""",value,0.005,assumption,,
@@ -631,9 +615,7 @@ cf_out_mean,docs/conference/paper_anon.tex,5,5.0,mission/assumptions.csv,value,"
 cf_sess_to,docs/conference/paper_anon.tex,10,10.0,mission/assumptions.csv,value,"name == ""session_timeout_s""",value,0.005,assumption,,10~s tears the
 cf_out_a,docs/conference/paper_anon.tex,15,15.0,sitl/settings.csv,value,"name == ""outage_window_start_s""",value,0.005,assumption,,15--40~s after arming
 cf_out_b,docs/conference/paper_anon.tex,40,40.0,sitl/settings.csv,value,"name == ""outage_window_end_s""",value,0.005,assumption,,40~s after arming
-cf_win,docs/conference/paper_anon.tex,64,64.0,mission/replay_assumptions.csv,value,"name == ""replay_window_counters""",value,0.005,assumption,,"64 counters).
-
-\begin{table}[t]"
+cf_win,docs/conference/paper_anon.tex,64,64.0,mission/replay_assumptions.csv,value,"name == ""replay_window_counters""",value,0.005,assumption,,64 flown. Rekey
 cs_none_av,docs/conference/paper_anon.tex,0.935,0.935185,sitl/results_r6/summary.csv,value,"profile == ""sik"" and config == ""none"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
 cs_none_av_lo,docs/conference/paper_anon.tex,0.902,0.901531,sitl/results_r6/summary.csv,ci_lo,"profile == ""sik"" and config == ""none"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
 cs_none_av_hi,docs/conference/paper_anon.tex,0.963,0.96304,sitl/results_r6/summary.csv,ci_hi,"profile == ""sik"" and config == ""none"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
@@ -673,43 +655,35 @@ cs_pqsig_real_lat,docs/conference/paper_anon.tex,496.1,496.109,sitl/results_r6/s
 cs_n_miss,docs/conference/paper_anon.tex,20,20.0,sitl/results_r6/summary.csv,value,"profile == ""sik"" and metric == ""missions_completed""",min,0.005,SITL measured,,20 paired missions
 cs_cmd_min,docs/conference/paper_anon.tex,958,958.0,sitl/results_r6/summary.csv,value,"profile == ""sik"" and metric == ""commands""",min,0.005,SITL measured,,
 cs_cmd_max,docs/conference/paper_anon.tex,972,972.0,sitl/results_r6/summary.csv,value,"profile == ""sik"" and metric == ""commands""",max,0.005,SITL measured,,
-cs_d_hybrid_cache_hybrid_published,docs/conference/paper_anon.tex,+0.0006,0.000641201,sitl/results_r6/paired.csv,difference,"profile == ""sik"" and config == ""hybrid_cache"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_hybrid_cache_hybrid_published_lo,docs/conference/paper_anon.tex,+0.0002,0.000158851,sitl/results_r6/paired.csv,ci_lo,"profile == ""sik"" and config == ""hybrid_cache"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_hybrid_cache_hybrid_published_hi,docs/conference/paper_anon.tex,+0.0013,0.0013007,sitl/results_r6/paired.csv,ci_hi,"profile == ""sik"" and config == ""hybrid_cache"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_hybrid_published_classical,docs/conference/paper_anon.tex,-0.0040,-0.00401196,sitl/results_r6/paired.csv,difference,"profile == ""sik"" and config == ""hybrid_published"" and minus_config == ""classical"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_hybrid_published_classical_lo,docs/conference/paper_anon.tex,-0.0082,-0.00817124,sitl/results_r6/paired.csv,ci_lo,"profile == ""sik"" and config == ""hybrid_published"" and minus_config == ""classical"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_hybrid_published_classical_hi,docs/conference/paper_anon.tex,-0.0007,-0.000653295,sitl/results_r6/paired.csv,ci_hi,"profile == ""sik"" and config == ""hybrid_published"" and minus_config == ""classical"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_hybrid_published_none,docs/conference/paper_anon.tex,-0.0041,-0.00407871,sitl/results_r6/paired.csv,difference,"profile == ""sik"" and config == ""hybrid_published"" and minus_config == ""none"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_hybrid_published_none_lo,docs/conference/paper_anon.tex,-0.0090,-0.00904257,sitl/results_r6/paired.csv,ci_lo,"profile == ""sik"" and config == ""hybrid_published"" and minus_config == ""none"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_hybrid_published_none_hi,docs/conference/paper_anon.tex,-0.0006,-0.00055839,sitl/results_r6/paired.csv,ci_hi,"profile == ""sik"" and config == ""hybrid_published"" and minus_config == ""none"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_kem_auth_hybrid_published,docs/conference/paper_anon.tex,+0.0033,0.00333682,sitl/results_r6/paired.csv,difference,"profile == ""sik"" and config == ""kem_auth"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_kem_auth_hybrid_published_lo,docs/conference/paper_anon.tex,+0.0003,0.000288396,sitl/results_r6/paired.csv,ci_lo,"profile == ""sik"" and config == ""kem_auth"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_kem_auth_hybrid_published_hi,docs/conference/paper_anon.tex,+0.0067,0.00670926,sitl/results_r6/paired.csv,ci_hi,"profile == ""sik"" and config == ""kem_auth"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_kem_auth_classical,docs/conference/paper_anon.tex,-0.0007,-0.000675146,sitl/results_r6/paired.csv,difference,"profile == ""sik"" and config == ""kem_auth"" and minus_config == ""classical"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_kem_auth_classical_lo,docs/conference/paper_anon.tex,-0.0014,-0.00138042,sitl/results_r6/paired.csv,ci_lo,"profile == ""sik"" and config == ""kem_auth"" and minus_config == ""classical"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
-cs_d_kem_auth_classical_hi,docs/conference/paper_anon.tex,-0.0002,-0.000210873,sitl/results_r6/paired.csv,ci_hi,"profile == ""sik"" and config == ""kem_auth"" and minus_config == ""classical"" and metric == ""availability_rt_all""",value,0.005,SITL measured,,
 cs_strict_loss,docs/conference/paper_anon.tex,0.033,-0.0332963,sitl/results_r6/paired.csv,difference,"profile == ""sik"" and config == ""hybrid_strict"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,displayed as {:.3f} x -1.0,
 cs_strict_loss_lo,docs/conference/paper_anon.tex,0.019,-0.0194894,sitl/results_r6/paired.csv,ci_hi,"profile == ""sik"" and config == ""hybrid_strict"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,displayed as {:.3f} x -1.0,
 cs_strict_loss_hi,docs/conference/paper_anon.tex,0.047,-0.0473703,sitl/results_r6/paired.csv,ci_lo,"profile == ""sik"" and config == ""hybrid_strict"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,displayed as {:.3f} x -1.0,
-cs_pq_drop,docs/conference/paper_anon.tex,0.51,-0.513581,sitl/results_r6/paired.csv,difference,"profile == ""sik"" and config == ""pqsig_real"" and minus_config == ""hybrid_published"" and metric == ""availability_rt_all""",value,0.005,SITL measured,displayed as {:.2f} x -1.0,
 cs_strict_nosession,docs/conference/paper_anon.tex,58,58.0,sitl/results_r6/rejections.csv,count,"profile == ""sik"" and config == ""hybrid_strict"" and scope == ""stream commands not acknowledged within 0.5 s"" and reason == ""no_session""",value,0.005,SITL measured,,58 commands were
 cs_strict_ahead,docs/conference/paper_anon.tex,13,13.0,sitl/results_r6/rejections.csv,count,"profile == ""sik"" and config == ""hybrid_strict"" and scope == ""stream commands not acknowledged within 0.5 s"" and reason == ""rejected_ahead_of_next""",value,0.005,SITL measured,,13 rejected as
 cs_pub_late,docs/conference/paper_anon.tex,11,11.0,sitl/results_r6/rejections.csv,count,"profile == ""sik"" and config == ""hybrid_published"" and scope == ""stream commands not acknowledged within 0.5 s"" and reason == ""rejected_late_or_duplicate""",value,0.005,SITL measured,,11 of them
+cs_sign_nack,docs/conference/paper_anon.tex,17,17.0,sitl/results_r6/rejections.csv,count,"profile == ""sik"" and config == ""signing"" and scope == ""stream commands not acknowledged within 0.5 s"" and reason == ""not_acknowledged_by_vehicle""",value,0.005,SITL measured,,17 commands that
 cs_resync,docs/conference/paper_anon.tex,12,12.0,sitl/results_r6/rejections.csv,count,"profile == ""sik"" and config == ""hybrid_strict"" and scope == ""resynchronisations (strict rule)"" and reason == ""all triggers""",value,0.005,emulated,,"12 resynchronisations, 10"
 cs_resync_gu,docs/conference/paper_anon.tex,10,10.0,sitl/results_r6/rejections.csv,count,"profile == ""sik"" and config == ""hybrid_strict"" and scope == ""resynchronisations (strict rule)"" and reason == ""ground_give_up""",value,0.005,emulated,,10 of them
 cs_reorder_depth,docs/conference/paper_anon.tex,2,2.0,sitl/results_r6/reorder.csv,max_reorder_depth,"profile == ""sik""",max,0.005,emulated,,"2), and the"
-cs_pq_model,docs/conference/paper_anon.tex,0.730,0.730083,sitl/results_r6/comparison.csv,mission_model_estimated,"profile == ""sik"" and config == ""pqsig_real""",value,0.005,estimated,,
-cs_m_strict_60,docs/conference/paper_anon.tex,-0.0092,-0.0091855072463768,mission/results/replay_outage_sweep.csv,diff_vs_published_mean,"vehicle == ""drone"" and arch == ""B"" and link == ""sik"" and replay_rule == ""strict"" and over_outage_rate_per_h == 60",value,0.005,estimated,,
-cs_m_rate,docs/conference/paper_anon.tex,60,60.0,mission/results/replay_outage_sweep.csv,over_outage_rate_per_h,"vehicle == ""drone"" and arch == ""B"" and link == ""sik"" and replay_rule == ""strict"" and over_outage_rate_per_h == 60",value,0.005,assumption,,60 per hour
 cs_pq_dl_055,docs/conference/paper_anon.tex,0.636,0.636082,sitl/results_r6/deadline_sweep.csv,availability_rt_all,"profile == ""sik"" and config == ""pqsig_real"" and deadline_s == 0.55",value,0.005,SITL measured,,
 cs_pq_dl_075,docs/conference/paper_anon.tex,0.743,0.743299,sitl/results_r6/deadline_sweep.csv,availability_rt_all,"profile == ""sik"" and config == ""pqsig_real"" and deadline_s == 0.75",value,0.005,SITL measured,,
 cs_pq_dl_10,docs/conference/paper_anon.tex,0.851,0.850515,sitl/results_r6/deadline_sweep.csv,availability_rt_all,"profile == ""sik"" and config == ""pqsig_real"" and deadline_s == 1.0",value,0.005,SITL measured,,
 cs_pq_delay,docs/conference/paper_anon.tex,32,32.17327380952381,sitl/results_r6/delays.csv,delay_ms,"name == ""mldsa44_verify_command"" and core == ""ibex""",value,0.005,estimated,,32~ms; this puts
+cs_dos_k,docs/conference/paper_anon.tex,103,103.2518869047619,sitl/results_r6/delays.csv,delay_ms,"name == ""kem_auth_vehicle_f2"" and core == ""ibex""",value,0.005,estimated,,
+cs_dos_h,docs/conference/paper_anon.tex,66,66.07831547619047,sitl/results_r6/delays.csv,delay_ms,"name == ""hybrid_vehicle_f2"" and core == ""ibex""",value,0.005,estimated,,66~ms (hybrid) at
 cs_tagd_lo,docs/conference/paper_anon.tex,0.08,0.0848988095238095,sitl/results_r6/delays.csv,delay_ms,"core == ""ibex"" and name in (""tag_check"", ""tag_make"")",min,0.005,estimated,,
 cs_tagd_hi,docs/conference/paper_anon.tex,0.13,0.1279107142857142,sitl/results_r6/delays.csv,delay_ms,"core == ""ibex"" and name in (""tag_check"", ""tag_make"")",max,0.005,estimated,,
 cs_flight_s,docs/conference/paper_anon.tex,48,48.0383645,sitl/results_r6/missions.csv,flight_s,"profile == ""sik""",median,0.005,SITL measured,,48~s (take off
-cs_hx_k,docs/conference/paper_anon.tex,"1,178",1178.0,sitl/results_r6/host_compute.csv,host_exceeds_rtl_delay,"profile == ""sik"" and config == ""kem_auth"" and operation == ""vehicle_tag""",value,0.005,host measured,,
 cs_hx_tag,docs/conference/paper_anon.tex,"2,695",2695.0,sitl/results_r6/host_compute.csv,host_exceeds_rtl_delay,"profile == ""sik"" and operation == ""vehicle_tag""",sum,0.005,host measured,,
 cs_hx_tag_n,docs/conference/paper_anon.tex,"212,157",212157.0,sitl/results_r6/host_compute.csv,count,"profile == ""sik"" and operation == ""vehicle_tag""",sum,0.005,host measured,,
 cs_hx_tag_max,docs/conference/paper_anon.tex,"1,178",1178.0,sitl/results_r6/host_compute.csv,host_exceeds_rtl_delay,"profile == ""sik"" and operation == ""vehicle_tag""",max,0.005,host measured,,
-cs_hx_chk,docs/conference/paper_anon.tex,173,173.0,sitl/results_r6/host_compute.csv,host_exceeds_rtl_delay,"profile == ""sik"" and operation == ""vehicle_tag_check""",sum,0.005,host measured,,
+cs_air13,docs/conference/paper_anon.tex,1.6,1.625,data/conference/derived.csv,value,"ratio == ""sig_field_airtime_ms""",value,0.005,estimated,,
+cs_ow_rise,docs/conference/paper_anon.tex,1.8,1.833,data/conference/derived.csv,value,"ratio == ""ow_rise_signing_ms""",value,0.005,emulated,,
+cf_pv_q,docs/conference/paper_anon.tex,140,140.0,formal/results/proverif_results.csv,result,,count,0.005,modelled,,
+cf_pv_m,docs/conference/paper_anon.tex,33,33.0,formal/results/proverif_results.csv,model,,nunique,0.005,modelled,,33 model files
+cf_pv_p,docs/conference/paper_anon.tex,97,97.0,formal/results/proverif_results.csv,result,"result == ""proved""",count,0.005,modelled,,"97 proved, 39"
+cf_pv_cx,docs/conference/paper_anon.tex,39,39.0,formal/results/proverif_results.csv,result,"result == ""counterexample""",count,0.005,modelled,,"39 counterexamples, 3"
+cf_pv_cnp,docs/conference/paper_anon.tex,3,3.0,formal/results/proverif_results.csv,result,"result == ""cannot be proved""",count,0.005,modelled,,3 that the
+cf_pv_to,docs/conference/paper_anon.tex,1,1.0,formal/results/proverif_results.csv,result,"result.str.startswith(""cannot be proved (timeout"")",count,0.005,modelled,,1 that reached
+cf_pv_r0,docs/conference/paper_anon.tex,12,12.0,formal/results/proverif_results.csv,result,"property_id.str.startswith(""R"") and result == ""counterexample""",count,0.005,modelled,,12 are reachability
+cf_pv_a2_t,docs/conference/paper_anon.tex,1800,1800.0,formal/results/proverif_results.csv,run_time_s_host_measured,"model == ""session_kemauth_a2"" and property_id == ""A2""",value,0.005,host measured,,

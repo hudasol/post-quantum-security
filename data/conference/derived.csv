@@ -24,4 +24,8 @@ RTL simulated,cv32e40p,hybrid_f1_f4_bytes,2436.0,"bytes of flight F4 as built, h
 RTL simulated,cv32e40p,kem_auth_f1_bytes,2304.0,"bytes of flight F1 as built, kem_auth",rtlsim/results/proto_sessions.csv
 RTL simulated,cv32e40p,kem_auth_f2_bytes,2224.0,"bytes of flight F2 as built, kem_auth",rtlsim/results/proto_sessions.csv
 RTL simulated,cv32e40p,kem_auth_f3_bytes,16.0,"bytes of flight F3 as built, kem_auth",rtlsim/results/proto_sessions.csv
+RTL simulated,cv32e40p,x25519_pair_cycles,6319585.0,"X25519 key generation plus shared secret, the fixed difference between the hybrid and the post quantum only vehicle side",rtlsim/results/proto_primitives.csv
+RTL simulated,cv32e40p,hyb_minus_pq_vehicle_cycles,4483167.0,"measured median hybrid_f1 minus pq_only, vehicle, session start",rtlsim/results/proto_sessions.csv
+estimated,link,sig_field_airtime_ms,1.625,"airtime of the 13 B MAVLink 2 signing field at the SiK air rate, one direction",data/shared_inputs.csv
+emulated,link,ow_rise_signing_ms,1.833,"median one way latency, signing as shipped minus no authentication",sitl/results_r6/summary.csv
 RTL simulated,ibex over cv32e40p,hyb_vehicle,1.341381,"hybrid_f1 vehicle session start, Ibex over CV32E40P",rtlsim/results/proto_sessions.csv
