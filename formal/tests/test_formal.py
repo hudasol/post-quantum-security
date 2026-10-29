@@ -58,7 +58,8 @@ class TestResults(unittest.TestCase):
                  "firmware_stated_no_counter": "firmware_fixed_counter"}
         for stated, fixed in pairs.items():
             for (m, q), res in got.items():
-                if m == stated and res == "counterexample":
+                # reachability checks (R0, RV, RG) must give a counterexample in both models
+                if m == stated and res == "counterexample" and q not in ("R0", "RV", "RG"):
                     self.assertEqual(got.get((fixed, q)), "proved", (stated, q))
 
     def test_output_parser(self):

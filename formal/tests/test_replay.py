@@ -12,6 +12,7 @@ import os
 import unittest
 
 from formal import build_models, make_doc, run_all
+from formal.tests.test_round7 import is_round7
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPLAY = [m[0] for m in build_models.REPLAY_MODELS]
@@ -127,7 +128,8 @@ class TestReplayResults(unittest.TestCase):
                     self.assertEqual(self.got[(name, q)]["result"], "proved", (name, q))
 
     def test_earlier_results_unchanged(self):
-        rows = [r for r in self.rows if not r["model"].startswith(("session_replay", "session_kemauth"))]
+        rows = [r for r in self.rows if not r["model"].startswith(("session_replay", "session_kemauth"))
+                and not is_round7(r)]
         self.assertEqual(len(rows), EARLIER_ROWS)
         key = "\n".join(sorted(f"{r['model']},{r['property_id']},{r['result']},{r['weaker_form']}" for r in rows))
         self.assertEqual(hashlib.sha256(key.encode()).hexdigest(), EARLIER_SHA256)

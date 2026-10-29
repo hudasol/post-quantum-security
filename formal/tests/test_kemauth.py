@@ -12,6 +12,7 @@ import os
 import unittest
 
 from formal import build_models, make_doc, run_all
+from formal.tests.test_round7 import is_round7
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPLAY = [m[0] for m in build_models.REPLAY_MODELS]
@@ -58,7 +59,7 @@ class TestSanityQueries(unittest.TestCase):
         """The queries of the earlier run keep their position, so their results map to the same rows."""
         for name in REPLAY:
             ids = query_ids(name)
-            extra = [q for q in ids if q in ("R0", "A1", "A2")]
+            extra = [q for q in ids if q in ("R0", "A1", "A2", "RV", "RG")]
             self.assertEqual(ids[-len(extra):], extra, name)
 
     def test_timestamp_header_fixed(self):
@@ -179,10 +180,10 @@ class TestKemauthModels(unittest.TestCase):
 
     def test_queries(self):
         main = [q for q in build_models.ALL_KEMAUTH if q != "A2"]
-        self.assertEqual(query_ids("session_kemauth"), main)
-        self.assertEqual(query_ids("session_kemauth_replay_cache"), main)
+        self.assertEqual(query_ids("session_kemauth"), main + ["RV", "RG"])
+        self.assertEqual(query_ids("session_kemauth_replay_cache"), main + ["RV", "RG"])
         self.assertEqual(query_ids("session_kemauth_a2"), ["A2"])
-        self.assertEqual(query_ids("session_kemauth_a2_typed_static"), ["A2", "R0"])
+        self.assertEqual(query_ids("session_kemauth_a2_typed_static"), ["A2", "R0", "RV", "RG"])
         for name, _, _, _, _, qs, _ in build_models.KEMAUTH_MODELS[3:]:
             self.assertEqual(query_ids(name), build_models.SECRECY, name)
 
@@ -203,7 +204,7 @@ class TestResultsRound6b(unittest.TestCase):
             for qid in query_ids(name):
                 if not (name in REPLAY and qid in ("R0", "A1", "A2")):
                     earlier_keys.add((name, qid))
-        sel = [r for r in rows if (r["model"], r["property_id"]) in earlier_keys]
+        sel = [r for r in rows if (r["model"], r["property_id"]) in earlier_keys and not is_round7(r)]
         self.assertEqual(len(sel), EARLIER_ROWS)
         key = "\n".join(sorted("|".join(r[c] for c in EARLIER_COLS) for r in sel))
         self.assertEqual(hashlib.sha256(key.encode()).hexdigest(), EARLIER_SHA256)

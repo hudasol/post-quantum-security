@@ -60,6 +60,16 @@ PLAIN = {
                                               "authentication by pinned static KEM keys and key confirmation, without "
                                               "signatures.",
     ("kemauth", "R0"): "The same sanity check as R0 of the replay group, in the models of design K.",
+    ("session, replay, kemauth", "R0, RV, RG"): "Sanity checks, not security properties (round 7): the vehicle "
+                                                "accepts a command (R0), the vehicle accepts a session key (RV), and "
+                                                "the ground station accepts a session key (RG). A counterexample is "
+                                                "the expected result of each; it shows that C1, A1, A2 and the "
+                                                "secrecy queries of the accepted keys are not proved only because "
+                                                "the event can never happen.",
+    ("session, kemauth", "SM"): "Asked in the settings with a broken signature or known static KEM keys (round 7): "
+                                "the key of a session that the vehicle and the ground station both accepted, with "
+                                "the same session identifier and key, stays secret. This is secrecy of the honest, "
+                                "matched sessions only; S1 and S2 ask it of every session a side accepts.",
 }
 
 
@@ -146,7 +156,8 @@ def build(rows):
       f"and {n_cbp} that the tool could not prove. The counterexamples include the control rows in which both "
       "components are broken on purpose (section 7), the stated designs before each change (section 6), and the "
       "controls and reachability checks of the replay rules (section 9), the reachability checks and the "
-      "settings with a broken KEM of design K (section 10). The "
+      "settings with a broken KEM or known static keys of design K (section 10), and the reachability checks of the "
+      "session models and the settings with a broken signature (sections 7.1 and 7.2). The "
       "session and fallback models allow an unbounded number of sessions; the firmware models allow an unbounded "
       "number of devices, each booting three times, with three signed releases. The replay rule models of section 9 "
       "state their own bounds on commands per key, and section 11 lists the bounds of every model.")
@@ -284,6 +295,8 @@ def build(rows):
       "are not secret by construction. A classical only design (architecture A) is in the position of the control "
       "row once its classical part is broken.")
     a("")
+    reach_section(rows, a)
+    sig_section(rows, a)
     a("## 8. Text the reference architecture should adopt")
     a("")
     a("1. Session start: \"The vehicle also signs the transcript with its own ML-DSA-44 key, pinned at the ground "
@@ -494,15 +507,125 @@ def replay_section(rows, a):
     a("")
 
 
+SESSION_B_MODELS = [m[0] for m in build_models.SESSION_MODELS]
+SIG_MODELS = [m[0] for m in build_models.SESSION_SIG_BROKEN_MODELS]
+REACH_FULL = ["session_replay_cache", "session_replay_cache_fresh_counters", "session_replay_cache_broken_no_check",
+              "session_replay_cache_table_concurrent", "session_kemauth", "session_kemauth_a2_typed_static",
+              "session_kemauth_replay_cache"]
+
+
+def cell(rows, m, q):
+    r = get(rows, m, q)
+    return "not asked" if r == "not run" else r
+
+
+def reach_section(rows, a):
+    a("### 7.1 Reachability checks of the session models")
+    a("")
+    a("A review found that the proofs of C1, A1 and A2 in the session models had no check that the events they "
+      "speak about can happen at all; a proof about an event that is never reached would be vacuous. Round 7 adds "
+      "three reachability queries, after the earlier queries of each file: R0 (the vehicle accepts a command), RV "
+      "(the vehicle accepts a session key) and RG (the ground station accepts a session key). The expected result "
+      "of each is a counterexample, a trace that reaches the event. They are asked in every `session_b_*` model, "
+      "in the models of section 9 with the full handshake (RV and RG; R0 was asked there before) and in the models "
+      "of design K that ask A1 or A2 (section 10).")
+    a("")
+    a("| Model | R0 vehicle accepts a command | RV vehicle accepts a key | RG ground station accepts a key |")
+    a("|---|---|---|---|")
+    for m in SESSION_B_MODELS + SIG_MODELS + REACH_FULL:
+        a(f"| {m} | {cell(rows, m, 'R0')} | {cell(rows, m, 'RV')} | {cell(rows, m, 'RG')} |")
+    a("")
+    a("_modelled: ProVerif under the Dolev Yao model with abstract primitives; a counterexample is the expected result "
+      "of every query in this table. The earlier queries of each file kept their results in the rerun; run times "
+      "are in section 5._")
+    a("")
+    allr = [cell(rows, m, q) for m in SESSION_B_MODELS + SIG_MODELS + REACH_FULL for q in ("R0", "RV", "RG")]
+    asked = [r for r in allr if r != "not asked"]
+    n_cx = sum(r == "counterexample" for r in asked)
+    a(f"Reading: {n_cx} of the {len(asked)} reachability queries in this table give the expected counterexample. "
+      "In every model that asks them, both sides can accept a session key and the vehicle can accept a command, so "
+      "the proofs of A1, A2, C1, S1 and S2 in these files are not vacuous. The secrecy queries of the rekeyed keys "
+      "(S3 and S4) are not covered by these checks: no query asks that a rekey is reached.")
+    a("")
+
+
+def sig_reading(rows):
+    s0, sk, sc = SIG_MODELS
+    return [
+        f"- **Signature broken, KEM and classical intact.** S1 {get(rows, s0, 'S1')}, S2 {get(rows, s0, 'S2')}, "
+        f"A1 {get(rows, s0, 'A1')}, A2 {get(rows, s0, 'A2')}, C1 {get(rows, s0, 'C1')}. An attacker who can sign as "
+        "the ground station runs the handshake with the vehicle in its place (and as the vehicle with the ground "
+        "station), so each side accepts a key that the attacker shares, and the vehicle accepts commands the ground "
+        "station never sent. The hybrid exchange does not help here: both secrets of the key are shared with the "
+        "attacker, who took part in the exchange. In design B with change F1, authentication, and with it the "
+        "secrecy of the keys a side accepts and the integrity of commands, therefore rests on ML-DSA-44 alone. "
+        f"What remains is the matched session: SM {get(rows, s0, 'SM')}, so a session in which the attacker did "
+        "not take the place of either side keeps its key secret (an attacker who breaks ML-DSA-44 later, or who "
+        "only records, learns nothing from it).",
+        f"- **Signature and KEM broken.** SM {get(rows, sk, 'SM')}; signature and classical broken: SM "
+        f"{get(rows, sc, 'SM')}. The key of a matched session stays secret while one of the two exchange components "
+        "holds, as in section 7. The queries on every accepted key and on authentication give the same results as "
+        f"with the signature broken alone (with the KEM also broken: S1 {get(rows, sk, 'S1')}, A1 "
+        f"{get(rows, sk, 'A1')}; with the classical component also broken: S1 {get(rows, sc, 'S1')}, A1 "
+        f"{get(rows, sc, 'A1')}). In the setting with the KEM also broken, C1 "
+        f"{get(rows, sk, 'C1')}; it is asked last in that file for this reason. The author's reading, not asked of "
+        "the tool: the attack on C1 with the signature broken alone is also a trace of this setting, because the "
+        "attacker here holds every secret of that setting and more, so C1 does not hold here either.",
+        "- **Consequence for the design.** The hybrid exchange protects the confidentiality of honest sessions "
+        "against a break of either exchange component, but not against an active attacker who can forge ML-DSA-44 "
+        "signatures. A design that must survive a break of ML-DSA-44 needs a second, independent authentication: "
+        "for example a classical signature beside ML-DSA-44 (a hybrid signature), or the KEM authentication of "
+        "design K in addition to the signatures (section 10 shows that design K alone in turn rests on ML-KEM).",
+        "- **Reachability.** R0, RV and RG give counterexamples in all three files, as expected (section 7.1).",
+    ]
+
+
+SIG_SETTINGS = [("signature broken", "session_b_fixed_sig_broken"),
+                ("signature and KEM broken", "session_b_fixed_sig_kem_broken"),
+                ("signature and classical broken", "session_b_fixed_sig_classical_broken")]
+SIG_QIDS = ["S1", "S2", "S3", "S4", "A1", "A2", "C1", "SM"]
+
+
+def sig_section(rows, a):
+    a("### 7.2 Signature component broken")
+    a("")
+    a("A review found that in design B with change F1 authentication rests on ML-DSA-44 alone, and that no model "
+      "broke the signature. Round 7 adds three models of the session with change F1 in which the long term "
+      "ML-DSA-44 signing keys of both sides are given to the attacker from the start, so that the attacker can sign "
+      "any message as either side. This is the standard way of these files to break a component (section 2): a "
+      "broken signature scheme is modelled as an attacker who holds the signing keys, which is at least as strong "
+      "as any forgery. The KEM and the classical component are intact, broken in turn, as stated in each row. Each "
+      "file also asks SM, secrecy of the key of a session that both sides accepted with the same identifier and key "
+      "(a session in which the attacker did not take the place of either side). In the two settings in which a "
+      "second component is broken as well, the names that each side draws after an input are written without "
+      "arguments (`new y[]`, the construct described in section 10.1): with the default representation both files "
+      f"stopped at the memory cap of `formal/run_all.py` ({run_all.MEM_LIMIT_MB} MB) before they finished.")
+    a("")
+    a("| Setting (design with change F1) | Model | " + " | ".join(SIG_QIDS) + " | R0 | RV | RG |")
+    a("|---|---|" + "---|" * (len(SIG_QIDS) + 3))
+    for label, m in SIG_SETTINGS:
+        a(f"| {label} | {m} | " + " | ".join(cell(rows, m, q) for q in SIG_QIDS + ["R0", "RV", "RG"]) + " |")
+    a("")
+    a("_modelled: ProVerif under the Dolev Yao model with abstract primitives; run times are in section 5._")
+    a("")
+    for line in sig_reading(rows):
+        a(line)
+    a("")
+
+
 KEMAUTH_SETTINGS = [
     ("no secret given (A2 in session_kemauth_a2)", "session_kemauth"),
-    ("no secret given, static keys typed apart (A2 and R0 only)", "session_kemauth_a2_typed_static"),
+    ("no secret given, static keys typed apart (A2 and reachability only)", "session_kemauth_a2_typed_static"),
     ("classical component broken", "session_kemauth_classical_broken"),
     ("KEM component broken (static and ephemeral KEM keys)", "session_kemauth_kem_broken"),
     ("both broken (control)", "session_kemauth_both_broken"),
     ("static KEM keys stolen later", "session_kemauth_fs_longterm"),
     ("static KEM keys stolen later and classical broken", "session_kemauth_fs_longterm_classical_broken"),
     ("no secret given, replay cache rule", "session_kemauth_replay_cache"),
+    ("no secret given, A2 asked again with the setting selFun = Term (round 7)", "session_kemauth_a2_retry"),
+    ("static KEM keys known from the start (round 7)", "session_kemauth_static_known"),
+    ("static KEM keys known from the start and classical broken (round 7)",
+     "session_kemauth_static_known_classical_broken"),
 ]
 KEMAUTH_MODELS = [m for _, m in KEMAUTH_SETTINGS] + ["session_kemauth_a2"]
 
@@ -576,7 +699,7 @@ def kemauth_section(rows, a):
     a("")
     a("### 10.2 Results (modelled)")
     a("")
-    qids = ["S1", "S2", "S3", "S4", "A1", "A2", "C1", "C2", "R0"]
+    qids = ["S1", "S2", "S3", "S4", "A1", "A2", "C1", "C2", "R0", "RV", "RG", "SM"]
     a("| Setting (design K) | Model | " + " | ".join(qids) + " |")
     a("|---|---|" + "---|" * len(qids))
     for label, m in KEMAUTH_SETTINGS:
@@ -624,7 +747,8 @@ def kemauth_section(rows, a):
       "asked, for the reason given in section 10.1), under the same atomicity restriction as `session_replay_cache` (an assumption, "
       "not proved by the tool).")
     a("")
-    a("### 10.4 Not covered for design K")
+    kemauth_round7(rows, a)
+    a("### 10.5 Not covered for design K")
     a("")
     a("- Compromise of one static key only. Whoever holds the static KEM key of the vehicle can compute the first "
       "KEM secret, and whoever holds that of the ground station the third; whether a stolen static key of one side "
@@ -632,6 +756,61 @@ def kemauth_section(rows, a):
     a("- Everything listed in section 2 as not modelled, including the truncation of the tag, the grace period of "
       "a rekey, clocks and the width of the counter.")
     a("- Provisioning, storage and rotation of the static KEM keys.")
+    a("")
+
+
+def kemauth_round7(rows, a):
+    k, kt, kr = "session_kemauth", "session_kemauth_a2_typed_static", "session_kemauth_replay_cache"
+    ks, ksc, ka = ("session_kemauth_static_known", "session_kemauth_static_known_classical_broken",
+                   "session_kemauth_a2_retry")
+    to = f"cannot be proved (timeout {run_all.TIMEOUT_S} s)"
+    retry = get(rows, ka, "A2")
+    a("### 10.4 Round 7: reachability, known static keys and the general A2 query")
+    a("")
+    a(f"- **Reachability.** RV and RG in `{k}`: {get(rows, k, 'RV')} and {get(rows, k, 'RG')}; in `{kt}`: "
+      f"{get(rows, kt, 'RV')} and {get(rows, kt, 'RG')}; in `{kr}`: {get(rows, kr, 'RV')} and "
+      f"{get(rows, kr, 'RG')}. Both sides accept a session key in each of these models, so A1 and S1 to S4 of "
+      f"`{k}` and A2 of `{kt}` are not proved vacuously. `session_kemauth_a2` has the process of `{k}` and asks "
+      f"only A2, so the reachability checks of that process are the ones of `{k}`.")
+    a("- **Static KEM keys known from the start.** Design K has no signature; the secrets that authenticate its two "
+      "sides are the static KEM secret keys. The setting `session_kemauth_kem_broken` gives every KEM secret key "
+      "to the attacker, static and ephemeral (a break of ML-KEM). No earlier model gave the static keys alone from "
+      f"the start; `{ks}` does, so the ephemeral KEM stays intact, which is the counterpart of a broken signature "
+      f"with an intact KEM in design B (section 7.2). Results: S1 {get(rows, ks, 'S1')}, S2 {get(rows, ks, 'S2')}, "
+      f"S3 {get(rows, ks, 'S3')}, S4 {get(rows, ks, 'S4')}, SM {get(rows, ks, 'SM')}, R0 {get(rows, ks, 'R0')}, "
+      f"RV {get(rows, ks, 'RV')}, RG {get(rows, ks, 'RG')}; A1 {get(rows, ks, 'A1')}, C1 {get(rows, ks, 'C1')}, "
+      f"A2 {get(rows, ks, 'A2')}. With the classical component also broken (`{ksc}`): S1 {get(rows, ksc, 'S1')}, "
+      f"S2 {get(rows, ksc, 'S2')}, SM {get(rows, ksc, 'SM')}, A1 {get(rows, ksc, 'A1')}, "
+      f"C1 {get(rows, ksc, 'C1')}, A2 {get(rows, ksc, 'A2')}. The queries A1, C1 and A2 are asked last in these "
+      "files, because in a first run A1 asked after S1 to S4 did not finish and kept every later query from "
+      "running. The names that the ground station draws after F2 are written without arguments, as in the "
+      "settings with a broken KEM (section 10.1).")
+    a("- **Reading of the known static keys.** As with a broken signature in design B, an attacker who holds the "
+      "static keys takes the place of either side, and the keys that a side accepts are not secret (S1 and S2). "
+      "The key of a matched session stays secret (SM), through the ephemeral X25519 shares and the ephemeral KEM "
+      "key, and through the ephemeral KEM key alone when the classical component is broken. Where A1, C1 or A2 "
+      "reached the time limit, the tool neither found an attack nor gave a proof. The author's reading, not "
+      "confirmed by the tool, is that an attacker who holds both static keys can play the ground station to the "
+      "vehicle, as in the trace of S1, so A1 is not expected to hold in these settings. Together with "
+      "`session_kemauth_kem_broken`, this shows that design K, like design B, rests its authentication on one "
+      "post quantum primitive, here ML-KEM, and keeps only the confidentiality of matched sessions when it fails.")
+    if retry.startswith("cannot be proved ("):
+        outcome = (f"it did not finish either ({retry}), so A2 of the general model stays open, as recorded in "
+                   "section 10.3; no attack was found")
+    else:
+        outcome = f"result: {retry}"
+    a(f"- **General A2 asked again.** `{ka}` asks A2 of the same process as `session_kemauth_a2` (which gave "
+      f"{get(rows, 'session_kemauth_a2', 'A2')}), with the tool setting `set selFun = Term.` (the selection "
+      "function of the resolution, a documented setting of ProVerif that changes how the tool searches and not "
+      f"the model), in one run with a time limit of {build_models.A2_RETRY_TIMEOUT_S} s and a memory cap of "
+      f"{build_models.A2_RETRY_MEM_MB} MB; {outcome}. The choice of "
+      "setting came from short trial runs of 120 s to 300 s each, not recorded as results: with the default "
+      "selection function the tool inserted about 2,000 clauses in 300 s, at about the same rate with the non injective form "
+      "of A2, with `set maxDepth = 8.` or `12`, or with the names of the ground station written without arguments; "
+      "with `selFun = Term` it inserted about 18,000 in 300 s, and with `redundancyElim = no` about 9,000 in 120 s, "
+      "in both cases with the queue of clauses still growing; `selFun = Nounifset` stopped at a termination "
+      "warning that waits for input. The setting with the highest rate was chosen; a higher rate does not show "
+      "that the tool will finish.")
     a("")
 
 
@@ -645,9 +824,10 @@ def bounds_section(a):
     a("| Models | Handshake | Keys per session | Commands per key | Command messages read per key at the vehicle | "
       "Replay rule |")
     a("|---|---|---|---|---|---|")
-    a("| session_b_* | design B, as stated or with change F1 | 2 (one rekey) | 1 | 1 | next sequence number |")
-    a("| session_kemauth (and its broken and forward secrecy variants) | design K | 2 (one rekey) | 1 | 1 | "
-      "next sequence number |")
+    a("| session_b_* (including the settings with a broken signature of section 7.2) | design B, as stated or with "
+      "change F1 | 2 (one rekey) | 1 | 1 | next sequence number |")
+    a("| session_kemauth (and its broken, forward secrecy, known static key and A2 variants) | design K | "
+      "2 (one rekey) | 1 | 1 | next sequence number |")
     a(f"| session_kemauth_replay_cache | design K | 2 (one rekey) | {n} | unbounded | replay cache (restriction) |")
     a("| fallback_d_* | provisioned key, with or without change F2 | 1 | 2 | 2 | next sequence number |")
     a("| session_timestamp_rule | none (abstract key) | 1 | 2 (counters 1 and 3) | 2 | published timestamp rule |")
@@ -700,6 +880,24 @@ EXPECTED = {
     ("session_kemauth_fs_longterm_classical_broken", "S2"): "proved",
     ("session_kemauth_replay_cache", "C1"): "proved", ("session_kemauth_replay_cache", "C2"): "proved",
     ("session_kemauth_replay_cache", "R0"): "counterexample",
+    # round 7: reachability of the session models, broken signature, known static keys
+    ("session_b_fixed", "R0"): "counterexample", ("session_b_fixed", "RV"): "counterexample",
+    ("session_b_fixed", "RG"): "counterexample", ("session_b_stated", "RG"): "counterexample",
+    ("session_kemauth", "RV"): "counterexample", ("session_kemauth", "RG"): "counterexample",
+    ("session_kemauth_a2_typed_static", "RG"): "counterexample",
+    ("session_b_fixed_sig_broken", "S1"): "counterexample", ("session_b_fixed_sig_broken", "S2"): "counterexample",
+    ("session_b_fixed_sig_broken", "A1"): "counterexample", ("session_b_fixed_sig_broken", "A2"): "counterexample",
+    ("session_b_fixed_sig_broken", "C1"): "counterexample", ("session_b_fixed_sig_broken", "SM"): "proved",
+    ("session_b_fixed_sig_kem_broken", "S1"): "counterexample", ("session_b_fixed_sig_kem_broken", "A1"): "counterexample",
+    ("session_b_fixed_sig_kem_broken", "SM"): "proved",
+    ("session_b_fixed_sig_kem_broken", "C1"): f"cannot be proved (timeout {run_all.TIMEOUT_S} s)",
+    ("session_b_fixed_sig_classical_broken", "S1"): "counterexample",
+    ("session_b_fixed_sig_classical_broken", "A1"): "counterexample",
+    ("session_b_fixed_sig_classical_broken", "SM"): "proved",
+    ("session_kemauth_static_known", "S1"): "counterexample", ("session_kemauth_static_known", "S2"): "counterexample",
+    ("session_kemauth_static_known", "SM"): "proved",
+    ("session_kemauth_static_known_classical_broken", "S1"): "counterexample",
+    ("session_kemauth_static_known_classical_broken", "SM"): "proved",
 }
 
 

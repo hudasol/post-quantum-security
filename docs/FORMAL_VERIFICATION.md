@@ -13,7 +13,7 @@ The models follow `docs/REFERENCE_ARCHITECTURE.md` (sections 1 and 5), the archi
 3. **Firmware update (architecture D, boot half).** An image and its version are signed with an abstract stateful hash based signature (LMS) and verified by the bootloader, with and without a monotonic version counter in protected storage.
 4. **KEM authenticated session (design K, round 6).** The same hybrid exchange, but each side is authenticated by a static KEM key pinned at the other side and by key confirmation, without signatures (section 10).
 
-In total 33 model files and 140 queries were run: 97 proved, 39 counterexamples and 4 that the tool could not prove. The counterexamples include the control rows in which both components are broken on purpose (section 7), the stated designs before each change (section 6), and the controls and reachability checks of the replay rules (section 9), the reachability checks and the settings with a broken KEM of design K (section 10). The session and fallback models allow an unbounded number of sessions; the firmware models allow an unbounded number of devices, each booting three times, with three signed releases. The replay rule models of section 9 state their own bounds on commands per key, and section 11 lists the bounds of every model.
+In total 39 model files and 240 queries were run: 102 proved, 126 counterexamples and 12 that the tool could not prove. The counterexamples include the control rows in which both components are broken on purpose (section 7), the stated designs before each change (section 6), and the controls and reachability checks of the replay rules (section 9), the reachability checks and the settings with a broken KEM or known static keys of design K (section 10), and the reachability checks of the session models and the settings with a broken signature (sections 7.1 and 7.2). The session and fallback models allow an unbounded number of sessions; the firmware models allow an unbounded number of devices, each booting three times, with three signed releases. The replay rule models of section 9 state their own bounds on commands per key, and section 11 lists the bounds of every model.
 
 ## 2. Assumptions and what is not modelled
 
@@ -57,6 +57,8 @@ In total 33 model files and 140 queries were run: 97 proved, 39 counterexamples 
 | replay | A1, A2 | The same as A1 and A2 of the session group, asked in the replay rule models with the full handshake. |
 | kemauth | S1 to S4, A1, A2, C1, C2 | The same as the session group, for design K (section 10): authentication by pinned static KEM keys and key confirmation, without signatures. |
 | kemauth | R0 | The same sanity check as R0 of the replay group, in the models of design K. |
+| session, replay, kemauth | R0, RV, RG | Sanity checks, not security properties (round 7): the vehicle accepts a command (R0), the vehicle accepts a session key (RV), and the ground station accepts a session key (RG). A counterexample is the expected result of each; it shows that C1, A1, A2 and the secrecy queries of the accepted keys are not proved only because the event can never happen. |
+| session, kemauth | SM | Asked in the settings with a broken signature or known static KEM keys (round 7): the key of a session that the vehicle and the ground station both accepted, with the same session identifier and key, stays secret. This is secrecy of the honest, matched sessions only; S1 and S2 ask it of every session a side accepts. |
 
 ## 5. Results (modelled)
 
@@ -74,46 +76,109 @@ In total 33 model files and 140 queries were run: 97 proved, 39 counterexamples 
 | session_b_fixed | Dolev Yao attacker, no secret given | A2 | proved |  | 102.6 |
 | session_b_fixed | Dolev Yao attacker, no secret given | C1 | proved |  | 102.6 |
 | session_b_fixed | Dolev Yao attacker, no secret given | C2 | proved |  | 102.6 |
+| session_b_fixed | Dolev Yao attacker, no secret given | R0 | counterexample |  | 55.8 |
+| session_b_fixed | Dolev Yao attacker, no secret given | RG | counterexample |  | 55.8 |
+| session_b_fixed | Dolev Yao attacker, no secret given | RV | counterexample |  | 55.8 |
 | session_b_fixed | Dolev Yao attacker, no secret given | S1 | proved |  | 102.6 |
 | session_b_fixed | Dolev Yao attacker, no secret given | S2 | proved |  | 102.6 |
 | session_b_fixed | Dolev Yao attacker, no secret given | S3 | proved |  | 102.6 |
 | session_b_fixed | Dolev Yao attacker, no secret given | S4 | proved |  | 102.6 |
+| session_b_fixed_both_broken | both components broken (control: equivalent to a classical only design whose classical part is broken) | R0 | counterexample |  | 12.6 |
+| session_b_fixed_both_broken | both components broken (control: equivalent to a classical only design whose classical part is broken) | RG | counterexample |  | 12.6 |
+| session_b_fixed_both_broken | both components broken (control: equivalent to a classical only design whose classical part is broken) | RV | counterexample |  | 12.6 |
 | session_b_fixed_both_broken | both components broken (control: equivalent to a classical only design whose classical part is broken) | S1 | counterexample |  | 31.1 |
 | session_b_fixed_both_broken | both components broken (control: equivalent to a classical only design whose classical part is broken) | S2 | counterexample |  | 31.1 |
 | session_b_fixed_both_broken | both components broken (control: equivalent to a classical only design whose classical part is broken) | S3 | counterexample |  | 31.1 |
 | session_b_fixed_both_broken | both components broken (control: equivalent to a classical only design whose classical part is broken) | S4 | counterexample |  | 31.1 |
+| session_b_fixed_classical_broken | classical component broken: every Diffie Hellman exponent is given to the attacker | R0 | counterexample |  | 9.5 |
+| session_b_fixed_classical_broken | classical component broken: every Diffie Hellman exponent is given to the attacker | RG | counterexample |  | 9.5 |
+| session_b_fixed_classical_broken | classical component broken: every Diffie Hellman exponent is given to the attacker | RV | counterexample |  | 9.5 |
 | session_b_fixed_classical_broken | classical component broken: every Diffie Hellman exponent is given to the attacker | S1 | proved |  | 25.8 |
 | session_b_fixed_classical_broken | classical component broken: every Diffie Hellman exponent is given to the attacker | S2 | proved |  | 25.8 |
 | session_b_fixed_classical_broken | classical component broken: every Diffie Hellman exponent is given to the attacker | S3 | proved |  | 25.8 |
 | session_b_fixed_classical_broken | classical component broken: every Diffie Hellman exponent is given to the attacker | S4 | proved |  | 25.8 |
+| session_b_fixed_fs_longterm | forward secrecy: both long term signature keys given to the attacker after the sessions (phase 1) | R0 | counterexample |  | 34.5 |
+| session_b_fixed_fs_longterm | forward secrecy: both long term signature keys given to the attacker after the sessions (phase 1) | RG | counterexample |  | 34.5 |
+| session_b_fixed_fs_longterm | forward secrecy: both long term signature keys given to the attacker after the sessions (phase 1) | RV | counterexample |  | 34.5 |
 | session_b_fixed_fs_longterm | forward secrecy: both long term signature keys given to the attacker after the sessions (phase 1) | S1 | proved |  | 103.9 |
 | session_b_fixed_fs_longterm | forward secrecy: both long term signature keys given to the attacker after the sessions (phase 1) | S2 | proved |  | 103.9 |
 | session_b_fixed_fs_longterm | forward secrecy: both long term signature keys given to the attacker after the sessions (phase 1) | S3 | proved |  | 103.9 |
 | session_b_fixed_fs_longterm | forward secrecy: both long term signature keys given to the attacker after the sessions (phase 1) | S4 | proved |  | 103.9 |
+| session_b_fixed_fs_longterm_both_broken | forward secrecy control: long term keys given after the sessions, and both components broken | R0 | counterexample |  | 26.9 |
+| session_b_fixed_fs_longterm_both_broken | forward secrecy control: long term keys given after the sessions, and both components broken | RG | counterexample |  | 26.9 |
+| session_b_fixed_fs_longterm_both_broken | forward secrecy control: long term keys given after the sessions, and both components broken | RV | counterexample |  | 26.9 |
 | session_b_fixed_fs_longterm_both_broken | forward secrecy control: long term keys given after the sessions, and both components broken | S1 | counterexample |  | 97.2 |
 | session_b_fixed_fs_longterm_both_broken | forward secrecy control: long term keys given after the sessions, and both components broken | S2 | counterexample |  | 97.2 |
 | session_b_fixed_fs_longterm_both_broken | forward secrecy control: long term keys given after the sessions, and both components broken | S3 | counterexample |  | 97.2 |
 | session_b_fixed_fs_longterm_both_broken | forward secrecy control: long term keys given after the sessions, and both components broken | S4 | counterexample |  | 97.2 |
+| session_b_fixed_fs_longterm_classical_broken | forward secrecy: long term keys given after the sessions, and the classical component broken | R0 | counterexample |  | 12.4 |
+| session_b_fixed_fs_longterm_classical_broken | forward secrecy: long term keys given after the sessions, and the classical component broken | RG | counterexample |  | 12.4 |
+| session_b_fixed_fs_longterm_classical_broken | forward secrecy: long term keys given after the sessions, and the classical component broken | RV | counterexample |  | 12.4 |
 | session_b_fixed_fs_longterm_classical_broken | forward secrecy: long term keys given after the sessions, and the classical component broken | S1 | proved |  | 34.0 |
 | session_b_fixed_fs_longterm_classical_broken | forward secrecy: long term keys given after the sessions, and the classical component broken | S2 | proved |  | 34.0 |
 | session_b_fixed_fs_longterm_classical_broken | forward secrecy: long term keys given after the sessions, and the classical component broken | S3 | proved |  | 34.0 |
 | session_b_fixed_fs_longterm_classical_broken | forward secrecy: long term keys given after the sessions, and the classical component broken | S4 | proved |  | 34.0 |
+| session_b_fixed_fs_longterm_kem_broken | forward secrecy: long term keys given after the sessions, and the KEM component broken | R0 | counterexample |  | 33.9 |
+| session_b_fixed_fs_longterm_kem_broken | forward secrecy: long term keys given after the sessions, and the KEM component broken | RG | counterexample |  | 33.9 |
+| session_b_fixed_fs_longterm_kem_broken | forward secrecy: long term keys given after the sessions, and the KEM component broken | RV | counterexample |  | 33.9 |
 | session_b_fixed_fs_longterm_kem_broken | forward secrecy: long term keys given after the sessions, and the KEM component broken | S1 | proved |  | 86.5 |
 | session_b_fixed_fs_longterm_kem_broken | forward secrecy: long term keys given after the sessions, and the KEM component broken | S2 | proved |  | 86.5 |
 | session_b_fixed_fs_longterm_kem_broken | forward secrecy: long term keys given after the sessions, and the KEM component broken | S3 | proved |  | 86.5 |
 | session_b_fixed_fs_longterm_kem_broken | forward secrecy: long term keys given after the sessions, and the KEM component broken | S4 | proved |  | 86.5 |
+| session_b_fixed_kem_broken | KEM component broken: every KEM secret key is given to the attacker | R0 | counterexample |  | 28.6 |
+| session_b_fixed_kem_broken | KEM component broken: every KEM secret key is given to the attacker | RG | counterexample |  | 28.6 |
+| session_b_fixed_kem_broken | KEM component broken: every KEM secret key is given to the attacker | RV | counterexample |  | 28.6 |
 | session_b_fixed_kem_broken | KEM component broken: every KEM secret key is given to the attacker | S1 | proved |  | 68.6 |
 | session_b_fixed_kem_broken | KEM component broken: every KEM secret key is given to the attacker | S2 | proved |  | 68.6 |
 | session_b_fixed_kem_broken | KEM component broken: every KEM secret key is given to the attacker | S3 | proved |  | 68.6 |
 | session_b_fixed_kem_broken | KEM component broken: every KEM secret key is given to the attacker | S4 | proved |  | 68.6 |
+| session_b_fixed_sig_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side | A1 | counterexample | non injective form counterexample | 237.5 |
+| session_b_fixed_sig_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side | A2 | counterexample | non injective form counterexample | 237.5 |
+| session_b_fixed_sig_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side | C1 | counterexample | non injective form counterexample | 237.5 |
+| session_b_fixed_sig_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side | R0 | counterexample |  | 237.5 |
+| session_b_fixed_sig_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side | RG | counterexample |  | 237.5 |
+| session_b_fixed_sig_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side | RV | counterexample |  | 237.5 |
+| session_b_fixed_sig_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side | S1 | counterexample |  | 237.5 |
+| session_b_fixed_sig_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side | S2 | counterexample |  | 237.5 |
+| session_b_fixed_sig_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side | S3 | counterexample |  | 237.5 |
+| session_b_fixed_sig_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side | S4 | counterexample |  | 237.5 |
+| session_b_fixed_sig_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side | SM | proved |  | 237.5 |
+| session_b_fixed_sig_classical_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the classical component broken: every Diffie Hellman exponent is given to the attacker | A1 | counterexample | non injective form counterexample | 8.7 |
+| session_b_fixed_sig_classical_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the classical component broken: every Diffie Hellman exponent is given to the attacker | A2 | counterexample | non injective form counterexample | 8.7 |
+| session_b_fixed_sig_classical_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the classical component broken: every Diffie Hellman exponent is given to the attacker | C1 | counterexample | non injective form counterexample | 8.7 |
+| session_b_fixed_sig_classical_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the classical component broken: every Diffie Hellman exponent is given to the attacker | R0 | counterexample |  | 8.7 |
+| session_b_fixed_sig_classical_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the classical component broken: every Diffie Hellman exponent is given to the attacker | RG | counterexample |  | 8.7 |
+| session_b_fixed_sig_classical_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the classical component broken: every Diffie Hellman exponent is given to the attacker | RV | counterexample |  | 8.7 |
+| session_b_fixed_sig_classical_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the classical component broken: every Diffie Hellman exponent is given to the attacker | S1 | counterexample |  | 8.7 |
+| session_b_fixed_sig_classical_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the classical component broken: every Diffie Hellman exponent is given to the attacker | S2 | counterexample |  | 8.7 |
+| session_b_fixed_sig_classical_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the classical component broken: every Diffie Hellman exponent is given to the attacker | S3 | counterexample |  | 8.7 |
+| session_b_fixed_sig_classical_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the classical component broken: every Diffie Hellman exponent is given to the attacker | S4 | counterexample |  | 8.7 |
+| session_b_fixed_sig_classical_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the classical component broken: every Diffie Hellman exponent is given to the attacker | SM | proved |  | 8.7 |
+| session_b_fixed_sig_kem_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the KEM component broken: every KEM secret key is given to the attacker | A1 | counterexample | non injective form counterexample | 1800.1 |
+| session_b_fixed_sig_kem_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the KEM component broken: every KEM secret key is given to the attacker | A2 | counterexample | non injective form counterexample | 1800.1 |
+| session_b_fixed_sig_kem_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the KEM component broken: every KEM secret key is given to the attacker | C1 | cannot be proved (timeout 1800 s) |  | 1800.1 |
+| session_b_fixed_sig_kem_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the KEM component broken: every KEM secret key is given to the attacker | R0 | counterexample |  | 1800.1 |
+| session_b_fixed_sig_kem_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the KEM component broken: every KEM secret key is given to the attacker | RG | counterexample |  | 1800.1 |
+| session_b_fixed_sig_kem_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the KEM component broken: every KEM secret key is given to the attacker | RV | counterexample |  | 1800.1 |
+| session_b_fixed_sig_kem_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the KEM component broken: every KEM secret key is given to the attacker | S1 | counterexample |  | 1800.1 |
+| session_b_fixed_sig_kem_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the KEM component broken: every KEM secret key is given to the attacker | S2 | counterexample |  | 1800.1 |
+| session_b_fixed_sig_kem_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the KEM component broken: every KEM secret key is given to the attacker | S3 | counterexample |  | 1800.1 |
+| session_b_fixed_sig_kem_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the KEM component broken: every KEM secret key is given to the attacker | S4 | counterexample |  | 1800.1 |
+| session_b_fixed_sig_kem_broken | signature component broken: both long term ML-DSA-44 signing keys are given to the attacker from the start, so the attacker can sign any message as either side; and the KEM component broken: every KEM secret key is given to the attacker | SM | proved |  | 1800.1 |
 | session_b_stated | Dolev Yao attacker, no secret given | A1 | proved |  | 133.4 |
 | session_b_stated | Dolev Yao attacker, no secret given | A2 | counterexample | non injective form counterexample | 133.4 |
 | session_b_stated | Dolev Yao attacker, no secret given | C1 | proved |  | 133.4 |
 | session_b_stated | Dolev Yao attacker, no secret given | C2 | proved |  | 133.4 |
+| session_b_stated | Dolev Yao attacker, no secret given | R0 | counterexample |  | 55.2 |
+| session_b_stated | Dolev Yao attacker, no secret given | RG | counterexample |  | 55.2 |
+| session_b_stated | Dolev Yao attacker, no secret given | RV | counterexample |  | 55.2 |
 | session_b_stated | Dolev Yao attacker, no secret given | S1 | proved |  | 133.4 |
 | session_b_stated | Dolev Yao attacker, no secret given | S2 | counterexample |  | 133.4 |
 | session_b_stated | Dolev Yao attacker, no secret given | S3 | proved |  | 133.4 |
 | session_b_stated | Dolev Yao attacker, no secret given | S4 | counterexample |  | 133.4 |
+| session_b_stated_fs_longterm | forward secrecy: the ground station signature key given to the attacker after the sessions (phase 1) | R0 | counterexample |  | 34.9 |
+| session_b_stated_fs_longterm | forward secrecy: the ground station signature key given to the attacker after the sessions (phase 1) | RG | counterexample |  | 34.9 |
+| session_b_stated_fs_longterm | forward secrecy: the ground station signature key given to the attacker after the sessions (phase 1) | RV | counterexample |  | 34.9 |
 | session_b_stated_fs_longterm | forward secrecy: the ground station signature key given to the attacker after the sessions (phase 1) | S1 | proved |  | 54.9 |
 | session_b_stated_fs_longterm | forward secrecy: the ground station signature key given to the attacker after the sessions (phase 1) | S2 | counterexample |  | 54.9 |
 | session_b_stated_fs_longterm | forward secrecy: the ground station signature key given to the attacker after the sessions (phase 1) | S3 | proved |  | 54.9 |
@@ -122,13 +187,18 @@ In total 33 model files and 140 queries were run: 97 proved, 39 counterexamples 
 | session_kemauth | Dolev Yao attacker, no secret given | C1 | proved |  | 117.0 |
 | session_kemauth | Dolev Yao attacker, no secret given | C2 | proved |  | 117.0 |
 | session_kemauth | Dolev Yao attacker, no secret given | R0 | counterexample |  | 117.0 |
+| session_kemauth | Dolev Yao attacker, no secret given | RG | counterexample |  | 127.8 |
+| session_kemauth | Dolev Yao attacker, no secret given | RV | counterexample |  | 127.8 |
 | session_kemauth | Dolev Yao attacker, no secret given | S1 | proved |  | 117.0 |
 | session_kemauth | Dolev Yao attacker, no secret given | S2 | proved |  | 117.0 |
 | session_kemauth | Dolev Yao attacker, no secret given | S3 | proved |  | 117.0 |
 | session_kemauth | Dolev Yao attacker, no secret given | S4 | proved |  | 117.0 |
 | session_kemauth_a2 | Dolev Yao attacker, no secret given | A2 | cannot be proved (timeout 1800 s) |  | 1800.0 |
+| session_kemauth_a2_retry | Dolev Yao attacker, no secret given; tool setting selFun = Term (the selection function of the resolution); one run with a time limit of 10800 s | A2 | cannot be proved (timeout 10800 s) |  | 10800.3 |
 | session_kemauth_a2_typed_static | Dolev Yao attacker, no secret given; modelling variant: static and ephemeral KEM keys have distinct types, so the attacker cannot offer a pinned static public key in place of the ground ephemeral key | A2 | proved |  | 86.9 |
 | session_kemauth_a2_typed_static | Dolev Yao attacker, no secret given; modelling variant: static and ephemeral KEM keys have distinct types, so the attacker cannot offer a pinned static public key in place of the ground ephemeral key | R0 | counterexample |  | 86.9 |
+| session_kemauth_a2_typed_static | Dolev Yao attacker, no secret given; modelling variant: static and ephemeral KEM keys have distinct types, so the attacker cannot offer a pinned static public key in place of the ground ephemeral key | RG | counterexample |  | 83.7 |
+| session_kemauth_a2_typed_static | Dolev Yao attacker, no secret given; modelling variant: static and ephemeral KEM keys have distinct types, so the attacker cannot offer a pinned static public key in place of the ground ephemeral key | RV | counterexample |  | 83.7 |
 | session_kemauth_both_broken | both components broken (control: every Diffie Hellman exponent and every KEM secret key is given to the attacker) | S1 | counterexample |  | 23.9 |
 | session_kemauth_both_broken | both components broken (control: every Diffie Hellman exponent and every KEM secret key is given to the attacker) | S2 | counterexample |  | 23.9 |
 | session_kemauth_both_broken | both components broken (control: every Diffie Hellman exponent and every KEM secret key is given to the attacker) | S3 | counterexample |  | 23.9 |
@@ -153,15 +223,41 @@ In total 33 model files and 140 queries were run: 97 proved, 39 counterexamples 
 | session_kemauth_replay_cache | Dolev Yao attacker, no secret given | C1 | proved |  | 392.6 |
 | session_kemauth_replay_cache | Dolev Yao attacker, no secret given | C2 | proved |  | 392.6 |
 | session_kemauth_replay_cache | Dolev Yao attacker, no secret given | R0 | counterexample |  | 392.6 |
+| session_kemauth_replay_cache | Dolev Yao attacker, no secret given | RG | counterexample |  | 374.0 |
+| session_kemauth_replay_cache | Dolev Yao attacker, no secret given | RV | counterexample |  | 374.0 |
 | session_kemauth_replay_cache | Dolev Yao attacker, no secret given | S1 | proved |  | 392.6 |
 | session_kemauth_replay_cache | Dolev Yao attacker, no secret given | S2 | proved |  | 392.6 |
 | session_kemauth_replay_cache | Dolev Yao attacker, no secret given | S3 | proved |  | 392.6 |
 | session_kemauth_replay_cache | Dolev Yao attacker, no secret given | S4 | proved |  | 392.6 |
+| session_kemauth_static_known | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret) | A1 | cannot be proved (timeout 1800 s) |  | 1800.1 |
+| session_kemauth_static_known | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret) | A2 | cannot be proved (timeout 1800 s) |  | 1800.1 |
+| session_kemauth_static_known | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret) | C1 | cannot be proved (timeout 1800 s) |  | 1800.1 |
+| session_kemauth_static_known | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret) | R0 | counterexample |  | 1800.1 |
+| session_kemauth_static_known | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret) | RG | counterexample |  | 1800.1 |
+| session_kemauth_static_known | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret) | RV | counterexample |  | 1800.1 |
+| session_kemauth_static_known | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret) | S1 | counterexample |  | 1800.1 |
+| session_kemauth_static_known | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret) | S2 | counterexample |  | 1800.1 |
+| session_kemauth_static_known | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret) | S3 | counterexample |  | 1800.1 |
+| session_kemauth_static_known | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret) | S4 | counterexample |  | 1800.1 |
+| session_kemauth_static_known | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret) | SM | proved |  | 1800.1 |
+| session_kemauth_static_known_classical_broken | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret); and the classical component broken: every Diffie Hellman exponent is given to the attacker | A1 | cannot be proved (timeout 1800 s) |  | 1800.2 |
+| session_kemauth_static_known_classical_broken | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret); and the classical component broken: every Diffie Hellman exponent is given to the attacker | A2 | cannot be proved (timeout 1800 s) |  | 1800.2 |
+| session_kemauth_static_known_classical_broken | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret); and the classical component broken: every Diffie Hellman exponent is given to the attacker | C1 | cannot be proved (timeout 1800 s) |  | 1800.2 |
+| session_kemauth_static_known_classical_broken | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret); and the classical component broken: every Diffie Hellman exponent is given to the attacker | R0 | counterexample |  | 1800.2 |
+| session_kemauth_static_known_classical_broken | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret); and the classical component broken: every Diffie Hellman exponent is given to the attacker | RG | counterexample |  | 1800.2 |
+| session_kemauth_static_known_classical_broken | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret); and the classical component broken: every Diffie Hellman exponent is given to the attacker | RV | counterexample |  | 1800.2 |
+| session_kemauth_static_known_classical_broken | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret); and the classical component broken: every Diffie Hellman exponent is given to the attacker | S1 | counterexample |  | 1800.2 |
+| session_kemauth_static_known_classical_broken | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret); and the classical component broken: every Diffie Hellman exponent is given to the attacker | S2 | counterexample |  | 1800.2 |
+| session_kemauth_static_known_classical_broken | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret); and the classical component broken: every Diffie Hellman exponent is given to the attacker | S3 | counterexample |  | 1800.2 |
+| session_kemauth_static_known_classical_broken | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret); and the classical component broken: every Diffie Hellman exponent is given to the attacker | S4 | counterexample |  | 1800.2 |
+| session_kemauth_static_known_classical_broken | static keys known: both static ML-KEM-768 secret keys are given to the attacker from the start (the ephemeral KEM keys stay secret); and the classical component broken: every Diffie Hellman exponent is given to the attacker | SM | proved |  | 1800.2 |
 | session_replay_cache | Dolev Yao attacker, no secret given | A1 | proved |  | 134.7 |
 | session_replay_cache | Dolev Yao attacker, no secret given | A2 | proved |  | 134.7 |
 | session_replay_cache | Dolev Yao attacker, no secret given | C1 | proved |  | 83.6 |
 | session_replay_cache | Dolev Yao attacker, no secret given | C2 | proved |  | 83.6 |
 | session_replay_cache | Dolev Yao attacker, no secret given | R0 | counterexample |  | 134.7 |
+| session_replay_cache | Dolev Yao attacker, no secret given | RG | counterexample |  | 121.1 |
+| session_replay_cache | Dolev Yao attacker, no secret given | RV | counterexample |  | 121.1 |
 | session_replay_cache | Dolev Yao attacker, no secret given | S1 | proved |  | 83.6 |
 | session_replay_cache | Dolev Yao attacker, no secret given | S2 | proved |  | 83.6 |
 | session_replay_cache | Dolev Yao attacker, no secret given | S3 | proved |  | 83.6 |
@@ -171,6 +267,8 @@ In total 33 model files and 140 queries were run: 97 proved, 39 counterexamples 
 | session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | C1 | counterexample | non injective form proved | 64.8 |
 | session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | C2 | proved |  | 64.8 |
 | session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | R0 | counterexample |  | 111.9 |
+| session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | RG | counterexample |  | 100.8 |
+| session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | RV | counterexample |  | 100.8 |
 | session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | S1 | proved |  | 64.8 |
 | session_replay_cache_broken_no_check | Dolev Yao attacker, no secret given | S3 | proved |  | 64.8 |
 | session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | A1 | proved |  | 59.1 |
@@ -178,6 +276,8 @@ In total 33 model files and 140 queries were run: 97 proved, 39 counterexamples 
 | session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | C1 | proved |  | 29.3 |
 | session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | C2 | proved |  | 29.3 |
 | session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | R0 | counterexample |  | 59.1 |
+| session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | RG | counterexample |  | 50.9 |
+| session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | RV | counterexample |  | 50.9 |
 | session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | S1 | proved |  | 29.3 |
 | session_replay_cache_fresh_counters | Dolev Yao attacker, no secret given | S3 | proved |  | 29.3 |
 | session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | A1 | proved |  | 119.4 |
@@ -185,6 +285,8 @@ In total 33 model files and 140 queries were run: 97 proved, 39 counterexamples 
 | session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | C1 | counterexample | non injective form proved | 63.1 |
 | session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | C2 | proved |  | 63.1 |
 | session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | R0 | counterexample |  | 119.4 |
+| session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | RG | counterexample |  | 103.7 |
+| session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | RV | counterexample |  | 103.7 |
 | session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | S1 | proved |  | 63.1 |
 | session_replay_cache_table_concurrent | Dolev Yao attacker, no secret given | S3 | proved |  | 63.1 |
 | session_replay_cache_table_sequential | Dolev Yao attacker, no secret given | C1 | cannot be proved | non injective form proved | 126.1 |
@@ -248,6 +350,54 @@ The one line goal statement that ProVerif printed for each counterexample is kep
 | long term keys stolen later and both broken (control) | counterexample | counterexample | counterexample | counterexample |
 
 Reading: the session keys stay secret when either component is broken, and stay secret after both long term keys are stolen later, also with one component broken, because the key derivation takes both secrets. Only when both components are broken do the keys become known; the control rows confirm that the models are not secret by construction. A classical only design (architecture A) is in the position of the control row once its classical part is broken.
+
+### 7.1 Reachability checks of the session models
+
+A review found that the proofs of C1, A1 and A2 in the session models had no check that the events they speak about can happen at all; a proof about an event that is never reached would be vacuous. Round 7 adds three reachability queries, after the earlier queries of each file: R0 (the vehicle accepts a command), RV (the vehicle accepts a session key) and RG (the ground station accepts a session key). The expected result of each is a counterexample, a trace that reaches the event. They are asked in every `session_b_*` model, in the models of section 9 with the full handshake (RV and RG; R0 was asked there before) and in the models of design K that ask A1 or A2 (section 10).
+
+| Model | R0 vehicle accepts a command | RV vehicle accepts a key | RG ground station accepts a key |
+|---|---|---|---|
+| session_b_stated | counterexample | counterexample | counterexample |
+| session_b_fixed | counterexample | counterexample | counterexample |
+| session_b_fixed_classical_broken | counterexample | counterexample | counterexample |
+| session_b_fixed_kem_broken | counterexample | counterexample | counterexample |
+| session_b_fixed_both_broken | counterexample | counterexample | counterexample |
+| session_b_fixed_fs_longterm | counterexample | counterexample | counterexample |
+| session_b_fixed_fs_longterm_classical_broken | counterexample | counterexample | counterexample |
+| session_b_fixed_fs_longterm_kem_broken | counterexample | counterexample | counterexample |
+| session_b_fixed_fs_longterm_both_broken | counterexample | counterexample | counterexample |
+| session_b_stated_fs_longterm | counterexample | counterexample | counterexample |
+| session_b_fixed_sig_broken | counterexample | counterexample | counterexample |
+| session_b_fixed_sig_kem_broken | counterexample | counterexample | counterexample |
+| session_b_fixed_sig_classical_broken | counterexample | counterexample | counterexample |
+| session_replay_cache | counterexample | counterexample | counterexample |
+| session_replay_cache_fresh_counters | counterexample | counterexample | counterexample |
+| session_replay_cache_broken_no_check | counterexample | counterexample | counterexample |
+| session_replay_cache_table_concurrent | counterexample | counterexample | counterexample |
+| session_kemauth | counterexample | counterexample | counterexample |
+| session_kemauth_a2_typed_static | counterexample | counterexample | counterexample |
+| session_kemauth_replay_cache | counterexample | counterexample | counterexample |
+
+_modelled: ProVerif under the Dolev Yao model with abstract primitives; a counterexample is the expected result of every query in this table. The earlier queries of each file kept their results in the rerun; run times are in section 5._
+
+Reading: 60 of the 60 reachability queries in this table give the expected counterexample. In every model that asks them, both sides can accept a session key and the vehicle can accept a command, so the proofs of A1, A2, C1, S1 and S2 in these files are not vacuous. The secrecy queries of the rekeyed keys (S3 and S4) are not covered by these checks: no query asks that a rekey is reached.
+
+### 7.2 Signature component broken
+
+A review found that in design B with change F1 authentication rests on ML-DSA-44 alone, and that no model broke the signature. Round 7 adds three models of the session with change F1 in which the long term ML-DSA-44 signing keys of both sides are given to the attacker from the start, so that the attacker can sign any message as either side. This is the standard way of these files to break a component (section 2): a broken signature scheme is modelled as an attacker who holds the signing keys, which is at least as strong as any forgery. The KEM and the classical component are intact, broken in turn, as stated in each row. Each file also asks SM, secrecy of the key of a session that both sides accepted with the same identifier and key (a session in which the attacker did not take the place of either side). In the two settings in which a second component is broken as well, the names that each side draws after an input are written without arguments (`new y[]`, the construct described in section 10.1): with the default representation both files stopped at the memory cap of `formal/run_all.py` (4096 MB) before they finished.
+
+| Setting (design with change F1) | Model | S1 | S2 | S3 | S4 | A1 | A2 | C1 | SM | R0 | RV | RG |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| signature broken | session_b_fixed_sig_broken | counterexample | counterexample | counterexample | counterexample | counterexample | counterexample | counterexample | proved | counterexample | counterexample | counterexample |
+| signature and KEM broken | session_b_fixed_sig_kem_broken | counterexample | counterexample | counterexample | counterexample | counterexample | counterexample | cannot be proved (timeout 1800 s) | proved | counterexample | counterexample | counterexample |
+| signature and classical broken | session_b_fixed_sig_classical_broken | counterexample | counterexample | counterexample | counterexample | counterexample | counterexample | counterexample | proved | counterexample | counterexample | counterexample |
+
+_modelled: ProVerif under the Dolev Yao model with abstract primitives; run times are in section 5._
+
+- **Signature broken, KEM and classical intact.** S1 counterexample, S2 counterexample, A1 counterexample, A2 counterexample, C1 counterexample. An attacker who can sign as the ground station runs the handshake with the vehicle in its place (and as the vehicle with the ground station), so each side accepts a key that the attacker shares, and the vehicle accepts commands the ground station never sent. The hybrid exchange does not help here: both secrets of the key are shared with the attacker, who took part in the exchange. In design B with change F1, authentication, and with it the secrecy of the keys a side accepts and the integrity of commands, therefore rests on ML-DSA-44 alone. What remains is the matched session: SM proved, so a session in which the attacker did not take the place of either side keeps its key secret (an attacker who breaks ML-DSA-44 later, or who only records, learns nothing from it).
+- **Signature and KEM broken.** SM proved; signature and classical broken: SM proved. The key of a matched session stays secret while one of the two exchange components holds, as in section 7. The queries on every accepted key and on authentication give the same results as with the signature broken alone (with the KEM also broken: S1 counterexample, A1 counterexample; with the classical component also broken: S1 counterexample, A1 counterexample). In the setting with the KEM also broken, C1 cannot be proved (timeout 1800 s); it is asked last in that file for this reason. The author's reading, not asked of the tool: the attack on C1 with the signature broken alone is also a trace of this setting, because the attacker here holds every secret of that setting and more, so C1 does not hold here either.
+- **Consequence for the design.** The hybrid exchange protects the confidentiality of honest sessions against a break of either exchange component, but not against an active attacker who can forge ML-DSA-44 signatures. A design that must survive a break of ML-DSA-44 needs a second, independent authentication: for example a classical signature beside ML-DSA-44 (a hybrid signature), or the KEM authentication of design K in addition to the signatures (section 10 shows that design K alone in turn rests on ML-KEM).
+- **Reachability.** R0, RV and RG give counterexamples in all three files, as expected (section 7.1).
 
 ## 8. Text the reference architecture should adopt
 
@@ -337,16 +487,19 @@ Two choices help the tool finish; both are stated in the model files. First, the
 
 ### 10.2 Results (modelled)
 
-| Setting (design K) | Model | S1 | S2 | S3 | S4 | A1 | A2 | C1 | C2 | R0 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| no secret given (A2 in session_kemauth_a2) | session_kemauth | proved | proved | proved | proved | proved | cannot be proved (timeout 1800 s) | proved | proved | counterexample |
-| no secret given, static keys typed apart (A2 and R0 only) | session_kemauth_a2_typed_static | not asked | not asked | not asked | not asked | not asked | proved | not asked | not asked | counterexample |
-| classical component broken | session_kemauth_classical_broken | proved | proved | proved | proved | not asked | not asked | not asked | not asked | not asked |
-| KEM component broken (static and ephemeral KEM keys) | session_kemauth_kem_broken | counterexample | counterexample | counterexample | counterexample | not asked | not asked | not asked | not asked | not asked |
-| both broken (control) | session_kemauth_both_broken | counterexample | counterexample | counterexample | counterexample | not asked | not asked | not asked | not asked | not asked |
-| static KEM keys stolen later | session_kemauth_fs_longterm | proved | proved | proved | proved | not asked | not asked | not asked | not asked | not asked |
-| static KEM keys stolen later and classical broken | session_kemauth_fs_longterm_classical_broken | proved | proved | proved | proved | not asked | not asked | not asked | not asked | not asked |
-| no secret given, replay cache rule | session_kemauth_replay_cache | proved | proved | proved | proved | proved | not asked | proved | proved | counterexample |
+| Setting (design K) | Model | S1 | S2 | S3 | S4 | A1 | A2 | C1 | C2 | R0 | RV | RG | SM |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| no secret given (A2 in session_kemauth_a2) | session_kemauth | proved | proved | proved | proved | proved | cannot be proved (timeout 1800 s) | proved | proved | counterexample | counterexample | counterexample | not asked |
+| no secret given, static keys typed apart (A2 and reachability only) | session_kemauth_a2_typed_static | not asked | not asked | not asked | not asked | not asked | proved | not asked | not asked | counterexample | counterexample | counterexample | not asked |
+| classical component broken | session_kemauth_classical_broken | proved | proved | proved | proved | not asked | not asked | not asked | not asked | not asked | not asked | not asked | not asked |
+| KEM component broken (static and ephemeral KEM keys) | session_kemauth_kem_broken | counterexample | counterexample | counterexample | counterexample | not asked | not asked | not asked | not asked | not asked | not asked | not asked | not asked |
+| both broken (control) | session_kemauth_both_broken | counterexample | counterexample | counterexample | counterexample | not asked | not asked | not asked | not asked | not asked | not asked | not asked | not asked |
+| static KEM keys stolen later | session_kemauth_fs_longterm | proved | proved | proved | proved | not asked | not asked | not asked | not asked | not asked | not asked | not asked | not asked |
+| static KEM keys stolen later and classical broken | session_kemauth_fs_longterm_classical_broken | proved | proved | proved | proved | not asked | not asked | not asked | not asked | not asked | not asked | not asked | not asked |
+| no secret given, replay cache rule | session_kemauth_replay_cache | proved | proved | proved | proved | proved | not asked | proved | proved | counterexample | counterexample | counterexample | not asked |
+| no secret given, A2 asked again with the setting selFun = Term (round 7) | session_kemauth_a2_retry | not asked | not asked | not asked | not asked | not asked | cannot be proved (timeout 10800 s) | not asked | not asked | not asked | not asked | not asked | not asked |
+| static KEM keys known from the start (round 7) | session_kemauth_static_known | counterexample | counterexample | counterexample | counterexample | cannot be proved (timeout 1800 s) | cannot be proved (timeout 1800 s) | cannot be proved (timeout 1800 s) | not asked | counterexample | counterexample | counterexample | proved |
+| static KEM keys known from the start and classical broken (round 7) | session_kemauth_static_known_classical_broken | counterexample | counterexample | counterexample | counterexample | cannot be proved (timeout 1800 s) | cannot be proved (timeout 1800 s) | cannot be proved (timeout 1800 s) | not asked | counterexample | counterexample | counterexample | proved |
 
 _modelled: ProVerif under the Dolev Yao model with abstract primitives. R0 is a reachability check whose expected result is a counterexample (the vehicle accepts a command); run times are in section 5._
 
@@ -359,7 +512,14 @@ _modelled: ProVerif under the Dolev Yao model with abstract primitives. R0 is a 
 - **Static KEM keys stolen later.** S1 proved, S2 proved, S3 proved, S4 proved; with the classical component also broken S1 proved, S2 proved, S3 proved, S4 proved. The ephemeral X25519 shares and the ephemeral KEM key give forward secrecy, and the ephemeral KEM key alone keeps it when the classical component is broken.
 - **Replay cache rule.** With the cache of section 9 in design K: C1 proved, C2 proved, A1 proved, S1 to S4 proved, proved, proved, proved, R0 counterexample (A2 not asked, for the reason given in section 10.1), under the same atomicity restriction as `session_replay_cache` (an assumption, not proved by the tool).
 
-### 10.4 Not covered for design K
+### 10.4 Round 7: reachability, known static keys and the general A2 query
+
+- **Reachability.** RV and RG in `session_kemauth`: counterexample and counterexample; in `session_kemauth_a2_typed_static`: counterexample and counterexample; in `session_kemauth_replay_cache`: counterexample and counterexample. Both sides accept a session key in each of these models, so A1 and S1 to S4 of `session_kemauth` and A2 of `session_kemauth_a2_typed_static` are not proved vacuously. `session_kemauth_a2` has the process of `session_kemauth` and asks only A2, so the reachability checks of that process are the ones of `session_kemauth`.
+- **Static KEM keys known from the start.** Design K has no signature; the secrets that authenticate its two sides are the static KEM secret keys. The setting `session_kemauth_kem_broken` gives every KEM secret key to the attacker, static and ephemeral (a break of ML-KEM). No earlier model gave the static keys alone from the start; `session_kemauth_static_known` does, so the ephemeral KEM stays intact, which is the counterpart of a broken signature with an intact KEM in design B (section 7.2). Results: S1 counterexample, S2 counterexample, S3 counterexample, S4 counterexample, SM proved, R0 counterexample, RV counterexample, RG counterexample; A1 cannot be proved (timeout 1800 s), C1 cannot be proved (timeout 1800 s), A2 cannot be proved (timeout 1800 s). With the classical component also broken (`session_kemauth_static_known_classical_broken`): S1 counterexample, S2 counterexample, SM proved, A1 cannot be proved (timeout 1800 s), C1 cannot be proved (timeout 1800 s), A2 cannot be proved (timeout 1800 s). The queries A1, C1 and A2 are asked last in these files, because in a first run A1 asked after S1 to S4 did not finish and kept every later query from running. The names that the ground station draws after F2 are written without arguments, as in the settings with a broken KEM (section 10.1).
+- **Reading of the known static keys.** As with a broken signature in design B, an attacker who holds the static keys takes the place of either side, and the keys that a side accepts are not secret (S1 and S2). The key of a matched session stays secret (SM), through the ephemeral X25519 shares and the ephemeral KEM key, and through the ephemeral KEM key alone when the classical component is broken. Where A1, C1 or A2 reached the time limit, the tool neither found an attack nor gave a proof. The author's reading, not confirmed by the tool, is that an attacker who holds both static keys can play the ground station to the vehicle, as in the trace of S1, so A1 is not expected to hold in these settings. Together with `session_kemauth_kem_broken`, this shows that design K, like design B, rests its authentication on one post quantum primitive, here ML-KEM, and keeps only the confidentiality of matched sessions when it fails.
+- **General A2 asked again.** `session_kemauth_a2_retry` asks A2 of the same process as `session_kemauth_a2` (which gave cannot be proved (timeout 1800 s)), with the tool setting `set selFun = Term.` (the selection function of the resolution, a documented setting of ProVerif that changes how the tool searches and not the model), in one run with a time limit of 10800 s and a memory cap of 6144 MB; it did not finish either (cannot be proved (timeout 10800 s)), so A2 of the general model stays open, as recorded in section 10.3; no attack was found. The choice of setting came from short trial runs of 120 s to 300 s each, not recorded as results: with the default selection function the tool inserted about 2,000 clauses in 300 s, at about the same rate with the non injective form of A2, with `set maxDepth = 8.` or `12`, or with the names of the ground station written without arguments; with `selFun = Term` it inserted about 18,000 in 300 s, and with `redundancyElim = no` about 9,000 in 120 s, in both cases with the queue of clauses still growing; `selFun = Nounifset` stopped at a termination warning that waits for input. The setting with the highest rate was chosen; a higher rate does not show that the tool will finish.
+
+### 10.5 Not covered for design K
 
 - Compromise of one static key only. Whoever holds the static KEM key of the vehicle can compute the first KEM secret, and whoever holds that of the ground station the third; whether a stolen static key of one side lets the attacker pose as the other side to it (key compromise impersonation) was not asked.
 - Everything listed in section 2 as not modelled, including the truncation of the tag, the grace period of a rekey, clocks and the width of the counter.
@@ -371,8 +531,8 @@ Every model allows an unbounded number of sessions (or devices) in parallel with
 
 | Models | Handshake | Keys per session | Commands per key | Command messages read per key at the vehicle | Replay rule |
 |---|---|---|---|---|---|
-| session_b_* | design B, as stated or with change F1 | 2 (one rekey) | 1 | 1 | next sequence number |
-| session_kemauth (and its broken and forward secrecy variants) | design K | 2 (one rekey) | 1 | 1 | next sequence number |
+| session_b_* (including the settings with a broken signature of section 7.2) | design B, as stated or with change F1 | 2 (one rekey) | 1 | 1 | next sequence number |
+| session_kemauth (and its broken, forward secrecy, known static key and A2 variants) | design K | 2 (one rekey) | 1 | 1 | next sequence number |
 | session_kemauth_replay_cache | design K | 2 (one rekey) | 3 | unbounded | replay cache (restriction) |
 | fallback_d_* | provisioned key, with or without change F2 | 1 | 2 | 2 | next sequence number |
 | session_timestamp_rule | none (abstract key) | 1 | 2 (counters 1 and 3) | 2 | published timestamp rule |
