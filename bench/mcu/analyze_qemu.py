@@ -3,7 +3,7 @@
 
 Writes qemu_results/ANALYSIS.md: correctness, stack by core and optimisation level, Cortex-M33 versus
 Cortex-M4, the current toolchain versus the first round results of 2026-10-12 (read from git history,
-commit 1060a1d, built with arm-none-eabi-gcc 13.2.1 and QEMU 8.2.2), ordering by parameter set, and the
+commit fb3c121, built with arm-none-eabi-gcc 13.2.1 and QEMU 8.2.2), ordering by parameter set, and the
 effect of -Os and -O3. Emulator figures are never cycles or times. Run from bench/mcu/ or anywhere."""
 import csv
 import io
@@ -12,7 +12,7 @@ import subprocess
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "qemu_results")
-FIRST_ROUND = "1060a1d"
+FIRST_ROUND = "fb3c121"
 ORDER = {"ML-KEM": ["ML-KEM-512", "ML-KEM-768", "ML-KEM-1024"],
          "ML-DSA": ["ML-DSA-44", "ML-DSA-65", "ML-DSA-87"]}
 OPS = {"ML-KEM": ["keygen", "encaps", "decaps"], "ML-DSA": ["keygen", "sign", "verify"]}

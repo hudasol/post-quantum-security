@@ -7,7 +7,7 @@ scored only when their files exist; otherwise they are marked not yet scored.
 
 Frozen after round 4: round 5 overwrote several of the files this script reads (boot chain, mission and
 evidence results), so a rerun now would score round 4 predictions against round 5 data. The committed
-docs/PREDICTIONS_V4_SCORES.md (last written in commit 413734f) is the record. The script writes it only with
+docs/PREDICTIONS_V4_SCORES.md (last written in commit 89f0a6e) is the record. The script writes it only with
 --rescore-round4, which should be used only on a checkout of the round 4 state; otherwise it prints the
 result and writes nothing.
 """

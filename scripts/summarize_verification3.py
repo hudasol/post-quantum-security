@@ -56,7 +56,7 @@ def pass4_section():
     import sys
     sys.path.insert(0, str(ROOT))
     from scripts import lint_columns
-    old = subprocess.run(["git", "show", "efd8765:data/evidence.csv"], cwd=ROOT, capture_output=True, text=True,
+    old = subprocess.run(["git", "show", "e0fd150:data/evidence.csv"], cwd=ROOT, capture_output=True, text=True,
                          encoding="utf-8").stdout
     first_n = len({r["id"] for r in csv.DictReader(io.StringIO(old)) if lint_columns.lint(r, first_version=True)})
     rev = list(csv.DictReader(open(v4 / "lint_review.csv", newline="", encoding="utf-8")))

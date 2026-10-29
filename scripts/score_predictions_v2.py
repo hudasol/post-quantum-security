@@ -62,7 +62,7 @@ def main():
               "a test that could not fail; the fresh review found this.)"))
     emu = 50008  # first round emulated ML-DSA-44 sign stack, read below from git history when available
     try:
-        txt = subprocess.run(["git", "show", "1060a1d:bench/mcu/qemu_results/stack.csv"], cwd=ROOT,
+        txt = subprocess.run(["git", "show", "fb3c121:bench/mcu/qemu_results/stack.csv"], cwd=ROOT,
                              capture_output=True, text=True, check=True).stdout
         emu = [int(l.split(",")[3]) for l in txt.splitlines() if l.startswith("ML-DSA,ML-DSA-44,sign,")][0]
     except Exception:
@@ -180,10 +180,10 @@ def main():
     dif = max(abs(stk[("an505", o, p, op)] / stk[("an386", o, p, op)] - 1) for (b, o, p, op) in stk if b == "an386")
     S.append(("Q4.2", "hit" if dif <= 0.10 else "miss", f"Largest M33 versus M4 stack difference {100 * dif:.1f} percent."))
     try:
-        txt = subprocess.run(["git", "show", "1060a1d:bench/mcu/qemu_results/stack.csv"], cwd=ROOT,
+        txt = subprocess.run(["git", "show", "fb3c121:bench/mcu/qemu_results/stack.csv"], cwd=ROOT,
                              capture_output=True, text=True, check=True).stdout.splitlines()[1:]
         old = {(l.split(",")[1], l.split(",")[2]): int(l.split(",")[3]) for l in txt}
-        txt = subprocess.run(["git", "show", "1060a1d:bench/mcu/qemu_results/image_size.csv"], cwd=ROOT,
+        txt = subprocess.run(["git", "show", "fb3c121:bench/mcu/qemu_results/image_size.csv"], cwd=ROOT,
                              capture_output=True, text=True, check=True).stdout.splitlines()[1:]
         name = {"mlkem": "ML-KEM-", "mldsa": "ML-DSA-"}
         oldt = {name[l.split(",")[0]] + l.split(",")[1]: int(l.split(",")[2]) for l in txt}

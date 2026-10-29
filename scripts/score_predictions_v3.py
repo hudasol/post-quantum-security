@@ -12,7 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-PRED_COMMIT = "efd8765"  # commit that added the hashed predictions; state of the repository before any run
+PRED_COMMIT = "e0fd150"  # commit that added the hashed predictions; state of the repository before any run
 
 
 def rows(rel):
