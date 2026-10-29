@@ -24,6 +24,16 @@ holds a static ML-KEM-768 key pair whose encapsulation key is pinned at the othe
   th = SHAKE256(label_th || idG || idV || F1 || F2 without cV, 32),
   k = SHAKE256(label_kdf || ss_x25519 || ssV || ssE || ssG || th, 32), cV and cG as above.
 The ground accepts after checking cV and the vehicle after checking cG.
+In band resynchronisation (hybrid_strict_inband): the strict rule counter of link id 0 is resynchronised inside the
+current session with one authenticated message each way under the session key: the 24 B resync request of the
+vehicle side gateway (8 B counter of the last accepted frame, 16 B tag) answered by a 24 B set message of the
+ground side gateway (8 B next counter, 16 B tag), or a set message of the ground side gateway after a link layer
+give up answered by a 24 B acknowledgement of the vehicle side gateway (8 B counter, 16 B tag). The vehicle moves
+its next expected counter forward only (a set message never lowers it), so an old set message cannot reopen
+counters that were already accepted.
+ML-DSA-44 per command with a counter (pqsig_counter): the ground side gateway signs the command frame followed by a
+6 B counter; the frame on the link is the command, the 6 B counter and the 2420 B signature; the vehicle side
+gateway verifies the signature over frame and counter and accepts the counter under the published rule.
 Per message tag: the 13 B MAVLink 2 signing field (link id, 6 B counter in the timestamp field, 6 B tag), with
 tag = first 6 B of SHA-256(k || frame || link id || counter), the formula of the MAVLink 2 signing guide.
 """
@@ -41,6 +51,10 @@ LABEL_KDF = b'r6 session key'
 LABEL_CG = b'r6 confirm ground'
 LABEL_CV = b'r6 confirm vehicle'
 LABEL_RS = b'r6 resync request'
+LABEL_RSET = b'r6 resync set counter'
+LABEL_RACK = b'r6 resync acknowledge'
+RESYNC_BYTES = 24
+PQ_COUNTER_BYTES = 6
 TAG_FIELD_BYTES = 13
 CONFIRM_BYTES = 16
 RAW = serialization.Encoding.Raw
@@ -329,6 +343,60 @@ def resync_request(key, counter):
     return shake256(key + LABEL_RS + c, CONFIRM_BYTES)
 
 
+def _resync_msg(key, label, counter):
+    c = int(counter).to_bytes(8, 'little', signed=True)
+    return c + shake256(key + label + c, CONFIRM_BYTES)
+
+
+def resync_set(key, counter):
+    """24 B set message of the ground side gateway (in band resynchronisation): next counter and its tag."""
+    return _resync_msg(key, LABEL_RSET, counter)
+
+
+def resync_ack(key, counter):
+    """24 B acknowledgement of a set message by the vehicle side gateway (in band resynchronisation)."""
+    return _resync_msg(key, LABEL_RACK, counter)
+
+
+def resync_request_msg(key, counter):
+    """24 B resync request of the vehicle side gateway: 8 B counter of the last accepted frame and its tag."""
+    return int(counter).to_bytes(8, 'little', signed=True) + resync_request(key, counter)
+
+
+def open_resync(key, kind, msg):
+    """Counter of a 24 B resync message of kind 'request', 'set' or 'ack' when its tag is valid, else None."""
+    if len(msg) != RESYNC_BYTES:
+        return None
+    c = int.from_bytes(msg[:8], 'little', signed=True)
+    if kind == 'request':
+        good = resync_request(key, c)
+    else:
+        good = shake256(key + {'set': LABEL_RSET, 'ack': LABEL_RACK}[kind] + msg[:8], CONFIRM_BYTES)
+    return c if hmac.compare_digest(good, msg[8:]) else None
+
+
+# ---------------------------------------------------------------- ML-DSA-44 per command with a counter
+
+def pq_counter_field(counter):
+    return int(counter).to_bytes(8, 'little')[:PQ_COUNTER_BYTES]
+
+
+def pqsig_counter_seal(frame, counter, sk):
+    """Command frame, 6 B counter and the ML-DSA-44 signature over frame and counter."""
+    ctr = pq_counter_field(counter)
+    return frame + ctr + pqcrypto.mldsa44_sign(frame + ctr, sk)
+
+
+def pqsig_counter_open(data, pk):
+    """Return (signature valid, frame, counter) of a sealed command."""
+    n = pqcrypto.MLDSA44_SIG + PQ_COUNTER_BYTES
+    if len(data) <= n:
+        return False, None, None
+    frame, ctr, sig = data[:-n], data[-n:-pqcrypto.MLDSA44_SIG], data[-pqcrypto.MLDSA44_SIG:]
+    ok = pqcrypto.mldsa44_verify(sig, frame + ctr, pk)
+    return ok, frame, int.from_bytes(ctr + b'\x00\x00', 'little')
+
+
 # ---------------------------------------------------------------- replay acceptance rules
 
 class Acceptor:
@@ -372,6 +440,13 @@ class Acceptor:
             lo = self.hi - self.window
             self.seen = {x for x in self.seen if x > lo}
         return True, None
+
+    def set_next(self, c):
+        """In band resynchronisation (strict rule): make c the next expected counter if that moves forward."""
+        if c - 1 > self.hi:
+            self.hi = c - 1
+            return True
+        return False
 
     def gap(self):
         """True when a counter above the next expected one has been seen (strict rule stall)."""

@@ -410,5 +410,189 @@ class TestGatewayRelay(unittest.TestCase):
         self.assertEqual(r.chan.stats['wire_bytes']['up'], sum(c5.object_fragments(len(f) + 2420, prof())))
 
 
+class TestInbandMessages(unittest.TestCase):
+    """Messages of the in band resynchronisation and the strict rule counter move (hybrid_strict_inband)."""
+
+    def test_messages_roundtrip_and_forgeries(self):
+        key, other = bytes(range(32)), bytes(32)
+        for kind, make in (('set', gw.resync_set), ('ack', gw.resync_ack), ('request', gw.resync_request_msg)):
+            msg = make(key, 41)
+            self.assertEqual(len(msg), gw.RESYNC_BYTES)
+            self.assertEqual(gw.open_resync(key, kind, msg), 41)
+            self.assertIsNone(gw.open_resync(other, kind, msg))
+            bad = bytearray(msg)
+            bad[0] ^= 1  # counter changed, tag kept
+            self.assertIsNone(gw.open_resync(key, kind, bytes(bad)))
+            bad = bytearray(msg)
+            bad[-1] ^= 1
+            self.assertIsNone(gw.open_resync(key, kind, bytes(bad)))
+        # the request has the layout of the strict rule request; a message of one kind is not valid as another
+        self.assertEqual(gw.resync_request_msg(key, 7)[8:], gw.resync_request(key, 7))
+        self.assertIsNone(gw.open_resync(key, 'ack', gw.resync_set(key, 41)))
+        self.assertIsNone(gw.open_resync(key, 'set', gw.resync_ack(key, 41)))
+        self.assertIsNone(gw.open_resync(key, 'set', gw.resync_request_msg(key, 41)))
+
+    def test_set_next_moves_forward_only(self):
+        a = gw.Acceptor('strict')
+        self.assertEqual([a.accept(c)[0] for c in (0, 1, 3)], [True, True, False])
+        self.assertTrue(a.gap())
+        self.assertTrue(a.set_next(4))
+        self.assertFalse(a.gap())
+        self.assertEqual(a.accept(4), (True, None))
+        self.assertFalse(a.set_next(2))  # an old set message does not reopen accepted counters
+        self.assertEqual(a.accept(3), (False, 'behind_next'))
+        self.assertEqual(a.accept(5), (True, None))
+
+    def test_security_configs_of_the_added_designs(self):
+        s = c6.security_config('hybrid_strict_inband')
+        self.assertEqual((s['design'], s['rule'], s['session'], s['inband']), ('hybrid', 'strict', True, True))
+        s = c6.security_config('pqsig_counter')
+        self.assertEqual((s['pqsig'], s['pq_counter'], s['rule'], s['session']), (True, True, 'published', False))
+        self.assertEqual(s['cmd_extra_bytes'], c6.security_config('pqsig_real')['cmd_extra_bytes'] + 6)
+        self.assertNotIn('inband', c6.security_config('hybrid_strict'))
+
+
+@unittest.skipUnless(HAVE_PQ, 'host builds of mlkem-native and mldsa-native not found')
+class TestPqsigCounter(unittest.TestCase):
+    def test_seal_open_and_tamper(self):
+        pk, sk = pqcrypto.mldsa44_keypair()
+        f = command_long()
+        data = gw.pqsig_counter_seal(f, 300, sk)
+        self.assertEqual(len(data), len(f) + 6 + pqcrypto.MLDSA44_SIG)
+        self.assertEqual(gw.pqsig_counter_open(data, pk), (True, f, 300))
+        bad = bytearray(data)
+        bad[len(f)] ^= 1  # counter changed after signing
+        self.assertFalse(gw.pqsig_counter_open(bytes(bad), pk)[0])
+
+
+class TestAddedConfigsRelay(TestGatewayRelay):
+    """Gateway relay with in band resynchronisation (hybrid_strict_inband) and ML-DSA-44 with a counter."""
+
+    def command_with(self, r, key, c, seq=5):
+        f = command_long(seq=seq)
+        return dict(kind='mav', raw=f, msgid=lr.MSG_COMMAND_LONG, cmd=True, rec=None, data=f + gw.tag_field(key, f, 0, c))
+
+    @unittest.skipUnless(HAVE_PQ, 'host builds of mlkem-native and mldsa-native not found')
+    def test_inband_gap_resynchronises_without_a_handshake(self):
+        r = self.session('hybrid_strict_inband', delays={'tag_check': 0.001, 'tag_make': 0.001})
+        key = r.g_keys[r.g_epoch]['key']
+        r.g_ctr[0] = 2
+        r._vehicle_in(self.command_with(r, key, 1), 3.0)  # counter 1 arrives, counter 0 never does
+        self.assertEqual(r.rejects['stream0_ahead_of_next'], 1)
+        n_hs, n_epoch = r.hs_id, r.v_epoch
+        self.run_until(r, 3.0, 3.0 + r.gap_wait + 2.0)
+        self.assertEqual([x[1] for x in r.resyncs], ['vehicle_request'])
+        self.assertEqual((r.hs_id, r.v_epoch), (n_hs, n_epoch))  # same session, same key
+        acc = r.v_keys[r.v_epoch]['acc'][0]
+        self.assertEqual(acc.hi, 1)  # next expected counter is 2, the next one the ground sends
+        self.assertFalse(acc.gap())
+        n_sent = len(r.tcp.sent)
+        f = command_long(seq=9)
+        r._uplink(parse(f), 6.0)
+        self.run_until(r, 6.0, 6.5)
+        self.assertEqual(r.tcp.sent[n_sent:][-1], f)
+        self.assertEqual(r.cmds[-1]['counter'], 2)
+        events = [e[0] for e in r.session_events]
+        self.assertIn('resync_inband_applied', events)
+        self.assertNotIn('resync_inband_acknowledged', events)  # the answer to a request is not acknowledged
+        self.assertIn('vehicle_resync_tag', r.host)
+        self.assertIn('vehicle_resync_check', r.host)
+
+    @unittest.skipUnless(HAVE_PQ, 'host builds of mlkem-native and mldsa-native not found')
+    def test_inband_ground_give_up_resynchronises_and_is_acknowledged(self):
+        r = self.session('hybrid_strict_inband')
+        n_hs = r.hs_id
+        r.add_outage(3.0, 8.0)
+        r._uplink(parse(command_long()), 3.1)
+        self.run_until(r, 3.1, 9.5)
+        self.assertIn('ground_give_up', [x[1] for x in r.resyncs])
+        self.assertEqual(r.cmds[-1]['dropped'], 'link_up')
+        self.assertEqual(r.hs_id, n_hs)
+        self.assertIn('resync_inband_acknowledged', [e[0] for e in r.session_events])
+        self.assertIsNone(r.g_set_out)
+        # one set message at a time: the first is given up inside the outage and sent again once, no duplicates
+        self.assertEqual([e[0] for e in r.session_events].count('resync_set_sent'), 2)
+        self.assertEqual(r.rejects['bad_resync_set'], 0)
+        f = command_long(seq=11)
+        r._uplink(parse(f), 9.5)
+        self.run_until(r, 9.5, 10.0)
+        self.assertEqual(r.tcp.sent[-1], f)
+
+    @unittest.skipUnless(HAVE_PQ, 'host builds of mlkem-native and mldsa-native not found')
+    def test_inband_forged_messages_rejected(self):
+        r = self.session('hybrid_strict_inband')
+        key = r.v_keys[r.v_epoch]['key']
+        acc = r.v_keys[r.v_epoch]['acc'][0]
+        hi = acc.hi
+        # a set message under another key, and a genuine one with the counter changed
+        r._vehicle_set(dict(kind='rset', data=gw.resync_set(bytes(32), 50)), 3.0)
+        bad = bytearray(gw.resync_set(key, 50))
+        bad[0] ^= 3
+        r._vehicle_set(dict(kind='rset', data=bytes(bad)), 3.0)
+        self.run_until(r, 3.0, 3.2)
+        self.assertEqual(r.rejects['bad_resync_set'], 2)
+        self.assertEqual(acc.hi, hi)
+        # a forged request and a forged acknowledgement at the ground start nothing
+        r._on_resync_request(dict(kind='rs', data=gw.resync_request_msg(bytes(32), 0)), 3.2)
+        r._ground_ack(dict(kind='rack', data=gw.resync_ack(bytes(32), 0)), 3.2)
+        self.assertEqual(r.down_rejects['bad_resync_request'], 1)
+        self.assertEqual(r.down_rejects['bad_resync_ack'], 1)
+        self.assertEqual(r.resyncs, [])
+        # a replayed (old) genuine set message does not lower the next expected counter
+        r._vehicle_in(self.command_with(r, r.g_keys[r.g_epoch]['key'], 0), 3.3)
+        r._vehicle_set(dict(kind='rset', data=gw.resync_set(key, 0)), 3.4)
+        self.run_until(r, 3.4, 3.6)
+        self.assertEqual(acc.hi, 0)
+        self.assertEqual(r._vehicle_in(self.command_with(r, r.g_keys[r.g_epoch]['key'], 0), 3.6), None)
+        self.assertEqual(r.rejects['stream0_behind_next'], 1)
+
+    @unittest.skipUnless(HAVE_PQ, 'host builds of mlkem-native and mldsa-native not found')
+    def test_inband_long_outage_still_forces_a_handshake(self):
+        r = self.session('hybrid_strict_inband')
+        r.auto_rehandshake = True
+        r.last_rx = {'up': 3.0, 'down': 3.0}
+        # the outage outlasts the session timeout; the new handshake starts inside it and completes after it
+        r.add_outage(3.0, 3.0 + r.sec['timeout_s'] + 1.5)
+        self.run_until(r, 3.0, 3.0 + r.sec['timeout_s'] + 6.0, dt=0.01)
+        self.assertIn('teardown', [h['reason'] for h in r.hs_log])
+        self.assertEqual(r.g_state, 'up')
+        # a set message that reaches a vehicle without a key is counted as such, not as a forgery
+        r.v_keys.clear()
+        r._vehicle_set(dict(kind='rset', data=gw.resync_set(r.g_keys[r.g_epoch]['key'], 3)), 30.0)
+        self.assertEqual((r.rejects['resync_set_no_session_vehicle'], r.rejects['bad_resync_set']), (1, 0))
+
+    @unittest.skipUnless(HAVE_PQ, 'host builds of mlkem-native and mldsa-native not found')
+    def test_pqsig_counter_forwards_and_rejects_a_replay(self):
+        r = self.make('pqsig_counter', delays={'mldsa44_verify_command': 0.02})
+        f = command_long()
+        r._uplink(parse(f), 0.0)
+        self.run_until(r, 0.0, 1.0)
+        self.assertEqual(r.tcp.sent[-1], f)
+        rec = r.cmds[-1]
+        self.assertEqual(rec['counter'], 0)
+        self.assertGreaterEqual(rec['t_vehicle'] - rec['t_gateway'], 0.02 - 1e-9)
+        from sitl import config as c5
+        self.assertEqual(r.chan.stats['wire_bytes']['up'], sum(c5.object_fragments(len(f) + 6 + 2420, prof())))
+        # replay of the recorded command: valid signature, counter not greater than the last accepted one
+        data = gw.pqsig_counter_seal(f, 0, r.pq_sk)
+        n_sent = len(r.tcp.sent)
+        r._vehicle_in(dict(kind='mav', raw=f, msgid=lr.MSG_COMMAND_LONG, cmd=True, rec=None, data=data), 1.0)
+        self.run_until(r, 1.0, 1.5)
+        self.assertEqual(r.rejects['counter_late_or_duplicate'], 1)
+        self.assertEqual(len(r.tcp.sent), n_sent)
+        # a counter raised by a third party breaks the signature
+        bad = bytearray(data)
+        bad[len(f)] = 9
+        r._vehicle_in(dict(kind='mav', raw=f, msgid=lr.MSG_COMMAND_LONG, cmd=True, rec=None, data=bytes(bad)), 1.5)
+        self.assertEqual(r.rejects['bad_signature'], 1)
+        # pqsig_real accepts the same replay (no counter)
+        q = self.make('pqsig_real')
+        sig = pqcrypto.mldsa44_sign(f, q.pq_sk)
+        for t in (0.0, 0.1):
+            q._vehicle_in(dict(kind='mav', raw=f, msgid=lr.MSG_COMMAND_LONG, cmd=True, rec=None, data=f + sig), t)
+        self.run_until(q, 0.1, 0.5)
+        self.assertEqual(q.tcp.sent.count(f), 2)
+
+
 if __name__ == '__main__':
     unittest.main()

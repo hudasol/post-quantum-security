@@ -1,6 +1,6 @@
 """Configurations of the round 6 software in the loop study with executed cryptography.
 
-Eight configurations on the same flight stack, missions, link profile and paired seeds:
+Ten configurations on the same flight stack, missions, link profile and paired seeds:
   none                no authentication
   signing             MAVLink 2 signing as shipped (flight stack and ground station; key provisioned on a wire)
   classical           classical session: X25519 with Ed25519 transcript signatures by both sides, key
@@ -14,6 +14,11 @@ Eight configurations on the same flight stack, missions, link profile and paired
                       ML-KEM-768 ephemeral exchange, no signatures, three flights, then the 13 B tag; published
                       replay rule (added after the first seven; its vehicle side delays come from the 15 run RTL
                       files, see rtl_delays)
+  hybrid_strict_inband  the hybrid session with F1 and the strict rule, resynchronised inside the session (one
+                      authenticated message each way under the session key) instead of by a new handshake; added
+                      after kem_auth
+  pqsig_counter       ML-DSA-44 signature per command over the frame and a 6 B counter, published rule at the
+                      vehicle; added after kem_auth
 The gateway pair executes the cryptography with pinned libraries (sitl/gateway.py). Vehicle side compute
 delays come from RTL simulated cycles (rtlsim/results/proto_sessions.csv and proto_primitives.csv of the round 6
 RTL runs) at the mission study clock and are labelled estimated from RTL simulated cycles.
@@ -29,11 +34,17 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 
 CONFIGS = ['none', 'signing', 'classical', 'hybrid_published', 'hybrid_strict', 'hybrid_cache', 'pqsig_real',
-           'kem_auth']
+           'kem_auth', 'hybrid_strict_inband', 'pqsig_counter']
 # the configurations of the first round 6 runs, and the one added later (design K); analyse_r6 writes the rows of
 # the added configuration after those of the first seven so that the earlier rows stay unchanged
 FIRST = CONFIGS[:7]
 ADDED = ['kem_auth']
+# the two configurations added after kem_auth (in band resynchronisation, per command signature with a counter);
+# their rows come after those of kem_auth in every output file
+LATER = ['hybrid_strict_inband', 'pqsig_counter']
+GROUPS = (FIRST, ADDED, LATER)
+# configurations with a session (a handshake time per mission)
+SESSION = ['classical', 'hybrid_published', 'hybrid_strict', 'hybrid_cache', 'kem_auth', 'hybrid_strict_inband']
 CONFIG_NAMES = {
     'none': '1 no authentication',
     'signing': '2 MAVLink 2 signing as shipped',
@@ -43,15 +54,22 @@ CONFIG_NAMES = {
     'hybrid_cache': '6 hybrid session with F1, replay cache rule',
     'pqsig_real': '7 ML-DSA-44 signature per command',
     'kem_auth': '8 KEM authenticated session (design K), published rule',
+    'hybrid_strict_inband': '9 hybrid session with F1, strict rule, in band resynchronisation',
+    'pqsig_counter': '10 ML-DSA-44 signature per command with a counter, published rule',
 }
 SHORT = {'none': 'none', 'signing': 'signing', 'classical': 'classical', 'hybrid_published': 'hybrid pub',
          'hybrid_strict': 'hybrid strict', 'hybrid_cache': 'hybrid cache', 'pqsig_real': 'ML-DSA-44 cmd',
-         'kem_auth': 'KEM auth'}
+         'kem_auth': 'KEM auth', 'hybrid_strict_inband': 'strict in band', 'pqsig_counter': 'ML-DSA-44 ctr'}
 # mission study architecture and replay rule used for the comparison of each configuration; the mission model has
 # no architecture for design K, so kem_auth has none (its comparison row carries no model value)
 STUDY = {'none': ('A', None), 'signing': ('D', None), 'classical': ('A', 'published'),
          'hybrid_published': ('B', 'published'), 'hybrid_strict': ('B', 'strict'), 'hybrid_cache': ('B', 'cache'),
-         'pqsig_real': ('C', None), 'kem_auth': (None, 'published')}
+         'pqsig_real': ('C', None), 'kem_auth': (None, 'published'), 'hybrid_strict_inband': (None, 'strict'),
+         'pqsig_counter': (None, 'published')}
+# why a configuration has no mission study architecture
+NO_ARCH = {'kem_auth': 'design K',
+           'hybrid_strict_inband': 'in band resynchronisation',
+           'pqsig_counter': 'per command signature with a counter'}
 PROFILES = cfgmod.PROFILES
 
 # Rows of the RTL result files used for the vehicle side delays. Sessions: (design, side, steps) of
@@ -179,8 +197,15 @@ def security_config(name, delays=None):
     if name == 'pqsig_real':
         base.update(pqsig=True, cmd_extra_bytes=int(p['mldsa44_sig_bytes']), cmd_delay_s=d.get('mldsa44_verify_command', 0.0))
         return base
+    if name == 'pqsig_counter':
+        # the vehicle delay is that of the RTL row for the verification of a command (the 6 B counter is not costed)
+        base.update(pqsig=True, pq_counter=True, rule='published', cmd_extra_bytes=int(p['mldsa44_sig_bytes']) + 6,
+                    cmd_delay_s=d.get('mldsa44_verify_command', 0.0))
+        return base
     design = {'classical': 'classical', 'kem_auth': 'kem_auth'}.get(name, 'hybrid')
     rule = 'published' if name in ('classical', 'hybrid_published', 'kem_auth') else name.split('_')[1]
     base.update(design=design, rule=rule, session=True, tag_bytes=int(p['mav_sig_field_bytes']),
                 cmd_delay_s=d.get('tag_check', 0.0))
+    if name == 'hybrid_strict_inband':
+        base.update(inband=True)
     return base

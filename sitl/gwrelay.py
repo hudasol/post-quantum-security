@@ -27,6 +27,21 @@ authenticated with the session key) because a counter above the next one was see
 arrived for the link layer give up span ((max retries + 1) x retransmission timeout); the request is the
 8 B counter of the last accepted frame and a 16 B tag over it under the session key. The new handshake resets
 both counters.
+
+In band resynchronisation (hybrid_strict_inband, the strict rule without a new handshake): the same two triggers
+start a resynchronisation inside the current session with one authenticated message each way under the current
+session key. After a vehicle request (24 B, as above) the ground side gateway answers with a 24 B set message that
+carries the next counter (the lowest counter of link id 0 still in flight, or the next one to be sent) and a 16 B
+tag; after a link layer give up of a link id 0 frame the ground side gateway sends the set message itself and the
+vehicle side gateway answers with a 24 B acknowledgement (the ground repeats an unacknowledged set message after
+the give up span). The vehicle side gateway moves its next expected counter forward to the counter of a valid set
+message and never back, then both sides continue with the same key. Vehicle side compute for these messages is the
+tag check delay (set message) and the tag delay (request and acknowledgement). A teardown after an outage longer
+than the session timeout still forces a new handshake.
+
+ML-DSA-44 per command with a counter (pqsig_counter): the ground side gateway signs each command frame with a 6 B
+counter appended; the vehicle side gateway verifies the signature over frame and counter and accepts the counter
+under the published rule (greater than the last accepted one, gaps allowed); a replayed command is rejected.
 """
 import collections
 import heapq
@@ -48,6 +63,13 @@ class GatewayRelay(lr.Relay):
             self.lt_v = gw.LongTerm(self.design)
         if sec.get('pqsig'):
             self.pq_pk, self.pq_sk = pqcrypto.mldsa44_keypair()
+        self.pq_counter = bool(sec.get('pq_counter'))
+        self.pq_ctr = 0
+        self.pq_acc = gw.Acceptor('published')
+        self.inband = bool(sec.get('inband'))
+        self.g_inflight = set()  # counters of link id 0 frames of the current ground key still in flight (in band)
+        self.g_set_out = None  # unacknowledged set message of the ground side gateway (in band)
+        self.g_set_again = False
         self.g_keys = {}  # epoch -> dict(key, acc) at the ground
         self.v_keys = {}  # epoch -> dict(key, acc) at the vehicle
         self.g_epoch = 0
@@ -173,6 +195,7 @@ class GatewayRelay(lr.Relay):
             self.g_keys[self.g_epoch] = dict(key=self.g_hs.key, acc={0: gw.Acceptor('published'), 1: gw.Acceptor('published')})
             self.g_keys.pop(self.g_epoch - 2, None)
             self.g_ctr = {0: 0, 1: 0}
+            self._inband_reset()
             self.g_state = 'up'
             self.hs_times.append((self.hs_id, self.hs_start, t))
             self.hs_log[-1]['t_done'] = t
@@ -202,6 +225,7 @@ class GatewayRelay(lr.Relay):
             self.g_keys[self.g_epoch] = dict(key=self.g_hs.key, acc={0: gw.Acceptor('published'), 1: gw.Acceptor('published')})
             self.g_keys.pop(self.g_epoch - 2, None)
             self.g_ctr = {0: 0, 1: 0}
+            self._inband_reset()
             self.g_state = 'up'
             self.hs_log[-1]['t_ground_accept'] = t
             self.session_events.append(('hs_ground_accepted', t, self.hs_id))
@@ -223,12 +247,100 @@ class GatewayRelay(lr.Relay):
             self.rs_sent_at = None
             self._push(t + rtl, 'vflight', ('accept', None, self.hs_id))
 
+    def _inband_reset(self):
+        self.g_inflight = set()
+        self.g_set_out = None
+        self.g_set_again = False
+
     def _resync(self, t, trigger):
         if self.g_state != 'up':
+            return
+        if self.inband:
+            self._resync_inband(t, trigger)
             return
         self.resyncs.append((t, trigger))
         self.session_events.append(('resync_' + trigger, t, self.hs_id + 1))
         self._start_handshake(t, 'resync_' + trigger)
+
+    # ------------------------------------------------------------ in band resynchronisation
+    def _resync_inband(self, t, trigger):
+        """Resynchronise the counter of link id 0 inside the current session (no new handshake)."""
+        if trigger == 'ground_give_up' and self.g_set_out is not None:
+            # a set message is already on its way; send another one once it is acknowledged
+            self.g_set_again = True
+            return
+        self.resyncs.append((t, trigger))
+        self.session_events.append(('resync_inband_' + trigger, t, self.hs_id))
+        self._send_set(t, solicited=trigger == 'vehicle_request')
+
+    def _send_set(self, t, solicited):
+        c = min(self.g_inflight) if self.g_inflight else self.g_ctr[0]
+        t0 = time.perf_counter()
+        data = gw.resync_set(self.g_keys[self.g_epoch]['key'], c)
+        self._host('ground_resync_tag', time.perf_counter() - t0)
+        self.chan.submit('up', cfgmod.fragments(len(data), self.prof), True,
+                         dict(kind='rset', data=data, epoch=self.g_epoch, solicited=solicited), t)
+        self.session_events.append(('resync_set_sent', t, self.hs_id))
+        if not solicited:
+            self.g_set_out = dict(t=t, c=c, epoch=self.g_epoch, t_delivered=None)
+
+    def _vehicle_set(self, m, t):
+        """Set message at the vehicle side gateway: check the tag, then apply after the tag check delay."""
+        if m.get('epoch') == self.g_epoch and self.g_set_out is not None and not m.get('solicited'):
+            self.g_set_out['t_delivered'] = t  # the ground link layer learns that the set message arrived
+        if self.v_epoch not in self.v_keys:
+            self.rejects['resync_set_no_session_vehicle'] += 1
+            return
+        t0 = time.perf_counter()
+        hit = None
+        for e, k in self._keys_for_check(self.v_keys, self.v_epoch):
+            c = gw.open_resync(k['key'], 'set', m['data'])
+            if c is not None:
+                hit = (e, c)
+                break
+        rtl = self.delays.get('tag_check', 0.0)
+        self._host('vehicle_resync_check', time.perf_counter() - t0, rtl)
+        if hit is None:
+            self.rejects['bad_resync_set'] += 1
+            return
+        self.last_rx['up'] = t
+        self._push(t + rtl, 'vresync', hit)
+
+    def _vehicle_apply_set(self, e, c, t):
+        if e not in self.v_keys:
+            return
+        acc = self.v_keys[e]['acc'][0]
+        moved = acc.set_next(c)
+        self.session_events.append(('resync_inband_' + ('applied' if moved else 'no_change'), t, self.hs_id))
+        self.gap_since = None
+        if self.rs_sent_at is not None:
+            # the answer to the request of this gateway: one message each way, no acknowledgement
+            self.rs_sent_at = None
+            return
+        t0 = time.perf_counter()
+        data = gw.resync_ack(self.v_keys[e]['key'], c)
+        rtl = self.delays.get('tag_make', 0.0)
+        self._host('vehicle_resync_tag', time.perf_counter() - t0, rtl)
+        self.chan.submit('down', cfgmod.fragments(len(data), self.prof), True, dict(kind='rack', data=data), t + rtl)
+
+    def _ground_ack(self, m, t):
+        t0 = time.perf_counter()
+        c = None
+        for e, k in self._keys_for_check(self.g_keys, self.g_epoch):
+            c = gw.open_resync(k['key'], 'ack', m['data'])
+            if c is not None:
+                break
+        self._host('ground_resync_check', time.perf_counter() - t0)
+        if c is None:
+            self.down_rejects['bad_resync_ack'] += 1
+            return
+        self.last_rx['down'] = t
+        if self.g_set_out is not None and c == self.g_set_out['c']:
+            self.g_set_out = None
+            self.session_events.append(('resync_inband_acknowledged', t, self.hs_id))
+            if self.g_set_again and self.g_state == 'up':
+                self.g_set_again = False
+                self._resync_inband(t, 'ground_give_up')
 
     def _check_timeouts(self, now):
         """Session timeouts as in the round 5 relay, plus the strict rule gap timer of the vehicle side gateway."""
@@ -246,6 +358,12 @@ class GatewayRelay(lr.Relay):
             self.v_keys.clear()
             self.teardowns.append(('vehicle', now))
             self.session_events.append(('teardown_vehicle', now, self.hs_id))
+        if (self.inband and self.g_set_out is not None and self.g_state == 'up'
+                and self.g_set_out['epoch'] == self.g_epoch and self.g_set_out['t_delivered'] is not None
+                and now - self.g_set_out['t_delivered'] > self.gap_wait):
+            # delivered but not acknowledged within the give up span: send the set message again (same
+            # resynchronisation); a set message given up by the link layer is sent again at once (_deliver)
+            self._send_set(now, solicited=False)
         if self.sec.get('rule') != 'strict' or self.v_state != 'up' or self.v_epoch not in self.v_keys:
             self.gap_since = None
             return
@@ -257,8 +375,16 @@ class GatewayRelay(lr.Relay):
             self.gap_since = now
         due = self.rs_sent_at is None or now - self.rs_sent_at > self.gap_wait
         if now - self.gap_since > self.gap_wait and due:
-            data = int(acc.hi).to_bytes(8, 'little', signed=True) + gw.resync_request(self.v_keys[self.v_epoch]['key'], acc.hi)
-            self.chan.submit('down', cfgmod.fragments(len(data), self.prof), True, dict(kind='rs', data=data), now)
+            ready = now
+            if self.inband:
+                t0 = time.perf_counter()
+                data = gw.resync_request_msg(self.v_keys[self.v_epoch]['key'], acc.hi)
+                rtl = self.delays.get('tag_make', 0.0)
+                self._host('vehicle_resync_tag', time.perf_counter() - t0, rtl)
+                ready = now + rtl
+            else:
+                data = int(acc.hi).to_bytes(8, 'little', signed=True) + gw.resync_request(self.v_keys[self.v_epoch]['key'], acc.hi)
+            self.chan.submit('down', cfgmod.fragments(len(data), self.prof), True, dict(kind='rs', data=data), ready)
             self.rs_sent_at = now
             self.session_events.append(('resync_request_sent', now, self.hs_id))
 
@@ -295,6 +421,16 @@ class GatewayRelay(lr.Relay):
                 rec['counter'] = c
                 rec['epoch'] = self.g_epoch
             frags = cfgmod.fragments(len(data), self.prof)
+        elif sec.get('pqsig') and is_cmd and self.pq_counter:
+            c = self.pq_ctr
+            self.pq_ctr += 1
+            t0 = time.perf_counter()
+            data = gw.pqsig_counter_seal(raw, c, self.pq_sk)
+            self._host('ground_sign_command', time.perf_counter() - t0)
+            meta.update(data=data, counter=c)
+            if rec is not None:
+                rec['counter'] = c
+            frags = cfgmod.object_fragments(len(data), self.prof)
         elif sec.get('pqsig') and is_cmd:
             t0 = time.perf_counter()
             sig = pqcrypto.mldsa44_sign(raw, self.pq_sk)
@@ -305,6 +441,8 @@ class GatewayRelay(lr.Relay):
             meta.update(data=raw)
             frags = cfgmod.fragments(len(raw), self.prof)
         u = self.chan.submit('up', frags, reliable, meta, now)
+        if u is not None and self.inband and meta.get('stream') == 0:
+            self.g_inflight.add(meta['counter'])
         if u is None and rec is not None:
             rec['dropped'] = 'buffer'
 
@@ -350,6 +488,8 @@ class GatewayRelay(lr.Relay):
     # ------------------------------------------------------------ deliveries from the channel
     def _deliver(self, ev, t, u):
         m = u.meta
+        if self.inband and m['kind'] == 'mav' and u.direction == 'up' and m.get('epoch') == self.g_epoch:
+            self.g_inflight.discard(m.get('counter'))
         if ev == 'failed':
             if m['kind'] == 'hs':
                 self.session_events.append(('hs_failed', t, m['hs']))
@@ -362,6 +502,12 @@ class GatewayRelay(lr.Relay):
                     self._start_handshake(max(t, self.now()), 'retry_after_give_up')
             elif m['kind'] == 'rs':
                 self.rs_sent_at = None
+            elif m['kind'] == 'rset':
+                if (not m['solicited'] and self.g_set_out is not None and self.g_state == 'up'
+                        and m['epoch'] == self.g_epoch):
+                    self._send_set(t, solicited=False)
+            elif m['kind'] == 'rack':
+                pass  # the ground side gateway repeats its set message after the give up span
             else:
                 if m.get('rec') is not None and m['rec'].get('dropped') is None:
                     m['rec']['dropped'] = 'link_' + u.direction
@@ -374,6 +520,12 @@ class GatewayRelay(lr.Relay):
             return
         if m['kind'] == 'rs':
             self._on_resync_request(m, t)
+            return
+        if m['kind'] == 'rset':
+            self._vehicle_set(m, t)
+            return
+        if m['kind'] == 'rack':
+            self._ground_ack(m, t)
             return
         if u.direction == 'up':
             self._vehicle_in(m, t)
@@ -424,6 +576,25 @@ class GatewayRelay(lr.Relay):
                 self.arrivals.append((t, e, c, int(accepted), why or '', m['msgid']))
             if not accepted:
                 self.rejects[f'stream{lid}_{why}'] += 1
+                if rec is not None:
+                    rec['dropped'] = 'rejected_' + why
+                return
+            delay = rtl
+            frame_out = frame
+        elif sec.get('pqsig') and m['cmd'] and self.pq_counter:
+            t0 = time.perf_counter()
+            ok, frame, c = gw.pqsig_counter_open(m['data'], self.pq_pk)
+            rtl = self.delays.get('mldsa44_verify_command', 0.0)
+            self._host('vehicle_verify_command', time.perf_counter() - t0, rtl)
+            if not ok:
+                self.rejects['bad_signature'] += 1
+                if rec is not None:
+                    rec['dropped'] = 'rejected_bad_signature'
+                return
+            accepted, why = self.pq_acc.accept(c)
+            self.arrivals.append((t, 0, c, int(accepted), why or '', m['msgid']))
+            if not accepted:
+                self.rejects[f'counter_{why}'] += 1
                 if rec is not None:
                     rec['dropped'] = 'rejected_' + why
                 return
@@ -502,6 +673,9 @@ class GatewayRelay(lr.Relay):
                     self.v_ctr = {0: 0, 1: 0}
                     self.v_state = 'up'
                 self._submit_flight(k, data, t)
+                continue
+            if side == 'vresync':
+                self._vehicle_apply_set(m[0], m[1], t)
                 continue
             if side == 'vehicle':
                 if m.get('rec') is not None:

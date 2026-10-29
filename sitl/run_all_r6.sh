@@ -1,6 +1,6 @@
 #!/bin/sh
-# Round 6: run the eight configurations with executed cryptography; the first seven in two lanes (two vehicle
-# instances at once), then kem_auth alone.
+# Round 6: run the ten configurations with executed cryptography; the first seven in two lanes (two vehicle
+# instances at once), then kem_auth alone, then hybrid_strict_inband and pqsig_counter alone, one after the other.
 # Usage: sh sitl/run_all_r6.sh <folder with proto_sessions.csv and proto_primitives.csv> [profiles]
 # (default profile: sik). Needs sitl/fetch.sh and sitl/pqlib/build.sh first. SITL_PYTHON names the interpreter
 # with pymavlink and cryptography 50.0.1, SITL_ARDUPILOT the flight stack folder, SITL_PQLIB the library folder.
@@ -21,4 +21,8 @@ for p in ${*:-sik}; do
   # Design K (kem_auth) was added after the first seven and runs alone, one lane, after them. Its vehicle side
   # delays come from the 15 run RTL files in rtlsim/results/ (the snapshot folder has no design K rows).
   $PY -m sitl.run_missions_r6 --config kem_auth --profile $p --instance 0 --rtl rtlsim/results > sitl/raw_r6/lane0_kem_auth_$p.log 2>&1
+  # In band resynchronisation and ML-DSA-44 per command with a counter were added after kem_auth; each runs alone,
+  # one lane, with the vehicle side delays of the first seven (the five run snapshot folder given as RTL).
+  $PY -m sitl.run_missions_r6 --config hybrid_strict_inband --profile $p --instance 0 --rtl "$RTL" > sitl/raw_r6/lane0_hybrid_strict_inband_$p.log 2>&1
+  $PY -m sitl.run_missions_r6 --config pqsig_counter --profile $p --instance 0 --rtl "$RTL" > sitl/raw_r6/lane0_pqsig_counter_$p.log 2>&1
 done
