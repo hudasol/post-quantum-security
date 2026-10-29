@@ -11,7 +11,7 @@ from . import config_r6 as c6  # noqa: E402
 
 COLORS = {'none': '#7a6f8f', 'signing': '#d98cb3', 'classical': '#8f9fb8', 'hybrid_published': '#b0476f',
           'hybrid_strict': '#7d2a4c', 'hybrid_cache': '#e7a1bf', 'pqsig_real': '#4f6d8f',
-          'kem_auth': '#c9a227'}
+          'kem_auth': '#c9a227', 'hybrid_strict_inband': '#c46a8a', 'pqsig_counter': '#8fb0cf'}
 
 
 def _style(ax):
@@ -94,7 +94,7 @@ def paired(pr, profile, res):
 
 
 def handshakes(m, profile, res):
-    ks = [k for k in c6.CONFIGS if c6.STUDY[k][1] is not None]
+    ks = [k for k in c6.CONFIGS if k in c6.SESSION]
     d = m[(m.profile == profile) & m.config.isin(ks)]
     if len(d) == 0:
         return

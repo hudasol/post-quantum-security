@@ -1,7 +1,9 @@
 """Summarise the round 6 software in the loop runs (executed cryptography) and compare them with the mission model.
 
 Reads sitl/raw_r6/, writes sitl/results_r6/: commands.csv, missions.csv, summary.csv, paired.csv, rejections.csv,
-reorder.csv, delays.csv, host_compute.csv, comparison.csv, environment.json and SVG figures.
+reorder.csv, delays.csv, host_compute.csv, comparison.csv, environment.json and SVG figures; and, added after the
+review of the paired differences (common footing per mission), missed_per_mission.csv, paired_missed.csv and
+session_restarts.csv.
 Labels: round trips through the flight stack and mission completion are SITL measured; handshake time, one way
 delivery and channel figures are emulated (the emulated link with executed cryptography, vehicle side delays
 estimated from RTL simulated cycles); the delays themselves are estimated (from RTL simulated cycles); ground
@@ -9,8 +11,14 @@ side compute times are host measured; mission model values are estimated.
 Intervals: 95 percent cluster bootstrap over missions (2000 resamples); differences between configurations are
 paired by mission index (the same seed in every configuration). Bootstrap seeds: 20311021 + 5000 + offsets.
 Row order: the rows of the configuration added after the first seven runs (kem_auth, design K) are written after
-the rows of the first seven in every output file, so that the earlier rows are unchanged
+the rows of the first seven in every output file, and the rows of the two configurations added after kem_auth
+(hybrid_strict_inband, pqsig_counter) after those, so that the earlier rows are unchanged
 (sitl/tests/test_r6_rows_unchanged.py).
+Missed commands per mission: the share acknowledged within 0.5 s divides by the commands sent, and the number sent
+differs between configurations because the missions differ in length; a paired difference of the share can
+therefore move although no command was lost or saved. The count of stream commands not acknowledged within 0.5 s
+per mission (outages included) is on a common footing; its paired differences use the same bootstrap and the same
+seed per pair as the differences of the share.
 """
 import glob
 import json
@@ -32,8 +40,18 @@ BOOT = 2000
 PAIRS = [('hybrid_strict', 'hybrid_published'), ('hybrid_cache', 'hybrid_published'),
          ('hybrid_strict', 'hybrid_cache'), ('hybrid_published', 'classical'), ('classical', 'signing'),
          ('hybrid_published', 'none'), ('pqsig_real', 'hybrid_published'),
-         ('kem_auth', 'hybrid_published'), ('kem_auth', 'classical')]
+         ('kem_auth', 'hybrid_published'), ('kem_auth', 'classical'),
+         ('hybrid_strict_inband', 'hybrid_published'), ('hybrid_strict_inband', 'hybrid_strict'),
+         ('pqsig_counter', 'pqsig_real'), ('pqsig_counter', 'hybrid_published')]
 NO_MODEL_VERDICT = 'not compared: the mission model has no architecture for design K'
+
+
+def no_model_verdict(k):
+    return f'not compared: the mission model has no architecture for {c6.NO_ARCH[k]}'
+
+
+def group_of(config):
+    return next(i for i, g in enumerate(c6.GROUPS) if config in g)
 KEM_AUTH_DELAY_NOTE = 'estimated from RTL simulated cycles (median of the 15 run files rtlsim/results/proto_*.csv)'
 
 
@@ -44,13 +62,15 @@ def load_raw(raw=RAW):
         tag = os.path.basename(f)[:-len('_missions.csv')]
         with open(os.path.join(raw, f'{tag}_run.json')) as fh:
             info = json.load(fh)
-        tags.append((info['config'] in c6.ADDED, tag, info))
-    # runs of the first seven configurations in name order, then the added configuration
+        tags.append((group_of(info['config']), tag, info))
+    # runs of the first seven configurations in name order, then kem_auth, then the two added after it
     for _, tag, info in sorted(tags, key=lambda x: (x[0], x[1])):
         mis.append(pd.read_csv(os.path.join(raw, f'{tag}_missions.csv')))
         cmds.append(pd.read_csv(os.path.join(raw, f'{tag}_commands.csv')))
         info['_tag'] = tag
         runs.append(info)
+        ev = pd.read_csv(os.path.join(raw, f'{tag}_events.csv'))
+        info['_events'] = ev
         ap = os.path.join(raw, f'{tag}_arrivals.csv')
         if os.path.exists(ap):
             x = pd.read_csv(ap)
@@ -189,6 +209,74 @@ def rejection_rows(c, runs):
 DEADLINE_SWEEP = (0.25, 0.5, 0.55, 0.75, 1.0, 2.0)
 
 
+def missed_per_mission(c, mis, runs):
+    """One row per mission: stream commands sent, acknowledged within the deadline and missed (outages included),
+    with the teardowns, new handshakes other than the one at the start of the mission, and resynchronisations in
+    the mission (from the start of the mission to the start of the next one)."""
+    rows = []
+    for info in runs:
+        p, k = info['profile'], info['config']
+        gm = mis[(mis.profile == p) & (mis.config == k)].sort_values('mission')
+        g = c[(c.profile == p) & (c.config == k)]
+        starts = list(gm.t_mission_start.values)
+        ends = starts[1:] + [np.inf]
+        ev = info['_events']
+        td = ev[ev.event.str.startswith('teardown')].t.values
+        hs = [h['t_start'] for h in info['gateway']['handshakes'] if h['reason'] != 'initial']
+        rs = [t for t, _ in info['gateway']['resyncs']]
+        for (i, r), t0, t1 in zip(gm.iterrows(), starts, ends):
+            gi = g[g.mission == r.mission]
+            n_ok = int(gi.accepted_rt.sum())
+
+            def count(x):
+                return int(sum(1 for t in x if t0 <= t < t1))
+            rows.append(dict(profile=p, config=k, mission=int(r.mission), seed=int(r.seed), commands=len(gi),
+                             acknowledged=n_ok, missed=len(gi) - n_ok, teardowns_emulated=count(td),
+                             rehandshakes_emulated=count(hs), resyncs_emulated=count(rs), label='SITL measured'))
+    return pd.DataFrame(rows, columns=['profile', 'config', 'mission', 'seed', 'commands', 'acknowledged', 'missed',
+                                       'teardowns_emulated', 'rehandshakes_emulated', 'resyncs_emulated', 'label'])
+
+
+def paired_missed(mpm, seed0):
+    """Paired differences of the missed count per mission for every pair of PAIRS (mean over missions)."""
+    out = []
+    for p in c6.PROFILES:
+        for j, (x, y) in enumerate(PAIRS):
+            gx = mpm[(mpm.profile == p) & (mpm.config == x)]
+            gy = mpm[(mpm.profile == p) & (mpm.config == y)]
+            if len(gx) == 0 or len(gy) == 0:
+                continue
+            v, lo, hi, n = paired_boot(gx, gy, lambda d: float(d.missed.mean()), seed0 + 900 + 10 * j)
+            jx = gx.set_index('mission')
+            jy = gy.set_index('mission')
+            ids = sorted(set(jx.index) & set(jy.index))
+            dm = jx.loc[ids, 'missed'] - jy.loc[ids, 'missed']
+            ds = jx.loc[ids, 'commands'] - jy.loc[ids, 'commands']
+            da = jx.loc[ids, 'acknowledged'] - jy.loc[ids, 'acknowledged']
+            out.append(dict(profile=p, config=x, minus_config=y, metric='missed_per_mission', difference=v, ci_lo=lo,
+                            ci_hi=hi, missions_paired=n, missions_differing=int((dm != 0).sum()),
+                            commands_difference=float(ds.mean()), acknowledged_difference=float(da.mean()),
+                            missions_acknowledged_change_equals_sent_change=int((da == ds).sum()),
+                            label='SITL measured'))
+    return pd.DataFrame(out, columns=['profile', 'config', 'minus_config', 'metric', 'difference', 'ci_lo', 'ci_hi',
+                                      'missions_paired', 'missions_differing', 'commands_difference',
+                                      'acknowledged_difference', 'missions_acknowledged_change_equals_sent_change',
+                                      'label'])
+
+
+def session_restarts(mpm):
+    """Per configuration: missions with at least one teardown or a new handshake (other than the one at the start)."""
+    out = []
+    for (p, k), g in mpm.groupby(['profile', 'config'], sort=False):
+        td, hs, rs = g.teardowns_emulated > 0, g.rehandshakes_emulated > 0, g.resyncs_emulated > 0
+        out.append(dict(profile=p, config=k, missions=len(g), missions_with_teardown=int(td.sum()),
+                        missions_with_rehandshake=int(hs.sum()), missions_with_teardown_or_rehandshake=int((td | hs).sum()),
+                        missions_with_resync=int(rs.sum()), teardown_events=int(g.teardowns_emulated.sum()),
+                        rehandshakes=int(g.rehandshakes_emulated.sum()), resyncs=int(g.resyncs_emulated.sum()),
+                        label='emulated'))
+    return pd.DataFrame(out)
+
+
 def analyse(raw=RAW, res=RES):
     a = model.load_assumptions()
     s = c6.load_settings()
@@ -239,7 +327,7 @@ def analyse(raw=RAW, res=RES):
 
     def add(p, k, metric, val, lo, hi, n, unit, label):
         rows.append(dict(profile=p, config=k, metric=metric, value=val, ci_lo=lo, ci_hi=hi, n=n, unit=unit, label=label))
-    for p, k in [(p, k) for group in (c6.FIRST, c6.ADDED) for p in c6.PROFILES for k in group]:
+    for p, k in [(p, k) for group in c6.GROUPS for p in c6.PROFILES for k in group]:
         ki = c6.CONFIGS.index(k)
         g = c[(c.profile == p) & (c.config == k)]
         if len(g) == 0:
@@ -267,7 +355,7 @@ def analyse(raw=RAW, res=RES):
                 bacc = bu[bu.acked & (bu.result == 0)]
                 v, lo, hi, n = paired_boot(acc_up, bacc, a5.med_ms('rt_s'), sd + 50)
                 add(p, k, 'added_latency_rt_ms', v, lo, hi, n, 'ms', 'SITL measured')
-        if c6.STUDY[k][1] is not None:
+        if k in c6.SESSION:
             v, lo, hi = handshake_boot(gm, sd + 60)
             add(p, k, 'handshake_median_s', v, lo, hi, int(gm.handshake_s.notna().sum()), 's', 'emulated')
     summ = pd.DataFrame(rows)
@@ -288,11 +376,11 @@ def analyse(raw=RAW, res=RES):
     pr.to_csv(os.path.join(res, 'paired.csv'), index=False, float_format='%.6g')
     # rejections by reason: stream commands (commands.csv) and all stream 0 frames (gateway counters)
     rj = []
-    for group in (c6.FIRST, c6.ADDED):
+    for group in c6.GROUPS:
         rj += rejection_rows(c[c.config.isin(group)], [r for r in runs if r['config'] in group])
     pd.DataFrame(rj).to_csv(os.path.join(res, 'rejections.csv'), index=False)
     ro = pd.concat([reorder_stats(arr[arr.config.isin(group)]) if len(arr) else pd.DataFrame()
-                    for group in (c6.FIRST, c6.ADDED)], ignore_index=True)
+                    for group in c6.GROUPS], ignore_index=True)
     ro.reindex(columns=['profile', 'config', 'arrivals', 'arrivals_after_higher_counter',
                         'max_reorder_depth', 'label']).to_csv(os.path.join(res, 'reorder.csv'), index=False)
     # comparison with the mission model per rule
@@ -330,6 +418,16 @@ def analyse(raw=RAW, res=RES):
                              quantity='share acknowledged within 0.5 s, outages included', value=r.value, ci_lo=r.ci_lo,
                              ci_hi=r.ci_hi, mission_model_estimated=np.nan, error=np.nan, verdict=NO_MODEL_VERDICT,
                              label='SITL measured'))
+    for p in c6.PROFILES:
+        for k in c6.LATER:
+            sv = summ[(summ.profile == p) & (summ.config == k) & (summ.metric == 'availability_rt_all')]
+            if len(sv) == 0:
+                continue
+            r = sv.iloc[0]
+            comp.append(dict(profile=p, config=k, mission_arch='', mission_rule=c6.STUDY[k][1],
+                             quantity='share acknowledged within 0.5 s, outages included', value=r.value, ci_lo=r.ci_lo,
+                             ci_hi=r.ci_hi, mission_model_estimated=np.nan, error=np.nan, verdict=no_model_verdict(k),
+                             label='SITL measured'))
     pd.DataFrame(comp).to_csv(os.path.join(res, 'comparison.csv'), index=False, float_format='%.6g')
     write_environment(runs, res)
     from . import plots_r6
@@ -343,7 +441,8 @@ def analyse(raw=RAW, res=RES):
     # availability_rt_all, recomputed for other deadlines from the same raw runs.
     dsw = []
     for d, p, k in ([(d, p, k) for d in DEADLINE_SWEEP for p in c6.PROFILES for k in c6.FIRST]
-                    + [(d, p, k) for d in DEADLINE_SWEEP for p in c6.PROFILES for k in c6.ADDED]):
+                    + [(d, p, k) for d in DEADLINE_SWEEP for p in c6.PROFILES for k in c6.ADDED]
+                    + [(d, p, k) for d in DEADLINE_SWEEP for p in c6.PROFILES for k in c6.LATER]):
         cd = prepared(d)
         ki = c6.CONFIGS.index(k)
         g = cd[(cd.profile == p) & (cd.config == k)]
@@ -353,6 +452,11 @@ def analyse(raw=RAW, res=RES):
         dsw.append(dict(profile=p, config=k, deadline_s=d, availability_rt_all=v, ci_lo=lo, ci_hi=hi,
                         label='SITL measured'))
     pd.DataFrame(dsw).to_csv(os.path.join(res, 'deadline_sweep.csv'), index=False, float_format='%.6g')
+    # missed commands per mission on a common footing (review of the paired differences of the share)
+    mpm = missed_per_mission(c, mis, runs)
+    mpm.to_csv(os.path.join(res, 'missed_per_mission.csv'), index=False)
+    paired_missed(mpm, seed0).to_csv(os.path.join(res, 'paired_missed.csv'), index=False, float_format='%.6g')
+    session_restarts(mpm).to_csv(os.path.join(res, 'session_restarts.csv'), index=False)
     plots_r6.all_figures(c, summ, pr, m, res, deadline)
     print('wrote', res)
     return 0
