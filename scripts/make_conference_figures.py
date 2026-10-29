@@ -54,7 +54,7 @@ def fig_rtl():
     pr = pd.read_csv(os.path.join(ROOT, "rtlsim/results/proto_primitives.csv"))
     sign = pr[(pr.core == "cv32e40p") & (pr.operation == "mldsa44_sign")].iloc[0]
     designs = [("classical", "Classical"), ("pq_only", "PQ only"), ("hybrid_f1", "Hybrid"), ("kem_auth", "Design K")]
-    fig, ax = plt.subplots(figsize=(3.45, 1.9))
+    fig, ax = plt.subplots(figsize=(3.45, 1.6))
     for i, (k, _) in enumerate(designs):
         r = d[(d.core == "cv32e40p") & (d.design == k) & (d.side == "vehicle")].iloc[0]
         p = parts(r.components)
@@ -174,7 +174,7 @@ def fig_space():
     names = {"classical": "Classical", "pq_only": "PQ only", "hybrid_f1": "Hybrid", "kem_auth": "Design K"}
     place = {"classical": (700, 7), "pq_only": (5300, 9), "hybrid_f1": (5000, 25.5), "kem_auth": (4000, 6)}
     cols = {"classical": BLUE, "pq_only": GOLD, "hybrid_f1": PINK, "kem_auth": GREEN}
-    fig, ax = plt.subplots(figsize=(3.45, 1.85))
+    fig, ax = plt.subplots(figsize=(3.45, 1.6))
     for core, mk in (("cv32e40p", "o"), ("ibex", "s")):
         for d, name in names.items():
             r = s[(s.core == core) & (s.design == d)].iloc[0]
