@@ -181,6 +181,9 @@ This paper & two RISC-V cores (RTL) & emulated SiK radio, ArduPilot & executed (
 \section{Conclusion}
 Executed under one set of conditions, a hybrid post quantum session for drone commands costs 1.75 to 1.89 times the vehicle side computation of a classical session on these cores (medians; more on the ground side and in expectation, because signing repeats) and many times its handshake bytes, yet leaves the per command cost and the availability of the shipped tag almost unchanged, while a signature per command does not at a 0.5~s deadline. A KEM authenticated session with pinned keys is the cheapest post quantum option but rests on ML-KEM alone. The replay rule decides as much as the algorithms: a strict rule that resynchronises by a new handshake loses commands after outages, while a replay cache loses nothing against the published rule; its proof covers a cache that checks and records in one step.
 
+\section*{AI Disclosure}
+% To be completed by the authors.
+
 \bibliographystyle{IEEEtran}
 \bibliography{references}
 \end{document}

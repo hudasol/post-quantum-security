@@ -11,6 +11,9 @@ BANNED_SHA256 = {'4011393f356a69582a25dfd73603b974b88e7df6fec0b75793c6155c365e69
 # round 3 and cannot change, so it is exempt.
 TOOL_SHA256 = {'32ed3a37e22652f5262701eec81dc4f24ffa10cc030845cfa04ed67ca7c82f18', 'c4ef3e6214a4b8dd3c18ee795af15676419af881472ed20ec7adc94ba67c0751', 'c857d09db23e6822e3600bc06ad8d58f92ed62bc8efd81c753f77048662cb97d', 'c70eca6b0f88f44d81a41311647e50fda1ac454ec04ffd442b0eb4743a993131', '94a168d2da574b00ec6c787377278465271cf2b97e68af076fc3eee87eba8664', 'd298391b07433318a02bd922ed5b90112a4302606c4928b54e3fb1c18130d92e'}
 TOOL_EXEMPT = {'docs/PREDICTIONS_V3.md'}
+# The author block of the named conference paper states the affiliations the authors chose for it (and only that
+# block: the line must also carry the author block macro). The anonymised copy carries no affiliation.
+AFFILIATION_OK = {'scripts/conference_texts.py', 'docs/conference/paper.tex'}
 WORD = re.compile(r'[a-z]+')
 EXT = {'.md', '.py', '.csv', '.txt', '.yml', '.yaml', '.sh', '.tex', '.dot'}
 SKIP = {'scripts/check_style.py'}
@@ -34,7 +37,8 @@ def check(root):
             if re.search(r'/home/[a-z]', line): hits.append(f'{rel}:{n}: local machine path')
             if rel.endswith('.md') and not rel.startswith('data/raw/'):
                 for m in COMPOUNDS.findall(line): hits.append(f'{rel}:{n}: hyphenated compound {m!r}')
-            if any(hashlib.sha256(w.encode()).hexdigest() in BANNED_SHA256 for w in WORD.findall(line.lower())):
+            if any(hashlib.sha256(w.encode()).hexdigest() in BANNED_SHA256 for w in WORD.findall(line.lower())) and not (
+                    rel in AFFILIATION_OK and 'IEEEauthorblockA' in line):
                 hits.append(f'{rel}:{n}: banned affiliation')
             if rel not in TOOL_EXEMPT and any(hashlib.sha256(w.encode()).hexdigest() in TOOL_SHA256 for w in WORD.findall(line.lower())):
                 hits.append(f'{rel}:{n}: tool or vendor name')

@@ -193,7 +193,11 @@ PREAMBLE = r"""\documentclass[conference]{IEEEtran}
 def authors(anon):
     if anon:
         return r"\author{\IEEEauthorblockN{Anonymous author(s)}\IEEEauthorblockA{Affiliation withheld for review}}"
-    return r"\author{\IEEEauthorblockN{Huda Mueen}\IEEEauthorblockA{Independent researcher, United Arab Emirates\\hudamueen2407@gmail.com}}"
+    return (r"\author{\IEEEauthorblockN{Huda Mueen}" "\n"
+            r"\IEEEauthorblockA{\textit{Dept. of Data Science \& AI} \\ \textit{University of Stirling}\\ Ras Al Khaimah, United Arab Emirates \\ hudamueen2407@gmail.com}" "\n"
+            r"\and" "\n"
+            r"\IEEEauthorblockN{Awaiz Ahmed}" "\n"
+            r"\IEEEauthorblockA{\textit{Dept. of Software Engineering} \\ \textit{Al Ain University}\\ Abu Dhabi, United Arab Emirates \\ awaiz42ad@gmail.com}}")
 
 
 def artifact(anon):
@@ -204,7 +208,7 @@ def artifact(anon):
 
 def text(n, s, anon):
     """The paper. n: RTL, formal and set up numbers; s: software in the loop and mission numbers."""
-    meta = "" if anon else "\\pdfinfo{/Author (Huda Mueen)}\n"
+    meta = "" if anon else "\\pdfinfo{/Author (Huda Mueen; Awaiz Ahmed)}\n"
     return PREAMBLE + meta + r"""
 \title{Post Quantum Session Authentication for Drone Command Links: Executed Baselines, Flight Stack in the Loop and Replay Rules}
 """ + authors(anon) + r"""
@@ -318,6 +322,9 @@ This paper & two RISC-V cores (RTL) & emulated SiK radio, ArduPilot & executed (
 
 \section{Conclusion}
 Executed under one set of conditions, a hybrid post quantum session for drone commands costs """ + n["cv32e40p_r_hybrid_f1_classical_vehicle"] + r""" to """ + n["ibex_r_hybrid_f1_classical_vehicle"] + r""" times the vehicle side computation of a classical session on these cores (medians; more on the ground side and in expectation, because signing repeats) and many times its handshake bytes, yet leaves the per command cost and """ + s["conclusion"] + r""" A KEM authenticated session with pinned keys is the cheapest post quantum option but rests on ML-KEM alone. The replay rule decides as much as the algorithms: a strict rule that resynchronises by a new handshake loses commands after outages, while a replay cache loses nothing against the published rule; its proof covers a cache that checks and records in one step.
+
+\section*{AI Disclosure}
+% To be completed by the authors.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}

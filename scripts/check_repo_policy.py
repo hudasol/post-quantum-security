@@ -5,7 +5,7 @@ Checks every file that git tracks or would track (not ignored). Exit code 1 on a
 Rules:
   1. No file with a document or archive extension (pdf, ps, epub, djvu, docx, pptx, xlsx, zip, tar, gz, tgz, bz2, xz, 7z, rar, html, htm, mhtml, warc), except the allowlist below.
   2. No file that starts with a PDF header, whatever its name, except the allowlist.
-  3. Allowlisted PDFs must name only the author in their metadata (Author: Huda Mueen) and live in docs/; the anonymised review copy and the figures it includes must name no author.
+  3. Allowlisted PDFs must name only the author in their metadata (Author: Huda Mueen; the conference paper also names its coauthor) and live in docs/; the anonymised review copy and the figures it includes must name no author.
   4. Binary files (NUL bytes) are allowed only as PNG or SVG under plots/ or docs/figures/.
   5. No file larger than 5 MB (large files are usually downloads).
   6. Nothing under third party directories (bench/mcu/ext, bench/mcu/build) and no vendored library trees.
@@ -16,6 +16,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BAD_EXT = {'.pdf','.ps','.epub','.djvu','.docx','.pptx','.xlsx','.zip','.tar','.gz','.tgz','.bz2','.xz','.7z','.rar','.html','.htm','.mhtml','.warc'}
 ALLOW = {'docs/REPORT.pdf','docs/EXECUTIVE_BRIEF.pdf','docs/PAPER.pdf','docs/PROPOSAL_BRIEF.pdf','docs/conference/paper.pdf','docs/conference/paper_anon.pdf','docs/conference/fig_rtl.pdf','docs/conference/fig_sitl.pdf'}
 ANON = {'docs/conference/paper_anon.pdf', 'docs/conference/fig_rtl.pdf', 'docs/conference/fig_sitl.pdf'}  # anonymised paper and the figures it includes: must carry no author
+COAUTHORED = {'docs/conference/paper.pdf'}  # conference paper by Huda Mueen (lead author) and Awaiz Ahmed
 BIN_OK_EXT = {'.png','.svg'}
 BIN_OK_DIRS = ('plots/','docs/figures/')
 THIRD = ('bench/mcu/ext/','bench/mcu/build/')
@@ -51,7 +52,7 @@ def check(root):
             try:
                 info = subprocess.run(['pdfinfo', p], capture_output=True, text=True, check=True).stdout
                 author = [l.split(':', 1)[1].strip() for l in info.splitlines() if l.startswith('Author:')]
-                want = [] if rel in ANON else ['Huda Mueen']
+                want = [] if rel in ANON else (['Huda Mueen; Awaiz Ahmed'] if rel in COAUTHORED else ['Huda Mueen'])
                 if author not in (want, [''] if rel in ANON else want): problems.append(f'{rel}: PDF author is {author!r}, expected {want!r}')
             except FileNotFoundError:
                 print(f'note: pdfinfo not installed, author of {rel} not checked')
