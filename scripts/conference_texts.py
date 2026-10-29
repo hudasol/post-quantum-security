@@ -563,14 +563,14 @@ Configuration & Handshake (s) & Added round trip (ms) & Share acknowledged withi
            + t["air13"] + "~ms of airtime per direction at the radio rate, while the applied tag delays are " + t["tagd_lo"] + " to " + t["tagd_hi"] + "~ms. The hybrid handshake takes "
            + t["hybrid_published_hs"] + "~s over the emulated radio against " + t["classical_hs"] + "~s for the classical session, a cost paid once per session"
            + (", and design K completes in " + t["kem_auth_hs"] + "~s" if "kem_auth" in keys else "") + ". Signing as shipped missed " + t["sign_nack"]
-           + " commands that the flight stack received but did not answer; the link layer delivered them after a newer frame, and the shipped timestamp rule discarded them.\n\n")
+           + " commands that arrived after a newer frame and failed the shipped timestamp rule.\n\n")
     sec += ("Fig.~\\ref{fig:latency} shows the whole distribution of round trips. A signature on every command adds " + t["pqsig_real_lat"] + "~ms to each round trip, mostly airtime of the 2.4~kB signature, since the applied verification delay is "
             + t["pq_delay"] + "~ms; this puts the median round trip next to the deadline: " + t["pqsig_real_av"] + " of its commands are acknowledged within 0.5~s, " + t["pq_dl_0.55"]
             + " within 0.55~s, " + t["pq_dl_0.75"] + " within 0.75~s and " + t["pq_dl_1.0"] + " within 1~s.\n\n")
     sec += ("Fig.~\\ref{fig:sitl} compares configurations by the commands missed per mission. Most session configurations differ in at most three of the " + t["n_miss"]
             + " missions: the hybrid session misses " + t["m_hybrid_published_none"] + " commands per mission against no authentication (" + t["m_hybrid_published_none_lo"] + " to "
             + t["m_hybrid_published_none_hi"] + ", " + t["m_hybrid_published_none_n"] + " missions differ) and " + t["m_hybrid_published_classical"] + " against the classical session, "
-            "consistent with a small cost from re-handshakes after long outages; design K and the classical session miss the same commands (" + t["m_kem_auth_classical"] + "). "
+            "a small cost from re-handshakes after long outages; design K and the classical session miss the same commands (" + t["m_kem_auth_classical"] + "). "
             "Link layer retransmission delivers some frames after newer ones (reordering depth up to " + t["reorder_depth"] + "), and the published rule rejected " + t["pub_late"]
             + " of them as late; the replay cache accepted them, but they had already missed the deadline, so the cache misses exactly as many commands as the published rule ("
             + t["m_hybrid_cache_hybrid_published"] + ", " + t["m_hybrid_cache_hybrid_published_n"] + " missions differ).\n\n")
@@ -580,7 +580,7 @@ Configuration & Handshake (s) & Added round trip (ms) & Share acknowledged withi
             + " of them triggered when the link layer gave up a frame during an outage, against " + t["strict_ahead"] + " rejected as ahead of the expected counter; "
             + t["rs_strict"] + " of its missions restarted the session, against " + t["rs_pub"] + " under the published rule.")
     if "hybrid_strict_inband" in keys:
-        sec += (" Resynchronising inside the session with one authenticated message each way removes the handshake but not the cost: across " + t["resync_in"]
+        sec += (" Resynchronising inside the session removes the handshake but not the cost: across " + t["resync_in"]
                 + " resynchronisations it still misses " + t["m_hybrid_strict_inband_hybrid_published"] + " commands per mission against the published rule ("
                 + t["m_hybrid_strict_inband_hybrid_published_lo"] + " to " + t["m_hybrid_strict_inband_hybrid_published_hi"] + "), " + t["m_hybrid_strict_inband_hybrid_strict"]
                 + " against the strict rule with a new handshake, because every command sent while the counter is out of step is rejected.")
@@ -622,18 +622,19 @@ def formal_text(c, doc):
         def res(m, pid):
             r = pv[(pv.model == m) & (pv.property_id == pid)]
             return r.result.iloc[0] if len(r) else None
-        m0 = sig[0]
+        m0 = "session_b_fixed_sig_broken" if "session_b_fixed_sig_broken" in models else sig[0]
         auth = [pid for pid in ("A1", "A2") if res(m0, pid) == "counterexample"]
-        sec = [pid for pid in ("S1", "S2", "S3", "S4") if res(m0, pid) == "proved"]
-        out += (" With ML-DSA-44 broken, " + ("authentication fails (" + ", ".join(auth) + " give counterexamples)" if auth else "authentication still holds")
-                + (", while the session keys stay secret against this attacker" if len(sec) == 4 else "") + ": the hybrid session's authentication rests on the signature alone.")
+        sm = res(m0, "SM") == "proved"
+        out += (" With ML-DSA-44 broken (both signing keys known to the attacker), " + ("authentication fails and an active attacker learns the key a side accepts" if auth else "authentication still holds")
+                + ("; only a session that both sides accepted with the same key stays secret, which the X25519 and ML-KEM exchange still gives" if sm else "")
+                + ". The hybrid session's authentication therefore rests on ML-DSA-44 alone.")
     out += ("\n\nDesign K keeps its keys secret when the classical component is broken and after a later theft of the static keys, and the vehicle authenticates the ground station. "
             "With ML-KEM broken, however, its keys are not secret: the attacker sends its own first flight with stolen static keys, and the X25519 share does not save the session against an active attacker, "
-            "whereas the hybrid session still has its signatures. Authentication of the vehicle by the ground station is proved only in a model in which static and ephemeral KEM keys have distinct types; ")
-    a2 = pv[(pv.model == "session_kemauth_a2") & (pv.property_id == "A2")]
+            "whereas the hybrid session still has its signatures; with its static keys known, design K fares like the hybrid session with ML-DSA-44 broken. Authentication of the vehicle by the ground station is proved only in a model in which static and ephemeral KEM keys have distinct types; ")
+    a2 = pv[(pv.model == "session_kemauth_a2_retry") & (pv.property_id == "A2")]
     if len(a2) and a2.result.iloc[0].startswith("cannot"):
-        out += ("the general model reached the time limit of " + c("cf_pv_a2_t", PV, "run_time_s_host_measured", 'model == "session_kemauth_a2" and property_id == "A2"',
-                                                                    "value", "{:.0f}", label="host measured", doc=doc) + "~s without a result.")
+        out += ("the general model reached a time limit of " + c("cf_pv_a2_t", PV, "run_time_s_host_measured", 'model == "session_kemauth_a2_retry" and property_id == "A2"',
+                                                                    "value", "{:.0f}", 1 / 3600, label="host measured", doc=doc) + "~h without finding an attack or a proof.")
     else:
         out += "the general model " + ("proves it as well." if len(a2) and a2.result.iloc[0] == "proved" else "gives " + a2.result.iloc[0] + ".")
     out += ("\n\nFor out of order delivery, a replay cache proves injective agreement on commands when the vehicle checks and records each pair of session and counter in one step and never forgets an entry, "

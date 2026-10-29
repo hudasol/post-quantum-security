@@ -54,8 +54,8 @@ ab_fl_ms,docs/PAPER.md,0.398,0.398,planner/results/flightstack_mc_summary.csv,me
 ab_fl_a,docs/PAPER.md,0.201,0.201,planner/results/flightstack_mc_summary.csv,assumed_median,"thresholds == ""uncertain""",value,0.005,estimated,,
 ab_fl_m,docs/PAPER.md,0.300,0.3,planner/results/flightstack_mc_summary.csv,measured_median,"thresholds == ""uncertain""",value,0.005,estimated,,
 ab_ls,docs/PAPER.md,7.1,7.12266,netsim/results/gap_sweep.csv,time_s_modelled,"cell == ""base_frame""",value,0.005,modelled,,
-ab_pv_n,docs/PAPER.md,140,140.0,formal/results/proverif_results.csv,result,,count,0.005,modelled,,
-ab_pv_p,docs/PAPER.md,97,97.0,formal/results/proverif_results.csv,result,"result == ""proved""",count,0.005,modelled,,"97, and found"
+ab_pv_n,docs/PAPER.md,240,240.0,formal/results/proverif_results.csv,result,,count,0.005,modelled,,
+ab_pv_p,docs/PAPER.md,102,102.0,formal/results/proverif_results.csv,result,"result == ""proved""",count,0.005,modelled,,
 p_s13_staged,docs/PAPER.md,265,265.0,data/raw/S13_staged.csv,id,,count,0.005,host measured,,
 p_s13_valdis,docs/PAPER.md,0,0.0,data/verify6/summary.csv,field,"status == ""disagree"" and field in [""cycles"", ""ram_bytes"", ""stack_bytes"", ""flash_or_code_bytes"", ""energy_uj"", ""key_or_sig_size_bytes"", ""value""]",count,0.005,host measured,,0 value fields
 p_s13_word,docs/PAPER.md,41,41.0,data/verify6/third_look_queue.csv,id,"kind == ""wording""",count,0.005,host measured,,41 wording disagreements
@@ -148,19 +148,18 @@ p_e2e_av_lo,docs/PAPER.md,0.798,0.798232,stats/results/e2e_mc_summary.csv,p2_5,"
 p_e2e_av_hi,docs/PAPER.md,0.999,0.999058,stats/results/e2e_mc_summary.csv,p97_5,"output == ""hybrid_availability_sik_drone""",value,0.005,modelled,,
 p_sob_or,docs/PAPER.md,0.55,0.546169,stats/results/e2e_sobol.csv,ST,"output == ""hybrid_availability_sik_drone"" and input == ""outage_rate_per_h""",value,0.005,modelled,,
 p_sob_om,docs/PAPER.md,0.48,0.477748,stats/results/e2e_sobol.csv,ST,"output == ""hybrid_availability_sik_drone"" and input == ""outage_mean_s""",value,0.005,modelled,,
-p_pv_q,docs/PAPER.md,140,140.0,formal/results/proverif_results.csv,property_id,,count,0.005,modelled,,
-p_pv_m,docs/PAPER.md,33,33.0,formal/results/proverif_results.csv,model,,nunique,0.005,modelled,,33 models of
-p_pv_cx_stated,docs/PAPER.md,7,7.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and model.str.contains(""stated"")",count,0.005,modelled,,7 in the
-p_pv_cx_broken,docs/PAPER.md,12,12.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and model.str.contains(""both_broken"")",count,0.005,modelled,,12 in deliberate
+p_pv_q,docs/PAPER.md,240,240.0,formal/results/proverif_results.csv,property_id,,count,0.005,modelled,,
+p_pv_m,docs/PAPER.md,39,39.0,formal/results/proverif_results.csv,model,,nunique,0.005,modelled,,39 models of
+p_pv_cx_reach,docs/PAPER.md,71,71.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and property_id.str.startswith(""R"")",count,0.005,modelled,,71 reachability checks
+p_pv_cx_broken,docs/PAPER.md,44,44.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and not property_id.str.startswith(""R"") and model.str.contains(""broken|static_known"") and not model.str.startswith(""session_replay"")",count,0.005,modelled,,44 in settings
+p_pv_cx_stated,docs/PAPER.md,7,7.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and not property_id.str.startswith(""R"") and model.str.contains(""stated"") and not model.str.contains(""broken"")",count,0.005,modelled,,7 in the
 p_pv_cx_fs,docs/PAPER.md,1,1.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and model == ""fallback_d_fixed_fs_provisioned""",count,0.005,modelled,,1 for forward
 p_pv_cx_mid,docs/PAPER.md,1,1.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and model == ""firmware_counter_unsigned_version""",count,0.005,modelled,,1 for an
-p_pv_cx_replay,docs/PAPER.md,2,2.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and model.str.startswith(""session_replay"") and property_id not in (""R0"", ""R1"")",count,0.005,modelled,,2 in the
-p_pv_cx_kem,docs/PAPER.md,4,4.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and model == ""session_kemauth_kem_broken""",count,0.005,modelled,,4 for design
-p_pv_cx_reach,docs/PAPER.md,12,12.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and property_id in (""R0"", ""R1"")",count,0.005,modelled,,12 reachability checks
-p_pv_to,docs/PAPER.md,1800,1800.0,formal/results/proverif_results.csv,run_time_s_host_measured,"model == ""session_kemauth_a2"" and property_id == ""A2""",value,0.005,host measured,,
-p_pv_proved,docs/PAPER.md,97,97.0,formal/results/proverif_results.csv,result,"result.str.startswith(""proved"")",count,0.005,modelled,,97 | property
-p_pv_counterexample,docs/PAPER.md,39,39.0,formal/results/proverif_results.csv,result,"result.str.startswith(""counterexample"")",count,0.005,modelled,,39 | attack
-p_pv_cannot_be_proved,docs/PAPER.md,4,4.0,formal/results/proverif_results.csv,result,"result.str.startswith(""cannot be proved"")",count,0.005,modelled,,4 | MAVLink
+p_pv_cx_replay,docs/PAPER.md,2,2.0,formal/results/proverif_results.csv,result,"result == ""counterexample"" and model.str.startswith(""session_replay"") and not property_id.str.startswith(""R"")",count,0.005,modelled,,2 in the
+p_pv_to,docs/PAPER.md,9,9.0,formal/results/proverif_results.csv,result,"result.str.startswith(""cannot be proved (timeout"")",count,0.005,modelled,,9 queries that
+p_pv_proved,docs/PAPER.md,102,102.0,formal/results/proverif_results.csv,result,"result.str.startswith(""proved"")",count,0.005,modelled,,
+p_pv_counterexample,docs/PAPER.md,126,126.0,formal/results/proverif_results.csv,result,"result.str.startswith(""counterexample"")",count,0.005,modelled,,
+p_pv_cannot_be_proved,docs/PAPER.md,12,12.0,formal/results/proverif_results.csv,result,"result.str.startswith(""cannot be proved"")",count,0.005,modelled,,12 | MAVLink
 p_bk_n,docs/PAPER.md,36,36.0,bench/board_kit/predictions_v5_board.csv,id,"cache_pass == ""off""",count,0.005,modelled,,36 cycle predictions
 p_sitl_n,docs/PAPER.md,20,20.0,sitl/results/summary.csv,value,"profile == ""sik"" and config == ""hybrid"" and metric == ""missions_completed""",value,0.005,SITL measured,,20 scripted missions
 p_sitl_sig,docs/PAPER.md,3.7,3.7165,sitl/results/summary.csv,value,"profile == ""sik"" and config == ""signing"" and metric == ""added_latency_rt_ms""",value,0.005,SITL measured,,
@@ -231,11 +230,11 @@ proposal_robotics_ns_bg16,docs/PROPOSAL_ROBOTICS.md,33.2,33.2116,netsim/results/
 proposal_robotics_ns_bg16_lo,docs/PROPOSAL_ROBOTICS.md,19.0,18.9827,netsim/results/gap_sweep.csv,time_ci_lo_s_simulated_network,"cell == ""bg_16""",value,0.005,simulated (network),,
 proposal_robotics_ns_bg16_hi,docs/PROPOSAL_ROBOTICS.md,47.4,47.4404,netsim/results/gap_sweep.csv,time_ci_hi_s_simulated_network,"cell == ""bg_16""",value,0.005,simulated (network),,
 proposal_robotics_ns_minbe8,docs/PROPOSAL_ROBOTICS.md,40.1,40.0957,netsim/results/gap_sweep.csv,time_mean_s_simulated_network,"cell == ""minbe_8""",value,0.005,simulated (network),,
-proposal_robotics_fv_q,docs/PROPOSAL_ROBOTICS.md,140,140.0,formal/results/proverif_results.csv,query,,count,0.005,modelled,,
-proposal_robotics_fv_models,docs/PROPOSAL_ROBOTICS.md,33,33.0,formal/results/proverif_results.csv,model,,nunique,0.005,modelled,,33 model files
-proposal_robotics_fv_proved,docs/PROPOSAL_ROBOTICS.md,97,97.0,formal/results/proverif_results.csv,query,"result == ""proved""",count,0.005,modelled,,"97 proved, 39"
-proposal_robotics_fv_cex,docs/PROPOSAL_ROBOTICS.md,39,39.0,formal/results/proverif_results.csv,query,"result == ""counterexample""",count,0.005,modelled,,39 counterexamples (stated
-proposal_robotics_fv_cnp,docs/PROPOSAL_ROBOTICS.md,4,4.0,formal/results/proverif_results.csv,query,"result.str.startswith(""cannot be proved"")",count,0.005,modelled,,4 that the
+proposal_robotics_fv_q,docs/PROPOSAL_ROBOTICS.md,240,240.0,formal/results/proverif_results.csv,query,,count,0.005,modelled,,
+proposal_robotics_fv_models,docs/PROPOSAL_ROBOTICS.md,39,39.0,formal/results/proverif_results.csv,model,,nunique,0.005,modelled,,39 model files
+proposal_robotics_fv_proved,docs/PROPOSAL_ROBOTICS.md,102,102.0,formal/results/proverif_results.csv,query,"result == ""proved""",count,0.005,modelled,,
+proposal_robotics_fv_cex,docs/PROPOSAL_ROBOTICS.md,126,126.0,formal/results/proverif_results.csv,query,"result == ""counterexample""",count,0.005,modelled,,
+proposal_robotics_fv_cnp,docs/PROPOSAL_ROBOTICS.md,12,12.0,formal/results/proverif_results.csv,query,"result.str.startswith(""cannot be proved"")",count,0.005,modelled,,12 that the
 proposal_robotics_v5b_rows,docs/PROPOSAL_ROBOTICS.md,36,36.0,bench/board_kit/predictions_v5_board.csv,id,,count,0.005,modelled,,36 out of
 proposal_robotics_v5b_per,docs/PROPOSAL_ROBOTICS.md,18,18.0,bench/board_kit/predictions_v5_board.csv,id,"platform == ""nucleo-l4r5zi""",count,0.005,modelled,,18 harness rows
 proposal_robotics_plan_min,docs/PROPOSAL_ROBOTICS.md,153,9180.5,bench/board_kit/session_plan.csv,total_s,"~block.str.contains(""B0"")",sum,0.005,estimated,displayed as {:.0f} x 0.016666666666666666,
@@ -271,8 +270,8 @@ proposal_robotics_atrc_hr_unc_m,docs/PROPOSAL_ROBOTICS_ATRC.md,0.300,0.3,planner
 proposal_robotics_atrc_ns_base,docs/PROPOSAL_ROBOTICS_ATRC.md,5.72,5.72107,netsim/results/gap_sweep.csv,time_mean_s_simulated_network,"cell == ""base_frame""",value,0.005,simulated (network),,
 proposal_robotics_atrc_pub_lo,docs/PROPOSAL_ROBOTICS_ATRC.md,30,30.0,netsim/results/gap_sweep.csv,range_low_s_published,"cell == ""base_frame""",value,0.005,published,,30 to 60
 proposal_robotics_atrc_pub_hi,docs/PROPOSAL_ROBOTICS_ATRC.md,60,60.0,netsim/results/gap_sweep.csv,range_high_s_published,"cell == ""base_frame""",value,0.005,published,,"60 s, and"
-proposal_robotics_atrc_fv_q,docs/PROPOSAL_ROBOTICS_ATRC.md,140,140.0,formal/results/proverif_results.csv,query,,count,0.005,modelled,,
-proposal_robotics_atrc_fv_proved,docs/PROPOSAL_ROBOTICS_ATRC.md,97,97.0,formal/results/proverif_results.csv,query,"result == ""proved""",count,0.005,modelled,,97 of 140
+proposal_robotics_atrc_fv_q,docs/PROPOSAL_ROBOTICS_ATRC.md,240,240.0,formal/results/proverif_results.csv,query,,count,0.005,modelled,,
+proposal_robotics_atrc_fv_proved,docs/PROPOSAL_ROBOTICS_ATRC.md,102,102.0,formal/results/proverif_results.csv,query,"result == ""proved""",count,0.005,modelled,,
 proposal_robotics_atrc_v5b_rows,docs/PROPOSAL_ROBOTICS_ATRC.md,36,36.0,bench/board_kit/predictions_v5_board.csv,id,,count,0.005,modelled,,36 board predictions
 proposal_robotics_atrc_hops,docs/PROPOSAL_ROBOTICS_ATRC.md,3,3.0,netsim/results/gap_sweep.csv,value,"cell == ""hops_3""",value,0.005,simulated (network),,3 hops or
 proposal_robotics_atrc_bg,docs/PROPOSAL_ROBOTICS_ATRC.md,16,16.0,netsim/results/gap_sweep.csv,value,"cell == ""bg_16""",value,0.005,simulated (network),,16 loaded neighbours
@@ -292,8 +291,8 @@ proposal_robotics_edge_hr_unc_m,docs/PROPOSAL_ROBOTICS_EDGE.md,0.300,0.3,planner
 proposal_robotics_edge_ns_base,docs/PROPOSAL_ROBOTICS_EDGE.md,5.72,5.72107,netsim/results/gap_sweep.csv,time_mean_s_simulated_network,"cell == ""base_frame""",value,0.005,simulated (network),,
 proposal_robotics_edge_pub_lo,docs/PROPOSAL_ROBOTICS_EDGE.md,30,30.0,netsim/results/gap_sweep.csv,range_low_s_published,"cell == ""base_frame""",value,0.005,published,,30 to 60
 proposal_robotics_edge_pub_hi,docs/PROPOSAL_ROBOTICS_EDGE.md,60,60.0,netsim/results/gap_sweep.csv,range_high_s_published,"cell == ""base_frame""",value,0.005,published,,"60 s, and"
-proposal_robotics_edge_fv_q,docs/PROPOSAL_ROBOTICS_EDGE.md,140,140.0,formal/results/proverif_results.csv,query,,count,0.005,modelled,,
-proposal_robotics_edge_fv_proved,docs/PROPOSAL_ROBOTICS_EDGE.md,97,97.0,formal/results/proverif_results.csv,query,"result == ""proved""",count,0.005,modelled,,97 of 140
+proposal_robotics_edge_fv_q,docs/PROPOSAL_ROBOTICS_EDGE.md,240,240.0,formal/results/proverif_results.csv,query,,count,0.005,modelled,,
+proposal_robotics_edge_fv_proved,docs/PROPOSAL_ROBOTICS_EDGE.md,102,102.0,formal/results/proverif_results.csv,query,"result == ""proved""",count,0.005,modelled,,
 proposal_robotics_edge_v5b_rows,docs/PROPOSAL_ROBOTICS_EDGE.md,36,36.0,bench/board_kit/predictions_v5_board.csv,id,,count,0.005,modelled,,36 board predictions
 proposal_robotics_edge_hops,docs/PROPOSAL_ROBOTICS_EDGE.md,3,3.0,netsim/results/gap_sweep.csv,value,"cell == ""hops_3""",value,0.005,simulated (network),,3 hops or
 proposal_robotics_edge_bg,docs/PROPOSAL_ROBOTICS_EDGE.md,16,16.0,netsim/results/gap_sweep.csv,value,"cell == ""bg_16""",value,0.005,simulated (network),,16 loaded neighbours
@@ -313,8 +312,8 @@ proposal_robotics_adeo_hr_unc_m,docs/PROPOSAL_ROBOTICS_ADEO.md,0.300,0.3,planner
 proposal_robotics_adeo_ns_base,docs/PROPOSAL_ROBOTICS_ADEO.md,5.72,5.72107,netsim/results/gap_sweep.csv,time_mean_s_simulated_network,"cell == ""base_frame""",value,0.005,simulated (network),,
 proposal_robotics_adeo_pub_lo,docs/PROPOSAL_ROBOTICS_ADEO.md,30,30.0,netsim/results/gap_sweep.csv,range_low_s_published,"cell == ""base_frame""",value,0.005,published,,30 to 60
 proposal_robotics_adeo_pub_hi,docs/PROPOSAL_ROBOTICS_ADEO.md,60,60.0,netsim/results/gap_sweep.csv,range_high_s_published,"cell == ""base_frame""",value,0.005,published,,"60 s, and"
-proposal_robotics_adeo_fv_q,docs/PROPOSAL_ROBOTICS_ADEO.md,140,140.0,formal/results/proverif_results.csv,query,,count,0.005,modelled,,
-proposal_robotics_adeo_fv_proved,docs/PROPOSAL_ROBOTICS_ADEO.md,97,97.0,formal/results/proverif_results.csv,query,"result == ""proved""",count,0.005,modelled,,97 of 140
+proposal_robotics_adeo_fv_q,docs/PROPOSAL_ROBOTICS_ADEO.md,240,240.0,formal/results/proverif_results.csv,query,,count,0.005,modelled,,
+proposal_robotics_adeo_fv_proved,docs/PROPOSAL_ROBOTICS_ADEO.md,102,102.0,formal/results/proverif_results.csv,query,"result == ""proved""",count,0.005,modelled,,
 proposal_robotics_adeo_v5b_rows,docs/PROPOSAL_ROBOTICS_ADEO.md,36,36.0,bench/board_kit/predictions_v5_board.csv,id,,count,0.005,modelled,,36 board predictions
 proposal_robotics_adeo_hops,docs/PROPOSAL_ROBOTICS_ADEO.md,3,3.0,netsim/results/gap_sweep.csv,value,"cell == ""hops_3""",value,0.005,simulated (network),,3 hops or
 proposal_robotics_adeo_bg,docs/PROPOSAL_ROBOTICS_ADEO.md,16,16.0,netsim/results/gap_sweep.csv,value,"cell == ""bg_16""",value,0.005,simulated (network),,16 loaded neighbours
@@ -330,8 +329,8 @@ proposal_brief_hr_asm_a,docs/PROPOSAL_BRIEF.md,0.186,0.186,planner/results/fligh
 proposal_brief_hr_asm_m,docs/PROPOSAL_BRIEF.md,0.398,0.398,planner/results/flightstack_mc_summary.csv,measured_median,"thresholds == ""stack_asm""",value,0.005,estimated,,
 proposal_brief_hr_unc_a,docs/PROPOSAL_BRIEF.md,0.201,0.201,planner/results/flightstack_mc_summary.csv,assumed_median,"thresholds == ""uncertain""",value,0.005,estimated,,
 proposal_brief_hr_unc_m,docs/PROPOSAL_BRIEF.md,0.300,0.3,planner/results/flightstack_mc_summary.csv,measured_median,"thresholds == ""uncertain""",value,0.005,estimated,,
-proposal_brief_fv_q,docs/PROPOSAL_BRIEF.md,140,140.0,formal/results/proverif_results.csv,query,,count,0.005,modelled,,
-proposal_brief_fv_proved,docs/PROPOSAL_BRIEF.md,97,97.0,formal/results/proverif_results.csv,query,"result == ""proved""",count,0.005,modelled,,97 of 140
+proposal_brief_fv_q,docs/PROPOSAL_BRIEF.md,240,240.0,formal/results/proverif_results.csv,query,,count,0.005,modelled,,
+proposal_brief_fv_proved,docs/PROPOSAL_BRIEF.md,102,102.0,formal/results/proverif_results.csv,query,"result == ""proved""",count,0.005,modelled,,
 proposal_brief_v5b_rows,docs/PROPOSAL_BRIEF.md,36,36.0,bench/board_kit/predictions_v5_board.csv,id,,count,0.005,modelled,,36 registered predictions
 proposal_brief_months,docs/PROPOSAL_BRIEF.md,12,12.0,data/proposal/plan.csv,end_month,,max,0.005,planned,,"12 months, part"
 proposal_brief_buy,docs/PROPOSAL_BRIEF.md,0,0.0,data/proposal/equipment.csv,purchase_count,,sum,0.005,planned,,0
@@ -527,14 +526,14 @@ cs_m_pqsig_counter_pqsig_real_hi,docs/conference/paper.tex,+0.30,0.30125,sitl/re
 cs_rs_strict,docs/conference/paper.tex,12,12.0,sitl/results_r6/session_restarts.csv,missions_with_teardown_or_rehandshake,"profile == ""sik"" and config == ""hybrid_strict""",value,0.005,emulated,,12 of its
 cs_rs_pub,docs/conference/paper.tex,1,1.0,sitl/results_r6/session_restarts.csv,missions_with_teardown_or_rehandshake,"profile == ""sik"" and config == ""hybrid_published""",value,0.005,emulated,,1 under the
 cs_resync_in,docs/conference/paper.tex,22,22.0,sitl/results_r6/rejections.csv,count,"profile == ""sik"" and config == ""hybrid_strict_inband"" and scope == ""resynchronisations (strict rule)"" and reason == ""all triggers""",value,0.005,emulated,,22 resynchronisations it
-cf_pv_q,docs/conference/paper.tex,140,140.0,formal/results/proverif_results.csv,result,,count,0.005,modelled,,
-cf_pv_m,docs/conference/paper.tex,33,33.0,formal/results/proverif_results.csv,model,,nunique,0.005,modelled,,33 model files
-cf_pv_p,docs/conference/paper.tex,97,97.0,formal/results/proverif_results.csv,result,"result == ""proved""",count,0.005,modelled,,"97 proved, 39"
-cf_pv_cx,docs/conference/paper.tex,39,39.0,formal/results/proverif_results.csv,result,"result == ""counterexample""",count,0.005,modelled,,"39 counterexamples, 3"
+cf_pv_q,docs/conference/paper.tex,240,240.0,formal/results/proverif_results.csv,result,,count,0.005,modelled,,
+cf_pv_m,docs/conference/paper.tex,39,39.0,formal/results/proverif_results.csv,model,,nunique,0.005,modelled,,39 model files
+cf_pv_p,docs/conference/paper.tex,102,102.0,formal/results/proverif_results.csv,result,"result == ""proved""",count,0.005,modelled,,
+cf_pv_cx,docs/conference/paper.tex,126,126.0,formal/results/proverif_results.csv,result,"result == ""counterexample""",count,0.005,modelled,,
 cf_pv_cnp,docs/conference/paper.tex,3,3.0,formal/results/proverif_results.csv,result,"result == ""cannot be proved""",count,0.005,modelled,,3 that the
-cf_pv_to,docs/conference/paper.tex,1,1.0,formal/results/proverif_results.csv,result,"result.str.startswith(""cannot be proved (timeout"")",count,0.005,modelled,,1 that reached
-cf_pv_r0,docs/conference/paper.tex,12,12.0,formal/results/proverif_results.csv,result,"property_id.str.startswith(""R"") and result == ""counterexample""",count,0.005,modelled,,12 are reachability
-cf_pv_a2_t,docs/conference/paper.tex,1800,1800.0,formal/results/proverif_results.csv,run_time_s_host_measured,"model == ""session_kemauth_a2"" and property_id == ""A2""",value,0.005,host measured,,
+cf_pv_to,docs/conference/paper.tex,9,9.0,formal/results/proverif_results.csv,result,"result.str.startswith(""cannot be proved (timeout"")",count,0.005,modelled,,9 that reached
+cf_pv_r0,docs/conference/paper.tex,71,71.0,formal/results/proverif_results.csv,result,"property_id.str.startswith(""R"") and result == ""counterexample""",count,0.005,modelled,,71 are reachability
+cf_pv_a2_t,docs/conference/paper.tex,3,10800.3,formal/results/proverif_results.csv,run_time_s_host_measured,"model == ""session_kemauth_a2_retry"" and property_id == ""A2""",value,0.005,host measured,displayed as {:.0f} x 0.0002777777777777778,3~h without finding
 cf_runs,docs/conference/paper_anon.tex,15,15.0,rtlsim/results/proto_sessions.csv,n_runs,"unit == ""session start""",min,0.005,RTL simulated,,"15 runs, 5"
 cf_runs_tag,docs/conference/paper_anon.tex,5,5.0,rtlsim/results/proto_sessions.csv,n_runs,"design == ""mavlink_tag""",max,0.005,RTL simulated,,5 for the
 cf_ibex_classical_vehicle,docs/conference/paper_anon.tex,15.5,15454894.0,rtlsim/results/proto_sessions.csv,cycles_median,"core == ""ibex"" and design == ""classical"" and side == ""vehicle"" and unit == ""session start""",value,0.005,RTL simulated,displayed as {:.1f} x 1e-06,
@@ -725,11 +724,11 @@ cs_m_pqsig_counter_pqsig_real_hi,docs/conference/paper_anon.tex,+0.30,0.30125,si
 cs_rs_strict,docs/conference/paper_anon.tex,12,12.0,sitl/results_r6/session_restarts.csv,missions_with_teardown_or_rehandshake,"profile == ""sik"" and config == ""hybrid_strict""",value,0.005,emulated,,12 of its
 cs_rs_pub,docs/conference/paper_anon.tex,1,1.0,sitl/results_r6/session_restarts.csv,missions_with_teardown_or_rehandshake,"profile == ""sik"" and config == ""hybrid_published""",value,0.005,emulated,,1 under the
 cs_resync_in,docs/conference/paper_anon.tex,22,22.0,sitl/results_r6/rejections.csv,count,"profile == ""sik"" and config == ""hybrid_strict_inband"" and scope == ""resynchronisations (strict rule)"" and reason == ""all triggers""",value,0.005,emulated,,22 resynchronisations it
-cf_pv_q,docs/conference/paper_anon.tex,140,140.0,formal/results/proverif_results.csv,result,,count,0.005,modelled,,
-cf_pv_m,docs/conference/paper_anon.tex,33,33.0,formal/results/proverif_results.csv,model,,nunique,0.005,modelled,,33 model files
-cf_pv_p,docs/conference/paper_anon.tex,97,97.0,formal/results/proverif_results.csv,result,"result == ""proved""",count,0.005,modelled,,"97 proved, 39"
-cf_pv_cx,docs/conference/paper_anon.tex,39,39.0,formal/results/proverif_results.csv,result,"result == ""counterexample""",count,0.005,modelled,,"39 counterexamples, 3"
+cf_pv_q,docs/conference/paper_anon.tex,240,240.0,formal/results/proverif_results.csv,result,,count,0.005,modelled,,
+cf_pv_m,docs/conference/paper_anon.tex,39,39.0,formal/results/proverif_results.csv,model,,nunique,0.005,modelled,,39 model files
+cf_pv_p,docs/conference/paper_anon.tex,102,102.0,formal/results/proverif_results.csv,result,"result == ""proved""",count,0.005,modelled,,
+cf_pv_cx,docs/conference/paper_anon.tex,126,126.0,formal/results/proverif_results.csv,result,"result == ""counterexample""",count,0.005,modelled,,
 cf_pv_cnp,docs/conference/paper_anon.tex,3,3.0,formal/results/proverif_results.csv,result,"result == ""cannot be proved""",count,0.005,modelled,,3 that the
-cf_pv_to,docs/conference/paper_anon.tex,1,1.0,formal/results/proverif_results.csv,result,"result.str.startswith(""cannot be proved (timeout"")",count,0.005,modelled,,1 that reached
-cf_pv_r0,docs/conference/paper_anon.tex,12,12.0,formal/results/proverif_results.csv,result,"property_id.str.startswith(""R"") and result == ""counterexample""",count,0.005,modelled,,12 are reachability
-cf_pv_a2_t,docs/conference/paper_anon.tex,1800,1800.0,formal/results/proverif_results.csv,run_time_s_host_measured,"model == ""session_kemauth_a2"" and property_id == ""A2""",value,0.005,host measured,,
+cf_pv_to,docs/conference/paper_anon.tex,9,9.0,formal/results/proverif_results.csv,result,"result.str.startswith(""cannot be proved (timeout"")",count,0.005,modelled,,9 that reached
+cf_pv_r0,docs/conference/paper_anon.tex,71,71.0,formal/results/proverif_results.csv,result,"property_id.str.startswith(""R"") and result == ""counterexample""",count,0.005,modelled,,71 are reachability
+cf_pv_a2_t,docs/conference/paper_anon.tex,3,10800.3,formal/results/proverif_results.csv,run_time_s_host_measured,"model == ""session_kemauth_a2_retry"" and property_id == ""A2""",value,0.005,host measured,displayed as {:.0f} x 0.0002777777777777778,3~h without finding
