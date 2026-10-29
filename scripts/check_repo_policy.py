@@ -14,8 +14,8 @@ Rules:
 import os, subprocess, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BAD_EXT = {'.pdf','.ps','.epub','.djvu','.docx','.pptx','.xlsx','.zip','.tar','.gz','.tgz','.bz2','.xz','.7z','.rar','.html','.htm','.mhtml','.warc'}
-ALLOW = {'docs/REPORT.pdf','docs/EXECUTIVE_BRIEF.pdf','docs/PAPER.pdf','docs/PROPOSAL_BRIEF.pdf','docs/conference/paper.pdf','docs/conference/paper_anon.pdf','docs/conference/fig_rtl.pdf','docs/conference/fig_sitl.pdf'}
-ANON = {'docs/conference/paper_anon.pdf', 'docs/conference/fig_rtl.pdf', 'docs/conference/fig_sitl.pdf'}  # anonymised paper and the figures it includes: must carry no author
+ALLOW = {'docs/REPORT.pdf','docs/EXECUTIVE_BRIEF.pdf','docs/PAPER.pdf','docs/PROPOSAL_BRIEF.pdf','docs/conference/paper.pdf','docs/conference/paper_anon.pdf','docs/conference/fig_rtl.pdf','docs/conference/fig_sitl.pdf','docs/conference/fig_flows.pdf','docs/conference/fig_space.pdf','docs/conference/fig_latency.pdf'}
+ANON = {'docs/conference/paper_anon.pdf', 'docs/conference/fig_rtl.pdf', 'docs/conference/fig_sitl.pdf', 'docs/conference/fig_flows.pdf', 'docs/conference/fig_space.pdf', 'docs/conference/fig_latency.pdf'}  # anonymised paper and the figures it includes: must carry no author
 COAUTHORED = {'docs/conference/paper.pdf'}  # conference paper by Huda Mueen (lead author) and Awaiz Ahmed
 BIN_OK_EXT = {'.png','.svg'}
 BIN_OK_DIRS = ('plots/','docs/figures/')
