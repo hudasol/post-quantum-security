@@ -69,6 +69,10 @@ query s: bitstring, t: nat, m: bitstring; inj-event(Acc(s, t, m)) ==> inj-event(
 query s: bitstring, t: nat, m: bitstring; event(Acc(s, t, m)) ==> event(Send(s, t, m)).
 (* R0: reachability check: the vehicle accepts at least one command (a counterexample is the expected result and shows that acceptance is reachable, so the proofs of C1 and C2 are not vacuous) *)
 query s: bitstring, t: nat, m: bitstring; event(Acc(s, t, m)) ==> false.
+(* RV: reachability check: the vehicle accepts a session key (a counterexample is the expected result and shows that the proofs of A1 and S1 are not vacuous) *)
+query s: bitstring, k: key; event(VAccept(s, k)) ==> false.
+(* RG: reachability check: the ground station accepts a session key (a counterexample is the expected result and shows that the proofs of A2 and S2 are not vacuous) *)
+query s: bitstring, k: key; event(GSAccept(s, k)) ==> false.
 
 type stamp.
 event Mark(bitstring, nat, stamp).

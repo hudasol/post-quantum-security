@@ -1,0 +1,35 @@
+goal reachable: attacker(gx_2) && attacker(sk) -> event(VAccept(h((gx_2,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1))),kdf(exp(gx_2,y_1),kss(kpk(sk),r_1),h((gx_2,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1)))))) && attacker(kdf(exp(gx_2,y_1),kss(kpk(sk),r_1),h((gx_2,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1)))))
+RESULT not (event(VAccept(s,k_2)) && attacker(k_2)) is false.
+goal reachable: attacker(gy_2) && attacker(r_1) -> event(GSAccept(h((exp(g,x_1),kpk(dk_1),gy_2,kct(kpk(dk_1),r_1))),kdf(exp(gy_2,x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),gy_2,kct(kpk(dk_1),r_1)))))) && attacker(kdf(exp(gy_2,x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),gy_2,kct(kpk(dk_1),r_1)))))
+RESULT not (event(GSAccept(s,k_2)) && attacker(k_2)) is false.
+goal reachable: attacker(gx_2) && attacker(sk) && attacker(gx2_2) && attacker(sk_1) -> event(VRekey(h((h((gx_2,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1))),gx2_2,kpk(sk_1),exp(g,y2_1),kct(kpk(sk_1),r2_1))),kdf(exp(gx2_2,y2_1),kss(kpk(sk_1),r2_1),h((h((gx_2,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1))),gx2_2,kpk(sk_1),exp(g,y2_1),kct(kpk(sk_1),r2_1)))))) && attacker(kdf(exp(gx2_2,y2_1),kss(kpk(sk_1),r2_1),h((h((gx_2,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1))),gx2_2,kpk(sk_1),exp(g,y2_1),kct(kpk(sk_1),r2_1)))))
+RESULT not (event(VRekey(s,k_2)) && attacker(k_2)) is false.
+goal reachable: attacker(gy_2) && attacker(r_1) && attacker(gy2_2) && attacker(r_2) -> event(GSRekey(h((h((exp(g,x_1),kpk(dk_1),gy_2,kct(kpk(dk_1),r_1))),exp(g,x2_1),kpk(dk2_1),gy2_2,kct(kpk(dk2_1),r_2))),kdf(exp(gy2_2,x2_1),kss(kpk(dk2_1),r_2),h((h((exp(g,x_1),kpk(dk_1),gy_2,kct(kpk(dk_1),r_1))),exp(g,x2_1),kpk(dk2_1),gy2_2,kct(kpk(dk2_1),r_2)))))) && attacker(kdf(exp(gy2_2,x2_1),kss(kpk(dk2_1),r_2),h((h((exp(g,x_1),kpk(dk_1),gy_2,kct(kpk(dk_1),r_1))),exp(g,x2_1),kpk(dk2_1),gy2_2,kct(kpk(dk2_1),r_2)))))
+RESULT not (event(GSRekey(s,k_2)) && attacker(k_2)) is false.
+goal reachable: attacker(gx_2) && attacker(sk) -> inj-event(VAccept(h((gx_2,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1))),kdf(exp(gx_2,y_1),kss(kpk(sk),r_1),h((gx_2,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1))))),@occ61_1)
+RESULT inj-event(VAccept(s,k_2)) ==> inj-event(GSKey(s,k_2)) is false.
+RESULT (even event(VAccept(s,k_2)) ==> event(GSKey(s,k_2)) is false.)
+goal reachable: attacker(gy_2) && attacker(r_1) -> inj-event(GSAccept(h((exp(g,x_1),kpk(dk_1),gy_2,kct(kpk(dk_1),r_1))),kdf(exp(gy_2,x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),gy_2,kct(kpk(dk_1),r_1))))),@occ25_1)
+RESULT inj-event(GSAccept(s,k_2)) ==> inj-event(VRun(s)) is false.
+RESULT (even event(GSAccept(s,k_2)) ==> event(VRun(s)) is false.)
+goal reachable: attacker(m) && attacker(gx2_2) && attacker(sk) && attacker(m1_2) && attacker(gx_2) && attacker(sk_1) -> inj-event(Acc(h((h((gx_2,kpk(sk_1),exp(g,y_1),kct(kpk(sk_1),r_1))),gx2_2,kpk(sk),exp(g,y2_1),kct(kpk(sk),r2_1))),2,m),@occ80_1)
+RESULT inj-event(Acc(s,t,m)) ==> inj-event(Send(s,t,m)) is false.
+RESULT (even event(Acc(s,t,m)) ==> event(Send(s,t,m)) is false.)
+goal reachable: attacker(m) && attacker(gx2_2) && attacker(sk) && attacker(gx_2) && attacker(sk_1) -> event(Acc(h((h((gx_2,kpk(sk_1),exp(g,y_1),kct(kpk(sk_1),r_1))),gx2_2,kpk(sk),exp(g,y2_1),kct(kpk(sk),r2_1))),2,m))
+RESULT not event(Acc(s,t,m)) is false.
+goal reachable: attacker(gx_2) && attacker(sk) -> event(VAccept(h((gx_2,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1))),kdf(exp(gx_2,y_1),kss(kpk(sk),r_1),h((gx_2,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1))))))
+RESULT not event(VAccept(s,k_2)) is false.
+goal reachable: attacker(gy_2) && attacker(r_1) -> event(GSAccept(h((exp(g,x_1),kpk(dk_1),gy_2,kct(kpk(dk_1),r_1))),kdf(exp(gy_2,x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),gy_2,kct(kpk(dk_1),r_1))))))
+RESULT not event(GSAccept(s,k_2)) is false.
+RESULT not (event(VAccept(s,k_2)) && event(GSAccept(s,k_2)) && attacker(k_2)) is true.
+Query not (event(VAccept(s,k_2)) && attacker(k_2)) is false.
+Query not (event(GSAccept(s,k_2)) && attacker(k_2)) is false.
+Query not (event(VRekey(s,k_2)) && attacker(k_2)) is false.
+Query not (event(GSRekey(s,k_2)) && attacker(k_2)) is false.
+Query inj-event(VAccept(s,k_2)) ==> inj-event(GSKey(s,k_2)) is false.
+Query inj-event(GSAccept(s,k_2)) ==> inj-event(VRun(s)) is false.
+Query inj-event(Acc(s,t,m)) ==> inj-event(Send(s,t,m)) is false.
+Query not event(Acc(s,t,m)) is false.
+Query not event(VAccept(s,k_2)) is false.
+Query not event(GSAccept(s,k_2)) is false.
+Query not (event(VAccept(s,k_2)) && event(GSAccept(s,k_2)) && attacker(k_2)) is true.

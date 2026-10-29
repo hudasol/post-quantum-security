@@ -77,6 +77,10 @@ query s: bitstring, t: nat, m: bitstring; event(Acc(s, t, m)) ==> false.
 query s: bitstring, k: key; inj-event(VAccept(s, k)) ==> inj-event(GSKey(s, k)).
 (* A2: ground station authenticates the vehicle (injective agreement on the handshake) *)
 query s: bitstring, k: key; inj-event(GSAccept(s, k)) ==> inj-event(VRun(s)).
+(* RV: reachability check: the vehicle accepts a session key (a counterexample is the expected result and shows that the proofs of A1 and S1 are not vacuous) *)
+query s: bitstring, k: key; event(VAccept(s, k)) ==> false.
+(* RG: reachability check: the ground station accepts a session key (a counterexample is the expected result and shows that the proofs of A2 and S2 are not vacuous) *)
+query s: bitstring, k: key; event(GSAccept(s, k)) ==> false.
 
 (* Commands sent by the ground station under one key. *)
 let GSCmds(sid: bitstring, k: key) =

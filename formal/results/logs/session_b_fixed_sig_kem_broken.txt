@@ -1,0 +1,22 @@
+goal reachable: attacker(sk) -> event(VAccept(h((g,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1))),kdf(exp(g,y_1),kss(kpk(sk),r_1),h((g,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1)))))) && attacker(kdf(exp(g,y_1),kss(kpk(sk),r_1),h((g,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1)))))
+RESULT not (event(VAccept(s,k_2)) && attacker(k_2)) is false.
+goal reachable: attacker(r_1) -> event(GSAccept(h((exp(g,x_1),kpk(dk_1),g,kct(kpk(dk_1),r_1))),kdf(exp(g,x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),g,kct(kpk(dk_1),r_1)))))) && attacker(kdf(exp(g,x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),g,kct(kpk(dk_1),r_1)))))
+RESULT not (event(GSAccept(s,k_2)) && attacker(k_2)) is false.
+goal reachable: attacker(sk) && attacker(sk_1) -> event(VRekey(h((h((g,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1))),g,kpk(sk_1),exp(g,y2_1),kct(kpk(sk_1),r2_1))),kdf(exp(g,y2_1),kss(kpk(sk_1),r2_1),h((h((g,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1))),g,kpk(sk_1),exp(g,y2_1),kct(kpk(sk_1),r2_1)))))) && attacker(kdf(exp(g,y2_1),kss(kpk(sk_1),r2_1),h((h((g,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1))),g,kpk(sk_1),exp(g,y2_1),kct(kpk(sk_1),r2_1)))))
+RESULT not (event(VRekey(s,k_2)) && attacker(k_2)) is false.
+goal reachable: attacker(r_1) -> event(GSRekey(h((h((exp(g,x_1),kpk(dk_1),g,kct(kpk(dk_1),r_2))),exp(g,x2_1),kpk(dk2_1),g,kct(kpk(dk2_1),r_1))),kdf(exp(g,x2_1),kss(kpk(dk2_1),r_1),h((h((exp(g,x_1),kpk(dk_1),g,kct(kpk(dk_1),r_2))),exp(g,x2_1),kpk(dk2_1),g,kct(kpk(dk2_1),r_1)))))) && attacker(kdf(exp(g,x2_1),kss(kpk(dk2_1),r_1),h((h((exp(g,x_1),kpk(dk_1),g,kct(kpk(dk_1),r_2))),exp(g,x2_1),kpk(dk2_1),g,kct(kpk(dk2_1),r_1)))))
+goal reachable: attacker(r_1) && attacker(r_2) -> event(GSRekey(h((h((exp(g,x_1),kpk(dk_1),g,kct(kpk(dk_1),r_1))),exp(g,x2_1),kpk(dk2_1),g,kct(kpk(dk2_1),r_2))),kdf(exp(g,x2_1),kss(kpk(dk2_1),r_2),h((h((exp(g,x_1),kpk(dk_1),g,kct(kpk(dk_1),r_1))),exp(g,x2_1),kpk(dk2_1),g,kct(kpk(dk2_1),r_2)))))) && attacker(kdf(exp(g,x2_1),kss(kpk(dk2_1),r_2),h((h((exp(g,x_1),kpk(dk_1),g,kct(kpk(dk_1),r_1))),exp(g,x2_1),kpk(dk2_1),g,kct(kpk(dk2_1),r_2)))))
+RESULT not (event(GSRekey(s,k_2)) && attacker(k_2)) is false.
+goal reachable: attacker(sk) -> inj-event(VAccept(h((g,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1))),kdf(exp(g,y_1),kss(kpk(sk),r_1),h((g,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1))))),@occ60_1)
+RESULT inj-event(VAccept(s,k_2)) ==> inj-event(GSKey(s,k_2)) is false.
+RESULT (even event(VAccept(s,k_2)) ==> event(GSKey(s,k_2)) is false.)
+goal reachable: attacker(r_1) -> inj-event(GSAccept(h((exp(g,x_1),kpk(dk_1),g,kct(kpk(dk_1),r_1))),kdf(exp(g,x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),g,kct(kpk(dk_1),r_1))))),@occ25_1)
+RESULT inj-event(GSAccept(s,k_2)) ==> inj-event(VRun(s)) is false.
+RESULT (even event(GSAccept(s,k_2)) ==> event(VRun(s)) is false.)
+goal reachable: attacker(m) && attacker(sk) && attacker(x_1) && attacker(sk_1) -> event(Acc(h((h((exp(g,x_1),kpk(sk_1),exp(g,y_1),kct(kpk(sk_1),r_1))),g,kpk(sk),exp(g,y2_1),kct(kpk(sk),r2_1))),2,m))
+RESULT not event(Acc(s,t,m)) is false.
+goal reachable: attacker(sk) -> event(VAccept(h((g,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1))),kdf(exp(g,y_1),kss(kpk(sk),r_1),h((g,kpk(sk),exp(g,y_1),kct(kpk(sk),r_1))))))
+RESULT not event(VAccept(s,k_2)) is false.
+goal reachable: attacker(r_1) -> event(GSAccept(h((exp(g,x_1),kpk(dk_1),g,kct(kpk(dk_1),r_1))),kdf(exp(g,x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),g,kct(kpk(dk_1),r_1))))))
+RESULT not event(GSAccept(s,k_2)) is false.
+RESULT not (event(VAccept(s,k_2)) && event(GSAccept(s,k_2)) && attacker(k_2)) is true.

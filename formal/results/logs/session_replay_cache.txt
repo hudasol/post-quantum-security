@@ -22,6 +22,10 @@ goal reachable: b-inj-event(GSKey(h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_
 RESULT inj-event(VAccept(s,k_2)) ==> inj-event(GSKey(s,k_2)) is true.
 goal reachable: b-event(@p_act(@occ64_1,(tF3,sign((tF3,idG,idV,(exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),skG[]),mac((tConfG,h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1)))),kdf(exp(exp(g,y_1),x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1)))))))) && b-inj-event(VRun(h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1)))),@occ62_1) -> inj-event(GSAccept(h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),kdf(exp(exp(g,y_1),x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))))),@occ22_1)
 RESULT inj-event(GSAccept(s,k_2)) ==> inj-event(VRun(s)) is true.
+goal reachable: event(VAccept(h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),kdf(exp(exp(g,y_1),x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))))))
+RESULT not event(VAccept(s,k_2)) is false.
+goal reachable: event(GSAccept(h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))),kdf(exp(exp(g,y_1),x_1),kss(kpk(dk_1),r_1),h((exp(g,x_1),kpk(dk_1),exp(g,y_1),kct(kpk(dk_1),r_1))))))
+RESULT not event(GSAccept(s,k_2)) is false.
 Query(ies):
  - Query not (event(VAccept(s,k_2)) && attacker(k_2)) is true.
  - Query not (event(GSAccept(s,k_2)) && attacker(k_2)) is true.
@@ -32,3 +36,5 @@ Query(ies):
  - Query not event(Acc(s,t_2,m_2)) is false.
  - Query inj-event(VAccept(s,k_2)) ==> inj-event(GSKey(s,k_2)) is true.
  - Query inj-event(GSAccept(s,k_2)) ==> inj-event(VRun(s)) is true.
+ - Query not event(VAccept(s,k_2)) is false.
+ - Query not event(GSAccept(s,k_2)) is false.

@@ -59,6 +59,12 @@ query s: bitstring, k: key; event(GSAccept(s, k)) && attacker(k) ==> false.
 query s: bitstring, k: key; event(VRekey(s, k)) && attacker(k) ==> false.
 (* S4: secrecy of the rekeyed session key at the ground station *)
 query s: bitstring, k: key; event(GSRekey(s, k)) && attacker(k) ==> false.
+(* R0: reachability check: the vehicle accepts at least one command (a counterexample is the expected result and shows that acceptance is reachable, so the proofs of C1 and C2 are not vacuous) *)
+query s: bitstring, t: nat, m: bitstring; event(Acc(s, t, m)) ==> false.
+(* RV: reachability check: the vehicle accepts a session key (a counterexample is the expected result and shows that the proofs of A1 and S1 are not vacuous) *)
+query s: bitstring, k: key; event(VAccept(s, k)) ==> false.
+(* RG: reachability check: the ground station accepts a session key (a counterexample is the expected result and shows that the proofs of A2 and S2 are not vacuous) *)
+query s: bitstring, k: key; event(GSAccept(s, k)) ==> false.
 
 (* Ground station: one session = handshake, one command, rekey with a fresh
    KEM, one command under the new key, then teardown (the process ends). *)
