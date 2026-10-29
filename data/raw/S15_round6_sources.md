@@ -1,0 +1,12 @@
+# Sources retrieved for the round 6 paper revision
+
+Author: Huda Mueen. Retrieved 2026-10-29 (UTC) with the fetch tool after a web search that returned each page; each line states what was read. Nothing here was read from memory.
+
+| Key | Page retrieved | What was read |
+|---|---|---|
+| rfc4303 | https://datatracker.ietf.org/doc/html/rfc4303.html | Title "IP Encapsulating Security Payload (ESP)", S. Kent, December 2005. Section 3.4.3: "Duplicates are rejected through the use of a sliding receive window"; "A minimum window size of 32 packets MUST be supported when 32-bit sequence numbers are employed"; "a window size of 64 is preferred and SHOULD be employed as the default"; "The receive window is updated only if the integrity verification succeeds." |
+| xwing24 | https://eprint.iacr.org/2024/039 | Title "X-Wing: The Hybrid KEM You've Been Looking For"; authors Manuel Barbosa, Deirdre Connolly, João Diogo Duarte, Aaron Kaiser, Peter Schwabe, Karolin Varner, Bas Westerbaan; 2024; ePrint 2024/039, published in IACR Communications in Cryptology. Abstract: "X-Wing is a hybrid key-encapsulation mechanism based on X25519 and ML-KEM-768"; secure "if either X25519 or ML-KEM-768 is secure". |
+| falcon | https://falcon-sign.info/ | Falcon, Fast-Fourier Lattice-based Compact Signatures over NTRU; designers Pierre-Alain Fouque, Jeffrey Hoffstein, Paul Kirchner, Vadim Lyubashevsky, Thomas Pornin, Thomas Prest, Thomas Ricosset, Gregor Seiler, William Whyte, Zhenfei Zhang; sizes in bytes: Falcon-512 public key 897, signature 666; Falcon-1024 public key 1793, signature 1280 (values in `data/raw/S15_signature_sizes.csv`). |
+| author names | https://eprint.iacr.org/2021/781, https://eprint.iacr.org/2020/308, https://eprint.iacr.org/2020/534/, https://eprint.iacr.org/2020/379, https://ar5iv.labs.arxiv.org/html/1905.00265, https://ndss-symposium.org/ndss-paper/when-cryptography-needs-a-hand-practical-post-quantum-authentication-for-v2v-communications, https://past.date-conference.com/proceedings-archive/2020/html/0438.html, https://repository.essex.ac.uk/43739/, https://sol.sbc.org.br/index.php/sbseg/article/view/44307 | Full author names of banegas21, burstinghaus20, kemtls20, pqwg21, mavsec19, twardokus24, kumar20, ahmed26 (Computers and Electrical Engineering 139, 111429, 2026) and meneses26 (SBSeg 2026, pages 472 to 487, DOI 10.5753/sbseg.2026.27127), as listed on those pages. |
+
+The citation of Gonzalez and Wiggers (gonzalez22) was removed from the paper: `data/raw/S14_related_work.csv` row RW04 records that its full text was not retrieved.
