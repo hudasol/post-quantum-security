@@ -8,3 +8,7 @@ sik,hybrid_published,none,availability_rt_all,-0.00407871,-0.00904257,-0.0005583
 sik,pqsig_real,hybrid_published,availability_rt_all,-0.513581,-0.557326,-0.476506,20,SITL measured
 sik,kem_auth,hybrid_published,availability_rt_all,0.00333682,0.000288396,0.00670926,20,SITL measured
 sik,kem_auth,classical,availability_rt_all,-0.000675146,-0.00138042,-0.000210873,20,SITL measured
+sik,hybrid_strict_inband,hybrid_published,availability_rt_all,-0.0194641,-0.0319645,-0.00826036,20,SITL measured
+sik,hybrid_strict_inband,hybrid_strict,availability_rt_all,0.0138322,0.00438482,0.0244225,20,SITL measured
+sik,pqsig_counter,pqsig_real,availability_rt_all,0.0211972,-0.00619654,0.0519514,20,SITL measured
+sik,pqsig_counter,hybrid_published,availability_rt_all,-0.492384,-0.527043,-0.458814,20,SITL measured

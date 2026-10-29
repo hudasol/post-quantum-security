@@ -1,0 +1,11 @@
+profile,config,missions,missions_with_teardown,missions_with_rehandshake,missions_with_teardown_or_rehandshake,missions_with_resync,teardown_events,rehandshakes,resyncs,label
+sik,classical,20,1,1,1,0,2,1,0,emulated
+sik,hybrid_cache,20,1,1,1,0,2,1,0,emulated
+sik,hybrid_published,20,1,1,1,0,2,1,0,emulated
+sik,hybrid_strict,20,1,12,12,12,1,17,12,emulated
+sik,none,20,0,0,0,0,0,0,0,emulated
+sik,pqsig_real,20,0,0,0,0,0,0,0,emulated
+sik,signing,20,0,0,0,0,0,0,0,emulated
+sik,kem_auth,20,1,1,1,0,2,1,0,emulated
+sik,hybrid_strict_inband,20,1,1,1,12,2,1,22,emulated
+sik,pqsig_counter,20,0,0,0,0,0,0,0,emulated

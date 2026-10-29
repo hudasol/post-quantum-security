@@ -6,7 +6,7 @@ Status: SITL measured (round trips through ArduPilot Copter 4.7.2 running in sof
 
 ## 1. Question
 
-The round 5 relay carried the bytes of the hybrid session and of the per command signature and added published cycle counts as delays, but executed no cryptography and enforced no replay rule (limitation L2 of `docs/LIMITATIONS_AND_PLAN_R6.md`). This study puts a gateway pair in front of the flight stack that executes the handshake of design B with change F1 and a real per message tag with pinned libraries, enforces one of three replay acceptance rules, and compares seven configurations on paired seeds. An eighth configuration, design K (`kem_auth`: KEM authentication with static ML-KEM-768 keys pinned on both sides, X25519 plus ML-KEM-768 ephemeral exchange, no signatures, three flights; the `kem_auth` design of `rtlsim/proto/sw/proto_bench.c`), was flown afterwards on the same seeds and mission settings under the published rule.
+The round 5 relay carried the bytes of the hybrid session and of the per command signature and added published cycle counts as delays, but executed no cryptography and enforced no replay rule (limitation L2 of `docs/LIMITATIONS_AND_PLAN_R6.md`). This study puts a gateway pair in front of the flight stack that executes the handshake of design B with change F1 and a real per message tag with pinned libraries, enforces one of three replay acceptance rules, and compares seven configurations on paired seeds. An eighth configuration, design K (`kem_auth`: KEM authentication with static ML-KEM-768 keys pinned on both sides, X25519 plus ML-KEM-768 ephemeral exchange, no signatures, three flights; the `kem_auth` design of `rtlsim/proto/sw/proto_bench.c`), was flown afterwards on the same seeds and mission settings under the published rule. Two further configurations were flown after it on the same seeds and settings: the hybrid session under the strict rule with the counter resynchronised inside the session instead of by a new handshake (`hybrid_strict_inband`), and the ML-DSA-44 signature per command with a counter inside the signed data and the published rule at the vehicle (`pqsig_counter`), which resists replay like the session designs.
 
 ## 2. Set up
 
@@ -17,6 +17,8 @@ The round 5 relay carried the bytes of the hybrid session and of the per command
 - Per message tag: the 13 B MAVLink 2 signing field (link id, a 6 B counter in the timestamp field, a 6 B tag = first 6 B of SHA-256 over key, frame, link id and counter, the formula of the MAVLink 2 signing guide) added by the sending gateway to every frame and checked by the receiving gateway before the frame is forwarded; the flight stack receives the unsigned frame. Link id 0 carries every uplink frame that the link layer retransmits (commands, mode changes, mission upload) and is checked under the configured rule; link id 1 carries the ground heartbeat (not retransmitted) under the published rule; downlink frames are checked under the published rule.
 - Replay rules: published (counter greater than the last accepted, gaps allowed); strict (only the next counter); replay cache (unseen counter inside a window of W = 64 counters, `mission/replay_assumptions.csv`). These are the definitions of the mission model (`mission/replay.py`, `docs/MISSION_STUDY.md` Section 6.1). Strict resynchronisation: the ground side gateway starts a new handshake when its link layer gives up a frame of link id 0, or when the vehicle side gateway asks for it (an authenticated 24 B request) because a counter above the next one was seen and the next one did not arrive within the give up span of 2.19 s on SiK ((maximum retries + 1) times the retransmission timeout). The new handshake resets both counters.
 - ML-DSA-44 per command: the ground side gateway signs every command frame and the vehicle side gateway verifies it; the frame carries 2420 B more and is sent in file transfer style chunks as in round 5. Like architecture C of the mission study, it carries no counter and enforces no replay rule.
+- In band resynchronisation (`hybrid_strict_inband`, configuration 9): the hybrid session with F1 and the strict rule, with the same two triggers as configuration 5, but the counter of link id 0 is resynchronised inside the current session with one authenticated message each way under the current session key, and both sides continue with the same key. After a vehicle request (24 B, the request of configuration 5) the ground side gateway answers with a 24 B set message (8 B next counter and a 16 B tag under the session key); after a link layer give up of a link id 0 frame the ground side gateway sends the set message itself and the vehicle side gateway answers with a 24 B acknowledgement (the ground repeats an unacknowledged set message after the give up span). The next counter is the lowest counter of link id 0 still in flight, or the next one to be sent. The vehicle side gateway moves its next expected counter forward only, so an old set message replayed by a third party cannot reopen accepted counters. Vehicle side compute: the tag check delay for a set message, the tag delay for a request or an acknowledgement. A teardown after an outage longer than the session timeout still forces a new handshake.
+- ML-DSA-44 per command with a counter (`pqsig_counter`, configuration 10): as configuration 7, but the ground side gateway signs the command frame followed by a 6 B counter, the frame on the link carries the counter and the signature (2426 B more than the command), and the vehicle side gateway verifies the signature over frame and counter and accepts the counter under the published rule (greater than the last accepted, gaps allowed). The vehicle side delay is the RTL row for the verification of a command; the 6 B of the counter are not costed separately.
 - Compute delays: vehicle side operations are executed on the host, and their output is released at the input time plus a delay estimated from RTL simulated cycles of the round 6 RTL runs (`rtlsim/results/proto_sessions.csv` and `proto_primitives.csv`, core ibex, median of the runs) at 168 MHz, the mission study clock; the host speed enters only when the host is slower than the delay (counted in the host compute section). Ground side compute is executed on the host and enters the timings as host measured. For design K the delays come from the 15 run files of the same folder (`rtlsim/results/proto_sessions.csv` and `proto_primitives.csv`, which hold its rows; the five run snapshots used for the first seven configurations, `proto_sessions_runs5.csv` and `proto_primitives_runs5.csv`, do not), core ibex at the same clock. Design K has no signing rejection loop, so its cycles are nearly deterministic (the 15 runs of its vehicle total lie from 0.01 percent below to 0.90 percent above their median of 17391267 cycles); the per message delays are the same in both sets of files.
 
 | delay | cycles on ibex (RTL simulated) | delay ms at 168 MHz, used (estimated from RTL simulated cycles) | delay ms on cv32e40p, not used (estimated) | source rows (rtlsim/results/) |
@@ -48,6 +50,8 @@ The session file gives the vehicle total of a handshake; it is split into the st
 | 6 hybrid session with F1, replay cache rule | mission study B, cache rule |
 | 7 ML-DSA-44 signature per command | mission study C |
 | 8 KEM authenticated session (design K), published rule | no mission study architecture (design K), published rule |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | no mission study architecture (in band resynchronisation), strict rule |
+| 10 ML-DSA-44 signature per command with a counter, published rule | no mission study architecture (per command signature with a counter), published rule |
 
 ## 3. Results, SiK class 64 kbit/s
 
@@ -61,6 +65,8 @@ The session file gives the vehicle total of a handshake; it is split into the st
 | 6 hybrid session with F1, replay cache rule | 20 of 20 | 967 | 0.9317 [0.8985, 0.9639] | 0.9989 [0.9965, 1.0000] | 17.9 | 4.2 [3.9, 4.5] | 1.436 [1.427, 1.459] |
 | 7 ML-DSA-44 signature per command | 20 of 20 | 970 | 0.4175 [0.3738, 0.4588] | 0.4576 [0.4174, 0.4967] | 509.9 | 496.1 [487.4, 500.2] | n/a |
 | 8 KEM authenticated session (design K), published rule | 20 of 20 | 961 | 0.9344 [0.9029, 0.9637] | 1.0000 [1.0000, 1.0000] | 18.5 | 4.7 [4.5, 5.0] | 0.923 [0.887, 0.996] |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | 20 of 20 | 962 | 0.9116 [0.8724, 0.9469] | 0.9829 [0.9713, 0.9931] | 18.5 | 4.8 [4.4, 5.2] | 1.485 [1.464, 1.492] |
+| 10 ML-DSA-44 signature per command with a counter, published rule | 20 of 20 | 971 | 0.4387 [0.4033, 0.4775] | 0.4797 [0.4478, 0.5119] | 507.6 | 493.8 [482.6, 499.2] | n/a |
 
 _SITL measured except the handshake (emulated link with executed cryptography and delays estimated from RTL simulated cycles). Intervals: 95 percent cluster bootstrap over missions; the added round trip is paired by mission._
 
@@ -81,6 +87,10 @@ Design K handshake (three flights, 4544 B in all against 7208 B for the hybrid s
 | 7 ML-DSA-44 signature per command | 4 hybrid session with F1, published rule | -0.5136 [-0.5573, -0.4765] | 20 |
 | 8 KEM authenticated session (design K), published rule | 4 hybrid session with F1, published rule | 0.0033 [0.0003, 0.0067] | 20 |
 | 8 KEM authenticated session (design K), published rule | 3 classical session (X25519, Ed25519), published rule | -0.0007 [-0.0014, -0.0002] | 20 |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | 4 hybrid session with F1, published rule | -0.0195 [-0.0320, -0.0083] | 20 |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | 5 hybrid session with F1, strict rule | 0.0138 [0.0044, 0.0244] | 20 |
+| 10 ML-DSA-44 signature per command with a counter, published rule | 7 ML-DSA-44 signature per command | 0.0212 [-0.0062, 0.0520] | 20 |
+| 10 ML-DSA-44 signature per command with a counter, published rule | 4 hybrid session with F1, published rule | -0.4924 [-0.5270, -0.4588] | 20 |
 
 _SITL measured; paired bootstrap over mission indices (the same seed in both configurations)._
 
@@ -158,6 +168,25 @@ _SITL measured; paired bootstrap over mission indices (the same seed in both con
 | 8 KEM authenticated session (design K), published rule | frames dropped by a gateway without a session | up_no_session_none | 2 | emulated |
 | 8 KEM authenticated session (design K), published rule | frames dropped by a gateway without a session | up_no_session_teardown | 4 | emulated |
 | 8 KEM authenticated session (design K), published rule | resynchronisations (strict rule) | all triggers | 0 | emulated |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | stream commands not acknowledged within 0.5 s | link_up | 40 | SITL measured |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | stream commands not acknowledged within 0.5 s | rejected_ahead_of_next | 31 | SITL measured |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | stream commands not acknowledged within 0.5 s | acknowledged late or rejected by the flight stack | 10 | SITL measured |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | stream commands not acknowledged within 0.5 s | no_session | 3 | SITL measured |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | stream commands not acknowledged within 0.5 s | no_session_vehicle | 1 | SITL measured |
+| 10 ML-DSA-44 signature per command with a counter, published rule | stream commands not acknowledged within 0.5 s | acknowledged late or rejected by the flight stack | 533 | SITL measured |
+| 10 ML-DSA-44 signature per command with a counter, published rule | stream commands not acknowledged within 0.5 s | link_up | 12 | SITL measured |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | uplink frames rejected by the vehicle side gateway | no_session_vehicle | 1 | emulated |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | uplink frames rejected by the vehicle side gateway | resync_set_no_session_vehicle | 1 | emulated |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | uplink frames rejected by the vehicle side gateway | stream0_ahead_of_next | 31 | emulated |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | downlink frames rejected by the ground side gateway | bad_or_unknown_key | 3 | emulated |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | frames dropped by a gateway without a session | down_no_session | 115 | emulated |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | frames dropped by a gateway without a session | up_no_session_initial | 31 | emulated |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | frames dropped by a gateway without a session | up_no_session_none | 1 | emulated |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | frames dropped by a gateway without a session | up_no_session_teardown | 5 | emulated |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | resynchronisations (strict rule) | all triggers | 22 | emulated |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | resynchronisations (strict rule) | ground_give_up | 16 | emulated |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | resynchronisations (strict rule) | vehicle_request | 6 | emulated |
+| 10 ML-DSA-44 signature per command with a counter, published rule | resynchronisations (strict rule) | all triggers | 0 | emulated |
 
 Reasons: `link_up` the link layer gave the command up; `no_session` the ground side gateway had no session (handshake, teardown or resynchronisation in progress); `rejected_<reason>` the vehicle side gateway rejected the frame (`late_or_duplicate` published rule, `ahead_of_next` or `behind_next` strict rule, `outside_window` or `duplicate` replay cache, `bad_tag` or `bad_signature` check failed); `not_acknowledged_by_vehicle` delivered but not answered by the flight stack; the remaining commands were acknowledged later than 0.5 s or rejected by the flight stack.
 
@@ -173,6 +202,47 @@ Out of order arrivals on link id 0 at the vehicle side gateway (emulated), SiK c
 | 4 hybrid session with F1, published rule | 1094 | 11 | 2 |
 | 5 hybrid session with F1, strict rule | 1058 | 4 | 2 |
 | 8 KEM authenticated session (design K), published rule | 1098 | 12 | 2 |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | 1098 | 12 | 2 |
+| 10 ML-DSA-44 signature per command with a counter, published rule | 1139 | 0 | 0 |
+
+### 3.3 Commands missed per mission, a common footing for the paired differences
+
+The share acknowledged within 0.5 s divides by the commands sent, and the number sent differs between configurations because the missions differ in length (the command stream runs from arming to disarm). A paired difference of the share can therefore move although no command was lost or saved. Example: replay cache minus published rule, a share difference of 0.0006 [0.0002, 0.0013]; in 20 of 20 paired missions the change in acknowledged commands equals the change in commands sent, and the count of commands missed differs in 0 missions. The count of stream commands not acknowledged within 0.5 s per mission (outages included) does not depend on the number sent. Its paired differences below are means over missions with the same paired bootstrap (2000 resamples of mission indices) and the same seed per pair as the differences of the share (`sitl/results_r6/paired_missed.csv`; per mission counts in `sitl/results_r6/missed_per_mission.csv`).
+
+| configuration | minus configuration | difference of commands missed per mission [95% CI] | missions whose missed count differs | mean difference of commands sent per mission | mean difference of commands acknowledged per mission | missions where the acknowledged change equals the sent change |
+|---|---|---|---|---|---|---|
+| 5 hybrid session with F1, strict rule | 4 hybrid session with F1, published rule | 1.600 [0.950, 2.250] | 12 of 20 | 0.05 | -1.55 | 8 |
+| 6 hybrid session with F1, replay cache rule | 4 hybrid session with F1, published rule | 0.000 [0.000, 0.000] | 0 of 20 | 0.45 | 0.45 | 20 |
+| 5 hybrid session with F1, strict rule | 6 hybrid session with F1, replay cache rule | 1.600 [0.949, 2.300] | 12 of 20 | -0.40 | -2.00 | 8 |
+| 4 hybrid session with F1, published rule | 3 classical session (X25519, Ed25519), published rule | 0.150 [0.000, 0.350] | 3 of 20 | -0.65 | -0.80 | 17 |
+| 3 classical session (X25519, Ed25519), published rule | 2 MAVLink 2 signing as shipped | -0.150 [-0.300, 0.000] | 3 of 20 | -0.05 | 0.10 | 17 |
+| 4 hybrid session with F1, published rule | 1 no authentication | 0.150 [0.000, 0.400] | 2 of 20 | -0.70 | -0.85 | 18 |
+| 7 ML-DSA-44 signature per command | 4 hybrid session with F1, published rule | 24.950 [23.150, 27.001] | 20 of 20 | 0.60 | -24.35 | 0 |
+| 8 KEM authenticated session (design K), published rule | 4 hybrid session with F1, published rule | -0.150 [-0.300, 0.000] | 3 of 20 | 0.15 | 0.30 | 17 |
+| 8 KEM authenticated session (design K), published rule | 3 classical session (X25519, Ed25519), published rule | 0.000 [0.000, 0.000] | 0 of 20 | -0.50 | -0.50 | 20 |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | 4 hybrid session with F1, published rule | 0.950 [0.400, 1.550] | 8 of 20 | 0.20 | -0.75 | 12 |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | 5 hybrid session with F1, strict rule | -0.650 [-1.150, -0.200] | 10 of 20 | 0.15 | 0.80 | 10 |
+| 10 ML-DSA-44 signature per command with a counter, published rule | 7 ML-DSA-44 signature per command | -1.000 [-2.500, 0.301] | 17 of 20 | 0.05 | 1.05 | 3 |
+| 10 ML-DSA-44 signature per command with a counter, published rule | 4 hybrid session with F1, published rule | 23.950 [22.350, 25.600] | 20 of 20 | 0.65 | -23.30 | 0 |
+
+_SITL measured; paired bootstrap over mission indices. A negative difference means fewer commands missed per mission than the configuration subtracted._
+
+Missions (of 20) with at least one teardown or a new handshake other than the one at the start of the mission (emulated, `sitl/results_r6/session_restarts.csv`):
+
+| configuration | missions with a teardown or a new handshake | missions with a teardown | missions with a new handshake | missions with a resynchronisation | teardown events (both sides) | new handshakes | resynchronisations |
+|---|---|---|---|---|---|---|---|
+| 3 classical session (X25519, Ed25519), published rule | 1 | 1 | 1 | 0 | 2 | 1 | 0 |
+| 6 hybrid session with F1, replay cache rule | 1 | 1 | 1 | 0 | 2 | 1 | 0 |
+| 4 hybrid session with F1, published rule | 1 | 1 | 1 | 0 | 2 | 1 | 0 |
+| 5 hybrid session with F1, strict rule | 12 | 1 | 12 | 12 | 1 | 17 | 12 |
+| 1 no authentication | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 7 ML-DSA-44 signature per command | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 2 MAVLink 2 signing as shipped | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 8 KEM authenticated session (design K), published rule | 1 | 1 | 1 | 0 | 2 | 1 | 0 |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | 1 | 1 | 1 | 12 | 2 | 1 | 22 |
+| 10 ML-DSA-44 signature per command with a counter, published rule | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+A mission runs from its start to the start of the next one. New handshakes are those after a teardown, after a link layer give up of a handshake flight, or for a strict rule resynchronisation of configuration 5; the resynchronisations of configuration 9 stay inside the session and are not new handshakes.
 
 ## 4. Comparison with the mission model per rule, SiK class 64 kbit/s
 
@@ -188,8 +258,10 @@ Out of order arrivals on link id 0 at the vehicle side gateway (emulated), SiK c
 | 4 hybrid session with F1, published rule | B | median handshake s (mission transfer model with the executed flight sizes and RTL delays) | 1.4862 [1.4622, 1.4950] | emulated | 1.5836 | -0.0974 | model higher |
 | 3 classical session (X25519, Ed25519), published rule | A | median handshake s (mission transfer model with the executed flight sizes and RTL delays) | 0.1902 [0.1783, 0.2015] | emulated | 0.3452 | -0.1549 | model higher |
 | 8 KEM authenticated session (design K), published rule | no architecture, published | share acknowledged within 0.5 s, outages included | 0.9344 [0.9029, 0.9637] | SITL measured | n/a | n/a | not compared: the mission model has no architecture for design K |
+| 9 hybrid session with F1, strict rule, in band resynchronisation | no architecture, strict | share acknowledged within 0.5 s, outages included | 0.9116 [0.8724, 0.9469] | SITL measured | n/a | n/a | not compared: the mission model has no architecture for in band resynchronisation |
+| 10 ML-DSA-44 signature per command with a counter, published rule | no architecture, published | share acknowledged within 0.5 s, outages included | 0.4387 [0.4033, 0.4775] | SITL measured | n/a | n/a | not compared: the mission model has no architecture for per command signature with a counter |
 
-The mission model values for availability are those of the outage rate sweep at 60 per hour (the round 5 comparison point; `mission/results/replay_outage_sweep.csv` per rule, `mission/results/sweeps.csv` for the configurations without a rule). "consistent" means the model value lies inside the 95 percent interval of this study. The handshake row applies the mission transfer model to the executed flight sizes and the RTL delays. The mission model has no architecture for design K, so its row carries no model value and no verdict.
+The mission model values for availability are those of the outage rate sweep at 60 per hour (the round 5 comparison point; `mission/results/replay_outage_sweep.csv` per rule, `mission/results/sweeps.csv` for the configurations without a rule). "consistent" means the model value lies inside the 95 percent interval of this study. The handshake row applies the mission transfer model to the executed flight sizes and the RTL delays. The mission model has no architecture for design K, for in band resynchronisation or for a per command signature with a counter, so those rows carry no model value and no verdict.
 
 ## 5. Host compute (host measured)
 
@@ -222,6 +294,31 @@ _The first seven configurations together._
 
 _Design K (`kem_auth`) alone._
 
+| side | operation (strict in band) | count | host mean ms (host measured) | host maximum ms | delay applied ms (estimated) | host slower than the delay |
+|---|---|---|---|---|---|---|
+| ground | ground_accept | 21 | 0.317 | 2.301 | not applied | n/a |
+| ground | ground_f1 | 21 | 0.526 | 4.062 | not applied | n/a |
+| ground | ground_f3 | 21 | 0.893 | 1.799 | not applied | n/a |
+| ground | ground_resync_check | 15 | 0.069 | 0.224 | not applied | n/a |
+| ground | ground_resync_tag | 32 | 0.054 | 0.132 | not applied | n/a |
+| ground | ground_tag | 2217 | 0.063 | 1.792 | not applied | n/a |
+| ground | ground_tag_check | 39165 | 0.058 | 5.934 | not applied | n/a |
+| vehicle | vehicle_f2 | 21 | 0.473 | 1.795 | 66.078 | 0 |
+| vehicle | vehicle_f4 | 21 | 0.935 | 7.195 | 108.766 | 0 |
+| vehicle | vehicle_resync_check | 21 | 0.095 | 0.354 | 0.128 | 4 |
+| vehicle | vehicle_resync_tag | 21 | 0.062 | 0.736 | 0.085 | 2 |
+| vehicle | vehicle_tag | 42656 | 0.017 | 5.362 | 0.085 | 1284 |
+| vehicle | vehicle_tag_check | 2081 | 0.064 | 6.136 | 0.128 | 27 |
+
+_9 hybrid session with F1, strict rule, in band resynchronisation (`hybrid_strict_inband`) alone._
+
+| side | operation (ML-DSA-44 ctr) | count | host mean ms (host measured) | host maximum ms | delay applied ms (estimated) | host slower than the delay |
+|---|---|---|---|---|---|---|
+| ground | ground_sign_command | 1151 | 0.465 | 3.976 | not applied | n/a |
+| vehicle | vehicle_verify_command | 1139 | 0.182 | 8.259 | 32.173 | 0 |
+
+_10 ML-DSA-44 signature per command with a counter, published rule (`pqsig_counter`) alone._
+
 Where the host was slower than the delay, the output left at the host time, so for those events the host speed entered the result.
 
 ## 6. Limits
@@ -229,9 +326,10 @@ Where the host was slower than the delay, the output left at the host time, so f
 - The emulated link is not a radio; loss is independent per frame, outages are scripted, and the channel is a first in first out queue with link layer retransmission that can deliver frames out of order (round 5 design).
 - Vehicle side compute delays are RTL simulated cycles of an open RISC-V core at an assumed clock, not cycles of a flight controller; the host executes the operations for correctness only.
 - The gateways are research glue in one host process around pinned libraries; secrets are not wiped and nothing was reviewed for side channels. They are not a design for use.
-- Resynchronisation under the strict rule is modelled as a full new handshake; the rekey of the design (two flights protected by the current key) would be shorter.
-- The ML-DSA-44 per command configuration carries no counter, as in the mission study, so it has no replay protection.
+- Resynchronisation under the strict rule is modelled as a full new handshake in configuration 5; the rekey of the design (two flights protected by the current key) would be shorter. Configuration 9 resynchronises inside the session with one message each way; its messages are research glue of this study and have no formal model in `formal/`.
+- The ML-DSA-44 per command configuration 7 carries no counter, as in the mission study, so it has no replay protection; configuration 10 adds a signed counter and the published rule.
 - Design K was flown after the first seven configurations, alone (one vehicle instance), while the first seven ran two instances at a time; it uses the same seeds, missions, link profile, flight stack build, libraries and interpreter, but the host load and the time of the run differ. Its vehicle side delays come from the 15 run RTL files rather than the five run snapshots. The mission model has no architecture for it, so it is compared with the other configurations of this study only.
+- Configurations 9 and 10 were flown after design K, each alone (one vehicle instance), one after the other, with the same seeds, missions, link profile, flight stack build, libraries, interpreter and vehicle side delays (the five run snapshots) as the first seven; the host load and the time of the run differ. The mission model has no architecture for them.
 - 20 missions per configuration and profile give wide intervals for rare events (resynchronisations, teardowns); host scheduling noise of a shared two core host enters every round trip.
 
 ## 7. Reproduce
@@ -239,7 +337,7 @@ Where the host was slower than the delay, the output left at the host time, so f
 ```
 sh sitl/fetch.sh                        # flight stack at the pinned tag
 sh sitl/pqlib/build.sh                  # mlkem-native and mldsa-native host libraries at the pinned commits
-sh sitl/run_all_r6.sh <rtl results>     # eight configurations, paired seeds (kem_auth alone, last)
+sh sitl/run_all_r6.sh <rtl results>     # ten configurations, paired seeds (kem_auth, then the last two, alone)
 python3 -m sitl.analyse_r6 && python3 -m sitl.make_doc_r6
 python3 -m unittest discover -s sitl -t .
 ```

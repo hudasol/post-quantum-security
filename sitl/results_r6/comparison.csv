@@ -9,3 +9,5 @@ sik,pqsig_real,C,no rule,"share acknowledged within 0.5 s, outages included",0.4
 sik,hybrid_published,B,,median handshake s (mission transfer model with the executed flight sizes and RTL delays),1.48616,1.46223,1.49501,1.58359,-0.0974377,model higher,emulated
 sik,classical,A,,median handshake s (mission transfer model with the executed flight sizes and RTL delays),0.190246,0.17831,0.201549,0.34518,-0.154934,model higher,emulated
 sik,kem_auth,,published,"share acknowledged within 0.5 s, outages included",0.934443,0.902923,0.963656,,,not compared: the mission model has no architecture for design K,SITL measured
+sik,hybrid_strict_inband,,strict,"share acknowledged within 0.5 s, outages included",0.911642,0.8724,0.946934,,,not compared: the mission model has no architecture for in band resynchronisation,SITL measured
+sik,pqsig_counter,,published,"share acknowledged within 0.5 s, outages included",0.438723,0.403292,0.477469,,,not compared: the mission model has no architecture for per command signature with a counter,SITL measured

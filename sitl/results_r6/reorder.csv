@@ -4,3 +4,5 @@ sik,hybrid_cache,1102,12,2,emulated
 sik,hybrid_published,1094,11,2,emulated
 sik,hybrid_strict,1058,4,2,emulated
 sik,kem_auth,1098,12,2,emulated
+sik,hybrid_strict_inband,1098,12,2,emulated
+sik,pqsig_counter,1139,0,0,emulated

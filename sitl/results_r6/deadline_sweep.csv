@@ -47,3 +47,15 @@ sik,kem_auth,0.55,0.934443,0.900521,0.963392,SITL measured
 sik,kem_auth,0.75,0.938606,0.904259,0.967995,SITL measured
 sik,kem_auth,1,0.939646,0.907096,0.969634,SITL measured
 sik,kem_auth,2,0.942768,0.910508,0.970895,SITL measured
+sik,hybrid_strict_inband,0.25,0.910603,0.872407,0.946876,SITL measured
+sik,pqsig_counter,0.25,0,0,0,SITL measured
+sik,hybrid_strict_inband,0.5,0.911642,0.874605,0.945946,SITL measured
+sik,pqsig_counter,0.5,0.438723,0.404959,0.476386,SITL measured
+sik,hybrid_strict_inband,0.55,0.911642,0.87538,0.946934,SITL measured
+sik,pqsig_counter,0.55,0.631308,0.577157,0.6814,SITL measured
+sik,hybrid_strict_inband,0.75,0.914761,0.879127,0.949445,SITL measured
+sik,pqsig_counter,0.75,0.743563,0.687613,0.795072,SITL measured
+sik,hybrid_strict_inband,1,0.914761,0.878879,0.948853,SITL measured
+sik,pqsig_counter,1,0.84964,0.787035,0.910586,SITL measured
+sik,hybrid_strict_inband,2,0.919958,0.882524,0.953224,SITL measured
+sik,pqsig_counter,2,0.879506,0.824552,0.933265,SITL measured

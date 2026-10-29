@@ -1,0 +1,14 @@
+profile,config,minus_config,metric,difference,ci_lo,ci_hi,missions_paired,missions_differing,commands_difference,acknowledged_difference,missions_acknowledged_change_equals_sent_change,label
+sik,hybrid_strict,hybrid_published,missed_per_mission,1.6,0.95,2.25,20,12,0.05,-1.55,8,SITL measured
+sik,hybrid_cache,hybrid_published,missed_per_mission,0,0,0,20,0,0.45,0.45,20,SITL measured
+sik,hybrid_strict,hybrid_cache,missed_per_mission,1.6,0.94875,2.3,20,12,-0.4,-2,8,SITL measured
+sik,hybrid_published,classical,missed_per_mission,0.15,0,0.35,20,3,-0.65,-0.8,17,SITL measured
+sik,classical,signing,missed_per_mission,-0.15,-0.3,0,20,3,-0.05,0.1,17,SITL measured
+sik,hybrid_published,none,missed_per_mission,0.15,0,0.4,20,2,-0.7,-0.85,18,SITL measured
+sik,pqsig_real,hybrid_published,missed_per_mission,24.95,23.15,27.0012,20,20,0.6,-24.35,0,SITL measured
+sik,kem_auth,hybrid_published,missed_per_mission,-0.15,-0.3,0,20,3,0.15,0.3,17,SITL measured
+sik,kem_auth,classical,missed_per_mission,0,0,0,20,0,-0.5,-0.5,20,SITL measured
+sik,hybrid_strict_inband,hybrid_published,missed_per_mission,0.95,0.4,1.55,20,8,0.2,-0.75,12,SITL measured
+sik,hybrid_strict_inband,hybrid_strict,missed_per_mission,-0.65,-1.15,-0.2,20,10,0.15,0.8,10,SITL measured
+sik,pqsig_counter,pqsig_real,missed_per_mission,-1,-2.5,0.30125,20,17,0.05,1.05,3,SITL measured
+sik,pqsig_counter,hybrid_published,missed_per_mission,23.95,22.35,25.6,20,20,0.65,-23.3,0,SITL measured
