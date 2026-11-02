@@ -11,6 +11,10 @@ from the 15 run files in rtlsim/results/, which hold its rows).
 Usage (repository root, flight stack built by sitl/fetch.sh, libraries by sitl/pqlib/build.sh):
   SITL_PQLIB=<folder> python3 -m sitl.run_missions_r6 --config hybrid_strict --profile sik --rtl <rtl results folder>
 Outputs in sitl/raw_r6/: <profile>_<config>_{missions,commands,events,arrivals}.csv and _run.json.
+
+Round 7 options (defaults keep the round 6 behaviour): --set names a round 7 result set of sitl/config_r7.py, whose
+loss model, configurations and default output folder (sitl/raw_r7/<set>/) are then used; the Falcon-512
+configurations of round 7 take their vehicle side delay from rtlsim/results/proto_falcon.csv.
 """
 import argparse
 import csv
@@ -27,6 +31,7 @@ from mission import model
 
 from . import config as cfgmod
 from . import config_r6 as c6
+from . import config_r7 as c7
 from . import gwrelay
 from . import pqcrypto
 from .run_missions import AP_DEFAULT, MODE_AUTO, MODE_GUIDED, Gcs, dbg, mission_items, set_param
@@ -49,21 +54,34 @@ def library_versions():
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument('--config', choices=c6.CONFIGS, required=True)
+    ap.add_argument('--config', choices=c6.CONFIGS + c7.CONFIGS, required=True)
     ap.add_argument('--profile', choices=c6.PROFILES, default='sik')
     ap.add_argument('--missions', type=int, default=None)
     ap.add_argument('--first', type=int, default=0, help='index of the first mission (for split runs)')
     ap.add_argument('--instance', type=int, default=0)
     ap.add_argument('--ardupilot', default=AP_DEFAULT)
     ap.add_argument('--rtl', required=True, help='folder with proto_sessions.csv and proto_primitives.csv')
-    ap.add_argument('--out', default=os.path.join(HERE, 'raw_r6'))
+    ap.add_argument('--out', default=None, help='output folder (default sitl/raw_r6, or sitl/raw_r7/<set> with --set)')
+    ap.add_argument('--set', choices=sorted(c7.SETS), default=None, help='round 7 result set')
     ap.add_argument('--workdir', default=None)
     args = ap.parse_args(argv)
     s5 = cfgmod.load_settings()
     s = c6.load_settings()
-    n_missions = args.missions or int(s['missions_per_config_r6'])
+    loss_model = 'independent'
+    if args.set is None:
+        if args.config in c7.CONFIGS:
+            ap.error('the round 7 configurations need --set')
+        n_missions = args.missions or int(s['missions_per_config_r6'])
+        args.out = args.out or os.path.join(HERE, 'raw_r6')
+    else:
+        rs = c7.SETS[args.set]
+        if args.config not in rs['configs']:
+            ap.error(f'{args.config} is not in set {args.set}')
+        loss_model = rs['loss']
+        n_missions = args.missions or int(c7.load_settings()[rs['missions_key']])
+        args.out = args.out or os.path.join(HERE, 'raw_r7', args.set)
     a = model.load_assumptions()
-    prof = cfgmod.link_profile(args.profile)
+    prof = c7.link_profile(cfgmod.link_profile(args.profile), loss_model)
     ka = args.config == 'kem_auth'
     delays = c6.rtl_delays(args.rtl, s['rtl_core'], a['clock_hz'], s['rtl_statistic'], kem_auth=ka)
     other = {}
@@ -73,7 +91,11 @@ def main(argv=None):
                 other[core] = c6.rtl_delays(args.rtl, core, a['clock_hz'], s['rtl_statistic'], kem_auth=ka)
             except (KeyError, ValueError):
                 pass
-    sec = c6.security_config(args.config, delays)
+    if args.config in c7.CONFIGS:
+        delays.update(c7.falcon_delays(s['rtl_core'], a['clock_hz']))
+        for core in other:
+            other[core].update(c7.falcon_delays(core, a['clock_hz']))
+    sec = c7.security_config(args.config, delays)
     rate = model.command_rate('drone')
     deadline = a['deadline_s']
     os.makedirs(args.out, exist_ok=True)
@@ -128,6 +150,8 @@ def main(argv=None):
             o_dur = rng.expovariate(1.0 / a['outage_mean_s'])
             with relay.lock:
                 relay.chan.rng.seed(seed)
+                if loss_model == 'burst':
+                    relay.chan.reset_burst_state()
             gcs.mission = i
             rec = dict(profile=args.profile, config=args.config, mission=i, seed=seed, outage_start_after_arm_s=o_start,
                        outage_duration_s=o_dur, handshake_s=float('nan'), completed=0, t_arm=float('nan'),
@@ -198,7 +222,8 @@ def main(argv=None):
         gcs.pump(3.0)
         relay.stop()
         relay.join(timeout=5)
-        write_outputs(args, relay, gcs, missions, prof, sec, delays, base_seed, param_ok, deadline, rate, other)
+        write_outputs(args, relay, gcs, missions, prof, sec, delays, base_seed, param_ok, deadline, rate, other,
+                      loss_model)
     finally:
         if relay is not None:
             relay.stop()
@@ -219,11 +244,18 @@ def rtl_hashes(rtl_dir):
     return out
 
 
+def rtl_hashes_falcon():
+    import hashlib
+    with open(c7.FALCON_RTL, 'rb') as f:
+        return hashlib.sha256(f.read()).hexdigest()
+
+
 def _f(x):
     return '' if x is None else f'{x:.6f}'
 
 
-def write_outputs(args, relay, gcs, missions, prof, sec, delays, base_seed, param_ok, deadline, rate, other):
+def write_outputs(args, relay, gcs, missions, prof, sec, delays, base_seed, param_ok, deadline, rate, other,
+                  loss_model='independent'):
     tag = f'{args.profile}_{args.config}'
     if args.first:
         tag += f'_from{args.first}'
@@ -269,6 +301,10 @@ def write_outputs(args, relay, gcs, missions, prof, sec, delays, base_seed, para
                 flight_stack='ArduPilot Copter 4.7.2 SITL, built in multicopter model (--model +), speedup 1',
                 pymavlink=getattr(__import__('pymavlink'), '__version__', 'unknown'), python=sys.version.split()[0],
                 statustext=[t for _, t in gcs.statustext][-50:], t_relay_start=relay.t0, t_end=time.monotonic())
+    if args.set is not None:
+        info.update(result_set=args.set, loss_model=loss_model, first_mission=args.first, missions_run=len(missions))
+        if args.config in c7.CONFIGS:
+            info['rtl_files_sha256']['proto_falcon.csv'] = rtl_hashes_falcon()
     with open(os.path.join(args.out, f'{tag}_run.json'), 'w') as f:
         json.dump(info, f, indent=1, default=str)
 

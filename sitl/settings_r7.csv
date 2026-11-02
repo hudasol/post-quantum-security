@@ -1,0 +1,5 @@
+name,value,unit,label,note
+burst_mean_frames,5,frames,assumption,mean length of a loss burst of the two state loss model in transmitted frames (1 / p_bg); one value chosen for round 7 without a measured SiK source; the round 6 frame loss of 0.02 stays the mean loss
+missions_falcon_r7,20,count,assumption,missions per Falcon-512 configuration under independent loss: the 20 paired seeds of round 6 (missions 0 to 19)
+missions_burst_r7,20,count,assumption,missions per configuration under the two state loss model: the 20 paired seeds of round 6 (missions 0 to 19)
+missions_large_r7,100,count,assumption,missions per configuration of the larger set under independent loss: missions 0 to 99 of the round 6 seed block (0 to 19 repeat the round 6 seeds)
