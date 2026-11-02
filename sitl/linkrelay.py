@@ -13,6 +13,13 @@ air and a vehicle side delay, they do not compute any cryptographic function. Co
 the signing of the flight stack and the ground station, so its 13 B field is real bytes on the link.
 
 The channel logic (Channel) runs on explicit times so that the tests can drive it without sockets.
+
+Round 7 adds an optional two state (Gilbert Elliott) loss process for additional runs: when the profile carries a
+'burst' entry (p_gb, p_bg), the channel is in a good or a bad state, moves between them once per transmitted frame
+(good to bad with p_gb, bad to good with p_bg), and loses every frame sent in the bad state and none in the good
+state (the Gilbert special case), so the mean frame loss is p_gb / (p_gb + p_bg) and the mean burst is 1 / p_bg
+frames. Outages are applied as before. Without a 'burst' entry the independent loss of rounds 5 and 6 is used
+exactly as before (the same generator calls in the same order).
 """
 import collections
 import heapq
@@ -125,6 +132,8 @@ class Channel:
         self.rto = prof['rto']
         self.max_retries = prof['max_retries']
         self.rng = random.Random(seed)
+        self.burst = prof.get('burst')  # None: independent loss (rounds 5 and 6); dict(p_gb, p_bg): two state loss
+        self.bad = False
         self.queue = collections.deque()  # (ready_time, unit, frag index, attempt)
         self.retx = []  # heap of (due, counter, unit, idx, attempt)
         self.cur = None
@@ -136,6 +145,15 @@ class Channel:
         self._ctr = 0
         self.stats = dict(air_s={'up': 0.0, 'down': 0.0}, wire_bytes={'up': 0, 'down': 0}, frames=0, lost_frames=0,
                           retransmissions=0, failed_units=0, buffer_drops=0, units=0)
+        if self.burst is not None:
+            self.stats.update(burst_lost_frames=0, outage_lost_frames=0, bad_state_frames=0)
+
+    def reset_burst_state(self):
+        """Draw the state of the two state loss process from its stationary distribution (one generator call); called
+        after the generator is reseeded at the start of a mission so that missions stay paired by seed."""
+        if self.burst is not None:
+            pb = self.burst['p_gb'] / (self.burst['p_gb'] + self.burst['p_bg'])
+            self.bad = self.rng.random() < pb
 
     # outages are (start, end) in the channel's time base
     def add_outage(self, start, end):
@@ -197,7 +215,19 @@ class Channel:
         u, i, att = self.cur
         t0, t1 = self.cur_start, self.cur_end
         self.cur = None
-        lost = self.in_outage(t0, t1) or (self.rng.random() < self.loss)
+        if self.burst is None:
+            lost = self.in_outage(t0, t1) or (self.rng.random() < self.loss)
+        else:
+            # one state transition per transmitted frame, also during an outage, then the loss of this frame
+            u_ = self.rng.random()
+            self.bad = (u_ >= self.burst['p_bg']) if self.bad else (u_ < self.burst['p_gb'])
+            in_out = self.in_outage(t0, t1)
+            lost = in_out or self.bad
+            self.stats['bad_state_frames'] += int(self.bad)
+            if in_out:
+                self.stats['outage_lost_frames'] += 1
+            elif self.bad:
+                self.stats['burst_lost_frames'] += 1
         out = []
         if lost:
             self.stats['lost_frames'] += 1
