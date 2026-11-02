@@ -1,0 +1,26 @@
+set,profile,config,minus_config,metric,difference,ci_lo,ci_hi,missions_paired,missions_differing,label
+falcon20,sik,pqsig_falcon,pqsig_real,missed_per_mission,-24.05,-26.25,-22,20,20,SITL measured
+falcon20,sik,pqsig_falcon,hybrid_published,missed_per_mission,0.9,0.55,1.25,20,12,SITL measured
+falcon20,sik,pqsig_falcon,none,missed_per_mission,1.05,0.6,1.55,20,12,SITL measured
+falcon20,sik,pqsig_falcon_counter,pqsig_falcon,missed_per_mission,0,-0.15,0.15,20,2,SITL measured
+falcon20,sik,pqsig_falcon_counter,pqsig_counter,missed_per_mission,-23.05,-24.75,-21.4,20,20,SITL measured
+burst20,sik,hybrid_strict,hybrid_published,missed_per_mission,1.65,0.95,2.35,20,14,SITL measured
+burst20,sik,hybrid_strict_inband,hybrid_published,missed_per_mission,1.2,0.45,2,20,9,SITL measured
+burst20,sik,hybrid_cache,hybrid_published,missed_per_mission,0,-0.15,0.15,20,2,SITL measured
+burst20,sik,hybrid_strict,hybrid_cache,missed_per_mission,1.65,1,2.3,20,13,SITL measured
+burst20,sik,hybrid_published,classical,missed_per_mission,0.15,-0.1,0.4,20,7,SITL measured
+burst20,sik,hybrid_published,none,missed_per_mission,0.2,-0.05,0.45,20,5,SITL measured
+burst20,sik,kem_auth,hybrid_published,missed_per_mission,-0.25,-0.45,-0.1,20,5,SITL measured
+burst20,sik,pqsig_real,hybrid_published,missed_per_mission,23,21.5,24.55,20,20,SITL measured
+burst20,sik,pqsig_falcon,hybrid_published,missed_per_mission,0.8,0.3,1.25,20,15,SITL measured
+burst20,sik,pqsig_falcon,pqsig_real,missed_per_mission,-22.2,-23.95,-20.55,20,20,SITL measured
+large100,sik,hybrid_strict,hybrid_published,missed_per_mission,1.48,1.16,1.81,100,52,SITL measured
+large100,sik,hybrid_strict_inband,hybrid_published,missed_per_mission,1.04,0.75,1.34025,100,41,SITL measured
+large100,sik,hybrid_cache,hybrid_published,missed_per_mission,0.05,0.01,0.1,100,5,SITL measured
+large100,sik,hybrid_strict,hybrid_cache,missed_per_mission,1.43,1.13,1.76,100,51,SITL measured
+large100,sik,hybrid_published,classical,missed_per_mission,0.08,-0.03,0.19,100,21,SITL measured
+large100,sik,hybrid_published,none,missed_per_mission,0.15,0.01,0.29,100,21,SITL measured
+large100,sik,kem_auth,hybrid_published,missed_per_mission,-0.04,-0.11,0.02,100,12,SITL measured
+large100,sik,pqsig_real,hybrid_published,missed_per_mission,23.92,23.1,24.75,100,100,SITL measured
+large100,sik,pqsig_falcon,hybrid_published,missed_per_mission,0.88,0.72,1.05,100,62,SITL measured
+large100,sik,pqsig_falcon,pqsig_real,missed_per_mission,-23.04,-23.92,-22.19,100,100,SITL measured

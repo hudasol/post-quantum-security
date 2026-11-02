@@ -1,0 +1,14 @@
+config,minus_config,metric,difference,ci_lo,ci_hi,missions_paired,label
+none,,missed_per_mission burst minus independent,0.05,0,0.15,20,SITL measured
+classical,,missed_per_mission burst minus independent,0.1,0,0.25,20,SITL measured
+hybrid_published,,missed_per_mission burst minus independent,0.1,-0.1,0.3,20,SITL measured
+hybrid_cache,,missed_per_mission burst minus independent,0.1,-0.1,0.3,20,SITL measured
+hybrid_strict,,missed_per_mission burst minus independent,0.15,0,0.3,20,SITL measured
+hybrid_strict_inband,,missed_per_mission burst minus independent,0.35,0.1,0.6,20,SITL measured
+kem_auth,,missed_per_mission burst minus independent,0,0,0,20,SITL measured
+pqsig_real,,missed_per_mission burst minus independent,-1.85,-3.55,-0.35,20,SITL measured
+pqsig_falcon,,missed_per_mission burst minus independent,0,-0.15,0.15,20,SITL measured
+pqsig_real,hybrid_published,"change of missed_per_mission from independent to burst loss, difference",-1.95,-3.8,-0.45,20,SITL measured
+pqsig_falcon,hybrid_published,"change of missed_per_mission from independent to burst loss, difference",-0.1,-0.35,0.15,20,SITL measured
+hybrid_strict,hybrid_published,"change of missed_per_mission from independent to burst loss, difference",0.05,-0.1,0.2,20,SITL measured
+hybrid_cache,hybrid_published,"change of missed_per_mission from independent to burst loss, difference",0,-0.15,0.15,20,SITL measured

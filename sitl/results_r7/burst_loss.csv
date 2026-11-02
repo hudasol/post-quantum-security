@@ -1,0 +1,10 @@
+set,profile,config,part,missions,frames,lost_frames,burst_lost_frames,outage_lost_frames,bad_state_frames,mean_loss_assumption,mean_burst_frames_assumption,label
+burst20,sik,classical,classical,20,45467,4731,856,3875,901,0.02,5,emulated
+burst20,sik,hybrid_cache,hybrid_cache,20,46886,4736,849,3887,921,0.02,5,emulated
+burst20,sik,hybrid_published,hybrid_published,20,46887,4730,848,3882,923,0.02,5,emulated
+burst20,sik,hybrid_strict_inband,hybrid_strict_inband,20,47193,5049,852,4197,926,0.02,5,emulated
+burst20,sik,hybrid_strict,hybrid_strict,20,47113,4205,851,3354,920,0.02,5,emulated
+burst20,sik,kem_auth,kem_auth,20,45893,4723,829,3894,901,0.02,5,emulated
+burst20,sik,none,none,20,45484,4763,857,3906,901,0.02,5,emulated
+burst20,sik,pqsig_falcon,pqsig_falcon,20,48311,3718,879,2839,936,0.02,5,emulated
+burst20,sik,pqsig_real,pqsig_real,20,58903,3469,1033,2436,1083,0.02,5,emulated

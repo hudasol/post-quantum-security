@@ -1,0 +1,5 @@
+set,name,core,used_in_runs,cycles,clock_hz,delay_ms,source,label,label_note
+falcon20,falcon512_verify_command,ibex,1,1.14969e+06,1.68e+08,6.84337,proto_falcon.csv ibex vehicle_verify_command,estimated,estimated from RTL simulated cycles
+falcon20,falcon512_verify_command,cv32e40p,0,909320,1.68e+08,5.41262,proto_falcon.csv cv32e40p vehicle_verify_command,estimated,estimated from RTL simulated cycles
+falcon20,falcon512_verify_command,ibex,1,1.14969e+06,1.68e+08,6.84337,proto_falcon.csv ibex vehicle_verify_command,estimated,estimated from RTL simulated cycles
+falcon20,falcon512_verify_command,cv32e40p,0,909320,1.68e+08,5.41262,proto_falcon.csv cv32e40p vehicle_verify_command,estimated,estimated from RTL simulated cycles

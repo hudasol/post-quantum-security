@@ -112,6 +112,12 @@ jobs:
           python3 -m sitl.analyse_r6 > /dev/null
           python3 -m sitl.make_doc_r6 > /dev/null
           git diff --exit-code -- 'sitl/results_r6/*.csv' docs/SITL_STUDY_R6.md
+      - name: Round 7 software in the loop sets and prediction scores regenerate from the committed raw logs
+        run: |
+          python3 -m sitl.analyse_r7 > /dev/null
+          python3 -m sitl.make_doc_r7 > /dev/null
+          python3 scripts/score_predictions_v7.py > /dev/null
+          git diff --exit-code -- 'sitl/results_r7/*.csv' docs/SITL_STUDY_R7.md data/predictions_v7_scores.csv docs/PREDICTIONS_V7_SCORES.md
       - name: Round 6 executed baselines and prediction scores regenerate
         run: |
           which pdfinfo || (sudo apt-get update -q > /dev/null && sudo apt-get install -y -q poppler-utils > /dev/null)

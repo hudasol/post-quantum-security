@@ -1,0 +1,10 @@
+config,metric,larger_set_mean,reference_mean,difference,ci_lo,ci_hi,missions_paired,reference,label
+none,"missed_per_mission, larger set missions 0 to 19 minus reference run",3.2,3.15,0.05,0,0.15,20,round 6,SITL measured
+classical,"missed_per_mission, larger set missions 0 to 19 minus reference run",3.2,3.15,0.05,0,0.15,20,round 6,SITL measured
+hybrid_published,"missed_per_mission, larger set missions 0 to 19 minus reference run",3.2,3.3,-0.1,-0.25,0,20,round 6,SITL measured
+hybrid_cache,"missed_per_mission, larger set missions 0 to 19 minus reference run",3.25,3.3,-0.05,-0.15,0,20,round 6,SITL measured
+hybrid_strict,"missed_per_mission, larger set missions 0 to 19 minus reference run",4.7,4.9,-0.2,-0.75,0.15,20,round 6,SITL measured
+hybrid_strict_inband,"missed_per_mission, larger set missions 0 to 19 minus reference run",4.55,4.25,0.3,-0.15,0.8,20,round 6,SITL measured
+kem_auth,"missed_per_mission, larger set missions 0 to 19 minus reference run",3.2,3.15,0.05,0,0.15,20,round 6,SITL measured
+pqsig_real,"missed_per_mission, larger set missions 0 to 19 minus reference run",27.9,28.25,-0.35,-1.55,0.9,20,round 6,SITL measured
+pqsig_falcon,"missed_per_mission, larger set missions 0 to 19 minus reference run",4.15,4.2,-0.05,-0.15,0,20,falcon20,SITL measured
