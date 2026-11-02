@@ -100,3 +100,61 @@ def mldsa44_verify(sig, msg, pk, ctx=b''):
     rc = dsa.PQCP_MLDSA_NATIVE_MLDSA44_verify(sig, msg, ctypes.c_size_t(len(msg)), ctx or None,
                                                 ctypes.c_size_t(len(ctx)), pk)
     return rc == 0
+
+
+# ---------------------------------------------------------------- round 7: padded Falcon-512 (fixed 666 B signatures)
+FALCON512_PK = 897
+FALCON512_SK = 1281
+FALCON512_SIG = 666
+_fal = None
+
+
+def falcon_available(lib_dir=LIB_DIR):
+    return os.path.exists(os.path.join(lib_dir, 'libfalconpadded512.so'))
+
+
+def _load_falcon(lib_dir=LIB_DIR):
+    global _fal
+    if _fal is None:
+        _fal = ctypes.CDLL(os.path.join(lib_dir, 'libfalconpadded512.so'))
+        for f in (_fal.PQCLEAN_FALCONPADDED512_CLEAN_crypto_sign_keypair,
+                  _fal.PQCLEAN_FALCONPADDED512_CLEAN_crypto_sign_signature,
+                  _fal.PQCLEAN_FALCONPADDED512_CLEAN_crypto_sign_verify):
+            f.restype = ctypes.c_int
+    return _fal
+
+
+def falcon512_keypair():
+    """Return (public key, secret key) as bytes."""
+    fal = _load_falcon()
+    pk, sk = _buf(FALCON512_PK), _buf(FALCON512_SK)
+    if fal.PQCLEAN_FALCONPADDED512_CLEAN_crypto_sign_keypair(pk, sk) != 0:
+        raise RuntimeError('Falcon-512 key generation failed')
+    return pk.raw, sk.raw
+
+
+def falcon512_sign(msg, sk):
+    fal = _load_falcon()
+    sig = _buf(FALCON512_SIG)
+    n = ctypes.c_size_t(0)
+    rc = fal.PQCLEAN_FALCONPADDED512_CLEAN_crypto_sign_signature(sig, ctypes.byref(n), msg, ctypes.c_size_t(len(msg)), sk)
+    if rc != 0 or n.value != FALCON512_SIG:
+        raise RuntimeError(f'Falcon-512 signing failed ({rc}, {n.value} B)')
+    return sig.raw
+
+
+def falcon512_verify(sig, msg, pk):
+    """True when the signature verifies; False otherwise (wrong length included)."""
+    fal = _load_falcon()
+    if len(sig) != FALCON512_SIG or len(pk) != FALCON512_PK:
+        return False
+    rc = fal.PQCLEAN_FALCONPADDED512_CLEAN_crypto_sign_verify(sig, ctypes.c_size_t(len(sig)), msg,
+                                                                ctypes.c_size_t(len(msg)), pk)
+    return rc == 0
+
+
+# per command signature algorithms of the gateway: keypair, sign, verify, signature bytes
+SIG_ALGS = {
+    'mldsa44': (mldsa44_keypair, mldsa44_sign, mldsa44_verify, MLDSA44_SIG),
+    'falcon512': (falcon512_keypair, falcon512_sign, falcon512_verify, FALCON512_SIG),
+}

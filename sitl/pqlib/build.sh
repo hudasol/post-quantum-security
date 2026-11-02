@@ -1,6 +1,6 @@
 #!/bin/sh
-# Build mlkem-native (ML-KEM-768) and mldsa-native (ML-DSA-44) as host shared libraries for the software in
-# the loop gateway of round 6, from the commits pinned by rtlsim/config.sh (tag v2.0.0 of each project),
+# Build mlkem-native (ML-KEM-768), mldsa-native (ML-DSA-44) and, from round 7, padded Falcon-512 as host shared
+# libraries for the software in the loop gateway, from the commits pinned by rtlsim/config.sh (tag v2.0.0 of each project),
 # portable C back end, outside the repository. Nothing built here is committed.
 # Licences: mlkem-native and mldsa-native, Apache-2.0 OR ISC OR MIT (LICENSE of each project).
 # Usage: sh sitl/pqlib/build.sh [source folder with mlkem-native/ and mldsa-native/] [output folder]
@@ -28,10 +28,28 @@ nice -n 10 $CC $CFLAGS -DMLK_CONFIG_PARAMETER_SET=768 -I"$SRC/mlkem-native/mlkem
   "$SRC/mlkem-native/mlkem/mlkem_native.c" "$HERE/randombytes.c" -o "$OUT/libmlkem768.so"
 nice -n 10 $CC $CFLAGS -DMLD_CONFIG_PARAMETER_SET=44 -I"$SRC/mldsa-native/mldsa" \
   "$SRC/mldsa-native/mldsa/mldsa_native.c" "$HERE/randombytes.c" -o "$OUT/libmldsa44.so"
+# Round 7: padded Falcon-512 from liboqs tag 0.16.0 (folder src/sig/falcon/pqclean_falcon-padded-512_clean, MIT),
+# with SHAKE256 from mldsa-native through rtlsim/proto/sw/falcon_shim/fips202.h, as in the RTL image.
+LIBOQS_TAG=0.16.0
+LIBOQS_COMMIT=5a1a854b0dc9f2141bdc771c555ee60c37950183
+FAL_SUB=src/sig/falcon/pqclean_falcon-padded-512_clean
+if [ ! -d "$SRC/liboqs/.git" ]; then
+  git clone -q --depth 1 --branch $LIBOQS_TAG https://github.com/open-quantum-safe/liboqs.git "$SRC/liboqs"
+fi
+test "$(git -C "$SRC/liboqs" rev-parse HEAD)" = "$LIBOQS_COMMIT" || { echo "unexpected liboqs commit"; exit 1; }
+FAL="$SRC/liboqs/$FAL_SUB"
+SHIM="$HERE/../../rtlsim/proto/sw/falcon_shim"
+MLD="$SRC/mldsa-native/mldsa"
+nice -n 10 $CC $CFLAGS -DMLD_CONFIG_PARAMETER_SET=44 -I"$SHIM" -I"$MLD" -I"$FAL" \
+  "$FAL/codec.c" "$FAL/common.c" "$FAL/fft.c" "$FAL/fpr.c" "$FAL/keygen.c" "$FAL/pqclean.c" "$FAL/rng.c" \
+  "$FAL/sign.c" "$FAL/vrfy.c" "$MLD/src/fips202/fips202.c" "$MLD/src/fips202/keccakf1600.c" "$HERE/randombytes.c" \
+  -o "$OUT/libfalconpadded512.so"
 {
   echo "mlkem_commit=$MLKEM_COMMIT"
   echo "mldsa_commit=$MLDSA_COMMIT"
   echo "compiler=$($CC --version | head -1)"
   echo "cflags=$CFLAGS"
+  echo "liboqs_commit=$LIBOQS_COMMIT"
+  echo "falcon_folder=$FAL_SUB"
 } > "$OUT/build_info.txt"
 ls -l "$OUT"
