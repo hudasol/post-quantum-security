@@ -10,3 +10,4 @@ scratch/
 *.log
 # simulation logs of the executed baselines are results, not scratch
 !rtlsim/results/logs/proto/*/*.log
+!rtlsim/results/logs/proto_r7/*/*.log
