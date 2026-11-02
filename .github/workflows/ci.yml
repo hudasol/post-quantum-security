@@ -87,6 +87,10 @@ jobs:
         run: |
           python3 scripts/summarize_verification3.py > /dev/null
           git diff --exit-code docs/VERIFICATION3.md data/verify3/summary.csv
+      - name: Preregistration record regenerates, every hashed prediction file matches as first added
+        run: |
+          python3 scripts/prereg_record.py
+          git diff --exit-code data/history/ docs/PREREGISTRATION_RECORD.md
       - name: Meta analysis regenerates from the evidence table
         run: |
           python3 scripts/meta_analysis.py

@@ -1,0 +1,7 @@
+alg,param,text_bytes,data_bytes,bss_bytes,note
+mlkem,512,19408,92,69132,image includes harness and C library; baseline not subtracted
+mlkem,768,19376,92,70604,image includes harness and C library; baseline not subtracted
+mlkem,1024,19632,92,72236,image includes harness and C library; baseline not subtracted
+mldsa,44,23648,100,72220,image includes harness and C library; baseline not subtracted
+mldsa,65,24368,100,75228,image includes harness and C library; baseline not subtracted
+mldsa,87,23440,100,78044,image includes harness and C library; baseline not subtracted
