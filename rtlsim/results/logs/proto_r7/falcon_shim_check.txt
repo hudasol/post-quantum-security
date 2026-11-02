@@ -1,0 +1,7 @@
+liboqs_commit=5a1a854b0dc9f2141bdc771c555ee60c37950183 falcon_folder=src/sig/falcon/pqclean_falcon-padded-512_clean
+pqclean_commit=0586a824fc0d49df0b6b6e9179d8d15d06d0974f (SHAKE256 of PQClean common/fips202.c)
+mldsa_commit=834a90d5e846ffa1e1611bd24e160bb2e9b86d35 (SHAKE256 of mldsa-native through the shim)
+bytes_compared=4227
+sha256_shim=d04b3d8f493f6e55af7787afe1faf57d874a0c3bd5927f65cec770cd2025451b
+sha256_pqclean=d04b3d8f493f6e55af7787afe1faf57d874a0c3bd5927f65cec770cd2025451b
+result=identical
