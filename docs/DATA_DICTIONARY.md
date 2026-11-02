@@ -2232,6 +2232,56 @@ Labels used across the repository: published, host measured, emulated, estimated
 | has_mldsa44_sign | text | False |
 | components | text | x25519_keygen x1 = 3920681; x25519_shared x1 = 3920680; shak... |
 
+### `rtlsim/results/proto_falcon.csv`
+
+27 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | RTL simulated |
+| core | text | ibex |
+| design | text | per_command_falcon512 |
+| operation | text | provisioning_keypair |
+| side | text | ground |
+| what | text | key pair, made once per image |
+| cycles_median | number | 194148019 |
+| cycles_ci95_low | number | 194148019.0 |
+| cycles_ci95_high | number | 194148019.0 |
+| cycles_min | number | 194148019 |
+| cycles_max | number | 194148019 |
+| n_runs | number | 1 |
+| peak_stack_bytes | number | 18004 |
+| stack_saturated | text | False |
+| calls_succeeded | number | 1 |
+| checks_passed | number | 2 |
+| checks_total | number | 2 |
+| log_complete | text | True |
+| seed_first | number | 20261021 |
+| bytes_per_command | number | 710 |
+| signature_bytes | number | 666 |
+| text_bytes_host_measured | number | 110157 |
+| data_bytes_host_measured | number | 1 |
+| bss_bytes_host_measured | number | 3306 |
+| text_bytes_gc_host_measured | number | 98396 |
+| mldsa44_cycles_median | number | 10017385 |
+| mldsa44_peak_stack_bytes | number | 50164 |
+
+### `rtlsim/results/proto_falcon_ratios.csv`
+
+9 columns.
+
+| column | type | example |
+|---|---|---|
+| label | text | RTL simulated |
+| comparison | text | Falcon-512 over ML-DSA-44 per command |
+| core | text | ibex |
+| operation | text | ground_sign_command |
+| ratio | number | 7.7757 |
+| ci95_low | number | 2.9141 |
+| ci95_high | number | 8.0861 |
+| n_numerator | number | 15 |
+| n_denominator | number | 15 |
+
 ### `rtlsim/results/proto_primitives.csv`
 
 18 columns.
