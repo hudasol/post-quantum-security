@@ -113,13 +113,42 @@ def _missed_pairs(pairs):
     return out
 
 
+R7_SETS = [("large100", "100 missions", "s"), ("burst20", "20 missions, burst loss", "^")]
+
+
+def _r7_pairs(pairs):
+    """Round 7 paired differences of missed commands per mission (sitl/results_r7/paired_missed.csv) for the pairs
+    drawn, per round 7 set: {set: {(config, minus): (difference, ci_lo, ci_hi)}}."""
+    p = os.path.join(ROOT, "sitl/results_r7/paired_missed.csv")
+    if not os.path.exists(p):
+        return {}
+    d = pd.read_csv(p)
+    out = {}
+    for st, _, _ in R7_SETS:
+        g = d[d.set == st]
+        out[st] = {(r.config, r.minus_config): (r.difference, r.ci_lo, r.ci_hi) for r in g.itertuples()}
+    return out
+
+
 def fig_sitl():
     from conference_texts import PAIRS
     rows = _missed_pairs(PAIRS)
-    fig, ax = plt.subplots(figsize=(3.45, 0.19 * len(rows) + 0.5))
+    r7 = _r7_pairs(PAIRS)
+    fig, ax = plt.subplots(figsize=(3.45, (0.235 if r7 else 0.19) * len(rows) + 0.5))
     for i, (name, dlt, lo, hi) in enumerate(rows):
         col = PINK if "strict" in name else (GREEN if "design K" in name else INK)
-        ax.errorbar(dlt, i, xerr=[[dlt - lo], [hi - dlt]], fmt="o", color=col, ms=3.5, capsize=2, lw=0.9)
+        off = -0.22 if r7 else 0.0
+        ax.errorbar(dlt, i + off, xerr=[[dlt - lo], [hi - dlt]], fmt="o", color=col, ms=3.2, capsize=1.5, lw=0.9,
+                    label="20 missions" if i == 0 else None)
+        k, m = PAIRS[i][0], PAIRS[i][1]
+        for j, (st, lab, mk) in enumerate(R7_SETS):
+            v = r7.get(st, {}).get((k, m))
+            if v is None:
+                continue
+            ax.errorbar(v[0], i + (0.0 if j == 0 else 0.22), xerr=[[v[0] - v[1]], [v[2] - v[0]]], fmt=mk, color=col,
+                        mfc="white", ms=3.0, capsize=1.5, lw=0.7, label=lab if i == 0 else None)
+    if r7:
+        ax.legend(fontsize=5.8, frameon=False, loc="upper left", handletextpad=0.3, borderaxespad=0.1)
     ax.axvline(0, color=GREY, lw=0.6)
     ax.set_yticks(range(len(rows)))
     ax.set_yticklabels([n.replace("$-$", "\u2212") for n, _, _, _ in rows], fontsize=6.3)
