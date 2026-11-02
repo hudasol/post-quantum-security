@@ -1,0 +1,10 @@
+board,cpu,opt,alg,param,op,stack_bytes
+an386,cortex-m4,-O2,Falcon,Falcon-512 (padded),keygen,18052
+an386,cortex-m4,-O2,Falcon,Falcon-512 (padded),sign,43560
+an386,cortex-m4,-O2,Falcon,Falcon-512 (padded),verify,4880
+an386,cortex-m4,-Os,Falcon,Falcon-512 (padded),keygen,17944
+an386,cortex-m4,-Os,Falcon,Falcon-512 (padded),sign,43464
+an386,cortex-m4,-Os,Falcon,Falcon-512 (padded),verify,4884
+an386,cortex-m4,-O3,Falcon,Falcon-512 (padded),keygen,18084
+an386,cortex-m4,-O3,Falcon,Falcon-512 (padded),sign,43584
+an386,cortex-m4,-O3,Falcon,Falcon-512 (padded),verify,4888

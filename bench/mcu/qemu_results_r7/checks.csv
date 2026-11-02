@@ -1,0 +1,7 @@
+board,cpu,opt,alg,param,check,ok,fail
+an386,cortex-m4,-O2,Falcon,Falcon-512 (padded),keygen_sign_verify,7,0
+an386,cortex-m4,-O2,Falcon,Falcon-512 (padded),reject_modified_message_or_signature,6,0
+an386,cortex-m4,-Os,Falcon,Falcon-512 (padded),keygen_sign_verify,7,0
+an386,cortex-m4,-Os,Falcon,Falcon-512 (padded),reject_modified_message_or_signature,6,0
+an386,cortex-m4,-O3,Falcon,Falcon-512 (padded),keygen_sign_verify,7,0
+an386,cortex-m4,-O3,Falcon,Falcon-512 (padded),reject_modified_message_or_signature,6,0

@@ -1,0 +1,12 @@
+key,value
+label,emulated
+date_utc,2026-11-02T13:55:26Z
+qemu,QEMU emulator version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)
+compiler,arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009
+falcon,liboqs 0.16.0 5a1a854b0dc9f2141bdc771c555ee60c37950183 src/sig/falcon/pqclean_falcon-padded-512_clean
+shake256,mldsa-native 834a90d5e846ffa1e1611bd24e160bb2e9b86d35 through rtlsim/proto/sw/falcon_shim/fips202.h
+iterations,3
+stack_paint_span_bytes,131072
+optimisation_levels,-O2 -Os -O3
+board,an386 (Cortex-M4 with single precision FPU; Falcon uses its integer emulated floating point)
+common_flags,-mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffunction-sections -fdata-sections -std=c99 -DBENCH_DISABLE_IRQ; link -Wl --gc-sections --specs=nano.specs --specs=nosys.specs

@@ -1,0 +1,4 @@
+board,cpu,opt,alg,param,text_bytes,data_bytes,bss_bytes,note
+an386,cortex-m4,-O2,Falcon,Falcon-512 (padded),74656,100,68772,image includes key generation, signing, verification, harness and C library
+an386,cortex-m4,-Os,Falcon,Falcon-512 (padded),65444,100,68764,image includes key generation, signing, verification, harness and C library
+an386,cortex-m4,-O3,Falcon,Falcon-512 (padded),87992,100,68772,image includes key generation, signing, verification, harness and C library
