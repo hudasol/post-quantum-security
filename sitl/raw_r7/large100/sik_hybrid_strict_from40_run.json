@@ -1,0 +1,715 @@
+{
+ "profile": "sik",
+ "config": "hybrid_strict",
+ "base_seed": 20311061,
+ "link_profile": {
+  "name": "sik",
+  "rate": 57600.0,
+  "cap": null,
+  "wire_extra": 0,
+  "loss": 0.02,
+  "rto": 0.10444444444444445,
+  "max_retries": 20,
+  "turnaround": 0.05
+ },
+ "security": {
+  "name": "hybrid_strict",
+  "design": "hybrid",
+  "rule": "strict",
+  "window": 64,
+  "pqsig": false,
+  "tag_bytes": 13,
+  "cmd_extra_bytes": 0,
+  "session": true,
+  "timeout_s": 10.0,
+  "rekey_s": 300.0,
+  "grace_s": 30.0,
+  "cmd_delay_s": 0.00012791071428571428,
+  "flights": []
+ },
+ "rtl_delays": {
+  "hybrid_vehicle_total": {
+   "seconds": 0.1748440238095238,
+   "cycles": 29373796.0,
+   "source": "proto_sessions.csv hybrid_f1 vehicle vehicle_f2+vehicle_f4",
+   "core": "ibex",
+   "label": "estimated from RTL simulated cycles"
+  },
+  "classical_vehicle_total": {
+   "seconds": 0.09184631547619047,
+   "cycles": 15430181.0,
+   "source": "proto_sessions.csv classical vehicle vehicle_f2+vehicle_f4",
+   "core": "ibex",
+   "label": "estimated from RTL simulated cycles"
+  },
+  "tag_check": {
+   "seconds": 0.00012791071428571428,
+   "cycles": 21489.0,
+   "source": "proto_sessions.csv mavlink_tag vehicle vehicle_receive_command_long",
+   "core": "ibex",
+   "label": "estimated from RTL simulated cycles"
+  },
+  "tag_make": {
+   "seconds": 8.489880952380952e-05,
+   "cycles": 14263.0,
+   "source": "proto_sessions.csv mavlink_tag ground ground_tag_frame60",
+   "core": "ibex",
+   "label": "estimated from RTL simulated cycles"
+  },
+  "mldsa44_verify_command": {
+   "seconds": 0.03217327380952381,
+   "cycles": 5405110.0,
+   "source": "proto_sessions.csv per_command_mldsa44 vehicle vehicle_verify_command",
+   "core": "ibex",
+   "label": "estimated from RTL simulated cycles"
+  },
+  "hybrid_vehicle_f2": {
+   "seconds": 0.06607831547619047,
+   "cycles": 11101157.0,
+   "source": "proto_primitives.csv x25519_keygen + x25519_shared + mlkem768_encaps + shake256_transcript_hybrid + shake256_kdf",
+   "core": "ibex",
+   "label": "estimated from RTL simulated cycles"
+  },
+  "hybrid_vehicle_f4": {
+   "seconds": 0.10876570833333334,
+   "cycles": 18272639.0,
+   "source": "proto_sessions.csv hybrid_f1 vehicle vehicle_f2+vehicle_f4 minus the F2 step",
+   "core": "ibex",
+   "label": "estimated from RTL simulated cycles"
+  },
+  "classical_vehicle_f2": {
+   "seconds": 0.04719610119047619,
+   "cycles": 7928945.0,
+   "source": "proto_primitives.csv x25519_keygen + x25519_shared + shake256_kdf + shake256_kdf",
+   "core": "ibex",
+   "label": "estimated from RTL simulated cycles"
+  },
+  "classical_vehicle_f4": {
+   "seconds": 0.044650214285714286,
+   "cycles": 7501236.0,
+   "source": "proto_sessions.csv classical vehicle vehicle_f2+vehicle_f4 minus the F2 step",
+   "core": "ibex",
+   "label": "estimated from RTL simulated cycles"
+  }
+ },
+ "rtl_delays_other_cores": {
+  "cv32e40p": {
+   "hybrid_vehicle_total": {
+    "seconds": 0.13045225,
+    "cycles": 21915978.0,
+    "source": "proto_sessions.csv hybrid_f1 vehicle vehicle_f2+vehicle_f4",
+    "core": "cv32e40p",
+    "label": "estimated from RTL simulated cycles"
+   },
+   "classical_vehicle_total": {
+    "seconds": 0.07391528571428571,
+    "cycles": 12417768.0,
+    "source": "proto_sessions.csv classical vehicle vehicle_f2+vehicle_f4",
+    "core": "cv32e40p",
+    "label": "estimated from RTL simulated cycles"
+   },
+   "tag_check": {
+    "seconds": 0.00011254166666666666,
+    "cycles": 18907.0,
+    "source": "proto_sessions.csv mavlink_tag vehicle vehicle_receive_command_long",
+    "core": "cv32e40p",
+    "label": "estimated from RTL simulated cycles"
+   },
+   "tag_make": {
+    "seconds": 7.770833333333333e-05,
+    "cycles": 13055.0,
+    "source": "proto_sessions.csv mavlink_tag ground ground_tag_frame60",
+    "core": "cv32e40p",
+    "label": "estimated from RTL simulated cycles"
+   },
+   "mldsa44_verify_command": {
+    "seconds": 0.023115202380952382,
+    "cycles": 3883354.0,
+    "source": "proto_sessions.csv per_command_mldsa44 vehicle vehicle_verify_command",
+    "core": "cv32e40p",
+    "label": "estimated from RTL simulated cycles"
+   },
+   "hybrid_vehicle_f2": {
+    "seconds": 0.05084725595238095,
+    "cycles": 8542339.0,
+    "source": "proto_primitives.csv x25519_keygen + x25519_shared + mlkem768_encaps + shake256_transcript_hybrid + shake256_kdf",
+    "core": "cv32e40p",
+    "label": "estimated from RTL simulated cycles"
+   },
+   "hybrid_vehicle_f4": {
+    "seconds": 0.07960499404761905,
+    "cycles": 13373639.0,
+    "source": "proto_sessions.csv hybrid_f1 vehicle vehicle_f2+vehicle_f4 minus the F2 step",
+    "core": "cv32e40p",
+    "label": "estimated from RTL simulated cycles"
+   },
+   "classical_vehicle_f2": {
+    "seconds": 0.03796835119047619,
+    "cycles": 6378683.0,
+    "source": "proto_primitives.csv x25519_keygen + x25519_shared + shake256_kdf + shake256_kdf",
+    "core": "cv32e40p",
+    "label": "estimated from RTL simulated cycles"
+   },
+   "classical_vehicle_f4": {
+    "seconds": 0.03594693452380952,
+    "cycles": 6039085.0,
+    "source": "proto_sessions.csv classical vehicle vehicle_f2+vehicle_f4 minus the F2 step",
+    "core": "cv32e40p",
+    "label": "estimated from RTL simulated cycles"
+   }
+  }
+ },
+ "rtl_files_sha256": {
+  "proto_sessions.csv": "4d0761601cf4810de26d95cc2f60ae29f687b8edea5c097c0af3bacfcc648b33",
+  "proto_primitives.csv": "c14a180da27c959afdb48d5744093e69e6b825b7c99f94c7e12c83dd723cee6c"
+ },
+ "params_ok": {
+  "SERIAL1_PROTOCOL": true,
+  "FS_GCS_ENABLE": true,
+  "AUTO_OPTIONS": true,
+  "MIS_RESTART": true,
+  "LAND_SPD_MS": true,
+  "WP_SPD": true,
+  "MAV1_POSITION": true,
+  "MAV1_EXT_STAT": true,
+  "MAV2_EXTRA1": true,
+  "MAV2_POSITION": true,
+  "MAV2_EXTRA2": true,
+  "MAV2_EXT_STAT": true,
+  "MAV2_EXTRA3": true,
+  "MAV2_RAW_SENS": true,
+  "MAV2_RC_CHAN": true,
+  "MAV2_RAW_CTRL": true,
+  "MAV2_ADSB": true,
+  "MAV2_PARAMS": true
+ },
+ "deadline_s": 0.5,
+ "command_rate_hz": 1.0,
+ "commands_sent": 962,
+ "commands_seen_by_relay": 962,
+ "channel_stats": {
+  "air_s": {
+   "up": 90.70125000000462,
+   "down": 317.81263888892886
+  },
+  "wire_bytes": {
+   "up": 653049,
+   "down": 2288251
+  },
+  "frames": 47517,
+  "lost_frames": 5378,
+  "retransmissions": 2290,
+  "failed_units": 3039,
+  "buffer_drops": 508,
+  "units": 44304
+ },
+ "relay_drops": {
+  "down_no_session": 915,
+  "up_no_session_none": 2,
+  "up_no_session_initial": 37,
+  "up_no_session_resync_ground_give_up": 64,
+  "up_no_session_retry_after_give_up": 63,
+  "up_no_session_resync_vehicle_request": 6
+ },
+ "frame_counts": {
+  "down_unsigned": 43491,
+  "up_unsigned": 2274
+ },
+ "gateway": {
+  "rejects": {
+   "stream0_ahead_of_next": 9
+  },
+  "down_rejects": {
+   "bad_or_unknown_key": 27
+  },
+  "host": {
+   "ground_f1": {
+    "n": 42,
+    "host_s": 0.014285944987932453,
+    "host_max_s": 0.0037074699976074044,
+    "exceeds": 0,
+    "rtl_s": 0.0
+   },
+   "vehicle_f2": {
+    "n": 30,
+    "host_s": 0.013539907013182528,
+    "host_max_s": 0.000623230000201147,
+    "exceeds": 0,
+    "rtl_s": 0.06607831547619047
+   },
+   "ground_f3": {
+    "n": 30,
+    "host_s": 0.029700305007281713,
+    "host_max_s": 0.0016990320000331849,
+    "exceeds": 0,
+    "rtl_s": 0.0
+   },
+   "vehicle_f4": {
+    "n": 30,
+    "host_s": 0.025792344993533334,
+    "host_max_s": 0.0020404559982125647,
+    "exceeds": 0,
+    "rtl_s": 0.10876570833333334
+   },
+   "vehicle_tag": {
+    "n": 42576,
+    "host_s": 0.6984620366893068,
+    "host_max_s": 0.003243298997404054,
+    "exceeds": 962,
+    "rtl_s": 8.489880952380952e-05
+   },
+   "ground_accept": {
+    "n": 30,
+    "host_s": 0.008573690003686352,
+    "host_max_s": 0.00046006999764358625,
+    "exceeds": 0,
+    "rtl_s": 0.0
+   },
+   "ground_tag_check": {
+    "n": 39120,
+    "host_s": 2.6784991974600416,
+    "host_max_s": 0.011998382000456331,
+    "exceeds": 0,
+    "rtl_s": 0.0
+   },
+   "ground_tag": {
+    "n": 2102,
+    "host_s": 0.1301849149822374,
+    "host_max_s": 0.0021995770002831705,
+    "exceeds": 0,
+    "rtl_s": 0.0
+   },
+   "vehicle_tag_check": {
+    "n": 2015,
+    "host_s": 0.13975165498413844,
+    "host_max_s": 0.001171192001493182,
+    "exceeds": 65,
+    "rtl_s": 0.00012791071428571428
+   }
+  },
+  "resyncs": [
+   [
+    21610.80035044358,
+    "ground_give_up"
+   ],
+   [
+    21681.575299474363,
+    "ground_give_up"
+   ],
+   [
+    21824.992409382336,
+    "vehicle_request"
+   ],
+   [
+    21946.557450691806,
+    "ground_give_up"
+   ],
+   [
+    22039.450287728334,
+    "vehicle_request"
+   ],
+   [
+    22110.31502907236,
+    "ground_give_up"
+   ],
+   [
+    22204.69661548022,
+    "ground_give_up"
+   ],
+   [
+    22327.814820503143,
+    "ground_give_up"
+   ],
+   [
+    22431.85380558292,
+    "ground_give_up"
+   ],
+   [
+    22497.92844187914,
+    "ground_give_up"
+   ],
+   [
+    22595.161633469026,
+    "ground_give_up"
+   ]
+  ],
+  "handshakes": [
+   {
+    "hs": 1,
+    "reason": "initial",
+    "t_start": 21547.539944257,
+    "t_done": 21548.82589939193,
+    "failed": null
+   },
+   {
+    "hs": 2,
+    "reason": "resync_ground_give_up",
+    "t_start": 21610.80035044358,
+    "t_done": null,
+    "failed": 21613.909517110264
+   },
+   {
+    "hs": 3,
+    "reason": "retry_after_give_up",
+    "t_start": 21613.909673762,
+    "t_done": null,
+    "failed": 21617.89632266582
+   },
+   {
+    "hs": 4,
+    "reason": "retry_after_give_up",
+    "t_start": 21617.896500771,
+    "t_done": 21620.876861134067,
+    "failed": null
+   },
+   {
+    "hs": 5,
+    "reason": "initial",
+    "t_start": 21637.694354119,
+    "t_done": 21639.26878701418,
+    "failed": null
+   },
+   {
+    "hs": 6,
+    "reason": "resync_ground_give_up",
+    "t_start": 21681.575299474363,
+    "t_done": 21686.144019271702,
+    "failed": null
+   },
+   {
+    "hs": 7,
+    "reason": "initial",
+    "t_start": 21691.714126903,
+    "t_done": 21693.165146201398,
+    "failed": null
+   },
+   {
+    "hs": 8,
+    "reason": "initial",
+    "t_start": 21744.718596882,
+    "t_done": 21746.238894313956,
+    "failed": null
+   },
+   {
+    "hs": 9,
+    "reason": "initial",
+    "t_start": 21797.688500803,
+    "t_done": 21799.376115163926,
+    "failed": null
+   },
+   {
+    "hs": 10,
+    "reason": "resync_vehicle_request",
+    "t_start": 21824.992409382336,
+    "t_done": 21826.52076318537,
+    "failed": null
+   },
+   {
+    "hs": 11,
+    "reason": "initial",
+    "t_start": 21850.741195824,
+    "t_done": 21852.184642875396,
+    "failed": null
+   },
+   {
+    "hs": 12,
+    "reason": "initial",
+    "t_start": 21904.702772764,
+    "t_done": 21906.192484140174,
+    "failed": null
+   },
+   {
+    "hs": 13,
+    "reason": "resync_ground_give_up",
+    "t_start": 21946.557450691806,
+    "t_done": null,
+    "failed": 21949.714117358482
+   },
+   {
+    "hs": 14,
+    "reason": "retry_after_give_up",
+    "t_start": 21949.714294267,
+    "t_done": 21952.686200691795,
+    "failed": null
+   },
+   {
+    "hs": 15,
+    "reason": "initial",
+    "t_start": 21958.727050051,
+    "t_done": 21960.235635316953,
+    "failed": null
+   },
+   {
+    "hs": 16,
+    "reason": "initial",
+    "t_start": 22012.719976539,
+    "t_done": 22014.310591691286,
+    "failed": null
+   },
+   {
+    "hs": 17,
+    "reason": "resync_vehicle_request",
+    "t_start": 22039.450287728334,
+    "t_done": 22040.865548418817,
+    "failed": null
+   },
+   {
+    "hs": 18,
+    "reason": "initial",
+    "t_start": 22067.757830981,
+    "t_done": 22069.210683735175,
+    "failed": null
+   },
+   {
+    "hs": 19,
+    "reason": "resync_ground_give_up",
+    "t_start": 22110.31502907236,
+    "t_done": null,
+    "failed": 22113.511279072365
+   },
+   {
+    "hs": 20,
+    "reason": "retry_after_give_up",
+    "t_start": 22113.511532762,
+    "t_done": 22116.083933669568,
+    "failed": null
+   },
+   {
+    "hs": 21,
+    "reason": "initial",
+    "t_start": 22122.950492358,
+    "t_done": 22124.42523237273,
+    "failed": null
+   },
+   {
+    "hs": 22,
+    "reason": "initial",
+    "t_start": 22176.980457954,
+    "t_done": 22178.43488385151,
+    "failed": null
+   },
+   {
+    "hs": 23,
+    "reason": "resync_ground_give_up",
+    "t_start": 22204.69661548022,
+    "t_done": 22208.775087702452,
+    "failed": null
+   },
+   {
+    "hs": 24,
+    "reason": "initial",
+    "t_start": 22229.955848619,
+    "t_done": 22231.44094333973,
+    "failed": null
+   },
+   {
+    "hs": 25,
+    "reason": "initial",
+    "t_start": 22283.045873589,
+    "t_done": 22284.5903216314,
+    "failed": null
+   },
+   {
+    "hs": 26,
+    "reason": "resync_ground_give_up",
+    "t_start": 22327.814820503143,
+    "t_done": null,
+    "failed": 22330.84482050317
+   },
+   {
+    "hs": 27,
+    "reason": "retry_after_give_up",
+    "t_start": 22330.844975129,
+    "t_done": null,
+    "failed": 22334.83093161428
+   },
+   {
+    "hs": 28,
+    "reason": "retry_after_give_up",
+    "t_start": 22334.831112463,
+    "t_done": null,
+    "failed": null
+   },
+   {
+    "hs": 29,
+    "reason": "initial",
+    "t_start": 22336.078710107,
+    "t_done": null,
+    "failed": 22342.526348280968
+   },
+   {
+    "hs": 30,
+    "reason": "retry_after_give_up",
+    "t_start": 22342.52665275,
+    "t_done": null,
+    "failed": 22346.639126058766
+   },
+   {
+    "hs": 31,
+    "reason": "retry_after_give_up",
+    "t_start": 22346.639355397,
+    "t_done": null,
+    "failed": 22350.64232050323
+   },
+   {
+    "hs": 32,
+    "reason": "retry_after_give_up",
+    "t_start": 22350.642492895,
+    "t_done": 22354.431886749288,
+    "failed": null
+   },
+   {
+    "hs": 33,
+    "reason": "initial",
+    "t_start": 22407.039445294,
+    "t_done": 22408.56187848651,
+    "failed": null
+   },
+   {
+    "hs": 34,
+    "reason": "resync_ground_give_up",
+    "t_start": 22431.85380558292,
+    "t_done": null,
+    "failed": 22435.04213891626
+   },
+   {
+    "hs": 35,
+    "reason": "retry_after_give_up",
+    "t_start": 22435.042322507,
+    "t_done": 22440.34187684681,
+    "failed": null
+   },
+   {
+    "hs": 36,
+    "reason": "initial",
+    "t_start": 22460.059160903,
+    "t_done": 22461.57020093951,
+    "failed": null
+   },
+   {
+    "hs": 37,
+    "reason": "resync_ground_give_up",
+    "t_start": 22497.92844187914,
+    "t_done": null,
+    "failed": 22501.100941879147
+   },
+   {
+    "hs": 38,
+    "reason": "retry_after_give_up",
+    "t_start": 22501.101169207,
+    "t_done": 22504.98205299023,
+    "failed": null
+   },
+   {
+    "hs": 39,
+    "reason": "initial",
+    "t_start": 22514.066526537,
+    "t_done": 22515.54108359951,
+    "failed": null
+   },
+   {
+    "hs": 40,
+    "reason": "initial",
+    "t_start": 22568.065082492,
+    "t_done": 22569.547186547734,
+    "failed": null
+   },
+   {
+    "hs": 41,
+    "reason": "resync_ground_give_up",
+    "t_start": 22595.161633469026,
+    "t_done": 22599.404514872476,
+    "failed": null
+   },
+   {
+    "hs": 42,
+    "reason": "initial",
+    "t_start": 22622.077592253,
+    "t_done": 22623.59308333551,
+    "failed": null
+   }
+  ],
+  "gap_wait_s": 2.1933333333333334,
+  "delays_s": {
+   "hybrid_vehicle_total": 0.1748440238095238,
+   "classical_vehicle_total": 0.09184631547619047,
+   "tag_check": 0.00012791071428571428,
+   "tag_make": 8.489880952380952e-05,
+   "mldsa44_verify_command": 0.03217327380952381,
+   "hybrid_vehicle_f2": 0.06607831547619047,
+   "hybrid_vehicle_f4": 0.10876570833333334,
+   "classical_vehicle_f2": 0.04719610119047619,
+   "classical_vehicle_f4": 0.044650214285714286
+  }
+ },
+ "libraries": {
+  "cryptography": "50.0.1",
+  "mlkem_commit": "d1b2fe782888bdb761a50336012923180be7f502",
+  "mldsa_commit": "834a90d5e846ffa1e1611bd24e160bb2e9b86d35",
+  "compiler": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+  "cflags": "-O2 -fPIC -shared -std=c99 -D_GNU_SOURCE",
+  "liboqs_commit": "5a1a854b0dc9f2141bdc771c555ee60c37950183",
+  "falcon_folder": "src/sig/falcon/pqclean_falcon-padded-512_clean"
+ },
+ "flight_stack": "ArduPilot Copter 4.7.2 SITL, built in multicopter model (--model +), speedup 1",
+ "pymavlink": "2.4.50",
+ "python": "3.13.16",
+ "statustext": [
+  "Disarming motors",
+  "Mission: 1 Takeoff",
+  "Mission: 1 Takeoff",
+  "Arming motors",
+  "EKF3 IMU0 MAG0 in-flight yaw alignment complete",
+  "EKF3 IMU1 MAG0 in-flight yaw alignment complete",
+  "Mission: 2 WP",
+  "Reached command #2",
+  "Mission: 3 WP",
+  "Reached command #3",
+  "Mission: 4 Land",
+  "SIM Hit ground at 1.494385 m/s",
+  "Disarming motors",
+  "Mission: 1 Takeoff",
+  "Mission: 1 Takeoff",
+  "Arming motors",
+  "EKF3 IMU1 MAG0 in-flight yaw alignment complete",
+  "EKF3 IMU0 MAG0 in-flight yaw alignment complete",
+  "Mission: 2 WP",
+  "Reached command #2",
+  "Mission: 3 WP",
+  "Reached command #3",
+  "Mission: 4 Land",
+  "SIM Hit ground at 1.490217 m/s",
+  "Disarming motors",
+  "Mission: 1 Takeoff",
+  "Mission: 1 Takeoff",
+  "Arming motors",
+  "EKF3 IMU1 MAG0 in-flight yaw alignment complete",
+  "EKF3 IMU0 MAG0 in-flight yaw alignment complete",
+  "Mission: 2 WP",
+  "Reached command #2",
+  "Mission: 3 WP",
+  "Reached command #3",
+  "Mission: 4 Land",
+  "SIM Hit ground at 1.489978 m/s",
+  "Disarming motors",
+  "Mission: 1 Takeoff",
+  "Mission: 1 Takeoff",
+  "Arming motors",
+  "EKF3 IMU1 MAG0 in-flight yaw alignment complete",
+  "EKF3 IMU0 MAG0 in-flight yaw alignment complete",
+  "Mission: 2 WP",
+  "Reached command #2",
+  "Mission: 3 WP",
+  "Reached command #3",
+  "Mission: 4 Land",
+  "SIM Hit ground at 1.489349 m/s",
+  "Disarming motors",
+  "Mission: 1 Takeoff"
+ ],
+ "t_relay_start": 21546.036702815,
+ "t_end": 22679.136429546,
+ "result_set": "large100",
+ "loss_model": "independent",
+ "first_mission": 40,
+ "missions_run": 20
+}
