@@ -364,6 +364,49 @@ def rq_text():
         f"{claim('p_sitl_pq_av_st', sc, 'study_estimated', qc.format(c='pqsig', m='availability_rt_all'), fmt='{:.3f}', label='estimated')} in the mission study, which counts one way delivery: the deadline falls in the tail of a delivery of several hundred milliseconds. "
         f"In the configuration with MAVLink 2 signing as shipped, the flight stack discarded {claim('p_sitl_drop', cm, 'dropped', 'config == \"signing\" and dropped == \"not_acknowledged_by_vehicle\"', 'count', '{:.0f}', label='SITL measured')} delivered signed commands, because the emulated link layer's retransmission let a frame arrive after a newer one and fail the signing timestamp rule, an effect the mission study does not model. The strict next sequence rule that the formal proofs use would reject such frames too, and every frame after a lost one, so a deployment needs in order delivery below the session layer or a replay window that the proofs do not yet cover; this is an open design question, not a result in favour of either rule. "
         "The hybrid session and the signature per command add the bytes and published compute delays on the link rather than executing cryptography, and the link is an emulation, not a radio. The added round trip latencies are about twice the emulated one way delays, because the flight stack handles the same frames in every configuration, so they too check the relay rather than the model; the parts that test the mission model are the acknowledged shares with outages and the discarded commands. Evidence: SITL measured for round trips through the flight stack; emulated for one way and handshake figures; against the mission study (estimated).\n")
+    if exists("rtlsim/results/proto_falcon.csv"):
+        L.append(round7_text())
+    return "\n".join(L)
+
+
+def round7_text():
+    """Section 4.8: Falcon-512 per command, burst loss and the larger set of missions (round 7)."""
+    fal, fr = "rtlsim/results/proto_falcon.csv", "rtlsim/results/proto_falcon_ratios.csv"
+    s7, p7, lc = "sitl/results_r7/summary.csv", "sitl/results_r7/paired_missed.csv", "sitl/results_r7/loss_change.csv"
+    qf = 'core == "{c}" and operation == "{o}"'
+    qr = 'comparison == "Falcon-512 over ML-DSA-44 per command" and core == "{c}" and operation == "{o}"'
+    qs = 'set == "{st}" and config == "{k}" and metric == "{m}"'
+    qp = 'set == "{st}" and config == "{a}" and minus_config == "{b}"'
+    L = ["### 4.8 Falcon-512, burst loss and a larger set of missions (round 7)\n"]
+    t = ("Round 6 executed the command channel designs on two open RISC-V cores in RTL simulation and in gateways in front of ArduPilot in software in the loop "
+         "(`docs/RTL_BASELINES.md`, `docs/SITL_STUDY_R6.md`); round 7 adds a Falcon-512 signature per command, a burst loss model and a larger set of missions, "
+         "with predictions registered before the runs (`docs/PREDICTIONS_V7.md`). "
+         "The padded Falcon-512 of liboqs tag 0.16.0 runs on both cores with its integer emulation of floating point, since neither core has a floating point unit. "
+         f"On CV32E40P it verifies a command in {claim('p7_fv_cv', fal, 'cycles_median', qf.format(c='cv32e40p', o='vehicle_verify_command'), fmt='{:,.0f}', label='RTL simulated')} cycles, "
+         f"{claim('p7_frv_cv', fr, 'ratio', qr.format(c='cv32e40p', o='vehicle_verify_command'), fmt='{:.2f}', label='RTL simulated')} times an ML-DSA-44 verification, with "
+         f"{claim('p7_fsv', fal, 'peak_stack_bytes', 'operation == \"vehicle_verify_command\"', 'max', '{:,.0f}', label='RTL simulated')} B of stack; signing takes "
+         f"{claim('p7_fg_cv', fal, 'cycles_median', qf.format(c='cv32e40p', o='ground_sign_command'), fmt='{:,.0f}', label='RTL simulated')} cycles, "
+         f"{claim('p7_frg_cv', fr, 'ratio', qr.format(c='cv32e40p', o='ground_sign_command'), fmt='{:.1f}', label='RTL simulated')} times ML-DSA-44 signing, and "
+         f"{claim('p7_fsg', fal, 'peak_stack_bytes', 'operation == \"ground_sign_command\"', 'max', '{:,.0f}', label='RTL simulated')} B of stack "
+         "(RTL simulated, `docs/RTL_FALCON_R7.md`). On an emulated Cortex-M4 the same code signs, verifies and rejects altered input at "
+         f"{claim('p7_m4', 'bench/mcu/qemu_results_r7/checks.csv', 'opt', 'fail == 0', 'nunique', '{:.0f}', label='emulated')} optimisation levels; this check is functional only and not cycle accurate. ")
+    if exists(s7):
+        t += (f"In the gateway emulation a Falcon-512 signature per command added {claim('p7_flat', s7, 'value', qs.format(st='falcon20', k='pqsig_falcon', m='added_latency_rt_ms'), fmt='{:.0f}', label='SITL measured')} ms "
+              f"to the median round trip, and {claim('p7_fav', s7, 'value', qs.format(st='falcon20', k='pqsig_falcon', m='availability_rt_all'), fmt='{:.3f}', label='SITL measured')} of its commands were acknowledged within 0.5 s, "
+              f"so it missed {claim('p7_fdiff', p7, 'difference', qp.format(st='falcon20', a='pqsig_falcon', b='pqsig_real'), fmt='{:+.2f}', label='SITL measured')} commands per mission against ML-DSA-44 per command "
+              f"and {claim('p7_fpub', p7, 'difference', qp.format(st='falcon20', a='pqsig_falcon', b='hybrid_published'), fmt='{:+.2f}', label='SITL measured')} against the hybrid session (SITL measured, `docs/SITL_STUDY_R7.md`). "
+              "Under a two state burst loss model with the same mean frame loss (an assumed mean burst, one value), the strict replay rule with a new handshake still missed "
+              f"{claim('p7_bs', p7, 'difference', qp.format(st='burst20', a='hybrid_strict', b='hybrid_published'), fmt='{:+.2f}', label='SITL measured')} commands per mission against the published rule, "
+              f"and the replay cache {claim('p7_bc', p7, 'difference', qp.format(st='burst20', a='hybrid_cache', b='hybrid_published'), fmt='{:+.2f}', label='SITL measured')}. ")
+        if exists(p7) and len(pd.read_csv(ROOT / p7).query('set == "large100"')):
+            t += (f"Over {claim('p7_n100', s7, 'value', 'set == \"large100\" and metric == \"missions\"', 'min', '{:.0f}', label='SITL measured')} missions per configuration under independent loss the strict rule missed "
+                  f"{claim('p7_ls', p7, 'difference', qp.format(st='large100', a='hybrid_strict', b='hybrid_published'), fmt='{:+.2f}', label='SITL measured')} "
+                  f"(95 percent interval {claim('p7_ls_lo', p7, 'ci_lo', qp.format(st='large100', a='hybrid_strict', b='hybrid_published'), fmt='{:+.2f}', label='SITL measured')} to "
+                  f"{claim('p7_ls_hi', p7, 'ci_hi', qp.format(st='large100', a='hybrid_strict', b='hybrid_published'), fmt='{:+.2f}', label='SITL measured')}), the strict rule in session "
+                  f"{claim('p7_li', p7, 'difference', qp.format(st='large100', a='hybrid_strict_inband', b='hybrid_published'), fmt='{:+.2f}', label='SITL measured')} and the cache "
+                  f"{claim('p7_lc', p7, 'difference', qp.format(st='large100', a='hybrid_cache', b='hybrid_published'), fmt='{:+.2f}', label='SITL measured')} against the published rule. ")
+        t += ("Nothing in round 7 was measured on a microcontroller or a radio.\n")
+    L.append(t)
     return "\n".join(L)
 
 
@@ -400,13 +443,13 @@ def threats_text():
         "12. The match rules for the third look at wording disagreements were written after a first literal comparison was seen; ambiguous lines stay unsettled and are listed for the author.\n"
         "13. IEEE Xplore and the ACM Digital Library could not be searched (their search pages could not be fetched), and Semantic Scholar refused; the systematic search under covers those indexes.\n"
         "14. The selective repeat follow up blocks and the extra ns-3 runs were added after the first results; predictions are scored on the first, registered runs only.\n"
-        "15. Software in the loop used one flight stack (ArduPilot), one link profile (SiK class) and one outage per mission; the hybrid session and the per command signature were emulated by their bytes and published compute delays, not executed, and a first set of runs with a timing defect was replaced by a rerun with the same seeds.\n"
+        f"15. Software in the loop used one flight stack (ArduPilot), one link profile (SiK class) and one outage per mission; the hybrid session and the per command signature were emulated by their bytes and published compute delays, not executed, and a first set of runs with a timing defect was replaced by a rerun with the same seeds. Rounds 6 and 7 executed the cryptography in gateways in front of the unmodified flight stack; round 7 covers burst loss only through one two state model with an assumed burst length, and runs {claim('p7_t_n100', 'sitl/settings_r7.csv', 'value', 'name == \"missions_large_r7\"', fmt='{:.0f}', label='assumption')} missions for nine configurations and {claim('p7_t_n20', 'sitl/settings_r7.csv', 'value', 'name == \"missions_burst_r7\"', fmt='{:.0f}', label='assumption')} for the others (section 4.8); the Cortex-M4 check of Falcon-512 is emulated and functional only.\n"
         f"16. {claim('p_s12_fetch', 'data/evidence.csv', 'id', 'stream == \"S12\" and comparability_warning.fillna(\"\").str.contains(\"Read with web fetch\")', 'count', '{:.0f}', label='published')} round 4 rows were read through a web fetch that returns a summary of the page rather than the page itself; round 5 excludes such values (inclusion 4), but the round 4 rows were not held to that rule. They include the Cortex-M4 X25519 and Ed25519 baseline rows that the mission and energy studies use, so those classical figures are less certain than their labels suggest until the full texts are read.")
 
 
 def conclusion_text():
     return (
-        "On the links small drones and ground robots use, the cost of post quantum authentication is a one time handshake if the design uses a session (availability modelled under the published MAVLink replay rule; the cost of the stricter rule the proofs need is not yet modelled); on telemetry radios and 802.15.4, per command signatures are the option that fails, and on LoRaWAN no command stream fits the duty cycle. "
+        "On the links small drones and ground robots use, the cost of post quantum authentication is a one time handshake if the design uses a session (availability modelled under the published MAVLink replay rule; the cost of the stricter rule the proofs need is not yet modelled); on telemetry radios and 802.15.4, per command ML-DSA signatures are the option that fails (Falcon-512 signatures keep most commands on time in the round 7 gateway emulation, but cost many times the signing cycles where floating point is emulated), and on LoRaWAN no command stream fits the duty cycle. "
         "For firmware, hashing dominates unless the device has hash hardware, and a signed version with a counter is required. The fleet answer is set by how much memory the flight stack leaves free, and measuring it raised the replacement share well above the round 4 estimate. "
         "A cycle model predicts within a code base but not across schemes, so migration decisions should rest on a measurement of the deployed code; the registered board session is the next step and can refute the model.")
 
@@ -452,14 +495,14 @@ def parts_text(fill):
         f"{claim('ab_fl_m', fs, 'measured_median', 'thresholds == \"uncertain\"', fmt='{:.3f}', label='estimated')} under thresholds drawn from published rows, a correction of our earlier estimate. "
         f"In ns-3, an IEEE 802.15.4 transfer that the link model puts at {claim('ab_ls', gs, 'time_s_modelled', 'cell == \"base_frame\"', fmt='{:.1f}', label='modelled')} s reaches the published 30 to 60 s, on average, with any one of three configurations the source does not state, so the published gap has sufficient causes but no proven one. "
         f"A protocol verifier checked {claim('ab_pv_n', pv, 'result', '', 'count', '{:.0f}', label='modelled')} queries, including deliberate controls built to fail, proved {claim('ab_pv_p', pv, 'result', 'result == \"proved\"', 'count', '{:.0f}', label='modelled')}, and found three design flaws whose fixes the reference architecture adopts. "
-        "On telemetry class radios a hybrid key establishment followed by a symmetric session keeps command availability where it is without authentication, while a post quantum signature on every command does not; this availability is modelled under the published MAVLink replay rule, not the stricter rule the proofs need.")
+        "On telemetry class radios a hybrid key establishment followed by a symmetric session keeps command availability where it is without authentication, while an ML-DSA signature on every command does not (a Falcon-512 signature on every command keeps most commands on time in the gateway emulation of round 7, at a far higher signing cost); this availability is modelled under the published MAVLink replay rule, not the stricter rule the proofs need.")
     fill["method_reading"] = method_reading()
     fill["rq_results"] = rq_text()
     fill["threats"] = threats_text()
     fill["conclusion"] = conclusion_text()
     fill["discussion"] = (
         "Three results change what an engineer should do. First, a published cycle count is not a property of the algorithm alone: the implementation variant and the measurement conditions move the same operation on the same core class, so a migration decision should rest on a measurement of the deployed code, which the board kit makes cheap. "
-        "Second, on the links drones and robots use, the cost of post quantum authentication is a one time handshake, not a per message burden, provided the design uses a session: on telemetry radios and 802.15.4, per message signatures are the option that fails, and on LoRaWAN no command stream fits the duty cycle. "
+        "Second, on the links drones and robots use, the cost of post quantum authentication is a one time handshake, not a per message burden, provided the design uses a session: on telemetry radios and 802.15.4, per message ML-DSA signatures are the option that fails (Falcon-512, section 4.8, comes close to a session at a far higher signing cost), and on LoRaWAN no command stream fits the duty cycle. "
         "Third, the fleet answer depends on how much memory the flight stack leaves free; measured builds show less free flash than round 4 assumed, and operators can settle this from their own build output.\n\n"
         "Where the models overlap they are not independent: the mission model reads the link simulator's parameters through the shared inputs file, so their agreement on a single handshake is a consistency check, not a validation. "
         "The energy and mission studies both find CPU time, not energy, to be the binding budget. ns-3 now gives sufficient causes for the 802.15.4 gap and shows that the link model's multi hop assumption is optimistic; the link model was not tuned to the published figure.")
