@@ -61,8 +61,12 @@ class GatewayRelay(lr.Relay):
         if self.design:
             self.lt_g = gw.LongTerm(self.design)
             self.lt_v = gw.LongTerm(self.design)
+        # per command signature algorithm (round 7 adds Falcon-512; the default keeps the round 6 behaviour) and the
+        # name of its vehicle side delay
+        self.pq_alg = sec.get('pqsig_alg', 'mldsa44')
+        self.pq_delay = sec.get('pqsig_delay', 'mldsa44_verify_command')
         if sec.get('pqsig'):
-            self.pq_pk, self.pq_sk = pqcrypto.mldsa44_keypair()
+            self.pq_pk, self.pq_sk = pqcrypto.SIG_ALGS[self.pq_alg][0]()
         self.pq_counter = bool(sec.get('pq_counter'))
         self.pq_ctr = 0
         self.pq_acc = gw.Acceptor('published')
@@ -425,7 +429,7 @@ class GatewayRelay(lr.Relay):
             c = self.pq_ctr
             self.pq_ctr += 1
             t0 = time.perf_counter()
-            data = gw.pqsig_counter_seal(raw, c, self.pq_sk)
+            data = gw.pqsig_counter_seal(raw, c, self.pq_sk, self.pq_alg)
             self._host('ground_sign_command', time.perf_counter() - t0)
             meta.update(data=data, counter=c)
             if rec is not None:
@@ -433,7 +437,7 @@ class GatewayRelay(lr.Relay):
             frags = cfgmod.object_fragments(len(data), self.prof)
         elif sec.get('pqsig') and is_cmd:
             t0 = time.perf_counter()
-            sig = pqcrypto.mldsa44_sign(raw, self.pq_sk)
+            sig = pqcrypto.SIG_ALGS[self.pq_alg][1](raw, self.pq_sk)
             self._host('ground_sign_command', time.perf_counter() - t0)
             meta.update(data=raw + sig)
             frags = cfgmod.object_fragments(len(raw) + len(sig), self.prof)
@@ -583,8 +587,8 @@ class GatewayRelay(lr.Relay):
             frame_out = frame
         elif sec.get('pqsig') and m['cmd'] and self.pq_counter:
             t0 = time.perf_counter()
-            ok, frame, c = gw.pqsig_counter_open(m['data'], self.pq_pk)
-            rtl = self.delays.get('mldsa44_verify_command', 0.0)
+            ok, frame, c = gw.pqsig_counter_open(m['data'], self.pq_pk, self.pq_alg)
+            rtl = self.delays.get(self.pq_delay, 0.0)
             self._host('vehicle_verify_command', time.perf_counter() - t0, rtl)
             if not ok:
                 self.rejects['bad_signature'] += 1
@@ -602,10 +606,11 @@ class GatewayRelay(lr.Relay):
             frame_out = frame
         elif sec.get('pqsig') and m['cmd']:
             data = m['data']
-            frame, sig = data[:-pqcrypto.MLDSA44_SIG], data[-pqcrypto.MLDSA44_SIG:]
+            nsig = pqcrypto.SIG_ALGS[self.pq_alg][3]
+            frame, sig = data[:-nsig], data[-nsig:]
             t0 = time.perf_counter()
-            ok = pqcrypto.mldsa44_verify(sig, frame, self.pq_pk)
-            rtl = self.delays.get('mldsa44_verify_command', 0.0)
+            ok = pqcrypto.SIG_ALGS[self.pq_alg][2](sig, frame, self.pq_pk)
+            rtl = self.delays.get(self.pq_delay, 0.0)
             self._host('vehicle_verify_command', time.perf_counter() - t0, rtl)
             if not ok:
                 self.rejects['bad_signature'] += 1

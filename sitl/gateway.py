@@ -34,6 +34,9 @@ counters that were already accepted.
 ML-DSA-44 per command with a counter (pqsig_counter): the ground side gateway signs the command frame followed by a
 6 B counter; the frame on the link is the command, the 6 B counter and the 2420 B signature; the vehicle side
 gateway verifies the signature over frame and counter and accepts the counter under the published rule.
+Falcon-512 per command (round 7, pqsig_falcon and pqsig_falcon_counter): the same two designs with the padded
+Falcon-512 signature (666 B) in place of the ML-DSA-44 signature; the signature algorithm is a parameter of the
+helpers below, and its default (ML-DSA-44) keeps the round 6 behaviour.
 Per message tag: the 13 B MAVLink 2 signing field (link id, 6 B counter in the timestamp field, 6 B tag), with
 tag = first 6 B of SHA-256(k || frame || link id || counter), the formula of the MAVLink 2 signing guide.
 """
@@ -381,19 +384,20 @@ def pq_counter_field(counter):
     return int(counter).to_bytes(8, 'little')[:PQ_COUNTER_BYTES]
 
 
-def pqsig_counter_seal(frame, counter, sk):
-    """Command frame, 6 B counter and the ML-DSA-44 signature over frame and counter."""
+def pqsig_counter_seal(frame, counter, sk, alg='mldsa44'):
+    """Command frame, 6 B counter and the signature (ML-DSA-44 by default) over frame and counter."""
     ctr = pq_counter_field(counter)
-    return frame + ctr + pqcrypto.mldsa44_sign(frame + ctr, sk)
+    return frame + ctr + pqcrypto.SIG_ALGS[alg][1](frame + ctr, sk)
 
 
-def pqsig_counter_open(data, pk):
+def pqsig_counter_open(data, pk, alg='mldsa44'):
     """Return (signature valid, frame, counter) of a sealed command."""
-    n = pqcrypto.MLDSA44_SIG + PQ_COUNTER_BYTES
+    nsig = pqcrypto.SIG_ALGS[alg][3]
+    n = nsig + PQ_COUNTER_BYTES
     if len(data) <= n:
         return False, None, None
-    frame, ctr, sig = data[:-n], data[-n:-pqcrypto.MLDSA44_SIG], data[-pqcrypto.MLDSA44_SIG:]
-    ok = pqcrypto.mldsa44_verify(sig, frame + ctr, pk)
+    frame, ctr, sig = data[:-n], data[-n:-nsig], data[-nsig:]
+    ok = pqcrypto.SIG_ALGS[alg][2](sig, frame + ctr, pk)
     return ok, frame, int.from_bytes(ctr + b'\x00\x00', 'little')
 
 
