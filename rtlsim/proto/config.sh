@@ -37,3 +37,13 @@ proto_runs_for() {
   if [ "$1" = mavlink_tag ]; then echo "$PROTO_RUNS_TAG"; else echo "$PROTO_RUNS"; fi
 }
 STACK_PAINT_BYTES="0x30000"    # 192 kB painted below the caller of each timed step (stack is 256 kB)
+
+# Round 7: Falcon-512 per command. Padded Falcon-512 (fixed 666 B signatures), clean implementation with integer
+# emulated floating point, from the liboqs release tag 0.16.0, folder src/sig/falcon/pqclean_falcon-padded-512_clean
+# (a copy of PQClean; identical to PQClean master of 2026-08-04, commit 0586a824, apart from build files).
+# Licence of the Falcon folder: MIT (LICENSE in that folder); liboqs: MIT. Only that folder is compiled.
+LIBOQS_URL="https://github.com/open-quantum-safe/liboqs.git"
+LIBOQS_TAG="0.16.0"
+LIBOQS_COMMIT="5a1a854b0dc9f2141bdc771c555ee60c37950183"   # tag 0.16.0, committed 2026-07-09
+FALCON_SUBDIR="src/sig/falcon/pqclean_falcon-padded-512_clean"
+PROTO_IMAGES_R7="per_command_falcon512"
