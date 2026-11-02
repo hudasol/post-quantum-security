@@ -1,0 +1,11 @@
+per_command_falcon512.elf  :
+section               size      addr
+.vectors               132   1048576
+.text                78974   1048708
+.rodata              31051   1127688
+.data                    1   1158739
+.bss                  3306   1158744
+.stack                8192   1835008
+Total               133227
+
+

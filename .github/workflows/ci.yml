@@ -118,6 +118,10 @@ jobs:
           python3 rtlsim/proto/make_doc.py > /dev/null
           python3 scripts/score_predictions_v6.py > /dev/null
           git diff --exit-code -- docs/RTL_BASELINES.md data/predictions_v6_scores.csv
+      - name: Round 7 Falcon-512 RTL results regenerate from the committed logs
+        run: |
+          python3 rtlsim/proto/parse_falcon.py > /dev/null
+          git diff --exit-code -- rtlsim/results/proto_falcon.csv rtlsim/results/proto_falcon_ratios.csv docs/RTL_FALCON_R7.md
       - name: Mission study and reference architecture regenerate from the committed mission results
         run: |
           python3 -m mission.run_all --reuse > /dev/null

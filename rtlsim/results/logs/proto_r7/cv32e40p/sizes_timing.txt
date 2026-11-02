@@ -1,0 +1,2 @@
+   text	   data	    bss	    dec	    hex	filename
+ 110664	      4	 269917	 380585	  5cea9	per_command_falcon512.elf

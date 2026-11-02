@@ -1,0 +1,11 @@
+core=ibex
+compiler=riscv64-unknown-elf-gcc (13.2.0-11ubuntu1+12) 13.2.0
+cflags=-march=rv32imc_zicsr -mabi=ilp32 -O3 -fomit-frame-pointer -static -mcmodel=medany -ffreestanding -fno-builtin-printf -std=gnu99 -isystem /usr/lib/picolibc/riscv64-unknown-elf/include
+gc_variant_extra_cflags=-ffunction-sections -fdata-sections; ldflags=-Wl,--gc-sections (size only)
+mldsa_commit=834a90d5e846ffa1e1611bd24e160bb2e9b86d35 (SHAKE256 only)
+mavlink_c_commit=6b4243f0e54b42ddb1e65df7a3a5e8c99d15ec1f
+liboqs_tag=0.16.0 liboqs_commit=5a1a854b0dc9f2141bdc771c555ee60c37950183 falcon_folder=src/sig/falcon/pqclean_falcon-padded-512_clean
+runs=15
+seed_first=20261021
+stack_paint_bytes=0x30000
+ibex_commit=1b29dae8866e6c0f0a3cd9dead53a77b4f45e357 ram_length=0xC0000 stack_length=0x40000

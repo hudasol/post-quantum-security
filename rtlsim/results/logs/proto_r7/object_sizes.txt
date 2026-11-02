@@ -1,0 +1,5 @@
+   text	   data	    bss	    dec	    hex	filename
+  92998	      0	      0	  92998	  16b46	falcon512.o
+   1174	      0	      0	   1174	    496	mld_fips202.o
+   8596	      0	      0	   8596	   2194	mld_keccakf1600.o
+    374	      0	      8	    382	    17e	bench_rng.o

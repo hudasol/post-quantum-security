@@ -1,0 +1,7 @@
+label,comparison,core,operation,ratio,ci95_low,ci95_high,n_numerator,n_denominator
+RTL simulated,Falcon-512 over ML-DSA-44 per command,ibex,ground_sign_command,7.7757,2.9141,8.0861,15,15
+RTL simulated,Falcon-512 over ML-DSA-44 per command,ibex,vehicle_verify_command,0.2127,0.2127,0.2127,15,15
+RTL simulated,Falcon-512 over ML-DSA-44 per command,cv32e40p,ground_sign_command,9.7353,3.5971,10.1698,15,15
+RTL simulated,Falcon-512 over ML-DSA-44 per command,cv32e40p,vehicle_verify_command,0.2342,0.2341,0.2342,15,15
+RTL simulated,"Ibex over CV32E40P, Falcon-512",ibex/cv32e40p,ground_sign_command,1.0751,1.0734,1.0768,15,15
+RTL simulated,"Ibex over CV32E40P, Falcon-512",ibex/cv32e40p,vehicle_verify_command,1.2643,1.2642,1.2645,15,15

@@ -1,0 +1,1 @@
+per_command_falcon512: falcon512 mld_fips202 mld_keccakf1600
