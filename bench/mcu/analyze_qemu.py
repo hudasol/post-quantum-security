@@ -4,15 +4,20 @@
 Writes qemu_results/ANALYSIS.md: correctness, stack by core and optimisation level, Cortex-M33 versus
 Cortex-M4, the current toolchain versus the first round results of 2026-10-12 (read from git history,
 commit fb3c121, built with arm-none-eabi-gcc 13.2.1 and QEMU 8.2.2), ordering by parameter set, and the
-effect of -Os and -O3. Emulator figures are never cycles or times. Run from bench/mcu/ or anywhere."""
+effect of -Os and -O3. Emulator figures are never cycles or times. Run from bench/mcu/ or anywhere.
+The first round files are read through scripts/prereg_record.py (committed copies checked by SHA-256 against
+data/history/snapshots.csv), so no commit ID is needed."""
 import csv
 import io
 import os
-import subprocess
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "qemu_results")
-FIRST_ROUND = "fb3c121"
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(HERE)), "scripts"))
+import prereg_record  # noqa: E402
+
+FIRST_ROUND = prereg_record.commit_of("qemu_first_round_stack")
 ORDER = {"ML-KEM": ["ML-KEM-512", "ML-KEM-768", "ML-KEM-1024"],
          "ML-DSA": ["ML-DSA-44", "ML-DSA-65", "ML-DSA-87"]}
 OPS = {"ML-KEM": ["keygen", "encaps", "decaps"], "ML-DSA": ["keygen", "sign", "verify"]}
@@ -26,11 +31,10 @@ def read(name):
 
 
 def first_round(name):
-    try:
-        txt = subprocess.run(["git", "show", f"{FIRST_ROUND}:bench/mcu/qemu_results/{name}"], cwd=HERE,
-                             capture_output=True, text=True, check=True).stdout
-    except (subprocess.CalledProcessError, FileNotFoundError):
+    snap = {"stack.csv": "qemu_first_round_stack", "image_size.csv": "qemu_first_round_image_size"}
+    if name not in snap:
         return None
+    txt = prereg_record.snapshot_text(snap[name])
     return list(csv.DictReader(io.StringIO(txt)))
 
 

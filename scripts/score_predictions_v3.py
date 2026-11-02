@@ -12,7 +12,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-PRED_COMMIT = "e0fd150"  # commit that added the hashed predictions; state of the repository before any run
+from scripts import prereg_record  # noqa: E402
+
+# commit that added the hashed predictions (state of the repository before any run); its current ID is read from
+# data/history/snapshots.csv so that no commit ID is written here
+PRED_COMMIT = prereg_record.commit_of("evidence_at_v3_predictions")
 
 
 def rows(rel):
@@ -54,7 +58,7 @@ def main():
               f"bound {100 * 3 / len(v4):.1f} percent."))
 
     # R3: lint as first written, on the table as it stood at the prediction commit.
-    first = list(csv.DictReader(io.StringIO(git_show("data/evidence.csv"))))
+    first = list(csv.DictReader(io.StringIO(prereg_record.snapshot_text("evidence_at_v3_predictions"))))
     n_first = len({r["id"] for r in first if lint_columns.lint(r, first_version=True)})
     n_now = len({r["id"] for r in rows("data/evidence.csv") if lint_columns.lint(r)})
     rev = rows("data/verify4/lint_review.csv")
