@@ -21,6 +21,7 @@ A prediction file is verified by its SHA-256, not by a commit ID: compute the SH
 | `docs/PREDICTIONS_V5.md` | c75ec6ac23e0f641 | `docs/PREDICTIONS_V5.md.sha256` | yes | yes | 7fe640a | 2026-10-21 | da9821e |
 | `docs/PREDICTIONS_V5_BOARD.md` | f0e048c5da99668d | `docs/PREDICTIONS_V5_BOARD.md.sha256` | yes | yes | e7b4656 | 2026-10-21 | 8c722a5 |
 | `docs/PREDICTIONS_V6.md` | 5b773dfdde1d967a | `docs/PREDICTIONS_V6.md.sha256` | yes | yes | b6f5ef7 | 2026-10-28 | 2a39550 |
+| `docs/PREDICTIONS_V7.md` | b28f8a9eb7905553 | `docs/PREDICTIONS_V7.md.sha256` | yes | yes | 40dc7cc | 2026-11-02 |  |
 
 Full hashes: `data/history/prereg_hashes.csv`. `docs/PREDICTIONS_V3.md` is hashed after line endings are normalised to a line feed, as its scoring script does. Files that match their stored hash as first added but not now were scored in place later; the version that was hashed is the one in the commit named in the table: `docs/PREDICTIONS.md`.
 
