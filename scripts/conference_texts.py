@@ -346,7 +346,7 @@ This paper & two RISC-V cores (RTL) & emulated SiK radio, ArduPilot SITL & execu
 
 \section{Method}
 \label{sec:method}
-\emph{RTL simulation.} Ibex in its small configuration \cite{ibex} and CV32E40P \cite{cv32e40p}, both RV32IMC without caches or wait states, are simulated cycle accurately with Verilator. One firmware image per design runs the vehicle and the ground side, each step timed with the cycle counter, """ + n["runs"] + r""" runs per session image with a fixed seed block (""" + n["runs_tag"] + r""" for the deterministic tag image); every run checks that both sides derive the same key, that all signatures and tags verify, and hash known answers; medians carry 95\% intervals over runs. Libraries are pinned and unmodified: mlkem-native \cite{mlkemnative}, mldsa-native \cite{mldsanative}, Monocypher \cite{monocypher} and the padded Falcon-512 of liboqs \cite{liboqs,falcon}, all portable C, compiled with one compiler at \texttt{-O3}; neither core has a floating point unit, so Falcon runs its integer emulation of floating point. Peak stack is measured by stack painting and includes the harness; code size is the text section of each image with unused sections removed, both sides and the harness included.
+\emph{RTL simulation.} Ibex in its small configuration \cite{ibex} and CV32E40P \cite{cv32e40p}, both RV32IMC without caches or wait states, are simulated cycle accurately with Verilator. One firmware image per design runs the vehicle and the ground side, each step timed with the cycle counter, """ + n["runs"] + r""" runs per session image with a fixed seed block (""" + n["runs_tag"] + r""" for the deterministic tag image); every run checks that both sides derive the same key, that all signatures and tags verify, and hash known answers; medians carry 95\% intervals over runs. These are bare metal cycles with single cycle memory, not board cycles. Libraries are pinned and unmodified: mlkem-native \cite{mlkemnative}, mldsa-native \cite{mldsanative}, Monocypher \cite{monocypher} and the padded Falcon-512 of liboqs \cite{liboqs,falcon}, all portable C, compiled with one compiler at \texttt{-O3}, so that classical and post quantum code stand on the same footing, without assembly; neither core has a floating point unit, so Falcon runs its integer emulation of floating point. Peak stack is measured by stack painting and includes the harness; code size is the text section of each image with unused sections removed, both sides and the harness included.
 
 \emph{Gateway emulation with ArduPilot SITL.} ArduPilot Copter 4.7.2 \cite{ardupilot} flies a scripted mission of about """ + s["flight_s"] + r"""~s (take off, two legs, land) with its built in vehicle model; the ground station sends one acknowledged COMMAND\_LONG message per second. A relay emulates a SiK class telemetry radio of """ + n["sik_kbps"] + r"""~kbit/s with independent frame loss of """ + n["loss"] + r""", link layer retransmission that can deliver frames out of order, and one outage per mission starting """ + n["out_a"] + r"""--""" + n["out_b"] + r"""~s after arming with an exponential duration of mean """ + n["out_mean"] + r"""~s; an outage longer than """ + n["sess_to"] + r"""~s tears the session down. A gateway pair between the ground station, the relay and the flight stack executes the handshake, the tags and the replay rule with the same algorithms (Python cryptography and host builds of the same libraries); the flight stack itself runs unmodified and never executes the cryptography. Vehicle side operations are released after a delay equal to their Ibex cycles at """ + n["clock"] + r"""~MHz, the clock of a Cortex-M4 flight controller, fixed from the first runs before the flights (for design K, flown later, from the medians of all runs); ground side compute runs at host speed. """ + s["method"] + r"""
 
@@ -376,9 +376,9 @@ Design K avoids both ML-DSA-44 operations: on CV32E40P its vehicle side costs ""
 """ + s["formal"] + r"""
 
 \section{Discussion and limitations}
-For streamed commands the results support a session: its post quantum cost is paid once, and the per command cost stays that of the shipped tag. Where both identities can be pinned, design K is cheaper but rests on ML-KEM alone; the hybrid session keeps the classical component as a guard against a flaw in ML-KEM, while its authentication rests on ML-DSA-44. """ + s["disc"].replace("@FALRG@", n["fal_rg_cv32e40p"]).replace("@FALSIG@", n["fal_bytes"]).replace("@MLDSASIG@", n["mldsa_sig"]) + r"""
+For streamed commands the results support a session, whose post quantum cost is paid once. Where both identities can be pinned, design K is cheaper but rests on ML-KEM alone; the hybrid session keeps the classical component as a guard against a flaw in ML-KEM, while its authentication rests on ML-DSA-44. """ + s["disc"].replace("@FALRG@", n["fal_rg_cv32e40p"]).replace("@FALSIG@", n["fal_bytes"]).replace("@MLDSASIG@", n["mldsa_sig"]) + r"""
 
-\emph{Threats to validity.} (i) Cycles come from two open core designs with single cycle memories, applied at a Cortex-M4 clock; Cortex-M flight controllers have flash wait states, caches and other multipliers, and an earlier run of portable C code on Ibex took """ + n["m4c_lo2"] + r""" to """ + n["m4c_hi2"] + r""" times the published portable C cycles on Cortex-M4 and """ + n["m4a_lo2"] + r""" to """ + n["m4a_hi2"] + r""" times its assembly for ML-KEM-768 and ML-DSA-44; stack optimised signing \cite{greconici21} or RISC-V extensions \cite{alkim20,fritzmann20} would change the figures, and the Cortex-M4 check of Falcon-512 is functional only. (ii) One classical library was measured, and it favours the post quantum designs. (iii) The cryptography runs in gateways, not in the flight stack, so the scheduling load of a handshake on the flight controller is not measured; vehicle compute is a delay applied per event without a busy processor, and the host was slower than that delay for a small share of tags. """ + s.get("thr", r"""(iv) The radio is an emulation with independent frame loss and one scripted outage per mission, real loss is bursty, and the strict rule results rest on about a dozen outage triggered events. (v) Twenty missions per configuration, a bootstrap over missions that may under cover, and no correction for the several paired comparisons.""") + r""" (vi) The formal models use perfect primitives and small bounds (Section~\ref{sec:method}). Next, the baselines should be repeated on Cortex-M boards with the vehicle side inside the flight stack and a real radio.
+\emph{Threats to validity.} (i) Cycles come from two open core designs with single cycle memories, applied at a Cortex-M4 clock; Cortex-M flight controllers have flash wait states, caches and other multipliers, which add unmeasured cycles, most for code that streams large keys and signatures or calls many small routines (ML-DSA-44, Falcon-512 with emulated floating point); an earlier run of portable C code on Ibex took """ + n["m4c_lo2"] + r""" to """ + n["m4c_hi2"] + r""" times the published portable C cycles on Cortex-M4 and """ + n["m4a_lo2"] + r""" to """ + n["m4a_hi2"] + r""" times its assembly for ML-KEM-768 and ML-DSA-44; stack optimised signing \cite{greconici21} or RISC-V extensions \cite{alkim20,fritzmann20} would change the figures, and the Cortex-M4 check of Falcon-512 is functional only. (ii) One classical library was measured, and it favours the post quantum designs. (iii) The cryptography runs in gateways, not in the flight stack, so the scheduling load of a handshake on the flight controller is not measured; vehicle compute is a delay applied per event without a busy processor, and the host was slower than that delay for a small share of tags. """ + s.get("thr", r"""(iv) The radio is an emulation with independent frame loss and one scripted outage per mission, real loss is bursty, and the strict rule results rest on about a dozen outage triggered events. (v) Twenty missions per configuration, a bootstrap over missions that may under cover, and no correction for the several paired comparisons.""") + r""" (vi) The formal models use perfect primitives and small bounds (Section~\ref{sec:method}). Next, the baselines should be repeated on Cortex-M boards with the vehicle side inside the flight stack and a real radio.
 
 \section{Conclusion}
 """ + s["conclusion"].replace("@FALRG@", n["fal_rg_cv32e40p"]).replace("{hyb_lo}", n["cv32e40p_r_hybrid_f1_classical_vehicle"]).replace("{hyb_hi}", n["ibex_r_hybrid_f1_classical_vehicle"]) + r"""
@@ -625,7 +625,7 @@ Configuration & Handshake (s) & Added round trip (ms) & Share acknowledged withi
 \bottomrule
 \end{tabular}
 
-\smallskip\footnotesize Handshake: median from F1 until both sides hold the key (vehicle accepting F3 for design K, ground accepting F4 otherwise), emulated link and executed cryptography with RTL derived vehicle delays. Added round trip: median round trip to the flight stack's acknowledgement against no authentication (SITL measured). Acknowledged share and missed commands (not acknowledged within 0.5~s) include one outage per mission. $^{a}$ signing inside ArduPilot and the ground station at host speed, without RTL derived delays.""" + (r" $^{b}$ flown after the other configurations, on the same seeds." if r7 else "") + r"""
+\smallskip\footnotesize Handshake: median from F1 until both sides hold the key (vehicle accepting F3 for design K, ground accepting F4 otherwise). Added round trip: median round trip to the flight stack's acknowledgement against no authentication (SITL measured). Acknowledged share and missed commands (not acknowledged within 0.5~s) include one outage per mission. $^{a}$ signing inside ArduPilot and the ground station at host speed, without RTL derived delays.""" + (r" $^{b}$ flown after the other configurations, on the same seeds." if r7 else "") + r"""
 \end{table*}
 """
     s = {}
@@ -642,17 +642,17 @@ Configuration & Handshake (s) & Added round trip (ms) & Share acknowledged withi
                    + ". The host was slower than the applied delay for " + t["hx_tag"] + " of " + t["hx_tag_n"]
                    + " vehicle side tags (at most " + t["hx_tag_max"] + " in one configuration); these are counted, not corrected.")
     fig = ("\\begin{figure}[t]\n\\centering\n\\includegraphics[width=\\columnwidth]{fig_sitl.pdf}\n"
-           "\\caption{Paired differences between configurations of the commands missed per mission (not acknowledged within 0.5~s, outages included), mean over missions with 95\\% bootstrap interval (SITL measured). Negative values mean fewer missed commands than the reference. Filled circles: the " + t["n_miss"] + " missions of Table~\\ref{tab:sitl}" + ("; open squares: " + t["n100"] + " missions; open triangles: " + t["n20b"] + " missions under burst loss" if "n100" in t else "") + ".}\n"
+           "\\caption{Paired differences between configurations of the commands missed per mission (not acknowledged within 0.5~s, outages included), mean over missions with 95\\% bootstrap interval (SITL measured). Filled circles: the " + t["n_miss"] + " missions of Table~\\ref{tab:sitl}" + ("; open squares: " + t["n100"] + " missions; open triangles: " + t["n20b"] + " missions under burst loss" if "n100" in t else "") + ".}\n"
            "\\label{fig:sitl}\n\\end{figure}\n")
-    sec = (table + fig + "Table~\\ref{tab:sitl} gives each configuration. Once a session exists, its per message cost is that of the shipped tag: the hybrid session adds "
+    sec = (table + fig + "\\emph{Sessions.} Table~\\ref{tab:sitl} gives each configuration against no authentication; missed commands per mission is the common footing for comparing rows. Once a session exists, its per message cost is that of the shipped tag: the hybrid session adds "
            + t["hybrid_published_lat"] + "~ms to the median command round trip, the classical session " + t["classical_lat"] + "~ms and signing as shipped, which runs inside the flight stack without gateways, "
-           + t["signing_lat"] + "~ms. These milliseconds are mostly airtime of the 13~B signing field (" + t["air13"] + "~ms per direction; applied tag delays " + t["tagd_lo"] + " to " + t["tagd_hi"] + "~ms). The hybrid handshake takes "
+           + t["signing_lat"] + "~ms. These milliseconds are mostly airtime of the 13~B signing field (" + t["air13"] + "~ms per direction). The hybrid handshake takes "
            + t["hybrid_published_hs"] + "~s over the emulated radio against " + t["classical_hs"] + "~s for the classical session, a cost paid once per session"
            + (", and design K completes in " + t["kem_auth_hs"] + "~s" if "kem_auth" in keys else "") + ". Signing as shipped missed " + t["sign_nack"]
-           + " commands that arrived after a newer frame and failed the shipped timestamp rule.\n\n")
-    sec += ("An ML-DSA-44 signature on every command adds " + t["pqsig_real_lat"] + "~ms to each round trip, mostly airtime of the 2.4~kB signature, since the applied verification delay is "
+           + " commands that arrived after a newer frame.\n\n")
+    sec += ("\\emph{Signature per command.} An ML-DSA-44 signature on every command adds " + t["pqsig_real_lat"] + "~ms to each round trip, mostly airtime of the 2.4~kB signature, since the applied verification delay is "
             + t["pq_delay"] + "~ms; this puts the median round trip next to the deadline: " + t["pqsig_real_av"] + " of its commands are acknowledged within 0.5~s and " + t["pq_dl_1.0"] + " within 1~s.\n\n")
-    sec += ("Fig.~\\ref{fig:sitl} compares configurations by the commands missed per mission. Most session configurations differ in at most three of the " + t["n_miss"]
+    sec += ("\\emph{Replay rules.} Fig.~\\ref{fig:sitl} compares configurations by the commands missed per mission; right of zero, the first of a pair misses more, and open markers repeat the pair over more missions and under burst loss. Most session configurations differ in at most three of the " + t["n_miss"]
             + " missions: the hybrid session misses " + t["m_hybrid_published_none"] + " commands per mission against no authentication and " + t["m_hybrid_published_classical"] + " against the classical session, "
             "a small cost from re-handshakes after long outages; design K and the classical session miss the same commands (" + t["m_kem_auth_classical"] + "). "
             "Link layer retransmission delivers some frames after newer ones (reordering depth up to " + t["reorder_depth"] + "), and the published rule rejected " + t["pub_late"]
@@ -661,8 +661,7 @@ Configuration & Handshake (s) & Added round trip (ms) & Share acknowledged withi
     sec += ("The strict rule is the one that costs commands. Resynchronising by a full new handshake, it misses " + t["m_hybrid_strict_hybrid_published"] + " commands per mission against the published rule ("
             + t["m_hybrid_strict_hybrid_published_lo"] + " to " + t["m_hybrid_strict_hybrid_published_hi"] + "), mainly through resynchronisation, not reordering: "
             + t["strict_nosession"] + " commands were lost while no session existed during " + t["resync"] + " resynchronisations, " + t["resync_gu"]
-            + " of them triggered when the link layer gave up a frame during an outage, against " + t["strict_ahead"] + " rejected as ahead of the expected counter; "
-            + t["rs_strict"] + " of its missions restarted the session, against " + t["rs_pub"] + " under the published rule.")
+            + " of them triggered when the link layer gave up a frame during an outage, against " + t["strict_ahead"] + " rejected as ahead of the expected counter.")
     if "hybrid_strict_inband" in keys:
         sec += (" Resynchronising inside the session removes the handshake but not the cost: across " + t["resync_in"]
                 + " resynchronisations it still misses " + t["m_hybrid_strict_inband_hybrid_published"] + " commands per mission against the published rule ("
@@ -695,18 +694,18 @@ Configuration & Handshake (s) & Added round trip (ms) & Share acknowledged withi
                         + ((", and under independent loss " + t["n100"] + " missions each, for nine configurations") if big else "")
                         + "; all ran in two lanes at once, and the Falcon-512 configurations were added after the first runs.")
         sec = s["section"]
-        sec += ("\n\nA Falcon-512 signature per command, with " + t["fal_delay"] + "~ms of verification at the applied clock, adds " + t["pqsig_falcon_lat"]
+        sec += ("\n\n\\emph{Falcon-512.} A Falcon-512 signature per command, with " + t["fal_delay"] + "~ms of verification at the applied clock, adds " + t["pqsig_falcon_lat"]
                 + "~ms to the round trip, mostly the airtime of its " + t["fal_sig_b"] + "~B signature, and " + t["pqsig_falcon_av"] + " [" + t["pqsig_falcon_av_lo"] + ", " + t["pqsig_falcon_av_hi"]
                 + "] of its commands are acknowledged within 0.5~s, against " + t["pqsig_real_av"] + " for ML-DSA-44. Its missed commands per mission differ by " + t["falcon20_pqsig_falcon_pqsig_real"]
                 + " from ML-DSA-44 (" + t["falcon20_pqsig_falcon_pqsig_real_lo"] + " to " + t["falcon20_pqsig_falcon_pqsig_real_hi"] + ") and by "
                 + t["falcon20_pqsig_falcon_hybrid_published"] + " from the hybrid session, and its counter changes nothing (" + t["falcon20_pqsig_falcon_counter_pqsig_falcon"]
-                + "). The price is on the ground side: signing took " + t["fal_sign_host"] + "~ms on the host, and on the cores many times ML-DSA-44 signing (Section~\\ref{sec:rtl}).")
-        sec += ("\n\nThe replay rule results hold under burst loss and over more missions (Fig.~\\ref{fig:sitl}). Under burst loss the strict rule with a new handshake misses "
+                + "). The price is ground side signing: " + t["fal_sign_host"] + "~ms on the host and many times ML-DSA-44 on the cores (Section~\\ref{sec:rtl}).")
+        sec += ("\n\n\\emph{Burst loss and more missions.} The replay rule results hold under burst loss and over more missions (Fig.~\\ref{fig:sitl}). Under burst loss the strict rule with a new handshake misses "
                 + t["burst20_hybrid_strict_hybrid_published"] + " commands per mission against the published rule (" + t["burst20_hybrid_strict_hybrid_published_lo"] + " to "
                 + t["burst20_hybrid_strict_hybrid_published_hi"] + "), in session " + t["burst20_hybrid_strict_inband_hybrid_published"] + ", and the cache "
-                + t["burst20_hybrid_cache_hybrid_published"] + ". Bursts did not hurt the per command signatures more than the sessions: from independent to burst loss the missed commands per mission of ML-DSA-44 per command changed by "
-                + t.get("chg_pqsig_real", "") + " and those of the hybrid session by " + t.get("chg_hybrid_published", "")
-                + ", probably because with the same mean loss bursts hit fewer of the many frames that carry one signed command; we did not check this frame by frame.")
+                + t["burst20_hybrid_cache_hybrid_published"] + ". Bursts did not hurt per command signatures more than sessions: from independent to burst loss, missed commands per mission changed by "
+                + t.get("chg_pqsig_real", "") + " for ML-DSA-44 per command and " + t.get("chg_hybrid_published", "")
+                + " for the hybrid session, probably because bursts hit fewer of the many frames of one signed command (not checked frame by frame).")
         if big:
             sec += (" Over " + t["n100"] + " missions under independent loss, the strict rule misses " + t["large100_hybrid_strict_hybrid_published"] + " ("
                     + t["large100_hybrid_strict_hybrid_published_lo"] + " to " + t["large100_hybrid_strict_hybrid_published_hi"] + ") and in session "
@@ -743,15 +742,14 @@ def formal_text(c, doc):
         return c(cid, PV, col, q, agg, fmt, label=label, doc=doc)
     hyb_reach = bool(((pv.model == "session_b_fixed") & pv.property_id.str.startswith("R")).any())
     sig = sorted(m for m in models if m.startswith("session_b_fixed") and "sig" in m)
-    out = ("ProVerif checked " + k("cf_pv_q", "") + " queries in " + c("cf_pv_m", PV, "model", "", "nunique", "{:.0f}", label="modelled", doc=doc)
+    out = ("\\emph{Scope.} Results are symbolic (Dolev Yao, perfect primitives), not computational proofs. ProVerif checked " + k("cf_pv_q", "") + " queries in " + c("cf_pv_m", PV, "model", "", "nunique", "{:.0f}", label="modelled", doc=doc)
            + " model files: " + k("cf_pv_p", 'result == "proved"') + " proved, " + k("cf_pv_cx", 'result == "counterexample"') + " counterexamples, "
            + k("cf_pv_cnp", 'result == "cannot be proved"') + " that the tool could not prove and " + k("cf_pv_to", 'result.str.startswith("cannot be proved (timeout")')
            + " that reached the time limit. Of the counterexamples, " + k("cf_pv_r0", 'property_id.str.startswith("R") and result == "counterexample"')
-           + " are reachability checks that must fail: they show that a command or a session key can be accepted, so the agreement results are not vacuous"
+           + " are reachability checks that must fail, so the agreement results are not vacuous"
            + ("" if hyb_reach else " (the hybrid session models have no such check)")
-           + ". The others come from designs before their fixes, models not discussed here, deliberate controls and the results below. ")
-    out += ("With mutual signing the hybrid session keys stay secret and each side authenticates the other; the keys stay secret when either the classical or the KEM component is broken, "
-            "and after a later theft of the long term keys.")
+           + "; the others come from designs before their fixes, other models, controls and the results below. ")
+    out += ("With mutual signing each side of the hybrid session authenticates the other, and its keys stay secret, also with either component broken or the long term keys later stolen.")
     if sig:
         def res(m, pid):
             r = pv[(pv.model == m) & (pv.property_id == pid)]
@@ -761,17 +759,17 @@ def formal_text(c, doc):
         sm = res(m0, "SM") == "proved"
         out += (" With ML-DSA-44 broken (both signing keys known to the attacker), " + ("authentication fails and an active attacker learns the key a side accepts" if auth else "authentication still holds")
                 + ("; only a session that both sides accepted with the same key stays secret, which the X25519 and ML-KEM exchange still gives" if sm else "")
-                + ". The hybrid session's authentication therefore rests on ML-DSA-44 alone.")
-    out += ("\n\nDesign K keeps its keys secret when the classical component is broken and after a later theft of the static keys, and the vehicle authenticates the ground station. "
+                + ".")
+    out += ("\n\n\\emph{Design K.} Design K keeps its keys secret when the classical component is broken and after a later theft of the static keys, and the vehicle authenticates the ground station. "
             "With ML-KEM broken, however, its keys are not secret: the attacker sends its own first flight with stolen static keys, and the X25519 share does not save the session against an active attacker; "
             "with its static keys known, design K fares like the hybrid session with ML-DSA-44 broken. Authentication of the vehicle by the ground station is proved only in a model in which static and ephemeral KEM keys have distinct types; ")
     a2 = pv[(pv.model == "session_kemauth_a2_retry") & (pv.property_id == "A2")]
     if len(a2) and a2.result.iloc[0].startswith("cannot"):
         out += ("the general model reached a time limit of " + c("cf_pv_a2_t", PV, "run_time_s_host_measured", 'model == "session_kemauth_a2_retry" and property_id == "A2"',
-                                                                    "value", "{:.0f}", 1 / 3600, label="host measured", doc=doc) + "~h without finding an attack or a proof.")
+                                                                    "value", "{:.0f}", 1 / 3600, label="host measured", doc=doc) + "~h without finding an attack or a proof; this is a limit of the tool over unbounded sessions, not an attack.")
     else:
         out += "the general model " + ("proves it as well." if len(a2) and a2.result.iloc[0] == "proved" else "gives " + a2.result.iloc[0] + ".")
-    out += ("\n\nFor out of order delivery, a replay cache proves injective agreement on commands when the vehicle checks and records each pair of session and counter in one step and never forgets an entry, "
+    out += ("\n\n\\emph{Replay rules.} For out of order delivery, a replay cache proves injective agreement on commands when the vehicle checks and records each pair of session and counter in one step and never forgets an entry, "
             "a condition stated in the model as a restriction, not derived. When concurrent branches read a table before either records, the model gives a counterexample, and a table read in sequence could not be proved; "
             "an implementation must therefore check and record atomically. A bounded window was proved only on the command layer for a window of two counters, and the published timestamp rule could not be proved.")
     return out
